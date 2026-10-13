@@ -9,6 +9,6 @@
     {"name":"fat","kind":"binary","role":"main","identifier":"com.loadstar.fixture.fat","entitlements":"entitlements/app.plist","minOS":"14.0"},
     {"name":"nosig.dylib","kind":"binary","role":"dylib","identifier":"com.loadstar.fixture.nosig","entitlements":null,"minOS":"14.0"},
     {"name":"resign","kind":"binary","role":"main","identifier":"com.loadstar.fixture.resign","entitlements":"entitlements/resign.plist","minOS":"14.0"},
-    {"name":"Test.app","kind":"bundle","role":"main","identifier":"com.loadstar.fixture.app","entitlements":"entitlements/app.plist","minOS":"14.0","nested":[{"path":"Frameworks/Lib.framework","role":"framework","identifier":"com.loadstar.fixture.lib","entitlements":null},{"path":"Frameworks/libloose.dylib","role":"dylib","identifier":"libloose","entitlements":null},{"path":"PlugIns/Ext.appex","role":"appex","identifier":"com.loadstar.fixture.app.ext","entitlements":"entitlements/appex.plist"}]}
+    {"name":"Test.app","kind":"bundle","role":"main","identifier":"com.loadstar.fixture.app","entitlements":"entitlements/app.plist","minOS":"14.0","symlinks":["Strings-link"],"nested":[{"path":"Frameworks/Lib.framework","role":"framework","identifier":"com.loadstar.fixture.lib","entitlements":null},{"path":"Frameworks/libloose.dylib","role":"dylib","identifier":"libloose","entitlements":null},{"path":"PlugIns/Ext.appex","role":"appex","identifier":"com.loadstar.fixture.app.ext","entitlements":"entitlements/appex.plist"}]}
   ]
 }

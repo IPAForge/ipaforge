@@ -1,3 +1,4 @@
-# Signer fixtures are compared byte-for-byte: never normalise line endings or diff them as text.
-fixtures/** -text -diff
 * text=auto eol=lf
+# Signer fixtures are compared byte-for-byte: never normalise line endings or diff them as text.
+# (Must come after the catch-all: for the same attribute, the later line wins.)
+fixtures/** -text -diff

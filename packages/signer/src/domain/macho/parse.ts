@@ -34,6 +34,9 @@ import type {
   Slice,
 } from "@signer/domain/macho/types.ts";
 
+/** Real universal binaries have at most a handful of slices (e.g. armv7, arm64, arm64e). */
+export const MAX_FAT_ARCHES = 16;
+
 const invalid = (message: string, data?: Record<string, unknown>): LoadstarError =>
   new LoadstarError(ErrorCode.InvalidMachO, { message, ...(data ? { data } : {}) });
 
@@ -73,7 +76,7 @@ export const parseMachO = (bytes: Uint8Array): MachOFile => {
 const parseFatHeader = (bytes: Uint8Array): FatArch[] => {
   const reader = new ByteReader(bytes, 4);
   const count = reader.u32be();
-  if (count === 0 || FAT_HEADER_SIZE + count * FAT_ARCH_SIZE > bytes.byteLength) {
+  if (count === 0 || count > MAX_FAT_ARCHES || FAT_HEADER_SIZE + count * FAT_ARCH_SIZE > bytes.byteLength) {
     throw invalid("bad fat header", { count });
   }
   const arches: FatArch[] = [];
@@ -90,6 +93,16 @@ const parseFatHeader = (bytes: Uint8Array): FatArch[] => {
     }
     arches.push(arch);
   }
+  // Slices must not overlap each other or the header: overlapping slices would let one region be
+  // signed (and copied) many times, multiplying output size past the archive's size limits.
+  const headerEnd = FAT_HEADER_SIZE + count * FAT_ARCH_SIZE;
+  const sorted = [...arches].sort((a, b) => a.offset - b.offset);
+  sorted.forEach((arch, i) => {
+    const previousEnd = i === 0 ? headerEnd : (sorted[i - 1] as FatArch).offset + (sorted[i - 1] as FatArch).size;
+    if (arch.size === 0 || arch.offset < previousEnd) {
+      throw invalid("fat slices overlap or are empty", { offset: arch.offset, size: arch.size });
+    }
+  });
   return arches;
 };
 
@@ -109,6 +122,7 @@ export const parseSlice = (bytes: Uint8Array, fileOffset: number): Slice => {
   const ncmds = header.u32le();
   const sizeofcmds = header.u32le();
   if (headerSize + sizeofcmds > bytes.byteLength) throw invalid("load commands exceed file", { sizeofcmds });
+  if (ncmds > sizeofcmds / 8) throw invalid("more load commands than fit in sizeofcmds", { ncmds, sizeofcmds });
 
   const segments: Segment[] = [];
   let codeSignature: CodeSignatureCommand | undefined;
@@ -129,14 +143,19 @@ export const parseSlice = (bytes: Uint8Array, fileOffset: number): Slice => {
     switch (cmd) {
       case LC_SEGMENT_64:
       case LC_SEGMENT: {
-        const segment = readSegment(bytes, offset, cmd === LC_SEGMENT_64);
+        const segment = readSegment(bytes, offset, cmdsize, cmd === LC_SEGMENT_64);
         segments.push(segment.segment);
         firstSectionOffset = Math.min(firstSectionOffset, segment.firstSectionOffset);
         break;
       }
-      case LC_CODE_SIGNATURE:
-        codeSignature = { commandOffset: offset, dataoff: command.u32le(), datasize: command.u32le() };
+      case LC_CODE_SIGNATURE: {
+        const signature = { commandOffset: offset, dataoff: command.u32le(), datasize: command.u32le() };
+        if (signature.dataoff + signature.datasize > bytes.byteLength) {
+          throw invalid("code signature lies outside the file", { ...signature, size: bytes.byteLength });
+        }
+        codeSignature = signature;
         break;
+      }
       case LC_BUILD_VERSION:
         buildVersion = { platform: command.u32le(), minOS: command.u32le() };
         break;
@@ -183,6 +202,7 @@ const ZEROFILL_TYPES = new Set([S_ZEROFILL, S_GB_ZEROFILL, S_THREAD_LOCAL_ZEROFI
 const readSegment = (
   bytes: Uint8Array,
   offset: number,
+  cmdsize: number,
   is64: boolean,
 ): { segment: Segment; firstSectionOffset: number } => {
   const r = new ByteReader(bytes, offset + 8);
@@ -196,8 +216,19 @@ const readSegment = (
   const nsects = r.u32le();
   const flags = r.u32le();
 
+  // The segment's file range must lie inside the slice: later steps size buffers from it.
+  // Checked even when filesize is 0: allocation uses fileoff + filesize, so a zero-size segment with a
+  // huge offset must not slip through.
+  if (fileoff + filesize > BigInt(bytes.byteLength)) {
+    throw invalid("segment lies outside the file", { name, fileoff: String(fileoff), filesize: String(filesize) });
+  }
+
   // section_64: 80 bytes (offset@48, size@40 u64, flags@64); section: 68 bytes (offset@40, size@36 u32, flags@56)
   const sectionSize = is64 ? 80 : 68;
+  const headerSize = is64 ? 72 : 56;
+  if (headerSize + nsects * sectionSize > cmdsize) {
+    throw invalid("segment declares more sections than its load command holds", { name, nsects, cmdsize });
+  }
   let firstSectionOffset = bytes.byteLength;
   for (let k = 0; k < nsects; k++) {
     const s = new ByteReader(bytes, r.position + k * sectionSize);

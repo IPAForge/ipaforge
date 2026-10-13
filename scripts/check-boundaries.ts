@@ -56,13 +56,14 @@ export const checkBoundaries = (root: string, onFile: (file: string) => void = (
         if (!SOURCE_FILE.test(file)) continue;
         const shipped = dir === "src" && !TEST_FILE.test(file);
         filesChecked++;
-        onFile(relative(root, file));
+        const display = relative(root, file).split(sep).join("/"); // same output on every OS
+        onFile(display);
         const source = readFileSync(file, "utf8");
         for (const { specifier, line } of findImports(source)) {
           const violation =
             classifyImportStyle(pkg, packages, pkgRoot, file, specifier) ??
             (shipped ? classify(pkg, specifier) : undefined);
-          if (violation) violations.push({ file: relative(root, file), line, specifier, ...violation });
+          if (violation) violations.push({ file: display, line, specifier, ...violation });
         }
       }
     }
