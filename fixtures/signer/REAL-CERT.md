@@ -1,0 +1,32 @@
+# Verifying the signer against a real Apple Development certificate
+
+Golden fixtures prove byte parity with Apple `codesign` for **ad-hoc** signatures, and CI checks that certificate-signed output passes `codesign --verify`. One thing needs a real Apple-issued certificate, which CI can't have: whether Loadstar's **CMS** matches Apple's structurally (certificate chain and order, algorithm identifiers, signed attributes) for an Apple Development identity. That was signer-spec open uncertainty #2.
+
+## Run it (macOS, about 1 minute)
+
+1. Export a **disposable** Apple Development identity as a `.p12`:
+   - Xcode → Settings → Accounts → Manage Certificates, or
+   - Keychain Access → right-click the certificate → Export.
+
+   A free Apple ID's development certificate is fine. You can revoke it afterwards.
+2. Run:
+
+   ```bash
+   LOADSTAR_P12_PASSWORD='…' pnpm --filter @loadstar/signer compare-real-cert -- --p12 ~/Downloads/identity.p12
+   ```
+
+The script:
+
+- imports the `.p12` into a **temporary keychain** and deletes it at the end; your login keychain is never touched;
+- signs the fixture `Test.app` bottom-up with Apple `codesign` (`--timestamp=none`), and with Loadstar using the same certificate and key;
+- compares every SuperBlob blob of every executable byte for byte, except the CMS: CodeDirectories (flags 0, team ID), the requirements set (Apple's designated-requirement form) and the entitlements;
+- compares the CMS structurally with `openssl cms -cmsout -print`, masking only the signing time and signature value;
+- runs `codesign --verify --deep --strict` on Loadstar's output.
+
+## Results log
+
+| Date | Certificate issuer | Result | Notes |
+|---|---|---|---|
+| _pending_ | | | First run by the maintainer closes signer-spec uncertainty #2 |
+
+If a check fails, the script keeps both CMS dumps (`*.apple.txt`, `*.ours.txt`) in the printed temp directory. Diff them, fix `packages/signer/src/infrastructure/cms/sign.ts`, and record the finding in `docs/design/signer-spec.md` §5 and §11.

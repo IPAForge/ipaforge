@@ -1,0 +1,81 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "includes": [
+      "**",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/coverage",
+      "!fixtures/**/inputs",
+      "!fixtures/**/expected",
+      "!scripts/__fixtures__",
+      "!fixtures/**/manifest.json"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 120
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "double",
+      "semicolons": "always",
+      "trailingCommas": "all"
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended",
+      "style": {
+        "useImportType": "error",
+        "useNodejsImportProtocol": "error"
+      }
+    }
+  },
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["packages/*/src/**", "!packages/**/*.test.ts", "!packages/**/__tests__/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "paths": {
+                  "electron": "packages/* must stay platform-free; put Electron code in apps/desktop.",
+                  "fs": "packages/* must stay platform-free; use the FileSource port.",
+                  "path": "packages/* must stay platform-free.",
+                  "net": "packages/* must stay platform-free; use the DeviceTransport port.",
+                  "tls": "packages/* must stay platform-free; use the TlsUpgrader port.",
+                  "buffer": "Use Uint8Array, not Buffer."
+                },
+                "patterns": [
+                  {
+                    "group": ["node:*"],
+                    "message": "packages/* must stay platform-free; Node built-ins belong in apps/* adapters."
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "plugins": ["./tooling/biome/no-function-declaration.grit"]
+}

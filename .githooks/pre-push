@@ -1,0 +1,5 @@
+#!/bin/sh
+# Full type and test pass before anything leaves the machine.
+set -e
+pnpm -s typecheck
+pnpm -s test

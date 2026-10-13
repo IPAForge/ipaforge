@@ -1,0 +1,61 @@
+// Public API of @loadstar/signer. Everything else is internal.
+
+export { embeddedEntitlements } from "@signer/application/embedded-entitlements.ts";
+export {
+  type BundleProvisioning,
+  type ReconcileOptions,
+  type ReconcileResult,
+  reconcileForSideload,
+} from "@signer/application/reconcile.ts";
+export {
+  type EntitlementsInput,
+  type SignBinaryOptions,
+  type SignedBinary,
+  type SigningMode,
+  signBinary,
+} from "@signer/application/sign-binary.ts";
+export {
+  type BundleSigningConfig,
+  canonicalIdentifier,
+  type SignBundleOptions,
+  type SignBundleProgress,
+  type SignedBundleSummary,
+  signBundle,
+} from "@signer/application/sign-bundle.ts";
+export {
+  type SignedIpa,
+  type SignerProgress,
+  type SignIpaDeps,
+  type SignIpaOptions,
+  type SignIpaSummary,
+  signIpa,
+} from "@signer/application/sign-ipa.ts";
+export { defaultSignerDeps, resolveDeps, type SignerDeps } from "@signer/deps.ts";
+export type { DesignatedRequirement } from "@signer/domain/blobs/index.ts";
+export { type CodeBundle, discoverBundles } from "@signer/domain/bundle/discover.ts";
+export type { BundleTree, TreeEntry } from "@signer/domain/bundle/tree.ts";
+export {
+  createDict,
+  isPlistDict,
+  type PlistDict,
+  PlistReal,
+  type PlistValue,
+  parsePlist,
+  real,
+  serializeXmlPlist,
+} from "@signer/domain/plist/index.ts";
+export type { HashAlgorithm, Hasher } from "@signer/domain/ports/hasher.ts";
+export {
+  APPLE_CERTIFICATES,
+  type CertificateInfo,
+  type ChainResolution,
+  certificateInfo,
+  expiringAppleCertificates,
+  type IssuerFetcher,
+  type ResolveChainOptions,
+  resolveChain,
+  type SigningIdentity,
+} from "@signer/infrastructure/cms/index.ts";
+export { createHasher } from "@signer/infrastructure/hashing/index.ts";
+export { DEFAULT_IPA_LIMITS, type Ipa, type IpaLimits, readIpa, writeIpa } from "@signer/infrastructure/ipa/ipa.ts";
+export { type ProvisioningProfile, parseProvisioningProfile } from "@signer/infrastructure/profile/profile.ts";

@@ -1,0 +1,29 @@
+name: Bug report
+description: Something does not work as expected
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: Include the error code shown (e.g. `signer.profile_expired`) and what you expected instead.
+    validations:
+      required: true
+  - type: input
+    id: platform
+    attributes:
+      label: Platform
+      placeholder: "macOS 26.4 desktop / Windows 11 desktop / Chrome 155 web"
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device and iOS version
+      placeholder: "iPhone 15, iOS 26.0.1"
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: From the in-app log viewer. Secrets are redacted automatically, but please double-check.
+      render: text

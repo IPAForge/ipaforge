@@ -1,0 +1,23 @@
+{
+  "name": "@loadstar/signer",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.test.json",
+    "compare-real-cert": "tsx scripts/compare-real-cert.ts",
+    "update-apple-certificates": "tsx scripts/update-apple-certificates.ts"
+  },
+  "dependencies": {
+    "@loadstar/kernel": "workspace:*",
+    "@noble/hashes": "2.4.0",
+    "@zip.js/zip.js": "2.23.0",
+    "asn1js": "3.0.10",
+    "pkijs": "3.4.1",
+    "zod": "4.6.6"
+  }
+}

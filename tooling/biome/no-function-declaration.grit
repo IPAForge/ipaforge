@@ -1,0 +1,7 @@
+// Project style: arrow functions everywhere (`const name = (…) => …`), never `function` declarations.
+or {
+  JsFunctionDeclaration(),
+  JsFunctionExportDefaultDeclaration()
+} as $fn where {
+  register_diagnostic(span=$fn, message="Use an arrow function (`const name = (…) => …`) instead of a `function` declaration.")
+}

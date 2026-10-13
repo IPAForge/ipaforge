@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
+    "strict": true,
+    "exactOptionalPropertyTypes": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "verbatimModuleSyntax": true,
+    "isolatedModules": true,
+    "erasableSyntaxOnly": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    // Absolute imports: each package uses only its own alias (enforced by scripts/check-boundaries.ts);
+    // they live here so every package and tool (tsc, Vite/Vitest, esbuild, tsx) resolves them identically.
+    "paths": {
+      "@kernel/*": ["./packages/kernel/src/*"],
+      "@signer/*": ["./packages/signer/src/*"],
+      "@signer-test/*": ["./packages/signer/test/*"]
+    }
+  }
+}

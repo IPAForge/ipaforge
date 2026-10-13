@@ -1,0 +1,27 @@
+import type { EntitlementsInput } from "@signer/application/sign-binary.ts";
+import { CSSLOT_ENTITLEMENTS, findBlob, parseSuperBlob } from "@signer/domain/blobs/index.ts";
+import { parseMachO } from "@signer/domain/macho/parse.ts";
+import { isPlistDict, parseXmlPlist } from "@signer/domain/plist/index.ts";
+
+/**
+ * Entitlements currently embedded in a signed executable (slot 5): the exact plist bytes and the
+ * parsed dict. `undefined` for unsigned binaries or binaries without entitlements.
+ */
+export const embeddedEntitlements = (executable: Uint8Array | undefined): EntitlementsInput | undefined => {
+  if (!executable) return undefined;
+  try {
+    const slice = parseMachO(executable).slices[0];
+    const sig = slice?.codeSignature;
+    if (!slice || !sig) return undefined;
+    const blob = findBlob(
+      parseSuperBlob(slice.bytes.subarray(sig.dataoff, sig.dataoff + sig.datasize)),
+      CSSLOT_ENTITLEMENTS,
+    );
+    if (!blob) return undefined;
+    const bytes = blob.slice(8);
+    const dict = parseXmlPlist(bytes);
+    return isPlistDict(dict) ? { bytes, dict } : undefined;
+  } catch {
+    return undefined; // malformed signatures are simply replaced
+  }
+};

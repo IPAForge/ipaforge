@@ -1,0 +1,8 @@
+node_modules/
+dist/
+coverage/
+.turbo/
+*.log
+.DS_Store
+# local caches (e.g. downloaded IPAs for opt-in e2e tests)
+.cache/

@@ -1,0 +1,84 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: check (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6 # version comes from package.json "packageManager"
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm check:boundaries
+      - run: pnpm test
+        env:
+          # verbose engine logs when a run is re-run with debug logging enabled
+          LOG_LEVEL: ${{ runner.debug == '1' && 'debug' || 'info' }}
+
+  # Apple `codesign` is the signer's oracle: fixtures must still match it, and every Apple-verification
+  # test (codesign --verify --deep --strict) runs here, plus the real SideStore end-to-end signing.
+  macos-codesign:
+    name: macos codesign parity
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Report toolchain versions
+        run: |
+          sw_vers
+          what /usr/bin/codesign | grep PROJECT
+          xcrun --sdk iphoneos --show-sdk-version
+      - name: Fixtures still match this codesign (toolchain drift check)
+        run: fixtures/signer/generate.sh --check
+      - name: Signer tests incl. Apple verification
+        run: pnpm vitest run --project @loadstar/signer
+      - uses: actions/cache@v6
+        with:
+          path: .cache/e2e
+          key: e2e-sidestore-0.7.0-alpha
+      - name: SideStore end to end
+        run: pnpm vitest run packages/signer/src/application/sign-ipa.test.ts
+        env:
+          LOADSTAR_E2E: "1"
+
+  browser-parity:
+    name: browser parity (Chromium)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm vitest run packages/signer/test/browser-parity.test.ts
+        env:
+          LOADSTAR_BROWSER: "1"

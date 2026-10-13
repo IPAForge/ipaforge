@@ -1,0 +1,62 @@
+[← Getting Started](getting-started.md) · [Back to README](../README.md) · [Code Signing →](signing.md)
+
+# Architecture
+
+Loadstar uses **Explicit Architecture (ports & adapters)** with one package per bounded context. The authoritative version is `docs/design/architecture.md`; this page is the summary.
+
+## Why ports & adapters
+
+The engine logic is the same on every platform, but the I/O isn't:
+
+| Concern | Desktop (Electron main) | Web (Web Worker) |
+|---|---|---|
+| Reach the device | usbmuxd socket | WebUSB + our own usbmux |
+| TLS to device services | `node:tls` | JS/WASM TLS client |
+| Talk to Apple | direct HTTPS | stateless relay (CORS) |
+| Secrets | OS keychain (`safeStorage`) | session memory |
+| Read IPAs | filesystem | `File` stream |
+
+Core packages define **ports**, which are interfaces. Each app provides **adapters**, which implement them. Core packages never import `node:*`, `electron` or browser-only APIs, and a boundary checker enforces this in CI.
+
+## Packages
+
+| Package | Responsibility |
+|---|---|
+| `kernel` | `LoadstarError` + `ErrorCode`, ports (Logger, HttpClient, SecretStore, FileSource, Clock, Cache), byte utilities |
+| `signer` | Mach-O code signing, CodeResources, entitlements, CMS, IPA streaming |
+| `device` | usbmux, lockdown, pairing, AFC, house_arrest, installation_proxy |
+| `apple` | Apple ID login (GSA SRP + 2FA), anisette, developer services |
+| `catalog` | Release sources, GitHub resolution, downloads, cache |
+| `installer` | Pipelines and flows (install SideStore, preload, pairing), diagnostics, the **Engine** facade |
+| `rpc` | Typed Engine ⇄ UI calls over Electron IPC or Worker `postMessage` |
+| `ui` | Shared React app (HeroUI + Tailwind, palettes, i18n) |
+
+Apps (composition roots): `apps/desktop` (Electron), `apps/web` (Vite + Worker), `apps/relay` (Hono).
+
+## Dependency rules
+
+```
+kernel  ←  signer, device, apple, catalog  ←  installer  ←  rpc  ←  ui
+                                     apps/* wire adapters and mount ui
+```
+
+- Contexts depend only on `kernel`. Only `installer` combines contexts.
+- `ui` talks to the engine only through `rpc`'s `EngineClient`.
+- Platform code lives only in `apps/*`.
+
+## Flows are pipelines
+
+Every long operation, such as installing SideStore, is an ordered list of typed **steps** with weights, labels, cancellation and resume (for 2FA or choosing a team). The UI renders the pipeline. It never invents its own progress.
+
+## Errors are codes
+
+Failures become `LoadstarError` with a stable code, for example `device.developer_mode_off`, `apple.app_id_quota` or `catalog.source_gone`. The UI maps each code to a recovery screen.
+
+## Styling
+
+There are no CSS files. The UI uses HeroUI components and Tailwind utility classes. Colour palettes are TypeScript data applied as HeroUI theme variables at runtime.
+
+## See Also
+
+- [Code Signing](signing.md): the most intricate context
+- [Contributing](contributing.md): conventions and the boundary checker

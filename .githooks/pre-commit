@@ -1,0 +1,5 @@
+#!/bin/sh
+# Fast checks on what is being committed (installed by `pnpm install` via core.hooksPath).
+set -e
+pnpm exec biome check --staged --no-errors-on-unmatched
+pnpm -s check:boundaries
