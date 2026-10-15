@@ -1,6 +1,7 @@
 import type { Logger } from "@loadstar/kernel";
 import { hashAlgorithmsFor } from "@signer/application/policy.ts";
-import { type EntitlementsInput, type SigningMode, signBinary } from "@signer/application/sign-binary.ts";
+import { signBinary } from "@signer/application/sign-binary.ts";
+import type { EntitlementsInput, SigningMode } from "@signer/application/signing.ts";
 import {
   type CodeBundle,
   discoverBundles,

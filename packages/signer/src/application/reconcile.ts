@@ -1,6 +1,6 @@
 import { createDict, ErrorCode, LoadstarError, type Logger, type PlistDict, serializeXmlPlist } from "@loadstar/kernel";
 import { embeddedEntitlements } from "@signer/application/embedded-entitlements.ts";
-import type { EntitlementsInput } from "@signer/application/sign-binary.ts";
+import type { EntitlementsInput } from "@signer/application/signing.ts";
 import { type CodeBundle, discoverBundles } from "@signer/domain/bundle/discover.ts";
 import { type IdentityRewrite, rewriteInfoPlist, rewriteNestedId } from "@signer/domain/bundle/info-plist.ts";
 import { INFO_PLIST } from "@signer/domain/bundle/layout.ts";

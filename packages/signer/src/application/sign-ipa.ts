@@ -1,8 +1,8 @@
 import { type Clock, type FileSource, type Logger, silentLogger, systemClock, toLoadstarError } from "@loadstar/kernel";
 import { embeddedEntitlements } from "@signer/application/embedded-entitlements.ts";
 import { type ReconcileOptions, type ReconcileResult, reconcileForSideload } from "@signer/application/reconcile.ts";
-import type { EntitlementsInput, SigningMode } from "@signer/application/sign-binary.ts";
 import { type SignBundleProgress, signBundle } from "@signer/application/sign-bundle.ts";
+import type { EntitlementsInput, SigningMode } from "@signer/application/signing.ts";
 import { type CodeBundle, discoverBundles } from "@signer/domain/bundle/discover.ts";
 import { readFile } from "@signer/domain/bundle/tree.ts";
 import { type Overrides, resolveLimits, type SignerLimits, type SigningPolicy } from "@signer/domain/config.ts";
