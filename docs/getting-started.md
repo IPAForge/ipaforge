@@ -1,10 +1,10 @@
-[Back to README](../README.md) · [Architecture →](architecture.md)
+[← Installing](installing.md) · [Back to README](../README.md) · [Architecture →](architecture.md)
 
 # Getting Started
 
 ## Current status
 
-Loadstar is **pre-alpha**. Phase 0 (Foundation) and Phase 1 (Signer) are complete, and Phase 2 (Device layer) is implemented. There is no installable build yet.
+Loadstar is **pre-alpha**. Phases 0–4 are complete: foundation, signer, device layer, Apple account and developer services. There is no installable build yet; see [Installing](installing.md) for how it will work.
 
 | Area | State |
 |---|---|

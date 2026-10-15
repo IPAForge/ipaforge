@@ -60,6 +60,7 @@ loadstar/
 | Document | Path | Description |
 |----------|------|-------------|
 | README | README.md | Project landing page |
+| Installing | docs/installing.md | Download, requirements per OS, first run |
 | Getting Started | docs/getting-started.md | Status, requirements, dev setup |
 | Architecture | docs/architecture.md | Packages, ports & adapters, dependency rules |
 | Code Signing | docs/signing.md | How signing works and how it is verified |
@@ -67,6 +68,8 @@ loadstar/
 | Apple Account | docs/apple-account.md | Sign-in, anisette, 2FA, saved accounts, errors |
 | Roadmap | docs/roadmap.md | Phases with links to plans |
 | Contributing | docs/contributing.md | PR rules, conventions, clean-room policy |
+| Code of Conduct | docs/CODE_OF_CONDUCT.md | Contributor Covenant 2.1 |
+| Security Policy | docs/SECURITY.md | Private vulnerability reporting |
 | Signer format spec | docs/design/signer-spec.md | Byte-level iOS code-signing reference |
 
 ## Design documents

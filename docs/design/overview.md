@@ -23,7 +23,7 @@ The whole engine is written in **TypeScript** and runs in Electron on all three 
 - **Apple developer tools.** List and revoke certificates, list and delete app IDs, show remaining app-ID quota, import and export certificates.
 - **Clear errors.** Detection of locked device, missing pair record, Developer Mode off, app-ID or certificate limits, `DeviceNotSupportedByThinning`, no internet, and similar conditions, each with a dedicated recovery screen.
 - **Themes.** Several colour palettes, each with light and dark variants, defined as TypeScript data.
-- **Localization** from day one (i18next).
+- **Localization** from day one (i18next): every language iOS supports, right-to-left included, chosen automatically from the OS, translated by the community.
 
 ## Tech Stack
 
