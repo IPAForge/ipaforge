@@ -17,13 +17,7 @@ export {
   type ReconcileResult,
   reconcileForSideload,
 } from "@signer/application/reconcile.ts";
-export {
-  type EntitlementsInput,
-  type SignBinaryOptions,
-  type SignedBinary,
-  type SigningMode,
-  signBinary,
-} from "@signer/application/sign-binary.ts";
+export { type SignBinaryOptions, type SignedBinary, signBinary } from "@signer/application/sign-binary.ts";
 export {
   type BundleSigningConfig,
   canonicalIdentifier,
@@ -41,6 +35,7 @@ export {
   type SignIpaSummary,
   signIpa,
 } from "@signer/application/sign-ipa.ts";
+export type { EntitlementsInput, SigningMode } from "@signer/application/signing.ts";
 export { defaultSignerDeps, resolveDeps, type SignerDeps } from "@signer/deps.ts";
 export type { DesignatedRequirement } from "@signer/domain/blobs/index.ts";
 export { type CodeBundle, discoverBundles } from "@signer/domain/bundle/discover.ts";
@@ -81,5 +76,5 @@ export {
   readIpa,
   type WriteIpaOptions,
   writeIpa,
-} from "@signer/infrastructure/ipa/ipa.ts";
+} from "@signer/infrastructure/ipa/index.ts";
 export { type ProvisioningProfile, parseProvisioningProfile } from "@signer/infrastructure/profile/profile.ts";

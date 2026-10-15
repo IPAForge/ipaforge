@@ -1,6 +1,6 @@
 import { ErrorCode, equalBytes, fromBase64, LoadstarError, type Logger, silentLogger } from "@loadstar/kernel";
 import { APPLE_CERTIFICATES } from "@signer/infrastructure/cms/apple-certificates.ts";
-import { parseCertificate } from "@signer/infrastructure/cms/certificate.ts";
+import { nameDer, parseCertificate } from "@signer/infrastructure/cms/certificate.ts";
 import {
   OID_AIA_CA_ISSUERS,
   OID_AUTHORITY_INFO_ACCESS,
@@ -31,8 +31,6 @@ export interface ResolveChainOptions {
 
 const bundled = (kind: "root" | "intermediate"): Uint8Array[] =>
   APPLE_CERTIFICATES.filter((c) => c.kind === kind).map((c) => fromBase64(c.der));
-
-const nameDer = (name: pkijs.RelativeDistinguishedNames): Uint8Array => new Uint8Array(name.toSchema().toBER(false));
 
 const unknownIssuer = (message: string, data: Record<string, unknown> = {}): LoadstarError =>
   new LoadstarError(ErrorCode.UnknownIssuer, { message, data });
@@ -68,6 +66,86 @@ const decodeCertificate = (bytes: Uint8Array): pkijs.Certificate => {
   return parseCertificate(bytes);
 };
 
+/** A certificate kept with its original DER bytes (what gets embedded). */
+interface KnownCertificate {
+  readonly der: Uint8Array;
+  readonly cert: pkijs.Certificate;
+}
+
+const known = (ders: readonly Uint8Array[]): KnownCertificate[] =>
+  ders.map((der) => ({ der, cert: parseCertificate(der) }));
+
+const rootFor = async (
+  roots: readonly KnownCertificate[],
+  intermediate: pkijs.Certificate,
+): Promise<KnownCertificate | undefined> => {
+  for (const root of roots) if (await issued(root.cert, intermediate)) return root;
+  return undefined;
+};
+
+/** Step 1: a bundled intermediate that issued the leaf and chains to a trusted root. */
+const bundledChain = async (
+  leaf: pkijs.Certificate,
+  intermediates: readonly KnownCertificate[],
+  roots: readonly KnownCertificate[],
+): Promise<ChainResolution | undefined> => {
+  for (const intermediate of intermediates) {
+    if (!(await issued(intermediate.cert, leaf))) continue;
+    const root = await rootFor(roots, intermediate.cert);
+    if (root) return { chain: [intermediate.der, root.der], source: "bundled" };
+  }
+  return undefined;
+};
+
+/** Accepts a downloaded issuer only if it issued the leaf, is a currently valid CA and chains to a root. */
+const verifyFetchedIssuer = async (
+  der: Uint8Array,
+  leaf: pkijs.Certificate,
+  roots: readonly KnownCertificate[],
+  now: Date,
+): Promise<{ readonly intermediate: Uint8Array; readonly root: KnownCertificate }> => {
+  const candidate = decodeCertificate(der);
+  if (!(await issued(candidate, leaf))) throw new Error("downloaded certificate did not issue this certificate");
+  if (!isCa(candidate)) throw new Error("downloaded certificate is not a CA");
+  if (!isValidAt(candidate, now)) throw new Error("downloaded certificate is expired or not yet valid");
+  const root = await rootFor(roots, candidate);
+  if (!root) throw new Error("downloaded certificate does not chain to a trusted Apple root");
+  return { intermediate: new Uint8Array(candidate.toSchema(true).toBER(false)), root };
+};
+
+/** Step 2: try each AIA `caIssuers` URL in turn; fails with every reason when none is acceptable. */
+const fetchedChain = async (
+  leaf: pkijs.Certificate,
+  roots: readonly KnownCertificate[],
+  options: ResolveChainOptions,
+): Promise<ChainResolution> => {
+  const urls = caIssuerUrls(leaf);
+  if (!options.fetchIssuer || urls.length === 0) {
+    throw unknownIssuer(
+      urls.length === 0
+        ? "certificate issuer is not a known Apple CA and the certificate names no issuer download"
+        : "certificate issuer is not bundled; issuer download is not available here",
+      { urls },
+    );
+  }
+
+  const logger = options.logger ?? silentLogger;
+  const now = new Date();
+  const failures: string[] = [];
+  for (const url of urls) {
+    options.signal?.throwIfAborted();
+    try {
+      const der = await options.fetchIssuer(url, options.signal);
+      const { intermediate, root } = await verifyFetchedIssuer(der, leaf, roots, now);
+      logger.warn("using an Apple intermediate that is not bundled; update apple-certificates.ts", { url });
+      return { chain: [intermediate, root.der], source: "fetched", fetchedFrom: url };
+    } catch (error) {
+      failures.push(`${url}: ${error instanceof Error ? error.message : String(error)}`);
+    }
+  }
+  throw unknownIssuer("could not establish a trusted chain for this certificate", { failures });
+};
+
 /**
  * Resolves the chain to embed for a leaf certificate (signer-spec §5.1):
  *  1. a bundled intermediate that verifiably issued the leaf, plus the bundled root that issued it;
@@ -79,55 +157,10 @@ export const resolveChain = async (
   leafDer: Uint8Array,
   options: ResolveChainOptions = {},
 ): Promise<ChainResolution> => {
-  const logger = options.logger ?? silentLogger;
   const leaf = parseCertificate(leafDer);
-  const roots = (options.roots ?? bundled("root")).map((der) => ({ der, cert: parseCertificate(der) }));
-  const intermediates = (options.intermediates ?? bundled("intermediate")).map((der) => ({
-    der,
-    cert: parseCertificate(der),
-  }));
-
-  const rootFor = async (intermediate: pkijs.Certificate) => {
-    for (const root of roots) if (await issued(root.cert, intermediate)) return root;
-    return undefined;
-  };
-
-  for (const intermediate of intermediates) {
-    if (!(await issued(intermediate.cert, leaf))) continue;
-    const root = await rootFor(intermediate.cert);
-    if (root) return { chain: [intermediate.der, root.der], source: "bundled" };
-  }
-
-  const urls = caIssuerUrls(leaf);
-  if (!options.fetchIssuer || urls.length === 0) {
-    throw unknownIssuer(
-      urls.length === 0
-        ? "certificate issuer is not a known Apple CA and the certificate names no issuer download"
-        : "certificate issuer is not bundled; issuer download is not available here",
-      { urls },
-    );
-  }
-
-  const now = new Date();
-  const failures: string[] = [];
-  for (const url of urls) {
-    options.signal?.throwIfAborted();
-    try {
-      const der = await options.fetchIssuer(url, options.signal);
-      const candidate = decodeCertificate(der);
-      if (!(await issued(candidate, leaf))) throw new Error("downloaded certificate did not issue this certificate");
-      if (!isCa(candidate)) throw new Error("downloaded certificate is not a CA");
-      if (!isValidAt(candidate, now)) throw new Error("downloaded certificate is expired or not yet valid");
-      const root = await rootFor(candidate);
-      if (!root) throw new Error("downloaded certificate does not chain to a trusted Apple root");
-      const candidateDer = new Uint8Array(candidate.toSchema(true).toBER(false));
-      logger.warn("using an Apple intermediate that is not bundled; update apple-certificates.ts", { url });
-      return { chain: [candidateDer, root.der], source: "fetched", fetchedFrom: url };
-    } catch (error) {
-      failures.push(`${url}: ${error instanceof Error ? error.message : String(error)}`);
-    }
-  }
-  throw unknownIssuer("could not establish a trusted chain for this certificate", { failures });
+  const roots = known(options.roots ?? bundled("root"));
+  const intermediates = known(options.intermediates ?? bundled("intermediate"));
+  return (await bundledChain(leaf, intermediates, roots)) ?? fetchedChain(leaf, roots, options);
 };
 
 /** Bundled Apple certificates expiring before `before` (for maintenance warnings). */

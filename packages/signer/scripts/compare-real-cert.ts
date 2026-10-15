@@ -11,7 +11,7 @@ import { execFileSync, spawnSync } from "node:child_process";
 import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
-import { fromBase64, silentLogger, systemClock, toHex } from "@loadstar/kernel";
+import { compact, fromBase64, silentLogger, systemClock, toHex } from "@loadstar/kernel";
 import { readTree } from "@signer/__tests__/fixtures.ts";
 import { CSSLOT_SIGNATURESLOT, parseSuperBlob } from "@signer/domain/blobs/index.ts";
 import type { BundleTree } from "@signer/domain/bundle/tree.ts";
@@ -193,13 +193,11 @@ try {
   await signBundle(
     tree,
     {
-      configFor: (bundle) => {
-        const entitlements = entitlementsFor(bundle.kind);
-        return {
-          signing: { kind: "identity", identity: { certificate, chain, privateKey }, teamId },
-          ...(entitlements ? { entitlements } : {}),
-        };
-      },
+      configFor: (bundle) =>
+        compact({
+          signing: { kind: "identity" as const, identity: { certificate, chain, privateKey }, teamId },
+          entitlements: entitlementsFor(bundle.kind),
+        }),
     },
     { hasher: createHasher(), logger: silentLogger, clock: systemClock },
   );

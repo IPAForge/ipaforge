@@ -14,7 +14,8 @@ import {
 import { readFixture } from "@signer/__tests__/fixtures.ts";
 import { createTestIdentity, type TestIdentity } from "@signer/__tests__/identity.ts";
 import { type SignedTarget, signedTargets } from "@signer/__tests__/targets.ts";
-import { type EntitlementsInput, type SigningMode, signBinary } from "@signer/application/sign-binary.ts";
+import { signBinary } from "@signer/application/sign-binary.ts";
+import type { EntitlementsInput, SigningMode } from "@signer/application/signing.ts";
 import { parseMachO } from "@signer/domain/macho/parse.ts";
 import { createHasher } from "@signer/infrastructure/hashing/index.ts";
 import { afterAll, describe, expect, it } from "vitest";

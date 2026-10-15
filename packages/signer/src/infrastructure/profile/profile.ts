@@ -1,5 +1,6 @@
 import { ErrorCode, equalBytes, isPlistDict, LoadstarError, type PlistDict, parseXmlPlist } from "@loadstar/kernel";
 import { DEFAULT_SIGNER_LIMITS, type PlistLimits } from "@signer/domain/config.ts";
+import { toArrayBuffer } from "@signer/infrastructure/cms/certificate.ts";
 import * as asn1js from "asn1js";
 import * as pkijs from "pkijs";
 import { z } from "zod";
@@ -38,19 +39,20 @@ const ProfileSchema = z.object({
 const invalid = (message: string, cause?: unknown): LoadstarError =>
   new LoadstarError(ErrorCode.InvalidProfile, { message, ...(cause ? { cause } : {}) });
 
-/** The XML plist inside the CMS envelope; tolerant of BER/indefinite encodings. */
-const extractPlist = (raw: Uint8Array): Uint8Array => {
+/** The CMS envelope's encapsulated content, when the envelope parses. */
+const envelopeContent = (raw: Uint8Array): Uint8Array | undefined => {
   try {
-    const contentInfo = pkijs.ContentInfo.fromBER(
-      raw.buffer.slice(raw.byteOffset, raw.byteOffset + raw.byteLength) as ArrayBuffer,
-    );
+    const contentInfo = pkijs.ContentInfo.fromBER(toArrayBuffer(raw));
     const signed = new pkijs.SignedData({ schema: contentInfo.content });
     const content = signed.encapContentInfo.eContent;
-    if (content instanceof asn1js.OctetString) return new Uint8Array(content.getValue());
+    return content instanceof asn1js.OctetString ? new Uint8Array(content.getValue()) : undefined;
   } catch {
-    // fall through to the textual fallback
+    return undefined; // fall through to the textual fallback
   }
-  // Fallback: the payload is a UTF-8 XML plist; take it verbatim from the envelope.
+};
+
+/** Fallback: the payload is a UTF-8 XML plist; take it verbatim from the envelope. */
+const textualPlist = (raw: Uint8Array): Uint8Array => {
   const text = new TextDecoder("latin1").decode(raw);
   const start = text.indexOf("<?xml");
   const end = text.indexOf("</plist>", start);
@@ -62,7 +64,8 @@ export const parseProvisioningProfile = (
   raw: Uint8Array,
   limits: PlistLimits = DEFAULT_SIGNER_LIMITS.plist,
 ): ProvisioningProfile => {
-  const plistBytes = extractPlist(raw);
+  // The XML plist inside the CMS envelope; tolerant of BER/indefinite encodings.
+  const plistBytes = envelopeContent(raw) ?? textualPlist(raw);
   let value: unknown;
   try {
     value = parseXmlPlist(plistBytes, limits);

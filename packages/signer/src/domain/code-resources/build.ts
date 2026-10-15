@@ -1,6 +1,13 @@
 import { createDict, type PlistValue, serializeXmlPlist } from "@loadstar/kernel";
 import { CODE_RESOURCES, CODE_SIGNATURE_DIR, MAS_RECEIPT_DIR } from "@signer/domain/bundle/layout.ts";
-import { compileRules, matchRule, RULES_V1, RULES_V2, rulesToPlist } from "@signer/domain/code-resources/rules.ts";
+import {
+  type CompiledRule,
+  compileRules,
+  matchRule,
+  RULES_V1,
+  RULES_V2,
+  rulesToPlist,
+} from "@signer/domain/code-resources/rules.ts";
 import type { Hasher } from "@signer/domain/ports/hasher.ts";
 
 /** A file or symlink in a bundle, path relative to the bundle root with '/' separators. */
@@ -33,6 +40,39 @@ const isExcluded = (path: string, mainExecutable: RegExp): boolean =>
   path.startsWith(`${MAS_RECEIPT_DIR}/`) ||
   mainExecutable.test(path);
 
+/** `files` (v1) value: regular files only, SHA-1; `undefined` when the entry is not listed. */
+const sealV1 = async (
+  entry: ResourceEntry,
+  rule: CompiledRule | undefined,
+  hasher: Hasher,
+): Promise<PlistValue | undefined> => {
+  if (entry.kind !== "file" || !rule || rule.omit) return undefined;
+  const sha1 = await hasher.digest("sha1", entry.data);
+  if (!rule.optional) return sha1;
+  return createDict([
+    ["hash", sha1],
+    ["optional", true],
+  ]);
+};
+
+/** `files2` (v2) value: files and symlinks, with the optional flag when the rule sets it. */
+const sealV2 = async (
+  entry: ResourceEntry,
+  rule: CompiledRule,
+  hashMode: CodeResourcesOptions["hashMode"],
+  hasher: Hasher,
+): Promise<PlistValue> => {
+  const sealed: [string, PlistValue][] = [];
+  if (entry.kind === "symlink") {
+    sealed.push(["symlink", entry.target]);
+  } else {
+    if (hashMode === "dual") sealed.push(["hash", await hasher.digest("sha1", entry.data)]);
+    sealed.push(["hash2", await hasher.digest("sha256", entry.data)]);
+  }
+  if (rule.optional) sealed.push(["optional", true]);
+  return createDict(sealed);
+};
+
 /** Builds `_CodeSignature/CodeResources` exactly as codesign does for an iOS (flat) bundle. */
 export const buildCodeResources = async (
   entries: readonly ResourceEntry[],
@@ -51,39 +91,16 @@ export const buildCodeResources = async (
   for (const entry of entries) {
     if (isExcluded(entry.path, mainExecutable)) continue;
 
-    // files (v1): regular files only, SHA-1
-    const ruleV1 = matchRule(v1, entry.path);
-    if (entry.kind === "file" && ruleV1 && !ruleV1.omit) {
-      const sha1 = await hasher.digest("sha1", entry.data);
-      files.push([
-        entry.path,
-        ruleV1.optional
-          ? createDict([
-              ["hash", sha1],
-              ["optional", true],
-            ])
-          : sha1,
-      ]);
-    }
+    const v1Value = await sealV1(entry, matchRule(v1, entry.path), hasher);
+    if (v1Value !== undefined) files.push([entry.path, v1Value]);
 
-    // files2 (v2): files and symlinks
     const ruleV2 = matchRule(v2, entry.path);
     if (!ruleV2 || ruleV2.omit) {
       omitted++;
       continue;
     }
-    const sealed: [string, PlistValue][] = [];
-    if (entry.kind === "symlink") {
-      sealed.push(["symlink", entry.target]);
-    } else {
-      if (options.hashMode === "dual") sealed.push(["hash", await hasher.digest("sha1", entry.data)]);
-      sealed.push(["hash2", await hasher.digest("sha256", entry.data)]);
-    }
-    if (ruleV2.optional) {
-      sealed.push(["optional", true]);
-      optional++;
-    }
-    files2.push([entry.path, createDict(sealed)]);
+    if (ruleV2.optional) optional++;
+    files2.push([entry.path, await sealV2(entry, ruleV2, options.hashMode, hasher)]);
   }
 
   const plist = createDict([

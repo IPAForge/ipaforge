@@ -1,10 +1,16 @@
 import type { Clock, Logger } from "@loadstar/kernel";
 import { silentLogger, systemClock } from "@loadstar/kernel";
+import type { Hasher } from "@signer/domain/ports/hasher.ts";
 
 /** Collaborators every public signer operation accepts. */
 export interface SignerDeps {
   readonly logger: Logger;
   readonly clock: Clock;
+}
+
+/** What signing a binary or a bundle needs: the shared collaborators plus a hasher. */
+export interface SigningDeps extends SignerDeps {
+  readonly hasher: Hasher;
 }
 
 export const defaultSignerDeps: SignerDeps = { logger: silentLogger, clock: systemClock };
