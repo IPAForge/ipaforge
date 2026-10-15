@@ -13,6 +13,12 @@ export type AppSource =
   | { readonly kind: "file"; readonly file: FileSource };
 
 /** One app moving through a flow; each step fills in what it produced. */
+/** A signed IPA in the scratch store. */
+export interface SignedIpa {
+  readonly key: string;
+  readonly file: FileSource;
+}
+
 export interface AppJob {
   readonly source: AppSource;
   readonly release?: ResolvedRelease;
@@ -23,8 +29,8 @@ export interface AppJob {
   readonly identity?: SideloadIdentityPlan;
   /** Raw provisioning profiles keyed by new bundle ID. */
   readonly profiles?: ReadonlyMap<string, Uint8Array>;
-  /** The signed IPA, waiting in the scratch store under `key` until it is installed. */
-  readonly signed?: { readonly key: string; readonly file: FileSource };
+  /** The signed IPA, waiting in the scratch store under `key` until the install step ends. */
+  readonly signed?: SignedIpa;
   readonly installed?: boolean;
 }
 

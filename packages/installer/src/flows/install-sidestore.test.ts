@@ -235,6 +235,20 @@ describe("installSideStore", () => {
     expect(h.catalog.calls.resolved).toEqual([]);
   });
 
+  it("deletes the signed IPA when the install fails, and signs again on resume", async () => {
+    const h = createHarness({ device: { installErrors: [new LoadstarError(ErrorCode.InstallFailed)] } });
+    const failed = await h.engine.installSideStore(input).result;
+    expect(failed.status).toBe("failed");
+    if (failed.status !== "failed") return;
+    expect(failed.failedStep).toBe("install-0");
+    expect(h.scratch.keys.size).toBe(0);
+
+    completed(await h.engine.installSideStore(input, { resume: failed.checkpoint }).result);
+    expect(h.signer.calls.signed).toHaveLength(2);
+    expect(h.devices.calls.installs).toHaveLength(1);
+    expect(h.scratch.keys.size).toBe(0);
+  });
+
   it("resumes a cancelled run from its checkpoint without downloading again", async () => {
     const h = createHarness({ apple: { teams: [OTHER_TEAM, FREE_TEAM] } });
     const first = h.engine.installSideStore(input);

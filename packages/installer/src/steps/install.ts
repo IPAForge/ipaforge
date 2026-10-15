@@ -1,13 +1,15 @@
 // Installs the signed app with progress. Two installd answers get special handling: a banned profile marks the
 // account as banned on this device (so the UI can offer another Apple ID), and a free-app-limit refusal (iOS
-// counted an app the profile check could not see) asks which listed app to remove, then installs once more.
+// counted an app the profile check could not see) asks which listed app to remove, then installs once more. The
+// signed IPA is deleted when the step ends, success or not; a resumed run signs again.
 import { chooseAppToRemove, removeFreeApp } from "@installer/application/free-apps.ts";
 import type { FlowRuntime } from "@installer/application/runtime.ts";
 import { StepLabel } from "@installer/domain/labels.ts";
-import type { InstallState } from "@installer/domain/state.ts";
+import type { InstallState, SignedIpa } from "@installer/domain/state.ts";
 import { StepWeight } from "@installer/domain/step-weights.ts";
 import type { Step, StepContext } from "@installer/pipeline/step.ts";
 import { appStepId, jobAt, required, updateJob } from "@installer/steps/app-job.ts";
+import { signToScratch } from "@installer/steps/sign.ts";
 import type { DeviceHandle } from "@loadstar/device";
 import { compact, ErrorCode, type FileSource, LoadstarError } from "@loadstar/kernel";
 
@@ -48,23 +50,48 @@ const retryAfterRemoval = async (
   await install(handle, file, context);
 };
 
+/** The signed IPA from the sign step, or a fresh one when a resumed run finds it deleted. */
+const signedIpa = async (
+  runtime: FlowRuntime,
+  state: InstallState,
+  index: number,
+  context: StepContext,
+): Promise<SignedIpa> => {
+  const signed = required(jobAt(state, index).signed, "signed IPA");
+  if (await runtime.deps.scratch.has(signed.key)) return signed;
+  return signToScratch(runtime, state, index, context);
+};
+
+/** Installs, handling a ban and installd's free-app-limit refusal. */
+const installSigned = async (
+  runtime: FlowRuntime,
+  state: InstallState,
+  context: StepContext,
+  { file, installing }: { file: FileSource; installing: string },
+): Promise<void> => {
+  const handle = await runtime.device(state.udid);
+  try {
+    await install(handle, file, context);
+  } catch (error) {
+    if (hasCode(error, ErrorCode.ProfileBanned)) await runtime.deps.apple.markBanned(state.accountId, state.udid);
+    if (!hasCode(error, ErrorCode.FreeAppLimit)) throw error;
+    await retryAfterRemoval(runtime, handle, context, { error, file, installing });
+  }
+};
+
 export const installStep = (runtime: FlowRuntime, index: number): Step<InstallState> => ({
   id: appStepId("install", index),
   labelKey: StepLabel.install,
   weight: StepWeight.install,
   run: async (state, context) => {
-    const job = jobAt(state, index);
-    const signed = required(job.signed, "signed IPA");
-    const installing = required(job.identity, "identity plan").newMainBundleId;
-    const handle = await runtime.device(state.udid);
+    const installing = required(jobAt(state, index).identity, "identity plan").newMainBundleId;
+    const signed = await signedIpa(runtime, state, index, context);
+    // The signed IPA may hold SideStore's certificate and key: never leave it behind, whatever the outcome.
     try {
-      await install(handle, signed.file, context);
-    } catch (error) {
-      if (hasCode(error, ErrorCode.ProfileBanned)) await runtime.deps.apple.markBanned(state.accountId, state.udid);
-      if (!hasCode(error, ErrorCode.FreeAppLimit)) throw error;
-      await retryAfterRemoval(runtime, handle, context, { error, file: signed.file, installing });
+      await installSigned(runtime, state, context, { file: signed.file, installing });
+    } finally {
+      await runtime.deps.scratch.delete(signed.key);
     }
-    await runtime.deps.scratch.delete(signed.key);
     return updateJob(state, index, { installed: true });
   },
 });

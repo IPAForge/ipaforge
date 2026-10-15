@@ -63,6 +63,7 @@ export const memoryScratch = (): ScratchStore & { readonly keys: Set<string> } =
       const body = await readBody({ status: 200, headers: {}, body: stream });
       return bytesFileSource(key, body);
     },
+    has: async (key) => keys.has(key),
     delete: async (key) => {
       keys.delete(key);
     },
