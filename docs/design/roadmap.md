@@ -17,6 +17,7 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
 | Place pairing files into several apps (SideStore, LiveContainer, StikDebug and others from a data-driven app list) | 2, 5, 10 |
 | Save and switch between multiple Apple IDs | 3, 10 |
 | SideStore integration: sources via deep links/QR, anisette server choice, Wi-Fi refresh prerequisites | 5, 8, 11 |
+| The app in every language iOS supports (about 40, right-to-left included), community-translated, picked automatically from the OS | 6, 7–9, 12 |
 | Every known failure detected and handled: automatic retry or fix where possible, otherwise a recovery screen (catalogue built from real user reports: `references/failure-catalogue.md`) | all |
 
 ## Milestones
@@ -49,13 +50,27 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
   - a diagnostics error catalog, the Engine facade, and `@loadstar/rpc`
 - [ ] **6. UI foundation**: `@loadstar/ui` with HeroUI v3 and Tailwind v4 (no CSS files):
   - palette themes as TS data (Graphite, Ocean, Aurora, Sunset, Forest, Rose), each with light and dark variants;
-  - i18n, TanStack Router and Query, `EngineClient`, a layout shell, and the log viewer
+  - i18n, TanStack Router and Query, `EngineClient`, a layout shell, and the log viewer;
+  - translation foundation:
+    - i18next with ICU plurals and gender (via `Intl`), and every user-visible string as a key, including every `ErrorCode` recovery screen; a lint check rejects hard-coded UI strings;
+    - language picked automatically from the OS (Electron `app.getPreferredSystemLanguages()`), with a picker in settings and an English fallback for missing keys;
+    - right-to-left layouts (Arabic, Hebrew, Persian, Urdu) built from logical Tailwind utilities (`ms-`/`me-`, `start`/`end`), with mirrored icons where meaning depends on direction;
+    - locale-aware dates, numbers and lists (`Intl.DateTimeFormat`, `NumberFormat`, `ListFormat`, `RelativeTimeFormat`);
+    - a pseudo-locale (accented and about 40 % longer) for catching truncation and untranslated strings, plus screenshot tests in German (long), Arabic (RTL) and Japanese (CJK)
 - [ ] **7. Onboarding**: a first-run guided wizard with platform checks (usbmuxd / Apple Mobile Device driver, with copyable fixes per OS), network preflight (Apple, anisette, clock skew), connecting and trusting the device, Developer Mode, Apple ID sign-in with 2FA, team choice, and choosing what to install. It can be resumed and re-run from settings
 - [ ] **8. Install and preload experience**: one-click SideStore (stable/nightly), a preload picker (local IPAs, URLs, catalog apps), source deep links and a QR code for SideStore, a live pipeline view, dedicated recovery screens for every `ErrorCode` with "copy diagnostics", an on-device checklist per iOS version, a "Repair SideStore" wizard, and one-click switching to another Apple ID when one is banned
 - [ ] **9. Desktop app**: Electron 44 shell with Node adapters, a hardened preload (`contextIsolation`, typed RPC only), electron-builder packages (Windows NSIS, macOS DMG signed and notarized, Linux AppImage, deb and rpm), and auto-update
 - [ ] **10. Management tools**: certificate and app-ID management, pairing files per app (place, export, version), certificate and account import/export (`.p12`), and developer portal tools
 - [ ] **11. Wireless and remote pairing**: Wi-Fi device discovery and install, the iOS 17+ remote-pairing (RP) file for SideStore, and handling for a device that is visible over both USB and network
 - [ ] **12. Release 1.0**: docs site, an upstream SideStore "preload manifest" proposal, translations, a security review (secrets, Electron hardening, CSP), a licence audit, and a tagged multi-platform release pipeline
+  - translations: **every language iOS supports** (about 40), including:
+    - Arabic, Catalan, Chinese (Simplified, Traditional, Hong Kong), Croatian, Czech, Danish, Dutch, English (US, UK, Australia), Finnish, French (France, Canada), German, Greek, Hebrew, Hindi, Hungarian, Indonesian;
+    - Italian, Japanese, Korean, Malay, Norwegian, Polish, Portuguese (Brazil, Portugal), Romanian, Russian, Slovak, Spanish (Spain, Latin America), Swedish, Thai, Turkish, Ukrainian, Vietnamese;
+    - plus Persian and Urdu, and any language the community adds;
+  - process:
+    - community translation through a hosted platform (Weblate's free plan for open-source projects), synced into the repository by pull request;
+    - drafts may be machine-assisted, but are marked for review until a native speaker approves them;
+  - CI fails on missing or extra keys and broken placeholders, and reports each language's completion; languages below 90 % are labelled "beta" in the picker
 
 ## Completed
 

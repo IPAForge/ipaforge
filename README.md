@@ -1,10 +1,16 @@
 # Loadstar
 
+[![CI](https://github.com/SirReaDy/loadstar/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/SirReaDy/loadstar/actions/workflows/ci.yml)
+[![Downloads](https://img.shields.io/github/downloads/SirReaDy/loadstar/total?label=downloads)](https://github.com/SirReaDy/loadstar/releases)
+[![Latest release](https://img.shields.io/github/v/release/SirReaDy/loadstar?include_prereleases&label=release)](https://github.com/SirReaDy/loadstar/releases/latest)
+[![Licence: MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
+[![Sponsor](https://img.shields.io/badge/sponsor-%E2%9D%A4-ea4aaa?logo=githubsponsors)](https://github.com/sponsors/SirReaDy)
+
 > Install SideStore and preload your apps onto iPhone and iPad, from Windows, macOS or Linux.
 
 Loadstar signs into your Apple ID, gets a free development certificate, re-signs apps, installs them over USB, and sets up SideStore so it can refresh itself. It also preloads any extra apps you choose in the same run. The whole engine is TypeScript, and the app is a desktop app built with Electron.
 
-> **Status: pre-alpha.** The signing engine, the device layer and Apple ID sign-in are built and verified. Developer services and UI work come next, and nothing is installable yet. See the [Roadmap](docs/roadmap.md).
+> **Status: pre-alpha.** The signing engine, the device layer, Apple ID sign-in and developer services are built and verified. The installer and the UI come next, and nothing is installable yet. See the [Roadmap](docs/roadmap.md).
 
 ## Design goals
 
@@ -24,6 +30,7 @@ Sideloading installers usually fail in a few recurring ways. Loadstar is designe
 - **Preload apps.** Add IPAs from files or URLs and install them all in one session.
 - **Device and account tools.** Manage certificates, app IDs and pairing files, with import and export.
 - **Themes.** Several colour palettes, each with light and dark variants.
+- **Your language.** Every language iOS supports, right-to-left included, picked automatically from your system.
 - **Desktop.** One Electron app for Windows, macOS and Linux.
 
 ## Scope
@@ -58,6 +65,7 @@ The signer (`@loadstar/signer`) is done. Its output is **byte-identical to Apple
 
 | Guide | Description |
 |---|---|
+| [Installing](docs/installing.md) | Download, requirements per system, first run |
 | [Getting Started](docs/getting-started.md) | Current status, requirements, how to follow along |
 | [Architecture](docs/architecture.md) | Packages, ports & adapters, dependency rules |
 | [Code Signing](docs/signing.md) | How iOS signing works and how Loadstar verifies it |
@@ -65,10 +73,20 @@ The signer (`@loadstar/signer`) is done. Its output is **byte-identical to Apple
 | [Apple Account](docs/apple-account.md) | Apple ID sign-in, 2FA, saved accounts, sign-in errors |
 | [Roadmap](docs/roadmap.md) | Phases from foundation to 1.0 |
 | [Contributing](docs/contributing.md) | How to contribute, pull request rules, conventions |
+| [Code of Conduct](docs/CODE_OF_CONDUCT.md) | How we treat each other |
+| [Security Policy](docs/SECURITY.md) | Reporting vulnerabilities privately |
 
 ## Acknowledgements
 
 Loadstar is an independent implementation. It uses public protocol knowledge from the [libimobiledevice](https://libimobiledevice.org) project, [SideStore](https://github.com/SideStore/SideStore), [rcodesign](https://github.com/indygreg/apple-platform-rs) and [zsign](https://github.com/zhlynn/zsign) as references. It is a clean-room implementation: it contains no code copied from other sideloading tools or from GPL/AGPL or proprietary projects.
+
+## Contributing
+
+Contributions are welcome: see [Contributing](docs/contributing.md). Changes reach `main` only through reviewed pull requests. Please follow the [Code of Conduct](docs/CODE_OF_CONDUCT.md), and report security issues privately as described in the [Security Policy](docs/SECURITY.md).
+
+## Sponsor
+
+Loadstar is free and open source, built in spare time. If it saves you time, consider [sponsoring the project on GitHub](https://github.com/sponsors/SirReaDy). Sponsorship pays for signing certificates (Windows code signing, Apple notarisation), test devices, and time for maintenance when Apple changes something.
 
 ## License
 

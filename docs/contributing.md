@@ -2,6 +2,56 @@
 
 # Contributing
 
+Thanks for helping. Loadstar is an open-source desktop app (Windows, macOS, Linux) that installs SideStore and other apps on iPhone and iPad.
+
+## How changes get in
+
+1. **Open an issue first** for anything bigger than a small fix, so we can agree on the approach.
+2. **Fork** the repository and create a branch: `feat/…`, `fix/…`, `docs/…` or `chore/…`.
+3. Make the change. Run the checks locally (CI runs the same):
+   ```bash
+   pnpm install
+   pnpm run verify   # lint, typecheck, boundaries, tests
+   ```
+4. **Open a pull request into `main`.** Fill in the template: what changed, why, and how you verified it.
+5. CI must pass on Linux, Windows and macOS. The maintainer reviews it.
+6. **Only the maintainer merges** (squash merge, one commit per PR). Nobody pushes to `main` directly.
+
+## What we look for
+
+- **Small, focused PRs.** One topic per PR.
+- **Tests** for new behaviour: `domain/` and `application/` code always gets unit tests.
+- **Conventions** (enforced by lint and `pnpm check:boundaries`):
+  - TypeScript strict, ESM only;
+  - arrow functions only;
+  - absolute `@<package>/…` imports;
+  - `packages/*` stay platform-free (no `node:*`, no `electron`).
+- **Errors are catalogued.** User-facing failures use an `ErrorCode` with a documented meaning and fix.
+- **No secrets** in code, tests, logs, issues or screenshots: no Apple ID passwords, tokens, pairing files, `.p12` files or device UDIDs.
+
+## Scope
+
+Loadstar helps people install apps they already have, on their own devices, within Apple's free and paid developer account rules. Changes that decrypt App Store apps, circumvent Apple's limits or security measures, or target other people's devices are out of scope and will be closed.
+
+## Licence
+
+By contributing, you agree that your contribution is licensed under the [MIT licence](../LICENSE) of this project.
+
+## Code of conduct
+
+This project follows the [Code of Conduct](CODE_OF_CONDUCT.md). Security issues go through [SECURITY.md](SECURITY.md), never public issues.
+
+## Pull requests and `main`
+
+- **`main` is protected.** It only changes through pull requests. There are no direct pushes, force pushes or deletions.
+- **Before a PR can merge:**
+  - CI passes on Linux, Windows and macOS, including macOS codesign parity;
+  - the branch is up to date with `main`;
+  - review threads are resolved;
+  - the code owner (`.github/CODEOWNERS`) approves.
+- **Merging:** squash merge only, so `main` keeps a linear history with one commit per PR. Only the maintainer merges.
+- **Contributors' own forks:** contributors work in forks and do not need write access. CI on pull requests from first-time contributors waits for the maintainer's approval, and runs with a read-only token and no secrets.
+
 ## Conventions (summary)
 
 - TypeScript strict, ESM only. Files are `kebab-case.ts`.
