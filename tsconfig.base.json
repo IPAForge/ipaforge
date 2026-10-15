@@ -26,6 +26,7 @@
       "@device/*": ["./packages/device/src/*"],
       "@apple/*": ["./packages/apple/src/*"],
       "@catalog/*": ["./packages/catalog/src/*"],
+      "@installer/*": ["./packages/installer/src/*"],
       "@desktop/*": ["./apps/desktop/src/*"]
     }
   }

@@ -86,6 +86,10 @@ export const ErrorCode = {
   CertificateNotInProfile: "signer.cert_not_in_profile",
   DeviceNotProvisioned: "signer.device_not_provisioned",
 
+  // installer
+  StepFailed: "installer.step_failed",
+  PromptCancelled: "installer.prompt_cancelled",
+
   // generic
   Aborted: "internal.aborted",
   Unexpected: "internal.unexpected",
