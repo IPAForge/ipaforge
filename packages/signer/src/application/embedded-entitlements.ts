@@ -1,8 +1,15 @@
-import { isPlistDict, parseXmlPlist } from "@loadstar/kernel";
-import type { EntitlementsInput } from "@signer/application/signing.ts";
-import { CSSLOT_ENTITLEMENTS, findBlob, parseSuperBlob } from "@signer/domain/blobs/index.ts";
-import { DEFAULT_SIGNER_LIMITS, type SignerLimits } from "@signer/domain/config.ts";
-import { parseMachO } from "@signer/domain/macho/parse.ts";
+import { isPlistDict, parseXmlPlist } from '@loadstar/kernel'
+import type { EntitlementsInput } from '@signer/application/signing.ts'
+import {
+  CSSLOT_ENTITLEMENTS,
+  findBlob,
+  parseSuperBlob
+} from '@signer/domain/blobs/index.ts'
+import {
+  DEFAULT_SIGNER_LIMITS,
+  type SignerLimits
+} from '@signer/domain/config.ts'
+import { parseMachO } from '@signer/domain/macho/parse.ts'
 
 /**
  * Entitlements currently embedded in a signed executable (slot 5): the exact plist bytes and the
@@ -10,22 +17,25 @@ import { parseMachO } from "@signer/domain/macho/parse.ts";
  */
 export const embeddedEntitlements = (
   executable: Uint8Array | undefined,
-  limits: SignerLimits = DEFAULT_SIGNER_LIMITS,
+  limits: SignerLimits = DEFAULT_SIGNER_LIMITS
 ): EntitlementsInput | undefined => {
-  if (!executable) return undefined;
+  if (!executable) return undefined
   try {
-    const slice = parseMachO(executable, limits.machO).slices[0];
-    const sig = slice?.codeSignature;
-    if (!slice || !sig) return undefined;
+    const slice = parseMachO(executable, limits.machO).slices[0]
+    const sig = slice?.codeSignature
+    if (!slice || !sig) return undefined
     const blob = findBlob(
-      parseSuperBlob(slice.bytes.subarray(sig.dataoff, sig.dataoff + sig.datasize)),
-      CSSLOT_ENTITLEMENTS,
-    );
-    if (!blob) return undefined;
-    const bytes = blob.slice(8);
-    const dict = parseXmlPlist(bytes, limits.plist);
-    return isPlistDict(dict) ? { bytes, dict } : undefined;
+      parseSuperBlob(
+        slice.bytes.subarray(sig.dataoff, sig.dataoff + sig.datasize)
+      ),
+      CSSLOT_ENTITLEMENTS
+    )
+    if (!blob) return undefined
+    const bytes = blob.slice(8)
+    const dict = parseXmlPlist(bytes, limits.plist)
+
+    return isPlistDict(dict) ? { bytes, dict } : undefined
   } catch {
-    return undefined; // malformed signatures are simply replaced
+    return undefined // malformed signatures are simply replaced
   }
-};
+}

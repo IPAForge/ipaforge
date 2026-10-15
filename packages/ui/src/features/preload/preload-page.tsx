@@ -1,3 +1,3 @@
-import { PlaceholderPage } from "@ui/components/placeholder-page.tsx";
+import { PlaceholderPage } from '@ui/components/placeholder-page.tsx'
 
-export const PreloadPage = () => <PlaceholderPage titleKey="nav.preload" />;
+export const PreloadPage = () => <PlaceholderPage titleKey="nav.preload" />

@@ -15,18 +15,18 @@
 // `apple-probe forget` deletes the saved accounts.
 // Passwords are read without echo and never printed or logged; tokens and keys are never printed.
 // The commands live in src/probes/apple/.
-import { appleCommands } from "@desktop/probes/apple/commands/index.ts";
-import { createAppleProbe } from "@desktop/probes/apple/context.ts";
-import { describeError } from "@desktop/probes/apple/describe-error.ts";
-import { selectCommand } from "@desktop/probes/shared/commands.ts";
+import { appleCommands } from '@desktop/probes/apple/commands/index.ts'
+import { createAppleProbe } from '@desktop/probes/apple/context.ts'
+import { describeError } from '@desktop/probes/apple/describe-error.ts'
+import { selectCommand } from '@desktop/probes/shared/commands.ts'
 
-const probe = createAppleProbe();
-const run = selectCommand(appleCommands(probe), process.argv[2] ?? "signin");
+const probe = createAppleProbe()
+const run = selectCommand(appleCommands(probe), process.argv[2] ?? 'signin')
 try {
-  await run();
+  await run()
 } catch (error) {
-  console.error(`✗ ${describeError(error)}`);
-  process.exitCode = 1;
+  console.error(`✗ ${describeError(error)}`)
+  process.exitCode = 1
 } finally {
-  probe.prompt.close();
+  probe.prompt.close()
 }

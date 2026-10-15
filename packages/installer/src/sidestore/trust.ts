@@ -3,6 +3,10 @@
 
 export type CertificateTrust =
   /** A catalog release whose download matched its published SHA-256. */
-  | { readonly kind: "catalog"; readonly appId: string; readonly sha256: string }
+  | {
+      readonly kind: 'catalog'
+      readonly appId: string
+      readonly sha256: string
+    }
   /** A manually imported IPA, after the user explicitly agreed to share the certificate with it. */
-  | { readonly kind: "user-approved" };
+  | { readonly kind: 'user-approved' }

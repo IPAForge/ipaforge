@@ -40,10 +40,10 @@ packages/ui/
     ├── components/     # the shell (app-shell, top-bar, sidebar, …) and shared pieces
     ├── features/       # one folder per section: install, preload, devices, accounts, certificates, logs, settings
     ├── hooks/          # useTheme, useUiServices, useLanguage, useFormat
-    ├── services/       # what the UI gets from its host, and its browser and in-memory implementations
-    ├── theme/          # palettes, applyPalette, the theme store and provider
+    ├── services/       # what the UI gets from its host: preferences/, system/ (OS colour scheme, languages), logging/
+    ├── theme/          # palettes/ (data + applying them), store/, provider/
     ├── locales/        # one JSON file per language (en.json is the source of truth) and status.json
-    └── utils/i18n/     # i18next setup, typed keys, language matching and store, pseudo-locale, formatters
+    └── i18n/           # setup/, languages/, loading/, provider/, plus formatters, pseudo-locale, required keys
 ```
 
 The package exports `App`, the service types and factories, the palettes and the theme types from `@loadstar/ui`, and the stylesheet from `@loadstar/ui/styles.css`.
@@ -63,7 +63,7 @@ The package exports `App`, the service types and factories, the palettes and the
 
 ## Themes and palettes
 
-There are six palettes: **Graphite** (the default), **Ocean**, **Aurora**, **Sunset**, **Forest** and **Rose**. Each has a light and a dark variant. They are TypeScript data in `src/theme/palettes.ts`: a fixed set of oklch tokens (`accent`, `background`, `surface`, `muted`, `border`, …), checked against `PaletteTokens` for every palette and both schemes.
+There are six palettes: **Graphite** (the default), **Ocean**, **Aurora**, **Sunset**, **Forest** and **Rose**. Each has a light and a dark variant. They are TypeScript data in `src/theme/palettes/palettes.ts`: a fixed set of oklch tokens (`accent`, `background`, `surface`, `muted`, `border`, …), checked against `PaletteTokens` for every palette and both schemes.
 
 `applyPalette` writes the tokens to `<html>` as HeroUI's CSS variables (`--accent`, `--background`, `--surface-secondary`, …). It also sets the `light`/`dark` class and `data-theme`, so HeroUI's own dark defaults (shadows, `color-scheme`) follow. HeroUI derives hover, soft and secondary border shades from these with `color-mix()`, so a palette only defines base colours.
 
@@ -102,7 +102,7 @@ English is bundled; every other language is its own chunk, loaded on demand (see
 3. Add the key to every other locale file, translated if you can. Otherwise leave it as an empty string: it shows English and counts as untranslated until a translator fills it in.
 4. Run `pnpm check:locales`.
 
-`t()` is typed against `en.json`, so a typo or a key missing from it is a type error. The keys for the Engine's data are required: every `ErrorCode` has `errors.<code>.title` and `errors.<code>.body`, every recovery action `recovery.<id>`, and every step label (`install.steps.*`, `pairing.steps.*`) its key. `src/utils/i18n/required-keys.ts` turns a missing one into a type error that names it, and a test checks the same keys in every shipped language. A new `ErrorCode` therefore fails `pnpm typecheck` until it has English text. `ErrorCode` comes from `@loadstar/kernel`; `RecoveryAction` and `StepLabel` come through `@loadstar/rpc`.
+`t()` is typed against `en.json`, so a typo or a key missing from it is a type error. The keys for the Engine's data are required: every `ErrorCode` has `errors.<code>.title` and `errors.<code>.body`, every recovery action `recovery.<id>`, and every step label (`install.steps.*`, `pairing.steps.*`) its key. `src/i18n/required-keys.ts` turns a missing one into a type error that names it, and a test checks the same keys in every shipped language. A new `ErrorCode` therefore fails `pnpm typecheck` until it has English text. `ErrorCode` comes from `@loadstar/kernel`; `RecoveryAction` and `StepLabel` come through `@loadstar/rpc`.
 
 ### Adding a language
 
@@ -110,7 +110,7 @@ Nothing needs registering beyond the JSON file and `status.json`: the build pick
 
 1. Copy `en.json` to `<code>.json` (a BCP 47 code such as `fr` or `pt-BR`) and translate it.
 2. Add `"<code>": "draft"` to `src/locales/status.json`.
-3. If the language is written right to left and isn't Arabic, Hebrew, Persian or Urdu, add it to `RTL_LANGUAGES` in `src/utils/i18n/languages.ts`.
+3. If the language is written right to left and isn't Arabic, Hebrew, Persian or Urdu, add it to `RTL_LANGUAGES` in `src/i18n/languages/languages.ts`.
 
 ### Drafts and completion
 
@@ -149,7 +149,7 @@ Development builds (`pnpm --filter @loadstar/ui dev`, `pnpm --filter @loadstar/d
 
 ### Loading languages
 
-English is part of the main bundle: it is the fallback and the source of the key types. Every other file in `src/locales/` (except `status.json`) is collected by `import.meta.glob` in `src/utils/i18n/locale-bundles.ts` and becomes its own chunk, about 20–30 kB each, fetched with a dynamic `import()` the first time the language is shown. The dev-only pseudo-locale and the ICU parser it needs load the same way.
+English is part of the main bundle: it is the fallback and the source of the key types. Every other file in `src/locales/` (except `status.json`) is collected by `import.meta.glob` in `src/i18n/loading/locale-bundles.ts` and becomes its own chunk, about 20–30 kB each, fetched with a dynamic `import()` the first time the language is shown. The dev-only pseudo-locale and the ICU parser it needs load the same way.
 
 - **Startup.** A host calls `await prepareLanguage(services)` before it renders. It resolves the language (the saved choice, else the best match for the OS languages), loads that bundle, and returns a `LanguageSetup`, which the host passes to `<App language={…}/>`. The first render is already in that language, so English never flashes. Both `src/main.tsx` and the Electron renderer do this.
 - **Switching.** `choose` (behind the Language select) loads the bundle first, then changes the language and saves the choice. Until then the current language, and the select's value, stay as they are. If several choices are made quickly, only the last one applies.

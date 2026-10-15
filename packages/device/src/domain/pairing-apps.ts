@@ -5,64 +5,85 @@
 // installed app only matches as itself (the original bundle ID, which no other team can register) or as a copy
 // sideloaded by one of the user's own teams (`<original>.<TEAMID>`). Callers still confirm targets with the user.
 
-export interface PairingApp {
-  readonly id: string;
-  readonly name: string;
+export type PairingApp = {
+  readonly id: string
+  readonly name: string
   /** Original bundle ID (before sideloading appends `.<TEAMID>`). */
-  readonly bundleId: string;
+  readonly bundleId: string
   /** Paths inside the app container. Every name the app (current or legacy builds) reads is written. */
-  readonly files: readonly string[];
+  readonly files: readonly string[]
 }
 
 export const PAIRING_APPS: readonly PairingApp[] = [
   {
-    id: "sidestore",
-    name: "SideStore",
-    bundleId: "com.SideStore.SideStore",
+    id: 'sidestore',
+    name: 'SideStore',
+    bundleId: 'com.SideStore.SideStore',
     // Current builds read PairingFile_Lockdown.plist; older builds read (and newer ones migrate) the legacy name.
-    files: ["Documents/PairingFile_Lockdown.plist", "Documents/ALTPairingFile.mobiledevicepairing"],
+    files: [
+      'Documents/PairingFile_Lockdown.plist',
+      'Documents/ALTPairingFile.mobiledevicepairing'
+    ]
   },
   {
-    id: "livecontainer",
-    name: "LiveContainer + SideStore",
-    bundleId: "com.kdt.livecontainer",
+    id: 'livecontainer',
+    name: 'LiveContainer + SideStore',
+    bundleId: 'com.kdt.livecontainer',
     // SideStore runs inside LiveContainer with its own Documents folder.
     files: [
-      "Documents/SideStore/Documents/PairingFile_Lockdown.plist",
-      "Documents/SideStore/Documents/ALTPairingFile.mobiledevicepairing",
-    ],
+      'Documents/SideStore/Documents/PairingFile_Lockdown.plist',
+      'Documents/SideStore/Documents/ALTPairingFile.mobiledevicepairing'
+    ]
   },
-  { id: "stikdebug", name: "StikDebug", bundleId: "com.stik.stikdebug", files: ["Documents/pairingFile.plist"] },
-  { id: "stikstore", name: "StikStore", bundleId: "app.stik.store", files: ["Documents/pairingFile.plist"] },
-];
+  {
+    id: 'stikdebug',
+    name: 'StikDebug',
+    bundleId: 'com.stik.stikdebug',
+    files: ['Documents/pairingFile.plist']
+  },
+  {
+    id: 'stikstore',
+    name: 'StikStore',
+    bundleId: 'app.stik.store',
+    files: ['Documents/pairingFile.plist']
+  }
+]
 
 /** True when `installed` is `original`, or `original.<TEAMID>` for one of `teamIds` (the user's own teams). */
-export const matchesBundleId = (installed: string, original: string, teamIds: ReadonlySet<string>): boolean =>
-  installed === original || (installed.startsWith(`${original}.`) && teamIds.has(installed.slice(original.length + 1)));
+export const matchesBundleId = (
+  installed: string,
+  original: string,
+  teamIds: ReadonlySet<string>
+): boolean =>
+  installed === original ||
+  (installed.startsWith(`${original}.`) &&
+    teamIds.has(installed.slice(original.length + 1)))
 
-export interface PairingAppMatch {
-  readonly app: PairingApp;
+export type PairingAppMatch = {
+  readonly app: PairingApp
   /** The bundle ID as installed on the device. */
-  readonly bundleId: string;
+  readonly bundleId: string
 }
 
-export interface FindPairingAppsOptions {
+export type FindPairingAppsOptions = {
   /** Team IDs of the user's own Apple IDs; sideloaded copies from any other team never match. */
-  readonly teamIds: Iterable<string>;
-  readonly apps?: readonly PairingApp[];
+  readonly teamIds: Iterable<string>
+  readonly apps?: readonly PairingApp[]
 }
 
 /** The pairing apps among `installedBundleIds`. */
 export const findPairingApps = (
   installedBundleIds: Iterable<string>,
-  options: FindPairingAppsOptions,
+  options: FindPairingAppsOptions
 ): PairingAppMatch[] => {
-  const teamIds = new Set(options.teamIds);
-  const apps = options.apps ?? PAIRING_APPS;
-  const matches: PairingAppMatch[] = [];
+  const teamIds = new Set(options.teamIds)
+  const apps = options.apps ?? PAIRING_APPS
+  const matches: PairingAppMatch[] = []
   for (const bundleId of installedBundleIds) {
-    const app = apps.find((candidate) => matchesBundleId(bundleId, candidate.bundleId, teamIds));
-    if (app) matches.push({ app, bundleId });
+    const app = apps.find((candidate) =>
+      matchesBundleId(bundleId, candidate.bundleId, teamIds)
+    )
+    if (app) matches.push({ app, bundleId })
   }
-  return matches;
-};
+  return matches
+}

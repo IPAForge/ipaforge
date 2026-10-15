@@ -1,9 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    // Tests run in Node.
-    "types": ["node"]
-  },
-  "include": ["src/**/*.ts"],
-  "exclude": []
-}

@@ -1,136 +1,180 @@
-import { LOCKDOWN_PROTOCOL_VERSION, LOCKDOWN_QUERY_TYPE } from "@device/domain/constants.ts";
-import type { LockdownPairRecord } from "@device/domain/pairing/pair-record.ts";
-import type { TlsCredentials } from "@device/domain/ports/transport.ts";
-import type { Link } from "@device/infrastructure/framing/link.ts";
-import { type FrameLimits, receivePlist, sendPlist } from "@device/infrastructure/framing/plist-frames.ts";
-import { plistInteger } from "@device/infrastructure/framing/plist-values.ts";
-import { isLockdownError, LockdownErrorName, lockdownError } from "@device/infrastructure/lockdown/errors.ts";
-import { createDict, ErrorCode, LoadstarError, type Logger, type PlistDict, type PlistValue } from "@loadstar/kernel";
+import {
+  LOCKDOWN_PROTOCOL_VERSION,
+  LOCKDOWN_QUERY_TYPE
+} from '@device/domain/constants.ts'
+import type { LockdownPairRecord } from '@device/domain/pairing/pair-record.ts'
+import type { TlsCredentials } from '@device/domain/ports/transport.ts'
+import type { Link } from '@device/infrastructure/framing/link.ts'
+import {
+  type FrameLimits,
+  receivePlist,
+  sendPlist
+} from '@device/infrastructure/framing/plist-frames.ts'
+import { plistInteger } from '@device/infrastructure/framing/plist-values.ts'
+import {
+  isLockdownError,
+  LockdownErrorName,
+  lockdownError
+} from '@device/infrastructure/lockdown/errors.ts'
+import {
+  createDict,
+  ErrorCode,
+  LoadstarError,
+  type Logger,
+  type PlistDict,
+  type PlistValue
+} from '@loadstar/kernel'
 
-export interface StartedService {
-  readonly port: number;
-  readonly enableServiceSsl: boolean;
+export type StartedService = {
+  readonly port: number
+  readonly enableServiceSsl: boolean
 }
 
-export interface LockdownClient {
-  queryType(): Promise<string>;
+export type LockdownClient = {
+  queryType(): Promise<string>
   /** `undefined` when the key does not exist (`MissingValue`). */
-  getValue(key?: string, domain?: string): Promise<PlistValue | undefined>;
-  setValue(domain: string, key: string, value: PlistValue): Promise<void>;
+  getValue(key?: string, domain?: string): Promise<PlistValue | undefined>
+  setValue(domain: string, key: string, value: PlistValue): Promise<void>
   /** Returns the escrow bag the device hands out on a successful pairing. */
-  pair(record: LockdownPairRecord): Promise<Uint8Array | undefined>;
-  validatePair(record: LockdownPairRecord): Promise<void>;
-  startSession(hostId: string, systemBuid: string): Promise<{ sessionId: string; enableSessionSsl: boolean }>;
-  startTls(credentials: TlsCredentials): Promise<void>;
-  startService(service: string, escrowBag?: Uint8Array): Promise<StartedService>;
-  stopSession(sessionId: string): Promise<void>;
-  close(): Promise<void>;
+  pair(record: LockdownPairRecord): Promise<Uint8Array | undefined>
+  validatePair(record: LockdownPairRecord): Promise<void>
+  startSession(
+    hostId: string,
+    systemBuid: string
+  ): Promise<{ sessionId: string; enableSessionSsl: boolean }>
+  startTls(credentials: TlsCredentials): Promise<void>
+  startService(service: string, escrowBag?: Uint8Array): Promise<StartedService>
+  stopSession(sessionId: string): Promise<void>
+  close(): Promise<void>
 }
 
 const pairRecordDict = (record: LockdownPairRecord): PlistDict =>
   createDict([
-    ["DeviceCertificate", record.deviceCertificate],
-    ["HostCertificate", record.hostCertificate],
-    ["RootCertificate", record.rootCertificate],
-    ["HostID", record.hostId],
-    ["SystemBUID", record.systemBuid],
-  ]);
+    ['DeviceCertificate', record.deviceCertificate],
+    ['HostCertificate', record.hostCertificate],
+    ['RootCertificate', record.rootCertificate],
+    ['HostID', record.hostId],
+    ['SystemBUID', record.systemBuid]
+  ])
 
-const MAX_PORT = 0xffff;
+const MAX_PORT = 0xffff
 
-const isValidPort = (port: number | undefined): port is number => port !== undefined && port > 0 && port <= MAX_PORT;
+const isValidPort = (port: number | undefined): port is number =>
+  port !== undefined && port > 0 && port <= MAX_PORT
 
-export const createLockdownClient = (link: Link, options: { label: string; limits: FrameLimits; logger: Logger }) => {
-  const { label, limits, logger } = options;
+export const createLockdownClient = (
+  link: Link,
+  options: { label: string; limits: FrameLimits; logger: Logger }
+) => {
+  const { label, limits, logger } = options
 
-  const request = async (name: string, fields: readonly (readonly [string, PlistValue])[] = []): Promise<PlistDict> => {
-    logger.debug("lockdown request", { request: name });
-    await sendPlist(link, createDict([["Label", label], ["Request", name], ...fields]));
-    const response = await receivePlist(link, limits, "lockdownd");
-    const error = response.Error;
-    if (typeof error === "string") throw lockdownError(error, name);
-    return response;
-  };
+  const request = async (
+    name: string,
+    fields: readonly (readonly [string, PlistValue])[] = []
+  ): Promise<PlistDict> => {
+    logger.debug('lockdown request', { request: name })
+    await sendPlist(
+      link,
+      createDict([['Label', label], ['Request', name], ...fields])
+    )
+    const response = await receivePlist(link, limits, 'lockdownd')
+    const error = response.Error
+    if (typeof error === 'string') throw lockdownError(error, name)
+    return response
+  }
 
   const client: LockdownClient = {
     queryType: async () => {
-      const response = await request("QueryType");
-      const type = response.Type;
+      const response = await request('QueryType')
+      const type = response.Type
       if (type !== LOCKDOWN_QUERY_TYPE) {
-        throw new LoadstarError(ErrorCode.DeviceProtocolError, { message: `unexpected lockdown type ${String(type)}` });
+        throw new LoadstarError(ErrorCode.DeviceProtocolError, {
+          message: `unexpected lockdown type ${String(type)}`
+        })
       }
-      return type;
+      return type
     },
 
     getValue: async (key, domain) => {
       try {
-        const response = await request("GetValue", [
-          ...(domain ? [["Domain", domain] as const] : []),
-          ...(key ? [["Key", key] as const] : []),
-        ]);
-        return response.Value;
+        const response = await request('GetValue', [
+          ...(domain ? [['Domain', domain] as const] : []),
+          ...(key ? [['Key', key] as const] : [])
+        ])
+
+        return response.Value
       } catch (error) {
-        if (isLockdownError(error, LockdownErrorName.MissingValue)) return undefined;
-        throw error;
+        if (isLockdownError(error, LockdownErrorName.MissingValue))
+          return undefined
+        throw error
       }
     },
 
     setValue: async (domain, key, value) => {
-      await request("SetValue", [
-        ["Domain", domain],
-        ["Key", key],
-        ["Value", value],
-      ]);
+      await request('SetValue', [
+        ['Domain', domain],
+        ['Key', key],
+        ['Value', value]
+      ])
     },
 
     pair: async (record) => {
-      const response = await request("Pair", [
-        ["PairRecord", pairRecordDict(record)],
-        ["PairingOptions", createDict([["ExtendedPairingErrors", true]])],
-        ["ProtocolVersion", LOCKDOWN_PROTOCOL_VERSION],
-      ]);
-      return response.EscrowBag instanceof Uint8Array ? response.EscrowBag : undefined;
+      const response = await request('Pair', [
+        ['PairRecord', pairRecordDict(record)],
+        ['PairingOptions', createDict([['ExtendedPairingErrors', true]])],
+        ['ProtocolVersion', LOCKDOWN_PROTOCOL_VERSION]
+      ])
+
+      return response.EscrowBag instanceof Uint8Array
+        ? response.EscrowBag
+        : undefined
     },
 
     validatePair: async (record) => {
-      await request("ValidatePair", [
-        ["PairRecord", pairRecordDict(record)],
-        ["ProtocolVersion", LOCKDOWN_PROTOCOL_VERSION],
-      ]);
+      await request('ValidatePair', [
+        ['PairRecord', pairRecordDict(record)],
+        ['ProtocolVersion', LOCKDOWN_PROTOCOL_VERSION]
+      ])
     },
 
     startSession: async (hostId, systemBuid) => {
-      const response = await request("StartSession", [
-        ["HostID", hostId],
-        ["SystemBUID", systemBuid],
-      ]);
-      const sessionId = response.SessionID;
-      if (typeof sessionId !== "string") {
-        throw new LoadstarError(ErrorCode.DeviceProtocolError, { message: "StartSession returned no SessionID" });
+      const response = await request('StartSession', [
+        ['HostID', hostId],
+        ['SystemBUID', systemBuid]
+      ])
+      const sessionId = response.SessionID
+      if (typeof sessionId !== 'string') {
+        throw new LoadstarError(ErrorCode.DeviceProtocolError, {
+          message: 'StartSession returned no SessionID'
+        })
       }
-      return { sessionId, enableSessionSsl: response.EnableSessionSSL === true };
+      return { sessionId, enableSessionSsl: response.EnableSessionSSL === true }
     },
 
     startTls: (credentials) => link.startTls(credentials),
 
     startService: async (service, escrowBag) => {
-      const response = await request("StartService", [
-        ["Service", service],
-        ...(escrowBag ? [["EscrowBag", escrowBag] as const] : []),
-      ]);
-      const port = plistInteger(response.Port);
+      const response = await request('StartService', [
+        ['Service', service],
+        ...(escrowBag ? [['EscrowBag', escrowBag] as const] : [])
+      ])
+      const port = plistInteger(response.Port)
       if (!isValidPort(port)) {
-        throw new LoadstarError(ErrorCode.ServiceUnavailable, { message: `${service}: no port`, data: { service } });
+        throw new LoadstarError(ErrorCode.ServiceUnavailable, {
+          message: `${service}: no port`,
+          data: { service }
+        })
       }
-      logger.debug("service started", { service, port });
-      return { port, enableServiceSsl: response.EnableServiceSSL === true };
+      logger.debug('service started', { service, port })
+      return { port, enableServiceSsl: response.EnableServiceSSL === true }
     },
 
     stopSession: async (sessionId) => {
-      await request("StopSession", [["SessionID", sessionId]]);
+      await request('StopSession', [['SessionID', sessionId]])
     },
 
-    close: () => link.close(),
-  };
-  return client;
-};
+    close: () => link.close()
+  }
+
+  return client
+}

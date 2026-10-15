@@ -1,93 +1,134 @@
 // The runner: walks the steps in order, merging what each produces into the state, and stops at the first
 // cancellation or failure with a checkpoint to resume from.
-import { attemptStep } from "@installer/pipeline/attempt-step.ts";
-import { asLoadstarError, isAbort } from "@installer/pipeline/errors.ts";
-import type { PipelineEvent } from "@installer/pipeline/events.ts";
-import { createProgress } from "@installer/pipeline/progress.ts";
-import type { Checkpoint, PipelineResult } from "@installer/pipeline/result.ts";
-import { type PromptRequest, type Step, stepWeight } from "@installer/pipeline/step.ts";
-import { createStepContext } from "@installer/pipeline/step-context.ts";
+import { attemptStep } from '@installer/pipeline/attempt-step.ts'
+import { asLoadstarError, isAbort } from '@installer/pipeline/errors.ts'
+import type { PipelineEvent } from '@installer/pipeline/events.ts'
+import { createProgress } from '@installer/pipeline/progress.ts'
+import type { Checkpoint, PipelineResult } from '@installer/pipeline/result.ts'
+import {
+  type PromptRequest,
+  type Step,
+  stepWeight
+} from '@installer/pipeline/step.ts'
+import { createStepContext } from '@installer/pipeline/step-context.ts'
 
-export interface RunOptions<S> {
-  readonly onEvent?: (event: PipelineEvent) => void;
-  readonly onPrompt?: (request: PromptRequest, signal: AbortSignal) => Promise<unknown>;
-  readonly signal?: AbortSignal;
+export type RunOptions<S> = {
+  readonly onEvent?: (event: PipelineEvent) => void
+  readonly onPrompt?: (
+    request: PromptRequest,
+    signal: AbortSignal
+  ) => Promise<unknown>
+  readonly signal?: AbortSignal
   /** Continue from an earlier failed or cancelled run of the same pipeline. */
-  readonly resume?: Checkpoint<S>;
+  readonly resume?: Checkpoint<S>
   /** Attempts for idempotent steps on transient errors (default 3). */
-  readonly attempts?: number;
-  readonly sleep?: (ms: number, signal?: AbortSignal) => Promise<void>;
+  readonly attempts?: number
+  readonly sleep?: (ms: number, signal?: AbortSignal) => Promise<void>
 }
 
-export interface PipelineDefinition<S> {
-  readonly id: string;
-  readonly steps: readonly Step<S>[];
-  readonly totalWeight: number;
+export type PipelineDefinition<S> = {
+  readonly id: string
+  readonly steps: readonly Step<S>[]
+  readonly totalWeight: number
 }
 
-const assertResumable = <S>(pipelineId: string, resume: Checkpoint<S> | undefined): void => {
+const assertResumable = <S>(
+  pipelineId: string,
+  resume: Checkpoint<S> | undefined
+): void => {
   if (resume && resume.pipelineId !== pipelineId) {
-    throw new Error(`checkpoint belongs to "${resume.pipelineId}", not "${pipelineId}"`);
+    throw new Error(
+      `checkpoint belongs to "${resume.pipelineId}", not "${pipelineId}"`
+    )
   }
-};
+}
 
 export const runPipeline = async <S>(
   { id, steps, totalWeight }: PipelineDefinition<S>,
   initial: S,
-  options: RunOptions<S>,
+  options: RunOptions<S>
 ): Promise<PipelineResult<S>> => {
-  assertResumable(id, options.resume);
-  const signal = options.signal ?? new AbortController().signal;
-  const emit = options.onEvent ?? (() => {});
-  const progress = createProgress(totalWeight);
-  const completed = new Set(options.resume?.completed ?? []);
-  let state: S = options.resume ? options.resume.state : initial;
+  assertResumable(id, options.resume)
+  const signal = options.signal ?? new AbortController().signal
+  const emit = options.onEvent ?? (() => {})
+  const progress = createProgress(totalWeight)
+  const completed = new Set(options.resume?.completed ?? [])
+  let state: S = options.resume ? options.resume.state : initial
 
-  const checkpoint = (): Checkpoint<S> => ({ pipelineId: id, completed: [...completed], state });
-  const cancelled = (): PipelineResult<S> => ({ status: "cancelled", checkpoint: checkpoint() });
+  const checkpoint = (): Checkpoint<S> => ({
+    pipelineId: id,
+    completed: [...completed],
+    state
+  })
+  const cancelled = (): PipelineResult<S> => ({
+    status: 'cancelled',
+    checkpoint: checkpoint()
+  })
 
   const failed = (step: Step<S>, error: unknown): PipelineResult<S> => {
-    const failure = asLoadstarError(error, step.id);
-    emit({ type: "step-failed", stepId: step.id, error: failure });
-    return { status: "failed", error: failure, failedStep: step.id, checkpoint: checkpoint() };
-  };
+    const failure = asLoadstarError(error, step.id)
+    emit({ type: 'step-failed', stepId: step.id, error: failure })
+    return {
+      status: 'failed',
+      error: failure,
+      failedStep: step.id,
+      checkpoint: checkpoint()
+    }
+  }
 
-  const finish = (step: Step<S>, type: "step-skipped" | "step-completed"): void => {
-    completed.add(step.id);
-    emit({ type, stepId: step.id });
-    emit({ type: "progress", fraction: progress.complete(stepWeight(step)) });
-  };
+  const finish = (
+    step: Step<S>,
+    type: 'step-skipped' | 'step-completed'
+  ): void => {
+    completed.add(step.id)
+    emit({ type, stepId: step.id })
+    emit({ type: 'progress', fraction: progress.complete(stepWeight(step)) })
+  }
 
   /** Runs one step to completion; returns a result only when the run must stop there. */
-  const execute = async (step: Step<S>, index: number): Promise<PipelineResult<S> | undefined> => {
-    emit({ type: "step-started", stepId: step.id, labelKey: step.labelKey, index, total: steps.length });
-    const context = createStepContext(step, { signal, emit, progress, onPrompt: options.onPrompt });
+  const execute = async (
+    step: Step<S>,
+    index: number
+  ): Promise<PipelineResult<S> | undefined> => {
+    emit({
+      type: 'step-started',
+      stepId: step.id,
+      labelKey: step.labelKey,
+      index,
+      total: steps.length
+    })
+    const context = createStepContext(step, {
+      signal,
+      emit,
+      progress,
+      onPrompt: options.onPrompt
+    })
     try {
       const produced = await attemptStep(step, state, context, {
         emit,
         attempts: options.attempts,
-        sleep: options.sleep,
-      });
-      if (produced) state = { ...state, ...produced };
+        sleep: options.sleep
+      })
+      if (produced) state = { ...state, ...produced }
     } catch (error) {
-      return isAbort(error, signal) ? cancelled() : failed(step, error);
+      return isAbort(error, signal) ? cancelled() : failed(step, error)
     }
-    finish(step, "step-completed");
-    return undefined;
-  };
+    finish(step, 'step-completed')
+    return undefined
+  }
 
   for (const [index, step] of steps.entries()) {
     if (completed.has(step.id)) {
-      progress.complete(stepWeight(step));
-      continue;
+      progress.complete(stepWeight(step))
+      continue
     }
-    if (signal.aborted) return cancelled();
+    if (signal.aborted) return cancelled()
     if (step.skip?.(state)) {
-      finish(step, "step-skipped");
-      continue;
+      finish(step, 'step-skipped')
+      continue
     }
-    const stopped = await execute(step, index);
-    if (stopped) return stopped;
+    const stopped = await execute(step, index)
+    if (stopped) return stopped
   }
-  return { status: "completed", state };
-};
+  return { status: 'completed', state }
+}

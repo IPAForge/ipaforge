@@ -8,5 +8,5 @@ export const StepWeight = {
   provision: 2,
   sign: 4,
   install: 6,
-  pairing: 1,
-} as const;
+  pairing: 1
+} as const

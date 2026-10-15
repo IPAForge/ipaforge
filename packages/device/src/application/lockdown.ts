@@ -1,38 +1,51 @@
 // Connections to lockdownd: plain (for pairing) and with a session started (for everything else).
-import type { DeviceContext } from "@device/application/context.ts";
-import { LOCKDOWN_PORT } from "@device/domain/constants.ts";
-import type { UsbmuxDevice } from "@device/domain/device.ts";
-import { type PairRecord, tlsCredentials } from "@device/domain/pairing/pair-record.ts";
-import { closeOnError } from "@device/infrastructure/closeable.ts";
-import { createLockdownClient, type LockdownClient } from "@device/infrastructure/lockdown/client.ts";
+import type { DeviceContext } from '@device/application/context.ts'
+import { LOCKDOWN_PORT } from '@device/domain/constants.ts'
+import type { UsbmuxDevice } from '@device/domain/device.ts'
+import {
+  type PairRecord,
+  tlsCredentials
+} from '@device/domain/pairing/pair-record.ts'
+import { closeOnError } from '@device/infrastructure/closeable.ts'
+import {
+  createLockdownClient,
+  type LockdownClient
+} from '@device/infrastructure/lockdown/client.ts'
 
-export interface LockdownSession {
-  readonly lockdown: LockdownClient;
-  readonly sessionId: string;
+export type LockdownSession = {
+  readonly lockdown: LockdownClient
+  readonly sessionId: string
 }
 
 /** Connects to lockdownd and checks that it answers as lockdownd. */
-export const openLockdown = async (ctx: DeviceContext, device: UsbmuxDevice): Promise<LockdownClient> => {
-  const link = await ctx.usbmux.connect(device.deviceId, LOCKDOWN_PORT);
+export const openLockdown = async (
+  ctx: DeviceContext,
+  device: UsbmuxDevice
+): Promise<LockdownClient> => {
+  const link = await ctx.usbmux.connect(device.deviceId, LOCKDOWN_PORT)
   const lockdown = createLockdownClient(link, {
     label: ctx.deps.config.label,
     limits: ctx.limits,
-    logger: ctx.deps.logger,
-  });
+    logger: ctx.deps.logger
+  })
+
   return closeOnError(lockdown, async (client) => {
-    await client.queryType();
-    return client;
-  });
-};
+    await client.queryType()
+    return client
+  })
+}
 
 /** Connects to lockdownd and starts a session with `record`, upgrading to TLS when the device asks for it. */
 export const openLockdownSession = async (
   ctx: DeviceContext,
   device: UsbmuxDevice,
-  record: PairRecord,
+  record: PairRecord
 ): Promise<LockdownSession> =>
   closeOnError(await openLockdown(ctx, device), async (lockdown) => {
-    const { sessionId, enableSessionSsl } = await lockdown.startSession(record.hostId, record.systemBuid);
-    if (enableSessionSsl) await lockdown.startTls(tlsCredentials(record));
-    return { lockdown, sessionId };
-  });
+    const { sessionId, enableSessionSsl } = await lockdown.startSession(
+      record.hostId,
+      record.systemBuid
+    )
+    if (enableSessionSsl) await lockdown.startTls(tlsCredentials(record))
+    return { lockdown, sessionId }
+  })

@@ -1,3 +1,3 @@
-import { PlaceholderPage } from "@ui/components/placeholder-page.tsx";
+import { PlaceholderPage } from '@ui/components/placeholder-page.tsx'
 
-export const LogsPage = () => <PlaceholderPage titleKey="nav.logs" />;
+export const LogsPage = () => <PlaceholderPage titleKey="nav.logs" />

@@ -1,96 +1,121 @@
 // The UI's handle on a run in the Engine: events replayed to late subscribers, the waiting prompt, and the result.
 // Answers, declines and cancels go to the server; the server's events and outcome come back through `deliver`.
-import type { PromptRequest, RunEvent } from "@loadstar/installer";
-import { compact, LoadstarError, type Logger, toLoadstarError } from "@loadstar/kernel";
-import { createEventLog } from "@rpc/application/event-log.ts";
-import type { RemoteResult, RemoteRunHandle } from "@rpc/domain/engine-client.ts";
-import { noPrompt } from "@rpc/domain/errors.ts";
-import type { WireRunEvent, WireRunResult } from "@rpc/domain/protocol/messages.ts";
-import type { RequestBody } from "@rpc/domain/protocol/requests.ts";
+import type { PromptRequest, RunEvent } from '@loadstar/installer'
+import {
+  compact,
+  LoadstarError,
+  type Logger,
+  toLoadstarError
+} from '@loadstar/kernel'
+import { createEventLog } from '@rpc/application/event-log.ts'
+import type {
+  RemoteResult,
+  RemoteRunHandle
+} from '@rpc/domain/engine-client.ts'
+import { noPrompt } from '@rpc/domain/errors.ts'
+import type {
+  WireRunEvent,
+  WireRunResult
+} from '@rpc/domain/protocol/messages.ts'
+import type { RequestBody } from '@rpc/domain/protocol/requests.ts'
 
-export interface ClientRun<S> {
-  readonly handle: RemoteRunHandle<S>;
-  event(event: WireRunEvent): void;
-  finish(result: WireRunResult): void;
-  fail(error: LoadstarError): void;
+export type ClientRun<S> = {
+  readonly handle: RemoteRunHandle<S>
+  event(event: WireRunEvent): void
+  finish(result: WireRunResult): void
+  fail(error: LoadstarError): void
 }
 
-interface ClientRunDeps {
-  readonly runId: string;
-  readonly request: (body: RequestBody) => Promise<unknown>;
-  readonly logger: Logger;
+type ClientRunDeps = {
+  readonly runId: string
+  readonly request: (body: RequestBody) => Promise<unknown>
+  readonly logger: Logger
 }
 
 const toRunEvent = (event: WireRunEvent): RunEvent => {
-  if (event.type === "step-failed") return { ...event, error: LoadstarError.fromJSON(event.error) };
-  if (event.type === "prompt") return { type: event.type, request: compact(event.request) };
-  return compact(event) as RunEvent;
-};
+  if (event.type === 'step-failed')
+    return { ...event, error: LoadstarError.fromJSON(event.error) }
+  if (event.type === 'prompt')
+    return { type: event.type, request: compact(event.request) }
+  return compact(event) as RunEvent
+}
 
 const toResult = <S>(result: WireRunResult): RemoteResult<S> => {
   // The state is the Engine's run state without its file handles: `S` is `Wire<…>` of that state.
-  if (result.status === "completed") return { status: result.status, state: result.state as S };
-  if (result.status === "cancelled") return result;
-  return { ...result, error: LoadstarError.fromJSON(result.error) };
-};
+  if (result.status === 'completed')
+    return { status: result.status, state: result.state as S }
+  if (result.status === 'cancelled') return result
+  return { ...result, error: LoadstarError.fromJSON(result.error) }
+}
 
-export const createClientRun = <S>({ runId, request, logger }: ClientRunDeps): ClientRun<S> => {
-  const events = createEventLog<RunEvent>();
-  let pending: PromptRequest | undefined;
-  let ended = false;
-  let settle: { resolve: (result: RemoteResult<S>) => void; reject: (error: LoadstarError) => void };
+export const createClientRun = <S>({
+  runId,
+  request,
+  logger
+}: ClientRunDeps): ClientRun<S> => {
+  const events = createEventLog<RunEvent>()
+  let pending: PromptRequest | undefined
+  let ended = false
+  let settle: {
+    resolve: (result: RemoteResult<S>) => void
+    reject: (error: LoadstarError) => void
+  }
   const result = new Promise<RemoteResult<S>>((resolve, reject) => {
-    settle = { resolve, reject };
-  });
+    settle = { resolve, reject }
+  })
   // A UI that never looks at the result must not see an unhandled rejection when the channel closes.
-  result.catch(() => {});
+  result.catch(() => {})
 
   /** The server is authoritative: if the run ended meanwhile, its outcome arrives anyway. */
   const tell = (body: RequestBody): void => {
     request(body).catch((error: unknown) =>
-      logger.debug("RPC run request failed", { runId, type: body.type, code: toLoadstarError(error).code }),
-    );
-  };
+      logger.debug('RPC run request failed', {
+        runId,
+        type: body.type,
+        code: toLoadstarError(error).code
+      })
+    )
+  }
 
   const takePrompt = (): void => {
-    if (!pending) throw noPrompt();
-    pending = undefined;
-  };
+    if (!pending) throw noPrompt()
+    pending = undefined
+  }
 
   const end = (): void => {
-    ended = true;
-    pending = undefined;
-  };
+    ended = true
+    pending = undefined
+  }
 
   return {
     handle: {
       subscribe: events.subscribe,
       pending: () => pending,
       answer: (answer) => {
-        takePrompt();
-        tell({ type: "answer", runId, answer });
+        takePrompt()
+        tell({ type: 'answer', runId, answer })
       },
       decline: () => {
-        takePrompt();
-        tell({ type: "decline", runId });
+        takePrompt()
+        tell({ type: 'decline', runId })
       },
       cancel: () => {
-        if (!ended) tell({ type: "cancel", runId });
+        if (!ended) tell({ type: 'cancel', runId })
       },
-      result,
+      result
     },
     event: (wire) => {
-      const event = toRunEvent(wire);
-      if (event.type === "prompt") pending = event.request;
-      events.emit(event);
+      const event = toRunEvent(wire)
+      if (event.type === 'prompt') pending = event.request
+      events.emit(event)
     },
     finish: (wire) => {
-      end();
-      settle.resolve(toResult<S>(wire));
+      end()
+      settle.resolve(toResult<S>(wire))
     },
     fail: (error) => {
-      end();
-      settle.reject(error);
-    },
-  };
-};
+      end()
+      settle.reject(error)
+    }
+  }
+}

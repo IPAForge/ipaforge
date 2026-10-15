@@ -1,9 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    // Tests run in Node and may read fixtures from disk.
-    "types": ["node"]
-  },
-  "include": ["src/**/*.ts"],
-  "exclude": []
-}

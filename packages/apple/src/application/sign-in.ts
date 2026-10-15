@@ -1,50 +1,74 @@
 // Apple ID sign-in: SRP against GrandSlam, then (when Apple asks) a second factor. Wrong passwords are never
 // retried automatically, so the user cannot be locked out by the app.
 
-import type { AnisetteService } from "@apple/application/anisette.ts";
-import { type Authenticated, authenticate, type Credentials } from "@apple/application/gsa-authenticate.ts";
-import { createTwoFactorChallenge, type TwoFactorChallenge } from "@apple/application/two-factor.ts";
-import type { AppleDeps } from "@apple/deps.ts";
-import { GsaCode } from "@apple/domain/gsa-status.ts";
-import { type AppleSession, normalizeAppleId, type SecondFactorRequest } from "@apple/domain/session.ts";
-import { compact, ErrorCode, LoadstarError } from "@loadstar/kernel";
+import type { AnisetteService } from '@apple/application/anisette.ts'
+import {
+  type Authenticated,
+  authenticate,
+  type Credentials
+} from '@apple/application/gsa-authenticate.ts'
+import {
+  createTwoFactorChallenge,
+  type TwoFactorChallenge
+} from '@apple/application/two-factor.ts'
+import type { AppleDeps } from '@apple/deps.ts'
+import { GsaCode } from '@apple/domain/gsa-status.ts'
+import {
+  type AppleSession,
+  normalizeAppleId,
+  type SecondFactorRequest
+} from '@apple/domain/session.ts'
+import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
 
 export type SignInResult =
-  | { readonly kind: "signed_in"; readonly session: AppleSession }
-  | { readonly kind: "two_factor"; readonly challenge: TwoFactorChallenge };
+  | { readonly kind: 'signed_in'; readonly session: AppleSession }
+  | { readonly kind: 'two_factor'; readonly challenge: TwoFactorChallenge }
 
-export interface SignInInput {
-  readonly appleId: string;
-  readonly password: string;
-  readonly signal?: AbortSignal;
+export type SignInInput = {
+  readonly appleId: string
+  readonly password: string
+  readonly signal?: AbortSignal
 }
 
-export interface SignInService {
-  signIn(input: SignInInput): Promise<SignInResult>;
+export type SignInService = {
+  signIn(input: SignInInput): Promise<SignInResult>
 }
 
 const isAnisetteNotProvisioned = (error: unknown): boolean =>
-  error instanceof LoadstarError && error.data?.gsaCode === GsaCode.AnisetteNotProvisioned;
+  error instanceof LoadstarError &&
+  error.data?.gsaCode === GsaCode.AnisetteNotProvisioned
 
-export const createSignInService = (deps: AppleDeps, anisette: AnisetteService): SignInService => {
+export const createSignInService = (
+  deps: AppleDeps,
+  anisette: AnisetteService
+): SignInService => {
   /** Authenticates; when the machine identity went stale, re-provisions once and tries again (catalogue: -45061). */
-  const authenticateWithReset = async (credentials: Credentials): Promise<Authenticated> => {
-    const getOptions = compact({ signal: credentials.signal });
-    const data = await anisette.get(getOptions);
+  const authenticateWithReset = async (
+    credentials: Credentials
+  ): Promise<Authenticated> => {
+    const getOptions = compact({ signal: credentials.signal })
+    const data = await anisette.get(getOptions)
     try {
-      return await authenticate(deps, data, anisette.resync, credentials);
+      return await authenticate(deps, data, anisette.resync, credentials)
     } catch (error) {
-      if (!isAnisetteNotProvisioned(error)) throw error;
-      deps.logger.warn("anisette not provisioned for Apple; resetting it", { server: data.server });
-      await anisette.reset();
-      return authenticate(deps, await anisette.get(getOptions), anisette.resync, credentials);
+      if (!isAnisetteNotProvisioned(error)) throw error
+      deps.logger.warn('anisette not provisioned for Apple; resetting it', {
+        server: data.server
+      })
+      await anisette.reset()
+      return authenticate(
+        deps,
+        await anisette.get(getOptions),
+        anisette.resync,
+        credentials
+      )
     }
-  };
+  }
 
   const startTwoFactor = (
     input: SignInInput,
     session: AppleSession,
-    secondFactor: SecondFactorRequest,
+    secondFactor: SecondFactorRequest
   ): Promise<TwoFactorChallenge> =>
     createTwoFactorChallenge(
       deps,
@@ -54,25 +78,36 @@ export const createSignInService = (deps: AppleDeps, anisette: AnisetteService):
       // After the code is accepted, signing in again completes without a second factor.
       () =>
         signIn(input).then((retry) => {
-          if (retry.kind === "signed_in") return retry.session;
-          throw new LoadstarError(ErrorCode.TwoFactorRequired, { message: "Apple still asks for a second factor" });
+          if (retry.kind === 'signed_in') return retry.session
+          throw new LoadstarError(ErrorCode.TwoFactorRequired, {
+            message: 'Apple still asks for a second factor'
+          })
         }),
-      { codeAlreadySent: secondFactor.codeAlreadySent },
-    );
+      { codeAlreadySent: secondFactor.codeAlreadySent }
+    )
 
   const signIn = async (input: SignInInput): Promise<SignInResult> => {
     const credentials = compact({
       appleId: normalizeAppleId(input.appleId),
       password: input.password,
-      signal: input.signal,
-    });
-    const result = await authenticateWithReset(credentials);
-    deps.logger.info("password accepted", {
-      secondFactor: result.secondFactor?.kind ?? "none",
-      codeAlreadySent: result.secondFactor?.codeAlreadySent ?? false,
-    });
-    if (!result.secondFactor) return { kind: "signed_in", session: result.session };
-    return { kind: "two_factor", challenge: await startTwoFactor(input, result.session, result.secondFactor) };
-  };
-  return { signIn };
-};
+      signal: input.signal
+    })
+    const result = await authenticateWithReset(credentials)
+    deps.logger.info('password accepted', {
+      secondFactor: result.secondFactor?.kind ?? 'none',
+      codeAlreadySent: result.secondFactor?.codeAlreadySent ?? false
+    })
+    if (!result.secondFactor)
+      return { kind: 'signed_in', session: result.session }
+    return {
+      kind: 'two_factor',
+      challenge: await startTwoFactor(
+        input,
+        result.session,
+        result.secondFactor
+      )
+    }
+  }
+
+  return { signIn }
+}

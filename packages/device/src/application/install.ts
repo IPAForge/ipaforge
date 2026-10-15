@@ -1,100 +1,111 @@
-import type { DeviceContext } from "@device/application/context.ts";
-import { openAfc, useInstallationProxy } from "@device/application/services.ts";
-import type { DeviceSession } from "@device/application/session.ts";
-import { PUBLIC_STAGING_DIR } from "@device/domain/constants.ts";
-import { shortUdid } from "@device/domain/device.ts";
-import type { AfcClient } from "@device/infrastructure/afc/client.ts";
-import { withClient } from "@device/infrastructure/closeable.ts";
-import { compact, type FileSource } from "@loadstar/kernel";
+import type { DeviceContext } from '@device/application/context.ts'
+import { openAfc, useInstallationProxy } from '@device/application/services.ts'
+import type { DeviceSession } from '@device/application/session.ts'
+import { PUBLIC_STAGING_DIR } from '@device/domain/constants.ts'
+import { shortUdid } from '@device/domain/device.ts'
+import type { AfcClient } from '@device/infrastructure/afc/client.ts'
+import { withClient } from '@device/infrastructure/closeable.ts'
+import { compact, type FileSource } from '@loadstar/kernel'
 
-export type InstallStage = "uploading" | "installing" | "done";
+export type InstallStage = 'uploading' | 'installing' | 'done'
 
-export interface InstallIpaProgress {
-  readonly stage: InstallStage;
+export type InstallIpaProgress = {
+  readonly stage: InstallStage
   /** 0–100 across the whole install (upload is the first half). */
-  readonly percent: number;
-  readonly status?: string;
+  readonly percent: number
+  readonly status?: string
 }
 
-export interface InstallIpaOptions {
+export type InstallIpaOptions = {
   /** Replace an existing app with the same bundle ID, keeping its data. Default true. */
-  readonly upgrade?: boolean;
-  readonly onProgress?: (progress: InstallIpaProgress) => void;
-  readonly signal?: AbortSignal;
+  readonly upgrade?: boolean
+  readonly onProgress?: (progress: InstallIpaProgress) => void
+  readonly signal?: AbortSignal
 }
 
-type Report = (progress: InstallIpaProgress) => void;
+type Report = (progress: InstallIpaProgress) => void
 
 /** Share of the overall progress taken by the upload; installation_proxy's own 0–100 fills the second half. */
-const UPLOAD_SHARE = 50;
-const PERCENT_DONE = 100;
+const UPLOAD_SHARE = 50
+const PERCENT_DONE = 100
 
 const uploadPercent = (written: number, total: number | undefined): number =>
-  total ? Math.floor((written / total) * UPLOAD_SHARE) : 0;
+  total ? Math.floor((written / total) * UPLOAD_SHARE) : 0
 
-const installPercent = (percent: number): number => UPLOAD_SHARE + Math.floor(percent / 2);
+const installPercent = (percent: number): number =>
+  UPLOAD_SHARE + Math.floor(percent / 2)
 
 const uploadIpa = async (
   afc: AfcClient,
   stagingPath: string,
   ipa: FileSource,
   report: Report,
-  signal: AbortSignal | undefined,
+  signal: AbortSignal | undefined
 ): Promise<void> => {
-  if (!(await afc.exists(PUBLIC_STAGING_DIR))) await afc.mkdir(PUBLIC_STAGING_DIR);
+  if (!(await afc.exists(PUBLIC_STAGING_DIR)))
+    await afc.mkdir(PUBLIC_STAGING_DIR)
   await afc.writeFile(
     stagingPath,
     ipa.stream(),
     compact({
       totalBytes: ipa.size,
       onProgress: (written: number, total: number | undefined) =>
-        report({ stage: "uploading", percent: uploadPercent(written, total) }),
-      signal,
-    }),
-  );
-  signal?.throwIfAborted();
-};
+        report({ stage: 'uploading', percent: uploadPercent(written, total) }),
+      signal
+    })
+  )
+  signal?.throwIfAborted()
+}
 
 const installStaged = (
   ctx: DeviceContext,
   session: DeviceSession,
   stagingPath: string,
   options: InstallIpaOptions,
-  report: Report,
+  report: Report
 ): Promise<void> =>
   useInstallationProxy(ctx, session, (proxy) =>
     proxy.install(stagingPath, {
       upgrade: options.upgrade ?? true,
-      onProgress: ({ percent, status }) => report({ stage: "installing", percent: installPercent(percent), status }),
-    }),
-  );
+      onProgress: ({ percent, status }) =>
+        report({
+          stage: 'installing',
+          percent: installPercent(percent),
+          status
+        })
+    })
+  )
 
 /** Uploads a signed IPA to `PublicStaging` and installs it. The staged copy is always removed. */
 export const installIpa = async (
   ctx: DeviceContext,
   session: DeviceSession,
   ipa: FileSource,
-  options: InstallIpaOptions = {},
+  options: InstallIpaOptions = {}
 ): Promise<void> => {
-  const { logger, clock } = ctx.deps;
-  const started = clock.now().getTime();
-  const stagingPath = `${PUBLIC_STAGING_DIR}/${globalThis.crypto.randomUUID()}.ipa`;
-  const report = options.onProgress ?? (() => {});
+  const { logger, clock } = ctx.deps
+  const started = clock.now().getTime()
+  const stagingPath = `${PUBLIC_STAGING_DIR}/${globalThis.crypto.randomUUID()}.ipa`
+  const report = options.onProgress ?? (() => {})
 
   await withClient(await openAfc(ctx, session), async (afc) => {
     try {
-      await uploadIpa(afc, stagingPath, ipa, report, options.signal);
-      await installStaged(ctx, session, stagingPath, options, report);
+      await uploadIpa(afc, stagingPath, ipa, report, options.signal)
+      await installStaged(ctx, session, stagingPath, options, report)
     } finally {
-      await afc.remove(stagingPath).catch((error: unknown) => logger.debug("staging cleanup failed", { cause: error }));
+      await afc
+        .remove(stagingPath)
+        .catch((error: unknown) =>
+          logger.debug('staging cleanup failed', { cause: error })
+        )
     }
-  });
+  })
 
-  report({ stage: "done", percent: PERCENT_DONE });
-  logger.info("installed", {
+  report({ stage: 'done', percent: PERCENT_DONE })
+  logger.info('installed', {
     device: shortUdid(session.device.udid),
     file: ipa.name,
     bytes: ipa.size,
-    ms: clock.now().getTime() - started,
-  });
-};
+    ms: clock.now().getTime() - started
+  })
+}

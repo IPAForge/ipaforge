@@ -20,37 +20,37 @@
 // UDIDs are shortened unless --show-udid is given. Passwords, tokens and keys are never printed.
 // The commands live in src/probes/install/.
 
-import { describeError } from "@desktop/probes/apple/describe-error.ts";
-import { parseInstallProbeArgs } from "@desktop/probes/install/args.ts";
-import { INSTALL_COMMANDS } from "@desktop/probes/install/commands/index.ts";
-import { createInstallProbe } from "@desktop/probes/install/context.ts";
-import { LoadstarError } from "@loadstar/kernel";
+import { describeError } from '@desktop/probes/apple/describe-error.ts'
+import { parseInstallProbeArgs } from '@desktop/probes/install/args.ts'
+import { INSTALL_COMMANDS } from '@desktop/probes/install/commands/index.ts'
+import { createInstallProbe } from '@desktop/probes/install/context.ts'
+import { LoadstarError } from '@loadstar/kernel'
 
 const USAGE = `usage: install-probe <command> [options]
   plan <file.ipa|catalogAppId>   read-only preview (identity, App ID budget, free-app slots, certificate)
   sidestore --yes                install SideStore (--livecontainer, --channel stable|nightly)
   ipa <file.ipa…> --yes          install IPAs
   pairing --yes                  place this computer's pairing file into pairing apps (--keep-existing)
-common: --account <id> --team <id> --udid <udid> --show-udid`;
+common: --account <id> --team <id> --udid <udid> --show-udid`
 
-const args = parseInstallProbeArgs(process.argv.slice(2));
-const command = INSTALL_COMMANDS[args.command];
+const args = parseInstallProbeArgs(process.argv.slice(2))
+const command = INSTALL_COMMANDS[args.command]
 if (!command) {
-  if (args.command) console.error(`unknown command "${args.command}"`);
-  console.error(USAGE);
-  process.exit(2);
+  if (args.command) console.error(`unknown command "${args.command}"`)
+  console.error(USAGE)
+  process.exit(2)
 }
-const probe = createInstallProbe(args);
+const probe = createInstallProbe(args)
 try {
-  await command(probe)();
+  await command(probe)()
 } catch (error) {
-  console.error(`✗ ${describeError(error)}`);
+  console.error(`✗ ${describeError(error)}`)
   // Usage mistakes are plain errors; anything from the Engine gets the diagnosis the UI would show.
   if (error instanceof LoadstarError) {
-    const { code, recovery } = probe.engine.classify(error);
-    console.error(`  diagnosis: ${code}; recovery: ${recovery.join(", ")}`);
+    const { code, recovery } = probe.engine.classify(error)
+    console.error(`  diagnosis: ${code}; recovery: ${recovery.join(', ')}`)
   }
-  process.exitCode = 1;
+  process.exitCode = 1
 } finally {
-  probe.prompt.close();
+  probe.prompt.close()
 }

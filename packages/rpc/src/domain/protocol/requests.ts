@@ -1,55 +1,81 @@
 // What the UI sends: requests, each with an id the response echoes. Queries and command starts mirror the Engine;
 // answer, decline and cancel address a run by the id the client chose when it started it.
-import { idSchema, textSchema, versionSchema } from "@rpc/domain/protocol/common.ts";
+
+import { z } from 'zod'
+
+import {
+  idSchema,
+  textSchema,
+  versionSchema
+} from '@rpc/domain/protocol/common.ts'
 import {
   installAppsInputSchema,
   installSideStoreInputSchema,
   placePairingInputSchema,
   planInstallInputSchema,
-  teamQuerySchema,
-} from "@rpc/domain/protocol/inputs.ts";
-import { z } from "zod";
+  teamQuerySchema
+} from '@rpc/domain/protocol/inputs.ts'
 
 const call = <M extends string, A extends z.ZodTuple>(method: M, args: A) =>
-  z.object({ method: z.literal(method), args });
+  z.object({ method: z.literal(method), args })
 
-export const queryCallSchema = z.discriminatedUnion("method", [
-  call("listDevices", z.tuple([])),
-  call("deviceStatus", z.tuple([textSchema])),
-  call("listAccounts", z.tuple([])),
-  call("listTeams", z.tuple([textSchema])),
-  call("catalogApps", z.tuple([])),
-  call("recommendedChannel", z.tuple([textSchema, textSchema.optional()])),
-  call("appIdQuota", z.tuple([teamQuerySchema])),
-  call("listCertificates", z.tuple([teamQuerySchema])),
-  call("planInstall", z.tuple([planInstallInputSchema])),
-]);
+export const queryCallSchema = z.discriminatedUnion('method', [
+  call('listDevices', z.tuple([])),
+  call('deviceStatus', z.tuple([textSchema])),
+  call('listAccounts', z.tuple([])),
+  call('listTeams', z.tuple([textSchema])),
+  call('catalogApps', z.tuple([])),
+  call('recommendedChannel', z.tuple([textSchema, textSchema.optional()])),
+  call('appIdQuota', z.tuple([teamQuerySchema])),
+  call('listCertificates', z.tuple([teamQuerySchema])),
+  call('planInstall', z.tuple([planInstallInputSchema]))
+])
 
-export const commandCallSchema = z.discriminatedUnion("command", [
-  z.object({ command: z.literal("installSideStore"), input: installSideStoreInputSchema }),
-  z.object({ command: z.literal("installApps"), input: installAppsInputSchema }),
-  z.object({ command: z.literal("placePairing"), input: placePairingInputSchema }),
-]);
+export const commandCallSchema = z.discriminatedUnion('command', [
+  z.object({
+    command: z.literal('installSideStore'),
+    input: installSideStoreInputSchema
+  }),
+  z.object({
+    command: z.literal('installApps'),
+    input: installAppsInputSchema
+  }),
+  z.object({
+    command: z.literal('placePairing'),
+    input: placePairingInputSchema
+  })
+])
 
-const request = <T extends string, S extends z.ZodRawShape>(type: T, shape: S) =>
-  z.object({ v: versionSchema, id: idSchema, type: z.literal(type), ...shape });
+const request = <T extends string, S extends z.ZodRawShape>(
+  type: T,
+  shape: S
+) =>
+  z.object({ v: versionSchema, id: idSchema, type: z.literal(type), ...shape })
 
-export const requestSchema = z.discriminatedUnion("type", [
-  request("query", { call: queryCallSchema }),
+export const requestSchema = z.discriminatedUnion('type', [
+  request('query', { call: queryCallSchema }),
   /** `resume` is the id of a checkpoint the server kept from an earlier run of the same command. */
-  request("start", { runId: idSchema, call: commandCallSchema, resume: idSchema.optional() }),
-  request("answer", { runId: idSchema, answer: z.unknown() }),
-  request("decline", { runId: idSchema }),
-  request("cancel", { runId: idSchema }),
-]);
+  request('start', {
+    runId: idSchema,
+    call: commandCallSchema,
+    resume: idSchema.optional()
+  }),
+  request('answer', { runId: idSchema, answer: z.unknown() }),
+  request('decline', { runId: idSchema }),
+  request('cancel', { runId: idSchema })
+])
 
-export type QueryCall = z.infer<typeof queryCallSchema>;
-export type QueryMethod = QueryCall["method"];
-export type QueryCallInput = z.input<typeof queryCallSchema>;
-export type CommandCall = z.infer<typeof commandCallSchema>;
-export type CommandCallInput = z.input<typeof commandCallSchema>;
-export type Command = CommandCall["command"];
-export type Request = z.infer<typeof requestSchema>;
+export type QueryCall = z.infer<typeof queryCallSchema>
+export type QueryMethod = QueryCall['method']
+export type QueryCallInput = z.input<typeof queryCallSchema>
+export type CommandCall = z.infer<typeof commandCallSchema>
+export type CommandCallInput = z.input<typeof commandCallSchema>
+export type Command = CommandCall['command']
+export type Request = z.infer<typeof requestSchema>
 /** A request as the client writes it; the version and id are added when it is sent. */
 export type RequestBody =
-  z.input<typeof requestSchema> extends infer R ? (R extends unknown ? Omit<R, "v" | "id"> : never) : never;
+  z.input<typeof requestSchema> extends infer R
+    ? R extends unknown
+      ? Omit<R, 'v' | 'id'>
+      : never
+    : never

@@ -1,10 +1,11 @@
 {
-  "extends": "../../tsconfig.base.json",
+  // The editor's project: source and tests together, so every file VS Code opens resolves the @… aliases.
+  // tsconfig.src.json checks the source alone, without test-only types.
+  "extends": "./tsconfig.src.json",
   "compilerOptions": {
-    // Platform-free baseline: standard web globals that Node 22 also has; no Node or DOM-only types.
-    "lib": ["ES2023", "WebWorker"],
-    "types": []
+    // Tests run in Node and may read fixtures from disk.
+    "types": ["node"]
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["src/**/*.test.ts", "src/**/__tests__/**"]
+  "include": ["src/**/*.ts", "scripts/**/*.ts"],
+  "exclude": []
 }

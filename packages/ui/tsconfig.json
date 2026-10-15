@@ -1,12 +1,11 @@
 {
-  "extends": "../../tsconfig.base.json",
+  // The editor's project: source and tests together, so every file VS Code opens resolves the @… aliases.
+  // tsconfig.src.json checks the source alone, without test-only types.
+  "extends": "./tsconfig.src.json",
   "compilerOptions": {
-    // The UI runs in a browser renderer: DOM types instead of the platform-free WebWorker baseline.
-    "lib": ["ES2023", "DOM", "DOM.Iterable"],
-    "jsx": "react-jsx",
-    // Built with Vite: `vite/client` types the stylesheet import and `import.meta.env` in main.tsx.
-    "types": ["vite/client"]
+    // Tests run in Vitest with happy-dom.
+    "types": ["vite/client", "node"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
-  "exclude": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/__tests__/**"]
+  "exclude": []
 }

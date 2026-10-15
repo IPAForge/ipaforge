@@ -1,131 +1,168 @@
-import type { Link } from "@device/infrastructure/framing/link.ts";
-import { type FrameLimits, receivePlist, sendPlist } from "@device/infrastructure/framing/plist-frames.ts";
-import { plistInteger } from "@device/infrastructure/framing/plist-values.ts";
+import type { Link } from '@device/infrastructure/framing/link.ts'
+import {
+  type FrameLimits,
+  receivePlist,
+  sendPlist
+} from '@device/infrastructure/framing/plist-frames.ts'
+import { plistInteger } from '@device/infrastructure/framing/plist-values.ts'
 import {
   browsedApps,
   DEFAULT_APP_ATTRIBUTES,
   type InstalledApp,
-  lookedUpApps,
-} from "@device/infrastructure/installation-proxy/apps.ts";
-import { installProxyError } from "@device/infrastructure/installation-proxy/errors.ts";
-import { createDict, type Logger, type PlistDict, type PlistValue, stringAt } from "@loadstar/kernel";
+  lookedUpApps
+} from '@device/infrastructure/installation-proxy/apps.ts'
+import { installProxyError } from '@device/infrastructure/installation-proxy/errors.ts'
+import {
+  createDict,
+  type Logger,
+  type PlistDict,
+  type PlistValue,
+  stringAt
+} from '@loadstar/kernel'
 
-export type ApplicationType = "User" | "System" | "Any";
+export type ApplicationType = 'User' | 'System' | 'Any'
 
-export interface InstallProgress {
-  readonly percent: number;
-  readonly status: string;
+export type InstallProgress = {
+  readonly percent: number
+  readonly status: string
 }
 
-export interface InstallationProxy {
+export type InstallationProxy = {
   install(
     packagePath: string,
-    options?: { upgrade?: boolean; onProgress?: (p: InstallProgress) => void },
-  ): Promise<void>;
-  uninstall(bundleId: string, options?: { onProgress?: (p: InstallProgress) => void }): Promise<void>;
-  browse(options?: { applicationType?: ApplicationType; attributes?: readonly string[] }): Promise<InstalledApp[]>;
-  lookup(bundleIds: readonly string[], attributes?: readonly string[]): Promise<Map<string, InstalledApp>>;
-  close(): Promise<void>;
+    options?: { upgrade?: boolean; onProgress?: (p: InstallProgress) => void }
+  ): Promise<void>
+  uninstall(
+    bundleId: string,
+    options?: { onProgress?: (p: InstallProgress) => void }
+  ): Promise<void>
+  browse(options?: {
+    applicationType?: ApplicationType
+    attributes?: readonly string[]
+  }): Promise<InstalledApp[]>
+  lookup(
+    bundleIds: readonly string[],
+    attributes?: readonly string[]
+  ): Promise<Map<string, InstalledApp>>
+  close(): Promise<void>
 }
 
-type Fields = readonly (readonly [string, PlistValue])[];
+type Fields = readonly (readonly [string, PlistValue])[]
 
-const STATUS_COMPLETE = "Complete";
-const PERCENT_COMPLETE = 100;
+const STATUS_COMPLETE = 'Complete'
+const PERCENT_COMPLETE = 100
 
-const browseOptionsDict = (applicationType: ApplicationType | undefined, attributes: readonly string[]): PlistDict =>
+const browseOptionsDict = (
+  applicationType: ApplicationType | undefined,
+  attributes: readonly string[]
+): PlistDict =>
   createDict([
-    ...(applicationType ? [["ApplicationType", applicationType] as const] : []),
-    ["ReturnAttributes", [...attributes]],
-  ]);
+    ...(applicationType ? [['ApplicationType', applicationType] as const] : []),
+    ['ReturnAttributes', [...attributes]]
+  ])
 
-const lookupOptionsDict = (bundleIds: readonly string[], attributes: readonly string[]): PlistDict =>
+const lookupOptionsDict = (
+  bundleIds: readonly string[],
+  attributes: readonly string[]
+): PlistDict =>
   createDict([
-    ["BundleIDs", [...bundleIds]],
-    ["ReturnAttributes", [...attributes]],
-  ]);
+    ['BundleIDs', [...bundleIds]],
+    ['ReturnAttributes', [...attributes]]
+  ])
 
 export const createInstallationProxy = (
   link: Link,
-  options: { limits: FrameLimits; logger: Logger },
+  options: { limits: FrameLimits; logger: Logger }
 ): InstallationProxy => {
-  const { limits, logger } = options;
+  const { limits, logger } = options
 
   /** Sends a command and reads status messages until `Complete`. */
   const run = async (
     command: string,
     subject: string,
     fields: Fields,
-    onMessage: (message: PlistDict) => void = () => {},
+    onMessage: (message: PlistDict) => void = () => {}
   ): Promise<void> => {
-    await sendPlist(link, createDict([["Command", command], ...fields]));
+    await sendPlist(link, createDict([['Command', command], ...fields]))
     for (;;) {
-      const response = await receivePlist(link, limits, "installation_proxy");
-      if (response.Error !== undefined) throw installProxyError(response, command, subject);
-      onMessage(response);
-      if (response.Status === STATUS_COMPLETE) return;
+      const response = await receivePlist(link, limits, 'installation_proxy')
+      if (response.Error !== undefined)
+        throw installProxyError(response, command, subject)
+      onMessage(response)
+      if (response.Status === STATUS_COMPLETE) return
     }
-  };
+  }
 
   /** Forwards status messages as progress. */
   const progress =
     (onProgress: ((p: InstallProgress) => void) | undefined) =>
     (message: PlistDict): void => {
-      const status = stringAt(message, "Status");
-      if (!status) return;
-      logger.debug("installation_proxy status", { status, percent: message.PercentComplete });
-      const percent = status === STATUS_COMPLETE ? PERCENT_COMPLETE : (plistInteger(message.PercentComplete) ?? 0);
-      onProgress?.({ status, percent });
-    };
+      const status = stringAt(message, 'Status')
+      if (!status) return
+      logger.debug('installation_proxy status', {
+        status,
+        percent: message.PercentComplete
+      })
+      const percent =
+        status === STATUS_COMPLETE
+          ? PERCENT_COMPLETE
+          : (plistInteger(message.PercentComplete) ?? 0)
+      onProgress?.({ status, percent })
+    }
 
   return {
     install: (packagePath, installOptions = {}) =>
       run(
-        installOptions.upgrade ? "Upgrade" : "Install",
+        installOptions.upgrade ? 'Upgrade' : 'Install',
         packagePath,
         [
-          ["PackagePath", packagePath],
-          ["ClientOptions", createDict()],
+          ['PackagePath', packagePath],
+          ['ClientOptions', createDict()]
         ],
-        progress(installOptions.onProgress),
+        progress(installOptions.onProgress)
       ),
 
     uninstall: (bundleId, uninstallOptions = {}) =>
       run(
-        "Uninstall",
+        'Uninstall',
         bundleId,
         [
-          ["ApplicationIdentifier", bundleId],
-          ["ClientOptions", createDict()],
+          ['ApplicationIdentifier', bundleId],
+          ['ClientOptions', createDict()]
         ],
-        progress(uninstallOptions.onProgress),
+        progress(uninstallOptions.onProgress)
       ),
 
     browse: async (browseOptions = {}) => {
-      const apps: InstalledApp[] = [];
+      const apps: InstalledApp[] = []
       const clientOptions = browseOptionsDict(
-        browseOptions.applicationType ?? "User",
-        browseOptions.attributes ?? DEFAULT_APP_ATTRIBUTES,
-      );
-      await run("Browse", "apps", [["ClientOptions", clientOptions]], (message) => {
-        for (const app of browsedApps(message)) apps.push(app);
-      });
-      return apps;
+        browseOptions.applicationType ?? 'User',
+        browseOptions.attributes ?? DEFAULT_APP_ATTRIBUTES
+      )
+      await run(
+        'Browse',
+        'apps',
+        [['ClientOptions', clientOptions]],
+        (message) => {
+          for (const app of browsedApps(message)) apps.push(app)
+        }
+      )
+      return apps
     },
 
     lookup: async (bundleIds, attributes = DEFAULT_APP_ATTRIBUTES) => {
-      const found = new Map<string, InstalledApp>();
+      const found = new Map<string, InstalledApp>()
       await run(
-        "Lookup",
-        bundleIds.join(","),
-        [["ClientOptions", lookupOptionsDict(bundleIds, attributes)]],
+        'Lookup',
+        bundleIds.join(','),
+        [['ClientOptions', lookupOptionsDict(bundleIds, attributes)]],
         (message) => {
-          for (const app of lookedUpApps(message)) found.set(app.bundleId, app);
-        },
-      );
-      return found;
+          for (const app of lookedUpApps(message)) found.set(app.bundleId, app)
+        }
+      )
+      return found
     },
 
-    close: () => link.close(),
-  };
-};
+    close: () => link.close()
+  }
+}
