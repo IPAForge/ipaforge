@@ -9,6 +9,7 @@ import { request as httpRequest, type IncomingMessage } from "node:http";
 import { request as httpsRequest } from "node:https";
 import { Readable } from "node:stream";
 import { rootCertificates } from "node:tls";
+import { createBrotliDecompress, createGunzip, createInflate } from "node:zlib";
 import { encodePem } from "@loadstar/device";
 import type { HttpClient, HttpResponse } from "@loadstar/kernel";
 import { ErrorCode, fromBase64, LoadstarError } from "@loadstar/kernel";
@@ -22,6 +23,27 @@ const appleRoots = APPLE_CERTIFICATES.filter((certificate) => certificate.kind =
 export const TRUSTED_ROOTS: readonly string[] = [...rootCertificates, ...appleRoots];
 
 const MAX_REDIRECTS = 5;
+
+/**
+ * Some Apple endpoints compress responses even when the request did not ask for it. Decompress gzip/deflate/br
+ * here so callers always see the plain body (and drop the header that no longer applies).
+ */
+const decoded = (message: IncomingMessage, headers: Record<string, string>): Readable => {
+  const encoding = (headers["content-encoding"] ?? "").trim().toLowerCase();
+  const decoder =
+    encoding === "gzip" || encoding === "x-gzip"
+      ? createGunzip()
+      : encoding === "deflate"
+        ? createInflate()
+        : encoding === "br"
+          ? createBrotliDecompress()
+          : undefined;
+  if (!decoder) return message;
+  delete headers["content-encoding"];
+  delete headers["content-length"];
+  message.on("error", (error) => decoder.destroy(error));
+  return message.pipe(decoder);
+};
 
 /** Headers that identify the user or this machine; never forwarded to another host on redirect. */
 const SENSITIVE_HEADER =
@@ -109,10 +131,11 @@ export const createNodeHttpClient = (): HttpClient => ({
         }
         continue;
       }
+      const responseHeaders = toHeaders(message);
       return {
         status,
-        headers: toHeaders(message),
-        body: Readable.toWeb(message) as ReadableStream<Uint8Array>,
+        headers: responseHeaders,
+        body: Readable.toWeb(decoded(message, responseHeaders)) as ReadableStream<Uint8Array>,
       };
     }
   },

@@ -13,6 +13,8 @@
   },
   "dependencies": {
     "@loadstar/kernel": "workspace:*",
+    "asn1js": "3.0.10",
+    "pkijs": "3.4.1",
     "zod": "4.6.6"
   }
 }

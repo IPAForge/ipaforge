@@ -208,6 +208,12 @@ importers:
       '@loadstar/kernel':
         specifier: workspace:*
         version: link:../kernel
+      asn1js:
+        specifier: 3.0.10
+        version: 3.0.10
+      pkijs:
+        specifier: 3.4.1
+        version: 3.4.1
       zod:
         specifier: 4.6.6
         version: 4.6.6

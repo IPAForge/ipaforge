@@ -39,7 +39,7 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
   - Apple-facing client identity as remotely updatable data (from the anisette server's `client_info` or signed config), never constants;
   - a full 2FA state machine (device push, SMS number picker, resend, legacy 4-digit codes, server-provided code length, "code already sent" states, security-key explanation);
   - automatic recovery for every known login failure (`references/failure-catalogue.md`): anisette failover and re-provisioning, clock-skew and connectivity preflight, backoff on 429/503, no auto-retry on wrong passwords, account health and ban flags
-- [ ] **4. Developer services**: teams (team picker remembered per Apple ID), certificate lifecycle (reuse by machine name and key, a revoke picker showing which tool created each certificate, per-type revoke, `.p12` export/import with the `machineId` password), App IDs with budgeting before any write (clamped quota, next free slot, normalised names, conserve mode), app groups, devices, provisioning profiles, defensive parsing of every response, and `provisionApp()`, which yields everything the signer needs for an IPA and its extensions
+- [x] **4. Developer services**: teams (team picker remembered per Apple ID), certificate lifecycle (reuse by machine name and key, a revoke picker showing which tool created each certificate, per-type revoke, `.p12` export/import with the `machineId` password), App IDs with budgeting before any write (clamped quota, next free slot, normalised names, conserve mode), app groups, devices, provisioning profiles, defensive parsing of every response, and `provisionApp()`, which yields everything the signer needs for an IPA and its extensions
 - [ ] **5. Installer engine and catalog**:
   - the pipeline runner (progress, cancel, resume, idempotent retry);
   - `@loadstar/catalog`: a release source catalog resolved through the GitHub API, streamed downloads, cache and checksum, and handling for sources that have gone;
@@ -65,3 +65,4 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
 | 1. Signer | 2026-10-15 |
 | 2. Device layer (hardware verification across OSes deferred to the end-to-end test pass) | 2026-10-15 |
 | 3. Apple account (sign-in + device 2FA + app token verified with a real account; SMS refused by Apple) | 2026-10-15 |
+| 4. Developer services (reads verified with a real account; writes exercised in the end-to-end pass) | 2026-10-15 |
