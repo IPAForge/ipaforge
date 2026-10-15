@@ -218,3 +218,34 @@ describe("encrypted file secret store", () => {
     }
   });
 });
+
+describe("file download store", () => {
+  it("keeps only verified downloads and never leaves partial files", async () => {
+    const { createFileDownloadStore } = await import("@desktop/main/adapters/file-download-store.ts");
+    const { readdir } = await import("node:fs/promises");
+    const dir = await mkdtemp(join(tmpdir(), "loadstar-dl-"));
+    const stream = (text: string) =>
+      new ReadableStream<Uint8Array>({
+        start: (controller) => {
+          controller.enqueue(utf8Encode(text));
+          controller.close();
+        },
+      });
+    try {
+      const store = createFileDownloadStore(dir);
+      const file = await store.put("sidestore/stable/0.7.0/abc/SideStore.ipa", stream("ok"), async () => {});
+      expect(utf8Decode(await file.slice(0, 2))).toBe("ok");
+      expect(await store.get("sidestore/stable/0.7.0/abc/SideStore.ipa")).toBeDefined();
+      await expect(
+        store.put("bad/../../escape", stream("no"), async () => {
+          throw new Error("checksum");
+        }),
+      ).rejects.toThrow("checksum");
+      expect(await store.get("bad/../../escape")).toBeUndefined();
+      const leftovers = (await readdir(dir, { recursive: true })).filter((name) => String(name).includes(".partial-"));
+      expect(leftovers).toEqual([]);
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+});
