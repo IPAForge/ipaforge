@@ -34,14 +34,22 @@ export interface TestIdentityOptions {
   readonly issuer?: pkijs.RelativeDistinguishedNames;
 }
 
-export const createTestIdentity = async (options: TestIdentityOptions = {}): Promise<TestIdentity> => {
-  const teamId = options.teamId ?? "ABCDE12345";
-  const commonName = options.commonName ?? `Apple Development: Loadstar Test (${teamId})`;
-  const keys = await crypto.subtle.generateKey(
+// RSA key generation searches for random primes and can take seconds on slow CI runners, so a test file
+// generates one key pair and every identity it creates reuses it; each still gets its own certificate.
+let sharedKeys: Promise<CryptoKeyPair> | undefined;
+const testKeys = (): Promise<CryptoKeyPair> => {
+  sharedKeys ??= crypto.subtle.generateKey(
     { name: "RSASSA-PKCS1-v1_5", modulusLength: 2048, publicExponent: new Uint8Array([1, 0, 1]), hash: "SHA-256" },
     true,
     ["sign", "verify"],
   );
+  return sharedKeys;
+};
+
+export const createTestIdentity = async (options: TestIdentityOptions = {}): Promise<TestIdentity> => {
+  const teamId = options.teamId ?? "ABCDE12345";
+  const commonName = options.commonName ?? `Apple Development: Loadstar Test (${teamId})`;
+  const keys = await testKeys();
 
   const certificate = new pkijs.Certificate();
   certificate.version = 2;

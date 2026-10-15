@@ -54,7 +54,7 @@ pnpm --filter @loadstar/desktop preview  # build, then launch the built app
 pnpm --filter @loadstar/ui dev           # the UI alone in a browser, http://localhost:5173
 ```
 
-Electron downloads its binary the first time the app is launched, not during `pnpm install`. The window is not wired to the Engine yet, so the device and Apple ID pickers are placeholders. See [The User Interface](ui.md).
+Electron downloads its binary (about 100 MB) the first time `dev` or `preview` runs, not during `pnpm install`; `pnpm --filter @loadstar/desktop ensure-electron` does the download on its own. The window is not wired to the Engine yet, so the device and Apple ID pickers are placeholders. See [The User Interface](ui.md).
 
 Opt-in test suites:
 

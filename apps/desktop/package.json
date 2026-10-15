@@ -6,9 +6,10 @@
   "type": "module",
   "main": "out/main/index.js",
   "scripts": {
-    "dev": "electron-vite dev",
+    "dev": "pnpm run ensure-electron && electron-vite dev",
     "build": "electron-vite build",
-    "preview": "electron-vite preview",
+    "preview": "pnpm run ensure-electron && electron-vite preview",
+    "ensure-electron": "node -e \"require('electron')\"",
     "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.renderer.json",
     "device-probe": "tsx scripts/device-probe.ts",
     "apple-probe": "tsx scripts/apple-probe.ts",

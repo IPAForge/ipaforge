@@ -33,6 +33,8 @@ import * as pkijs from "pkijs";
 import { afterAll, describe, expect, it } from "vitest";
 
 const hasher = createHasher();
+/** Starting the external openssl process is slow on Windows CI runners. */
+const EXTERNAL_TOOL_TIMEOUT_MS = 30_000;
 const signingTime = new Date("2026-10-13T12:00:00Z");
 const hasOpenssl = (() => {
   try {
@@ -161,34 +163,38 @@ describe.each(["thin-min14", "thin-min10"])("CMS over the %s CodeDirectories", (
     expect(await signed.verify({ signer: 0, data: toArrayBuffer(primary), checkChain: false })).toBe(true);
   });
 
-  it.skipIf(!hasOpenssl)("verifies with openssl cms (detached content)", async () => {
-    const identity = await createTestIdentity();
-    const cms = await signCodeDirectories(cds, identity, signingTime, hasher);
-    const dir = mkdtempSync(join(temp, `${fixture}-`));
-    writeFileSync(join(dir, "cms.der"), cms);
-    writeFileSync(join(dir, "cd.bin"), cds[0]?.bytes ?? new Uint8Array());
-    writeFileSync(join(dir, "leaf.pem"), identity.pem);
-    const out = execFileSync(
-      "openssl",
-      [
-        "cms",
-        "-verify",
-        "-binary",
-        "-inform",
-        "DER",
-        "-in",
-        "cms.der",
-        "-content",
-        "cd.bin",
-        "-CAfile",
-        "leaf.pem",
-        "-purpose",
-        "any",
-        "-out",
-        "verified.bin",
-      ],
-      { cwd: dir, stdio: ["ignore", "pipe", "pipe"] },
-    );
-    expect(out.toString()).toBe("");
-  });
+  it.skipIf(!hasOpenssl)(
+    "verifies with openssl cms (detached content)",
+    { timeout: EXTERNAL_TOOL_TIMEOUT_MS },
+    async () => {
+      const identity = await createTestIdentity();
+      const cms = await signCodeDirectories(cds, identity, signingTime, hasher);
+      const dir = mkdtempSync(join(temp, `${fixture}-`));
+      writeFileSync(join(dir, "cms.der"), cms);
+      writeFileSync(join(dir, "cd.bin"), cds[0]?.bytes ?? new Uint8Array());
+      writeFileSync(join(dir, "leaf.pem"), identity.pem);
+      const out = execFileSync(
+        "openssl",
+        [
+          "cms",
+          "-verify",
+          "-binary",
+          "-inform",
+          "DER",
+          "-in",
+          "cms.der",
+          "-content",
+          "cd.bin",
+          "-CAfile",
+          "leaf.pem",
+          "-purpose",
+          "any",
+          "-out",
+          "verified.bin",
+        ],
+        { cwd: dir, stdio: ["ignore", "pipe", "pipe"] },
+      );
+      expect(out.toString()).toBe("");
+    },
+  );
 });
