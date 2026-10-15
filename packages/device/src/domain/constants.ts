@@ -4,6 +4,8 @@
 export const USBMUX_HEADER_SIZE = 16;
 export const USBMUX_VERSION_PLIST = 1;
 export const USBMUX_MESSAGE_PLIST = 8;
+/** `kLibUSBMuxVersion` sent with every usbmuxd request. */
+export const USBMUX_LIB_VERSION = 3;
 
 /** usbmuxd `Result` numbers. */
 export const UsbmuxResult = {

@@ -1,9 +1,13 @@
 import { type DeviceProfile, summarizeProfile } from "@device/domain/profiles.ts";
 import type { Link } from "@device/infrastructure/framing/link.ts";
 import { type FrameLimits, receivePlist, sendPlist } from "@device/infrastructure/framing/plist-frames.ts";
+import { plistInteger } from "@device/infrastructure/framing/plist-values.ts";
 import { createDict, ErrorCode, LoadstarError, type Logger, type PlistDict, type PlistValue } from "@loadstar/kernel";
 
 const PROFILE_TYPE = "Provisioning";
+const STATUS_OK = 0;
+/** Stands in for a missing or non-integer `Status`, so it reads as a failure. */
+const STATUS_UNKNOWN = -1;
 
 export interface Misagent {
   /** All provisioning profiles on the device. */
@@ -13,9 +17,20 @@ export interface Misagent {
   close(): Promise<void>;
 }
 
-const statusOf = (response: PlistDict): number => {
-  const status = response.Status;
-  return typeof status === "number" ? status : typeof status === "bigint" ? Number(status) : -1;
+const statusOf = (response: PlistDict): number => plistInteger(response.Status) ?? STATUS_UNKNOWN;
+
+const payloads = (response: PlistDict): Uint8Array[] =>
+  Array.isArray(response.Payload) ? response.Payload.filter((item) => item instanceof Uint8Array) : [];
+
+const ensureOk = (response: PlistDict, messageType: string): PlistDict => {
+  const status = statusOf(response);
+  if (status !== STATUS_OK) {
+    throw new LoadstarError(ErrorCode.ServiceUnavailable, {
+      message: `misagent ${messageType} failed with status ${status}`,
+      data: { misagentStatus: status, messageType },
+    });
+  }
+  return response;
 };
 
 export const createMisagent = (link: Link, options: { limits: FrameLimits; logger: Logger }): Misagent => {
@@ -27,32 +42,19 @@ export const createMisagent = (link: Link, options: { limits: FrameLimits; logge
     return receivePlist(link, limits, "misagent");
   };
 
-  const ensureOk = (response: PlistDict, messageType: string): PlistDict => {
-    const status = statusOf(response);
-    if (status !== 0) {
-      throw new LoadstarError(ErrorCode.ServiceUnavailable, {
-        message: `misagent ${messageType} failed with status ${status}`,
-        data: { misagentStatus: status, messageType },
-      });
-    }
-    return response;
+  const summarize = (raw: Uint8Array): DeviceProfile[] => {
+    const profile = summarizeProfile(raw, limits.plist);
+    if (profile) return [profile];
+    logger.warn("misagent: skipped an unreadable profile", { bytes: raw.byteLength });
+    return [];
   };
-
-  const payloads = (response: PlistDict): Uint8Array[] =>
-    Array.isArray(response.Payload) ? response.Payload.filter((item) => item instanceof Uint8Array) : [];
 
   return {
     list: async () => {
       // CopyAll (iOS 9.3+) returns every profile; older systems only answer Copy.
       let response = await request("CopyAll");
-      if (statusOf(response) !== 0) response = await request("Copy");
-      const profiles: DeviceProfile[] = [];
-      for (const raw of payloads(ensureOk(response, "CopyAll"))) {
-        const profile = summarizeProfile(raw, limits.plist);
-        if (profile) profiles.push(profile);
-        else logger.warn("misagent: skipped an unreadable profile", { bytes: raw.byteLength });
-      }
-      return profiles;
+      if (statusOf(response) !== STATUS_OK) response = await request("Copy");
+      return payloads(ensureOk(response, "CopyAll")).flatMap(summarize);
     },
 
     install: async (profile) => {

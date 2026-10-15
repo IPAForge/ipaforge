@@ -1,6 +1,7 @@
 // usbmuxd responses, validated at the boundary.
 
 import type { UsbmuxDevice } from "@device/domain/device.ts";
+import { compact } from "@loadstar/kernel";
 import { z } from "zod";
 
 const integer = z.union([z.number().int(), z.bigint().transform(Number)]);
@@ -31,9 +32,10 @@ export const buidResponseSchema = z.looseObject({ BUID: z.string().min(1) });
 export const pairRecordResponseSchema = z.looseObject({ PairRecordData: z.instanceof(Uint8Array) });
 
 /** usbmuxd's `SerialNumber` is the UDID; it reports USB as "USB" and Wi-Fi as "Network". */
-export const toUsbmuxDevice = (properties: UsbmuxProperties, deviceId: number): UsbmuxDevice => ({
-  udid: properties.SerialNumber,
-  deviceId,
-  connectionType: properties.ConnectionType === "Network" ? "network" : "usb",
-  ...(properties.ProductID === undefined ? {} : { productId: properties.ProductID }),
-});
+export const toUsbmuxDevice = (properties: UsbmuxProperties, deviceId: number): UsbmuxDevice =>
+  compact({
+    udid: properties.SerialNumber,
+    deviceId,
+    connectionType: properties.ConnectionType === "Network" ? ("network" as const) : ("usb" as const),
+    productId: properties.ProductID,
+  });

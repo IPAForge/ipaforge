@@ -1,4 +1,4 @@
-import { AFC_HEADER_SIZE, AFC_MAGIC } from "@device/infrastructure/afc/constants.ts";
+import { AFC_HEADER_SIZE, AFC_MAGIC, AFC_U64_SIZE } from "@device/infrastructure/afc/constants.ts";
 import type { Link } from "@device/infrastructure/framing/link.ts";
 import { ByteWriter, concatBytes, ErrorCode, equalBytes, LoadstarError, utf8Decode } from "@loadstar/kernel";
 
@@ -55,3 +55,22 @@ export const splitCStrings = (bytes: Uint8Array): string[] => {
   if (parts.at(-1) === "") parts.pop();
   return parts;
 };
+
+/** Key/value pairs from alternating NUL-terminated strings (file info, device info). */
+export const keyValues = (strings: readonly string[]): Record<string, string> => {
+  const out: Record<string, string> = Object.create(null);
+  for (let i = 0; i + 1 < strings.length; i += 2) out[strings[i] as string] = strings[i + 1] as string;
+  return out;
+};
+
+/** A NUL-terminated UTF-8 string (paths in request headers). */
+export const cstring = (text: string): Uint8Array => new ByteWriter().cstring(text).toBytes();
+
+/** A little-endian u64 (file handles in request headers). */
+export const u64 = (value: bigint): Uint8Array => new ByteWriter(AFC_U64_SIZE).u64le(value).toBytes();
+
+/** The little-endian u64 at the start of a payload, or `undefined` when the payload is too short. */
+export const readU64 = (payload: Uint8Array): bigint | undefined =>
+  payload.byteLength >= AFC_U64_SIZE
+    ? new DataView(payload.buffer, payload.byteOffset).getBigUint64(0, true)
+    : undefined;

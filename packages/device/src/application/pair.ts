@@ -1,64 +1,74 @@
+// Pairing: asks the device to trust this computer and stores the resulting pair record.
 import type { DeviceContext } from "@device/application/context.ts";
-import { LOCKDOWN_PORT } from "@device/domain/constants.ts";
+import { openLockdown } from "@device/application/lockdown.ts";
+import { type PairRecordStore, savePairRecord } from "@device/application/pair-records.ts";
 import { shortUdid, type UsbmuxDevice } from "@device/domain/device.ts";
-import {
-  lockdownPairRecord,
-  type PairRecord,
-  parsePairRecord,
-  serializePairRecord,
-} from "@device/domain/pairing/pair-record.ts";
-import { createLockdownClient, type LockdownClient } from "@device/infrastructure/lockdown/client.ts";
+import { lockdownPairRecord, type PairRecord } from "@device/domain/pairing/pair-record.ts";
+import { withClient } from "@device/infrastructure/closeable.ts";
+import type { LockdownClient } from "@device/infrastructure/lockdown/client.ts";
 import { createPairRecord } from "@device/infrastructure/pairing/certificates.ts";
-import { ErrorCode, LoadstarError } from "@loadstar/kernel";
+import { compact, ErrorCode, LoadstarError } from "@loadstar/kernel";
 
 export type PairingProgress =
   | { readonly stage: "waiting_for_trust" }
   | { readonly stage: "waiting_for_unlock" }
-  | { readonly stage: "paired"; readonly savedTo: "usbmuxd" | "secret_store" };
+  | { readonly stage: "paired"; readonly savedTo: PairRecordStore };
+
+type WaitingStage = "waiting_for_trust" | "waiting_for_unlock";
 
 export interface PairOptions {
   readonly onProgress?: (event: PairingProgress) => void;
   readonly signal?: AbortSignal;
 }
 
-/** Key under which a pair record is kept when usbmuxd refuses to store it. */
-export const pairRecordSecretKey = (udid: string): string => `pair-record/${udid}`;
-
-export const openLockdown = async (ctx: DeviceContext, device: UsbmuxDevice): Promise<LockdownClient> => {
-  const link = await ctx.usbmux.connect(device.deviceId, LOCKDOWN_PORT);
-  const lockdown = createLockdownClient(link, {
-    label: ctx.deps.config.label,
-    limits: ctx.limits,
-    logger: ctx.deps.logger,
-  });
-  try {
-    await lockdown.queryType();
-    return lockdown;
-  } catch (error) {
-    await lockdown.close();
-    throw error;
-  }
+/** A non-empty string value from lockdownd, or `undefined` (missing, unreadable or empty). */
+const optionalString = async (lockdown: LockdownClient, key: string): Promise<string | undefined> => {
+  const value = await lockdown.getValue(key).catch(() => undefined);
+  return typeof value === "string" && value !== "" ? value : undefined;
 };
 
-/** The pair record for `udid`: usbmuxd's (the OS trusts this host) first, then Loadstar's own copy. */
-export const getPairRecord = async (ctx: DeviceContext, udid: string): Promise<PairRecord | undefined> => {
-  const { logger, config, secrets } = ctx.deps;
-  const fromUsbmux = await ctx.usbmux.readPairRecord(udid);
-  if (fromUsbmux) {
-    logger.debug("pair record from usbmuxd", { device: shortUdid(udid) });
-    return parsePairRecord(fromUsbmux, config.plist);
+const readDevicePublicKey = async (lockdown: LockdownClient): Promise<Uint8Array> => {
+  const devicePublicKey = await lockdown.getValue("DevicePublicKey");
+  if (!(devicePublicKey instanceof Uint8Array)) {
+    throw new LoadstarError(ErrorCode.DeviceProtocolError, { message: "device returned no DevicePublicKey" });
   }
-  const stored = await secrets.get(pairRecordSecretKey(udid));
-  if (stored) {
-    logger.debug("pair record from the secret store", { device: shortUdid(udid) });
-    return parsePairRecord(stored, config.plist);
-  }
+  return devicePublicKey;
+};
+
+/** What the user still has to do when `Pair` fails with `error`; `undefined` when it is a real failure. */
+const waitingStage = (error: unknown): WaitingStage | undefined => {
+  if (!(error instanceof LoadstarError)) return undefined;
+  if (error.code === ErrorCode.DeviceLocked) return "waiting_for_unlock";
+  if (error.code === ErrorCode.PairingPending) return "waiting_for_trust";
   return undefined;
 };
 
-const optionalString = async (lockdown: LockdownClient, key: string): Promise<string | undefined> => {
-  const value = await lockdown.getValue(key).catch(() => undefined);
-  return typeof value === "string" ? value : undefined;
+/**
+ * Sends `Pair` until the user answers the trust dialog (and unlocks the device), or `pairingTimeoutMs` passes.
+ * Returns the escrow bag the device hands out.
+ */
+const pairUntilTrusted = async (
+  ctx: DeviceContext,
+  lockdown: LockdownClient,
+  record: PairRecord,
+  options: PairOptions,
+): Promise<Uint8Array | undefined> => {
+  const { clock, sleep, config } = ctx.deps;
+  const deadline = clock.now().getTime() + config.pairingTimeoutMs;
+  for (;;) {
+    options.signal?.throwIfAborted();
+    try {
+      return await lockdown.pair(lockdownPairRecord(record));
+    } catch (error) {
+      const stage = waitingStage(error);
+      if (!stage) throw error;
+      if (clock.now().getTime() >= deadline) {
+        throw new LoadstarError(ErrorCode.DeviceTimeout, { cause: error, data: { stage: "pairing" } });
+      }
+      options.onProgress?.({ stage });
+      await sleep(config.pairingPollIntervalMs, options.signal);
+    }
+  }
 };
 
 /**
@@ -70,69 +80,17 @@ export const pairDevice = async (
   ctx: DeviceContext,
   device: UsbmuxDevice,
   options: PairOptions = {},
-): Promise<PairRecord> => {
-  const { logger, clock, sleep, config, secrets } = ctx.deps;
-  const lockdown = await openLockdown(ctx, device);
-  try {
-    const devicePublicKey = await lockdown.getValue("DevicePublicKey");
-    if (!(devicePublicKey instanceof Uint8Array)) {
-      throw new LoadstarError(ErrorCode.DeviceProtocolError, { message: "device returned no DevicePublicKey" });
-    }
+): Promise<PairRecord> =>
+  withClient(await openLockdown(ctx, device), async (lockdown) => {
+    const devicePublicKey = await readDevicePublicKey(lockdown);
     const wifiMacAddress = await optionalString(lockdown, "WiFiAddress");
     const systemBuid = await ctx.usbmux.readBuid();
-    const created = await createPairRecord({ devicePublicKey, systemBuid, now: clock.now() });
+    const created = await createPairRecord({ devicePublicKey, systemBuid, now: ctx.deps.clock.now() });
+    const escrowBag = await pairUntilTrusted(ctx, lockdown, created, options);
 
-    const deadline = clock.now().getTime() + config.pairingTimeoutMs;
-    let escrowBag: Uint8Array | undefined;
-    for (;;) {
-      options.signal?.throwIfAborted();
-      try {
-        escrowBag = await lockdown.pair(lockdownPairRecord(created));
-        break;
-      } catch (error) {
-        const waiting =
-          error instanceof LoadstarError &&
-          (error.code === ErrorCode.PairingPending || error.code === ErrorCode.DeviceLocked);
-        if (!waiting) throw error;
-        if (clock.now().getTime() >= deadline) {
-          throw new LoadstarError(ErrorCode.DeviceTimeout, { cause: error, data: { stage: "pairing" } });
-        }
-        options.onProgress?.({
-          stage: (error as LoadstarError).code === ErrorCode.DeviceLocked ? "waiting_for_unlock" : "waiting_for_trust",
-        });
-        await sleep(config.pairingPollIntervalMs, options.signal);
-      }
-    }
-
-    const record: PairRecord = {
-      ...created,
-      ...(escrowBag ? { escrowBag } : {}),
-      ...(wifiMacAddress ? { wifiMacAddress } : {}),
-      udid: device.udid,
-    };
-    const bytes = serializePairRecord(record);
-    let savedTo: "usbmuxd" | "secret_store" = "usbmuxd";
-    try {
-      await ctx.usbmux.savePairRecord(device.udid, bytes, device.deviceId);
-    } catch (error) {
-      logger.warn("usbmuxd did not store the pair record; keeping it in the secret store", { cause: error });
-      await secrets.set(pairRecordSecretKey(device.udid), bytes);
-      savedTo = "secret_store";
-    }
-    logger.info("paired", { device: shortUdid(device.udid), savedTo });
+    const record: PairRecord = compact({ ...created, escrowBag, wifiMacAddress, udid: device.udid });
+    const savedTo = await savePairRecord(ctx, device, record);
+    ctx.deps.logger.info("paired", { device: shortUdid(device.udid), savedTo });
     options.onProgress?.({ stage: "paired", savedTo });
     return record;
-  } finally {
-    await lockdown.close();
-  }
-};
-
-/** Exports a pair record as plist bytes (for backups or other hosts). */
-export const exportPairRecord = (record: PairRecord): Uint8Array => serializePairRecord(record);
-
-/** Imports a pair record from plist bytes into Loadstar's own store. */
-export const importPairRecord = async (ctx: DeviceContext, udid: string, data: Uint8Array): Promise<PairRecord> => {
-  const record = parsePairRecord(data, ctx.deps.config.plist);
-  await ctx.deps.secrets.set(pairRecordSecretKey(udid), serializePairRecord(record));
-  return record;
-};
+  });
