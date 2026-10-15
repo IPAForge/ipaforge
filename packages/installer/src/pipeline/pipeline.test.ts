@@ -1,4 +1,6 @@
-import { type PipelineEvent, pipeline, type Step } from "@installer/pipeline/pipeline.ts";
+import type { PipelineEvent } from "@installer/pipeline/events.ts";
+import { pipeline } from "@installer/pipeline/pipeline.ts";
+import type { Step } from "@installer/pipeline/step.ts";
 import { ErrorCode, LoadstarError } from "@loadstar/kernel";
 import { describe, expect, it } from "vitest";
 

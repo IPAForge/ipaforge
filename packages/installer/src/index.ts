@@ -1,13 +1,7 @@
 // Public API of @loadstar/installer.
-export {
-  type Checkpoint,
-  isTransient,
-  type Pipeline,
-  type PipelineEvent,
-  type PipelineResult,
-  type PromptRequest,
-  pipeline,
-  type RunOptions,
-  type Step,
-  type StepContext,
-} from "@installer/pipeline/pipeline.ts";
+export { isTransient } from "@installer/pipeline/errors.ts";
+export type { PipelineEvent } from "@installer/pipeline/events.ts";
+export { type Pipeline, pipeline } from "@installer/pipeline/pipeline.ts";
+export type { Checkpoint, PipelineResult } from "@installer/pipeline/result.ts";
+export type { RunOptions } from "@installer/pipeline/run.ts";
+export type { PromptRequest, Step, StepContext } from "@installer/pipeline/step.ts";
