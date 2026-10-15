@@ -40,18 +40,22 @@ It also records what the app needs from a device: its `MinimumOSVersion`, its de
 `planSideloadIdentity` turns the inspection into the identities to register for a team.
 
 ```ts
-import { checkCompatibility, inspectIpa, planSideloadIdentity } from "@loadstar/signer";
+import {
+  checkCompatibility,
+  inspectIpa,
+  planSideloadIdentity
+} from '@loadstar/signer'
 
-const inspection = await inspectIpa(source, { signal });
+const inspection = await inspectIpa(source, { signal })
 // inspection.app: { path, identifier, name, version?, minimumOSVersion?, deviceFamilies, architectures }
 // inspection.nested: every .appex (PlugIns/, Extensions/, Watch/*.app/PlugIns/) and watch app
 // inspection.appGroups / keychainAccessGroups: from the main executable's entitlements
 // inspection.altAppGroups: from the main app's Info.plist
 
-checkCompatibility(inspection, { iosVersion: "18.0", deviceClass: "iPhone" });
+checkCompatibility(inspection, { iosVersion: '18.0', deviceClass: 'iPhone' })
 // undefined, or e.g. { code: "signer.unsupported_ios", data: { minimumOSVersion: "26.0", iosVersion: "18.0" } }
 
-const plan = planSideloadIdentity(inspection, "ABCDE12345");
+const plan = planSideloadIdentity(inspection, 'ABCDE12345')
 // plan.newMainBundleId: "<original ID>.ABCDE12345"
 // plan.bundles: [{ identifier, name }, …], main app first (the shape the developer services API provisions)
 // plan.appGroup: "group.<newMainBundleId>" when the app declares any app group
@@ -61,30 +65,35 @@ const plan = planSideloadIdentity(inspection, "ABCDE12345");
 ### Signing
 
 ```ts
-import { bytesFileSource } from "@loadstar/kernel";
-import { resolveChain, signIpa } from "@loadstar/signer";
+import { bytesFileSource } from '@loadstar/kernel'
+import { resolveChain, signIpa } from '@loadstar/signer'
 
 // Bundled Apple intermediates first; unknown ones are downloaded from the certificate's issuer
 // link and accepted only if they verifiably chain to a pinned Apple root.
-const { chain } = await resolveChain(certificate, { fetchIssuer: (url) => http.getBytes(url) });
+const { chain } = await resolveChain(certificate, {
+  fetchIssuer: (url) => http.getBytes(url)
+})
 
-const { ipa, summary } = await signIpa(bytesFileSource("SideStore.ipa", ipaBytes), {
-  signing: {
-    kind: "identity",
-    identity: { certificate, chain, privateKey }, // privateKey: CryptoKey
-    teamId: "ABCDE12345",
-  },
-  sideload: {
-    teamId: "ABCDE12345",
-    newMainBundleId: "com.SideStore.SideStore.ABCDE12345",
-    certificate,
-    profiles, // Map<new bundle ID, raw provisioning profile>
-    deviceUdid,
-    pruneUnprovisioned: true, // drop extensions the account could not provision
-  },
-  onProgress: (event) => console.log(event.stage),
-  signal, // AbortSignal
-});
+const { ipa, summary } = await signIpa(
+  bytesFileSource('SideStore.ipa', ipaBytes),
+  {
+    signing: {
+      kind: 'identity',
+      identity: { certificate, chain, privateKey }, // privateKey: CryptoKey
+      teamId: 'ABCDE12345'
+    },
+    sideload: {
+      teamId: 'ABCDE12345',
+      newMainBundleId: 'com.SideStore.SideStore.ABCDE12345',
+      certificate,
+      profiles, // Map<new bundle ID, raw provisioning profile>
+      deviceUdid,
+      pruneUnprovisioned: true // drop extensions the account could not provision
+    },
+    onProgress: (event) => console.log(event.stage),
+    signal // AbortSignal
+  }
+)
 // `ipa` is a ReadableStream<Uint8Array>; `summary.bundles` lists every signed bundle and its cdhash.
 ```
 
@@ -100,12 +109,12 @@ await signIpa(source, {
   sideload,
   additions: (bundles) => [
     {
-      bundlePath: "", // CodeBundle.path; "" is the main app
-      files: new Map([["Config.bin", bytes]]), // paths relative to that bundle
-      infoPlist: createDict([["SomeKey", "value"]]), // keys to set
-    },
-  ],
-});
+      bundlePath: '', // CodeBundle.path; "" is the main app
+      files: new Map([['Config.bin', bytes]]), // paths relative to that bundle
+      infoPlist: createDict([['SomeKey', 'value']]) // keys to set
+    }
+  ]
+})
 ```
 
 A file path that would leave its bundle (`..`, absolute, backslashes, empty segments), or a `bundlePath` that is
@@ -136,17 +145,25 @@ default that matches Apple `codesign` and can be overridden per call:
 await signIpa(source, {
   signing,
   // Page size, hash algorithms and CMS reservation. "codesign" follows Apple's own choice.
-  policy: { pageSize: "codesign", hashAlgorithms: "codesign", cmsReservation: 18_000 },
+  policy: {
+    pageSize: 'codesign',
+    hashAlgorithms: 'codesign',
+    cmsReservation: 18_000
+  },
   // Hostile-input limits; override any subset.
   limits: {
-    plist: { maxDepth: 64, maxExpandedNodes: 1_000_000, maxExpandedBytes: 64 * 1024 * 1024 },
+    plist: {
+      maxDepth: 64,
+      maxExpandedNodes: 1_000_000,
+      maxExpandedBytes: 64 * 1024 * 1024
+    },
     machO: { maxFatArches: 16 },
-    ipa: { maxEntries: 200_000, maxUncompressedBytes: 4 * 1024 ** 3 },
+    ipa: { maxEntries: 200_000, maxUncompressedBytes: 4 * 1024 ** 3 }
   },
   // Output archive: compression level 0–9 (0 = store), plus the stored-extension pattern,
   // the members dropped on read and the entry timestamp.
-  archive: { compressionLevel: 0 },
-});
+  archive: { compressionLevel: 0 }
+})
 ```
 
 The defaults are exported as `DEFAULT_SIGNING_POLICY`, `DEFAULT_SIGNER_LIMITS`, `DEFAULT_DROPPED_MEMBERS`,

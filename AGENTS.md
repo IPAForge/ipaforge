@@ -31,7 +31,7 @@ loadstar/
 ├── apps/
 │   └── desktop/      # Electron composition root + Node adapters
 ├── scripts/          # check-boundaries.ts (+ boundaries.config.ts edge table), check-locales.ts
-├── tooling/          # Biome GritQL lint plugins, shared Vite aliases
+├── tooling/          # Biome GritQL lint plugins, shared Vite aliases, ESLint plugins (own package: TypeScript 6 for the parser)
 ├── fixtures/         # golden Apple codesign outputs for signer tests
 └── docs/             # user, contributor and design documentation
 ```
@@ -61,11 +61,12 @@ loadstar/
 | `apps/desktop/electron.vite.config.ts` | electron-vite builds for main, preload and renderer (`pnpm --filter @loadstar/desktop dev` / `build`) |
 | `packages/ui/src/App.tsx` | UI root that every host mounts: providers (services, query, language, theme) + router with the shell |
 | `packages/ui/src/locales/en.json` | English UI strings, the source of truth for every translation (`status.json` lists languages and drafts) |
-| `packages/ui/src/utils/i18n/` | i18next setup, typed keys, language matching and store, on-demand locale loading (`prepareLanguage`), pseudo-locale, `Intl` formatters |
+| `packages/ui/src/i18n/` | i18next setup, typed keys, language matching and store, on-demand locale loading (`prepareLanguage`), pseudo-locale, `Intl` formatters |
 | `packages/ui/src/main.tsx` | Browser entry for the UI (`pnpm --filter @loadstar/ui dev` / `build`) |
 | `pnpm-workspace.yaml` / `turbo.json` | Workspace and task graph |
 | `packages/kernel/src/index.ts` | LoadstarError/ErrorCode, ports, logger, byte utilities |
 | `scripts/check-boundaries.ts` | Architecture dependency-rule checker |
+| `biome.json` / `eslint.config.js` | Code style: Biome formats and lints, ESLint only adds blank lines |
 | `scripts/check-locales.ts` | Locale checker: keys, ICU syntax and placeholders vs `en.json`, completion per language |
 | `.github/workflows/ci.yml` | Lint, typecheck, boundaries, locales and tests on Linux, Windows and macOS |
 

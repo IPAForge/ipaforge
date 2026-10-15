@@ -1,0 +1,16 @@
+{
+  "name": "@loadstar/tooling-eslint",
+  "private": true,
+  "type": "module",
+  "description": "ESLint plugins for the root eslint.config.js, in their own package so typescript-eslint resolves TypeScript 6 (TypeScript 7 ships no JS API).",
+  "exports": {
+    ".": "./index.js"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@stylistic/eslint-plugin": "5.10.0",
+    "eslint": "10.11.0",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.71.0"
+  }
+}

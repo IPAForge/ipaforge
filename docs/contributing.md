@@ -11,7 +11,8 @@ Thanks for helping. Loadstar is an open-source desktop app (Windows, macOS, Linu
 3. Make the change. Run the checks locally (CI runs the same):
    ```bash
    pnpm install
-   pnpm run verify   # lint, typecheck, boundaries, tests
+   pnpm run verify   # lint, typecheck, boundaries, locales, tests
+   pnpm lint:fix     # format, sort imports and fix what lint can
    ```
 4. **Open a pull request into `main`.** Fill in the template: what changed, why, and how you verified it.
 5. CI must pass on Linux, Windows and macOS. The maintainer reviews it.
@@ -52,9 +53,25 @@ This project follows the [Code of Conduct](CODE_OF_CONDUCT.md). Security issues 
 - **Merging:** squash merge only, so `main` keeps a linear history with one commit per PR. Only the maintainer merges.
 - **Contributors' own forks:** contributors work in forks and do not need write access. CI on pull requests from first-time contributors waits for the maintainer's approval, and runs with a read-only token and no secrets.
 
+## Editor setup
+
+The repository ships VS Code settings in `.vscode/`. Install the two recommended extensions when VS Code offers them:
+
+- **Biome** (`biomejs.biome`) formats and lints;
+- **ESLint** (`dbaeumer.vscode-eslint`) adds the blank lines between statements.
+
+Formatting happens on save: Biome formats the file and sorts its imports, and ESLint adds the blank lines. Outside VS Code (or to fix the whole repository at once), run:
+
+```bash
+pnpm lint:fix
+```
+
+`pnpm lint` (part of `pnpm verify` and CI) fails on unformatted code, unsorted imports and missing blank lines.
+
 ## Conventions (summary)
 
 - TypeScript strict, ESM only. Files are `kebab-case.ts`.
+- Single quotes, no semicolons, no trailing commas, 80 columns, 2-space indent; `type` rather than `interface`. Biome and ESLint enforce it (see [conventions](design/conventions.md#formatting-and-lint)).
 - Arrow functions only (`const name = () => …`). `function` declarations fail lint through a Biome GritQL plugin.
 - Absolute imports only: `@signer/domain/…` inside a package, `@loadstar/kernel` across packages. Relative imports fail `pnpm check:boundaries`.
 - `packages/*` are platform-free: no `node:*`, `electron` or DOM-only APIs. `pnpm check:boundaries` enforces this.

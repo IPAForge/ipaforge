@@ -1,6 +1,7 @@
 packages:
   - "packages/*"
   - "apps/*"
+  - "tooling/eslint"
 
 # Dependencies allowed to run install scripts (pnpm blocks all others).
 allowBuilds:

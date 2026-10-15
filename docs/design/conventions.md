@@ -6,10 +6,37 @@
 
 - Files: `kebab-case.ts` / `kebab-case.tsx`; tests sit next to the source as `*.test.ts`. React components follow the same rule (`top-bar.tsx` exports `TopBar`). The one exception is the UI's root component, `packages/ui/src/App.tsx` (with `App.test.tsx`), which keeps the name every React project uses.
 - Variables and functions: `camelCase`; booleans read as predicates (`isLocked`, `hasPairRecord`)
-- Types, interfaces, classes, React components: `PascalCase`; no `I` prefix on interfaces
+- Types, classes, React components: `PascalCase`; no `I` prefix on object types
 - Constants: `camelCase`, except frozen lookup tables, which use `PascalCase` objects with `as const` (e.g. `ErrorCode`)
 - Packages: `@loadstar/<context>` (`kernel`, `signer`, `device`, `apple`, `catalog`, `installer`, `rpc`, `ui`)
 - Binary-format constants keep Apple's names (`CSMAGIC_CODEDIRECTORY`, `LC_CODE_SIGNATURE`) so they stay grep-able against the XNU headers
+
+## Formatting and lint
+
+Biome formats and lints everything (`biome.json`). ESLint (`eslint.config.js`) does one thing Biome can't: blank lines between statements. `pnpm lint` runs both, and `pnpm lint:fix` fixes both. Editors format on save (see [contributing](../contributing.md#editor-setup)).
+
+- **Style** for JS, TS and TSX: single quotes (double quotes in JSX attributes), no semicolons, no trailing commas, 80 columns, 2-space indent.
+
+  ```ts
+  export const label = (name: string) => {
+    const trimmed = name.trim()
+
+    return trimmed === '' ? 'Untitled' : trimmed
+  }
+  ```
+
+- **Imports** are sorted by Biome into four groups, separated by a blank line and sorted alphabetically within each:
+  1. Node built-ins (`node:fs`);
+  2. external packages (`react`, `zod`);
+  3. our own: `@loadstar/*` and every `@<alias>/*` from `tsconfig.base.json` `paths` (`@kernel/…`, `@ui/…`);
+  4. relative paths (rare, since imports are absolute).
+
+  When you add an alias to `tsconfig.base.json` `paths`, add it to both lists of the `organizeImports` groups in `biome.json` (the exclusion from external packages and the "our own" group).
+- **`type`, not `interface`** (`useConsistentTypeDefinitions`): `type Props = { … }`, and `type A = B & { … }` where an interface would extend. The one exception is module augmentation (`declare module '…' { interface … }`), which TypeScript only allows on interfaces; those keep a `biome-ignore` saying so (`router.tsx`, `i18n/setup/i18next-types.ts`).
+- **`readonly` where mutation would be a bug.** Engine packages (`kernel`, `signer`, `device`, `apple`, `catalog`, `installer`, `rpc`) mark fields `readonly` and use `readonly T[]` / `ReadonlyMap`, because records travel through many functions. React component props in `packages/ui` don't: React already treats props as read-only, so `readonly` there only adds noise. Non-prop UI types (options, theme tokens, shared state) keep it, and `readonly T[]` stays wherever a prop must accept read-only arrays.
+- **Blank lines** (ESLint `@stylistic/padding-line-between-statements`): one after the import block, and one before a `return` that follows a `const` or `let` declaration.
+- **Unused code:** unused imports are errors; unused variables are warnings, except names starting with `_`.
+- **`console`** warns everywhere except the probe CLIs, `scripts/`, the log sinks and tests (an override in `biome.json`, not inline ignores).
 
 ## Functions
 
@@ -54,18 +81,18 @@
 - Build UI from HeroUI components and Tailwind utilities only. No `.css` files beyond the single entry import, and no `style={{}}` for theming.
 - Every user-visible string goes through i18next (`t("…")`), so string literals don't appear in JSX. The Biome GritQL plugin `tooling/biome/no-jsx-literal-text.grit` enforces this for `packages/ui/src/**/*.tsx`: it rejects JSX text containing a letter and string or template literals in `aria-label`, `aria-description`, `title`, `placeholder`, `label` and `alt`. Props nobody sees or hears (`className`, `key`, `id`, `data-testid`, `href`, …) may hold literals.
 - Strings live in `packages/ui/src/locales/<language>.json`, nested by feature (`nav.install`, `settings.language.title`), in ICU MessageFormat (`{count, plural, one {…} other {…}}`). `en.json` is the source of truth; `status.json` lists every language as `source`, `draft` or `reviewed`.
-- Keys are typed: `t()` accepts only keys of `en.json` (react-i18next `CustomTypeOptions`, `utils/i18n/i18next-types.ts`). Every `ErrorCode` needs `errors.<code>.title` and `.body`, every recovery action `recovery.<id>`, and every step label its key; a missing one fails typecheck (`utils/i18n/required-keys.ts`), and a test checks the same keys in every shipped language. `pnpm check:locales` fails on missing or extra keys, broken ICU or changed placeholders in any language.
+- Keys are typed: `t()` accepts only keys of `en.json` (react-i18next `CustomTypeOptions`, `i18n/setup/i18next-types.ts`). Every `ErrorCode` needs `errors.<code>.title` and `.body`, every recovery action `recovery.<id>`, and every step label its key; a missing one fails typecheck (`i18n/required-keys.ts`), and a test checks the same keys in every shipped language. `pnpm check:locales` fails on missing or extra keys, broken ICU or changed placeholders in any language.
 - Only `en.json` is bundled; other languages load on demand (`import.meta.glob`). Hosts `await prepareLanguage(services)` before rendering `<App language={…}/>`, and language changes go through `useLanguage().choose`, which loads before switching.
 - Format dates, numbers, lists and relative times with `useFormat()` (standard `Intl`, memoised per locale), never by hand. Error text comes from the code's keys, never from `LoadstarError.message`.
 - Direction-dependent icons (a "next" chevron, a "back" arrow) use `MirroredIcon`, which flips them in right-to-left languages.
 - Components never call adapters or the engine directly. They use `EngineClient` hooks (TanStack Query) from `ui/hooks`.
 - The host reaches the UI only through `UiServices` (`ui/services`), passed to `<App services={…}/>`: the kernel `Logger`, `PreferencesStore` (synchronous `read`/`write` of UI preferences such as palette, colour mode and language), `ColorSchemeSource` (the OS light/dark preference) and `LocaleSource` (the OS's preferred languages). `ui/services` also holds their implementations: browser ones (`createBrowserServices`, used by `src/main.tsx`) and in-memory ones for tests. The Electron renderer passes its own. `App` touches no browser global at import time.
-- `packages/ui/src` layout: `App.tsx` (providers + router), `main.tsx` (browser entry), `router.tsx`, `sections.ts`, `styles.css`, then `components/`, `features/<section>/`, `hooks/`, `services/`, `theme/`, `locales/` (JSON per language) and `utils/` (`utils/i18n/`: the i18next setup and language logic).
+- `packages/ui/src` layout: `App.tsx` (providers + router), `main.tsx` (browser entry), `router.tsx`, `sections.ts`, `styles.css`, then `components/`, `features/<section>/`, `hooks/`, `services/`, `theme/`, `i18n/`, `locales/` (JSON per language) and `utils/` (small generic helpers only). Group a folder's files into subfolders by job once it holds more than a handful (e.g. `i18n/setup|languages|loading|provider`, `theme/palettes|store|provider`, `services/preferences|system|logging`); keep tests next to the file they test.
 - Use logical Tailwind utilities only (`ms-`/`me-`, `ps-`/`pe-`, `start-`/`end-`, `border-s`/`border-e`), so layouts mirror in right-to-left languages.
 
 ## Logging
 
-- Use the `Logger` port only (`logger.debug|info|warn|error(msg, fields)`), with structured fields. Never call `console` directly; the one exception is the UI's browser log sink (`packages/ui/src/services/console-log-sink.ts`).
+- Use the `Logger` port only (`logger.debug|info|warn|error(msg, fields)`), with structured fields. Never call `console` directly (Biome's `noConsole` warns). The exceptions are the log sinks that write to a console (`packages/ui/src/services/logging/console-log-sink.ts`, `apps/desktop/src/main/logger.ts`, the kernel logger's last-resort fallback), the probe CLIs and scripts, and tests that print benchmarks.
 - Redact passwords, tokens, anisette headers, private keys and device serials by default. Log level comes from `LOG_LEVEL` or the settings screen.
 
 ## Testing

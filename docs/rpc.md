@@ -6,14 +6,23 @@ The Engine runs in Electron's main process; the UI runs in the renderer. `@loads
 
 ```ts
 // Engine side (apps/desktop, main process)
-createRpcServer({ engine, transport: messagePortTransport(port), resolveIpa, logger });
+createRpcServer({
+  engine,
+  transport: messagePortTransport(port),
+  resolveIpa,
+  logger
+})
 
 // UI side
-const engine = createEngineClient(transport);
-const devices = await engine.listDevices();
-const run = engine.installApps({ udid, accountId, apps: [{ kind: "file", path }] });
-run.subscribe((event) => render(event));
-const result = await run.result;
+const engine = createEngineClient(transport)
+const devices = await engine.listDevices()
+const run = engine.installApps({
+  udid,
+  accountId,
+  apps: [{ kind: 'file', path }]
+})
+run.subscribe((event) => render(event))
+const result = await run.result
 ```
 
 ## The channel

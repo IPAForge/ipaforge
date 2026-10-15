@@ -79,7 +79,7 @@ loadstar/
 │           ├── features/           # install/, preload/, devices/, accounts/, certificates/, logs/, settings/
 │           ├── hooks/              # useTheme, useUiServices, later the EngineClient hooks
 │           ├── services/           # what the host provides (UiServices) + browser and in-memory implementations
-│           ├── theme/              # palettes.ts (data), applyPalette.ts (→ HeroUI CSS variables), theme store
+│           ├── theme/              # palettes/ (data → HeroUI CSS variables), store/, provider/
 │           └── locales/            # UI strings (i18next locales/*.json from 6b)
 │
 ├── apps/                           # ── COMPOSITION ROOTS (adapters + wiring) ──
@@ -140,55 +140,79 @@ kernel  ←  signer, device, apple, catalog  ←  installer  ←  rpc  ←  ui
 
 ```ts
 // packages/device/src/domain/ports/transport.ts: the context only knows the interface
-export interface Connection {
-  read(): Promise<Uint8Array | null>;
-  write(bytes: Uint8Array): Promise<void>;
+export type Connection = {
+  read(): Promise<Uint8Array | null>
+  write(bytes: Uint8Array): Promise<void>
   /** Upgrade in place; the adapter authenticates the device by pinning its certificate. */
-  startTls(credentials: TlsCredentials): Promise<void>;
-  close(): Promise<void>;
+  startTls(credentials: TlsCredentials): Promise<void>
+  close(): Promise<void>
 }
 
-export interface DeviceTransport {
-  connectUsbmux(): Promise<Connection>;
+export type DeviceTransport = {
+  connectUsbmux(): Promise<Connection>
 }
 ```
 
 ```ts
 // apps/desktop/src/main/adapters/usbmux-transport.ts: the only place that touches node:net
-export const createNodeUsbmuxTransport = (endpoint = resolveUsbmuxdEndpoint()): DeviceTransport => ({
-  connectUsbmux: async () => createNodeConnection(await open(endpoint)),
-});
+export const createNodeUsbmuxTransport = (
+  endpoint = resolveUsbmuxdEndpoint()
+): DeviceTransport => ({
+  connectUsbmux: async () => createNodeConnection(await open(endpoint))
+})
 
 // apps/desktop composition root
-const devices = createDeviceManager({ transport: createNodeUsbmuxTransport(), secrets, logger });
+const devices = createDeviceManager({
+  transport: createNodeUsbmuxTransport(),
+  secrets,
+  logger
+})
 ```
 
 ### A pipeline flow in the installer (application layer)
 
 ```ts
 // packages/installer/src/flows/install-sidestore.ts
-import { pipeline, step } from "../pipeline";
+import { pipeline, step } from '../pipeline'
 
-export const installSideStore = pipeline("installSideStore", [
-  step("resolveRelease", { weight: 1, labelKey: "install.steps.resolve" }, ({ catalog }, input: { channel: Channel }) =>
-    catalog.resolveRelease("sidestore", input.channel),
+export const installSideStore = pipeline('installSideStore', [
+  step(
+    'resolveRelease',
+    { weight: 1, labelKey: 'install.steps.resolve' },
+    ({ catalog }, input: { channel: Channel }) =>
+      catalog.resolveRelease('sidestore', input.channel)
   ),
-  step("download", { weight: 3, labelKey: "install.steps.download", idempotent: true }, ({ catalog }, release) =>
-    catalog.download(release),
+  step(
+    'download',
+    { weight: 3, labelKey: 'install.steps.download', idempotent: true },
+    ({ catalog }, release) => catalog.download(release)
   ),
-  step("provision", { weight: 2, labelKey: "install.steps.provision" }, ({ apple, device }, ipa) =>
-    apple.provisionApp(ipa.manifest, device.info),
+  step(
+    'provision',
+    { weight: 2, labelKey: 'install.steps.provision' },
+    ({ apple, device }, ipa) => apple.provisionApp(ipa.manifest, device.info)
   ),
-  step("sign", { weight: 2, labelKey: "install.steps.sign" }, ({ signer }, provisioned) =>
-    signer.signIpa(provisioned.ipa, provisioned.identity, provisioned.profiles),
+  step(
+    'sign',
+    { weight: 2, labelKey: 'install.steps.sign' },
+    ({ signer }, provisioned) =>
+      signer.signIpa(
+        provisioned.ipa,
+        provisioned.identity,
+        provisioned.profiles
+      )
   ),
-  step("install", { weight: 4, labelKey: "install.steps.install" }, ({ device }, signed) =>
-    device.installApp(signed),
+  step(
+    'install',
+    { weight: 4, labelKey: 'install.steps.install' },
+    ({ device }, signed) => device.installApp(signed)
   ),
-  step("placePairing", { weight: 1, labelKey: "install.steps.pairing" }, ({ device }, installed) =>
-    device.placePairingFile(installed.bundleId),
-  ),
-]);
+  step(
+    'placePairing',
+    { weight: 1, labelKey: 'install.steps.pairing' },
+    ({ device }, installed) => device.placePairingFile(installed.bundleId)
+  )
+])
 ```
 
 ### Errors are codes, the UI decides presentation
@@ -196,19 +220,22 @@ export const installSideStore = pipeline("installSideStore", [
 ```ts
 // packages/kernel/src/errors/codes.ts
 export const ErrorCode = {
-  DeviceLocked: "device.locked",
-  DeveloperModeOff: "device.developer_mode_off",
-  AppIdQuotaExceeded: "apple.app_id_quota",
-  CertificateLimit: "apple.certificate_limit",
-  AnisetteUnavailable: "apple.anisette_unavailable",
-  ReleaseSourceGone: "catalog.source_gone",
-  NoInternet: "net.offline",
-} as const;
-export type ErrorCode = (typeof ErrorCode)[keyof typeof ErrorCode];
+  DeviceLocked: 'device.locked',
+  DeveloperModeOff: 'device.developer_mode_off',
+  AppIdQuotaExceeded: 'apple.app_id_quota',
+  CertificateLimit: 'apple.certificate_limit',
+  AnisetteUnavailable: 'apple.anisette_unavailable',
+  ReleaseSourceGone: 'catalog.source_gone',
+  NoInternet: 'net.offline'
+} as const
+export type ErrorCode = (typeof ErrorCode)[keyof typeof ErrorCode]
 
 export class LoadstarError extends Error {
-  constructor(readonly code: ErrorCode, options?: { cause?: unknown; data?: Record<string, unknown> }) {
-    super(code, { cause: options?.cause });
+  constructor(
+    readonly code: ErrorCode,
+    options?: { cause?: unknown; data?: Record<string, unknown> }
+  ) {
+    super(code, { cause: options?.cause })
   }
 }
 ```
@@ -216,12 +243,21 @@ export class LoadstarError extends Error {
 ### Theme palettes as data (no CSS files)
 
 ```ts
-// packages/ui/src/theme/palettes.ts
+// packages/ui/src/theme/palettes/palettes.ts
 export const palettes = {
-  graphite: { light: { accent: "oklch(0.55 0.02 260)", background: "oklch(0.99 0 0)" }, dark: { accent: "oklch(0.75 0.02 260)", background: "oklch(0.16 0.01 260)" } },
-  ocean:    { light: { accent: "oklch(0.58 0.15 240)", background: "oklch(0.99 0.005 240)" }, dark: { accent: "oklch(0.72 0.13 230)", background: "oklch(0.17 0.03 245)" } },
+  graphite: {
+    light: { accent: 'oklch(0.55 0.02 260)', background: 'oklch(0.99 0 0)' },
+    dark: { accent: 'oklch(0.75 0.02 260)', background: 'oklch(0.16 0.01 260)' }
+  },
+  ocean: {
+    light: {
+      accent: 'oklch(0.58 0.15 240)',
+      background: 'oklch(0.99 0.005 240)'
+    },
+    dark: { accent: 'oklch(0.72 0.13 230)', background: 'oklch(0.17 0.03 245)' }
+  }
   // aurora, sunset, forest, rose …
-} satisfies Record<string, Record<"light" | "dark", PaletteTokens>>;
+} satisfies Record<string, Record<'light' | 'dark', PaletteTokens>>
 ```
 
 ## Anti-Patterns

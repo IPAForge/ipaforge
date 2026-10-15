@@ -26,9 +26,11 @@
   },
   "javascript": {
     "formatter": {
-      "quoteStyle": "double",
-      "semicolons": "always",
-      "trailingCommas": "all"
+      "quoteStyle": "single",
+      "jsxQuoteStyle": "double",
+      "semicolons": "asNeeded",
+      "trailingCommas": "none",
+      "lineWidth": 80
     }
   },
   "css": {
@@ -40,16 +42,65 @@
     "enabled": true,
     "rules": {
       "preset": "recommended",
+      "correctness": {
+        "noUnusedImports": "error",
+        "noUnusedVariables": "warn"
+      },
+      "suspicious": {
+        "noConsole": "warn"
+      },
       "style": {
         "useImportType": "error",
-        "useNodejsImportProtocol": "error"
+        "useNodejsImportProtocol": "error",
+        "useConsistentTypeDefinitions": {
+          "level": "error",
+          "options": {
+            "style": "type"
+          }
+        }
       }
     }
   },
   "assist": {
     "actions": {
       "source": {
-        "organizeImports": "on"
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [
+              [":NODE:", ":BUN:"],
+              ":BLANK_LINE:",
+              [
+                ":PACKAGE:",
+                "!@loadstar/**",
+                "!@kernel/**",
+                "!@signer/**",
+                "!@device/**",
+                "!@apple/**",
+                "!@catalog/**",
+                "!@installer/**",
+                "!@rpc/**",
+                "!@ui/**",
+                "!@desktop/**"
+              ],
+              ":BLANK_LINE:",
+              [
+                "@loadstar/**",
+                "@kernel/**",
+                "@signer/**",
+                "@device/**",
+                "@apple/**",
+                "@catalog/**",
+                "@installer/**",
+                "@rpc/**",
+                "@ui/**",
+                "@desktop/**"
+              ],
+              ":BLANK_LINE:",
+              ":PATH:"
+            ]
+          }
+        }
       }
     }
   },
@@ -101,6 +152,26 @@
     {
       "includes": ["packages/ui/src/**/*.tsx"],
       "plugins": ["./tooling/biome/no-jsx-literal-text.grit"]
+    },
+    {
+      "includes": [
+        "scripts/**",
+        "packages/*/scripts/**",
+        "apps/desktop/scripts/**",
+        "apps/desktop/src/probes/**",
+        "packages/ui/src/services/logging/console-log-sink.ts",
+        "apps/desktop/src/main/logger.ts",
+        "packages/kernel/src/logging/create-logger.ts",
+        "**/*.test.ts",
+        "**/*.test.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "suspicious": {
+            "noConsole": "off"
+          }
+        }
+      }
     }
   ],
   "plugins": ["./tooling/biome/no-function-declaration.grit"]
