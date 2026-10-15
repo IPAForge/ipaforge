@@ -8,12 +8,14 @@
     "typecheck": "tsc -p tsconfig.json",
     "device-probe": "tsx scripts/device-probe.ts",
     "apple-probe": "tsx scripts/apple-probe.ts",
-    "catalog-probe": "tsx scripts/catalog-probe.ts"
+    "catalog-probe": "tsx scripts/catalog-probe.ts",
+    "install-probe": "tsx scripts/install-probe.ts"
   },
   "dependencies": {
     "@loadstar/apple": "workspace:*",
     "@loadstar/catalog": "workspace:*",
     "@loadstar/device": "workspace:*",
+    "@loadstar/installer": "workspace:*",
     "@loadstar/kernel": "workspace:*",
     "@loadstar/signer": "workspace:*"
   }

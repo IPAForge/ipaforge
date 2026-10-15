@@ -15,7 +15,7 @@ Loadstar is an open-source desktop tool (Windows, macOS, Linux) for installing S
 
 ## Project Structure
 
-> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `catalog/sources.json`, `apps/desktop` (Node adapters only), `fixtures/signer`, `scripts/`, `.github/workflows/`.
+> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, maintainer probes), `fixtures/signer`, `scripts/`, `.github/workflows/`.
 
 ```
 loadstar/
@@ -39,7 +39,8 @@ loadstar/
 
 | File | Purpose |
 |------|---------|
-| `packages/installer/src/engine.ts` | The Engine facade: every capability the UI can call |
+| `packages/installer/src/engine.ts` | The Engine facade: every capability the UI can call (`installSideStore`, `installApps`, `placePairing`, queries, `classify`) |
+| `packages/installer/src/index.ts` | Public installer API (Engine, flows, prompts, diagnostics catalogue, pipeline runner) |
 | `packages/signer/src/index.ts` | Public signer API (`inspectIpa`, `planSideloadIdentity`, `signIpa`, `signBundle`, `signBinary`, `reconcileForSideload`, plist, IPA I/O) |
 | `fixtures/signer/generate.sh` | Regenerates the Apple `codesign` golden fixtures (macOS) |
 | `packages/signer/scripts/compare-real-cert.ts` | Maintainer check against a real Apple Development `.p12` |
@@ -48,6 +49,8 @@ loadstar/
 | `apps/desktop/scripts/device-probe.ts` | Maintainer CLI against a real device |
 | `packages/apple/src/index.ts` | Public Apple API (`createAppleAccounts`: anisette, sign-in + 2FA, app tokens, saved accounts) |
 | `apps/desktop/scripts/apple-probe.ts` | Maintainer CLI: sign in with real Apple IDs |
+| `apps/desktop/src/main/engine.ts` | `createDesktopEngine()`: the Engine built from the Node adapters |
+| `apps/desktop/scripts/install-probe.ts` | Maintainer CLI: run the install flows against a real device and Apple account |
 | `catalog/sources.json` | What can be installed and where releases come from (fetched by the app from `main`) |
 | `packages/catalog/src/index.ts` | Public catalog API (`createCatalog`: manifest, release resolution with mirrors, verified downloads) |
 | `apps/desktop/src/main/index.ts` | Electron main: wires Node adapters into the Engine (Phase 9) |
@@ -68,6 +71,7 @@ loadstar/
 | Code Signing | docs/signing.md | How signing works and how it is verified |
 | Device | docs/device.md | usbmuxd per OS, pairing, services, device errors |
 | Apple Account | docs/apple-account.md | Sign-in, anisette, 2FA, saved accounts, errors |
+| Install Flows | docs/install-flows.md | installSideStore, installApps, placePairing: steps, prompts, free-app limit, recovery, install-probe |
 | Roadmap | docs/roadmap.md | Phases with links to plans |
 | Contributing | docs/contributing.md | PR rules, conventions, clean-room policy |
 | Code of Conduct | docs/CODE_OF_CONDUCT.md | Contributor Covenant 2.1 |

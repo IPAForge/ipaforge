@@ -1,0 +1,21 @@
+// i18n keys of the step labels the UI shows for each pipeline step.
+export const StepLabel = {
+  device: "install.steps.device",
+  resolve: "install.steps.resolve",
+  download: "install.steps.download",
+  inspect: "install.steps.inspect",
+  certificateSharing: "install.steps.certificate_sharing",
+  signIn: "install.steps.sign_in",
+  team: "install.steps.team",
+  registerDevice: "install.steps.register_device",
+  certificate: "install.steps.certificate",
+  appIds: "install.steps.app_ids",
+  freeApps: "install.steps.free_apps",
+  provision: "install.steps.provision",
+  sign: "install.steps.sign",
+  install: "install.steps.install",
+  pairing: "install.steps.pairing",
+  remember: "install.steps.remember",
+  pairingTargets: "pairing.steps.targets",
+  placePairing: "pairing.steps.place",
+} as const;
