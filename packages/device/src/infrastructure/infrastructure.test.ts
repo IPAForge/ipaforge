@@ -142,4 +142,15 @@ describe("pairing certificates", () => {
     expect(record.hostId).toMatch(/^[0-9A-F-]{36}$/);
     expect(decodePem(record.hostPrivateKey).label).toBe("PRIVATE KEY");
   });
+
+  it("presents the root itself as the host certificate, so the device has no chain to build", async () => {
+    const { pkcs1 } = await deviceKey();
+    const record = await createPairRecord({
+      devicePublicKey: utf8Encode(encodePem("RSA PUBLIC KEY", pkcs1)),
+      systemBuid: "BUID",
+      now: new Date("2026-10-15T00:00:00Z"),
+    });
+    expect(record.hostCertificate).toEqual(record.rootCertificate);
+    expect(record.hostPrivateKey).toEqual(record.rootPrivateKey);
+  });
 });

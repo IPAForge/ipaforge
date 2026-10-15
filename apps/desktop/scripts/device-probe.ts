@@ -19,6 +19,7 @@ import { parseDeviceProbeArgs } from "@desktop/probes/device/args.ts";
 import { deviceCommands } from "@desktop/probes/device/commands/index.ts";
 import { createDeviceProbe } from "@desktop/probes/device/context.ts";
 import { selectCommand } from "@desktop/probes/shared/commands.ts";
+import { causeChain } from "@desktop/probes/shared/errors.ts";
 import { LoadstarError } from "@loadstar/kernel";
 
 const args = parseDeviceProbeArgs(process.argv.slice(2));
@@ -28,5 +29,6 @@ try {
 } catch (error) {
   if (error instanceof LoadstarError) console.error(`${error.code}: ${error.message}`, error.data ?? "");
   else console.error(error);
+  for (const line of causeChain(error)) console.error(line);
   process.exit(1);
 }

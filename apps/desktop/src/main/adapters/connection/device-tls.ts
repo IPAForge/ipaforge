@@ -1,7 +1,7 @@
 import type { Socket } from "node:net";
 import { type PeerCertificate, type TLSSocket, connect as tlsConnect } from "node:tls";
 import type { TlsCredentials } from "@loadstar/device";
-import { ErrorCode, equalBytes, LoadstarError } from "@loadstar/kernel";
+import { compact, ErrorCode, equalBytes, LoadstarError } from "@loadstar/kernel";
 
 /**
  * OpenSSL security level for device TLS. Pair records made by older systems sign certificates with SHA-1,
@@ -24,6 +24,23 @@ const pinMismatch = () =>
     message: "the device presented a certificate that does not match its pair record",
   });
 
+/** Fields Node and OpenSSL put on a failed handshake's error. */
+interface TlsErrorDetails {
+  readonly message?: string;
+  readonly code?: string;
+  readonly reason?: string;
+}
+
+/** A failed handshake, keeping what Node and OpenSSL reported so the failure can be diagnosed. */
+const handshakeFailed = (error: unknown) => {
+  const { message, code, reason } = (error ?? {}) as TlsErrorDetails;
+  return new LoadstarError(ErrorCode.InvalidPairRecord, {
+    message: `TLS handshake with the device failed: ${message ?? String(error)}`,
+    cause: error,
+    data: compact({ tlsError: code, reason }),
+  });
+};
+
 /**
  * Upgrades `socket` to TLS and authenticates the device by **pinning**: the handshake must present exactly the
  * device certificate from the pair record, checked before any application byte is sent; anything else is
@@ -44,7 +61,7 @@ export const upgradeToDeviceTls = (socket: Socket, credentials: TlsCredentials):
     });
     const fail = (error: unknown) => {
       secure.destroy();
-      reject(error instanceof LoadstarError ? error : new LoadstarError(ErrorCode.InvalidPairRecord, { cause: error }));
+      reject(error instanceof LoadstarError ? error : handshakeFailed(error));
     };
     secure.once("error", fail);
     secure.once("secureConnect", () => {
