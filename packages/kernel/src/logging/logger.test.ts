@@ -1,17 +1,20 @@
 import { ErrorCode, LoadstarError } from "@kernel/errors/index.ts";
 import { createLogger, parseLogLevel } from "@kernel/logging/create-logger.ts";
 import { REDACTED, redact } from "@kernel/logging/redact.ts";
+import { compact } from "@kernel/objects/compact.ts";
 import { fixedClock } from "@kernel/ports/clock.ts";
 import type { LogRecord } from "@kernel/ports/logger.ts";
 import { describe, expect, it, vi } from "vitest";
 
 const collect = (level?: "debug" | "info" | "warn" | "error") => {
   const records: LogRecord[] = [];
-  const logger = createLogger({
-    sink: (record) => records.push(record),
-    clock: fixedClock(new Date("2026-10-13T12:00:00Z")),
-    ...(level ? { level } : {}),
-  });
+  const logger = createLogger(
+    compact({
+      sink: (record: LogRecord) => records.push(record),
+      clock: fixedClock(new Date("2026-10-13T12:00:00Z")),
+      level,
+    }),
+  );
   return { logger, records };
 };
 
