@@ -11,6 +11,7 @@ import { altAppGroupsOf } from "@signer/domain/bundle/info-plist.ts";
 import { baseName } from "@signer/domain/bundle/tree.ts";
 import { stringsOf } from "@signer/domain/dict.ts";
 import { APPLICATION_GROUPS, KEYCHAIN_ACCESS_GROUPS } from "@signer/domain/entitlements/names.ts";
+import { deviceFamiliesOf } from "@signer/domain/sideload/device-families.ts";
 
 export type NestedBundleKind = Extract<BundleKind, "appex" | "watch-app">;
 
@@ -23,6 +24,10 @@ export interface InspectedApp {
   /** `CFBundleShortVersionString`. */
   readonly version?: string;
   readonly minimumOSVersion?: string;
+  /** `UIDeviceFamily` (1 iPhone and iPod touch, 2 iPad); Apple's default, iPhone only, when absent. */
+  readonly deviceFamilies: readonly number[];
+  /** The main executable's slices, as `lipo` names them (`arm64`, `arm64e`, `armv7`, …); none if unreadable. */
+  readonly architectures: readonly string[];
 }
 
 /** An extension or watch app: it needs its own App ID and profile. */
@@ -56,13 +61,15 @@ const bundleName = (bundle: CodeBundle): string =>
 export const isNestedProvisioned = (bundle: CodeBundle): bundle is CodeBundle & { readonly kind: NestedBundleKind } =>
   bundle.kind === "appex" || bundle.kind === "watch-app";
 
-export const inspectedApp = (bundle: CodeBundle, path: string): InspectedApp =>
+export const inspectedApp = (bundle: CodeBundle, path: string, architectures: readonly string[]): InspectedApp =>
   compact({
     path,
     identifier: bundle.identifier,
     name: bundleName(bundle),
     version: stringAt(bundle.infoPlist, CF_BUNDLE_SHORT_VERSION),
     minimumOSVersion: stringAt(bundle.infoPlist, MINIMUM_OS_VERSION),
+    deviceFamilies: deviceFamiliesOf(bundle.infoPlist),
+    architectures,
   });
 
 export const inspectedBundle = (bundle: CodeBundle & { readonly kind: NestedBundleKind }): InspectedBundle => ({

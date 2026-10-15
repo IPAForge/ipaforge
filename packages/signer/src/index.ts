@@ -58,6 +58,13 @@ export {
 } from "@signer/domain/config.ts";
 export type { HashAlgorithm, Hasher } from "@signer/domain/ports/hasher.ts";
 export {
+  assertCompatible,
+  type CompatibilityProblem,
+  checkCompatibility,
+  type TargetDevice,
+} from "@signer/domain/sideload/compatibility.ts";
+export { DeviceClass, DeviceFamily } from "@signer/domain/sideload/compatibility-constants.ts";
+export {
   type BundleIdentity,
   planSideloadIdentity,
   type SideloadIdentityPlan,

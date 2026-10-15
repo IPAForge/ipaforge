@@ -74,6 +74,10 @@ export const RECOVERY_CATALOGUE = {
   "signer.invalid_macho": [R.ChooseAnotherIpa],
   "signer.encrypted_binary": [R.ChooseAnotherIpa],
   "signer.unsupported_arch": [R.ChooseAnotherIpa],
+  // Another channel of a catalog app may support older iOS; otherwise an older build of the app is needed.
+  "signer.unsupported_ios": [R.ChooseAnotherChannel, R.ChooseAnotherIpa],
+  "signer.unsupported_device": [R.ChooseAnotherIpa],
+  "signer.no_arm64_build": [R.ChooseAnotherIpa],
   "signer.no_header_space": [R.ChooseAnotherIpa, R.ReportIssue],
   "signer.zip_slip": [R.ChooseAnotherIpa],
   "signer.invalid_certificate": [R.RevokeCertificate, R.Retry],

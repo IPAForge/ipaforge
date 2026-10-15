@@ -1,8 +1,9 @@
-import { ACCOUNT, FREE_TEAM, ipaFile, UDID } from "@installer/__tests__/fakes.ts";
+import { ACCOUNT, FREE_TEAM, inspectionFor, ipaFile, UDID } from "@installer/__tests__/fakes.ts";
 import { createHarness, scripted } from "@installer/__tests__/harness.ts";
 import { PromptKind } from "@installer/domain/prompts.ts";
 import type { AppSource } from "@installer/domain/state.ts";
 import { ErrorCode } from "@loadstar/kernel";
+import { DeviceFamily } from "@loadstar/signer";
 import { describe, expect, it } from "vitest";
 
 const file = (name: string): AppSource => ({ kind: "file", file: ipaFile(name) });
@@ -62,6 +63,27 @@ describe("installApps", () => {
     expect(result.status).toBe("completed");
     expect(prompts.asked).toEqual([]);
     expect(h.signer.calls.signed[0]?.additions).toBeUndefined();
+  });
+
+  it("stops at the inspect step of an app the device cannot run, before any Apple call", async () => {
+    const h = createHarness({ device: { deviceClass: "iPhone" } });
+    h.signer.signer.inspect = async (source) => {
+      const inspection = inspectionFor("com.example.app");
+      const deviceFamilies = source.name === "ipad.ipa" ? [DeviceFamily.IPad] : inspection.app.deviceFamilies;
+      return { ...inspection, app: { ...inspection.app, deviceFamilies } };
+    };
+    const result = await h.engine.installApps(install([file("one.ipa"), file("ipad.ipa")]), {
+      onPrompt: scripted(),
+    }).result;
+
+    expect(result.status === "failed" && result.failedStep).toBe("inspect-1");
+    expect(result.status === "failed" && result.error).toMatchObject({
+      code: ErrorCode.UnsupportedDevice,
+      data: { deviceFamilies: [DeviceFamily.IPad], deviceClass: "iPhone" },
+    });
+    expect(h.apple.calls.sessions).toBe(0);
+    expect(h.apple.calls.provisioned).toEqual([]);
+    expect(h.devices.calls.installs).toEqual([]);
   });
 
   it("refuses an empty list", () => {

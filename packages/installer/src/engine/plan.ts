@@ -1,6 +1,7 @@
-// A read-only preview of installing one app: what the IPA is, the identity it would get, the App IDs it needs
-// against the budget, the free-app slots on the device and whether a certificate can be reused. Nothing is
-// written to Apple or the device (a catalog app is downloaded into the download cache to be inspected).
+// A read-only preview of installing one app: what the IPA is, whether the device can run it, the identity it would
+// get, the App IDs it needs against the budget, the free-app slots on the device and whether a certificate can be
+// reused. Nothing is written to Apple or the device (a catalog app is downloaded into the download cache to be
+// inspected).
 import { createCertificateStore } from "@installer/application/certificate-store.ts";
 import { type FreeSlots, freeSlotsOnDevice } from "@installer/application/free-apps.ts";
 import { createFlowRuntime, type FlowRuntime } from "@installer/application/runtime.ts";
@@ -11,7 +12,14 @@ import type { AppSource } from "@installer/domain/state.ts";
 import { findSideStoreTarget } from "@installer/sidestore/target.ts";
 import type { AppIdPlan, DeveloperServices, Team } from "@loadstar/apple";
 import { compact, type FileSource } from "@loadstar/kernel";
-import { type IpaInspection, planSideloadIdentity, type SideloadIdentityPlan } from "@loadstar/signer";
+import {
+  type CompatibilityProblem,
+  checkCompatibility,
+  type IpaInspection,
+  planSideloadIdentity,
+  type SideloadIdentityPlan,
+  type TargetDevice,
+} from "@loadstar/signer";
 
 export interface PlanInstallInput {
   readonly udid: string;
@@ -32,6 +40,8 @@ export interface CertificateStatus {
 export interface InstallPlan {
   readonly team: Team;
   readonly inspection: IpaInspection;
+  /** Why the device cannot run the app (the error installing would stop with); absent when it can. */
+  readonly compatibility?: CompatibilityProblem;
   readonly identity: SideloadIdentityPlan;
   readonly appIds: AppIdPlan;
   /** Free teams only: the apps holding a slot (the app itself left out) and the limit. */
@@ -45,6 +55,11 @@ const sourceFile = async (deps: InstallerDeps, source: AppSource): Promise<FileS
   if (source.kind === "file") return source.file;
   const channel = source.channel ?? (await deps.catalog.recommendedChannel(source.appId));
   return (await deps.catalog.download(await deps.catalog.resolve(source.appId, channel))).file;
+};
+
+const targetDevice = async (runtime: FlowRuntime, udid: string): Promise<TargetDevice> => {
+  const { info } = await (await runtime.device(udid)).check();
+  return { iosVersion: info.productVersion, deviceClass: info.deviceClass };
 };
 
 const certificateStatus = async (
@@ -71,6 +86,7 @@ const buildPlan = async (runtime: FlowRuntime, input: PlanInstallInput): Promise
   const { deps } = runtime;
   const file = await sourceFile(deps, input.source);
   const inspection = await deps.signer.inspect(file);
+  const compatibility = checkCompatibility(inspection, await targetDevice(runtime, input.udid));
   const developer = await runtime.developer(input.accountId);
   const team = await queryTeam(deps, developer, { accountId: input.accountId, requested: input.teamId });
   const identity = planSideloadIdentity(inspection, team.id);
@@ -78,6 +94,7 @@ const buildPlan = async (runtime: FlowRuntime, input: PlanInstallInput): Promise
   return compact({
     team,
     inspection,
+    compatibility,
     identity,
     appIds: await developer.planAppIds(team, plannedIdentifiers([identity])),
     freeSlots: slots,

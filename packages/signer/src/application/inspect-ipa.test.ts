@@ -1,7 +1,27 @@
-import { bytesFileSource, concatBytes, createDict, ErrorCode, type FileSource, silentLogger } from "@loadstar/kernel";
-import { addBundle, encrypted, fileAt, fixtureAppTree, setFile, withEntitlements } from "@signer/__tests__/app-tree.ts";
+import {
+  bytesFileSource,
+  concatBytes,
+  createDict,
+  ErrorCode,
+  type FileSource,
+  type PlistValue,
+  serializeXmlPlist,
+  silentLogger,
+  withKey,
+} from "@loadstar/kernel";
+import {
+  addBundle,
+  encrypted,
+  fileAt,
+  fixtureAppTree,
+  infoAt,
+  setFile,
+  withEntitlements,
+} from "@signer/__tests__/app-tree.ts";
+import { readFixture } from "@signer/__tests__/fixtures.ts";
 import { inspectIpa } from "@signer/application/inspect-ipa.ts";
 import type { BundleTree } from "@signer/domain/bundle/tree.ts";
+import { CPU_SUBTYPE_ARM_V7, CPU_TYPE_ARM } from "@signer/domain/macho/constants.ts";
 import { planSideloadIdentity } from "@signer/domain/sideload/identity-plan.ts";
 import { writeIpa } from "@signer/infrastructure/ipa/index.ts";
 import { describe, expect, it } from "vitest";
@@ -15,6 +35,19 @@ const ipaOf = async (app: BundleTree): Promise<FileSource> => {
     chunks.push(chunk);
   }
   return bytesFileSource("Test.ipa", concatBytes(chunks));
+};
+
+const setInfoKey = (tree: BundleTree, key: string, value: PlistValue): void => {
+  setFile(tree, "Info.plist", serializeXmlPlist(withKey(infoAt(tree, ""), key, value)));
+};
+
+/** A copy of a thin Mach-O relabelled as 32-bit ARMv7 (cputype and cpusubtype, little-endian). */
+const asArmv7 = (executable: Uint8Array): Uint8Array => {
+  const bytes = executable.slice();
+  const view = new DataView(bytes.buffer);
+  view.setInt32(4, CPU_TYPE_ARM, true);
+  view.setInt32(8, CPU_SUBTYPE_ARM_V7, true);
+  return bytes;
 };
 
 /** The fixture app with an ExtensionKit extension, a watch app and its extension. */
@@ -49,6 +82,8 @@ describe("inspectIpa", () => {
         name: "Test",
         version: "1.0",
         minimumOSVersion: "14.0",
+        deviceFamilies: [1],
+        architectures: ["arm64"],
       },
       nested: [
         { path: "Extensions/Kit.appex", kind: "appex", identifier: `${MAIN}.kit`, name: "Kit Display" },
@@ -70,6 +105,21 @@ describe("inspectIpa", () => {
       `${MAIN}.${TEAM}.watchkitapp.ext`,
     ]);
     expect(plan.appGroup).toBe(`group.${MAIN}.${TEAM}`);
+  });
+
+  it("reports the declared device families and every slice of a universal executable", async () => {
+    const tree = fixtureAppTree();
+    setInfoKey(tree, "UIDeviceFamily", [1, 2]);
+    setFile(tree, "Test", readFixture("inputs", "fat"), 0o755);
+    const { app } = await inspectIpa(await ipaOf(tree));
+    expect(app.deviceFamilies).toEqual([1, 2]);
+    expect(app.architectures).toEqual(["arm64", "arm64e"]);
+  });
+
+  it("reports a 32-bit-only executable as armv7", async () => {
+    const tree = fixtureAppTree();
+    setFile(tree, "Test", asArmv7(fileAt(tree, "Test")), 0o755);
+    expect((await inspectIpa(await ipaOf(tree))).app.architectures).toEqual(["armv7"]);
   });
 
   it("refuses an app without a usable Info.plist", async () => {

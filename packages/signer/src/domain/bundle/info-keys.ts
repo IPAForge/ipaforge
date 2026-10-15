@@ -6,6 +6,8 @@ export const CF_BUNDLE_NAME = "CFBundleName";
 export const CF_BUNDLE_DISPLAY_NAME = "CFBundleDisplayName";
 export const CF_BUNDLE_SHORT_VERSION = "CFBundleShortVersionString";
 export const MINIMUM_OS_VERSION = "MinimumOSVersion";
+/** The device families an app runs on natively: an integer or an array of them. */
+export const UI_DEVICE_FAMILY = "UIDeviceFamily";
 export const WK_COMPANION_APP_BUNDLE_IDENTIFIER = "WKCompanionAppBundleIdentifier";
 export const NS_EXTENSION = "NSExtension";
 export const NS_EXTENSION_ATTRIBUTES = "NSExtensionAttributes";

@@ -7,7 +7,14 @@ const TEAM = "ABCDE12345";
 const MAIN = "com.example.app";
 
 const inspection = (overrides: Partial<IpaInspection> = {}): IpaInspection => ({
-  app: { path: "Payload/Example.app", identifier: MAIN, name: "Example", version: "1.0" },
+  app: {
+    path: "Payload/Example.app",
+    identifier: MAIN,
+    name: "Example",
+    version: "1.0",
+    deviceFamilies: [1],
+    architectures: ["arm64"],
+  },
   nested: [
     { path: "Extensions/Kit.appex", kind: "appex", identifier: `${MAIN}.kit`, name: "Kit" },
     { path: "PlugIns/Widget.appex", kind: "appex", identifier: `${MAIN}.widget`, name: "Widget" },

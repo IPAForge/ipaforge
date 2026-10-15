@@ -41,14 +41,13 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
   - a full 2FA state machine (device push, SMS number picker, resend, legacy 4-digit codes, server-provided code length, "code already sent" states, security-key explanation);
   - automatic recovery for every known login failure (`references/failure-catalogue.md`): anisette failover and re-provisioning, clock-skew and connectivity preflight, backoff on 429/503, no auto-retry on wrong passwords, account health and ban flags
 - [x] **4. Developer services**: teams (team picker remembered per Apple ID), certificate lifecycle (reuse by machine name and key, a revoke picker showing which tool created each certificate, per-type revoke, `.p12` export/import with the `machineId` password), App IDs with budgeting before any write (clamped quota, next free slot, normalised names, conserve mode), app groups, devices, provisioning profiles, defensive parsing of every response, and `provisionApp()`, which yields everything the signer needs for an IPA and its extensions
-- [ ] **5. Installer engine and catalog**:
+- [x] **5. Installer engine and catalog**:
   - the pipeline runner (progress, cancel, resume, idempotent retry);
   - `@loadstar/catalog`: a release source catalog resolved through the GitHub API, streamed downloads, cache and checksum, and handling for sources that have gone;
-  - IPA validation before any Apple call (structure, architecture, minimum OS, device family) and signer reconciliation additions: `Extensions/` and `Watch/` bundles, Watch companion and BGTask identifiers, app and keychain groups, `ALTAppGroups` on every extension;
+  - IPA validation before any Apple call (structure, encryption, extension IDs, and against the device: minimum OS, device family, architecture) and signer reconciliation additions: `Extensions/` and `Watch/` bundles, Watch companion and BGTask identifiers, app and keychain groups, `ALTAppGroups` on every extension;
   - a remote source manifest (SideStore and LiveContainer stable/nightly, mirrors, SHA-256, iOS compatibility table);
   - flows: `installSideStore` (SideStore or LiveContainer + SideStore, including certificate injection: `ALTCertificate.p12` + `ALTCertificateID`, into the SideStore framework for LiveContainer), free-app-limit resolution, `installApps` (any IPA, preload), `placePairing` (several apps from a data-driven list of known apps and their pairing-file locations);
   - a diagnostics error catalog, the Engine facade, and `@loadstar/rpc`
-  - status: everything above exists except IPA validation against the device (minimum OS, device family, architecture), which still has to land before this phase is complete
 - [ ] **6. UI foundation**: `@loadstar/ui` with HeroUI v3 and Tailwind v4 (no CSS files):
   - palette themes as TS data (Graphite, Ocean, Aurora, Sunset, Forest, Rose), each with light and dark variants;
   - i18n, TanStack Router and Query, `EngineClient`, a layout shell, and the log viewer;
@@ -83,3 +82,4 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
 | 2. Device layer | 2026-10-15 |
 | 3. Apple account (sign-in + device 2FA + app token verified with a real account; SMS refused by Apple) | 2026-10-15 |
 | 4. Developer services | 2026-10-15 |
+| 5. Installer engine and catalog | 2026-10-15 |

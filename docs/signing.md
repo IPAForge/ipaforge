@@ -29,16 +29,27 @@ An iPhone only runs code that carries a valid signature from a certificate Apple
 - `signer.encrypted_binary` when any Mach-O in the app is FairPlay-encrypted;
 - `signer.extension_prefix` when an extension or watch app ID is not under the app's ID.
 
+It also records what the app needs from a device: its `MinimumOSVersion`, its device families (`UIDeviceFamily`: 1 for iPhone and iPod touch, 2 for iPad; iPhone only when the key is absent, as on Apple's side) and the architectures of the main executable's slices (`arm64`, `arm64e`, `armv7`, …). `checkCompatibility(inspection, device)` compares them with the target device and returns the first problem, or nothing; `assertCompatible` throws it:
+
+| Check | Fails with | `data` |
+|---|---|---|
+| The device's iOS is at least `MinimumOSVersion` (dotted, numeric: `9.3.5` < `10.0` < `26.1`) | `signer.unsupported_ios` | `minimumOSVersion`, `iosVersion` |
+| The device runs one of the app's families: an iPhone or iPod touch needs family 1; an iPad takes 1 or 2, since it runs iPhone apps in compatibility mode. Other device classes are not checked | `signer.unsupported_device` | `deviceFamilies`, `deviceClass` |
+| The main executable has an `arm64` or `arm64e` slice. Devices that run current iOS are 64-bit only, so a 32-bit-only (`armv7`) or simulator (`x86_64`) build fails. An executable that cannot be read is left to signing | `signer.no_arm64_build` | `architectures`, `supported` |
+
 `planSideloadIdentity` turns the inspection into the identities to register for a team.
 
 ```ts
-import { inspectIpa, planSideloadIdentity } from "@loadstar/signer";
+import { checkCompatibility, inspectIpa, planSideloadIdentity } from "@loadstar/signer";
 
 const inspection = await inspectIpa(source, { signal });
-// inspection.app: { path, identifier, name, version?, minimumOSVersion? }
+// inspection.app: { path, identifier, name, version?, minimumOSVersion?, deviceFamilies, architectures }
 // inspection.nested: every .appex (PlugIns/, Extensions/, Watch/*.app/PlugIns/) and watch app
 // inspection.appGroups / keychainAccessGroups: from the main executable's entitlements
 // inspection.altAppGroups: from the main app's Info.plist
+
+checkCompatibility(inspection, { iosVersion: "18.0", deviceClass: "iPhone" });
+// undefined, or e.g. { code: "signer.unsupported_ios", data: { minimumOSVersion: "26.0", iosVersion: "18.0" } }
 
 const plan = planSideloadIdentity(inspection, "ABCDE12345");
 // plan.newMainBundleId: "<original ID>.ABCDE12345"
@@ -182,6 +193,7 @@ The golden inputs and Apple outputs live in `fixtures/signer/` ([README](../fixt
 | Code | Meaning |
 |---|---|
 | `signer.invalid_macho` / `signer.unsupported_arch` | Not a usable Mach-O binary |
+| `signer.unsupported_ios` / `signer.unsupported_device` / `signer.no_arm64_build` | The target device cannot run the app: iOS too old, wrong device family, or no 64-bit slice |
 | `signer.encrypted_binary` | App Store build; needs a decrypted IPA |
 | `signer.no_header_space` | Binary has no room for a signature load command |
 | `signer.zip_slip` / `signer.invalid_bundle` | Unsafe or malformed archive, missing `Payload/*.app`, size limits |

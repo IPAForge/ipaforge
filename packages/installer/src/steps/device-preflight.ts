@@ -22,8 +22,7 @@ export const devicePreflightStep = <S extends AccountState>(runtime: FlowRuntime
     const check = await (await runtime.device(state.udid)).check();
     assertUnlocked(check);
     assertCanRunSideloadedApps(check);
-    return {
-      device: { udid: state.udid, name: check.info.name, iosVersion: check.info.productVersion },
-    } as Partial<S>;
+    const { name, productVersion, deviceClass } = check.info;
+    return { device: { udid: state.udid, name, iosVersion: productVersion, deviceClass } } as Partial<S>;
   },
 });

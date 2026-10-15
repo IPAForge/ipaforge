@@ -15,7 +15,7 @@ Installs SideStore, or LiveContainer with SideStore inside, from the catalog. Th
 | 1 | `device` | Opens the device and stops at once if it is locked, Developer Mode is off, or it does not trust this computer |
 | 2 | `resolve-0` | Picks the release: the channel you asked for, or the one recommended for your iOS version |
 | 3 | `download-0` | Downloads it into the cache and checks its SHA-256 |
-| 4 | `inspect-0` | Reads the IPA (structure, extensions, encryption) before anything is sent to Apple |
+| 4 | `inspect-0` | Reads the IPA (structure, extensions, encryption) and checks the device can run it (minimum iOS, iPhone/iPad family, 64-bit slice) before anything is sent to Apple |
 | 5 | `sign-in` | Opens the saved Apple account; asks for the password or a 2FA code only when Apple wants them |
 | 6 | `team` | Uses the requested team, the one remembered for the account, or the only one; otherwise asks |
 | 7 | `register-device` | Registers the device with the team if it is not registered yet |
@@ -32,7 +32,7 @@ A new certificate is stored with its private key, per account and team, as soon 
 
 ### Install apps
 
-Installs one or more IPAs, from the catalog or from files, one after another. All apps are downloaded and inspected first. The account steps then run once (sign-in, team, device, certificate) and check the App ID budget for all apps together. After that, each app goes through `free-apps`, `provision`, `sign` and `install`.
+Installs one or more IPAs, from the catalog or from files, one after another. All apps are downloaded and inspected first, each checked against the device (minimum iOS, device family, architecture), so an app the device cannot run stops the run before any Apple call. The account steps then run once (sign-in, team, device, certificate) and check the App ID budget for all apps together. After that, each app goes through `free-apps`, `provision`, `sign` and `install`.
 
 The signing certificate goes only into an app Loadstar has a reason to trust:
 
@@ -88,7 +88,7 @@ pnpm --filter @loadstar/desktop install-probe ipa <file.ipa…> --yes
 pnpm --filter @loadstar/desktop install-probe pairing --yes              # --keep-existing
 ```
 
-- `plan` writes nothing to Apple or the device. It prints the IPA inspection, the new identity, the App ID budget against what is needed, the free-app slots and the certificate status.
+- `plan` writes nothing to Apple or the device. It prints the IPA inspection, whether the device can run the app (`InstallPlan.compatibility`: the code and data the install would stop with, reported without failing the plan), the new identity, the App ID budget against what is needed, the free-app slots and the certificate status.
 - The other commands refuse to run without `--yes`. Every command takes `--account <id>` and `--udid <udid>`; `plan`, `sidestore` and `ipa` also take `--team <id>`.
 - Prompts are answered in the terminal; an empty answer declines. On failure the probe prints the `classify()` result.
 - It shares `apple-probe`'s saved data under `~/.loadstar/dev`. Each team's certificate and key are kept in the encrypted store, IPAs in `downloads/` and signed IPAs in `scratch/` until they are installed.

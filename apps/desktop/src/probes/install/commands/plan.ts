@@ -23,6 +23,15 @@ const printInspection = ({ inspection, identity }: InstallPlan): void => {
   for (const bundle of identity.bundles) console.log(`  App ID ${bundle.identifier} ("${bundle.name}")`);
 };
 
+const printCompatibility = ({ inspection, compatibility }: InstallPlan): void => {
+  const { deviceFamilies, architectures } = inspection.app;
+  console.log(`Device families: ${deviceFamilies.join(", ")}; architectures: ${architectures.join(", ") || "?"}`);
+  const verdict = compatibility
+    ? `NO — ${compatibility.code} ${JSON.stringify(compatibility.data)}`
+    : "yes (iOS, device family, architecture)";
+  console.log(`Runs on this device: ${verdict}`);
+};
+
 const printBudget = ({ appIds }: InstallPlan): void => {
   const verdict = appIds.enough ? "fits" : `does NOT fit; next free slot ${day(appIds.nextSlotAt)}`;
   console.log(
@@ -61,6 +70,7 @@ export const planCommand = (probe: InstallProbe) => async (): Promise<void> => {
   const plan = await probe.engine.planInstall(compact({ udid, accountId, source, teamId: probe.args.option("team") }));
   console.log(`Device ${probe.show(udid)}, team ${plan.team.name}${plan.team.isFree ? " (free)" : ""}`);
   printInspection(plan);
+  printCompatibility(plan);
   printBudget(plan);
   printFreeSlots(plan);
   printCertificate(plan);

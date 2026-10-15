@@ -274,6 +274,27 @@ describe("installSideStore", () => {
     expect(h.devices.calls.installs).toHaveLength(1);
   });
 
+  it("stops at inspect, before any Apple call, when the device's iOS is too old for the release", async () => {
+    const h = createHarness({ device: { productVersion: "15.8" } });
+    const inspect = h.signer.signer.inspect;
+    h.signer.signer.inspect = async (file, signal) => {
+      const inspection = await inspect(file, signal);
+      return { ...inspection, app: { ...inspection.app, minimumOSVersion: "16.0" } };
+    };
+    const result = await h.engine.installSideStore(input, { onPrompt: scripted() }).result;
+
+    expect(result.status === "failed" && result.failedStep).toBe("inspect-0");
+    expect(result.status === "failed" && result.error).toMatchObject({
+      code: ErrorCode.UnsupportedIos,
+      data: { minimumOSVersion: "16.0", iosVersion: "15.8" },
+    });
+    expect(h.apple.calls.sessions).toBe(0);
+    expect(h.apple.calls.registered).toEqual([]);
+    expect(h.apple.calls.created).toEqual([]);
+    expect(h.apple.calls.provisioned).toEqual([]);
+    expect(h.devices.calls.installs).toEqual([]);
+  });
+
   it("answers prompts through the run handle", async () => {
     const h = createHarness({ apple: { teams: [OTHER_TEAM, FREE_TEAM] } });
     const run = h.engine.installSideStore(input);

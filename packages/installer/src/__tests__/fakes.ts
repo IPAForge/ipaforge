@@ -80,6 +80,8 @@ export interface FakeDeviceOptions {
   /** Errors thrown by successive installs (undefined = success). */
   installErrors?: (LoadstarError | undefined)[];
   pairingTargets?: PairingTarget[];
+  productVersion?: string;
+  deviceClass?: string;
 }
 
 export const profile = (uuid: string, teamId: string, bundleId: string): DeviceProfile => ({
@@ -111,9 +113,9 @@ export const fakeDevices = (options: FakeDeviceOptions = {}) => {
         udid: UDID,
         name: "Test iPhone",
         productType: "iPhone1,1",
-        productVersion: "18.0",
+        productVersion: options.productVersion ?? "18.0",
         buildVersion: "1",
-        deviceClass: "iPhone",
+        deviceClass: options.deviceClass ?? "iPhone",
       },
       locked: options.locked ?? false,
       developerMode: options.developerMode ?? "on",
@@ -215,6 +217,8 @@ export const fakeApple = (options: FakeAppleOptions = {}) => {
   };
   const certificates = [...(options.existingCertificates ?? [])];
   const calls = {
+    /** Sessions opened (resumed or signed in): any Apple call starts with one. */
+    sessions: 0,
     created: [] as string[],
     revoked: [] as string[],
     registered: [] as string[],
@@ -272,8 +276,14 @@ export const fakeApple = (options: FakeAppleOptions = {}) => {
   } as unknown as DeveloperServices;
 
   const apple = {
-    resume: options.resume ?? (async () => ({ kind: "signed_in" as const, session })),
-    signIn: async () => ({ kind: "signed_in" as const, session }),
+    resume: async () => {
+      calls.sessions++;
+      return options.resume ? options.resume() : { kind: "signed_in" as const, session };
+    },
+    signIn: async () => {
+      calls.sessions++;
+      return { kind: "signed_in" as const, session };
+    },
     developer: () => developer,
     markBanned: async (_id: string, udid: string) => {
       calls.banned.push(udid);
@@ -330,7 +340,7 @@ const MAIN_IDS: Readonly<Record<string, string>> = {
 };
 
 export const inspectionFor = (identifier: string, name = "App"): IpaInspection => ({
-  app: { path: `Payload/${name}.app`, identifier, name },
+  app: { path: `Payload/${name}.app`, identifier, name, deviceFamilies: [1], architectures: ["arm64"] },
   nested: [],
   appGroups: [],
   keychainAccessGroups: [],
