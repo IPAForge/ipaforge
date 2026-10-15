@@ -8,17 +8,70 @@
  * to your login keychain. The private key is passed to Loadstar in memory only.
  */
 import { execFileSync, spawnSync } from "node:child_process";
-import { cpSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { cpSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { fromBase64, silentLogger, systemClock, toHex } from "@loadstar/kernel";
 import { readTree } from "@signer/__tests__/fixtures.ts";
 import { CSSLOT_SIGNATURESLOT, parseSuperBlob } from "@signer/domain/blobs/index.ts";
 import type { BundleTree } from "@signer/domain/bundle/tree.ts";
 import { parseMachO } from "@signer/domain/macho/parse.ts";
 import { certificateInfo, createHasher, isPlistDict, parsePlist, resolveChain, signBundle } from "@signer/index.ts";
+import * as asn1js from "asn1js";
+import * as pkijs from "pkijs";
 
 const FIXTURES = join(import.meta.dirname, "../../../fixtures/signer");
+
+/** messageDigest, cdhashes2 and the cdhashes plist must all be derived from `cd` (SHA-256 / truncated). */
+const cdAttributesConsistent = async (cms: Uint8Array, cd: Uint8Array): Promise<boolean> => {
+  const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", cd as Uint8Array<ArrayBuffer>));
+  const signed = new pkijs.SignedData({
+    schema: pkijs.ContentInfo.fromBER(cms.buffer.slice(cms.byteOffset, cms.byteOffset + cms.byteLength) as ArrayBuffer)
+      .content,
+  });
+  const attributes = signed.signerInfos[0]?.signedAttrs?.attributes ?? [];
+  const octets = (type: string, index = 0): Uint8Array | undefined => {
+    const value = attributes.find((a) => a.type === type)?.values[index];
+    if (value instanceof asn1js.OctetString) return new Uint8Array(value.valueBlock.valueHexView);
+    if (value instanceof asn1js.Sequence) {
+      const inner = value.valueBlock.value[1];
+      return inner instanceof asn1js.OctetString ? new Uint8Array(inner.valueBlock.valueHexView) : undefined;
+    }
+    return undefined;
+  };
+  const plist = parsePlist(octets("1.2.840.113635.100.9.1") ?? new Uint8Array());
+  const listed = isPlistDict(plist) && Array.isArray(plist.cdhashes) ? plist.cdhashes[0] : undefined;
+  return (
+    toHex(octets("1.2.840.113549.1.9.4") ?? new Uint8Array()) === toHex(digest) &&
+    toHex(octets("1.2.840.113635.100.9.2") ?? new Uint8Array()) === toHex(digest) &&
+    listed instanceof Uint8Array &&
+    toHex(listed) === toHex(digest.subarray(0, 20))
+  );
+};
+
+/** Which hash slots of two same-shaped CodeDirectories differ ("special -3", "page 0", …, or "header"). */
+const differingHashSlots = (a: Uint8Array, b: Uint8Array): string[] => {
+  const view = (cd: Uint8Array) => new DataView(cd.buffer, cd.byteOffset, cd.byteLength);
+  const [va, vb] = [view(a), view(b)];
+  if (a.byteLength !== b.byteLength || va.getUint32(16) !== vb.getUint32(16)) return ["header"];
+  const hashOffset = va.getUint32(16);
+  const nSpecial = va.getUint32(24);
+  const nCode = va.getUint32(28);
+  const size = a[36] ?? 32;
+  const out: string[] = [];
+  if (toHex(a.subarray(0, hashOffset - nSpecial * size)) !== toHex(b.subarray(0, hashOffset - nSpecial * size))) {
+    out.push("header");
+  }
+  for (let i = 1; i <= nSpecial; i++) {
+    const at = hashOffset - i * size;
+    if (toHex(a.subarray(at, at + size)) !== toHex(b.subarray(at, at + size))) out.push(`special -${i}`);
+  }
+  for (let i = 0; i < nCode; i++) {
+    const at = hashOffset + i * size;
+    if (toHex(a.subarray(at, at + size)) !== toHex(b.subarray(at, at + size))) out.push(`page ${i}`);
+  }
+  return out;
+};
 const arg = (name: string): string | undefined => {
   const index = process.argv.indexOf(name);
   return index >= 0 ? process.argv[index + 1] : undefined;
@@ -38,6 +91,7 @@ if (!p12) {
 const work = mkdtempSync(join(tmpdir(), "loadstar-realcert-"));
 const keychain = join(work, "compare.keychain-db");
 const report: string[] = [];
+let originalSearchList: string[] | undefined;
 let failures = 0;
 const check = (label: string, ok: boolean, detail = ""): void => {
   report.push(`${ok ? "✓" : "✗"} ${label}${detail ? `  ${detail}` : ""}`);
@@ -70,16 +124,33 @@ try {
     `certificate: ${info.commonName} (team ${teamId}), chain: ${chain.length} certs (${resolution.source}${resolution.fetchedFrom ? ` from ${resolution.fetchedFrom}` : ""})`,
   );
 
-  // 2. temporary keychain with the identity, for codesign
+  // 2. temporary keychain with the identity and its Apple chain, for codesign
   run("security", ["create-keychain", "-p", "loadstar", keychain]);
   run("security", ["unlock-keychain", "-p", "loadstar", keychain]);
+  run("security", ["set-keychain-settings", keychain]); // no auto-lock while the comparison runs
   run("security", ["import", p12, "-k", keychain, "-P", password, "-T", "/usr/bin/codesign"]);
+  chain.forEach((der, index) => {
+    const file = join(work, `chain-${index}.cer`);
+    writeFileSync(file, der);
+    // the root may already be trusted system-wide; a duplicate import is harmless
+    spawnSync("security", ["import", file, "-k", keychain], { stdio: "ignore" });
+  });
   run("security", ["set-key-partition-list", "-S", "apple-tool:,apple:", "-s", "-k", "loadstar", keychain]);
-  const identityHash = run("security", ["find-identity", "-v", "-p", "codesigning", keychain]).match(
-    /\b([0-9A-F]{40})\b/,
-  )?.[1];
-  if (!identityHash)
-    throw new Error("codesign identity not found in the temporary keychain (is the certificate valid and trusted?)");
+  // macOS builds the trust chain from the user keychain search list, so add the temporary keychain to it
+  // for the duration of the run; the original list is restored in `finally`.
+  originalSearchList = run("security", ["list-keychains", "-d", "user"])
+    .split("\n")
+    .map((line) => line.trim().replace(/^"|"$/g, ""))
+    .filter((line) => line.length > 0);
+  run("security", ["list-keychains", "-d", "user", "-s", keychain, ...originalSearchList]);
+
+  const identities = run("security", ["find-identity", "-v", "-p", "codesigning", keychain]);
+  const identityHash = identities.match(/\b([0-9A-F]{40})\b/)?.[1];
+  if (!identityHash) {
+    const all = run("security", ["find-identity", "-p", "codesigning", keychain]).trim();
+    throw new Error(`no valid codesigning identity in the temporary keychain. macOS reports:\n${all}`);
+  }
+  report.push(`identity: ${identityHash} (valid for code signing)`);
 
   // 3. Apple codesign, bottom-up, same inputs as the ad-hoc fixtures
   const appleApp = join(work, "apple/Test.app");
@@ -145,21 +216,62 @@ try {
     const a = blobsOf(apple);
     const o = blobsOf(ours);
     check(`${path}: same slot layout`, a.blobs.map((b) => b.slot).join() === o.blobs.map((b) => b.slot).join());
+    // true when the CodeDirectory differs only in the CodeResources hash (expected for the main app)
+    let cdDiffersOnlyInResources = false;
     for (const blob of a.blobs.filter((b) => b.slot !== CSSLOT_SIGNATURESLOT)) {
       const mine = o.blobs.find((b) => b.slot === blob.slot);
-      check(`${path}: slot 0x${blob.slot.toString(16)} identical`, !!mine && toHex(mine.blob) === toHex(blob.blob));
+      const same = !!mine && toHex(mine.blob) === toHex(blob.blob);
+      const isCodeDirectory = blob.slot === 0 || (blob.slot >= 0x1000 && blob.slot < 0x1005);
+      if (!same && mine && isCodeDirectory) {
+        // Only the CodeResources slot (−3) may differ: it hashes nested binaries whose CMS carries a
+        // different signing time. Anything else is a real mismatch.
+        const slots = differingHashSlots(blob.blob, mine.blob);
+        const onlyResources = slots.length === 1 && slots[0] === "special -3";
+        cdDiffersOnlyInResources ||= onlyResources;
+        check(
+          `${path}: slot 0x${blob.slot.toString(16)} identical except CodeResources hash`,
+          onlyResources,
+          `differs in: ${slots.join(", ") || "header"}`,
+        );
+        continue;
+      }
+      check(`${path}: slot 0x${blob.slot.toString(16)} identical`, same);
     }
     const cmsText = (blobs: typeof a.blobs, name: string): string => {
       const cms = blobs.find((b) => b.slot === CSSLOT_SIGNATURESLOT)?.blob.subarray(8) ?? new Uint8Array();
       const file = join(work, `${name}.cms`);
       writeFileSync(file, cms);
-      return run("openssl", ["cms", "-cmsout", "-print", "-inform", "DER", "-in", file])
+      const text = run("openssl", ["cms", "-cmsout", "-print", "-inform", "DER", "-in", file])
         .replace(/UTCTIME:.*|GENERALIZEDTIME:.*/g, "<time>")
         .replace(/signature:[\s\S]*?(?=\n\s{4,6}\w|\n\s*unsignedAttrs)/g, "signature: <sig>");
+      if (!cdDiffersOnlyInResources) return text;
+      // The CD's own hash legitimately differs, so mask the three values derived from it (checked
+      // separately for self-consistency below): messageDigest, cdhashes2 and the cdhashes plist.
+      return text
+        .replace(
+          /(object: messageDigest[^\n]*\n\s*set:\n\s*OCTET STRING:\n)((?:\s+[0-9a-f]{4} - [^\n]*\n)+)/,
+          "$1<cd digest>\n",
+        )
+        .replace(/\[HEX DUMP\]:[0-9A-F]{40,64}/g, "[HEX DUMP]:<cd digest>")
+        .replace(
+          /(object: undefined \(1\.2\.840\.113635\.100\.9\.1\)\n\s*set:\n\s*OCTET STRING:\n)((?:\s+[0-9a-f]{4} - [^\n]*\n)+)/,
+          (_m, head: string, body: string) => `${head}<cdhashes plist, ${body.split("\n").length} lines>\n`,
+        );
     };
     const appleCms = cmsText(a.blobs, `apple-${path.replaceAll("/", "_")}`);
     const ourCms = cmsText(o.blobs, `ours-${path.replaceAll("/", "_")}`);
-    check(`${path}: CMS structure identical (time/signature masked)`, appleCms === ourCms);
+    check(
+      `${path}: CMS structure identical (time/signature${cdDiffersOnlyInResources ? "/cd-derived hashes" : ""} masked)`,
+      appleCms === ourCms,
+    );
+    if (cdDiffersOnlyInResources) {
+      const primary = o.blobs.find((b) => b.slot === 0)?.blob ?? new Uint8Array();
+      const cms = o.blobs.find((b) => b.slot === CSSLOT_SIGNATURESLOT)?.blob.subarray(8) ?? new Uint8Array();
+      check(
+        `${path}: CMS cd-derived hashes are correct for our CodeDirectory`,
+        await cdAttributesConsistent(cms, primary),
+      );
+    }
     if (appleCms !== ourCms) {
       writeFileSync(join(work, `${path.replaceAll("/", "_")}.apple.txt`), appleCms);
       writeFileSync(join(work, `${path.replaceAll("/", "_")}.ours.txt`), ourCms);
@@ -169,7 +281,11 @@ try {
   // 6. Apple accepts ours
   const oursApp = join(work, "ours/Test.app");
   cpSync(join(FIXTURES, "inputs/Test.app"), oursApp, { recursive: true, verbatimSymlinks: true });
-  for (const [path, entry] of tree) if (entry.kind === "file") writeFileSync(join(oursApp, path), entry.data);
+  for (const [path, entry] of tree) {
+    if (entry.kind !== "file") continue;
+    mkdirSync(dirname(join(oursApp, path)), { recursive: true });
+    writeFileSync(join(oursApp, path), entry.data);
+  }
   const verify = spawnSync("codesign", ["--verify", "--deep", "--strict", "-vv", oursApp], { encoding: "utf8" });
   check(
     "codesign --verify --deep --strict on Loadstar's output",
@@ -180,6 +296,7 @@ try {
   failures++;
   report.push(`✗ ${(error as Error).message}`);
 } finally {
+  if (originalSearchList) spawnSync("security", ["list-keychains", "-d", "user", "-s", ...originalSearchList]);
   spawnSync("security", ["delete-keychain", keychain]);
 }
 

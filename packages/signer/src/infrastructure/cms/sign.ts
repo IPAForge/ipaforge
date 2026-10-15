@@ -12,6 +12,7 @@ const OID_CONTENT_TYPE = "1.2.840.113549.1.9.3";
 const OID_MESSAGE_DIGEST = "1.2.840.113549.1.9.4";
 const OID_SIGNING_TIME = "1.2.840.113549.1.9.5";
 const OID_APPLE_CDHASHES = "1.2.840.113635.100.9.1";
+const OID_SHA256_WITH_RSA = "1.2.840.113549.1.1.11";
 const OID_APPLE_CDHASHES2 = "1.2.840.113635.100.9.2";
 const DIGEST_OID: Readonly<Record<HashAlgorithm, string>> = { sha1: "1.3.14.3.2.26", sha256: "2.16.840.1.101.3.4.2.1" };
 
@@ -98,7 +99,12 @@ export const signCodeDirectories = async (
   const signedData = new pkijs.SignedData({
     version: 1,
     encapContentInfo: new pkijs.EncapsulatedContentInfo({ eContentType: OID_DATA }),
-    certificates: [leaf, ...identity.chain.map(parseCertificate)],
+    // certificates [0] IMPLICIT SET: DER-sorted like any SET OF (verified against codesign with a real
+    // Apple Development certificate: G3, Apple Root CA, then the leaf)
+    certificates: derSorted(
+      [leaf, ...identity.chain.map(parseCertificate)],
+      (cert) => new Uint8Array(cert.toSchema(true).toBER(false)),
+    ),
     signerInfos: [
       new pkijs.SignerInfo({
         version: 1,
@@ -110,6 +116,15 @@ export const signCodeDirectories = async (
 
   try {
     await signedData.sign(identity.privateKey, 0, "SHA-256", toArrayBuffer(primary.bytes));
+    // Apple writes sha256WithRSAEncryption with an explicit NULL parameter (pkijs omits it). The signature
+    // covers only the signed attributes, so adjusting this identifier afterwards is safe.
+    const signer = signedData.signerInfos[0];
+    if (signer && signer.signatureAlgorithm.algorithmId === OID_SHA256_WITH_RSA) {
+      signer.signatureAlgorithm = new pkijs.AlgorithmIdentifier({
+        algorithmId: OID_SHA256_WITH_RSA,
+        algorithmParams: new asn1js.Null(),
+      });
+    }
   } catch (error) {
     throw new LoadstarError(ErrorCode.InvalidCertificate, { message: "CMS signing failed", cause: error });
   }

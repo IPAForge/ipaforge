@@ -467,7 +467,8 @@ Details:
   signingTime (`30 1c`), messageDigest (`30 2f`), V2 (`30 3c`), V1 (`30 82 ...`).
 - **Signature**: computed over the DER of the signedAttrs re-tagged as `SET (0x31)`
   (RFC 5652 §5.4).
-- **AlgorithmIdentifier parameters**: Apple writes an explicit NULL for sha256 and for
+- **AlgorithmIdentifier parameters** (confirmed with a real certificate: `signatureAlgorithm` is
+  sha256WithRSAEncryption **with** an explicit NULL): Apple writes an explicit NULL for sha256 and for
   sha256WithRSA (`apple/secalgid.c:59-95`, which adds NULL for SHA-* and RSA OIDs). other signers does the
   same ( `sha256_algorithm_identifier`). rcodesign omits it. Both verify.
 - **Certificates**:
@@ -477,8 +478,9 @@ Details:
     currently issued by **WWDR G3** (RSA, chains to "Apple Root CA"). zsign ships G1–G8 and matches
     them by issuer-name hash; G2 and G6 chain to "Apple Root CA – G3" (`zsign/openssl.cpp:317-330, 380-433`).
   - other signers bundles AppleWWDRCAG3 and AppleIncRootCertificate .
-  - Order inside the SET does not matter for verification. Issuer-first order is safe
-    (`cms-rs/signing.rs:441-453`).
+  - **Order (verified 2026-10-15 with a real Apple Development certificate, codesign-83.100.6):** codesign
+    DER-sorts the certificate SET like any `SET OF`. For a WWDR G3 leaf that gives G3, Apple Root CA, then
+    the leaf, effectively ordered by encoded length. Verifiers accept any order; Loadstar matches Apple.
 - **No timestamp** (iOS does not need one) and no smimeCapabilities (zsign uses `CMS_NOSMIMECAP`,
   `zsign/openssl.cpp:440`).
 - **Byte-identity with codesign**: given the same signing time, RSA PKCS#1 v1.5 is deterministic,
@@ -852,7 +854,9 @@ Mach-O-level pitfalls:
    iOS arm64 with minOS ≥ 16, verified. Older codesign versions and rcodesign/zsign/other signers use
    4 KiB. Apple's GitHub `main` has a slightly different switch (16 KiB for all non-tvOS arm64).
    Make it a parameter.
-2. **CMS byte-identity is untested.** No Apple identity was available, so these remain unconfirmed:
+2. **Resolved 2026-10-15** (real Apple Development certificate, `compare-real-cert`): certificates are
+   DER-sorted; `signatureAlgorithm` is sha256WithRSAEncryption with an explicit NULL. The remaining CMS bytes
+   differ only by signing time and signature value. Originally open:
    - Apple's certificate ordering inside the SET
    - whether `signatureAlgorithm` is sha256WithRSA (per current source) or rsaEncryption (older NSS)
    - the V2 value order in agile mode
