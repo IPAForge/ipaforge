@@ -10,7 +10,7 @@
     "build": "electron-vite build",
     "preview": "pnpm run ensure-electron && electron-vite preview",
     "ensure-electron": "node -e \"require('electron')\"",
-    "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.renderer.json",
+    "typecheck": "tsc -p tsconfig.json && tsc -p src/renderer/tsconfig.json",
     "device-probe": "tsx scripts/device-probe.ts",
     "apple-probe": "tsx scripts/apple-probe.ts",
     "catalog-probe": "tsx scripts/catalog-probe.ts",

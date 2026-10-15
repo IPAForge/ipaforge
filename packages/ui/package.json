@@ -15,7 +15,7 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.test.json"
+    "typecheck": "tsc -p tsconfig.src.json && tsc -p tsconfig.json"
   },
   "dependencies": {
     "@formatjs/icu-messageformat-parser": "3.5.18",

@@ -9,7 +9,7 @@
     ".": "./src/index.ts"
   },
   "scripts": {
-    "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.test.json",
+    "typecheck": "tsc -p tsconfig.src.json && tsc -p tsconfig.json",
     "compare-real-cert": "tsx scripts/compare-real-cert.ts",
     "update-apple-certificates": "tsx scripts/update-apple-certificates.ts"
   },
