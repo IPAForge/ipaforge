@@ -1,8 +1,8 @@
+import { isPlistDict, parseXmlPlist } from "@loadstar/kernel";
 import type { EntitlementsInput } from "@signer/application/sign-binary.ts";
 import { CSSLOT_ENTITLEMENTS, findBlob, parseSuperBlob } from "@signer/domain/blobs/index.ts";
 import { DEFAULT_SIGNER_LIMITS, type SignerLimits } from "@signer/domain/config.ts";
 import { parseMachO } from "@signer/domain/macho/parse.ts";
-import { isPlistDict, parseXmlPlist } from "@signer/domain/plist/index.ts";
 
 /**
  * Entitlements currently embedded in a signed executable (slot 5): the exact plist bytes and the

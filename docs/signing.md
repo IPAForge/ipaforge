@@ -1,8 +1,8 @@
-[← Architecture](architecture.md) · [Back to README](../README.md) · [Roadmap →](roadmap.md)
+[← Architecture](architecture.md) · [Back to README](../README.md) · [Device →](device.md)
 
 # Code Signing
 
-An iPhone only runs code that carries a valid signature from a certificate Apple trusts, tied to a provisioning profile that lists the device. `@loadstar/signer` re-signs apps with **your** free development certificate. It is pure TypeScript and runs unchanged in Node, Electron and browser Web Workers. The byte-level reference is `docs/design/signer-spec.md`.
+An iPhone only runs code that carries a valid signature from a certificate Apple trusts, tied to a provisioning profile that lists the device. `@loadstar/signer` re-signs apps with **your** free development certificate. It is pure TypeScript and runs in Node and Electron. The byte-level reference is `docs/design/signer-spec.md`.
 
 ## How it works
 
@@ -90,7 +90,6 @@ Lower-level building blocks are also exported: `signBundle`, `signBinary`, `reco
 | Certificate-signed binaries, bundles, sideload-reconciled apps and written IPAs pass `codesign --verify --deep --strict` | macOS tests |
 | CMS verifies with pkijs and `openssl cms` | `infrastructure/cms/cms.test.ts` |
 | Plist writer matches `plutil` byte for byte (including `%.17g` reals) | `domain/plist/plist.test.ts` |
-| A Chromium Web Worker produces byte-identical output to Node | `test/browser-parity.test.ts` |
 | Real SideStore 0.7.0-alpha is sideload-signed in ~0.5 s and verifies | `application/sign-ipa.test.ts` (`LOADSTAR_E2E=1`) |
 
 The golden inputs and Apple outputs live in `fixtures/signer/` ([README](../fixtures/signer/README.md)). Regenerate them on macOS with `fixtures/signer/generate.sh`; `--check` fails when an Xcode update changes Apple's behaviour. Checking the CMS against a **real** Apple Development certificate is a one-command maintainer step: [`fixtures/signer/REAL-CERT.md`](../fixtures/signer/REAL-CERT.md).
@@ -114,7 +113,7 @@ The golden inputs and Apple outputs live in `fixtures/signer/` ([README](../fixt
 | `signer.encrypted_binary` | App Store build; needs a decrypted IPA |
 | `signer.no_header_space` | Binary has no room for a signature load command |
 | `signer.zip_slip` / `signer.invalid_bundle` | Unsafe or malformed archive, missing `Payload/*.app`, size limits |
-| `signer.invalid_plist` / `signer.invalid_certificate` / `signer.invalid_profile` | Malformed inputs |
+| `plist.invalid` / `signer.invalid_certificate` / `signer.invalid_profile` | Malformed inputs |
 | `signer.unknown_issuer` | The certificate's issuer is neither bundled nor downloadable and verifiable to an Apple root |
 | `signer.extension_prefix` | Extension ID not under the app's ID |
 | `signer.profile_mismatch` / `signer.profile_expired` / `signer.cert_not_in_profile` / `signer.device_not_provisioned` | Profile doesn't fit this app, certificate or device |

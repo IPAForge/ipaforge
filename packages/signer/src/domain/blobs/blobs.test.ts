@@ -1,4 +1,4 @@
-import { fromHex, toHex } from "@loadstar/kernel";
+import { createDict, fromHex, isPlistDict, type PlistDict, parseXmlPlist, toHex } from "@loadstar/kernel";
 import { type FixtureCase, readFixture } from "@signer/__tests__/fixtures.ts";
 import { signedTargets } from "@signer/__tests__/targets.ts";
 import {
@@ -24,7 +24,6 @@ import {
 } from "@signer/domain/blobs/index.ts";
 import { findSegment, parseMachO } from "@signer/domain/macho/parse.ts";
 import type { Slice } from "@signer/domain/macho/types.ts";
-import { createDict, isPlistDict, type PlistDict, parseXmlPlist } from "@signer/domain/plist/index.ts";
 import { createHasher } from "@signer/infrastructure/hashing/index.ts";
 import { describe, expect, it } from "vitest";
 

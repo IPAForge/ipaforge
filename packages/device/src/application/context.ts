@@ -1,0 +1,19 @@
+import type { DeviceDeps } from "@device/deps.ts";
+import type { FrameLimits } from "@device/infrastructure/framing/plist-frames.ts";
+import { createUsbmuxClient, type UsbmuxClient } from "@device/infrastructure/usbmux/client.ts";
+
+/** Shared state for every device operation. */
+export interface DeviceContext {
+  readonly deps: DeviceDeps;
+  readonly usbmux: UsbmuxClient;
+  readonly limits: FrameLimits;
+}
+
+export const createDeviceContext = (deps: DeviceDeps): DeviceContext => {
+  const limits: FrameLimits = { maxMessageBytes: deps.config.maxMessageBytes, plist: deps.config.plist };
+  return {
+    deps,
+    limits,
+    usbmux: createUsbmuxClient({ transport: deps.transport, logger: deps.logger, label: deps.config.label, limits }),
+  };
+};

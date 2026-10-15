@@ -23,7 +23,8 @@
     "paths": {
       "@kernel/*": ["./packages/kernel/src/*"],
       "@signer/*": ["./packages/signer/src/*"],
-      "@signer-test/*": ["./packages/signer/test/*"]
+      "@device/*": ["./packages/device/src/*"],
+      "@desktop/*": ["./apps/desktop/src/*"]
     }
   }
 }

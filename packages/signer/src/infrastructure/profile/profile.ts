@@ -1,6 +1,5 @@
-import { ErrorCode, equalBytes, LoadstarError } from "@loadstar/kernel";
+import { ErrorCode, equalBytes, isPlistDict, LoadstarError, type PlistDict, parseXmlPlist } from "@loadstar/kernel";
 import { DEFAULT_SIGNER_LIMITS, type PlistLimits } from "@signer/domain/config.ts";
-import { isPlistDict, type PlistDict, parseXmlPlist } from "@signer/domain/plist/index.ts";
 import * as asn1js from "asn1js";
 import * as pkijs from "pkijs";
 import { z } from "zod";

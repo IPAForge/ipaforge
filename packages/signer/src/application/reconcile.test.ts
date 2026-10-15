@@ -2,14 +2,22 @@ import { execFileSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
-import { ErrorCode, fixedClock, LoadstarError, silentLogger, toHex, utf8Encode } from "@loadstar/kernel";
+import {
+  ErrorCode,
+  fixedClock,
+  LoadstarError,
+  type PlistDict,
+  parsePlist,
+  silentLogger,
+  toHex,
+  utf8Encode,
+} from "@loadstar/kernel";
 import { FIXTURES_DIR, readTree } from "@signer/__tests__/fixtures.ts";
 import { createTestIdentity, type TestIdentity } from "@signer/__tests__/identity.ts";
 import { makeProfile, type TestProfileOptions } from "@signer/__tests__/profile.ts";
 import { type ReconcileOptions, reconcileForSideload } from "@signer/application/reconcile.ts";
 import { signBundle } from "@signer/application/sign-bundle.ts";
 import type { BundleTree } from "@signer/domain/bundle/tree.ts";
-import { type PlistDict, parsePlist } from "@signer/domain/plist/index.ts";
 import { createHasher } from "@signer/infrastructure/hashing/index.ts";
 import { parseProvisioningProfile, profileCoversBundle } from "@signer/infrastructure/profile/profile.ts";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";

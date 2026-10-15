@@ -1,6 +1,6 @@
 /**
- * Storage for credentials and private keys. Desktop: OS keychain via Electron `safeStorage`.
- * Web: in-memory for the session. Values are raw bytes; callers own the encoding.
+ * Storage for credentials and private keys, backed by the OS keychain via Electron `safeStorage`.
+ * Values are raw bytes; callers own the encoding.
  */
 export interface SecretStore {
   get(key: string): Promise<Uint8Array | undefined>;

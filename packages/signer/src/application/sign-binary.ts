@@ -1,3 +1,4 @@
+import type { PlistDict } from "@loadstar/kernel";
 import { ErrorCode, LoadstarError, type Logger, utf8Encode } from "@loadstar/kernel";
 import { carriesEntitlements, execSegmentFlags, hashAlgorithmsFor, pageSizeFor } from "@signer/application/policy.ts";
 import {
@@ -31,7 +32,6 @@ import { estimateSignatureSize, prepareImage } from "@signer/domain/macho/alloca
 import { assembleFat } from "@signer/domain/macho/fat.ts";
 import { findSegment, parseMachO } from "@signer/domain/macho/parse.ts";
 import type { Slice } from "@signer/domain/macho/types.ts";
-import type { PlistDict } from "@signer/domain/plist/index.ts";
 import { DIGEST_SIZE, type HashAlgorithm, type Hasher } from "@signer/domain/ports/hasher.ts";
 import { certificateInfo } from "@signer/infrastructure/cms/certificate.ts";
 import { type SigningIdentity, signCodeDirectories } from "@signer/infrastructure/cms/sign.ts";

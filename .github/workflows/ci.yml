@@ -66,19 +66,3 @@ jobs:
         run: pnpm vitest run packages/signer/src/application/sign-ipa.test.ts
         env:
           LOADSTAR_E2E: "1"
-
-  browser-parity:
-    name: browser parity (Chromium)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: pnpm/action-setup@v6
-      - uses: actions/setup-node@v7
-        with:
-          node-version-file: .nvmrc
-          cache: pnpm
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm exec playwright install --with-deps chromium
-      - run: pnpm vitest run packages/signer/test/browser-parity.test.ts
-        env:
-          LOADSTAR_BROWSER: "1"

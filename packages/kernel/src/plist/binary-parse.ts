@@ -1,6 +1,7 @@
-import { ErrorCode, LoadstarError } from "@loadstar/kernel";
-import { DEFAULT_SIGNER_LIMITS, type PlistLimits } from "@signer/domain/config.ts";
-import { createDict, type PlistValue, real } from "@signer/domain/plist/model.ts";
+import { ErrorCode } from "@kernel/errors/codes.ts";
+import { LoadstarError } from "@kernel/errors/loadstar-error.ts";
+import { DEFAULT_PLIST_LIMITS, type PlistLimits } from "@kernel/plist/limits.ts";
+import { createDict, type PlistValue, real } from "@kernel/plist/model.ts";
 
 const HEADER = "bplist00";
 const TRAILER_SIZE = 32;
@@ -28,7 +29,7 @@ export const isBinaryPlist = (bytes: Uint8Array): boolean =>
  * exponentially large tree; each object is parsed once and carries the node/byte totals and height of its
  * expansion, which `limits` caps (anything that later walks the result is bounded by the same totals).
  */
-export const parseBinaryPlist = (bytes: Uint8Array, limits: PlistLimits = DEFAULT_SIGNER_LIMITS.plist): PlistValue => {
+export const parseBinaryPlist = (bytes: Uint8Array, limits: PlistLimits = DEFAULT_PLIST_LIMITS): PlistValue => {
   if (!isBinaryPlist(bytes) || bytes.byteLength < 8 + TRAILER_SIZE) fail("not a bplist00 file");
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
 

@@ -1,6 +1,9 @@
-import { ErrorCode, fromBase64, LoadstarError, utf8Decode } from "@loadstar/kernel";
-import { DEFAULT_SIGNER_LIMITS, type PlistLimits } from "@signer/domain/config.ts";
-import { createDict, type PlistValue, real } from "@signer/domain/plist/model.ts";
+import { fromBase64 } from "@kernel/bytes/base64.ts";
+import { utf8Decode } from "@kernel/bytes/bytes.ts";
+import { ErrorCode } from "@kernel/errors/codes.ts";
+import { LoadstarError } from "@kernel/errors/loadstar-error.ts";
+import { DEFAULT_PLIST_LIMITS, type PlistLimits } from "@kernel/plist/limits.ts";
+import { createDict, type PlistValue, real } from "@kernel/plist/model.ts";
 
 const fail = (message: string, position: number): never => {
   throw new LoadstarError(ErrorCode.InvalidPlist, { message: `XML plist: ${message}`, data: { position } });
@@ -160,10 +163,7 @@ const parseValue = (reader: Reader, tag: Tag, depth: number, maxDepth: number): 
 };
 
 /** Parses an XML property list (bytes must be UTF-8). */
-export const parseXmlPlist = (
-  input: Uint8Array | string,
-  limits: PlistLimits = DEFAULT_SIGNER_LIMITS.plist,
-): PlistValue => {
+export const parseXmlPlist = (input: Uint8Array | string, limits: PlistLimits = DEFAULT_PLIST_LIMITS): PlistValue => {
   let xml: string;
   try {
     xml = typeof input === "string" ? input : utf8Decode(input);

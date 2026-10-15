@@ -1,11 +1,10 @@
-import { ErrorCode, LoadstarError } from "@loadstar/kernel";
+import { ErrorCode, isPlistDict, LoadstarError, type PlistDict, parsePlist, stringAt } from "@loadstar/kernel";
 import { CODE_SIGNATURE_DIR, INFO_PLIST } from "@signer/domain/bundle/layout.ts";
 import { type BundleTree, isWithin, joinPath, readFile, relativeTo } from "@signer/domain/bundle/tree.ts";
 import type { ResourceEntry } from "@signer/domain/code-resources/index.ts";
 import { DEFAULT_SIGNER_LIMITS, type PlistLimits, type SignerLimits } from "@signer/domain/config.ts";
 import { MH_BUNDLE, MH_DYLIB, MH_EXECUTE } from "@signer/domain/macho/constants.ts";
 import { isMachO, parseMachO } from "@signer/domain/macho/parse.ts";
-import { isPlistDict, type PlistDict, parsePlist, stringAt } from "@signer/domain/plist/index.ts";
 
 export type BundleKind = "app" | "appex" | "framework" | "watch-app" | "xctest";
 

@@ -6,17 +6,17 @@ Loadstar uses **Explicit Architecture (ports & adapters)** with one package per 
 
 ## Why ports & adapters
 
-The engine logic is the same on every platform, but the I/O isn't:
+Loadstar is a desktop app (Electron) for Windows, macOS and Linux. The engine logic is the same everywhere; only the I/O is platform-specific:
 
-| Concern | Desktop (Electron main) | Web (Web Worker) |
-|---|---|---|
-| Reach the device | usbmuxd socket | WebUSB + our own usbmux |
-| TLS to device services | `node:tls` | JS/WASM TLS client |
-| Talk to Apple | direct HTTPS | stateless relay (CORS) |
-| Secrets | OS keychain (`safeStorage`) | session memory |
-| Read IPAs | filesystem | `File` stream |
+| Concern | Desktop (Electron main / utility process) |
+|---|---|
+| Reach the device | usbmuxd socket (Unix socket on macOS/Linux, TCP 27015 on Windows) |
+| TLS to device services | `node:tls` |
+| Talk to Apple | direct HTTPS |
+| Secrets | OS keychain (`safeStorage`) |
+| Read IPAs | filesystem / download stream |
 
-Core packages define **ports**, which are interfaces. Each app provides **adapters**, which implement them. Core packages never import `node:*`, `electron` or browser-only APIs, and a boundary checker enforces this in CI.
+Core packages define **ports**, which are interfaces. `apps/desktop` provides the **adapters**, which implement them. Core packages never import `node:*`, `electron` or DOM APIs, and a boundary checker enforces this in CI. That keeps the engine testable without a phone or an Apple account, and keeps every OS difference in one place.
 
 ## Packages
 
@@ -28,10 +28,10 @@ Core packages define **ports**, which are interfaces. Each app provides **adapte
 | `apple` | Apple ID login (GSA SRP + 2FA), anisette, developer services |
 | `catalog` | Release sources, GitHub resolution, downloads, cache |
 | `installer` | Pipelines and flows (install SideStore, preload, pairing), diagnostics, the **Engine** facade |
-| `rpc` | Typed Engine ⇄ UI calls over Electron IPC or Worker `postMessage` |
-| `ui` | Shared React app (HeroUI + Tailwind, palettes, i18n) |
+| `rpc` | Typed Engine ⇄ UI calls over Electron IPC |
+| `ui` | React app rendered by the desktop shell (HeroUI + Tailwind, palettes, i18n) |
 
-Apps (composition roots): `apps/desktop` (Electron), `apps/web` (Vite + Worker), `apps/relay` (Hono).
+App (composition root): `apps/desktop` (Electron).
 
 ## Dependency rules
 

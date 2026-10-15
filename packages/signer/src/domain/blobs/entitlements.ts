@@ -1,8 +1,17 @@
-import { compareBytes, concatBytes, ErrorCode, LoadstarError, utf8Encode } from "@loadstar/kernel";
+import {
+  compareBytes,
+  concatBytes,
+  ErrorCode,
+  isPlistDict,
+  LoadstarError,
+  type PlistDict,
+  PlistReal,
+  type PlistValue,
+  serializeXmlPlist,
+  utf8Encode,
+} from "@loadstar/kernel";
 import { CSMAGIC_EMBEDDED_DER_ENTITLEMENTS, CSMAGIC_EMBEDDED_ENTITLEMENTS } from "@signer/domain/blobs/constants.ts";
 import { wrapBlob } from "@signer/domain/blobs/super-blob.ts";
-import { isPlistDict, type PlistDict, PlistReal, type PlistValue } from "@signer/domain/plist/index.ts";
-import { serializeXmlPlist } from "@signer/domain/plist/xml-write.ts";
 
 /** Slot 5: the entitlements plist bytes, verbatim (codesign does not re-serialize them). */
 export const entitlementsXmlBlob = (plistBytes: Uint8Array): Uint8Array =>

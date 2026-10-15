@@ -16,8 +16,7 @@ export interface HttpResponse {
 }
 
 /**
- * Outbound HTTP. Desktop talks to the internet directly; the web shell routes Apple endpoints
- * through the relay. Implementations reject with `LoadstarError("net.offline")` when there is no network.
+ * Outbound HTTP, straight to the internet (Apple, GitHub, anisette servers). Implementations reject with `LoadstarError("net.offline")` when there is no network.
  */
 export interface HttpClient {
   request(request: HttpRequest): Promise<HttpResponse>;

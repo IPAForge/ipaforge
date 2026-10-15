@@ -1,5 +1,6 @@
-import { toBase64, utf8Encode } from "@loadstar/kernel";
-import { isPlistDict, PlistReal, type PlistValue } from "@signer/domain/plist/model.ts";
+import { toBase64 } from "@kernel/bytes/base64.ts";
+import { utf8Encode } from "@kernel/bytes/bytes.ts";
+import { isPlistDict, PlistReal, type PlistValue } from "@kernel/plist/model.ts";
 
 const HEADER =
   '<?xml version="1.0" encoding="UTF-8"?>\n' +

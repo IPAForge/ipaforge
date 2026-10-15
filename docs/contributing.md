@@ -37,7 +37,7 @@ Biome's `noRestrictedImports` also flags Node built-ins inside `packages/**` whi
 
 1. Create `packages/<name>/` with:
    - `package.json`: `"name": "@loadstar/<name>"`, `"type": "module"`, `"exports": { ".": "./src/index.ts" }`, and a `typecheck` script;
-   - `tsconfig.json`: extends `../../tsconfig.base.json` with `"lib": ["ES2023", "WebWorker"]` and `"types": []` (the isomorphic baseline).
+   - `tsconfig.json`: extends `../../tsconfig.base.json` with `"lib": ["ES2023", "WebWorker"]` and `"types": []` (the platform-free baseline).
 2. Add the package and its allowed dependencies to `scripts/boundaries.config.ts`, add its `@<name>/*` alias to `tsconfig.base.json` `paths`, and add a `vitest.config.ts` that uses `workspaceAliases` (copy one from `packages/kernel`).
 3. Export the public API from `src/index.ts` only. Put tests next to the source as `*.test.ts`.
 

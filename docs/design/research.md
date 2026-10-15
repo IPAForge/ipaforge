@@ -1,12 +1,14 @@
 # Research
 
-> Findings that shaped Loadstar's design, as of 2026-10-13. Detailed references live in `docs/design/`.
+> Findings that shaped Loadstar's design. Updated: 2026-10-15. Detailed references live in `docs/design/`.
 
 ## Active Summary
 
 - A **pure-TypeScript iOS code signer is feasible and was proven** in a spike. Its output is byte-identical to Apple `codesign` and runs identically in Node 22 and Chrome 155.
 - Sideloading installers typically fail in **auth (anisette)**, **hardcoded download URLs**, **signing/provisioning**, and **opaque errors**. Loadstar's architecture targets each one.
 - **LiveContainer's GitHub repository is gone** (404 under both org and original owner). Release sources must be data, and their disappearance must be a handled error.
+- **Sideloader / Provision (Dadoum, GPL-3.0 / no SPDX licence)** are ideas only, never code. Take on-device profile management (misagent) into Phase 2; consider local anisette (Provision) as an opt-in sidecar in Phase 3. The CoreTrust bypass ("trollsign") is out of scope.
+- **Real-world failures are catalogued** in `references/failure-catalogue.md` (about 800 user reports, 2026-10-15). The biggest causes are anisette/Apple client identity (~30 %), pairing and device state (~15 %), team-level profile bans (~7 %), and App ID/certificate limits. Every phase plans against that catalogue.
 - **Preloading SideStore sources** cannot be done directly over USB today. Plan: show deep links and a QR code (v1), then propose an upstream "preload manifest" in SideStore.
 
 ## 1. Signer spike (2026-10-13)
@@ -87,7 +89,42 @@ Scope items that follow from this:
 - **Default sources** come from `https://sidestore.io/default-sources`. Sources live in SideStore's database, which isn't reachable over USB. That's the reason for the upstream preload-manifest proposal.
 - **Releases.** The latest SideStore release at the time of research was `0.7.0-alpha`, asset `SideStore.ipa` (27.8 MB). It contains `PlugIns/AltWidgetExtension.appex`, `Frameworks/OpenSSL.framework` and a nested `SideBackup.ipa`.
 
-## 4. Web platform constraints
+## 4. Prior art: Dadoum/Sideloader and Provision (2026-10-15)
+
+Reviewed for ideas only. **Sideloader is GPL-3.0** (D language), so our clean-room policy forbids copying its code; Provision has no SPDX licence.
+
+- **Sideloader** (last commit 2026-09-18, about 1k stars): CLI + GTK frontends. Its device layer is C bindings to `libimobiledevice` (lockdown, AFC, house_arrest, installation_proxy, misagent), not protocol code, so there is nothing to port to a TypeScript engine.
+  - Its features (free-account certificates and app IDs, signing, SideStore pairing-file setup, bundled Apple root + WWDR G3) are already covered by Phases 1–4.
+  - **misagent** (`com.apple.misagent`): lists, installs and removes provisioning profiles on the device. **Adopted for Phase 2** (protocol from libimobiledevice docs as a reference).
+  - **trollsign**: a CoreTrust bypass using TrollStore 2's method (CVE-2023-41991). **Out of scope** (no exploit or jailbreak work).
+  - Multi-threaded signing: not needed (SideStore signs in about 0.5 s).
+- **Provision** (last release 2.2.0, 2023): generates anisette data locally by loading Apple Music's Android libraries (`libstoreservicescore.so`, `libCoreADI.so`) and registering the machine with Apple (ADI data in `~/.adi/adi.pb`). It ships an `anisette-server` binary for Linux/Windows.
+  - It removes the dependency on third-party anisette servers, the root cause of `-80045` login failures.
+  - It cannot be pure TypeScript (it is an ELF loader for Android libraries), Apple's libraries cannot be redistributed, and the licence is unclear.
+  - **Decision for Phase 3:** public anisette servers stay the default. A local `anisette-server` sidecar, which the user opts into and which downloads Apple's libraries itself, is an optional fallback provider.
+
+## 5. Failure catalogue (2026-10-15)
+
+Summary of `references/failure-catalogue.md`:
+- Apple-facing identity (client info, user agent) must be remotely updatable data, ideally from the anisette server's `/v3/client_info`. Hardcoded identities caused waves of `-80045` and HTTP 503.
+- Anisette servers need health checks and automatic failover; users should never have to pick one.
+- Pairing needs a passcode, an unlocked device and accepted trust prompts; Wi-Fi debugging (`EnableWifiDebugging`) answers `MissingValue` without a passcode.
+- Team-level bans (`0xe8008024`) cannot be fixed client-side: switching to another saved Apple ID is the fix, so multi-account support is a recovery path, not a convenience.
+- Free accounts: 10 App IDs per 7 days (LiveContainer + SideStore normally costs 5), 3 active free-profile apps per device.
+
+## 6. Device layer on real hardware (2026-10-15)
+
+`apps/desktop` device probe and the `LOADSTAR_DEVICE` suite against an iPhone on iOS 26 on macOS, over Wi-Fi sync, read-only:
+- The pair record macOS stores in usbmuxd parses (binary plist). Its certificates are **SHA-1 with empty subject/issuer names**, so OpenSSL treats them as self-signed and refuses SHA-1 above security level 0. Device TLS therefore authenticates by pinning the exact device certificate and runs at `@SECLEVEL=0` for device connections only.
+- Lockdown session + TLS, `GetValue`, installation_proxy `Browse`, misagent `CopyAll`, house_arrest `VendDocuments` + AFC stat all work.
+- LiveContainer + SideStore keeps the pairing file at `Documents/SideStore/Documents/ALTPairingFile.mobiledevicepairing` in the LiveContainer container (confirmed on device). SideStore 0.7.0 nightly (2026-09-11) still reads `ALTPairingFile.mobiledevicepairing`.
+- **Writes (2026-10-15, same device):** an AFC write/stat/read/delete round trip in `PublicStaging` is byte-identical. Pairing placement with `--only-missing` turned on `EnableWifiDebugging` (read back `true`), wrote 7,190-byte `PairingFile_Lockdown.plist` files into SideStore and LiveContainer + SideStore, and verified them (correct UDID and HostID, no `RootPrivateKey`); existing pairing files were left untouched.
+- `PasswordProtected` read `false` while `EnableWifiDebugging` was accepted, so the value probably reflects the lock state rather than "a passcode exists"; to confirm with the owner before the UI relies on it.
+- Still to verify: SideStore actually using the new file, a new pairing (trust prompt) over USB, installs and profile writes, Windows and Linux.
+
+## 7. Web platform constraints
+
+> **Not applicable since 2026-10-15:** the web version was dropped and Loadstar is desktop-only. Kept for the record.
 
 - WebUSB works only in Chromium browsers and needs a secure context (https or localhost).
 - On **Windows**, Apple's driver claims the iPhone. On **macOS**, usbmuxd holds the device. Either way, WebUSB will likely fail to claim the usbmux interface unless the driver is swapped (Windows: WinUSB via Zadig) or usbmuxd is stopped. This needs an early spike (Roadmap milestone 2).

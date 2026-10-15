@@ -4,34 +4,32 @@
 
 ## Project Overview
 
-Loadstar is an open-source, cross-platform (Windows, macOS, Linux, web) tool for installing SideStore and preloading other apps onto iOS devices, built on a pure-TypeScript engine. Details: `docs/design/overview.md`.
+Loadstar is an open-source desktop tool (Windows, macOS, Linux) for installing SideStore and preloading other apps onto iOS devices, built on a pure-TypeScript engine. Details: `docs/design/overview.md`.
 
 ## Tech Stack
 
 - **Programming language:** TypeScript 7 (strict, ESM)
-- **Framework:** React 19 + HeroUI v3 + Tailwind v4 (UI); Electron 44 (desktop); Vite 7 (web); Hono (relay)
-- **Database:** none (OS keychain on desktop, IndexedDB in the browser)
+- **Framework:** React 19 + HeroUI v3 + Tailwind v4 (UI); Electron 44 + electron-vite (desktop)
+- **Database:** none (OS keychain via Electron `safeStorage`)
 - **ORM:** none
 
 ## Project Structure
 
-> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `fixtures/signer`, `scripts/`, `.github/workflows/`.
+> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `apps/desktop` (Node adapters only), `fixtures/signer`, `scripts/`, `.github/workflows/`.
 
 ```
 loadstar/
 ├── packages/
-│   ├── kernel/       # Result/LoadstarError/ErrorCode, ports (Logger, HttpClient, SecretStore, FileSource), bytes utils
+│   ├── kernel/       # LoadstarError/ErrorCode, ports (Logger, HttpClient, SecretStore, FileSource), bytes utils, plist
 │   ├── signer/       # Mach-O code signing (CodeDirectory, CodeResources, entitlements, CMS, fat, bundles, IPA)
 │   ├── device/       # usbmux, lockdown, pairing, AFC, house_arrest, installation_proxy
 │   ├── apple/        # GSA auth + 2FA, anisette provider chain, developer services API
 │   ├── catalog/      # release sources (GitHub API), downloads, cache
 │   ├── installer/    # pipelines/flows, diagnostics, Engine facade
-│   ├── rpc/          # typed Engine ⇄ UI RPC (Electron IPC / Worker postMessage)
+│   ├── rpc/          # typed Engine ⇄ UI RPC (Electron IPC)
 │   └── ui/           # shared React app (features, theme palettes, i18n)
 ├── apps/
-│   ├── desktop/      # Electron composition root + Node adapters
-│   ├── web/          # Vite SPA + Web Worker composition root + browser adapters
-│   └── relay/        # Hono CORS/anisette relay for the web app
+│   └── desktop/      # Electron composition root + Node adapters
 ├── scripts/          # check-boundaries.ts (+ boundaries.config.ts edge table)
 ├── fixtures/         # golden Apple codesign outputs for signer tests
 └── docs/             # user, contributor and design documentation
@@ -45,8 +43,10 @@ loadstar/
 | `packages/signer/src/index.ts` | Public signer API (`signIpa`, `signBundle`, `signBinary`, `reconcileForSideload`, plist, IPA I/O) |
 | `fixtures/signer/generate.sh` | Regenerates the Apple `codesign` golden fixtures (macOS) |
 | `packages/signer/scripts/compare-real-cert.ts` | Maintainer check against a real Apple Development `.p12` |
-| `apps/desktop/src/main/index.ts` | Electron main: wires Node adapters into the Engine |
-| `apps/web/src/worker/index.ts` | Web Worker: wires browser adapters into the Engine |
+| `packages/device/src/index.ts` | Public device API (`createDeviceManager`: pairing, install, profiles, app files, checks) |
+| `apps/desktop/src/main/adapters/` | Node adapters: usbmuxd transport, pinned TLS, file source |
+| `apps/desktop/scripts/device-probe.ts` | Maintainer CLI against a real device |
+| `apps/desktop/src/main/index.ts` | Electron main: wires Node adapters into the Engine (Phase 9) |
 | `packages/ui/src/app/root.tsx` | UI root: router, providers, theme, i18n |
 | `pnpm-workspace.yaml` / `turbo.json` | Workspace and task graph |
 | `packages/kernel/src/index.ts` | LoadstarError/ErrorCode, ports, logger, byte utilities |
@@ -61,6 +61,7 @@ loadstar/
 | Getting Started | docs/getting-started.md | Status, requirements, dev setup |
 | Architecture | docs/architecture.md | Packages, ports & adapters, dependency rules |
 | Code Signing | docs/signing.md | How signing works and how it is verified |
+| Device | docs/device.md | usbmuxd per OS, pairing, services, device errors |
 | Roadmap | docs/roadmap.md | Phases with links to plans |
 | Contributing | docs/contributing.md | PR rules, conventions, clean-room policy |
 | Signer format spec | docs/design/signer-spec.md | Byte-level iOS code-signing reference |

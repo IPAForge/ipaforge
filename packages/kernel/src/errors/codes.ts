@@ -9,6 +9,22 @@ export const ErrorCode = {
   DeviceLocked: "device.locked",
   DeveloperModeOff: "device.developer_mode_off",
   DeviceNotPaired: "device.not_paired",
+  UsbmuxdUnavailable: "device.usbmuxd_unavailable",
+  DeviceNotFound: "device.not_found",
+  DeviceDisconnected: "device.disconnected",
+  PairingPending: "device.pairing_pending",
+  PairingDenied: "device.pairing_denied",
+  InvalidPairRecord: "device.invalid_pair_record",
+  ServiceUnavailable: "device.service_unavailable",
+  DeviceProtocolError: "device.protocol_error",
+  InstallFailed: "device.install_failed",
+  AfcError: "device.afc_error",
+  DeviceTimeout: "device.timeout",
+  PasscodeRequired: "device.passcode_required",
+  FreeAppLimit: "device.free_app_limit",
+  ProfileBanned: "device.profile_banned",
+  SigningIdentityInvalid: "device.identity_invalid",
+  ProfileNotFound: "device.profile_not_found",
 
   // apple
   AnisetteUnavailable: "apple.anisette_unavailable",
@@ -17,6 +33,9 @@ export const ErrorCode = {
 
   // catalog
   ReleaseSourceGone: "catalog.source_gone",
+
+  // plist
+  InvalidPlist: "plist.invalid",
 
   // network
   Offline: "net.offline",
@@ -27,7 +46,6 @@ export const ErrorCode = {
   UnsupportedArch: "signer.unsupported_arch",
   NoHeaderSpace: "signer.no_header_space",
   ZipSlip: "signer.zip_slip",
-  InvalidPlist: "signer.invalid_plist",
   InvalidCertificate: "signer.invalid_certificate",
   UnknownIssuer: "signer.unknown_issuer",
   InvalidBundle: "signer.invalid_bundle",
