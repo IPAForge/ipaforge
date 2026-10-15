@@ -10,13 +10,13 @@
     "build": "turbo run build",
     "test": "vitest run",
     "typecheck": "turbo run typecheck && tsc -p tsconfig.json",
-    "lint": "biome check . && eslint .",
-    "format": "biome format --write . && eslint --fix .",
+    "lint": "biome check . && eslint packages apps scripts tooling",
+    "format": "biome format --write . && eslint --fix packages apps scripts tooling",
     "check:boundaries": "node scripts/check-boundaries.ts",
     "check:locales": "node scripts/check-locales.ts",
     "test:coverage": "vitest run --coverage",
     "prepare": "git config core.hooksPath .githooks || true",
-    "lint:fix": "biome check --write . && eslint --fix .",
+    "lint:fix": "biome check --write . && eslint --fix packages apps scripts tooling",
     "verify": "pnpm lint && pnpm typecheck && pnpm check:boundaries && pnpm check:locales && pnpm test"
   },
   "devDependencies": {

@@ -11,7 +11,6 @@ export default [
       '**/node_modules/**',
       '.turbo/**',
       '.cache/**',
-      '.claude/**',
       'fixtures/**',
       'scripts/__fixtures__/**',
       'tooling/biome/__fixtures__/**'
