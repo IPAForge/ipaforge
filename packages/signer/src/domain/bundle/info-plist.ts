@@ -1,5 +1,4 @@
-import { ErrorCode, LoadstarError } from "@loadstar/kernel";
-import { createDict, isPlistDict, type PlistDict, type PlistValue } from "@signer/domain/plist/index.ts";
+import { createDict, ErrorCode, isPlistDict, LoadstarError, type PlistDict, type PlistValue } from "@loadstar/kernel";
 
 export interface IdentityRewrite {
   readonly oldMainId: string;

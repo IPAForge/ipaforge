@@ -1,3 +1,4 @@
+import type { PlistDict } from "@loadstar/kernel";
 import {
   CS_EXECSEG_ALLOW_UNSIGNED,
   CS_EXECSEG_CAN_EXEC_CDHASH,
@@ -13,7 +14,6 @@ import type { HashPolicy, PageSizePolicy } from "@signer/domain/config.ts";
 import { CPU_TYPE_ARM64, CPU_TYPE_ARM64_32, MH_EXECUTE, Platform } from "@signer/domain/macho/constants.ts";
 import type { Slice } from "@signer/domain/macho/types.ts";
 import { packVersion } from "@signer/domain/macho/version.ts";
-import type { PlistDict } from "@signer/domain/plist/index.ts";
 import type { HashAlgorithm } from "@signer/domain/ports/hasher.ts";
 
 /**

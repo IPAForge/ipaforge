@@ -1,8 +1,7 @@
 import { join } from "node:path";
-import { utf8Decode } from "@loadstar/kernel";
+import { type PlistDict, parseXmlPlist, utf8Decode } from "@loadstar/kernel";
 import { FIXTURES_DIR, readFixture, readTree } from "@signer/__tests__/fixtures.ts";
 import { buildCodeResources, type ResourceEntry } from "@signer/domain/code-resources/index.ts";
-import { type PlistDict, parseXmlPlist } from "@signer/domain/plist/index.ts";
 import { createHasher } from "@signer/infrastructure/hashing/index.ts";
 import { describe, expect, it } from "vitest";
 

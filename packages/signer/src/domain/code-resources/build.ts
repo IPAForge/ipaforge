@@ -1,7 +1,6 @@
+import { createDict, type PlistValue, serializeXmlPlist } from "@loadstar/kernel";
 import { CODE_RESOURCES, CODE_SIGNATURE_DIR, MAS_RECEIPT_DIR } from "@signer/domain/bundle/layout.ts";
 import { compileRules, matchRule, RULES_V1, RULES_V2, rulesToPlist } from "@signer/domain/code-resources/rules.ts";
-import { createDict, type PlistValue } from "@signer/domain/plist/index.ts";
-import { serializeXmlPlist } from "@signer/domain/plist/xml-write.ts";
 import type { Hasher } from "@signer/domain/ports/hasher.ts";
 
 /** A file or symlink in a bundle, path relative to the bundle root with '/' separators. */

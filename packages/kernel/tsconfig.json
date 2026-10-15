@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    // Isomorphic baseline: globals shared by Node 22 and browsers/workers, no Node or DOM-only types.
+    // Platform-free baseline: standard web globals that Node 22 also has; no Node or DOM-only types.
     "lib": ["ES2023", "WebWorker"],
     "types": []
   },

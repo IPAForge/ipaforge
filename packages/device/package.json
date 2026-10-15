@@ -1,0 +1,20 @@
+{
+  "name": "@loadstar/device",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.test.json"
+  },
+  "dependencies": {
+    "@loadstar/kernel": "workspace:*",
+    "asn1js": "3.0.10",
+    "pkijs": "3.4.1",
+    "zod": "4.6.6"
+  }
+}

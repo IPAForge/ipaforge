@@ -1,4 +1,4 @@
-/** A readable, random-access file: a path on desktop, a `File`/`Blob` in the browser, a download. */
+/** A readable, random-access file: a file on disk or a download. */
 export interface FileSource {
   readonly name: string;
   readonly size: number;

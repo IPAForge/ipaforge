@@ -1,10 +1,10 @@
 # Loadstar
 
-> Install SideStore and preload your apps onto iPhone and iPad, from Windows, macOS, Linux or the browser.
+> Install SideStore and preload your apps onto iPhone and iPad, from Windows, macOS or Linux.
 
-Loadstar signs into your Apple ID, gets a free development certificate, re-signs apps, installs them over USB, and sets up SideStore so it can refresh itself. It also preloads any extra apps you choose in the same run. The whole engine is TypeScript and runs unchanged on the desktop and in the browser.
+Loadstar signs into your Apple ID, gets a free development certificate, re-signs apps, installs them over USB, and sets up SideStore so it can refresh itself. It also preloads any extra apps you choose in the same run. The whole engine is TypeScript, and the app is a desktop app built with Electron.
 
-> **Status: pre-alpha.** The signing engine is built and verified. Device, Apple account and UI work comes next, and nothing is installable yet. See the [Roadmap](docs/roadmap.md).
+> **Status: pre-alpha.** The signing engine and the device layer are built and verified. Apple account and UI work comes next, and nothing is installable yet. See the [Roadmap](docs/roadmap.md).
 
 ## Design goals
 
@@ -24,7 +24,7 @@ Sideloading installers usually fail in a few recurring ways. Loadstar is designe
 - **Preload apps.** Add IPAs from files or URLs and install them all in one session.
 - **Device and account tools.** Manage certificates, app IDs and pairing files, with import and export.
 - **Themes.** Several colour palettes, each with light and dark variants.
-- **Desktop and web.** Electron app for Windows, macOS and Linux, plus a browser version (Chromium).
+- **Desktop.** One Electron app for Windows, macOS and Linux.
 
 ## Scope
 
@@ -34,12 +34,13 @@ Sideloading installers usually fail in a few recurring ways. Loadstar is designe
 - **Preloading** additional IPAs (files or URLs) in the same session, and pre-configuring SideStore sources
 - Guided **onboarding**: drivers, device trust, Developer Mode, Apple ID with 2FA, team selection
 - Managing what a free or paid **Apple developer account** provides: certificates, app IDs, profiles, pairing files
-- **Desktop** (Windows, macOS, Linux) and **web** (Chromium) from one engine
+- **Desktop** app for Windows, macOS and Linux
 
 **Out of scope**
 
 - Decrypting App Store apps or obtaining IPAs. Loadstar only signs apps you already have, and refuses FairPlay-encrypted binaries
 - Jailbreaking, or working around Apple's account limits (app-ID quota, certificate count, 7-day free profiles). Loadstar works within them and explains them
+- A web or browser version
 - Distributing apps to other people's devices
 - tvOS, watchOS-only and macOS apps (Watch extensions inside iOS apps are handled)
 
@@ -50,9 +51,8 @@ Sideloading installers usually fail in a few recurring ways. Loadstar is designe
 | Engine | TypeScript packages: `signer`, `device`, `apple`, `catalog`, `installer` (ports & adapters) |
 | UI | React 19, HeroUI v3, Tailwind CSS v4 (no hand-written CSS) |
 | Desktop | Electron 44 |
-| Web | Vite SPA + Web Worker + WebUSB, with a small Hono relay for Apple's CORS |
 
-The signer (`@loadstar/signer`) is done. Its output is **byte-identical to Apple `codesign`** on the golden fixtures, Apple's own `codesign --verify --deep --strict` accepts sideload-signed apps (real SideStore included, signed in about 0.5 s), and a browser Web Worker produces exactly the same bytes as Node. Details: [Code signing](docs/signing.md).
+The signer (`@loadstar/signer`) is done. Its output is **byte-identical to Apple `codesign`** on the golden fixtures, Apple's own `codesign --verify --deep --strict` accepts sideload-signed apps (real SideStore included, signed in about 0.5 s). Details: [Code signing](docs/signing.md).
 
 ## Documentation
 
@@ -61,6 +61,7 @@ The signer (`@loadstar/signer`) is done. Its output is **byte-identical to Apple
 | [Getting Started](docs/getting-started.md) | Current status, requirements, how to follow along |
 | [Architecture](docs/architecture.md) | Packages, ports & adapters, dependency rules |
 | [Code Signing](docs/signing.md) | How iOS signing works and how Loadstar verifies it |
+| [Device](docs/device.md) | How Loadstar reaches iPhones and iPads, pairing, and device errors |
 | [Roadmap](docs/roadmap.md) | Phases from foundation to 1.0 |
 | [Contributing](docs/contributing.md) | How to contribute, pull request rules, conventions |
 
@@ -70,4 +71,4 @@ Loadstar is an independent implementation. It uses public protocol knowledge fro
 
 ## License
 
-TODO(licence): MIT proposed. To be confirmed by the maintainer before the first release.
+[MIT](LICENSE) © 2026 Dan Motpan and Loadstar contributors. Third-party components keep their own licences (pkijs, asn1js and zip.js: BSD-3-Clause; @noble/hashes and zod: MIT).

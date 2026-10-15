@@ -9,7 +9,7 @@ export interface WebCryptoHasherOptions {
 
 export const DEFAULT_WEBCRYPTO_BATCH_SIZE = 256;
 
-/** WebCrypto-backed hasher: fastest in browsers and good in Node (batched to amortise per-call cost). */
+/** WebCrypto-backed hasher, the default (batched to amortise per-call cost). */
 export const createWebCryptoHasher = (subtle: SubtleCrypto, options: WebCryptoHasherOptions = {}): Hasher => {
   const batchSize = Math.max(1, Math.floor(options.batchSize ?? DEFAULT_WEBCRYPTO_BATCH_SIZE));
   const digest = async (algorithm: HashAlgorithm, data: Uint8Array): Promise<Uint8Array> =>

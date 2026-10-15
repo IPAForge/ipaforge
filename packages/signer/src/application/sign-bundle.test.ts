@@ -2,13 +2,12 @@ import { execFileSync } from "node:child_process";
 import { mkdirSync, mkdtempSync, rmSync, symlinkSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
-import { fixedClock, silentLogger, toHex } from "@loadstar/kernel";
+import { fixedClock, isPlistDict, parseXmlPlist, silentLogger, toHex } from "@loadstar/kernel";
 import { FIXTURES_DIR, readFixture, readTree } from "@signer/__tests__/fixtures.ts";
 import { createTestIdentity } from "@signer/__tests__/identity.ts";
 import type { EntitlementsInput, SigningMode } from "@signer/application/sign-binary.ts";
 import { canonicalIdentifier, type SignBundleProgress, signBundle } from "@signer/application/sign-bundle.ts";
 import type { BundleTree } from "@signer/domain/bundle/tree.ts";
-import { isPlistDict, parseXmlPlist } from "@signer/domain/plist/index.ts";
 import { createHasher } from "@signer/infrastructure/hashing/index.ts";
 import { afterAll, describe, expect, it } from "vitest";
 

@@ -4,7 +4,7 @@ import { type HashAlgorithm, type Hasher, pageAt, pageCount } from "@signer/doma
 
 const HASH: Readonly<Record<HashAlgorithm, (data: Uint8Array) => Uint8Array>> = { sha1, sha256 };
 
-/** Pure-JS hasher: works without WebCrypto (e.g. non-secure contexts), slower in browsers. */
+/** Pure-JS hasher: the fallback when WebCrypto is unavailable (slower). */
 export const createNobleHasher = (): Hasher => ({
   kind: "noble",
   digest: async (algorithm, data) => HASH[algorithm](data),

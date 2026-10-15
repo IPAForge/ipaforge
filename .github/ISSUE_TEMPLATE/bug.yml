@@ -13,7 +13,7 @@ body:
     id: platform
     attributes:
       label: Platform
-      placeholder: "macOS 26.4 desktop / Windows 11 desktop / Chrome 155 web"
+      placeholder: "macOS 26.4 / Windows 11 / Ubuntu 26.04"
     validations:
       required: true
   - type: input

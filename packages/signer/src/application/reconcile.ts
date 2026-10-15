@@ -1,4 +1,4 @@
-import { ErrorCode, LoadstarError, type Logger } from "@loadstar/kernel";
+import { createDict, ErrorCode, LoadstarError, type Logger, type PlistDict, serializeXmlPlist } from "@loadstar/kernel";
 import { embeddedEntitlements } from "@signer/application/embedded-entitlements.ts";
 import type { EntitlementsInput } from "@signer/application/sign-binary.ts";
 import { type CodeBundle, discoverBundles } from "@signer/domain/bundle/discover.ts";
@@ -6,7 +6,6 @@ import { type IdentityRewrite, rewriteInfoPlist, rewriteNestedId } from "@signer
 import { INFO_PLIST } from "@signer/domain/bundle/layout.ts";
 import { type BundleTree, isWithin, joinPath, readFile, removePath, writeFile } from "@signer/domain/bundle/tree.ts";
 import { type Overrides, resolveLimits, type SignerLimits } from "@signer/domain/config.ts";
-import { createDict, type PlistDict, serializeXmlPlist } from "@signer/domain/plist/index.ts";
 import {
   describeProfile,
   type ProvisioningProfile,

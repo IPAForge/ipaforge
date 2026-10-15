@@ -1,10 +1,9 @@
 // Regression tests for hostile inputs (security review 2026-10-13): every case must fail fast with a
 // LoadstarError instead of exhausting memory or CPU.
-import { ErrorCode, LoadstarError, utf8Encode } from "@loadstar/kernel";
+import { ErrorCode, LoadstarError, parseBinaryPlist, utf8Encode } from "@loadstar/kernel";
 import { readFixture } from "@signer/__tests__/fixtures.ts";
 import { DEFAULT_SIGNER_LIMITS } from "@signer/domain/config.ts";
 import { findSegment, parseMachO } from "@signer/domain/macho/parse.ts";
-import { parseBinaryPlist } from "@signer/domain/plist/binary-parse.ts";
 import { describe, expect, it } from "vitest";
 
 const MAX_FAT_ARCHES = DEFAULT_SIGNER_LIMITS.machO.maxFatArches;

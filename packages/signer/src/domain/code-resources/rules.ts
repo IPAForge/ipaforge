@@ -1,4 +1,4 @@
-import { createDict, type PlistDict, type PlistValue, real } from "@signer/domain/plist/index.ts";
+import { createDict, type PlistDict, type PlistValue, real } from "@loadstar/kernel";
 
 export interface ResourceRule {
   readonly pattern: string;

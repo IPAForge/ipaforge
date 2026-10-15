@@ -1,7 +1,7 @@
 // Test-only: CMS-wrapped provisioning profiles shaped like Apple's free development profiles.
 
+import { createDict, type PlistValue, serializeXmlPlist } from "@loadstar/kernel";
 import type { TestIdentity } from "@signer/__tests__/identity.ts";
-import { createDict, type PlistValue, serializeXmlPlist } from "@signer/domain/plist/index.ts";
 import { toArrayBuffer } from "@signer/infrastructure/cms/certificate.ts";
 import { OID_DATA, OID_SIGNED_DATA } from "@signer/infrastructure/cms/oids.ts";
 import * as asn1js from "asn1js";

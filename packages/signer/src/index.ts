@@ -1,5 +1,15 @@
 // Public API of @loadstar/signer. Everything else is internal.
 
+export {
+  createDict,
+  isPlistDict,
+  type PlistDict,
+  PlistReal,
+  type PlistValue,
+  parsePlist,
+  real,
+  serializeXmlPlist,
+} from "@loadstar/kernel";
 export { embeddedEntitlements } from "@signer/application/embedded-entitlements.ts";
 export {
   type BundleProvisioning,
@@ -49,16 +59,6 @@ export {
   type SignerLimits,
   type SigningPolicy,
 } from "@signer/domain/config.ts";
-export {
-  createDict,
-  isPlistDict,
-  type PlistDict,
-  PlistReal,
-  type PlistValue,
-  parsePlist,
-  real,
-  serializeXmlPlist,
-} from "@signer/domain/plist/index.ts";
 export type { HashAlgorithm, Hasher } from "@signer/domain/ports/hasher.ts";
 export {
   APPLE_CERTIFICATES,

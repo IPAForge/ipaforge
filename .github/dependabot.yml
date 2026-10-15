@@ -10,7 +10,7 @@ updates:
     open-pull-requests-limit: 10
     groups:
       tooling:
-        patterns: ["@biomejs/*", "vitest", "@vitest/*", "typescript", "turbo", "tsx", "esbuild", "playwright", "@types/*"]
+        patterns: ["@biomejs/*", "vitest", "@vitest/*", "typescript", "turbo", "tsx", "esbuild", "@types/*"]
       crypto-and-formats:
         patterns: ["pkijs", "asn1js", "@noble/*", "@zip.js/*", "zod"]
   - package-ecosystem: github-actions

@@ -58,12 +58,12 @@ export interface WriteIpaOptions {
 let configured = false;
 const ensureConfigured = (): void => {
   if (configured) return;
-  // Native (De)CompressionStream in Node ≥ 22 and browsers; no zip.js worker scripts needed.
+  // Native (De)CompressionStream in Node ≥ 22; no zip.js worker scripts needed.
   configure({ useWebWorkers: false, useCompressionStream: true });
   configured = true;
 };
 
-/** zip.js Reader over the kernel FileSource port (desktop file, browser File, download). */
+/** zip.js Reader over the kernel FileSource port (file on disk or download). */
 class FileSourceReader extends Reader<FileSource> {
   readonly #source: FileSource;
 

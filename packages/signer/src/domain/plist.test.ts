@@ -1,9 +1,9 @@
 import { execFileSync } from "node:child_process";
-import { ErrorCode, LoadstarError, utf8Decode, utf8Encode } from "@loadstar/kernel";
-import { readFixture } from "@signer/__tests__/fixtures.ts";
 import {
   createDict,
+  ErrorCode,
   isBinaryPlist,
+  LoadstarError,
   type PlistDict,
   PlistReal,
   parseBinaryPlist,
@@ -11,7 +11,10 @@ import {
   parseXmlPlist,
   real,
   serializeXmlPlist,
-} from "@signer/domain/plist/index.ts";
+  utf8Decode,
+  utf8Encode,
+} from "@loadstar/kernel";
+import { readFixture } from "@signer/__tests__/fixtures.ts";
 import { describe, expect, it } from "vitest";
 
 const isMac = process.platform === "darwin";
