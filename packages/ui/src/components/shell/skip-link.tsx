@@ -1,14 +1,15 @@
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next'
 
 /** First in the tab order and visible only when focused: jumps keyboard users past the top bar and navigation. */
 export const SkipLink = ({ targetId }: { targetId: string }) => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
+
   return (
     <a
       href={`#${targetId}`}
       className="sr-only rounded-lg bg-accent px-3 py-2 text-accent-foreground focus:not-sr-only focus:absolute focus:start-2 focus:top-2 focus:z-50"
     >
-      {t("shell.skipToContent")}
+      {t('shell.skipToContent')}
     </a>
-  );
-};
+  )
+}

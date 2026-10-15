@@ -20,20 +20,21 @@
 // UDIDs are shortened in output unless --show-udid is given. LOG_LEVEL=debug shows protocol traffic (redacted).
 // The commands live in src/probes/device/.
 
-import { parseDeviceProbeArgs } from "@desktop/probes/device/args.ts";
-import { deviceCommands } from "@desktop/probes/device/commands/index.ts";
-import { createDeviceProbe } from "@desktop/probes/device/context.ts";
-import { selectCommand } from "@desktop/probes/shared/commands.ts";
-import { causeChain } from "@desktop/probes/shared/errors.ts";
-import { LoadstarError } from "@loadstar/kernel";
+import { parseDeviceProbeArgs } from '@desktop/probes/device/args.ts'
+import { deviceCommands } from '@desktop/probes/device/commands/index.ts'
+import { createDeviceProbe } from '@desktop/probes/device/context.ts'
+import { selectCommand } from '@desktop/probes/shared/commands.ts'
+import { causeChain } from '@desktop/probes/shared/errors.ts'
+import { LoadstarError } from '@loadstar/kernel'
 
-const args = parseDeviceProbeArgs(process.argv.slice(2));
-const run = selectCommand(deviceCommands(createDeviceProbe(args)), args.command);
+const args = parseDeviceProbeArgs(process.argv.slice(2))
+const run = selectCommand(deviceCommands(createDeviceProbe(args)), args.command)
 try {
-  await run();
+  await run()
 } catch (error) {
-  if (error instanceof LoadstarError) console.error(`${error.code}: ${error.message}`, error.data ?? "");
-  else console.error(error);
-  for (const line of causeChain(error)) console.error(line);
-  process.exit(1);
+  if (error instanceof LoadstarError)
+    console.error(`${error.code}: ${error.message}`, error.data ?? '')
+  else console.error(error)
+  for (const line of causeChain(error)) console.error(line)
+  process.exit(1)
 }

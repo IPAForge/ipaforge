@@ -1,1 +1,1 @@
-export * from "@kernel/objects/compact.ts";
+export * from '@kernel/objects/compact.ts'

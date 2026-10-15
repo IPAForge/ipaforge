@@ -1,14 +1,15 @@
-import { ToggleButton, ToggleButtonGroup } from "@heroui/react";
-import type { TranslationKey } from "@ui/utils/i18n/i18next-types.ts";
-import { type Key, useId } from "react";
-import { useTranslation } from "react-i18next";
+import { ToggleButton, ToggleButtonGroup } from '@heroui/react'
+import { type Key, useId } from 'react'
+import { useTranslation } from 'react-i18next'
 
-interface ChoiceGroupProps<T extends string> {
-  readonly labelKey: TranslationKey;
-  readonly options: readonly T[];
-  readonly optionLabelKey: (option: T) => TranslationKey;
-  readonly value: T;
-  readonly onChange: (value: T) => void;
+import type { TranslationKey } from '@ui/i18n/setup/i18next-types.ts'
+
+type ChoiceGroupProps<T extends string> = {
+  labelKey: TranslationKey
+  options: readonly T[]
+  optionLabelKey: (option: T) => TranslationKey
+  value: T
+  onChange: (value: T) => void
 }
 
 /** A labelled single-choice row of toggle buttons; selecting the current choice again keeps it. */
@@ -17,15 +18,15 @@ export const ChoiceGroup = <T extends string>({
   options,
   optionLabelKey,
   value,
-  onChange,
+  onChange
 }: ChoiceGroupProps<T>) => {
-  const { t } = useTranslation();
-  const labelId = useId();
+  const { t } = useTranslation()
+  const labelId = useId()
   const onSelectionChange = (keys: Set<Key>) => {
-    const [selected] = keys;
-    const option = options.find((candidate) => candidate === selected);
-    if (option) onChange(option);
-  };
+    const [selected] = keys
+    const option = options.find((candidate) => candidate === selected)
+    if (option) onChange(option)
+  }
 
   return (
     <div className="flex flex-wrap items-center gap-3">
@@ -47,5 +48,5 @@ export const ChoiceGroup = <T extends string>({
         ))}
       </ToggleButtonGroup>
     </div>
-  );
-};
+  )
+}

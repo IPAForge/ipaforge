@@ -1,23 +1,24 @@
-import type { Logger } from "@loadstar/kernel";
-import { compact } from "@loadstar/kernel";
 import {
   createRootRoute,
   createRoute,
   createRouter,
   Outlet,
   type RouterHistory,
-  redirect,
-} from "@tanstack/react-router";
-import { AppShell } from "@ui/components/shell/app-shell.tsx";
-import { AccountsPage } from "@ui/features/accounts/accounts-page.tsx";
-import { CertificatesPage } from "@ui/features/certificates/certificates-page.tsx";
-import { DevicesPage } from "@ui/features/devices/devices-page.tsx";
-import { InstallPage } from "@ui/features/install/install-page.tsx";
-import { LogsPage } from "@ui/features/logs/logs-page.tsx";
-import { PreloadPage } from "@ui/features/preload/preload-page.tsx";
-import { SettingsPage } from "@ui/features/settings/settings-page.tsx";
-import { homePath, type SectionId, sections } from "@ui/sections.ts";
-import type { ComponentType } from "react";
+  redirect
+} from '@tanstack/react-router'
+import type { ComponentType } from 'react'
+
+import type { Logger } from '@loadstar/kernel'
+import { compact } from '@loadstar/kernel'
+import { AppShell } from '@ui/components/shell/app-shell.tsx'
+import { AccountsPage } from '@ui/features/accounts/accounts-page.tsx'
+import { CertificatesPage } from '@ui/features/certificates/certificates-page.tsx'
+import { DevicesPage } from '@ui/features/devices/devices-page.tsx'
+import { InstallPage } from '@ui/features/install/install-page.tsx'
+import { LogsPage } from '@ui/features/logs/logs-page.tsx'
+import { PreloadPage } from '@ui/features/preload/preload-page.tsx'
+import { SettingsPage } from '@ui/features/settings/settings-page.tsx'
+import { homePath, type SectionId, sections } from '@ui/sections.ts'
 
 const sectionPages = {
   install: InstallPage,
@@ -26,51 +27,59 @@ const sectionPages = {
   accounts: AccountsPage,
   certificates: CertificatesPage,
   logs: LogsPage,
-  settings: SettingsPage,
-} as const satisfies Readonly<Record<SectionId, ComponentType>>;
+  settings: SettingsPage
+} as const satisfies Readonly<Record<SectionId, ComponentType>>
 
 const rootRoute = createRootRoute({
   component: () => (
     <AppShell>
       <Outlet />
     </AppShell>
-  ),
-});
+  )
+})
 
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
-  path: "/",
+  path: '/',
   beforeLoad: () => {
-    throw redirect({ to: homePath });
-  },
-});
+    throw redirect({ to: homePath })
+  }
+})
 
 const sectionRoutes = sections.map((section) =>
-  createRoute({ getParentRoute: () => rootRoute, path: section.path, component: sectionPages[section.id] }),
-);
+  createRoute({
+    getParentRoute: () => rootRoute,
+    path: section.path,
+    component: sectionPages[section.id]
+  })
+)
 
-const routeTree = rootRoute.addChildren([indexRoute, ...sectionRoutes]);
+const routeTree = rootRoute.addChildren([indexRoute, ...sectionRoutes])
 
-export interface AppRouterOptions {
-  readonly logger: Logger;
+export type AppRouterOptions = {
+  readonly logger: Logger
   /** Defaults to the browser history; tests pass a memory history. */
-  readonly history?: RouterHistory | undefined;
+  readonly history?: RouterHistory | undefined
 }
 
 /** Code-based routes: `/` redirects home, one route per sidebar section, all inside the shell. */
 export const createAppRouter = ({ logger, history }: AppRouterOptions) => {
-  const router = createRouter(compact({ routeTree, history }));
-  const log = logger.child({ scope: "router" });
-  router.subscribe("onResolved", ({ fromLocation, toLocation }) =>
-    log.debug("navigated", compact({ from: fromLocation?.pathname, to: toLocation.pathname })),
-  );
-  return router;
-};
+  const router = createRouter(compact({ routeTree, history }))
+  const log = logger.child({ scope: 'router' })
+  router.subscribe('onResolved', ({ fromLocation, toLocation }) =>
+    log.debug(
+      'navigated',
+      compact({ from: fromLocation?.pathname, to: toLocation.pathname })
+    )
+  )
+  return router
+}
 
-export type AppRouter = ReturnType<typeof createAppRouter>;
+export type AppRouter = ReturnType<typeof createAppRouter>
 
-declare module "@tanstack/react-router" {
+declare module '@tanstack/react-router' {
+  // biome-ignore lint/style/useConsistentTypeDefinitions: module augmentation merges into an interface, so it must stay one
   interface Register {
-    router: AppRouter;
+    router: AppRouter
   }
 }

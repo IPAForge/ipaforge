@@ -1,13 +1,26 @@
 // The development certificate each account and team signs with, kept with its private key in the SecretStore so
 // the next run reuses it instead of using up another certificate slot.
-import type { CertificateIdentity, DevelopmentCertificate } from "@loadstar/apple";
-import { compact, fromBase64, type Logger, type SecretStore, toBase64, utf8Decode, utf8Encode } from "@loadstar/kernel";
-import { z } from "zod";
 
-const STORE_VERSION = 1;
+import { z } from 'zod'
+
+import type {
+  CertificateIdentity,
+  DevelopmentCertificate
+} from '@loadstar/apple'
+import {
+  compact,
+  fromBase64,
+  type Logger,
+  type SecretStore,
+  toBase64,
+  utf8Decode,
+  utf8Encode
+} from '@loadstar/kernel'
+
+const STORE_VERSION = 1
 
 export const certificateKey = (accountId: string, teamId: string): string =>
-  `installer/certificate/${accountId}/${teamId}`;
+  `installer/certificate/${accountId}/${teamId}`
 
 const storedSchema = z.object({
   version: z.literal(STORE_VERSION),
@@ -19,10 +32,10 @@ const storedSchema = z.object({
   platform: z.string().optional(),
   expiresAt: z.string().optional(),
   content: z.string().min(1),
-  privateKey: z.string().min(1),
-});
+  privateKey: z.string().min(1)
+})
 
-type StoredCertificate = z.infer<typeof storedSchema>;
+type StoredCertificate = z.infer<typeof storedSchema>
 
 const encode = ({ certificate, privateKey }: CertificateIdentity): Uint8Array =>
   utf8Encode(
@@ -37,10 +50,10 @@ const encode = ({ certificate, privateKey }: CertificateIdentity): Uint8Array =>
         platform: certificate.platform,
         expiresAt: certificate.expiresAt?.toISOString(),
         content: certificate.content && toBase64(certificate.content),
-        privateKey: toBase64(privateKey),
-      }),
-    ),
-  );
+        privateKey: toBase64(privateKey)
+      })
+    )
+  )
 
 const toIdentity = (stored: StoredCertificate): CertificateIdentity => {
   const certificate: DevelopmentCertificate = compact({
@@ -50,34 +63,49 @@ const toIdentity = (stored: StoredCertificate): CertificateIdentity => {
     machineName: stored.machineName,
     machineId: stored.machineId,
     platform: stored.platform,
-    expiresAt: stored.expiresAt === undefined ? undefined : new Date(stored.expiresAt),
-    content: fromBase64(stored.content),
-  });
-  return { certificate, privateKey: fromBase64(stored.privateKey) };
-};
+    expiresAt:
+      stored.expiresAt === undefined ? undefined : new Date(stored.expiresAt),
+    content: fromBase64(stored.content)
+  })
+
+  return { certificate, privateKey: fromBase64(stored.privateKey) }
+}
 
 const decode = (raw: Uint8Array): CertificateIdentity | undefined => {
   try {
-    const parsed = storedSchema.safeParse(JSON.parse(utf8Decode(raw)));
-    return parsed.success ? toIdentity(parsed.data) : undefined;
-  } catch {
-    return undefined;
-  }
-};
+    const parsed = storedSchema.safeParse(JSON.parse(utf8Decode(raw)))
 
-export interface CertificateStore {
-  load(accountId: string, teamId: string): Promise<CertificateIdentity | undefined>;
-  save(accountId: string, teamId: string, identity: CertificateIdentity): Promise<void>;
+    return parsed.success ? toIdentity(parsed.data) : undefined
+  } catch {
+    return undefined
+  }
 }
 
-export const createCertificateStore = (secrets: SecretStore, logger: Logger): CertificateStore => ({
+export type CertificateStore = {
+  load(
+    accountId: string,
+    teamId: string
+  ): Promise<CertificateIdentity | undefined>
+  save(
+    accountId: string,
+    teamId: string,
+    identity: CertificateIdentity
+  ): Promise<void>
+}
+
+export const createCertificateStore = (
+  secrets: SecretStore,
+  logger: Logger
+): CertificateStore => ({
   load: async (accountId, teamId) => {
-    const raw = await secrets.get(certificateKey(accountId, teamId));
-    if (!raw) return undefined;
-    const identity = decode(raw);
+    const raw = await secrets.get(certificateKey(accountId, teamId))
+    if (!raw) return undefined
+    const identity = decode(raw)
     // An unreadable entry is treated as missing: a new certificate is made and overwrites it.
-    if (!identity) logger.warn("ignoring an unreadable stored certificate", { team: teamId });
-    return identity;
+    if (!identity)
+      logger.warn('ignoring an unreadable stored certificate', { team: teamId })
+    return identity
   },
-  save: (accountId, teamId, identity) => secrets.set(certificateKey(accountId, teamId), encode(identity)),
-});
+  save: (accountId, teamId, identity) =>
+    secrets.set(certificateKey(accountId, teamId), encode(identity))
+})

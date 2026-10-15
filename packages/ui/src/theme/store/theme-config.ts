@@ -1,10 +1,10 @@
-import type { ColorMode, PaletteId } from "@ui/theme/theme-types.ts";
+import type { ColorMode, PaletteId } from '@ui/theme/theme-types.ts'
 
-export const defaultPalette: PaletteId = "graphite";
-export const defaultColorMode: ColorMode = "system";
+export const defaultPalette: PaletteId = 'graphite'
+export const defaultColorMode: ColorMode = 'system'
 
 /** `PreferencesStore` keys the theme persists under. */
 export const ThemePreferenceKey = {
-  Palette: "theme.palette",
-  Mode: "theme.mode",
-} as const;
+  Palette: 'theme.palette',
+  Mode: 'theme.mode'
+} as const

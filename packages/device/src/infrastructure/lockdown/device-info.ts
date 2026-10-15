@@ -1,7 +1,15 @@
 // lockdownd's device values (a `GetValue` without a key), validated at the boundary.
-import type { DeviceInfo } from "@device/domain/device.ts";
-import { compact, ErrorCode, isPlistDict, LoadstarError, type PlistValue } from "@loadstar/kernel";
-import { z } from "zod";
+
+import { z } from 'zod'
+
+import type { DeviceInfo } from '@device/domain/device.ts'
+import {
+  compact,
+  ErrorCode,
+  isPlistDict,
+  LoadstarError,
+  type PlistValue
+} from '@loadstar/kernel'
 
 const deviceInfoSchema = z.looseObject({
   UniqueDeviceID: z.string(),
@@ -12,18 +20,21 @@ const deviceInfoSchema = z.looseObject({
   DeviceClass: z.string(),
   CPUArchitecture: z.string().optional(),
   ActivationState: z.string().optional(),
-  PasswordProtected: z.boolean().optional(),
-});
+  PasswordProtected: z.boolean().optional()
+})
 
 export const toDeviceInfo = (values: PlistValue | undefined): DeviceInfo => {
-  const parsed = deviceInfoSchema.safeParse(isPlistDict(values) ? values : undefined);
+  const parsed = deviceInfoSchema.safeParse(
+    isPlistDict(values) ? values : undefined
+  )
   if (!parsed.success) {
     throw new LoadstarError(ErrorCode.DeviceProtocolError, {
-      message: "unexpected device values",
-      cause: parsed.error,
-    });
+      message: 'unexpected device values',
+      cause: parsed.error
+    })
   }
-  const v = parsed.data;
+  const v = parsed.data
+
   return compact({
     udid: v.UniqueDeviceID,
     name: v.DeviceName,
@@ -34,6 +45,6 @@ export const toDeviceInfo = (values: PlistValue | undefined): DeviceInfo => {
     // Empty strings count as missing.
     cpuArchitecture: v.CPUArchitecture || undefined,
     activationState: v.ActivationState || undefined,
-    locked: v.PasswordProtected,
-  });
-};
+    locked: v.PasswordProtected
+  })
+}
