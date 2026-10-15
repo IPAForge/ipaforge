@@ -28,8 +28,23 @@ export const ErrorCode = {
 
   // apple
   AnisetteUnavailable: "apple.anisette_unavailable",
+  AnisetteNotProvisioned: "apple.anisette_not_provisioned",
   AppIdQuotaExceeded: "apple.app_id_quota",
   CertificateLimit: "apple.certificate_limit",
+  InvalidCredentials: "apple.invalid_credentials",
+  AccountLocked: "apple.account_locked",
+  AccountRefused: "apple.account_refused",
+  ClientRejected: "apple.client_rejected",
+  RateLimited: "apple.rate_limited",
+  AppleServiceUnavailable: "apple.service_unavailable",
+  TwoFactorRequired: "apple.two_factor_required",
+  TwoFactorInvalidCode: "apple.two_factor_invalid_code",
+  TwoFactorUnsupported: "apple.two_factor_unsupported",
+  SmsUnavailable: "apple.sms_unavailable",
+  ClockSkew: "apple.clock_skew",
+  AppleProtocolError: "apple.protocol_error",
+  SessionExpired: "apple.session_expired",
+  AccountNotFound: "apple.account_not_found",
 
   // catalog
   ReleaseSourceGone: "catalog.source_gone",

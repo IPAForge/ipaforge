@@ -122,7 +122,19 @@ Summary of `references/failure-catalogue.md`:
 - `PasswordProtected` read `false` on a device that **has a passcode** (confirmed by the owner) while it was unlocked: it reports the current lock state, not passcode presence. Passcode presence is detected through Wi-Fi debugging (`MissingValue` → `device.passcode_required`).
 - Still to verify: SideStore actually using the new file, a new pairing (trust prompt) over USB, installs and profile writes, Windows and Linux.
 
-## 7. Web platform constraints
+## 7. Apple sign-in against real accounts (2026-10-15)
+
+`apple-probe` with two real Apple IDs on macOS. What Apple requires today, all verified:
+- **Machine identity is persistent.** A new anisette identity on every attempt gets `-90010`/`-22421` intermittently; reusing one identity (as installed clients do) is accepted.
+- **hsc 434 resync.** The first `init` from a newly provisioned machine answers `ec -22421` + `hsc 434` with `X-Apple-I-MD-DATA`; resync through the same anisette server (`get_headers` with `sim`, `device_id`, `md_lu`) and send `init` again.
+- **Request shape** (as config): `cpd` flags as strings, only `X-Mme-Device-Id`/`X-Apple-I-MD`/`X-Apple-I-MD-M` from anisette in `cpd`; `Accept: text/x-xml-plist`, `X-Xcode-Version` and `X-Apple-App-Info` on every GrandSlam request; endpoints from the URL bag fetched with a macOS akd identity; device id and LU lower-case.
+- **TLS:** `gsa.apple.com` chains to Apple Root CA (not in public root stores); trust it explicitly, keep verification on.
+- **Session data (`spd`)** decrypts to a bare `<dict>` without `<plist>` (CoreFoundation accepts that).
+- **After the password**, a trusted-device account answers `hsc 409` without `au`: Apple already pushed the code; go to code entry without pushing again. Fresh one-time anisette values on every 2FA request.
+- **Result:** sign-in with device 2FA and the `com.apple.gs.xcode.auth` token (valid one year) work end to end.
+- **SMS 2FA is refused** (`HTTP 403` on `/auth`) for an SMS-only account; another current client gets the same 403. Reported as `apple.sms_unavailable`; not worked around.
+
+## 8. Web platform constraints
 
 > **Not applicable since 2026-10-15:** the web version was dropped and Loadstar is desktop-only. Kept for the record.
 

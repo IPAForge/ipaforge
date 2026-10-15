@@ -12,7 +12,8 @@ Loadstar is **pre-alpha**. Phase 0 (Foundation) and Phase 1 (Signer) are complet
 | Workspace, `@loadstar/kernel`, boundary checker, CI | Done (Phase 0) |
 | Code signer (`@loadstar/signer`) | Done (Phase 1): matches Apple `codesign`, verified with a real Apple Development certificate |
 | Device layer (`@loadstar/device`, `apps/desktop` adapters) | Implemented (Phase 2): tested against a fake device and read-only on a real iPhone |
-| Apple account, UI, desktop app | Planned |
+| Apple account (`@loadstar/apple`) | Implemented (Phase 3): sign-in, device 2FA and developer token verified with a real account |
+| Developer services, UI, desktop app | Planned |
 
 ## What you'll need (once released)
 

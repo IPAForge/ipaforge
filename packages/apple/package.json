@@ -1,0 +1,18 @@
+{
+  "name": "@loadstar/apple",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "type": "module",
+  "sideEffects": false,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.test.json"
+  },
+  "dependencies": {
+    "@loadstar/kernel": "workspace:*",
+    "zod": "4.6.6"
+  }
+}

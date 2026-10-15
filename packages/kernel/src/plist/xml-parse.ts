@@ -174,7 +174,14 @@ export const parseXmlPlist = (input: Uint8Array | string, limits: PlistLimits = 
 
   const reader = createReader(xml);
   const root = reader.nextTag();
-  if (root.name !== "plist" || root.closing) fail("missing <plist> root", root.start);
+  if (root.closing) fail("missing root element", root.start);
+  // Some Apple payloads (e.g. GrandSlam session data) are a bare value such as `<dict>…</dict>` without the
+  // `<plist>` wrapper; CoreFoundation accepts those, so we do too.
+  if (root.name !== "plist") {
+    const bare = parseValue(reader, root, 0, limits.maxDepth);
+    if (!reader.atEnd()) fail("trailing content after the root value", reader.position());
+    return bare;
+  }
   if (root.selfClosing) fail("empty <plist>", root.start);
 
   const value = parseValue(reader, reader.nextTag(), 0, limits.maxDepth);
