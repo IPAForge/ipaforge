@@ -331,8 +331,10 @@ describe("app files and pairing files", () => {
     ]);
     const written = sidestore.container.files.get("Documents/ALTPairingFile.mobiledevicepairing");
     const plist = parsePlist(written as Uint8Array) as Record<string, unknown>;
-    expect(plist.RootPrivateKey).toBeUndefined(); // never leaves the computer
+    // On-device tools refuse a pairing file without the root key or the Wi-Fi MAC address.
+    expect(plist.RootPrivateKey).toBeInstanceOf(Uint8Array);
     expect(plist.HostPrivateKey).toBeInstanceOf(Uint8Array);
+    expect(plist.WiFiMACAddress).toBe("aa:bb:cc:dd:ee:ff");
     const parsed = { udid: plist.UDID, hostId: plist.HostID };
     expect(parsed.udid).toBe(rig.device.udid);
     expect(parsed.hostId).toBe(handle.pairRecord.hostId);
