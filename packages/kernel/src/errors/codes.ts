@@ -94,6 +94,14 @@ export const ErrorCode = {
   /** The account has several teams and none was chosen or remembered. */
   TeamRequired: "installer.team_required",
 
+  // rpc
+  /** A message between the Engine and the UI failed validation or refers to an unknown run or checkpoint. */
+  InvalidRpcMessage: "rpc.invalid_message",
+  /** The connection to the Engine closed while a request or run was waiting. */
+  RpcDisconnected: "rpc.disconnected",
+  /** The Engine did not answer a request in time. */
+  RpcTimeout: "rpc.timeout",
+
   // generic
   Aborted: "internal.aborted",
   Unexpected: "internal.unexpected",

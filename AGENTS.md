@@ -15,7 +15,7 @@ Loadstar is an open-source desktop tool (Windows, macOS, Linux) for installing S
 
 ## Project Structure
 
-> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, maintainer probes), `fixtures/signer`, `scripts/`, `.github/workflows/`.
+> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `packages/rpc`, `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, the RPC transport and IPA resolver, maintainer probes), `fixtures/signer`, `scripts/`, `.github/workflows/`.
 
 ```
 loadstar/
@@ -53,6 +53,8 @@ loadstar/
 | `apps/desktop/scripts/install-probe.ts` | Maintainer CLI: run the install flows against a real device and Apple account |
 | `catalog/sources.json` | What can be installed and where releases come from (fetched by the app from `main`) |
 | `packages/catalog/src/index.ts` | Public catalog API (`createCatalog`: manifest, release resolution with mirrors, verified downloads) |
+| `packages/rpc/src/index.ts` | Public RPC API (`createRpcServer`, `createEngineClient`, `EngineClient`, `Transport`, in-memory transport) |
+| `apps/desktop/src/main/rpc/` | Electron `MessagePortMain` transport and the IPA resolver (file path, URL download) |
 | `apps/desktop/src/main/index.ts` | Electron main: wires Node adapters into the Engine (Phase 9) |
 | `packages/ui/src/app/root.tsx` | UI root: router, providers, theme, i18n |
 | `pnpm-workspace.yaml` / `turbo.json` | Workspace and task graph |
@@ -72,6 +74,7 @@ loadstar/
 | Device | docs/device.md | usbmuxd per OS, pairing, services, device errors |
 | Apple Account | docs/apple-account.md | Sign-in, anisette, 2FA, saved accounts, errors |
 | Install Flows | docs/install-flows.md | installSideStore, installApps, placePairing: steps, prompts, free-app limit, recovery, install-probe |
+| Engine RPC | docs/rpc.md | Engine ⇄ UI message protocol, run streaming, checkpoints, error transport, Electron adapter |
 | Roadmap | docs/roadmap.md | Phases with links to plans |
 | Contributing | docs/contributing.md | PR rules, conventions, clean-room policy |
 | Code of Conduct | docs/CODE_OF_CONDUCT.md | Contributor Covenant 2.1 |
