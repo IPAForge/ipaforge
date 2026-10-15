@@ -7,22 +7,23 @@ export interface IdentityRewrite {
   readonly appGroups: ReadonlyMap<string, string>;
 }
 
+/** The main app's ID itself, or an ID nested under it (`<main>.suffix`). */
+const isUnderMainId = (value: string, rewrite: IdentityRewrite): boolean =>
+  value === rewrite.oldMainId || value.startsWith(`${rewrite.oldMainId}.`);
+
+const replacePrefix = (value: string, rewrite: IdentityRewrite): string =>
+  isUnderMainId(value, rewrite) ? rewrite.newMainId + value.slice(rewrite.oldMainId.length) : value;
+
 /** New bundle ID for an extension/watch app: keep the suffix after the parent's ID. */
 export const rewriteNestedId = (oldId: string, rewrite: IdentityRewrite): string => {
-  if (oldId === rewrite.oldMainId) return rewrite.newMainId;
-  if (!oldId.startsWith(`${rewrite.oldMainId}.`)) {
+  if (!isUnderMainId(oldId, rewrite)) {
     throw new LoadstarError(ErrorCode.ExtensionPrefix, {
       message: `bundle ID "${oldId}" is not prefixed by its app's ID "${rewrite.oldMainId}"`,
       data: { bundleId: oldId, appId: rewrite.oldMainId },
     });
   }
-  return rewrite.newMainId + oldId.slice(rewrite.oldMainId.length);
+  return replacePrefix(oldId, rewrite);
 };
-
-const replacePrefix = (value: string, rewrite: IdentityRewrite): string =>
-  value === rewrite.oldMainId || value.startsWith(`${rewrite.oldMainId}.`)
-    ? rewrite.newMainId + value.slice(rewrite.oldMainId.length)
-    : value;
 
 const mapStrings = (value: PlistValue | undefined, map: (text: string) => string): PlistValue | undefined => {
   if (typeof value === "string") return map(value);
@@ -30,11 +31,9 @@ const mapStrings = (value: PlistValue | undefined, map: (text: string) => string
   return value;
 };
 
-const setIn = (
-  dict: PlistDict,
-  path: readonly string[],
-  update: (value: PlistValue | undefined) => PlistValue | undefined,
-): PlistDict => {
+type ValueUpdate = (value: PlistValue | undefined) => PlistValue | undefined;
+
+const setIn = (dict: PlistDict, path: readonly string[], update: ValueUpdate): PlistDict => {
   const [head, ...rest] = path;
   if (head === undefined || !(head in dict)) return dict;
   const current = dict[head];
@@ -48,14 +47,15 @@ const setIn = (
  * CFBundleIdentifier, Watch companion IDs, background task IDs, app groups.
  */
 export const rewriteInfoPlist = (info: PlistDict, newBundleId: string, rewrite: IdentityRewrite): PlistDict => {
-  const group = (text: string): string => rewrite.appGroups.get(text) ?? text;
-  let out = setIn(info, ["CFBundleIdentifier"], () => newBundleId);
-  out = setIn(out, ["WKCompanionAppBundleIdentifier"], (v) => mapStrings(v, (t) => replacePrefix(t, rewrite)));
-  out = setIn(out, ["NSExtension", "NSExtensionAttributes", "WKAppBundleIdentifier"], (v) =>
-    mapStrings(v, (t) => replacePrefix(t, rewrite)),
-  );
-  out = setIn(out, ["BGTaskSchedulerPermittedIdentifiers"], (v) => mapStrings(v, (t) => replacePrefix(t, rewrite)));
-  out = setIn(out, ["NSExtension", "NSExtensionFileProviderDocumentGroup"], (v) => mapStrings(v, group));
-  out = setIn(out, ["ALTAppGroups"], (v) => mapStrings(v, group));
-  return out;
+  const bundleIds: ValueUpdate = (value) => mapStrings(value, (text) => replacePrefix(text, rewrite));
+  const appGroups: ValueUpdate = (value) => mapStrings(value, (text) => rewrite.appGroups.get(text) ?? text);
+  const updates: readonly [readonly string[], ValueUpdate][] = [
+    [["CFBundleIdentifier"], () => newBundleId],
+    [["WKCompanionAppBundleIdentifier"], bundleIds],
+    [["NSExtension", "NSExtensionAttributes", "WKAppBundleIdentifier"], bundleIds],
+    [["BGTaskSchedulerPermittedIdentifiers"], bundleIds],
+    [["NSExtension", "NSExtensionFileProviderDocumentGroup"], appGroups],
+    [["ALTAppGroups"], appGroups],
+  ];
+  return updates.reduce((out, [path, update]) => setIn(out, path, update), info);
 };

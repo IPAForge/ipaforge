@@ -36,6 +36,29 @@ const BUNDLE_SUFFIXES: readonly [string, BundleKind][] = [
 
 const SIGNABLE_FILETYPES = new Set([MH_EXECUTE, MH_DYLIB, MH_BUNDLE]);
 
+/** Number of path components ("" — the main app — is depth 0). */
+const pathDepth = (path: string): number => (path === "" ? 0 : path.split("/").length);
+
+/** Signing order: deepest first, then by path for a stable result. */
+const deepestFirst = (a: { readonly path: string }, b: { readonly path: string }): number =>
+  pathDepth(b.path) - pathDepth(a.path) || a.path.localeCompare(b.path);
+
+const bundleKindOf = (dir: string): BundleKind | undefined =>
+  BUNDLE_SUFFIXES.find(([suffix]) => dir.endsWith(suffix))?.[1];
+
+/** Every directory in the tree whose name marks it as a nested bundle. */
+const bundleDirectories = (tree: BundleTree): Set<string> => {
+  const directories = new Set<string>();
+  for (const path of tree.keys()) {
+    const parts = path.split("/");
+    for (let i = 1; i < parts.length; i++) {
+      const dir = parts.slice(0, i).join("/");
+      if (bundleKindOf(dir)) directories.add(dir);
+    }
+  }
+  return directories;
+};
+
 const readInfoPlist = (tree: BundleTree, bundlePath: string, limits: PlistLimits): PlistDict | undefined => {
   const bytes = readFile(tree, joinPath(bundlePath, INFO_PLIST));
   if (!bytes) return undefined;
@@ -55,7 +78,7 @@ const describeBundle = (
   if (!infoPlist || !executableName || !identifier) return undefined; // resource-only bundle
   const executable = joinPath(path, executableName);
   if (!readFile(tree, executable)) return undefined;
-  return { path, kind, infoPlist, identifier, executable, depth: path === "" ? 0 : path.split("/").length };
+  return { path, kind, infoPlist, identifier, executable, depth: pathDepth(path) };
 };
 
 /** Code bundles in the tree, deepest first (the order they must be signed in), main app last. */
@@ -67,23 +90,11 @@ export const discoverBundles = (tree: BundleTree, limits: SignerLimits = DEFAULT
     });
   }
 
-  const candidates = new Set<string>();
-  for (const path of tree.keys()) {
-    const parts = path.split("/");
-    for (let i = 1; i < parts.length; i++) {
-      const dir = parts.slice(0, i).join("/");
-      if (BUNDLE_SUFFIXES.some(([suffix]) => dir.endsWith(suffix))) candidates.add(dir);
-    }
-  }
-
-  const nested = [...candidates]
-    .map((dir) => {
-      const kind = BUNDLE_SUFFIXES.find(([suffix]) => dir.endsWith(suffix))?.[1] ?? "framework";
-      return describeBundle(tree, dir, kind, limits.plist);
-    })
+  const nested = [...bundleDirectories(tree)]
+    .map((dir) => describeBundle(tree, dir, bundleKindOf(dir) ?? "framework", limits.plist))
     .filter((bundle): bundle is CodeBundle => bundle !== undefined);
 
-  return [...nested.sort((a, b) => b.depth - a.depth || a.path.localeCompare(b.path)), main];
+  return [...nested.sort(deepestFirst), main];
 };
 
 /** Innermost code bundle that contains `path`. */
@@ -91,6 +102,15 @@ export const owningBundle = (bundles: readonly CodeBundle[], path: string): Code
   bundles
     .filter((bundle) => isWithin(path, bundle.path) && path !== bundle.path)
     .reduce<CodeBundle | undefined>((best, bundle) => (!best || bundle.depth > best.depth ? bundle : best), undefined);
+
+/** Every slice is an executable, dylib or bundle; malformed Mach-O stays a plain resource. */
+const isSignableMachO = (data: Uint8Array, limits: SignerLimits): boolean => {
+  try {
+    return parseMachO(data, limits.machO).slices.every((slice) => SIGNABLE_FILETYPES.has(slice.filetype));
+  } catch {
+    return false; // not a well-formed Mach-O: leave it as a plain resource
+  }
+};
 
 /**
  * Mach-O executables/dylibs/bundles that are not a bundle's main executable (e.g. Frameworks/*.dylib,
@@ -106,19 +126,11 @@ export const discoverLooseBinaries = (
   for (const [path, entry] of tree) {
     if (entry.kind !== "file" || executables.has(path) || !isMachO(entry.data)) continue;
     if (path.split("/").includes(CODE_SIGNATURE_DIR)) continue;
-    const signable = (() => {
-      try {
-        return parseMachO(entry.data, limits.machO).slices.every((slice) => SIGNABLE_FILETYPES.has(slice.filetype));
-      } catch {
-        return false; // not a well-formed Mach-O: leave it as a plain resource
-      }
-    })();
-    if (!signable) continue;
-    const bundle = owningBundle(bundles, path);
-    loose.push({ path, bundle: bundle?.path ?? "" });
+    if (!isSignableMachO(entry.data, limits)) continue;
+    loose.push({ path, bundle: owningBundle(bundles, path)?.path ?? "" });
   }
   // deepest first, so a dylib inside a framework is signed before the framework is sealed
-  return loose.sort((a, b) => b.path.split("/").length - a.path.split("/").length || a.path.localeCompare(b.path));
+  return loose.sort(deepestFirst);
 };
 
 /** Everything inside a bundle as CodeResources inputs (iOS seals nested bundles' files as plain resources). */

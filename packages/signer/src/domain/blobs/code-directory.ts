@@ -64,6 +64,18 @@ const specialSlotList = (special: SpecialSlotData): (Uint8Array | undefined)[] =
   return slots.slice(0, count); // nSpecialSlots = highest filled slot
 };
 
+/** One hash per special slot; unused slots hold zeroes. */
+const hashSpecialSlots = (
+  specials: readonly (Uint8Array | undefined)[],
+  algorithm: HashAlgorithm,
+  hasher: Hasher,
+): Promise<Uint8Array[]> =>
+  Promise.all(
+    specials.map((data) =>
+      data ? hasher.digest(algorithm, data) : Promise.resolve(new Uint8Array(DIGEST_SIZE[algorithm])),
+    ),
+  );
+
 /** Version per Apple's Builder::build: the oldest format that can carry the fields in use. */
 export const codeDirectoryVersion = (
   input: Pick<CodeDirectoryInput, "execSegment" | "codeLimit" | "teamId">,
@@ -92,9 +104,7 @@ export const buildCodeDirectory = async (input: CodeDirectoryInput, hasher: Hash
 
   const codeLimit = Math.min(input.codeLimit, input.image.byteLength);
   const codeHashes = await hasher.digestPages(input.hashType, input.image.subarray(0, codeLimit), input.pageSize);
-  const specialHashes = await Promise.all(
-    specials.map((data) => (data ? hasher.digest(input.hashType, data) : Promise.resolve(new Uint8Array(hashSize)))),
-  );
+  const specialHashes = await hashSpecialSlots(specials, input.hashType, hasher);
 
   const identOffset = headerSize;
   const teamOffset = team ? identOffset + identifier.byteLength : 0;
