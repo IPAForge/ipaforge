@@ -1,3 +1,5 @@
+import { concatBytes } from "@kernel/bytes/bytes.ts";
+
 export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD";
 
 export interface HttpRequest {
@@ -22,8 +24,11 @@ export interface HttpClient {
   request(request: HttpRequest): Promise<HttpResponse>;
 }
 
+/** Largest body `readBody` buffers by default. */
+const DEFAULT_BODY_LIMIT = 32 * 1024 * 1024;
+
 /** Buffer a response body, refusing bodies larger than `limit` bytes. */
-export const readBody = async (response: HttpResponse, limit = 32 * 1024 * 1024): Promise<Uint8Array> => {
+export const readBody = async (response: HttpResponse, limit = DEFAULT_BODY_LIMIT): Promise<Uint8Array> => {
   const chunks: Uint8Array[] = [];
   let total = 0;
   const reader = response.body.getReader();
@@ -38,11 +43,5 @@ export const readBody = async (response: HttpResponse, limit = 32 * 1024 * 1024)
   } finally {
     reader.releaseLock();
   }
-  const out = new Uint8Array(total);
-  let offset = 0;
-  for (const chunk of chunks) {
-    out.set(chunk, offset);
-    offset += chunk.byteLength;
-  }
-  return out;
+  return concatBytes(chunks);
 };

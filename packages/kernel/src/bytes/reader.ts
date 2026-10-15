@@ -1,3 +1,4 @@
+import { utf8DecodeLenient } from "@kernel/bytes/bytes.ts";
 import { ErrorCode } from "@kernel/errors/codes.ts";
 import { LoadstarError } from "@kernel/errors/loadstar-error.ts";
 
@@ -90,7 +91,7 @@ export class ByteReader {
     const start = this.#position;
     const window = this.#bytes.subarray(start, start + Math.min(maxLength, this.remaining));
     const end = window.indexOf(0);
-    const text = new TextDecoder().decode(end < 0 ? window : window.subarray(0, end));
+    const text = utf8DecodeLenient(end < 0 ? window : window.subarray(0, end));
     this.#position = start + (end < 0 ? window.byteLength : end + 1);
     return text;
   }

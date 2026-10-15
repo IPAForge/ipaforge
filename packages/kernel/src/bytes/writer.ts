@@ -1,11 +1,16 @@
+import { utf8Encode } from "@kernel/bytes/bytes.ts";
+
+const DEFAULT_CAPACITY = 256;
+const MIN_CAPACITY = 16;
+
 /** Growable byte builder with explicit endianness per write. */
 export class ByteWriter {
   #buffer: Uint8Array;
   #view: DataView;
   #length = 0;
 
-  constructor(initialCapacity = 256) {
-    this.#buffer = new Uint8Array(Math.max(16, initialCapacity));
+  constructor(initialCapacity = DEFAULT_CAPACITY) {
+    this.#buffer = new Uint8Array(Math.max(MIN_CAPACITY, initialCapacity));
     this.#view = new DataView(this.#buffer.buffer);
   }
 
@@ -63,7 +68,7 @@ export class ByteWriter {
 
   /** Writes UTF-8 text followed by a NUL terminator. */
   cstring(value: string): this {
-    return this.bytes(new TextEncoder().encode(value)).u8(0);
+    return this.bytes(utf8Encode(value)).u8(0);
   }
 
   /** Pads with `fill` up to the next multiple of `boundary`. */
@@ -88,15 +93,19 @@ export class ByteWriter {
   #grow(count: number): number {
     const start = this.#length;
     const needed = start + count;
-    if (needed > this.#buffer.byteLength) {
-      let capacity = this.#buffer.byteLength * 2;
-      while (capacity < needed) capacity *= 2;
-      const next = new Uint8Array(capacity);
-      next.set(this.#buffer.subarray(0, this.#length));
-      this.#buffer = next;
-      this.#view = new DataView(next.buffer);
-    }
+    this.#ensureCapacity(needed);
     this.#length = needed;
     return start;
+  }
+
+  /** Doubles the buffer until `needed` bytes fit, keeping what was written. */
+  #ensureCapacity(needed: number): void {
+    if (needed <= this.#buffer.byteLength) return;
+    let capacity = this.#buffer.byteLength * 2;
+    while (capacity < needed) capacity *= 2;
+    const next = new Uint8Array(capacity);
+    next.set(this.#buffer.subarray(0, this.#length));
+    this.#buffer = next;
+    this.#view = new DataView(next.buffer);
   }
 }
