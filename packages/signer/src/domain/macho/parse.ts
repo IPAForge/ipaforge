@@ -1,4 +1,5 @@
 import { ByteReader, ErrorCode, LoadstarError } from "@loadstar/kernel";
+import { DEFAULT_SIGNER_LIMITS, type MachOLimits } from "@signer/domain/config.ts";
 import {
   FAT_ARCH_SIZE,
   FAT_HEADER_SIZE,
@@ -34,9 +35,6 @@ import type {
   Slice,
 } from "@signer/domain/macho/types.ts";
 
-/** Real universal binaries have at most a handful of slices (e.g. armv7, arm64, arm64e). */
-export const MAX_FAT_ARCHES = 16;
-
 const invalid = (message: string, data?: Record<string, unknown>): LoadstarError =>
   new LoadstarError(ErrorCode.InvalidMachO, { message, ...(data ? { data } : {}) });
 
@@ -57,7 +55,7 @@ export const isMachO = (bytes: Uint8Array): boolean => {
 };
 
 /** Parses a thin or universal Mach-O file. Throws `signer.invalid_macho` on malformed input. */
-export const parseMachO = (bytes: Uint8Array): MachOFile => {
+export const parseMachO = (bytes: Uint8Array, limits: MachOLimits = DEFAULT_SIGNER_LIMITS.machO): MachOFile => {
   if (bytes.byteLength < 4) throw invalid("file too small to be Mach-O", { size: bytes.byteLength });
   const magicBE = new DataView(bytes.buffer, bytes.byteOffset, 4).getUint32(0, false);
 
@@ -66,17 +64,17 @@ export const parseMachO = (bytes: Uint8Array): MachOFile => {
   }
   if (magicBE !== FAT_MAGIC) return { fat: undefined, slices: [parseSlice(bytes, 0)] };
 
-  const fat = parseFatHeader(bytes);
+  const fat = parseFatHeader(bytes, limits.maxFatArches);
   return {
     fat,
     slices: fat.map((arch) => parseSlice(bytes.subarray(arch.offset, arch.offset + arch.size), arch.offset)),
   };
 };
 
-const parseFatHeader = (bytes: Uint8Array): FatArch[] => {
+const parseFatHeader = (bytes: Uint8Array, maxArches: number): FatArch[] => {
   const reader = new ByteReader(bytes, 4);
   const count = reader.u32be();
-  if (count === 0 || count > MAX_FAT_ARCHES || FAT_HEADER_SIZE + count * FAT_ARCH_SIZE > bytes.byteLength) {
+  if (count === 0 || count > maxArches || FAT_HEADER_SIZE + count * FAT_ARCH_SIZE > bytes.byteLength) {
     throw invalid("bad fat header", { count });
   }
   const arches: FatArch[] = [];

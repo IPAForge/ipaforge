@@ -3,18 +3,22 @@ import { createDict } from "@signer/domain/plist/index.ts";
 import { serializeXmlPlist } from "@signer/domain/plist/xml-write.ts";
 import type { HashAlgorithm, Hasher } from "@signer/domain/ports/hasher.ts";
 import { parseCertificate, toArrayBuffer } from "@signer/infrastructure/cms/certificate.ts";
+import {
+  OID_APPLE_CDHASHES,
+  OID_APPLE_CDHASHES2,
+  OID_CONTENT_TYPE,
+  OID_DATA,
+  OID_MESSAGE_DIGEST,
+  OID_SHA1,
+  OID_SHA256,
+  OID_SHA256_WITH_RSA,
+  OID_SIGNED_DATA,
+  OID_SIGNING_TIME,
+} from "@signer/infrastructure/cms/oids.ts";
 import * as asn1js from "asn1js";
 import * as pkijs from "pkijs";
 
-const OID_DATA = "1.2.840.113549.1.7.1";
-const OID_SIGNED_DATA = "1.2.840.113549.1.7.2";
-const OID_CONTENT_TYPE = "1.2.840.113549.1.9.3";
-const OID_MESSAGE_DIGEST = "1.2.840.113549.1.9.4";
-const OID_SIGNING_TIME = "1.2.840.113549.1.9.5";
-const OID_APPLE_CDHASHES = "1.2.840.113635.100.9.1";
-const OID_SHA256_WITH_RSA = "1.2.840.113549.1.1.11";
-const OID_APPLE_CDHASHES2 = "1.2.840.113635.100.9.2";
-const DIGEST_OID: Readonly<Record<HashAlgorithm, string>> = { sha1: "1.3.14.3.2.26", sha256: "2.16.840.1.101.3.4.2.1" };
+const DIGEST_OID: Readonly<Record<HashAlgorithm, string>> = { sha1: OID_SHA1, sha256: OID_SHA256 };
 
 export interface SigningIdentity {
   /** Leaf certificate (DER). */

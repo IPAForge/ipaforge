@@ -34,6 +34,10 @@ export const CS_EXECSEG_CAN_EXEC_CDHASH = 0x200n;
 export const CS_HASHTYPE_SHA1 = 1;
 export const CS_HASHTYPE_SHA256 = 2;
 
+/** Code page sizes the kernel accepts. */
+export const CS_PAGE_SIZE_4K = 4096;
+export const CS_PAGE_SIZE_16K = 16384;
+
 /** cdhash length (CS_CDHASH_LEN). */
 export const CS_CDHASH_LEN = 20;
 

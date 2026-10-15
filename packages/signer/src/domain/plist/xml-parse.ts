@@ -1,7 +1,6 @@
 import { ErrorCode, fromBase64, LoadstarError, utf8Decode } from "@loadstar/kernel";
+import { DEFAULT_SIGNER_LIMITS, type PlistLimits } from "@signer/domain/config.ts";
 import { createDict, type PlistValue, real } from "@signer/domain/plist/model.ts";
-
-const MAX_DEPTH = 64;
 
 const fail = (message: string, position: number): never => {
   throw new LoadstarError(ErrorCode.InvalidPlist, { message: `XML plist: ${message}`, data: { position } });
@@ -113,8 +112,8 @@ const parseReal = (text: string, position: number): number => {
   return Number.isNaN(value) ? fail(`bad real "${trimmed}"`, position) : value;
 };
 
-const parseValue = (reader: Reader, tag: Tag, depth: number): PlistValue => {
-  if (depth > MAX_DEPTH) fail("nesting too deep", tag.start);
+const parseValue = (reader: Reader, tag: Tag, depth: number, maxDepth: number): PlistValue => {
+  if (depth > maxDepth) fail("nesting too deep", tag.start);
   if (tag.closing) fail(`unexpected </${tag.name}>`, tag.start);
 
   switch (tag.name) {
@@ -126,7 +125,7 @@ const parseValue = (reader: Reader, tag: Tag, depth: number): PlistValue => {
         if (keyTag.closing && keyTag.name === "dict") return createDict(entries);
         if (keyTag.name !== "key") fail(`expected <key>, got <${keyTag.name}>`, keyTag.start);
         const key = keyTag.selfClosing ? "" : reader.textUntilClose("key");
-        entries.push([key, parseValue(reader, reader.nextTag(), depth + 1)]);
+        entries.push([key, parseValue(reader, reader.nextTag(), depth + 1, maxDepth)]);
       }
     }
     case "array": {
@@ -135,7 +134,7 @@ const parseValue = (reader: Reader, tag: Tag, depth: number): PlistValue => {
       for (;;) {
         const next = reader.nextTag();
         if (next.closing && next.name === "array") return items;
-        items.push(parseValue(reader, next, depth + 1));
+        items.push(parseValue(reader, next, depth + 1, maxDepth));
       }
     }
     case "string":
@@ -161,7 +160,10 @@ const parseValue = (reader: Reader, tag: Tag, depth: number): PlistValue => {
 };
 
 /** Parses an XML property list (bytes must be UTF-8). */
-export const parseXmlPlist = (input: Uint8Array | string): PlistValue => {
+export const parseXmlPlist = (
+  input: Uint8Array | string,
+  limits: PlistLimits = DEFAULT_SIGNER_LIMITS.plist,
+): PlistValue => {
   let xml: string;
   try {
     xml = typeof input === "string" ? input : utf8Decode(input);
@@ -175,7 +177,7 @@ export const parseXmlPlist = (input: Uint8Array | string): PlistValue => {
   if (root.name !== "plist" || root.closing) fail("missing <plist> root", root.start);
   if (root.selfClosing) fail("empty <plist>", root.start);
 
-  const value = parseValue(reader, reader.nextTag(), 0);
+  const value = parseValue(reader, reader.nextTag(), 0, limits.maxDepth);
   const close = reader.nextTag();
   if (!close.closing || close.name !== "plist") fail("expected </plist>", close.start);
   if (!reader.atEnd()) fail("trailing content after </plist>", reader.position());

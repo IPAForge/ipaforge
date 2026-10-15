@@ -1,14 +1,19 @@
 import { ErrorCode, type FileSource, LoadstarError, type Logger, utf8Decode, utf8Encode } from "@loadstar/kernel";
-import { type BundleTree, EXECUTABLE_MODE, SYMLINK_MODE, type TreeEntry } from "@signer/domain/bundle/tree.ts";
+import {
+  DEFAULT_FILE_MODE,
+  DIRECTORY_MODE,
+  EXECUTABLE_MODE,
+  IPA_PAYLOAD_DIR,
+  PERMISSION_BITS,
+  S_IFDIR,
+  S_IFLNK,
+  S_IFMT,
+  S_IFREG,
+  SYMLINK_MODE,
+} from "@signer/domain/bundle/layout.ts";
+import type { BundleTree, TreeEntry } from "@signer/domain/bundle/tree.ts";
+import { type ArchiveLimits, DEFAULT_SIGNER_LIMITS } from "@signer/domain/config.ts";
 import { configure, Reader, Uint8ArrayReader, Uint8ArrayWriter, ZipReader, ZipWriter } from "@zip.js/zip.js";
-
-/** Limits that keep a hostile archive from exhausting memory. */
-export interface IpaLimits {
-  readonly maxEntries: number;
-  readonly maxUncompressedBytes: number;
-}
-
-export const DEFAULT_IPA_LIMITS: IpaLimits = { maxEntries: 200_000, maxUncompressedBytes: 4 * 1024 ** 3 };
 
 export interface Ipa {
   /** e.g. `SideStore.app` */
@@ -19,10 +24,36 @@ export interface Ipa {
   readonly extras: BundleTree;
 }
 
-const S_IFMT = 0o170000;
-const S_IFLNK = 0o120000;
-/** Archive members never carried over (Apple account metadata, macOS resource forks). */
-const DROPPED = [/^__MACOSX\//, /^iTunesMetadata\.plist$/, /^META-INF\/com\.apple\.ZipMetadata\.plist$/];
+/** Archive members dropped by default when reading: Apple-account metadata and macOS resource forks. */
+export const DEFAULT_DROPPED_MEMBERS: readonly RegExp[] = [
+  /^__MACOSX\//,
+  /^iTunesMetadata\.plist$/,
+  /^META-INF\/com\.apple\.ZipMetadata\.plist$/,
+];
+
+/** Already-compressed formats stored without deflating again by default when writing. */
+export const DEFAULT_STORED_EXTENSIONS: RegExp = /\.(?:png|jpe?g|gif|heic|car|mp3|m4a|mp4|mov|zip|ipa|gz|lzfse)$/i;
+
+/** Timestamp written on every archive entry so output is deterministic (overridable). */
+export const DEFAULT_ENTRY_DATE = new Date("2026-01-01T00:00:00Z");
+
+export interface ReadIpaOptions {
+  readonly logger: Logger;
+  readonly signal?: AbortSignal;
+  readonly limits?: ArchiveLimits;
+  /** Members to skip (default: DEFAULT_DROPPED_MEMBERS). */
+  readonly droppedMembers?: readonly RegExp[];
+}
+
+export interface WriteIpaOptions {
+  readonly logger: Logger;
+  /** Deflate level 0–9 (0 = store everything; fastest, fine for device installs). Default 6. */
+  readonly level?: number;
+  /** Paths matching this are always stored (default: DEFAULT_STORED_EXTENSIONS). */
+  readonly storedExtensions?: RegExp;
+  /** Modification time recorded for every entry (default: DEFAULT_ENTRY_DATE). */
+  readonly entryDate?: Date;
+}
 
 let configured = false;
 const ensureConfigured = (): void => {
@@ -81,12 +112,10 @@ const zipError = (error: unknown, entry?: string): LoadstarError => {
 };
 
 /** Reads an .ipa: exactly one `Payload/<name>.app`, modes and symlinks preserved. */
-export const readIpa = async (
-  source: FileSource,
-  options: { readonly logger: Logger; readonly signal?: AbortSignal; readonly limits?: IpaLimits },
-): Promise<Ipa> => {
+export const readIpa = async (source: FileSource, options: ReadIpaOptions): Promise<Ipa> => {
   ensureConfigured();
-  const limits = options.limits ?? DEFAULT_IPA_LIMITS;
+  const limits = options.limits ?? DEFAULT_SIGNER_LIMITS.ipa;
+  const dropped = options.droppedMembers ?? DEFAULT_DROPPED_MEMBERS;
   const started = Date.now();
   const reader = new ZipReader(new FileSourceReader(source));
   try {
@@ -98,7 +127,7 @@ export const readIpa = async (
     const appNames = new Set<string>();
     for (const entry of entries) {
       assertSafePath(entry.filename);
-      const match = /^Payload\/([^/]+\.app)(?:\/|$)/.exec(entry.filename);
+      const match = new RegExp(`^${IPA_PAYLOAD_DIR}/([^/]+\\.app)(?:/|$)`).exec(entry.filename);
       if (match?.[1]) appNames.add(match[1]);
     }
     if (appNames.size !== 1) {
@@ -107,7 +136,7 @@ export const readIpa = async (
       });
     }
     const appName = [...appNames][0] as string;
-    const appPrefix = `Payload/${appName}/`;
+    const appPrefix = `${IPA_PAYLOAD_DIR}/${appName}/`;
 
     const app: BundleTree = new Map();
     const extras: BundleTree = new Map();
@@ -115,7 +144,7 @@ export const readIpa = async (
     let ignored = 0;
     for (const entry of entries) {
       options.signal?.throwIfAborted();
-      if (entry.directory || DROPPED.some((pattern) => pattern.test(entry.filename))) {
+      if (entry.directory || dropped.some((pattern) => pattern.test(entry.filename))) {
         if (!entry.directory) ignored++;
         continue;
       }
@@ -126,11 +155,11 @@ export const readIpa = async (
       const data = await entry.getData(new Uint8ArrayWriter()).catch((error: unknown) => {
         throw zipError(error, entry.filename);
       });
-      const unixMode = entry.unixMode ?? (entry.executable ? EXECUTABLE_MODE : 0o644);
+      const unixMode = entry.unixMode ?? (entry.executable ? EXECUTABLE_MODE : DEFAULT_FILE_MODE);
       const isSymlink = entry.symlink || (unixMode & S_IFMT) === S_IFLNK;
       const value: TreeEntry = isSymlink
         ? { kind: "symlink", target: utf8Decode(data), mode: SYMLINK_MODE }
-        : { kind: "file", data, mode: unixMode & 0o7777 };
+        : { kind: "file", data, mode: unixMode & PERMISSION_BITS };
 
       if (entry.filename.startsWith(appPrefix)) app.set(entry.filename.slice(appPrefix.length), value);
       else extras.set(entry.filename, value);
@@ -159,34 +188,29 @@ const parentDirectories = (paths: Iterable<string>): string[] => {
   return [...dirs].sort();
 };
 
-/** Already-compressed formats are stored, not deflated again. */
-const STORED = /\.(?:png|jpe?g|gif|heic|car|mp3|m4a|mp4|mov|zip|ipa|gz|lzfse)$/i;
-
 /** Writes an .ipa as a stream; directories, unix modes and symlinks are preserved. */
-export const writeIpa = (
-  ipa: Ipa,
-  options: { readonly logger: Logger; readonly level?: number },
-): ReadableStream<Uint8Array> => {
+export const writeIpa = (ipa: Ipa, options: WriteIpaOptions): ReadableStream<Uint8Array> => {
   ensureConfigured();
   const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();
   const started = Date.now();
 
   const files = new Map<string, TreeEntry>();
-  for (const [path, entry] of ipa.app) files.set(`Payload/${ipa.appName}/${path}`, entry);
+  for (const [path, entry] of ipa.app) files.set(`${IPA_PAYLOAD_DIR}/${ipa.appName}/${path}`, entry);
   for (const [path, entry] of ipa.extras) files.set(path, entry);
 
   const write = async (): Promise<void> => {
     const writer = new ZipWriter(writable, { useWebWorkers: false, extendedTimestamp: false });
-    const lastModDate = new Date("2026-01-01T00:00:00Z"); // deterministic archives
+    const lastModDate = options.entryDate ?? DEFAULT_ENTRY_DATE;
+    const stored = options.storedExtensions ?? DEFAULT_STORED_EXTENSIONS;
     for (const dir of parentDirectories(files.keys())) {
-      await writer.add(dir, undefined, { directory: true, unixMode: 0o40755, lastModDate });
+      await writer.add(dir, undefined, { directory: true, unixMode: S_IFDIR | DIRECTORY_MODE, lastModDate });
     }
     let bytes = 0;
     for (const path of [...files.keys()].sort()) {
       const entry = files.get(path) as TreeEntry;
       if (entry.kind === "symlink") {
         await writer.add(path, new Uint8ArrayReader(utf8Encode(entry.target)), {
-          unixMode: S_IFLNK | 0o777,
+          unixMode: S_IFLNK | 0o777, // symlink permissions are conventionally rwxrwxrwx
           level: 0,
           lastModDate,
         });
@@ -194,8 +218,8 @@ export const writeIpa = (
       }
       bytes += entry.data.byteLength;
       await writer.add(path, new Uint8ArrayReader(entry.data), {
-        unixMode: 0o100000 | (entry.mode & 0o7777),
-        level: STORED.test(path) ? 0 : (options.level ?? 6),
+        unixMode: S_IFREG | (entry.mode & PERMISSION_BITS),
+        level: stored.test(path) ? 0 : (options.level ?? 6),
         lastModDate,
       });
     }

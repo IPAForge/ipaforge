@@ -10,6 +10,9 @@ const escapeText = (text: string): string => text.replace(/&/g, "&amp;").replace
 
 const stripZeros = (digits: string): string => (digits.includes(".") ? digits.replace(/\.?0+$/, "") : digits);
 
+/** Significant digits of `%.17g`. */
+const G17_DIGITS = 17;
+
 /**
  * C `printf("%.17g")`, which CoreFoundation uses for `<real>`: 17 significant digits, trailing
  * zeros removed, exponent form only when the exponent is < -4 or >= 17 (e.g. 0.1 → 0.10000000000000001,
@@ -17,13 +20,13 @@ const stripZeros = (digits: string): string => (digits.includes(".") ? digits.re
  */
 const formatG17 = (value: number): string => {
   if (value === 0) return Object.is(value, -0) ? "-0" : "0";
-  const [mantissa = "", exponentText = "0"] = value.toExponential(16).split("e");
+  const [mantissa = "", exponentText = "0"] = value.toExponential(G17_DIGITS - 1).split("e");
   const exponent = Number(exponentText);
-  if (exponent < -4 || exponent >= 17) {
+  if (exponent < -4 || exponent >= G17_DIGITS) {
     const sign = exponent < 0 ? "-" : "+";
     return `${stripZeros(mantissa)}e${sign}${String(Math.abs(exponent)).padStart(2, "0")}`;
   }
-  return stripZeros(value.toFixed(16 - exponent));
+  return stripZeros(value.toFixed(G17_DIGITS - 1 - exponent));
 };
 
 const formatReal = (value: number): string => {
@@ -35,8 +38,14 @@ const formatReal = (value: number): string => {
 
 const formatDate = (date: Date): string => date.toISOString().replace(/\.\d{3}Z$/, "Z");
 
+/** CoreFoundation wraps `<data>` base64 at 76 columns, minus one tab (8 columns) per nesting level. */
+const CF_DATA_LINE_WIDTH = 76;
+const CF_TAB_WIDTH = 8;
+const CF_MIN_DATA_LINE_WIDTH = 4;
+
 /** Base64 line width CoreFoundation uses for `<data>` at a given depth. */
-const dataLineWidth = (depth: number): number => Math.max(76 - 8 * depth, 4);
+const dataLineWidth = (depth: number): number =>
+  Math.max(CF_DATA_LINE_WIDTH - CF_TAB_WIDTH * depth, CF_MIN_DATA_LINE_WIDTH);
 
 const writeValue = (value: PlistValue, depth: number, out: string[]): void => {
   const tabs = "\t".repeat(depth);

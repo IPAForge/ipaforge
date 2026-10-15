@@ -20,6 +20,13 @@ import {
   entitlementsXmlBlob,
   type SpecialSlotData,
 } from "@signer/domain/blobs/index.ts";
+import {
+  type Overrides,
+  resolveLimits,
+  resolvePolicy,
+  type SignerLimits,
+  type SigningPolicy,
+} from "@signer/domain/config.ts";
 import { estimateSignatureSize, prepareImage } from "@signer/domain/macho/allocate.ts";
 import { assembleFat } from "@signer/domain/macho/fat.ts";
 import { findSegment, parseMachO } from "@signer/domain/macho/parse.ts";
@@ -54,8 +61,10 @@ export interface SignBinaryOptions {
   /** Bundle executables only: Info.plist bytes (slot −1) and CodeResources bytes (slot −3). */
   readonly infoPlist?: Uint8Array;
   readonly codeResources?: Uint8Array;
-  /** Override the code page size (defaults to codesign 26's per-platform rule). */
-  readonly pageSize?: number;
+  /** Page size, hash algorithms and CMS reservation (defaults follow Apple codesign 26). */
+  readonly policy?: Partial<SigningPolicy>;
+  /** Parser limits for hostile-input protection (defaults: DEFAULT_SIGNER_LIMITS). */
+  readonly limits?: Overrides<SignerLimits>;
   readonly signal?: AbortSignal;
 }
 
@@ -108,7 +117,8 @@ const signSlice = async (
     ...(xml && der ? { entitlements: xml, derEntitlements: der } : {}),
   };
   const teamId = options.signing.kind === "identity" ? options.signing.teamId : undefined;
-  const pageSize = options.pageSize ?? pageSizeFor(slice);
+  const policy = resolvePolicy(options.policy);
+  const pageSize = pageSizeFor(slice, policy.pageSize);
 
   const datasize = estimateSignatureSize(slice, {
     pieces: [requirements, ...(xml && der ? [xml, der] : [])],
@@ -119,6 +129,7 @@ const signSlice = async (
       hashSize: DIGEST_SIZE[algorithm],
       nSpecialSlots: highestSpecialSlot(special),
     })),
+    cmsReservation: policy.cmsReservation,
   });
   const prepared = prepareImage(slice, datasize);
 
@@ -195,8 +206,8 @@ export const signBinary = async (
 ): Promise<SignedBinary> => {
   const started = Date.now();
   options.signal?.throwIfAborted();
-  const file = parseMachO(bytes);
-  const algorithms = hashAlgorithmsFor(file.slices);
+  const file = parseMachO(bytes, resolveLimits(options.limits).machO);
+  const algorithms = hashAlgorithmsFor(file.slices, resolvePolicy(options.policy).hashAlgorithms);
 
   const signed: { bytes: Uint8Array; cdhash: Uint8Array }[] = [];
   for (const slice of file.slices) {

@@ -1,3 +1,4 @@
+import { CODE_RESOURCES, CODE_SIGNATURE_DIR, MAS_RECEIPT_DIR } from "@signer/domain/bundle/layout.ts";
 import { compileRules, matchRule, RULES_V1, RULES_V2, rulesToPlist } from "@signer/domain/code-resources/rules.ts";
 import { createDict, type PlistValue } from "@signer/domain/plist/index.ts";
 import { serializeXmlPlist } from "@signer/domain/plist/xml-write.ts";
@@ -26,11 +27,11 @@ const escapeRegex = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/g
 
 /** Root-anchored exclusions that beat every rule (apple/bundlediskrep.cpp). */
 const isExcluded = (path: string, mainExecutable: RegExp): boolean =>
-  path === "_CodeSignature" ||
-  path.startsWith("_CodeSignature/") ||
-  path === "CodeResources" ||
-  path === "_MASReceipt" ||
-  path.startsWith("_MASReceipt/") ||
+  path === CODE_SIGNATURE_DIR ||
+  path.startsWith(`${CODE_SIGNATURE_DIR}/`) ||
+  path === CODE_RESOURCES ||
+  path === MAS_RECEIPT_DIR ||
+  path.startsWith(`${MAS_RECEIPT_DIR}/`) ||
   mainExecutable.test(path);
 
 /** Builds `_CodeSignature/CodeResources` exactly as codesign does for an iOS (flat) bundle. */

@@ -5,9 +5,10 @@ import type { EntitlementsInput, SigningMode } from "@signer/application/sign-bi
 import { type SignBundleProgress, signBundle } from "@signer/application/sign-bundle.ts";
 import { type CodeBundle, discoverBundles } from "@signer/domain/bundle/discover.ts";
 import { readFile } from "@signer/domain/bundle/tree.ts";
+import { type Overrides, resolveLimits, type SignerLimits, type SigningPolicy } from "@signer/domain/config.ts";
 import type { Hasher } from "@signer/domain/ports/hasher.ts";
 import { createHasher } from "@signer/infrastructure/hashing/index.ts";
-import { type Ipa, type IpaLimits, readIpa, writeIpa } from "@signer/infrastructure/ipa/ipa.ts";
+import { type Ipa, readIpa, writeIpa } from "@signer/infrastructure/ipa/ipa.ts";
 
 export type SignerProgress =
   | { readonly stage: "reading" }
@@ -24,9 +25,20 @@ export interface SignIpaOptions {
   readonly sideload?: Omit<ReconcileOptions, "now">;
   readonly onProgress?: (progress: SignerProgress) => void;
   readonly signal?: AbortSignal;
-  readonly limits?: IpaLimits;
-  /** Deflate level for the output (0 = store; fastest, fine for device installs). */
+  /** Page size, hash algorithms and CMS reservation (defaults follow Apple codesign 26). */
+  readonly policy?: Partial<SigningPolicy>;
+  /** Hostile-input limits for plists, Mach-O and the archive (defaults: DEFAULT_SIGNER_LIMITS). */
+  readonly limits?: Overrides<SignerLimits>;
+  /** Archive handling (defaults: store-only output, DEFAULT_DROPPED_MEMBERS, DEFAULT_STORED_EXTENSIONS). */
+  readonly archive?: ArchiveOptions;
+}
+
+export interface ArchiveOptions {
+  /** Deflate level for the output, 0–9 (default 0 = store; fastest, fine for device installs). */
   readonly compressionLevel?: number;
+  readonly storedExtensions?: RegExp;
+  readonly droppedMembers?: readonly RegExp[];
+  readonly entryDate?: Date;
 }
 
 export interface SignIpaDeps {
@@ -69,24 +81,27 @@ export const signIpa = async (
   });
 
   try {
+    const limits = resolveLimits(options.limits);
+    const archive = options.archive ?? {};
     options.onProgress?.({ stage: "reading" });
     const ipa = await readIpa(source, {
       logger,
+      limits: limits.ipa,
+      ...(archive.droppedMembers ? { droppedMembers: archive.droppedMembers } : {}),
       ...(options.signal ? { signal: options.signal } : {}),
-      ...(options.limits ? { limits: options.limits } : {}),
     });
 
     let reconciled: ReconcileResult | undefined;
     if (options.sideload) {
       options.onProgress?.({ stage: "reconciling" });
-      reconciled = reconcileForSideload(ipa.app, { ...options.sideload, now: clock.now() }, logger);
+      reconciled = reconcileForSideload(ipa.app, { limits, ...options.sideload, now: clock.now() }, logger);
     }
 
     // Without sideload changes, keep what each executable was signed with before.
     const preserved = new Map<string, EntitlementsInput>();
     if (!reconciled) {
-      for (const bundle of discoverBundles(ipa.app)) {
-        const entitlements = embeddedEntitlements(readFile(ipa.app, bundle.executable));
+      for (const bundle of discoverBundles(ipa.app, limits)) {
+        const entitlements = embeddedEntitlements(readFile(ipa.app, bundle.executable), limits);
         if (entitlements) preserved.set(bundle.path, entitlements);
       }
     }
@@ -106,6 +121,8 @@ export const signIpa = async (
       {
         configFor,
         onProgress: (event) => options.onProgress?.({ stage: "signing", ...event }),
+        limits,
+        ...(options.policy ? { policy: options.policy } : {}),
         ...(options.signal ? { signal: options.signal } : {}),
       },
       { hasher, logger, clock },
@@ -113,7 +130,12 @@ export const signIpa = async (
 
     options.signal?.throwIfAborted();
     options.onProgress?.({ stage: "writing" });
-    const stream = writeIpa(ipa, { logger, level: options.compressionLevel ?? 0 });
+    const stream = writeIpa(ipa, {
+      logger,
+      level: archive.compressionLevel ?? 0,
+      ...(archive.storedExtensions ? { storedExtensions: archive.storedExtensions } : {}),
+      ...(archive.entryDate ? { entryDate: archive.entryDate } : {}),
+    });
     const summary: SignIpaSummary = {
       appName: ipa.appName,
       bundles: signed.bundles,

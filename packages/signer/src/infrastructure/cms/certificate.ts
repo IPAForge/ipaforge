@@ -1,8 +1,6 @@
 import { ErrorCode, LoadstarError } from "@loadstar/kernel";
+import { OID_COMMON_NAME, OID_ORGANIZATIONAL_UNIT } from "@signer/infrastructure/cms/oids.ts";
 import * as pkijs from "pkijs";
-
-const OID_COMMON_NAME = "2.5.4.3";
-const OID_ORGANIZATIONAL_UNIT = "2.5.4.11";
 
 export const toArrayBuffer = (bytes: Uint8Array): ArrayBuffer =>
   bytes.buffer.slice(bytes.byteOffset, bytes.byteOffset + bytes.byteLength) as ArrayBuffer;

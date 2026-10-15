@@ -19,6 +19,14 @@ import {
   parseCertificate,
   signCodeDirectories,
 } from "@signer/infrastructure/cms/index.ts";
+import {
+  OID_APPLE_CDHASHES,
+  OID_APPLE_CDHASHES2,
+  OID_CONTENT_TYPE,
+  OID_MESSAGE_DIGEST,
+  OID_SHA256_WITH_RSA,
+  OID_SIGNING_TIME,
+} from "@signer/infrastructure/cms/oids.ts";
 import { createHasher } from "@signer/infrastructure/hashing/index.ts";
 import * as asn1js from "asn1js";
 import * as pkijs from "pkijs";
@@ -112,28 +120,22 @@ describe.each(["thin-min14", "thin-min10"])("CMS over the %s CodeDirectories", (
       expect(compareBytes(encodings[i - 1] as Uint8Array, encodings[i] as Uint8Array)).toBeLessThan(0);
     }
     expect(new Set(attributes.map((a) => a.type))).toEqual(
-      new Set([
-        "1.2.840.113549.1.9.3",
-        "1.2.840.113549.1.9.5",
-        "1.2.840.113549.1.9.4",
-        "1.2.840.113635.100.9.2",
-        "1.2.840.113635.100.9.1",
-      ]),
+      new Set([OID_CONTENT_TYPE, OID_SIGNING_TIME, OID_MESSAGE_DIGEST, OID_APPLE_CDHASHES2, OID_APPLE_CDHASHES]),
     );
 
-    const v2 = attributes.find((a) => a.type === "1.2.840.113635.100.9.2");
+    const v2 = attributes.find((a) => a.type === OID_APPLE_CDHASHES2);
     expect(v2?.values).toHaveLength(cds.length); // one entry per CD actually present
     const octets = (type: string): Uint8Array => {
       const value = attributes.find((a) => a.type === type)?.values[0] as asn1js.OctetString | undefined;
       if (!value) throw new Error(`missing attribute ${type}`);
       return new Uint8Array(value.valueBlock.valueHexView);
     };
-    const plist = utf8Decode(octets("1.2.840.113635.100.9.1"));
+    const plist = utf8Decode(octets(OID_APPLE_CDHASHES));
     expect(plist.match(/<data>/g)).toHaveLength(cds.length);
     if (cds.length === 1) expect(new TextEncoder().encode(plist)).toHaveLength(278);
 
     const expected = await hasher.digest("sha256", cds[0]?.bytes ?? new Uint8Array());
-    expect(toHex(octets("1.2.840.113549.1.9.4"))).toBe(toHex(expected));
+    expect(toHex(octets(OID_MESSAGE_DIGEST))).toBe(toHex(expected));
   });
 
   it("matches Apple's CMS shape: DER-sorted certificates and an explicit NULL for sha256WithRSA", async () => {
@@ -152,7 +154,7 @@ describe.each(["thin-min14", "thin-min10"])("CMS over the %s CodeDirectories", (
     }
 
     const algorithm = signed.signerInfos[0]?.signatureAlgorithm;
-    expect(algorithm?.algorithmId).toBe("1.2.840.113549.1.1.11");
+    expect(algorithm?.algorithmId).toBe(OID_SHA256_WITH_RSA);
     expect(algorithm?.algorithmParams).toBeInstanceOf(asn1js.Null);
     // still verifies after the parameter is made explicit
     const primary = cds[0]?.bytes ?? new Uint8Array();

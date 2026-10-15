@@ -2,8 +2,6 @@ import { ErrorCode, LoadstarError } from "@loadstar/kernel";
 import { LC_CODE_SIGNATURE, LINKEDIT_DATA_COMMAND_SIZE } from "@signer/domain/macho/constants.ts";
 import type { Segment, Slice } from "@signer/domain/macho/types.ts";
 
-/** codesign reserves this much for the CMS blob, whatever the identity (apple/CodeSigner.cpp). */
-export const CMS_RESERVATION = 18000;
 /** CodeDirectory header size Apple uses for estimates (the v0x20500 header). */
 const CD_ESTIMATE_HEADER = 96;
 
@@ -22,6 +20,8 @@ export interface SignatureEstimate {
   /** The non-CD blobs actually emitted: requirement set, XML and DER entitlements. */
   readonly pieces: readonly Uint8Array[];
   readonly codeDirectories: readonly CodeDirectoryEstimate[];
+  /** Bytes reserved for the CMS blob (codesign uses 18000; see SigningPolicy.cmsReservation). */
+  readonly cmsReservation: number;
 }
 
 /** Bytes the signature may cover before it: the old signature's start, or the whole slice. */
@@ -45,7 +45,7 @@ export const estimateSignatureSize = (slice: Slice, estimate: SignatureEstimate)
       (Math.ceil(extent / cd.pageSize) + cd.nSpecialSlots) * cd.hashSize,
     0,
   );
-  return alignUp(12 + 8 * count + pieces + cds + CMS_RESERVATION, 16);
+  return alignUp(12 + 8 * count + pieces + cds + estimate.cmsReservation, 16);
 };
 
 /** `guess_align` from cctools: trailing zero bits of vmaddr clamped to [lo, 15]. */

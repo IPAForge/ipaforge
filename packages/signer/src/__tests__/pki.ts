@@ -1,4 +1,17 @@
 // Test-only: tiny PKI (roots, intermediates, leaves) built with WebCrypto + pkijs.
+
+import {
+  OID_AIA_CA_ISSUERS,
+  OID_AUTHORITY_INFO_ACCESS,
+  OID_BASIC_CONSTRAINTS,
+  OID_COMMON_NAME,
+  OID_COUNTRY,
+  OID_EKU_CODE_SIGNING,
+  OID_EXTENDED_KEY_USAGE,
+  OID_KEY_USAGE,
+  OID_ORGANIZATION,
+  OID_ORGANIZATIONAL_UNIT,
+} from "@signer/infrastructure/cms/oids.ts";
 import * as asn1js from "asn1js";
 import * as pkijs from "pkijs";
 
@@ -25,10 +38,10 @@ export interface CertificateSpec {
 const name = (commonName: string, ou?: string): pkijs.RelativeDistinguishedNames =>
   new pkijs.RelativeDistinguishedNames({
     typesAndValues: [
-      ["2.5.4.6", "US"],
-      ["2.5.4.10", "Loadstar Test"],
-      ...(ou ? [["2.5.4.11", ou] as const] : []),
-      ["2.5.4.3", commonName],
+      [OID_COUNTRY, "US"],
+      [OID_ORGANIZATION, "Loadstar Test"],
+      ...(ou ? [[OID_ORGANIZATIONAL_UNIT, ou] as const] : []),
+      [OID_COMMON_NAME, commonName],
     ].map(([type, value]) => new pkijs.AttributeTypeAndValue({ type, value: new asn1js.Utf8String({ value }) })),
   });
 
@@ -55,22 +68,24 @@ export const createCertificate = async (spec: CertificateSpec): Promise<TestCert
 
   const keyUsageBits = spec.ca ? 0x06 : 0x80; // keyCertSign|cRLSign : digitalSignature
   cert.extensions = [
-    extension("2.5.29.19", true, new pkijs.BasicConstraints({ cA: spec.ca ?? false })),
+    extension(OID_BASIC_CONSTRAINTS, true, new pkijs.BasicConstraints({ cA: spec.ca ?? false })),
     extension(
-      "2.5.29.15",
+      OID_KEY_USAGE,
       true,
       new asn1js.BitString({ valueHex: new Uint8Array([keyUsageBits]).buffer, unusedBits: 1 }),
     ),
-    ...(spec.ca ? [] : [extension("2.5.29.37", true, new pkijs.ExtKeyUsage({ keyPurposes: ["1.3.6.1.5.5.7.3.3"] }))]),
+    ...(spec.ca
+      ? []
+      : [extension(OID_EXTENDED_KEY_USAGE, true, new pkijs.ExtKeyUsage({ keyPurposes: [OID_EKU_CODE_SIGNING] }))]),
     ...(spec.issuerUrl
       ? [
           extension(
-            "1.3.6.1.5.5.7.1.1",
+            OID_AUTHORITY_INFO_ACCESS,
             false,
             new pkijs.InfoAccess({
               accessDescriptions: [
                 new pkijs.AccessDescription({
-                  accessMethod: "1.3.6.1.5.5.7.48.2",
+                  accessMethod: OID_AIA_CA_ISSUERS,
                   accessLocation: new pkijs.GeneralName({ type: 6, value: spec.issuerUrl }),
                 }),
               ],

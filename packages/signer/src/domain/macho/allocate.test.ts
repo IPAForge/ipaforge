@@ -11,6 +11,7 @@ import {
   parseCodeDirectory,
   parseSuperBlob,
 } from "@signer/domain/blobs/index.ts";
+import { DEFAULT_SIGNING_POLICY } from "@signer/domain/config.ts";
 import { estimateSignatureSize, prepareImage } from "@signer/domain/macho/allocate.ts";
 import { assembleFat } from "@signer/domain/macho/fat.ts";
 import { parseMachO } from "@signer/domain/macho/parse.ts";
@@ -48,7 +49,11 @@ describe.each(signedTargets().map((t) => [t.label, t] as const))("allocation for
         nSpecialSlots: cd.nSpecialSlots,
       }));
 
-    const datasize = estimateSignatureSize(slice, { pieces, codeDirectories });
+    const datasize = estimateSignatureSize(slice, {
+      pieces,
+      codeDirectories,
+      cmsReservation: DEFAULT_SIGNING_POLICY.cmsReservation,
+    });
     expect(datasize).toBe(appleSig.datasize);
 
     const prepared = prepareImage(slice, datasize);

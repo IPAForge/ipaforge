@@ -1,11 +1,12 @@
 import { ErrorCode, equalBytes, fromBase64, LoadstarError, type Logger, silentLogger } from "@loadstar/kernel";
 import { APPLE_CERTIFICATES } from "@signer/infrastructure/cms/apple-certificates.ts";
 import { parseCertificate } from "@signer/infrastructure/cms/certificate.ts";
+import {
+  OID_AIA_CA_ISSUERS,
+  OID_AUTHORITY_INFO_ACCESS,
+  OID_BASIC_CONSTRAINTS,
+} from "@signer/infrastructure/cms/oids.ts";
 import * as pkijs from "pkijs";
-
-const OID_AUTHORITY_INFO_ACCESS = "1.3.6.1.5.5.7.1.1";
-const OID_CA_ISSUERS = "1.3.6.1.5.5.7.48.2";
-const OID_BASIC_CONSTRAINTS = "2.5.29.19";
 
 /** Downloads a certificate (DER or PEM) from an AIA `caIssuers` URL. Provided by the caller (HttpClient port). */
 export type IssuerFetcher = (url: string, signal?: AbortSignal) => Promise<Uint8Array>;
@@ -42,7 +43,7 @@ export const caIssuerUrls = (certificate: pkijs.Certificate): string[] => {
   const parsed = extension?.parsedValue;
   if (!(parsed instanceof pkijs.InfoAccess)) return [];
   return parsed.accessDescriptions
-    .filter((d) => d.accessMethod === OID_CA_ISSUERS && d.accessLocation.type === 6) // uniformResourceIdentifier
+    .filter((d) => d.accessMethod === OID_AIA_CA_ISSUERS && d.accessLocation.type === 6) // uniformResourceIdentifier
     .map((d) => String(d.accessLocation.value));
 };
 

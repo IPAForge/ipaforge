@@ -3,7 +3,9 @@ import { embeddedEntitlements } from "@signer/application/embedded-entitlements.
 import type { EntitlementsInput } from "@signer/application/sign-binary.ts";
 import { type CodeBundle, discoverBundles } from "@signer/domain/bundle/discover.ts";
 import { type IdentityRewrite, rewriteInfoPlist, rewriteNestedId } from "@signer/domain/bundle/info-plist.ts";
+import { INFO_PLIST } from "@signer/domain/bundle/layout.ts";
 import { type BundleTree, isWithin, joinPath, readFile, removePath, writeFile } from "@signer/domain/bundle/tree.ts";
+import { type Overrides, resolveLimits, type SignerLimits } from "@signer/domain/config.ts";
 import { createDict, type PlistDict, serializeXmlPlist } from "@signer/domain/plist/index.ts";
 import {
   describeProfile,
@@ -28,6 +30,8 @@ export interface ReconcileOptions {
   readonly now: Date;
   /** Remove extensions/watch apps without a profile instead of failing. */
   readonly pruneUnprovisioned?: boolean;
+  /** Parser limits (defaults: DEFAULT_SIGNER_LIMITS). */
+  readonly limits?: Overrides<SignerLimits>;
 }
 
 export interface BundleProvisioning {
@@ -88,7 +92,8 @@ const entitlementsFromProfile = (profile: ProvisioningProfile, bundleId: string)
  * entitlements + profile each executable must be signed with (signer-spec §8).
  */
 export const reconcileForSideload = (tree: BundleTree, options: ReconcileOptions, logger: Logger): ReconcileResult => {
-  const bundles = discoverBundles(tree);
+  const limits = resolveLimits(options.limits);
+  const bundles = discoverBundles(tree, limits);
   const main = bundles.at(-1) as CodeBundle;
   const rewrite: IdentityRewrite = {
     oldMainId: main.identifier,
@@ -117,17 +122,17 @@ export const reconcileForSideload = (tree: BundleTree, options: ReconcileOptions
       fail(ErrorCode.ProfileMismatch, `no provisioning profile for ${newId}`, { bundleId: newId, path: bundle.path });
     }
 
-    const profile = parseProvisioningProfile(raw as Uint8Array);
+    const profile = parseProvisioningProfile(raw as Uint8Array, limits.plist);
     validateProfile(profile, newId, options);
     const entitlements = entitlementsFromProfile(profile, newId);
 
-    const original = embeddedEntitlements(readFile(tree, bundle.executable))?.dict;
+    const original = embeddedEntitlements(readFile(tree, bundle.executable), limits)?.dict;
     const dropped = original ? Object.keys(original).filter((key) => !(key in entitlements)) : [];
     if (dropped.length)
       logger.warn("entitlements not granted by the profile were dropped", { bundleId: newId, keys: dropped });
 
     const info = rewriteInfoPlist(bundle.infoPlist, newId, rewrite);
-    writeFile(tree, joinPath(bundle.path, "Info.plist"), serializeXmlPlist(info));
+    writeFile(tree, joinPath(bundle.path, INFO_PLIST), serializeXmlPlist(info));
 
     provisioning.set(bundle.path, {
       entitlements: { bytes: serializeXmlPlist(entitlements), dict: entitlements },

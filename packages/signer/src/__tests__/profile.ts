@@ -3,6 +3,7 @@
 import type { TestIdentity } from "@signer/__tests__/identity.ts";
 import { createDict, type PlistValue, serializeXmlPlist } from "@signer/domain/plist/index.ts";
 import { toArrayBuffer } from "@signer/infrastructure/cms/certificate.ts";
+import { OID_DATA, OID_SIGNED_DATA } from "@signer/infrastructure/cms/oids.ts";
 import * as asn1js from "asn1js";
 import * as pkijs from "pkijs";
 
@@ -47,7 +48,7 @@ export const makeProfile = async (signer: TestIdentity, options: TestProfileOpti
   const signed = new pkijs.SignedData({
     version: 1,
     encapContentInfo: new pkijs.EncapsulatedContentInfo({
-      eContentType: "1.2.840.113549.1.7.1",
+      eContentType: OID_DATA,
       eContent: new asn1js.OctetString({ valueHex: toArrayBuffer(plist) }),
     }),
     certificates: [leaf],
@@ -60,8 +61,6 @@ export const makeProfile = async (signer: TestIdentity, options: TestProfileOpti
   });
   await signed.sign(signer.privateKey, 0, "SHA-256");
   return new Uint8Array(
-    new pkijs.ContentInfo({ contentType: "1.2.840.113549.1.7.2", content: signed.toSchema(true) })
-      .toSchema()
-      .toBER(false),
+    new pkijs.ContentInfo({ contentType: OID_SIGNED_DATA, content: signed.toSchema(true) }).toSchema().toBER(false),
   );
 };

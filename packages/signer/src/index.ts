@@ -23,6 +23,7 @@ export {
   signBundle,
 } from "@signer/application/sign-bundle.ts";
 export {
+  type ArchiveOptions,
   type SignedIpa,
   type SignerProgress,
   type SignIpaDeps,
@@ -34,6 +35,20 @@ export { defaultSignerDeps, resolveDeps, type SignerDeps } from "@signer/deps.ts
 export type { DesignatedRequirement } from "@signer/domain/blobs/index.ts";
 export { type CodeBundle, discoverBundles } from "@signer/domain/bundle/discover.ts";
 export type { BundleTree, TreeEntry } from "@signer/domain/bundle/tree.ts";
+export {
+  type ArchiveLimits,
+  DEFAULT_SIGNER_LIMITS,
+  DEFAULT_SIGNING_POLICY,
+  type HashPolicy,
+  type MachOLimits,
+  type Overrides,
+  type PageSizePolicy,
+  type PlistLimits,
+  resolveLimits,
+  resolvePolicy,
+  type SignerLimits,
+  type SigningPolicy,
+} from "@signer/domain/config.ts";
 export {
   createDict,
   isPlistDict,
@@ -56,6 +71,15 @@ export {
   resolveChain,
   type SigningIdentity,
 } from "@signer/infrastructure/cms/index.ts";
-export { createHasher } from "@signer/infrastructure/hashing/index.ts";
-export { DEFAULT_IPA_LIMITS, type Ipa, type IpaLimits, readIpa, writeIpa } from "@signer/infrastructure/ipa/ipa.ts";
+export { createHasher, type WebCryptoHasherOptions } from "@signer/infrastructure/hashing/index.ts";
+export {
+  DEFAULT_DROPPED_MEMBERS,
+  DEFAULT_ENTRY_DATE,
+  DEFAULT_STORED_EXTENSIONS,
+  type Ipa,
+  type ReadIpaOptions,
+  readIpa,
+  type WriteIpaOptions,
+  writeIpa,
+} from "@signer/infrastructure/ipa/ipa.ts";
 export { type ProvisioningProfile, parseProvisioningProfile } from "@signer/infrastructure/profile/profile.ts";

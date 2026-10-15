@@ -2,9 +2,12 @@
 // LoadstarError instead of exhausting memory or CPU.
 import { ErrorCode, LoadstarError, utf8Encode } from "@loadstar/kernel";
 import { readFixture } from "@signer/__tests__/fixtures.ts";
-import { findSegment, MAX_FAT_ARCHES, parseMachO } from "@signer/domain/macho/parse.ts";
+import { DEFAULT_SIGNER_LIMITS } from "@signer/domain/config.ts";
+import { findSegment, parseMachO } from "@signer/domain/macho/parse.ts";
 import { parseBinaryPlist } from "@signer/domain/plist/binary-parse.ts";
 import { describe, expect, it } from "vitest";
+
+const MAX_FAT_ARCHES = DEFAULT_SIGNER_LIMITS.machO.maxFatArches;
 
 const expectFastFailure = (run: () => unknown, code: string): void => {
   const started = performance.now();
@@ -74,7 +77,7 @@ describe("binary plist hardening", () => {
   });
 
   it("parses each shared object once (linear time on large but legal DAGs)", () => {
-    // 200 levels deep is over MAX_DEPTH; use 60 levels of [next, next]: 2^60 expanded nodes → rejected fast
+    // 200 levels deep is over the default maxDepth; use 60 levels of [next, next]: 2^60 expanded nodes → rejected fast
     const objects = Array.from({ length: 60 }, (_, i) => new Uint8Array([0xa2, i + 1, i + 1]));
     objects.push(new Uint8Array([0x51, 0x78]));
     expectFastFailure(() => parseBinaryPlist(bplist(objects)), ErrorCode.InvalidPlist);
@@ -82,7 +85,7 @@ describe("binary plist hardening", () => {
 
   it("keeps the depth limit when a cached subtree is reused deeper in the tree", () => {
     // root = [chainA, chainB]; chainA = 40 nested arrays ending in "x"; chainB = 40 nested arrays ending in a
-    // reference to chainA's head (already parsed and cached) → height ≈ 81 > MAX_DEPTH (64)
+    // reference to chainA's head (already parsed and cached) → height ≈ 81 > default maxDepth (64)
     const chain = (first: number, length: number, last: number) =>
       Array.from({ length }, (_, i) => new Uint8Array([0xa1, i === length - 1 ? last : first + i + 1]));
     const objects: Uint8Array[] = [new Uint8Array([0xa2, 1, 42])];
@@ -154,5 +157,22 @@ describe("Mach-O hardening", () => {
     if (!sig) throw new Error("fixture");
     new DataView(bytes.buffer).setUint32(sig.commandOffset + 12, 0x7fffffff, true); // datasize
     expectFastFailure(() => parseMachO(bytes), ErrorCode.InvalidMachO);
+  });
+});
+
+describe("limits are configurable", () => {
+  it("applies caller overrides for Mach-O and plists", () => {
+    const fat = readFixture("inputs", "fat");
+    expect(parseMachO(fat).slices).toHaveLength(2); // default allows it
+    expectFastFailure(() => parseMachO(fat, { maxFatArches: 1 }), ErrorCode.InvalidMachO);
+
+    const nested = bplist([new Uint8Array([0xa1, 1]), new Uint8Array([0xa1, 2]), new Uint8Array([0x51, 0x78])]);
+    expect(parseBinaryPlist(nested)).toEqual([["x"]]);
+    const strict = { ...DEFAULT_SIGNER_LIMITS.plist, maxDepth: 1 };
+    expectFastFailure(() => parseBinaryPlist(nested, strict), ErrorCode.InvalidPlist);
+    expectFastFailure(
+      () => parseBinaryPlist(nested, { ...DEFAULT_SIGNER_LIMITS.plist, maxExpandedNodes: 2 }),
+      ErrorCode.InvalidPlist,
+    );
   });
 });

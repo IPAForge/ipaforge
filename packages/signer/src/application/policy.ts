@@ -6,7 +6,10 @@ import {
   CS_EXECSEG_JIT,
   CS_EXECSEG_MAIN_BINARY,
   CS_EXECSEG_SKIP_LV,
+  CS_PAGE_SIZE_4K,
+  CS_PAGE_SIZE_16K,
 } from "@signer/domain/blobs/index.ts";
+import type { HashPolicy, PageSizePolicy } from "@signer/domain/config.ts";
 import { CPU_TYPE_ARM64, CPU_TYPE_ARM64_32, MH_EXECUTE, Platform } from "@signer/domain/macho/constants.ts";
 import type { Slice } from "@signer/domain/macho/types.ts";
 import { packVersion } from "@signer/domain/macho/version.ts";
@@ -17,7 +20,11 @@ import type { HashAlgorithm } from "@signer/domain/ports/hasher.ts";
  * SHA-1 + SHA-256 ("agile") when any slice targets an OS too old for SHA-256-only signatures;
  * the decision applies to the whole file (apple/machorep.cpp).
  */
-export const hashAlgorithmsFor = (slices: readonly Slice[]): readonly HashAlgorithm[] => {
+export const hashAlgorithmsFor = (
+  slices: readonly Slice[],
+  policy: HashPolicy = "codesign",
+): readonly HashAlgorithm[] => {
+  if (policy !== "codesign") return policy;
   const needsSha1 = slices.some((slice) => {
     const build = slice.buildVersion;
     if (!build) return false;
@@ -37,18 +44,19 @@ export const hashAlgorithmsFor = (slices: readonly Slice[]): readonly HashAlgori
 };
 
 /** Code page size codesign 26.x picks for a slice (apple/machorep_120.cpp). */
-export const pageSizeFor = (slice: Slice): number => {
-  if (slice.cputype !== CPU_TYPE_ARM64 && slice.cputype !== CPU_TYPE_ARM64_32) return 4096;
+export const pageSizeFor = (slice: Slice, policy: PageSizePolicy = "codesign"): number => {
+  if (policy !== "codesign") return policy;
+  if (slice.cputype !== CPU_TYPE_ARM64 && slice.cputype !== CPU_TYPE_ARM64_32) return CS_PAGE_SIZE_4K;
   const build = slice.buildVersion;
   switch (build?.platform) {
     case Platform.TvOS:
-      return 4096;
+      return CS_PAGE_SIZE_4K;
     case Platform.IOS:
-      return build.minOS < packVersion(16) ? 4096 : 16384;
+      return build.minOS < packVersion(16) ? CS_PAGE_SIZE_4K : CS_PAGE_SIZE_16K;
     case Platform.WatchOS:
-      return build.minOS < packVersion(9) ? 4096 : 16384;
+      return build.minOS < packVersion(9) ? CS_PAGE_SIZE_4K : CS_PAGE_SIZE_16K;
     default:
-      return 16384;
+      return CS_PAGE_SIZE_16K;
   }
 };
 

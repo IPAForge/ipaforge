@@ -29,6 +29,7 @@
 - One bounded context per package. Each package exposes its public API only from `src/index.ts`, and deep imports across packages are forbidden.
 - `domain/` holds types, value objects and ports. `application/` holds use cases. `infrastructure/` holds library-backed implementations that are still platform-free.
 - Platform adapters (`node:*`, `electron`, WebUSB, IndexedDB) live only in `apps/*`.
+- No magic values. Format constants (magics, slots, OIDs, bundle paths, file modes) live in named constants modules (`*constants.ts`, `oids.ts`, `layout.ts`). Tunables (limits, page size, hash algorithms, reservations, archive settings) live in `domain/config.ts` with exported defaults, and callers can override them.
 - ESM only, TypeScript `strict` plus `exactOptionalPropertyTypes`, `noUncheckedIndexedAccess` and `erasableSyntaxOnly`. That means no enums, namespaces or constructor parameter properties, so every file runs under Node's built-in type stripping (scripts run with plain `node`).
 
 ## Error Handling
