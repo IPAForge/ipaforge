@@ -21,6 +21,34 @@ An iPhone only runs code that carries a valid signature from a certificate Apple
 
 ## Using it
 
+### Before any Apple call
+
+`inspectIpa` reads the archive without changing it and fails early, before any App ID is spent:
+
+- `signer.invalid_bundle` when there is no usable main app;
+- `signer.encrypted_binary` when any Mach-O in the app is FairPlay-encrypted;
+- `signer.extension_prefix` when an extension or watch app ID is not under the app's ID.
+
+`planSideloadIdentity` turns the inspection into the identities to register for a team.
+
+```ts
+import { inspectIpa, planSideloadIdentity } from "@loadstar/signer";
+
+const inspection = await inspectIpa(source, { signal });
+// inspection.app: { path, identifier, name, version?, minimumOSVersion? }
+// inspection.nested: every .appex (PlugIns/, Extensions/, Watch/*.app/PlugIns/) and watch app
+// inspection.appGroups / keychainAccessGroups: from the main executable's entitlements
+// inspection.altAppGroups: from the main app's Info.plist
+
+const plan = planSideloadIdentity(inspection, "ABCDE12345");
+// plan.newMainBundleId: "<original ID>.ABCDE12345"
+// plan.bundles: [{ identifier, name }, …], main app first (the shape the developer services API provisions)
+// plan.appGroup: "group.<newMainBundleId>" when the app declares any app group
+// plan.appGroups: every declared group → plan.appGroup (pass as `sideload.appGroups`)
+```
+
+### Signing
+
 ```ts
 import { bytesFileSource } from "@loadstar/kernel";
 import { resolveChain, signIpa } from "@loadstar/signer";
@@ -117,7 +145,7 @@ and `limits`. `createHasher({ batchSize })` controls how many pages WebCrypto ha
 Format constants are not options: blob magics, slot numbers and flags are in `domain/blobs/constants.ts`,
 OIDs are in `infrastructure/cms/oids.ts` and `infrastructure/pkcs12/constants.ts`, and bundle paths and file modes are in `domain/bundle/layout.ts`.
 
-Lower-level building blocks are also exported: `signBundle`, `signBinary`, `reconcileForSideload`, `readIpa`/`writeIpa`, `parseProvisioningProfile`, and the plist API (`parsePlist`, `serializeXmlPlist`).
+Lower-level building blocks are also exported: `signBundle`, `signBinary`, `reconcileForSideload`, `readIpa`/`writeIpa`, `parseProvisioningProfile`, and the plist API (`parsePlist`, `serializeXmlPlist`). `inspectIpa` takes the same `limits`.
 
 ## How we know it's right
 
@@ -143,6 +171,8 @@ The golden inputs and Apple outputs live in `fixtures/signer/` ([README](../fixt
 | Sign innermost bundles first, and write profiles before sealing | A parent's `CodeResources` hashes its children's *final* bytes |
 | Each extension gets its own profile and entitlements | Otherwise installd reports "invalid entitlements" or "no valid provisioning profile" |
 | Extension IDs must start with the app's ID | installd rejects them otherwise (`signer.extension_prefix`) |
+| The app's `ALTAppGroups` is written into every extension and watch app | Extensions look up the shared app group at runtime |
+| Concrete keychain groups are kept under the new team | When a profile grants `<TEAMID>.*`, the executable's own `keychain-access-groups` are re-prefixed with the team and signed if the profile allows them; anything dropped is logged |
 | Team ID is written into every binary | Mixed or missing team IDs crash the app at launch |
 | Encrypted (App Store) binaries are refused | FairPlay-encrypted apps cannot be re-signed; you need a decrypted IPA |
 | 16 KB code pages for iOS 16+, SHA-1 + SHA-256 below iOS 11 | Matches Apple `codesign` 26 |

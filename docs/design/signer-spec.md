@@ -744,6 +744,9 @@ rules, which do not omit `.DS_Store`, `Info.plist` or `PkgInfo`.
     `rewrittenTaskSchedulerIdentifiers`)
   - `NSExtension.NSExtensionFileProviderDocumentGroup` → the matching new app group (SideStore `prepare`)
 - **Optional**: remove `DTXcode`/`DTXcodeBuild`, and `UISupportedDevices` (zsign option).
+- **Loadstar**: `inspectIpa` applies the prefix rule to every `.appex` (`PlugIns/`, `Extensions/`,
+  `Watch/*.app/PlugIns/`) and watch app before any Apple call; `planSideloadIdentity` derives
+  `<orig>.<TEAMID>`, the nested IDs and `group.<newMainBundleID>` from the inspection.
 
 ### 8.2 Entitlements
 
@@ -768,8 +771,14 @@ rules, which do not omit `.DS_Store`, `Info.plist` or `PkgInfo`.
 - **App groups** (AltStore/SideStore app-group handling):
   - register `group.<newMainBundleID>`, enable the `APG3427HIY` feature, and assign it to every App ID
   - then download profiles (they then contain the group)
-  - SideStore/AltStore also put `ALTAppGroups` in Info.plist
+  - SideStore/AltStore also put `ALTAppGroups` in Info.plist; Loadstar writes the app's rewritten list
+    into every extension and watch app too, even when they had no such key
   - code that hard-codes the old group ID will not work; that cannot be fixed by signing
+- **Keychain groups (Loadstar)**: when the profile grants a wildcard (`TEAMID.*`) and the executable's
+  original entitlements list concrete `keychain-access-groups`, Loadstar signs with those groups instead:
+  the old team prefix (from `com.apple.developer.team-identifier` or the `application-identifier`
+  prefix) or a literal `$(AppIdentifierPrefix)` becomes `TEAMID.`, and only groups the profile's patterns
+  allow are kept (dropped ones are logged). If none survive, the profile's value is used.
 - **Team ID**: profile `TeamIdentifier[0]` == leaf OU == CD teamID == the `application-identifier`
   prefix.
 

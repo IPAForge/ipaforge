@@ -1,5 +1,7 @@
 import { ErrorCode, equalBytes, isPlistDict, LoadstarError, type PlistDict, parseXmlPlist } from "@loadstar/kernel";
 import { DEFAULT_SIGNER_LIMITS, type PlistLimits } from "@signer/domain/config.ts";
+import { APPLICATION_IDENTIFIER } from "@signer/domain/entitlements/names.ts";
+import { matchesPattern } from "@signer/domain/entitlements/pattern.ts";
 import { toArrayBuffer } from "@signer/infrastructure/cms/certificate.ts";
 import * as asn1js from "asn1js";
 import * as pkijs from "pkijs";
@@ -76,7 +78,7 @@ export const parseProvisioningProfile = (
   if (!parsed.success) throw invalid(`provisioning profile is missing fields: ${z.prettifyError(parsed.error)}`);
 
   const p = parsed.data;
-  const applicationIdentifier = p.Entitlements["application-identifier"];
+  const applicationIdentifier = p.Entitlements[APPLICATION_IDENTIFIER];
   if (typeof applicationIdentifier !== "string") throw invalid("profile entitlements lack application-identifier");
   return {
     name: p.Name,
@@ -94,11 +96,8 @@ export const parseProvisioningProfile = (
 };
 
 /** Does the profile's application-identifier (exact or `TEAM.*` / `TEAM.prefix.*`) cover `bundleId`? */
-export const profileCoversBundle = (profile: ProvisioningProfile, bundleId: string): boolean => {
-  const wanted = `${profile.teamId}.${bundleId}`;
-  const pattern = profile.applicationIdentifier;
-  return pattern === wanted || (pattern.endsWith("*") && wanted.startsWith(pattern.slice(0, -1)));
-};
+export const profileCoversBundle = (profile: ProvisioningProfile, bundleId: string): boolean =>
+  matchesPattern(profile.applicationIdentifier, `${profile.teamId}.${bundleId}`);
 
 export const profileContainsCertificate = (profile: ProvisioningProfile, certificate: Uint8Array): boolean =>
   profile.developerCertificates.some((candidate) => equalBytes(candidate, certificate));
