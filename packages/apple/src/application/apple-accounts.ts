@@ -3,6 +3,7 @@
 import { type AccountStore, createAccountStore } from "@apple/application/accounts.ts";
 import { type AnisetteService, createAnisetteService } from "@apple/application/anisette.ts";
 import { type AppTokenService, createAppTokenService, XCODE_APP } from "@apple/application/app-token.ts";
+import { createDeveloperServices, type DeveloperServices } from "@apple/application/developer.ts";
 import { type PreflightReport, runPreflight } from "@apple/application/preflight.ts";
 import { createSignInService, type SignInInput, type SignInResult } from "@apple/application/sign-in.ts";
 import { type AppleDepsInput, resolveAppleDeps } from "@apple/deps.ts";
@@ -23,6 +24,8 @@ export interface AppleAccounts {
    * saved password (usually without 2FA, since this machine is already known), otherwise asks for the password.
    */
   resume(id: string): Promise<ResumeResult>;
+  /** Developer services (teams, certificates, App IDs, profiles) for a signed-in session. */
+  developer(session: AppleSession): DeveloperServices;
   /** Records that Apple blocked this account's profiles on a device, so the UI can offer another account. */
   markBanned(id: string, udid: string): Promise<void>;
 }
@@ -70,6 +73,7 @@ export const createAppleAccounts = (input: AppleDepsInput, options: AppleAccount
     signIn: (signInInput) => signInService.signIn(signInInput),
     appToken: (session, app) => tokens.appToken(session, app),
     resume,
+    developer: (session) => createDeveloperServices(deps, anisette, tokens, session),
     markBanned: async (id, udid) => {
       const account = (await accounts.list()).find((candidate) => candidate.id === id);
       await accounts.update(id, {

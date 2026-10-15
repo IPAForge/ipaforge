@@ -134,7 +134,13 @@ Summary of `references/failure-catalogue.md`:
 - **Result:** sign-in with device 2FA and the `com.apple.gs.xcode.auth` token (valid one year) work end to end.
 - **SMS 2FA is refused** (`HTTP 403` on `/auth`) for an SMS-only account; another current client gets the same 403. Reported as `apple.sms_unavailable`; not worked around.
 
-## 8. Web platform constraints
+## 8. Developer services (2026-10-15)
+
+- The Xcode developer API (`developerservices2…/QH65B2/[ios/]<action>.action?clientId=XABBG36SBA`) works with the `com.apple.gs.xcode.auth` token in `X-Apple-GS-Token`, the adsid in `X-Apple-I-Identity-Id`, and fresh anisette `cpd` headers. Verified with a free account: `listTeams`, `listDevices`, `listAllDevelopmentCerts`, `listAppIds` (`maxQuantity` 10, `availableQuantity`, per-App-ID `expirationDate`).
+- Certificates carry the creating tool's `machineName` (e.g. another sideloading tool, Xcode on a Mac), which is what the revoke picker shows.
+- Some responses arrive compressed even though the request did not ask for it; the client decompresses gzip/deflate/br.
+
+## 9. Web platform constraints
 
 > **Not applicable since 2026-10-15:** the web version was dropped and Loadstar is desktop-only. Kept for the record.
 

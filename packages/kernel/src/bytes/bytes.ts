@@ -33,3 +33,8 @@ export const utf8Encode = (text: string): Uint8Array => encoder.encode(text);
 
 /** Strict UTF-8 decode; throws on invalid sequences. */
 export const utf8Decode = (bytes: Uint8Array): string => decoder.decode(bytes);
+
+const lenientDecoder = new TextDecoder("utf-8", { fatal: false });
+
+/** Decodes for display/diagnostics: invalid or truncated sequences become U+FFFD instead of throwing. */
+export const utf8DecodeLenient = (bytes: Uint8Array): string => lenientDecoder.decode(bytes);

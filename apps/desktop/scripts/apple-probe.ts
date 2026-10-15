@@ -2,23 +2,43 @@
 //
 //   pnpm --filter @loadstar/desktop apple-probe preflight   # Apple reachable? clock right? anisette servers healthy?
 //   pnpm --filter @loadstar/desktop apple-probe anisette    # which server works (header names only, never values)
-//   pnpm --filter @loadstar/desktop apple-probe signin      # interactive: one or more Apple IDs, 2FA, app token,
-//                                                           # then switching between the saved accounts
+//   pnpm --filter @loadstar/desktop apple-probe developer   # interactive sign-in, then READ-ONLY: teams, devices,
+//                                                           # certificates (who made them), App IDs and quota
+//   pnpm --filter @loadstar/desktop apple-probe signin      # sign in one or more Apple IDs (2FA, app token), saved
+//   pnpm --filter @loadstar/desktop apple-probe accounts    # check every saved account's session
+//   pnpm --filter @loadstar/desktop apple-probe forget      # delete saved accounts, sessions and passwords
 //
-// Only the anisette (machine) identity is kept on disk, in ~/.loadstar/dev/anisette.json (0600); accounts, sessions
-// and passwords live in memory for this run only.
+// Saved between runs (so you do not sign in every time):
+// - the anisette (machine) identity: ~/.loadstar/dev/anisette.json (0600);
+// - accounts and sessions, and a password only if you agree: ~/.loadstar/dev/secrets.enc, AES-256-GCM encrypted
+//   with a key in your macOS login keychain ("dev.loadstar.probe"). Elsewhere: kept in memory only.
+// `apple-probe forget` deletes the saved accounts.
 // Passwords are read without echo and never printed or logged; tokens and keys are never printed.
+import { rm } from "node:fs/promises";
 import { homedir } from "node:os";
 import { join } from "node:path";
 import { createInterface } from "node:readline/promises";
+import { createEncryptedFileSecretStore, macKeychainKey } from "@desktop/main/adapters/encrypted-file-secret-store.ts";
 import { createFileSecretStore, createRoutedSecretStore } from "@desktop/main/adapters/file-secret-store.ts";
 import { createNodeHttpClient } from "@desktop/main/adapters/http-client.ts";
 import { createMemorySecretStore } from "@desktop/main/adapters/memory-secret-store.ts";
 import { createWebSocketFactory } from "@desktop/main/adapters/web-socket.ts";
-import { createAppleAccounts, type SignInResult, type TwoFactorChallenge, type TwoFactorMethod } from "@loadstar/apple";
+import {
+  type AppleSession,
+  createAppleAccounts,
+  type SignInResult,
+  type TwoFactorChallenge,
+  type TwoFactorMethod,
+} from "@loadstar/apple";
 import { createLogger, LoadstarError, parseLogLevel } from "@loadstar/kernel";
 
 const command = process.argv[2] ?? "signin";
+const DEV_DIR = join(homedir(), ".loadstar", "dev");
+const SECRETS_FILE = join(DEV_DIR, "secrets.enc");
+const persistAccounts = process.platform === "darwin";
+const accountStore = persistAccounts
+  ? createEncryptedFileSecretStore(SECRETS_FILE, macKeychainKey("dev.loadstar.probe"))
+  : createMemorySecretStore();
 const logger = createLogger({
   level: parseLogLevel(process.env.LOG_LEVEL, "warn"),
   sink: (record) => console.error(`  [${record.level}] ${record.scope ?? ""} ${record.msg}`, record.fields),
@@ -27,12 +47,8 @@ const apple = createAppleAccounts({
   http: createNodeHttpClient(),
   webSocket: createWebSocketFactory(),
   // Like a real installation, this computer keeps one anisette (machine) identity across runs; Apple treats a new
-  // machine on every attempt as suspicious. Only that identity is written to disk; accounts stay in memory.
-  secrets: createRoutedSecretStore(
-    ["anisette/"],
-    createFileSecretStore(join(homedir(), ".loadstar", "dev", "anisette.json")),
-    createMemorySecretStore(),
-  ),
+  // machine on every attempt as suspicious.
+  secrets: createRoutedSecretStore(["anisette/"], createFileSecretStore(join(DEV_DIR, "anisette.json")), accountStore),
   logger,
 });
 
@@ -91,24 +107,75 @@ const twoFactor = async (challenge: TwoFactorChallenge) => {
   }
 };
 
-const signInOnce = async () => {
-  const appleId = (await ask("\nApple ID (email or phone): ")).trim();
-  const password = await askHidden("Password (hidden): ");
+/** A new interactive sign-in; the session is saved, the password only if the user agrees. */
+const newSignIn = async (presetAppleId?: string): Promise<AppleSession> => {
+  const appleId = presetAppleId ?? (await ask("\nApple ID (email or phone): ")).trim();
+  const password = await askHidden(`Password for ${appleId} (hidden): `);
   const started = Date.now();
-  let result: SignInResult = await apple.signIn({ appleId, password });
+  const result: SignInResult = await apple.signIn({ appleId, password });
   const session = result.kind === "signed_in" ? result.session : await twoFactor(result.challenge);
-  result = { kind: "signed_in", session };
   const remember =
-    (await ask("  Remember the password for this run (to test re-sign-in)? [y/N] ")).trim().toLowerCase() === "y";
+    persistAccounts &&
+    (await ask("  Save the password in your Keychain-protected store too? [y/N] ")).trim().toLowerCase() === "y";
   const account = await apple.accounts.save(session, remember ? { rememberPassword: password } : {});
-  const token = await apple.appToken(session);
   console.log(
-    `  ✓ signed in as ${account.displayName ?? "(no name)"} [adsid ${mask(session.adsid)}] in ${Date.now() - started} ms`,
+    `  ✓ signed in as ${account.displayName ?? "(no name)"} [adsid ${mask(session.adsid)}] in ${Date.now() - started} ms` +
+      (persistAccounts ? " — session saved" : ""),
   );
-  console.log(`  ✓ developer-services token received, valid until ${token.expiresAt.toISOString()}`);
+  return session;
+};
+
+/** Offers saved accounts first (re-using their sessions), otherwise signs in. */
+const obtainSession = async (): Promise<AppleSession> => {
+  const saved = await apple.accounts.list();
+  if (saved.length > 0) {
+    console.log("\nSaved accounts:");
+    for (const [i, account] of saved.entries())
+      console.log(`  ${i + 1}. ${account.appleId} (${account.displayName ?? "?"})`);
+    console.log(`  ${saved.length + 1}. another Apple ID`);
+    const picked = saved[Number((await ask(`Choose [1-${saved.length + 1}] (default 1): `)) || "1") - 1];
+    if (picked) {
+      const resumed = await apple.resume(picked.id);
+      if (resumed.kind === "signed_in") {
+        console.log(`  ✓ using the saved session for ${picked.appleId}`);
+        return resumed.session;
+      }
+      if (resumed.kind === "two_factor") return twoFactor(resumed.challenge);
+      console.log("  The saved session expired; please sign in again.");
+      return newSignIn(picked.appleId);
+    }
+  }
+  return newSignIn();
 };
 
 const commands: Record<string, () => Promise<void>> = {
+  developer: async () => {
+    console.log("Read-only: lists teams, devices, certificates and App IDs. Nothing is created or changed.");
+    const developer = apple.developer(await obtainSession());
+    for (const team of await developer.teams()) {
+      console.log(
+        `\nTeam ${team.name} [${team.id}] ${team.isFree ? "(free)" : ""} ${team.type ?? ""} ${team.status ?? ""}`,
+      );
+      const devices = await developer.devices(team);
+      console.log(`  devices: ${devices.length}${devices.map((d) => `\n    - ${d.name ?? "?"}`).join("")}`);
+      const certificates = await developer.certificates(team);
+      console.log(`  iOS development certificates: ${certificates.length}`);
+      for (const certificate of certificates) {
+        console.log(
+          `    - made by "${certificate.machineName ?? certificate.name ?? "?"}", expires ${certificate.expiresAt?.toISOString().slice(0, 10) ?? "?"}`,
+        );
+      }
+      const { appIds, quota } = await developer.appIds(team);
+      console.log(
+        `  App IDs: ${appIds.length}, available now: ${quota.available}${quota.max ? ` of ${quota.max}` : ""}`,
+      );
+      for (const appId of appIds) {
+        console.log(
+          `    - ${appId.identifier}${appId.expiresAt ? ` (frees ${appId.expiresAt.toISOString().slice(0, 10)})` : ""}`,
+        );
+      }
+    }
+  },
   preflight: async () => {
     const report = await apple.preflight();
     console.log(`Apple reachable: ${report.apple.ok}${report.apple.error ? ` (${report.apple.error})` : ""}`);
@@ -128,29 +195,39 @@ const commands: Record<string, () => Promise<void>> = {
     console.log(`Client identity: ${data.identity.clientInfo}`);
   },
   signin: async () => {
-    console.log("Sign in with one or more Apple IDs. Accounts are not saved to disk.");
     for (;;) {
       try {
-        await signInOnce();
+        const session = await newSignIn();
+        const token = await apple.appToken(session);
+        console.log(`  ✓ developer-services token received, valid until ${token.expiresAt.toISOString()}`);
       } catch (error) {
         console.log(`  ✗ ${describe(error)}`);
       }
       if ((await ask("\nAdd another Apple ID? [y/N] ")).trim().toLowerCase() !== "y") break;
     }
+    await commands.accounts?.();
+  },
+  accounts: async () => {
     const accounts = await apple.accounts.list();
-    if (accounts.length === 0) return;
-    console.log("\nSaved accounts (this run):");
-    for (const account of accounts) console.log(`  - ${account.appleId} (${account.displayName ?? "?"})`);
-    console.log("\nSwitching between them (re-using each saved session):");
+    if (accounts.length === 0) {
+      console.log("No saved accounts.");
+      return;
+    }
+    console.log("\nSaved accounts — checking each saved session:");
     for (const account of accounts) {
       try {
         await apple.accounts.switchTo(account.id);
         const resumed = await apple.resume(account.id);
-        console.log(`  ${account.appleId}: ${resumed.kind === "signed_in" ? "✓ session still valid" : resumed.kind}`);
+        console.log(`  ${account.appleId}: ${resumed.kind === "signed_in" ? "✓ session valid" : resumed.kind}`);
       } catch (error) {
         console.log(`  ${account.appleId}: ✗ ${describe(error)}`);
       }
     }
+  },
+  forget: async () => {
+    for (const account of await apple.accounts.list()) await apple.accounts.remove(account.id);
+    await rm(SECRETS_FILE, { force: true });
+    console.log("Saved accounts, sessions and passwords deleted (the machine identity is kept).");
   },
 };
 

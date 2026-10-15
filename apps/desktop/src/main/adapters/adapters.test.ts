@@ -176,3 +176,45 @@ describe("file secret store", () => {
     }
   });
 });
+
+describe("HTTP client decompression", () => {
+  it("decompresses gzip bodies the server sends", async () => {
+    const { gzipSync } = await import("node:zlib");
+    const { createNodeHttpClient } = await import("@desktop/main/adapters/http-client.ts");
+    const { createServer: createHttpServer } = await import("node:http");
+    const server = createHttpServer((_request, response) => {
+      response.writeHead(200, { "Content-Encoding": "gzip", "Content-Type": "text/x-xml-plist" });
+      response.end(gzipSync("<plist><string>ok</string></plist>"));
+    });
+    servers.push(server);
+    await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
+    const address = server.address();
+    if (!address || typeof address === "string") throw new Error("no port");
+    const response = await createNodeHttpClient().request({ method: "GET", url: `http://127.0.0.1:${address.port}/` });
+    const chunks: Uint8Array[] = [];
+    for await (const chunk of response.body) chunks.push(chunk);
+    expect(utf8Decode(Buffer.concat(chunks))).toBe("<plist><string>ok</string></plist>");
+    expect(response.headers["content-encoding"]).toBeUndefined();
+  });
+});
+
+describe("encrypted file secret store", () => {
+  it("round-trips values through an AES-GCM file that does not contain them in clear", async () => {
+    const { createEncryptedFileSecretStore } = await import("@desktop/main/adapters/encrypted-file-secret-store.ts");
+    const { readFile } = await import("node:fs/promises");
+    const dir = await mkdtemp(join(tmpdir(), "loadstar-enc-"));
+    try {
+      const key = crypto.getRandomValues(new Uint8Array(32));
+      const path = join(dir, "secrets.enc");
+      const store = createEncryptedFileSecretStore(path, async () => key);
+      await store.set("apple/session/x", utf8Encode("session-token-value"));
+      expect(new TextDecoder().decode(await readFile(path))).not.toContain("session-token-value");
+      const reopened = createEncryptedFileSecretStore(path, async () => key);
+      expect(utf8Decode((await reopened.get("apple/session/x")) ?? new Uint8Array())).toBe("session-token-value");
+      const wrongKey = createEncryptedFileSecretStore(path, async () => crypto.getRandomValues(new Uint8Array(32)));
+      await expect(wrongKey.get("apple/session/x")).rejects.toThrow();
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+});

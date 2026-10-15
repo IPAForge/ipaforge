@@ -10,7 +10,7 @@ import {
   LoadstarError,
   readBody,
   retry,
-  utf8Decode,
+  utf8DecodeLenient,
 } from "@loadstar/kernel";
 
 export interface FetchOptions {
@@ -73,7 +73,7 @@ export const fetchApple = async (deps: AppleDeps, url: string, options: FetchOpt
       if (isTransientHttpStatus(response.status)) throw new TransientHttpError(response.status);
       throw new LoadstarError(httpErrorCode(response.status), {
         message: `${options.method ?? "GET"} ${new URL(url).host}${new URL(url).pathname} → HTTP ${response.status}`,
-        data: { status: response.status, host: new URL(url).host, body: utf8Decode(body.subarray(0, 512)) },
+        data: { status: response.status, host: new URL(url).host, body: utf8DecodeLenient(body.subarray(0, 512)) },
       });
     }
     const date = headerValue(response.headers, "date");

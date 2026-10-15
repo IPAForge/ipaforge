@@ -45,6 +45,16 @@ export const ErrorCode = {
   AppleProtocolError: "apple.protocol_error",
   SessionExpired: "apple.session_expired",
   AccountNotFound: "apple.account_not_found",
+  NotEligibleForDevelopment: "apple.not_eligible",
+  EmailUnverified: "apple.email_unverified",
+  TeamAgreementRequired: "apple.team_agreement",
+  NoTeams: "apple.no_teams",
+  DeviceLimit: "apple.device_limit",
+  AppIdUnavailable: "apple.app_id_unavailable",
+  InvalidAppIdName: "apple.invalid_app_id_name",
+  CertificateNotRevocable: "apple.certificate_not_revocable",
+  NoDevicesForProfile: "apple.no_devices_for_profile",
+  DeveloperRequestFailed: "apple.developer_request_failed",
 
   // catalog
   ReleaseSourceGone: "catalog.source_gone",

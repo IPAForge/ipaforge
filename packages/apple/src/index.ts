@@ -8,6 +8,14 @@ export {
   createAppleAccounts,
   type ResumeResult,
 } from "@apple/application/apple-accounts.ts";
+export type {
+  BundleRequest,
+  CertificateIdentity,
+  DeveloperServices,
+  EnsureCertificateOptions,
+  ProvisionRequest,
+  ProvisionResult,
+} from "@apple/application/developer.ts";
 export { assertPreflight, type PreflightReport } from "@apple/application/preflight.ts";
 export type { SignInInput, SignInResult } from "@apple/application/sign-in.ts";
 export type {
@@ -26,6 +34,21 @@ export {
   DEFAULT_APPLE_CONFIG,
   resolveAppleConfig,
 } from "@apple/domain/config.ts";
+export {
+  APP_GROUPS_FEATURE,
+  type AppGroup,
+  type AppId,
+  type AppIdPlan,
+  type AppIdQuota,
+  DeveloperCode,
+  type DevelopmentCertificate,
+  developerErrorCode,
+  normalizeAppIdName,
+  type ProvisioningProfile,
+  planAppIds,
+  type RegisteredDevice,
+  type Team,
+} from "@apple/domain/developer.ts";
 export { GsaCode, gsaErrorCode } from "@apple/domain/gsa-status.ts";
 export type { WebSocketFactory, WebSocketLike } from "@apple/domain/ports/web-socket.ts";
 export { type AppleSession, type AppToken, normalizeAppleId } from "@apple/domain/session.ts";

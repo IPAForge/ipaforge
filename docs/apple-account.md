@@ -34,6 +34,20 @@ Several Apple IDs can be saved and switched with one click. This is also the fix
 - Sessions are reused while Apple accepts them.
 - Passwords are kept only if you choose, and only in the OS keychain.
 
+## Developer services
+
+After sign-in, Loadstar uses the same developer API Xcode uses, through `apple.developer(session)`:
+
+| Task | What Loadstar does |
+|---|---|
+| **Team** | Lists your teams, marked free or paid. Your choice is remembered per Apple ID. |
+| **Device** | Registers your iPhone or iPad on the team if it isn't registered yet. |
+| **Certificate** | Reuses the certificate Loadstar saved earlier while Apple still lists it, and creates one (RSA-2048) only when needed. At Apple's limit you get a picker that shows **which tool made each certificate** and when it expires. Revoking one stops every app signed with it, on every device. |
+| **App IDs** | Free accounts get 10 every 7 days. Loadstar **budgets before creating anything**: it reuses existing App IDs, counts only new ones, and tells you when the next slot frees up. (LiveContainer + SideStore needs 5.) Names are cleaned to ASCII letters and digits. |
+| **App groups, profiles** | Registers and assigns the app group, then downloads one profile per app and extension. |
+
+`provisionApp` does all of this in one call and returns the profiles the signer needs.
+
 ## Errors you may see
 
 | Code | Meaning | What to do |
@@ -47,13 +61,24 @@ Several Apple IDs can be saved and switched with one click. This is also the fix
 | `apple.sms_unavailable` | Apple refused or could not send the SMS | Use a trusted device or another Apple ID |
 | `apple.clock_skew` | The computer's clock is wrong | Turn on automatic date and time |
 | `apple.rate_limited` / `apple.service_unavailable` | Apple is busy (429/503) | Loadstar retries automatically; try again later |
+| `apple.not_eligible` (1102, HTTP 403) | This Apple ID cannot be used for development (age, region, terms) | Use another Apple ID |
+| `apple.email_unverified` (2160) | The Apple ID's email is not verified | Verify it at account.apple.com |
+| `apple.team_agreement` (4550) | The chosen team needs the latest agreement accepted | Pick your personal team, or accept it at developer.apple.com |
+| `apple.certificate_limit` (7460) | Too many development certificates | Pick one to revoke in the list (it shows which tool made each) |
+| `apple.certificate_not_revocable` (7252, 7475) | That certificate cannot be revoked here | Leave it; it does not count for Loadstar |
+| `apple.app_id_quota` | Not enough free App IDs this week | Wait for the date shown, or remove optional extensions |
+| `apple.app_id_unavailable` (9401) | Another team owns this bundle ID | Change the bundle ID |
+| `apple.invalid_app_id_name` (35) | Apple rejected the App ID name | Loadstar normalises names; report it if you see this |
 
 ## For contributors
 
 ```bash
 pnpm --filter @loadstar/desktop apple-probe preflight   # Apple reachable, clock, anisette health
 pnpm --filter @loadstar/desktop apple-probe anisette    # which server works (header names only)
-LOG_LEVEL=debug pnpm --filter @loadstar/desktop apple-probe signin   # real account, interactive
+pnpm --filter @loadstar/desktop apple-probe signin      # sign in (2FA); the session is saved (macOS Keychain)
+pnpm --filter @loadstar/desktop apple-probe developer   # READ-ONLY: teams, devices, certificates, App IDs + quota
+pnpm --filter @loadstar/desktop apple-probe accounts    # check saved sessions
+pnpm --filter @loadstar/desktop apple-probe forget      # delete saved accounts
 ```
 
 - Everything Apple-facing is in `packages/apple/src/domain/config.ts` and can be overridden: endpoints, client identity, the URL-bag identity, the `cpd` header list, the Xcode version and the anisette server list. When Apple changes something, the fix is usually there.
