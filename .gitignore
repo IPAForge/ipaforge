@@ -4,5 +4,7 @@ coverage/
 .turbo/
 *.log
 .DS_Store
+# …except inside signer fixtures, where it is deliberate test input (sealed in v1, omitted in v2)
+!fixtures/**/.DS_Store
 # local caches (e.g. downloaded IPAs for opt-in e2e tests)
 .cache/
