@@ -27,7 +27,7 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
   - bundles: frameworks, dylibs and appexes signed inner-first, plus streaming IPA read and write;
   - bundle ID, entitlement and profile reconciliation;
   - golden Apple fixtures and checking the CMS against a real Apple Development certificate
-- [ ] **2. Device layer**: `@loadstar/device`:
+- [x] **2. Device layer**: `@loadstar/device`:
   - usbmux client and lockdown;
   - pairing: read existing pair records and create new ones with a trust prompt;
   - services: TLS sessions, AFC, house_arrest, installation_proxy (install with progress, list apps), misagent (profiles on the device);
@@ -63,3 +63,4 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
 |-----------|------|
 | 0. Foundation | 2026-10-13 |
 | 1. Signer | 2026-10-15 |
+| 2. Device layer (hardware verification across OSes deferred to the end-to-end test pass) | 2026-10-15 |

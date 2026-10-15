@@ -23,7 +23,12 @@ export interface DeviceInfo {
   readonly deviceClass: string;
   readonly cpuArchitecture?: string;
   readonly activationState?: string;
-  readonly passwordProtected?: boolean;
+  /**
+   * lockdownd's `PasswordProtected`: the screen is locked right now. It is not "a passcode is set" (verified on
+   * a device with a passcode that reported `false` while unlocked); passcode presence shows up as
+   * `device.passcode_required` from Wi-Fi debugging.
+   */
+  readonly locked?: boolean;
 }
 
 /** Shortens a UDID for logs and UI (`…1a2b`). */

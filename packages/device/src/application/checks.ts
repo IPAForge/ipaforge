@@ -7,8 +7,8 @@ export type DeveloperModeState = "on" | "off" | "not_required" | "unknown";
 
 export interface DeviceCheck {
   readonly info: DeviceInfo;
-  /** A passcode is set (installs still work; some services need the device unlocked once). */
-  readonly passcodeSet: boolean;
+  /** The screen is locked right now (pairing and some services wait for an unlock). */
+  readonly locked: boolean;
   readonly developerMode: DeveloperModeState;
   readonly activated: boolean;
 }
@@ -27,7 +27,7 @@ export const checkDevice = async (session: DeviceSession): Promise<DeviceCheck> 
   const status = await session.getValue("DeveloperModeStatus", LockdownDomain.Amfi).catch(() => undefined);
   return {
     info,
-    passcodeSet: info.passwordProtected === true,
+    locked: info.locked === true,
     developerMode: developerModeState(info.productVersion, status),
     activated: info.activationState === undefined || info.activationState === "Activated",
   };

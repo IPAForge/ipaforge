@@ -65,7 +65,7 @@ export const toDeviceInfo = (values: PlistValue | undefined): DeviceInfo => {
     deviceClass: v.DeviceClass,
     ...(v.CPUArchitecture ? { cpuArchitecture: v.CPUArchitecture } : {}),
     ...(v.ActivationState ? { activationState: v.ActivationState } : {}),
-    ...(v.PasswordProtected === undefined ? {} : { passwordProtected: v.PasswordProtected }),
+    ...(v.PasswordProtected === undefined ? {} : { locked: v.PasswordProtected }),
   };
 };
 
