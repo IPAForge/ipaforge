@@ -91,6 +91,8 @@ export const ErrorCode = {
   PromptCancelled: "installer.prompt_cancelled",
   /** The certificate has no machineId, which is the password SideStore opens its `.p12` with. */
   CertificateMachineIdMissing: "installer.certificate_machine_id_missing",
+  /** The account has several teams and none was chosen or remembered. */
+  TeamRequired: "installer.team_required",
 
   // generic
   Aborted: "internal.aborted",

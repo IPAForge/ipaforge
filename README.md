@@ -10,7 +10,7 @@
 
 Loadstar signs into your Apple ID, gets a free development certificate, re-signs apps, installs them over USB, and sets up SideStore so it can refresh itself. It also preloads any extra apps you choose in the same run. The whole engine is TypeScript, and the app is a desktop app built with Electron.
 
-> **Status: pre-alpha.** The signing engine, the device layer, Apple ID sign-in and developer services are built and verified. The installer and the UI come next, and nothing is installable yet. See the [Roadmap](docs/roadmap.md).
+> **Status: pre-alpha.** The signing engine, the device layer, Apple ID sign-in and developer services are built and verified, and the install flows are built. The UI comes next, and nothing is installable yet. See the [Roadmap](docs/roadmap.md).
 
 ## Design goals
 
@@ -71,6 +71,7 @@ The signer (`@loadstar/signer`) is done. Its output is **byte-identical to Apple
 | [Code Signing](docs/signing.md) | How iOS signing works and how Loadstar verifies it |
 | [Device](docs/device.md) | How Loadstar reaches iPhones and iPads, pairing, and device errors |
 | [Apple Account](docs/apple-account.md) | Apple ID sign-in, 2FA, saved accounts, sign-in errors |
+| [Install Flows](docs/install-flows.md) | Installing SideStore and apps: steps, prompts, free-app limit, recovery |
 | [Roadmap](docs/roadmap.md) | Phases from foundation to 1.0 |
 | [Contributing](docs/contributing.md) | How to contribute, pull request rules, conventions |
 | [Code of Conduct](docs/CODE_OF_CONDUCT.md) | How we treat each other |

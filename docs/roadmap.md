@@ -1,4 +1,4 @@
-[← Apple Account](apple-account.md) · [Back to README](../README.md) · [Contributing →](contributing.md)
+[← Install Flows](install-flows.md) · [Back to README](../README.md) · [Contributing →](contributing.md)
 
 # Roadmap
 
@@ -19,8 +19,6 @@ The detailed roadmap, with each phase's scope, is [design/roadmap.md](design/roa
 | 10 | Management tools | Certificates, app IDs, pairing files, import/export |
 | 11 | Wireless & remote pairing | Wi-Fi installs and the iOS 17+ RP pairing file |
 | 12 | Release 1.0 | Docs site, translations, security review, release pipeline |
-
-Real-device and real-account testing for every phase happens in one end-to-end pass once the desktop app runs. Loadstar is desktop-only (Windows, macOS, Linux); the web version was dropped on 2026-10-15.
 
 ## See Also
 

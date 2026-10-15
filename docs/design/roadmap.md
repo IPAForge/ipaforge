@@ -2,7 +2,7 @@
 
 > Open-source desktop SideStore installer for Windows, macOS and Linux, with app preloading, built on a pure-TypeScript engine that is verified against Apple `codesign`.
 
-Each milestone is a **phase**. Phases are ordered by dependency. Phases 2 and 3 (device, Apple) can run in parallel. The web version was dropped on 2026-10-15; Loadstar is desktop-only.
+Each milestone is a **phase**. Phases are ordered by dependency. Phases 2 and 3 (device, Apple) can run in parallel.
 
 ## Product features (v1.0)
 
@@ -78,6 +78,6 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
 |-----------|------|
 | 0. Foundation | 2026-10-13 |
 | 1. Signer | 2026-10-15 |
-| 2. Device layer (hardware verification across OSes deferred to the end-to-end test pass) | 2026-10-15 |
+| 2. Device layer | 2026-10-15 |
 | 3. Apple account (sign-in + device 2FA + app token verified with a real account; SMS refused by Apple) | 2026-10-15 |
-| 4. Developer services (reads verified with a real account; writes exercised in the end-to-end pass) | 2026-10-15 |
+| 4. Developer services | 2026-10-15 |

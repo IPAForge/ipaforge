@@ -1,4 +1,4 @@
-[← Device](device.md) · [Back to README](../README.md) · [Roadmap →](roadmap.md)
+[← Device](device.md) · [Back to README](../README.md) · [Install Flows →](install-flows.md)
 
 # Apple Account
 
@@ -87,5 +87,6 @@ pnpm --filter @loadstar/desktop apple-probe forget      # delete saved accounts
 
 ## See Also
 
+- [Install Flows](install-flows.md): how sign-in, team, certificate and App IDs are used to install
 - [Device](device.md): installing what gets signed
 - [Code Signing](signing.md)

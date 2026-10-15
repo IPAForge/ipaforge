@@ -12,7 +12,11 @@
     "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.test.json"
   },
   "dependencies": {
+    "@loadstar/apple": "workspace:*",
+    "@loadstar/catalog": "workspace:*",
+    "@loadstar/device": "workspace:*",
     "@loadstar/kernel": "workspace:*",
-    "@loadstar/signer": "workspace:*"
+    "@loadstar/signer": "workspace:*",
+    "zod": "4.6.6"
   }
 }
