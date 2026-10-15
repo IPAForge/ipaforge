@@ -1,9 +1,11 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    // The desktop main process runs in Node (Electron); adapters may use node:* freely.
+    // The main process, the preload and the probes run in Node (Electron); adapters may use node:* freely.
+    // `electron` brings its own types; the renderer has its own tsconfig (DOM + JSX).
     "lib": ["ES2023", "WebWorker"],
     "types": ["node"]
   },
-  "include": ["src/**/*.ts", "scripts/**/*.ts", "vitest.config.ts"]
+  "include": ["src/**/*.ts", "scripts/**/*.ts", "vitest.config.ts", "electron.vite.config.ts"],
+  "exclude": ["src/renderer/**"]
 }

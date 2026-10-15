@@ -36,6 +36,25 @@ jobs:
           # verbose engine logs when a run is re-run with debug logging enabled
           LOG_LEVEL: ${{ runner.debug == '1' && 'debug' || 'info' }}
 
+  # The Electron shell (main, preload, renderer) must build on every OS. Packaging comes in Phase 9.
+  # Electron 44 fetches its binary on first launch, not on install, and the build never launches it.
+  desktop-build:
+    name: desktop build (${{ matrix.os }})
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @loadstar/desktop build
+
   # Apple `codesign` is the signer's oracle: fixtures must still match it, and every Apple-verification
   # test (codesign --verify --deep --strict) runs here, plus the real SideStore end-to-end signing.
   macos-codesign:
