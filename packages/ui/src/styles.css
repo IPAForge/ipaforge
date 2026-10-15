@@ -1,0 +1,6 @@
+/* The UI's only stylesheet: Tailwind first, then HeroUI. Everything else is utilities and palette variables. */
+@import "tailwindcss";
+@import "@heroui/styles";
+
+/* Scan the UI sources for utility classes wherever the host's Vite root is. */
+@source "./";

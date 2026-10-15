@@ -30,6 +30,11 @@
       "trailingCommas": "all"
     }
   },
+  "css": {
+    "parser": {
+      "tailwindDirectives": true
+    }
+  },
   "linter": {
     "enabled": true,
     "rules": {
@@ -49,7 +54,12 @@
   },
   "overrides": [
     {
-      "includes": ["packages/*/src/**", "!packages/**/*.test.ts", "!packages/**/__tests__/**"],
+      "includes": [
+        "packages/*/src/**",
+        "!packages/**/*.test.ts",
+        "!packages/**/*.test.tsx",
+        "!packages/**/__tests__/**"
+      ],
       "linter": {
         "rules": {
           "style": {
@@ -73,6 +83,17 @@
               }
             }
           }
+        }
+      }
+    },
+    {
+      "includes": ["packages/ui/**"],
+      "linter": {
+        "domains": {
+          "react": "all"
+        },
+        "rules": {
+          "a11y": "error"
         }
       }
     }

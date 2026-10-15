@@ -69,12 +69,18 @@ loadstar/
 │   ├── rpc/                        # typed request/stream RPC (Engine ⇄ UI) over Electron IPC
 │   │
 │   └── ui/                         # React app rendered by the desktop shell (presentation layer)
+│       ├── index.html, vite.config.ts  # the UI as a plain browser app (dev server, build)
 │       └── src/
-│           ├── app/                # router, providers, EngineClient context
-│           ├── features/           # onboarding/, install/, preload/, devices/, account/, certificates/, settings/, logs/
-│           ├── components/         # thin compositions of HeroUI components (no CSS files)
-│           ├── theme/              # palettes.ts (data), applyPalette.ts (→ HeroUI CSS variables)
-│           └── i18n/               # i18next setup + locales/*.json
+│           ├── main.tsx            # browser entry: browser services, then <App/>
+│           ├── App.tsx             # providers (services, query, theme) + router; what every host mounts
+│           ├── router.tsx          # routes; sections.ts lists the sidebar sections and groups
+│           ├── styles.css          # the only stylesheet (Tailwind + HeroUI)
+│           ├── components/         # the shell and thin compositions of HeroUI components (no CSS files)
+│           ├── features/           # install/, preload/, devices/, accounts/, certificates/, logs/, settings/
+│           ├── hooks/              # useTheme, useUiServices, later the EngineClient hooks
+│           ├── services/           # what the host provides (UiServices) + browser and in-memory implementations
+│           ├── theme/              # palettes.ts (data), applyPalette.ts (→ HeroUI CSS variables), theme store
+│           └── locales/            # UI strings (i18next locales/*.json from 6b)
 │
 ├── apps/                           # ── COMPOSITION ROOTS (adapters + wiring) ──
 │   └── desktop/                    # Electron

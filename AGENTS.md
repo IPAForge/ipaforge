@@ -15,7 +15,7 @@ Loadstar is an open-source desktop tool (Windows, macOS, Linux) for installing S
 
 ## Project Structure
 
-> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `packages/rpc`, `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, the RPC transport and IPA resolver, maintainer probes), `fixtures/signer`, `scripts/`, `.github/workflows/`.
+> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `packages/rpc`, `packages/ui` (scaffold: palettes, top bar and sidebar shell, routes; runs in a browser via its own Vite config), `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, the RPC transport and IPA resolver, maintainer probes), `fixtures/signer`, `scripts/`, `.github/workflows/`.
 
 ```
 loadstar/
@@ -56,7 +56,8 @@ loadstar/
 | `packages/rpc/src/index.ts` | Public RPC API (`createRpcServer`, `createEngineClient`, `EngineClient`, `Transport`, in-memory transport) |
 | `apps/desktop/src/main/rpc/` | Electron `MessagePortMain` transport and the IPA resolver (file path, URL download) |
 | `apps/desktop/src/main/index.ts` | Electron main: wires Node adapters into the Engine (Phase 9) |
-| `packages/ui/src/app/root.tsx` | UI root: router, providers, theme, i18n |
+| `packages/ui/src/App.tsx` | UI root that every host mounts: providers (services, query, theme) + router with the shell |
+| `packages/ui/src/main.tsx` | Browser entry for the UI (`pnpm --filter @loadstar/ui dev` / `build`) |
 | `pnpm-workspace.yaml` / `turbo.json` | Workspace and task graph |
 | `packages/kernel/src/index.ts` | LoadstarError/ErrorCode, ports, logger, byte utilities |
 | `scripts/check-boundaries.ts` | Architecture dependency-rule checker |
@@ -73,6 +74,7 @@ loadstar/
 | Code Signing | docs/signing.md | How signing works and how it is verified |
 | Device | docs/device.md | usbmuxd per OS, pairing, services, device errors |
 | Apple Account | docs/apple-account.md | Sign-in, anisette, 2FA, saved accounts, errors |
+| User Interface | docs/ui.md | Running in a browser, folder structure, UiServices, palettes and themes, shell, styling rules |
 | Install Flows | docs/install-flows.md | installSideStore, installApps, placePairing: steps, prompts, free-app limit, recovery, install-probe |
 | Engine RPC | docs/rpc.md | Engine ⇄ UI message protocol, run streaming, checkpoints, error transport, Electron adapter |
 | Roadmap | docs/roadmap.md | Phases with links to plans |
