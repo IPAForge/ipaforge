@@ -41,7 +41,7 @@ kernel  ←  signer, device, apple, catalog  ←  installer  ←  rpc  ←  ui
 ```
 
 - Contexts depend only on `kernel`. Only `installer` combines contexts.
-- `ui` talks to the engine only through `rpc`'s `EngineClient`.
+- `ui` talks to the engine only through `rpc`'s `EngineClient` (see [Engine RPC](rpc.md)).
 - Platform code lives only in `apps/*`.
 
 ## Flows are pipelines

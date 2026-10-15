@@ -17,6 +17,7 @@
     "@loadstar/device": "workspace:*",
     "@loadstar/installer": "workspace:*",
     "@loadstar/kernel": "workspace:*",
+    "@loadstar/rpc": "workspace:*",
     "@loadstar/signer": "workspace:*"
   }
 }

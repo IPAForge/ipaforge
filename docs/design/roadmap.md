@@ -48,6 +48,7 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
   - a remote source manifest (SideStore and LiveContainer stable/nightly, mirrors, SHA-256, iOS compatibility table);
   - flows: `installSideStore` (SideStore or LiveContainer + SideStore, including certificate injection: `ALTCertificate.p12` + `ALTCertificateID`, into the SideStore framework for LiveContainer), free-app-limit resolution, `installApps` (any IPA, preload), `placePairing` (several apps from a data-driven list of known apps and their pairing-file locations);
   - a diagnostics error catalog, the Engine facade, and `@loadstar/rpc`
+  - status: everything above exists except IPA validation against the device (minimum OS, device family, architecture), which still has to land before this phase is complete
 - [ ] **6. UI foundation**: `@loadstar/ui` with HeroUI v3 and Tailwind v4 (no CSS files):
   - palette themes as TS data (Graphite, Ocean, Aurora, Sunset, Forest, Rose), each with light and dark variants;
   - i18n, TanStack Router and Query, `EngineClient`, a layout shell, and the log viewer;

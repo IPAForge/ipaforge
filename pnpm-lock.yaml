@@ -205,6 +205,9 @@ importers:
       '@loadstar/kernel':
         specifier: workspace:*
         version: link:../../packages/kernel
+      '@loadstar/rpc':
+        specifier: workspace:*
+        version: link:../../packages/rpc
       '@loadstar/signer':
         specifier: workspace:*
         version: link:../../packages/signer
@@ -273,6 +276,18 @@ importers:
         version: 4.6.6
 
   packages/kernel: {}
+
+  packages/rpc:
+    dependencies:
+      '@loadstar/installer':
+        specifier: workspace:*
+        version: link:../installer
+      '@loadstar/kernel':
+        specifier: workspace:*
+        version: link:../kernel
+      zod:
+        specifier: 4.6.6
+        version: 4.6.6
 
   packages/signer:
     dependencies:

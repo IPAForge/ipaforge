@@ -92,6 +92,11 @@ export const RECOVERY_CATALOGUE = {
   "installer.certificate_machine_id_missing": [R.RevokeCertificate, R.Retry],
   "installer.team_required": [R.ChooseTeam],
 
+  // rpc: the UI and the Engine disagree (a version mismatch or a bug), or the Engine went away
+  "rpc.invalid_message": [R.UpdateLoadstar, R.ReportIssue],
+  "rpc.disconnected": [R.Retry, R.ReportIssue],
+  "rpc.timeout": [R.Retry, R.ReportIssue],
+
   "internal.aborted": [R.Retry],
   "internal.unexpected": REPORT,
 } as const satisfies Readonly<Record<ErrorCode, readonly R[]>>;

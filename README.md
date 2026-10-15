@@ -72,6 +72,7 @@ The signer (`@loadstar/signer`) is done. Its output is **byte-identical to Apple
 | [Device](docs/device.md) | How Loadstar reaches iPhones and iPads, pairing, and device errors |
 | [Apple Account](docs/apple-account.md) | Apple ID sign-in, 2FA, saved accounts, sign-in errors |
 | [Install Flows](docs/install-flows.md) | Installing SideStore and apps: steps, prompts, free-app limit, recovery |
+| [Engine RPC](docs/rpc.md) | How the UI talks to the Engine: messages, runs, errors |
 | [Roadmap](docs/roadmap.md) | Phases from foundation to 1.0 |
 | [Contributing](docs/contributing.md) | How to contribute, pull request rules, conventions |
 | [Code of Conduct](docs/CODE_OF_CONDUCT.md) | How we treat each other |
