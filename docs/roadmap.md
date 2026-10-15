@@ -18,7 +18,7 @@ The detailed roadmap, with each phase's scope, is [design/roadmap.md](design/roa
 | 9 | Desktop app | Electron packages for Windows, macOS, Linux; auto-update |
 | 10 | Management tools | Certificates, app IDs, pairing files, import/export |
 | 11 | Wireless & remote pairing | Wi-Fi installs and the iOS 17+ RP pairing file |
-| 12 | Release 1.0 | Docs site, translations, security review, release pipeline |
+| 12 | Release 1.0 | Docs site, translations, security review, release pipeline, reusable packages on npm |
 
 ## See Also
 
