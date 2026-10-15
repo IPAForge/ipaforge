@@ -59,7 +59,6 @@ export const ErrorCode = {
   // catalog
   ReleaseSourceGone: "catalog.source_gone",
   CatalogUnavailable: "catalog.unavailable",
-  AssetNotFound: "catalog.asset_not_found",
   DownloadFailed: "catalog.download_failed",
   ChecksumMismatch: "catalog.checksum_mismatch",
   ChecksumMissing: "catalog.checksum_missing",

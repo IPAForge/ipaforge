@@ -12,15 +12,16 @@ const githubSchema = z.object({
   asset: z.string().min(1),
 });
 
-const locationSchema = z.union([
-  z.object({ github: githubSchema, sha256: sha256.optional() }),
-  z.object({
-    url: z.string().url().startsWith("https://"),
-    // A direct download has no other integrity source, so its checksum is mandatory.
-    sha256,
-    size: z.number().int().positive().optional(),
-  }),
-]);
+const githubLocationSchema = z.object({ github: githubSchema, sha256: sha256.optional() });
+
+const urlLocationSchema = z.object({
+  url: z.string().url().startsWith("https://"),
+  // A direct download has no other integrity source, so its checksum is mandatory.
+  sha256,
+  size: z.number().int().positive().optional(),
+});
+
+const locationSchema = z.union([githubLocationSchema, urlLocationSchema]);
 
 const releaseSchema = z.intersection(locationSchema, z.object({ mirrors: z.array(locationSchema).optional() }));
 
@@ -65,6 +66,8 @@ export type Manifest = z.infer<typeof manifestSchema>;
 export type CatalogApp = z.infer<typeof appSchema>;
 export type Release = z.infer<typeof releaseSchema>;
 export type ReleaseLocation = z.infer<typeof locationSchema>;
+export type GithubLocation = z.infer<typeof githubLocationSchema>;
+export type UrlLocation = z.infer<typeof urlLocationSchema>;
 export type Channel = "stable" | "nightly";
 export type AppKind = (typeof appKinds)[number];
 

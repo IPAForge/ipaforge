@@ -137,7 +137,7 @@ describe("release resolution", () => {
   it("falls back to a mirror when the source repository has gone", async () => {
     const http = fakeHttp({
       "LiveContainerMirror/LiveContainer/releases/latest": () =>
-        respond(200, githubRelease("LiveContainer+SideStore.ipa")),
+        respond(200, githubRelease("LiveContainer+SideStore.ipa", ipaSha)),
     });
     const catalog = createCatalog({
       http: http.client,
@@ -146,7 +146,19 @@ describe("release resolution", () => {
     });
     const release = await catalog.resolve("livecontainer-sidestore", "stable");
     expect(release.from).toBe("mirror");
+    expect(release.sha256).toBe(ipaSha);
     expect(http.requested.some((url) => url.includes("/repos/LiveContainer/LiveContainer/"))).toBe(true);
+  });
+
+  it("skips sources without a checksum and reports that nothing verifiable was found", async () => {
+    const catalog = createCatalog({
+      http: fakeHttp({ "/releases/latest": () => respond(200, githubRelease("LiveContainer+SideStore.ipa")) }).client,
+      store: memoryStore(),
+      config: { manifestUrl: "https://example.invalid/m.json" },
+    });
+    await expect(catalog.resolve("livecontainer-sidestore", "stable")).rejects.toMatchObject({
+      code: ErrorCode.ChecksumMissing,
+    });
   });
 
   it("reports a source that has gone everywhere, and GitHub rate limits", async () => {
@@ -210,8 +222,9 @@ describe("downloads", () => {
   it("refuses to download a release without a known checksum (fails closed)", async () => {
     const http = fakeHttp({ "SideStore.ipa": () => respond(200, ipa) });
     const catalog = createCatalog({ http: http.client, store: memoryStore() });
-    const { sha256: _omit, ...unverified } = release;
-    await expect(catalog.download(unverified)).rejects.toMatchObject({ code: ErrorCode.ChecksumMissing });
+    await expect(catalog.download({ ...release, sha256: "" })).rejects.toMatchObject({
+      code: ErrorCode.ChecksumMissing,
+    });
     expect(http.requested).toHaveLength(0);
   });
 

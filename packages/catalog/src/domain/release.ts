@@ -9,8 +9,8 @@ export interface ResolvedRelease {
   readonly url: string;
   readonly fileName: string;
   readonly size?: number;
-  /** Expected SHA-256 (hex), from the manifest pin or GitHub's asset digest. */
-  readonly sha256?: string;
+  /** Expected SHA-256 (hex), from the manifest pin or GitHub's asset digest. Always present: unverifiable releases are never resolved. */
+  readonly sha256: string;
   readonly publishedAt?: Date;
   /** Which location answered: the primary source or a mirror. */
   readonly from: "primary" | "mirror";
