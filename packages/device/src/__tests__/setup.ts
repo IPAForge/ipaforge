@@ -6,6 +6,7 @@ import {
   type FakeDevice,
   type FakeDeviceOptions,
   type FakeUsbmuxd,
+  type FakeUsbmuxdOptions,
   memorySecrets,
 } from "@device/__tests__/fake-device/fake-device.ts";
 import { createDeviceManager, type DeviceManager } from "@device/application/manager.ts";
@@ -20,12 +21,16 @@ export interface TestRig {
   readonly sleeps: number[];
 }
 
+/** By default the OS already trusts the device: its pair record is there the first time it is read. */
+const OS_ALREADY_PAIRED: FakeUsbmuxdOptions = { osPairsAfterMisses: 0 };
+
 export const createRig = async (
   options: FakeDeviceOptions = {},
   config: Partial<DeviceConfig> = {},
+  usbmux: FakeUsbmuxdOptions = OS_ALREADY_PAIRED,
 ): Promise<TestRig> => {
   const device = await createFakeDevice(options);
-  const fake = createFakeUsbmuxd([device]);
+  const fake = createFakeUsbmuxd([device], usbmux);
   const secrets = memorySecrets();
   let now = new Date("2026-10-15T12:00:00Z").getTime();
   const clock: Clock = { now: () => new Date(now) };

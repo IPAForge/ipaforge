@@ -97,6 +97,25 @@ describe("Node connection", () => {
     await connection.close();
   });
 
+  it("reports a failed handshake as a protocol error, not as an invalid pair record", async () => {
+    const server = createServer((socket) => {
+      socket.once("data", () => socket.write("OK\n", () => socket.destroy()));
+    });
+    servers.push(server);
+    await new Promise<void>((resolve) => server.listen(0, "127.0.0.1", resolve));
+    const address = server.address();
+    if (!address || typeof address === "string") throw new Error("no port");
+    const { record } = await pairing();
+    const connection = createNodeConnection(await plainConnect(address.port));
+    await connection.write(utf8Encode("STARTTLS\n"));
+    await readLine(connection);
+    const error = await connection.startTls(tlsCredentials(record)).catch((e: unknown) => e);
+    expect(error).toBeInstanceOf(LoadstarError);
+    expect((error as LoadstarError).code).toBe(ErrorCode.DeviceProtocolError);
+    expect((error as LoadstarError).message).toContain("TLS handshake with the device failed");
+    await connection.close();
+  });
+
   it("reports end of stream as null", async () => {
     const server = createServer((socket) => socket.end("bye"));
     servers.push(server);

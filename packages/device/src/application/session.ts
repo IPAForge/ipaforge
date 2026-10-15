@@ -1,7 +1,8 @@
 import type { DeviceContext } from "@device/application/context.ts";
 import { type LockdownSession, openLockdownSession } from "@device/application/lockdown.ts";
-import { type PairOptions, pairDevice } from "@device/application/pair.ts";
-import { getPairRecord, notPairedError } from "@device/application/pair-records.ts";
+import { pairDevice } from "@device/application/pair.ts";
+import type { PairOptions } from "@device/application/pair-options.ts";
+import { getPairRecord, notPairedError, type StoredPairRecord } from "@device/application/pair-records.ts";
 import { LockdownDomain } from "@device/domain/constants.ts";
 import { type DeviceInfo, shortUdid, type UsbmuxDevice } from "@device/domain/device.ts";
 import { type PairRecord, tlsCredentials } from "@device/domain/pairing/pair-record.ts";
@@ -41,34 +42,54 @@ export interface DeviceSession {
 const isInvalidPairing = (error: unknown): boolean =>
   error instanceof LoadstarError && error.code === ErrorCode.InvalidPairRecord;
 
+/** The device rejected the OS's own pairing: only the user can renew it, and we must not pair over it. */
+const osPairingRejected = (device: UsbmuxDevice, cause: unknown): LoadstarError =>
+  new LoadstarError(ErrorCode.InvalidPairRecord, {
+    message: "the device rejected this computer's pairing; unplug the device, plug it back in, unlock it and tap Trust",
+    cause,
+    data: { source: "usbmuxd", device: shortUdid(device.udid) },
+  });
+
 /** The stored pair record, or a new pairing when there is none (unless `autoPair` is off). */
 const pairRecordFor = async (
   ctx: DeviceContext,
   device: UsbmuxDevice,
   options: OpenSessionOptions,
   autoPair: boolean,
-): Promise<PairRecord> => {
-  const record = await getPairRecord(ctx, device.udid);
-  if (record) return record;
+): Promise<StoredPairRecord> => {
+  const stored = await getPairRecord(ctx, device.udid);
+  if (stored) return stored;
   if (!autoPair) throw notPairedError(device.udid);
   return pairDevice(ctx, device, options);
 };
 
-/** Starts a lockdown session; when the device rejects the pair record, pairs again once (if `autoPair`). */
+type StartedSession = LockdownSession & { readonly pairRecord: PairRecord };
+
+const startWith = async (ctx: DeviceContext, device: UsbmuxDevice, record: PairRecord): Promise<StartedSession> => ({
+  ...(await openLockdownSession(ctx, device, record)),
+  pairRecord: record,
+});
+
+/**
+ * Starts a lockdown session. When the device rejects the record, the OS's record is reported and left alone,
+ * while Loadstar's own record is replaced by pairing again once (if `autoPair`).
+ */
 const startSession = async (
   ctx: DeviceContext,
   device: UsbmuxDevice,
   options: OpenSessionOptions,
   autoPair: boolean,
-): Promise<LockdownSession & { readonly pairRecord: PairRecord }> => {
-  const record = await pairRecordFor(ctx, device, options, autoPair);
+): Promise<StartedSession> => {
+  const stored = await pairRecordFor(ctx, device, options, autoPair);
   try {
-    return { ...(await openLockdownSession(ctx, device, record)), pairRecord: record };
+    return await startWith(ctx, device, stored.record);
   } catch (error) {
-    if (!isInvalidPairing(error) || !autoPair) throw error;
-    ctx.deps.logger.warn("the device rejected the pair record; pairing again", { device: shortUdid(device.udid) });
+    if (!isInvalidPairing(error)) throw error;
+    if (stored.source === "usbmuxd") throw osPairingRejected(device, error);
+    if (!autoPair) throw error;
+    ctx.deps.logger.warn("the device rejected our pair record; pairing again", { device: shortUdid(device.udid) });
     const repaired = await pairDevice(ctx, device, options);
-    return { ...(await openLockdownSession(ctx, device, repaired)), pairRecord: repaired };
+    return startWith(ctx, device, repaired.record);
   }
 };
 
@@ -129,8 +150,9 @@ const sessionFor = (
 };
 
 /**
- * Opens a lockdown session. A missing or rejected pair record triggers pairing (once) unless
- * `autoPair` is false, in which case `device.not_paired` / `device.invalid_pair_record` is thrown.
+ * Opens a lockdown session. A missing pair record, or a rejected one of Loadstar's own, triggers pairing (once)
+ * unless `autoPair` is false, in which case `device.not_paired` / `device.invalid_pair_record` is thrown.
+ * A rejected OS record always throws `device.invalid_pair_record` with `data.source: "usbmuxd"`.
  */
 export const openSession = async (
   ctx: DeviceContext,

@@ -14,10 +14,14 @@
 
 ## Pairing and trust
 
-- If the computer already trusts the device (it shows up in Finder or Apple Devices), Loadstar reuses that pairing. It reads the pair record from usbmuxd.
-- Otherwise Loadstar pairs. The device shows **Trust This Computer?**; Loadstar waits (up to 2 minutes by default) while the user unlocks the phone and taps Trust. The new pair record is saved to usbmuxd, so other tools share it. If usbmuxd refuses, it is kept in Loadstar's secret store.
-- If the device rejects a stale pairing (for example after **Reset Location & Privacy** or **Clear Trusted Computers**), Loadstar pairs again once.
-- Every session is TLS-encrypted. The device is authenticated by **pinning**: it must present exactly the device certificate from the pair record.
+Loadstar uses the pairing the operating system already made. When the user taps **Trust This Computer?**, the OS creates a pair record and keeps it in usbmuxd: macOS always does, Windows does with Apple Devices or iTunes installed, and on Linux `usbmuxd` pairs when the device is plugged in.
+
+- If the computer already trusts the device (it shows up in Finder or Apple Devices), Loadstar reads that pair record from usbmuxd and uses it.
+- Otherwise Loadstar waits for it. The user unlocks the device and taps Trust, and Loadstar checks usbmuxd every second until the OS's record appears (up to 1 minute by default, `osPairingTimeoutMs`).
+- Only if no record appears in that time does Loadstar pair on its own: it sends lockdown `Pair` with certificates it generates, the device asks for Trust again, and Loadstar waits up to 2 minutes (`pairingTimeoutMs`). That record is kept in Loadstar's secret store only. Callers can also ask for this directly (`method: "own"`).
+- **Loadstar never writes to usbmuxd.** It does not save, replace or delete the OS's pair record, so Finder, Apple Devices and other tools keep working.
+- If the device rejects the OS's record (for example after **Reset Location & Privacy** or **Clear Trusted Computers**), Loadstar does not pair over it. It fails with `device.invalid_pair_record`: unplug the device, plug it back in, unlock it and tap Trust, so the OS pairs again. If the device rejects a record Loadstar made itself, Loadstar pairs again once.
+- Every session is TLS-encrypted. The device is authenticated by **pinning**: it must present exactly the device certificate from the pair record. A failed TLS handshake is reported as `device.protocol_error` with the TLS details; it does not mean the pairing is wrong, so it never triggers pairing.
 
 ## What it can do
 
@@ -49,6 +53,8 @@ The pairing file leaves out the root private key, which apps never need.
 | `device.locked` / `device.pairing_pending` | Waiting for unlock / Trust | Unlock the device and tap Trust |
 | `device.pairing_denied` | Don't Trust was tapped | Unplug, replug, tap Trust |
 | `device.timeout` | Nobody answered the trust prompt | Try again with the device unlocked |
+| `device.invalid_pair_record` | The device rejected this computer's pairing | Unplug, plug back in, unlock and tap Trust |
+| `device.protocol_error` | The device broke the protocol, for example a failed TLS handshake | Reconnect; the details name the TLS error |
 | `device.passcode_required` | Wi-Fi debugging needs a passcode | Set a passcode in Settings › Face ID & Passcode |
 | `device.developer_mode_off` | iOS 16+ without Developer Mode | Settings › Privacy & Security › Developer Mode, then restart |
 | `device.free_app_limit` | 3 active free-profile apps per device | Remove one of the listed apps (expired ones count) |
@@ -62,6 +68,7 @@ The pairing file leaves out the root private key, which apps never need.
 ```bash
 pnpm --filter @loadstar/desktop device-probe list              # devices visible to usbmuxd
 pnpm --filter @loadstar/desktop device-probe info              # identity and checks (read-only)
+pnpm --filter @loadstar/desktop device-probe pair [--own]      # wait for the OS pairing (tap Trust); --own pairs with Loadstar's own record
 pnpm --filter @loadstar/desktop device-probe apps | profiles   # read-only
 pnpm --filter @loadstar/desktop device-probe pairing-status <TEAMID...>
 LOADSTAR_DEVICE=1 pnpm vitest run apps/desktop/src/main/adapters/device.hardware.test.ts

@@ -31,10 +31,13 @@ interface TlsErrorDetails {
   readonly reason?: string;
 }
 
-/** A failed handshake, keeping what Node and OpenSSL reported so the failure can be diagnosed. */
+/**
+ * A failed handshake, keeping what Node and OpenSSL reported so the failure can be diagnosed. It is a protocol
+ * error, not a rejected pair record: pairing again would not fix it.
+ */
 const handshakeFailed = (error: unknown) => {
   const { message, code, reason } = (error ?? {}) as TlsErrorDetails;
-  return new LoadstarError(ErrorCode.InvalidPairRecord, {
+  return new LoadstarError(ErrorCode.DeviceProtocolError, {
     message: `TLS handshake with the device failed: ${message ?? String(error)}`,
     cause: error,
     data: compact({ tlsError: code, reason }),

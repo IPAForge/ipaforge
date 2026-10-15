@@ -1,6 +1,6 @@
 import { addApp, createFakeDevice, fakeProfile } from "@device/__tests__/fake-device/fake-device.ts";
-import { createRig } from "@device/__tests__/setup.ts";
-import type { PairingProgress } from "@device/application/pair.ts";
+import { createRig, type TestRig } from "@device/__tests__/setup.ts";
+import type { PairingProgress } from "@device/application/pair-options.ts";
 import { pairRecordSecretKey } from "@device/application/pair-records.ts";
 import { parsePairRecord } from "@device/domain/pairing/pair-record.ts";
 import { decodePem } from "@device/domain/pairing/pem.ts";
@@ -54,20 +54,43 @@ describe("devices", () => {
   });
 });
 
+const OS_NEVER_PAIRS = {};
+
+const pairRequests = (rig: TestRig): number => rig.device.requests.filter((r) => r === "lockdown:Pair").length;
+
+/** The OS's record stays the OS's: Loadstar never sends `SavePairRecord` (or anything else that writes). */
+const expectUsbmuxdUntouched = (rig: TestRig): void => {
+  expect(rig.fake.requests).not.toContain("SavePairRecord");
+  expect(rig.fake.requests).not.toContain("DeletePairRecord");
+};
+
+const rejectionOf = async (promise: Promise<unknown>): Promise<LoadstarError> => {
+  const error = await promise.then(
+    () => undefined,
+    (e: unknown) => e,
+  );
+  if (!(error instanceof LoadstarError)) throw new Error(`expected a LoadstarError, got ${String(error)}`);
+  return error;
+};
+
 describe("pairing and sessions", () => {
-  it("pairs on first use, waiting for Trust, and saves the record to usbmuxd", async () => {
-    const rig = await createRig({ pendingPolls: 2 });
+  it("waits for the OS to pair (the user taps Trust) and uses its record from usbmuxd", async () => {
+    const rig = await createRig({}, {}, { osPairsAfterMisses: 3 });
     const progress: PairingProgress[] = [];
     const handle = await rig.manager.open(rig.device.udid, { onProgress: (event) => progress.push(event) });
-    expect(progress.map((event) => event.stage)).toEqual(["waiting_for_trust", "waiting_for_trust", "paired"]);
+    expect(progress).toEqual([
+      { stage: "waiting_for_trust" },
+      { stage: "waiting_for_trust" },
+      { stage: "paired", savedTo: "usbmuxd" },
+    ]);
     expect(rig.sleeps).toEqual([1000, 1000]);
+    expect(pairRequests(rig)).toBe(0);
+    expect(rig.secrets.values.size).toBe(0);
+    expectUsbmuxdUntouched(rig);
 
-    const saved = rig.fake.pairRecords.get(rig.device.udid);
-    expect(saved).toBeDefined();
-    const record = parsePairRecord(saved as Uint8Array);
+    const record = parsePairRecord(rig.fake.pairRecords.get(rig.device.udid) as Uint8Array);
     expect(record.systemBuid).toBe(rig.fake.buid);
-    expect(record.udid).toBe(rig.device.udid);
-    expect(record.wifiMacAddress).toBe("aa:bb:cc:dd:ee:ff");
+    expect(handle.pairRecord.hostId).toBe(record.hostId);
 
     // The session was upgraded to TLS with the host credentials, pinning the device certificate.
     const tls = rig.device.tlsUpgrades[0];
@@ -77,45 +100,108 @@ describe("pairing and sessions", () => {
     expect(rig.device.requests).toContain("lockdown:StopSession");
   });
 
+  it("pairs on its own when the OS has no record within osPairingTimeoutMs, keeping it in the secret store only", async () => {
+    const rig = await createRig({ pendingPolls: 1 }, { osPairingTimeoutMs: 3000 }, OS_NEVER_PAIRS);
+    const progress: PairingProgress[] = [];
+    await (await rig.manager.open(rig.device.udid, { onProgress: (event) => progress.push(event) })).close();
+    // Three polls of usbmuxd, then one pending `Pair`.
+    expect(progress.map((event) => event.stage)).toEqual([
+      "waiting_for_trust",
+      "waiting_for_trust",
+      "waiting_for_trust",
+      "waiting_for_trust",
+      "paired",
+    ]);
+    expect(progress.at(-1)).toEqual({ stage: "paired", savedTo: "secret_store" });
+    expect(rig.sleeps).toEqual([1000, 1000, 1000, 1000]);
+
+    const stored = rig.secrets.values.get(pairRecordSecretKey(rig.device.udid));
+    expect(parsePairRecord(stored as Uint8Array)).toMatchObject({
+      systemBuid: rig.fake.buid,
+      udid: rig.device.udid,
+      wifiMacAddress: "aa:bb:cc:dd:ee:ff",
+    });
+    expect(rig.fake.pairRecords.size).toBe(0);
+    expectUsbmuxdUntouched(rig);
+
+    // The next session uses the stored record without pairing again.
+    const pairsBefore = pairRequests(rig);
+    await (await rig.manager.open(rig.device.udid)).close();
+    expect(pairRequests(rig)).toBe(pairsBefore);
+  });
+
+  it("pairs on its own straight away with method: own", async () => {
+    const rig = await createRig({ pendingPolls: 2 });
+    const progress: PairingProgress[] = [];
+    await rig.manager.pair(rig.device.udid, { method: "own", onProgress: (event) => progress.push(event) });
+    expect(progress.map((event) => event.stage)).toEqual(["waiting_for_trust", "waiting_for_trust", "paired"]);
+    expect(progress.at(-1)).toEqual({ stage: "paired", savedTo: "secret_store" });
+    expect(rig.sleeps).toEqual([1000, 1000]);
+    expect(rig.fake.requests).not.toContain("ReadPairRecord");
+    expect(rig.fake.pairRecords.size).toBe(0);
+    expect(rig.secrets.values.has(pairRecordSecretKey(rig.device.udid))).toBe(true);
+    expectUsbmuxdUntouched(rig);
+  });
+
   it("asks the user to unlock while the device is locked", async () => {
-    const rig = await createRig({ lockedPolls: 1 });
+    const rig = await createRig({ lockedPolls: 1 }, {}, OS_NEVER_PAIRS);
     const stages: string[] = [];
-    await (await rig.manager.open(rig.device.udid, { onProgress: (e) => stages.push(e.stage) })).close();
+    const handle = await rig.manager.open(rig.device.udid, { method: "own", onProgress: (e) => stages.push(e.stage) });
+    await handle.close();
     expect(stages).toEqual(["waiting_for_unlock", "paired"]);
   });
 
   it("fails with pairing_denied when the user taps Don't Trust", async () => {
-    const rig = await createRig({ denyPairing: true });
-    expect(await codeOf(rig.manager.open(rig.device.udid))).toBe(ErrorCode.PairingDenied);
+    const rig = await createRig({ denyPairing: true }, {}, OS_NEVER_PAIRS);
+    expect(await codeOf(rig.manager.open(rig.device.udid, { method: "own" }))).toBe(ErrorCode.PairingDenied);
   });
 
   it("times out when nobody answers the trust dialog", async () => {
-    const rig = await createRig({ pendingPolls: 1000 }, { pairingTimeoutMs: 5000, pairingPollIntervalMs: 1000 });
-    expect(await codeOf(rig.manager.open(rig.device.udid))).toBe(ErrorCode.DeviceTimeout);
+    const config = { pairingTimeoutMs: 5000, pairingPollIntervalMs: 1000 };
+    const rig = await createRig({ pendingPolls: 1000 }, config, OS_NEVER_PAIRS);
+    expect(await codeOf(rig.manager.open(rig.device.udid, { method: "own" }))).toBe(ErrorCode.DeviceTimeout);
     expect(rig.sleeps.length).toBe(5);
   });
 
-  it("keeps the record in the secret store when usbmuxd refuses it, and uses it next time", async () => {
-    const rig = await createRig();
-    rig.fake.refuseSavePairRecord = true;
-    await (await rig.manager.open(rig.device.udid)).close();
-    expect(rig.secrets.values.has(pairRecordSecretKey(rig.device.udid))).toBe(true);
-    const pairsBefore = rig.device.requests.filter((r) => r === "lockdown:Pair").length;
-    await (await rig.manager.open(rig.device.udid)).close();
-    expect(rig.device.requests.filter((r) => r === "lockdown:Pair").length).toBe(pairsBefore);
-  });
-
   it("does not pair when autoPair is off", async () => {
-    const rig = await createRig();
+    const rig = await createRig({}, {}, OS_NEVER_PAIRS);
     expect(await codeOf(rig.manager.open(rig.device.udid, { autoPair: false }))).toBe(ErrorCode.DeviceNotPaired);
+    expect(rig.sleeps).toEqual([]);
   });
 
-  it("pairs again when the device rejects a stale record", async () => {
+  it("reports a rejected OS record and never pairs over it", async () => {
     const rig = await createRig();
     await (await rig.manager.open(rig.device.udid)).close();
+    const osRecord = rig.fake.pairRecords.get(rig.device.udid);
     rig.device.acceptedHostIds.clear(); // e.g. the user reset "Trust" settings
-    await (await rig.manager.open(rig.device.udid)).close();
-    expect(rig.device.requests.filter((r) => r === "lockdown:Pair")).toHaveLength(2);
+    const error = await rejectionOf(rig.manager.open(rig.device.udid));
+    expect(error.code).toBe(ErrorCode.InvalidPairRecord);
+    expect(error.data).toMatchObject({ source: "usbmuxd" });
+    expect(error.message).toContain("tap Trust");
+    expect(pairRequests(rig)).toBe(0);
+    expect(rig.fake.pairRecords.get(rig.device.udid)).toBe(osRecord);
+    expect(rig.secrets.values.size).toBe(0);
+    expectUsbmuxdUntouched(rig);
+  });
+
+  it("pairs again once when the device rejects Loadstar's own record", async () => {
+    const rig = await createRig({}, {}, OS_NEVER_PAIRS);
+    await (await rig.manager.open(rig.device.udid, { method: "own" })).close();
+    const first = parsePairRecord(rig.secrets.values.get(pairRecordSecretKey(rig.device.udid)) as Uint8Array);
+    rig.device.acceptedHostIds.clear();
+    const handle = await rig.manager.open(rig.device.udid, { method: "own" });
+    expect(pairRequests(rig)).toBe(2);
+    expect(handle.pairRecord.hostId).not.toBe(first.hostId);
+    await handle.close();
+    expectUsbmuxdUntouched(rig);
+  });
+
+  it("does not pair again when the TLS handshake fails", async () => {
+    const rig = await createRig({}, {}, OS_NEVER_PAIRS);
+    await rig.manager.pair(rig.device.udid, { method: "own" });
+    rig.device.tlsHandshakeFails = true;
+    expect(await codeOf(rig.manager.open(rig.device.udid))).toBe(ErrorCode.DeviceProtocolError);
+    expect(pairRequests(rig)).toBe(1);
   });
 
   it("exports and imports pair records", async () => {
@@ -123,6 +209,7 @@ describe("pairing and sessions", () => {
     await rig.manager.pair(rig.device.udid);
     const exported = await rig.manager.exportPairRecord(rig.device.udid);
     expect(parsePairRecord(exported).systemBuid).toBe(rig.fake.buid);
+    rig.fake.osPairsAfterMisses = undefined;
     rig.fake.pairRecords.clear();
     expect(await rig.manager.isPaired(rig.device.udid)).toBe(false);
     await rig.manager.importPairRecord(rig.device.udid, exported);

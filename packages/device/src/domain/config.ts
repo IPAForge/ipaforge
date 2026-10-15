@@ -7,9 +7,11 @@ export interface DeviceConfig {
   /** Largest usbmux or plist-service message accepted from the device. */
   readonly maxMessageBytes: number;
   readonly plist: PlistLimits;
-  /** How often to re-send `Pair` while the device shows the trust dialog. */
+  /** How often to ask again while waiting for the user to tap Trust (usbmuxd for the OS record, or `Pair`). */
   readonly pairingPollIntervalMs: number;
-  /** How long to wait for the user to tap Trust. */
+  /** How long to wait for the OS to create its pair record (the user taps Trust) before pairing on our own. */
+  readonly osPairingTimeoutMs: number;
+  /** How long our own `Pair` waits for the user to tap Trust. */
   readonly pairingTimeoutMs: number;
   /** Bytes per AFC write packet. */
   readonly afcWriteChunkBytes: number;
@@ -22,6 +24,7 @@ export const DEFAULT_DEVICE_CONFIG: DeviceConfig = {
   maxMessageBytes: 64 * 1024 * 1024,
   plist: DEFAULT_PLIST_LIMITS,
   pairingPollIntervalMs: 1000,
+  osPairingTimeoutMs: 60_000,
   pairingTimeoutMs: 120_000,
   afcWriteChunkBytes: 64 * 1024,
   afcReadChunkBytes: 1024 * 1024,

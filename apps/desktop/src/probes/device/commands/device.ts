@@ -1,5 +1,6 @@
 // device-probe commands about the device itself: list, info, pair, apps, profiles, reveal-devmode.
 import { type DeviceProbe, printPairingProgress } from "@desktop/probes/device/context.ts";
+import type { PairMethod } from "@loadstar/device";
 
 export const listCommand =
   ({ manager, show }: DeviceProbe) =>
@@ -20,13 +21,19 @@ export const infoCommand =
       console.log({ locked: check.locked, developerMode: check.developerMode, activated: check.activated });
     });
 
-export const pairCommand =
-  ({ manager, pickDevice }: DeviceProbe) =>
-  async (): Promise<void> => {
-    const device = await pickDevice();
-    await manager.pair(device.udid, { onProgress: printPairingProgress });
-    console.log("paired");
-  };
+/** `--own` pairs with Loadstar's own certificates straight away; by default the OS's pairing is awaited. */
+const pairMethod = ({ args }: DeviceProbe): PairMethod => (args.flag("own") ? "own" : "os");
+
+export const pairCommand = (probe: DeviceProbe) => async (): Promise<void> => {
+  const device = await probe.pickDevice();
+  const method = pairMethod(probe);
+  console.log(
+    method === "own"
+      ? "pairing with Loadstar's own record: unlock the device and tap Trust"
+      : "waiting for this computer's pairing: unlock the device and tap Trust (own pairing after the timeout)",
+  );
+  await probe.manager.pair(device.udid, { method, onProgress: printPairingProgress });
+};
 
 export const appsCommand =
   ({ withDevice }: DeviceProbe) =>

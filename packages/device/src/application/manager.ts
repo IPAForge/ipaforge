@@ -1,7 +1,8 @@
 // The device facade: finding devices, pairing, and opening a session handle.
 import { createDeviceContext, type DeviceContext } from "@device/application/context.ts";
 import { createDeviceHandle, type DeviceHandle } from "@device/application/handle.ts";
-import { type PairOptions, pairDevice } from "@device/application/pair.ts";
+import { pairDevice } from "@device/application/pair.ts";
+import type { PairOptions } from "@device/application/pair-options.ts";
 import {
   exportPairRecord,
   getPairRecord,
@@ -36,7 +37,7 @@ export const createDeviceManager = (input: DeviceDepsInput): DeviceManager => {
   return {
     listDevices: () => ctx.usbmux.listDevices(),
     watch: (onEvent, signal) => ctx.usbmux.listen(onEvent, signal),
-    pair: async (udid, options) => pairDevice(ctx, await findDevice(ctx, udid), options),
+    pair: async (udid, options) => (await pairDevice(ctx, await findDevice(ctx, udid), options)).record,
     isPaired: async (udid) => (await getPairRecord(ctx, udid)) !== undefined,
     exportPairRecord: async (udid) => exportPairRecord(await requirePairRecord(ctx, udid)),
     importPairRecord: async (udid, data) => {
