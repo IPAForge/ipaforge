@@ -1,6 +1,6 @@
 import { createDict, ErrorCode, LoadstarError, type Logger, type PlistDict, serializeXmlPlist } from "@loadstar/kernel";
 import { embeddedEntitlements } from "@signer/application/embedded-entitlements.ts";
-import type { EntitlementsInput } from "@signer/application/sign-binary.ts";
+import type { EntitlementsInput } from "@signer/application/signing.ts";
 import { type CodeBundle, discoverBundles } from "@signer/domain/bundle/discover.ts";
 import { type IdentityRewrite, rewriteInfoPlist, rewriteNestedId } from "@signer/domain/bundle/info-plist.ts";
 import { INFO_PLIST } from "@signer/domain/bundle/layout.ts";
@@ -53,6 +53,10 @@ const fail = (code: ErrorCode, message: string, data: Record<string, unknown>): 
   throw new LoadstarError(code, { message, data });
 };
 
+const provisionsDevice = (profile: ProvisioningProfile, udid: string): boolean =>
+  profile.provisionsAllDevices ||
+  profile.provisionedDevices.some((candidate) => candidate.toLowerCase() === udid.toLowerCase());
+
 const validateProfile = (profile: ProvisioningProfile, bundleId: string, options: ReconcileOptions): void => {
   const data = { bundleId, profile: describeProfile(profile) };
   if (profile.teamId !== options.teamId) {
@@ -67,11 +71,7 @@ const validateProfile = (profile: ProvisioningProfile, bundleId: string, options
   if (!profileContainsCertificate(profile, options.certificate)) {
     fail(ErrorCode.CertificateNotInProfile, "signing certificate is not listed in the profile", data);
   }
-  if (
-    options.deviceUdid &&
-    !profile.provisionsAllDevices &&
-    !profile.provisionedDevices.some((udid) => udid.toLowerCase() === options.deviceUdid?.toLowerCase())
-  ) {
+  if (options.deviceUdid && !provisionsDevice(profile, options.deviceUdid)) {
     fail(ErrorCode.DeviceNotProvisioned, "the target device is not in the profile", data);
   }
 };
@@ -85,6 +85,44 @@ const entitlementsFromProfile = (profile: ProvisioningProfile, bundleId: string)
         : [key, value],
     ),
   );
+
+/** Entitlements the executable had that the profile does not grant are dropped; say so. */
+const warnDroppedEntitlements = (
+  tree: BundleTree,
+  bundle: CodeBundle,
+  granted: PlistDict,
+  context: { readonly bundleId: string; readonly limits: SignerLimits; readonly logger: Logger },
+): void => {
+  const original = embeddedEntitlements(readFile(tree, bundle.executable), context.limits)?.dict;
+  const dropped = original ? Object.keys(original).filter((key) => !(key in granted)) : [];
+  if (dropped.length === 0) return;
+  context.logger.warn("entitlements not granted by the profile were dropped", {
+    bundleId: context.bundleId,
+    keys: dropped,
+  });
+};
+
+/** Validates the bundle's profile, rewrites its Info.plist and returns what it must be signed with. */
+const reconcileBundle = (
+  tree: BundleTree,
+  bundle: CodeBundle,
+  target: { readonly bundleId: string; readonly rawProfile: Uint8Array; readonly rewrite: IdentityRewrite },
+  context: { readonly options: ReconcileOptions; readonly limits: SignerLimits; readonly logger: Logger },
+): BundleProvisioning => {
+  const { bundleId } = target;
+  const profile = parseProvisioningProfile(target.rawProfile, context.limits.plist);
+  validateProfile(profile, bundleId, context.options);
+  const entitlements = entitlementsFromProfile(profile, bundleId);
+  warnDroppedEntitlements(tree, bundle, entitlements, { bundleId, limits: context.limits, logger: context.logger });
+
+  const info = rewriteInfoPlist(bundle.infoPlist, bundleId, target.rewrite);
+  writeFile(tree, joinPath(bundle.path, INFO_PLIST), serializeXmlPlist(info));
+  return {
+    entitlements: { bytes: serializeXmlPlist(entitlements), dict: entitlements },
+    provisioningProfile: profile.raw,
+    profile,
+  };
+};
 
 /**
  * Prepares an app for sideloading in place: new bundle IDs, rewritten Info.plists, and the
@@ -121,29 +159,19 @@ export const reconcileForSideload = (tree: BundleTree, options: ReconcileOptions
       fail(ErrorCode.ProfileMismatch, `no provisioning profile for ${newId}`, { bundleId: newId, path: bundle.path });
     }
 
-    const profile = parseProvisioningProfile(raw as Uint8Array, limits.plist);
-    validateProfile(profile, newId, options);
-    const entitlements = entitlementsFromProfile(profile, newId);
-
-    const original = embeddedEntitlements(readFile(tree, bundle.executable), limits)?.dict;
-    const dropped = original ? Object.keys(original).filter((key) => !(key in entitlements)) : [];
-    if (dropped.length)
-      logger.warn("entitlements not granted by the profile were dropped", { bundleId: newId, keys: dropped });
-
-    const info = rewriteInfoPlist(bundle.infoPlist, newId, rewrite);
-    writeFile(tree, joinPath(bundle.path, INFO_PLIST), serializeXmlPlist(info));
-
-    provisioning.set(bundle.path, {
-      entitlements: { bytes: serializeXmlPlist(entitlements), dict: entitlements },
-      provisioningProfile: profile.raw,
-      profile,
-    });
+    const reconciled = reconcileBundle(
+      tree,
+      bundle,
+      { bundleId: newId, rawProfile: raw as Uint8Array, rewrite },
+      { options, limits, logger },
+    );
+    provisioning.set(bundle.path, reconciled);
     bundleIds.set(bundle.identifier, newId);
     logger.info("reconciled bundle", {
       path: bundle.path || ".",
       from: bundle.identifier,
       to: newId,
-      profile: profile.uuid,
+      profile: reconciled.profile.uuid,
     });
   }
 

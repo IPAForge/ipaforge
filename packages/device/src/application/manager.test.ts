@@ -1,7 +1,7 @@
 import { addApp, createFakeDevice, fakeProfile } from "@device/__tests__/fake-device/fake-device.ts";
 import { createRig } from "@device/__tests__/setup.ts";
 import type { PairingProgress } from "@device/application/pair.ts";
-import { pairRecordSecretKey } from "@device/application/pair.ts";
+import { pairRecordSecretKey } from "@device/application/pair-records.ts";
 import { parsePairRecord } from "@device/domain/pairing/pair-record.ts";
 import { decodePem } from "@device/domain/pairing/pem.ts";
 import { bytesFileSource, ErrorCode, LoadstarError, parsePlist, utf8Encode } from "@loadstar/kernel";

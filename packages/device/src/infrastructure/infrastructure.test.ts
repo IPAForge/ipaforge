@@ -7,7 +7,8 @@ import { encodePlistFrame, receivePlist } from "@device/infrastructure/framing/p
 import { createStreamReader } from "@device/infrastructure/framing/stream-reader.ts";
 import { lockdownErrorCode } from "@device/infrastructure/lockdown/errors.ts";
 import { createPairRecord, spkiFromPkcs1 } from "@device/infrastructure/pairing/certificates.ts";
-import { preferUsb, toNetworkPort } from "@device/infrastructure/usbmux/client.ts";
+import { preferUsb } from "@device/infrastructure/usbmux/client.ts";
+import { toNetworkPort } from "@device/infrastructure/usbmux/protocol.ts";
 import { createDict, ErrorCode, LoadstarError, utf8Encode } from "@loadstar/kernel";
 import * as pkijs from "pkijs";
 import { describe, expect, it } from "vitest";

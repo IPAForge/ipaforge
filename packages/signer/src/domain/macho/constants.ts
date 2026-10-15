@@ -31,6 +31,11 @@ export const LC_VERSION_MIN_WATCHOS = 0x30;
 export const LC_BUILD_VERSION = 0x32;
 
 export const LINKEDIT_DATA_COMMAND_SIZE = 16;
+/** segment_command / segment_command_64 and section / section_64 structure sizes. */
+export const SEGMENT_COMMAND_SIZE = 56;
+export const SEGMENT_COMMAND_64_SIZE = 72;
+export const SECTION_SIZE = 68;
+export const SECTION_64_SIZE = 80;
 
 // section_64.flags & SECTION_TYPE
 export const SECTION_TYPE_MASK = 0xff;

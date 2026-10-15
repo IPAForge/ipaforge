@@ -15,6 +15,9 @@ export const encodeUsbmuxPacket = (tag: number, message: PlistDict): Uint8Array 
     .toBytes();
 };
 
+/** Swaps a 16-bit port into network byte order, as usbmuxd's `Connect` expects. */
+export const toNetworkPort = (port: number): number => ((port & 0xff) << 8) | ((port >> 8) & 0xff);
+
 export interface UsbmuxPacket {
   readonly tag: number;
   readonly message: PlistDict;

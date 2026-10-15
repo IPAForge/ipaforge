@@ -1,6 +1,6 @@
 // Classifies installation_proxy failures. installd reports a symbolic `Error` plus a description that often
 // carries an `0xe800xxxx` code; these decide which recovery the user is shown.
-import { ErrorCode } from "@loadstar/kernel";
+import { compact, ErrorCode } from "@loadstar/kernel";
 
 /** installd/MobileInstallation codes worth a dedicated recovery. */
 export const InstalldCode = {
@@ -29,15 +29,24 @@ export interface InstallFailure {
   readonly freeProfileApps?: readonly string[];
 }
 
+/** The app identifiers listed in a free-profile-limit description (`{(a, b)}`), if any. */
+const freeProfileApps = (description: string): readonly string[] | undefined => {
+  const apps = BUNDLE_SET.exec(description)?.[1]
+    ?.split(",")
+    .map((entry) => entry.trim())
+    .filter(Boolean);
+  return apps?.length ? apps : undefined;
+};
+
+/** The first `0xe800xxxx` code, from the description or else the error, lowercased. */
+const installdCodeOf = (error: string, description: string): string | undefined =>
+  HEX_CODE.exec(description)?.[0]?.toLowerCase() ?? HEX_CODE.exec(error)?.[0]?.toLowerCase();
+
 export const classifyInstallError = (error: string, description = ""): InstallFailure => {
   if (FREE_APP_LIMIT.test(description)) {
-    const apps = BUNDLE_SET.exec(description)?.[1]
-      ?.split(",")
-      .map((entry) => entry.trim())
-      .filter(Boolean);
-    return { code: ErrorCode.FreeAppLimit, ...(apps?.length ? { freeProfileApps: apps } : {}) };
+    return compact({ code: ErrorCode.FreeAppLimit, freeProfileApps: freeProfileApps(description) });
   }
-  const hex = HEX_CODE.exec(description)?.[0]?.toLowerCase() ?? HEX_CODE.exec(error)?.[0]?.toLowerCase();
+  const hex = installdCodeOf(error, description);
   const mapped = hex ? CODE_TO_ERROR[hex] : undefined;
-  return { code: mapped ?? ErrorCode.InstallFailed, ...(hex ? { installdCode: hex } : {}) };
+  return compact({ code: mapped ?? ErrorCode.InstallFailed, installdCode: hex });
 };

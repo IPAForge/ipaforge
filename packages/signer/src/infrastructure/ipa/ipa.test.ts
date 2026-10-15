@@ -13,7 +13,7 @@ import {
 } from "@loadstar/kernel";
 import { FIXTURES_DIR, readTree } from "@signer/__tests__/fixtures.ts";
 import type { BundleTree } from "@signer/domain/bundle/tree.ts";
-import { assertSafePath, type Ipa, readIpa, writeIpa } from "@signer/infrastructure/ipa/ipa.ts";
+import { assertSafePath, type Ipa, readIpa, writeIpa } from "@signer/infrastructure/ipa/index.ts";
 import { Uint8ArrayReader, Uint8ArrayWriter, ZipWriter } from "@zip.js/zip.js";
 import { afterAll, describe, expect, it } from "vitest";
 

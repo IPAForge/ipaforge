@@ -1,9 +1,11 @@
 import type { DeviceContext } from "@device/application/context.ts";
-import { openAfc, openInstallationProxy, withClient } from "@device/application/services.ts";
+import { openAfc, useInstallationProxy } from "@device/application/services.ts";
 import type { DeviceSession } from "@device/application/session.ts";
 import { PUBLIC_STAGING_DIR } from "@device/domain/constants.ts";
 import { shortUdid } from "@device/domain/device.ts";
-import type { FileSource } from "@loadstar/kernel";
+import type { AfcClient } from "@device/infrastructure/afc/client.ts";
+import { withClient } from "@device/infrastructure/closeable.ts";
+import { compact, type FileSource } from "@loadstar/kernel";
 
 export type InstallStage = "uploading" | "installing" | "done";
 
@@ -21,7 +23,51 @@ export interface InstallIpaOptions {
   readonly signal?: AbortSignal;
 }
 
+type Report = (progress: InstallIpaProgress) => void;
+
+/** Share of the overall progress taken by the upload; installation_proxy's own 0–100 fills the second half. */
 const UPLOAD_SHARE = 50;
+const PERCENT_DONE = 100;
+
+const uploadPercent = (written: number, total: number | undefined): number =>
+  total ? Math.floor((written / total) * UPLOAD_SHARE) : 0;
+
+const installPercent = (percent: number): number => UPLOAD_SHARE + Math.floor(percent / 2);
+
+const uploadIpa = async (
+  afc: AfcClient,
+  stagingPath: string,
+  ipa: FileSource,
+  report: Report,
+  signal: AbortSignal | undefined,
+): Promise<void> => {
+  if (!(await afc.exists(PUBLIC_STAGING_DIR))) await afc.mkdir(PUBLIC_STAGING_DIR);
+  await afc.writeFile(
+    stagingPath,
+    ipa.stream(),
+    compact({
+      totalBytes: ipa.size,
+      onProgress: (written: number, total: number | undefined) =>
+        report({ stage: "uploading", percent: uploadPercent(written, total) }),
+      signal,
+    }),
+  );
+  signal?.throwIfAborted();
+};
+
+const installStaged = (
+  ctx: DeviceContext,
+  session: DeviceSession,
+  stagingPath: string,
+  options: InstallIpaOptions,
+  report: Report,
+): Promise<void> =>
+  useInstallationProxy(ctx, session, (proxy) =>
+    proxy.install(stagingPath, {
+      upgrade: options.upgrade ?? true,
+      onProgress: ({ percent, status }) => report({ stage: "installing", percent: installPercent(percent), status }),
+    }),
+  );
 
 /** Uploads a signed IPA to `PublicStaging` and installs it. The staged copy is always removed. */
 export const installIpa = async (
@@ -37,28 +83,14 @@ export const installIpa = async (
 
   await withClient(await openAfc(ctx, session), async (afc) => {
     try {
-      if (!(await afc.exists(PUBLIC_STAGING_DIR))) await afc.mkdir(PUBLIC_STAGING_DIR);
-      await afc.writeFile(stagingPath, ipa.stream(), {
-        totalBytes: ipa.size,
-        onProgress: (written, total) =>
-          report({ stage: "uploading", percent: total ? Math.floor((written / total) * UPLOAD_SHARE) : 0 }),
-        ...(options.signal ? { signal: options.signal } : {}),
-      });
-      options.signal?.throwIfAborted();
-
-      await withClient(await openInstallationProxy(ctx, session), (proxy) =>
-        proxy.install(stagingPath, {
-          upgrade: options.upgrade ?? true,
-          onProgress: ({ percent, status }) =>
-            report({ stage: "installing", percent: UPLOAD_SHARE + Math.floor(percent / 2), status }),
-        }),
-      );
+      await uploadIpa(afc, stagingPath, ipa, report, options.signal);
+      await installStaged(ctx, session, stagingPath, options, report);
     } finally {
       await afc.remove(stagingPath).catch((error: unknown) => logger.debug("staging cleanup failed", { cause: error }));
     }
   });
 
-  report({ stage: "done", percent: 100 });
+  report({ stage: "done", percent: PERCENT_DONE });
   logger.info("installed", {
     device: shortUdid(session.device.udid),
     file: ipa.name,

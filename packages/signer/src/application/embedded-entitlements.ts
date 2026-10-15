@@ -1,5 +1,5 @@
 import { isPlistDict, parseXmlPlist } from "@loadstar/kernel";
-import type { EntitlementsInput } from "@signer/application/sign-binary.ts";
+import type { EntitlementsInput } from "@signer/application/signing.ts";
 import { CSSLOT_ENTITLEMENTS, findBlob, parseSuperBlob } from "@signer/domain/blobs/index.ts";
 import { DEFAULT_SIGNER_LIMITS, type SignerLimits } from "@signer/domain/config.ts";
 import { parseMachO } from "@signer/domain/macho/parse.ts";

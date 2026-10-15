@@ -18,7 +18,8 @@ const nameAttribute = (name: pkijs.RelativeDistinguishedNames, oid: string): str
   return typeof value?.valueBlock?.value === "string" ? value.valueBlock.value : undefined;
 };
 
-const nameDer = (name: pkijs.RelativeDistinguishedNames): Uint8Array => new Uint8Array(name.toSchema().toBER(false));
+export const nameDer = (name: pkijs.RelativeDistinguishedNames): Uint8Array =>
+  new Uint8Array(name.toSchema().toBER(false));
 
 export interface CertificateInfo {
   readonly commonName: string | undefined;
