@@ -17,6 +17,6 @@
     "@loadstar/device": "workspace:*",
     "@loadstar/kernel": "workspace:*",
     "@loadstar/signer": "workspace:*",
-    "zod": "4.6.6"
+    "zod": "4.6.7"
   }
 }
