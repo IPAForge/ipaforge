@@ -1,3 +1,5 @@
+import { DEFAULT_FILE_MODE } from "@signer/domain/bundle/layout.ts";
+
 /**
  * In-memory view of an app bundle: files and symlinks keyed by '/'-separated paths relative to
  * the `.app` root. Directories are implicit. Unix modes are kept (executable bits matter on iOS).
@@ -7,10 +9,6 @@ export type TreeEntry =
   | { readonly kind: "symlink"; readonly target: string; readonly mode: number };
 
 export type BundleTree = Map<string, TreeEntry>;
-
-export const DEFAULT_FILE_MODE = 0o644;
-export const EXECUTABLE_MODE = 0o755;
-export const SYMLINK_MODE = 0o755;
 
 export const joinPath = (...parts: readonly string[]): string => parts.filter((part) => part.length > 0).join("/");
 

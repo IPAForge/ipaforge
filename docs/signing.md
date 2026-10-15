@@ -48,6 +48,35 @@ const { ipa, summary } = await signIpa(bytesFileSource("SideStore.ipa", ipaBytes
 // `ipa` is a ReadableStream<Uint8Array>; `summary.bundles` lists every signed bundle and its cdhash.
 ```
 
+### Tuning
+
+Nothing in the engine is hard-coded beyond what the file formats themselves fix. Every tunable has a
+default that matches Apple `codesign` and can be overridden per call:
+
+```ts
+await signIpa(source, {
+  signing,
+  // Page size, hash algorithms and CMS reservation. "codesign" follows Apple's own choice.
+  policy: { pageSize: "codesign", hashAlgorithms: "codesign", cmsReservation: 18_000 },
+  // Hostile-input limits; override any subset.
+  limits: {
+    plist: { maxDepth: 64, maxExpandedNodes: 1_000_000, maxExpandedBytes: 64 * 1024 * 1024 },
+    machO: { maxFatArches: 16 },
+    ipa: { maxEntries: 200_000, maxUncompressedBytes: 4 * 1024 ** 3 },
+  },
+  // Output archive: compression level 0–9 (0 = store), plus the stored-extension pattern,
+  // the members dropped on read and the entry timestamp.
+  archive: { compressionLevel: 0 },
+});
+```
+
+The defaults are exported as `DEFAULT_SIGNING_POLICY`, `DEFAULT_SIGNER_LIMITS`, `DEFAULT_DROPPED_MEMBERS`,
+`DEFAULT_STORED_EXTENSIONS` and `DEFAULT_ENTRY_DATE`. `signBundle` and `signBinary` take the same `policy`
+and `limits`. `createHasher({ batchSize })` controls how many pages WebCrypto hashes concurrently.
+
+Format constants are not options: blob magics, slot numbers and flags are in `domain/blobs/constants.ts`,
+OIDs are in `infrastructure/cms/oids.ts`, and bundle paths and file modes are in `domain/bundle/layout.ts`.
+
 Lower-level building blocks are also exported: `signBundle`, `signBinary`, `reconcileForSideload`, `readIpa`/`writeIpa`, `parseProvisioningProfile`, and the plist API (`parsePlist`, `serializeXmlPlist`).
 
 ## How we know it's right

@@ -2,11 +2,16 @@ import { type HashAlgorithm, type Hasher, pageAt, pageCount } from "@signer/doma
 
 const WEBCRYPTO_NAME: Readonly<Record<HashAlgorithm, string>> = { sha1: "SHA-1", sha256: "SHA-256" };
 
-/** Pages hashed concurrently per batch; bounds the number of in-flight promises. */
-const BATCH = 256;
+export interface WebCryptoHasherOptions {
+  /** Pages hashed concurrently per batch; bounds the number of in-flight promises (default 256). */
+  readonly batchSize?: number;
+}
+
+export const DEFAULT_WEBCRYPTO_BATCH_SIZE = 256;
 
 /** WebCrypto-backed hasher: fastest in browsers and good in Node (batched to amortise per-call cost). */
-export const createWebCryptoHasher = (subtle: SubtleCrypto): Hasher => {
+export const createWebCryptoHasher = (subtle: SubtleCrypto, options: WebCryptoHasherOptions = {}): Hasher => {
+  const batchSize = Math.max(1, Math.floor(options.batchSize ?? DEFAULT_WEBCRYPTO_BATCH_SIZE));
   const digest = async (algorithm: HashAlgorithm, data: Uint8Array): Promise<Uint8Array> =>
     new Uint8Array(await subtle.digest(WEBCRYPTO_NAME[algorithm], data as Uint8Array<ArrayBuffer>));
 
@@ -16,8 +21,8 @@ export const createWebCryptoHasher = (subtle: SubtleCrypto): Hasher => {
     digestPages: async (algorithm, data, pageSize) => {
       const total = pageCount(data.byteLength, pageSize);
       const out: Uint8Array[] = new Array(total);
-      for (let start = 0; start < total; start += BATCH) {
-        const end = Math.min(start + BATCH, total);
+      for (let start = 0; start < total; start += batchSize) {
+        const end = Math.min(start + batchSize, total);
         const batch = await Promise.all(
           Array.from({ length: end - start }, (_, k) => digest(algorithm, pageAt(data, start + k, pageSize))),
         );

@@ -7,8 +7,23 @@ import {
   discoverLooseBinaries,
   resourceEntriesOf,
 } from "@signer/domain/bundle/discover.ts";
+import {
+  CODE_RESOURCES_PATH,
+  CODE_SIGNATURE_DIR,
+  DEFAULT_FILE_MODE,
+  EMBEDDED_PROFILE,
+  INFO_PLIST,
+  SC_INFO_DIR,
+} from "@signer/domain/bundle/layout.ts";
 import { type BundleTree, baseName, joinPath, readFile, removePath, writeFile } from "@signer/domain/bundle/tree.ts";
 import { buildCodeResources } from "@signer/domain/code-resources/index.ts";
+import {
+  type Overrides,
+  resolveLimits,
+  resolvePolicy,
+  type SignerLimits,
+  type SigningPolicy,
+} from "@signer/domain/config.ts";
 import { parseMachO } from "@signer/domain/macho/parse.ts";
 import type { Hasher } from "@signer/domain/ports/hasher.ts";
 
@@ -36,6 +51,10 @@ export interface SignBundleOptions {
   /** Identifier for loose Mach-O files (default: codesign's canonical file name, e.g. `libFoo`). */
   readonly looseIdentifier?: (path: string) => string;
   readonly onProgress?: (event: SignBundleProgress) => void;
+  /** Page size, hash algorithms and CMS reservation (defaults follow Apple codesign 26). */
+  readonly policy?: Partial<SigningPolicy>;
+  /** Parser limits (defaults: DEFAULT_SIGNER_LIMITS). */
+  readonly limits?: Overrides<SignerLimits>;
   readonly signal?: AbortSignal;
 }
 
@@ -66,10 +85,10 @@ export const canonicalIdentifier = (path: string): string => {
 const cleanBundle = (tree: BundleTree, logger: Logger): void => {
   for (const path of [...tree.keys()]) {
     const parts = path.split("/");
-    const index = parts.findIndex((part) => part === "_CodeSignature" || part === "SC_Info");
+    const index = parts.findIndex((part) => part === CODE_SIGNATURE_DIR || part === SC_INFO_DIR);
     if (index >= 0) removePath(tree, parts.slice(0, index + 1).join("/"));
   }
-  logger.debug("removed stale _CodeSignature/SC_Info directories");
+  logger.debug(`removed stale ${CODE_SIGNATURE_DIR}/${SC_INFO_DIR} directories`);
 };
 
 /**
@@ -84,8 +103,11 @@ export const signBundle = async (
   const logger = deps.logger.child({ scope: "bundle" });
   cleanBundle(tree, logger);
 
-  const bundles = discoverBundles(tree);
-  const loose = discoverLooseBinaries(tree, bundles);
+  const limits = resolveLimits(options.limits);
+  const policy = resolvePolicy(options.policy);
+  const shared = { policy, limits, ...(options.signal ? { signal: options.signal } : {}) };
+  const bundles = discoverBundles(tree, limits);
+  const loose = discoverLooseBinaries(tree, bundles, limits);
   const configs = new Map(bundles.map((bundle) => [bundle.path, options.configFor(bundle)]));
   const looseIdentifier = options.looseIdentifier ?? canonicalIdentifier;
   logger.info("discovered code", {
@@ -111,11 +133,7 @@ export const signBundle = async (
       if (!config || !data) continue;
       const result = await signBinary(
         data,
-        {
-          identifier: looseIdentifier(item.path),
-          signing: config.signing,
-          ...(options.signal ? { signal: options.signal } : {}),
-        },
+        { identifier: looseIdentifier(item.path), signing: config.signing, ...shared },
         deps,
       );
       writeFile(tree, item.path, result.bytes);
@@ -132,19 +150,21 @@ export const signBundle = async (
     });
     const config = configs.get(bundle.path) as BundleSigningConfig;
     if (config.provisioningProfile) {
-      writeFile(tree, joinPath(bundle.path, "embedded.mobileprovision"), config.provisioningProfile, 0o644);
+      writeFile(tree, joinPath(bundle.path, EMBEDDED_PROFILE), config.provisioningProfile, DEFAULT_FILE_MODE);
     }
 
     const executable = readFile(tree, bundle.executable) as Uint8Array;
-    const agile = hashAlgorithmsFor(parseMachO(executable).slices).includes("sha1");
+    const agile = hashAlgorithmsFor(parseMachO(executable, limits.machO).slices, policy.hashAlgorithms).includes(
+      "sha1",
+    );
     const resources = await buildCodeResources(
       resourceEntriesOf(tree, bundle.path),
       { mainExecutable: baseName(bundle.executable), hashMode: agile ? "dual" : "sha256" },
       deps.hasher,
     );
-    writeFile(tree, joinPath(bundle.path, "_CodeSignature", "CodeResources"), resources.bytes, 0o644);
+    writeFile(tree, joinPath(bundle.path, CODE_RESOURCES_PATH), resources.bytes, DEFAULT_FILE_MODE);
 
-    const infoPlist = readFile(tree, joinPath(bundle.path, "Info.plist"));
+    const infoPlist = readFile(tree, joinPath(bundle.path, INFO_PLIST));
     const result = await signBinary(
       executable,
       {
@@ -153,7 +173,7 @@ export const signBundle = async (
         ...(config.entitlements && bundle.kind !== "framework" ? { entitlements: config.entitlements } : {}),
         ...(infoPlist ? { infoPlist } : {}),
         codeResources: resources.bytes,
-        ...(options.signal ? { signal: options.signal } : {}),
+        ...shared,
       },
       deps,
     );

@@ -1,6 +1,16 @@
 // Test-only: self-signed "Apple Development"-shaped identities generated with WebCrypto + pkijs.
 import { toBase64 } from "@loadstar/kernel";
 import type { SigningIdentity } from "@signer/infrastructure/cms/index.ts";
+import {
+  OID_BASIC_CONSTRAINTS,
+  OID_COMMON_NAME,
+  OID_COUNTRY,
+  OID_EKU_CODE_SIGNING,
+  OID_EXTENDED_KEY_USAGE,
+  OID_KEY_USAGE,
+  OID_ORGANIZATION,
+  OID_ORGANIZATIONAL_UNIT,
+} from "@signer/infrastructure/cms/oids.ts";
 import * as asn1js from "asn1js";
 import * as pkijs from "pkijs";
 
@@ -37,10 +47,10 @@ export const createTestIdentity = async (options: TestIdentityOptions = {}): Pro
   certificate.version = 2;
   certificate.serialNumber = new asn1js.Integer({ value: Math.floor(Math.random() * 2 ** 31) + 1 });
   const subject = rdn([
-    ["2.5.4.6", "US"],
-    ["2.5.4.10", "Loadstar Test"],
-    ["2.5.4.11", teamId],
-    ["2.5.4.3", commonName],
+    [OID_COUNTRY, "US"],
+    [OID_ORGANIZATION, "Loadstar Test"],
+    [OID_ORGANIZATIONAL_UNIT, teamId],
+    [OID_COMMON_NAME, commonName],
   ]);
   certificate.subject = subject;
   certificate.issuer = options.issuer ?? subject;
@@ -48,20 +58,20 @@ export const createTestIdentity = async (options: TestIdentityOptions = {}): Pro
   certificate.notAfter.value = new Date("2027-01-01T00:00:00Z");
   certificate.extensions = [
     new pkijs.Extension({
-      extnID: "2.5.29.19",
+      extnID: OID_BASIC_CONSTRAINTS,
       critical: true,
       extnValue: new pkijs.BasicConstraints({ cA: false }).toSchema().toBER(false),
     }),
     new pkijs.Extension({
       // keyUsage: digitalSignature (bit 0) — required by the code-signing policy
-      extnID: "2.5.29.15",
+      extnID: OID_KEY_USAGE,
       critical: true,
       extnValue: new asn1js.BitString({ valueHex: new Uint8Array([0x80]).buffer, unusedBits: 7 }).toBER(false),
     }),
     new pkijs.Extension({
-      extnID: "2.5.29.37",
+      extnID: OID_EXTENDED_KEY_USAGE,
       critical: true,
-      extnValue: new pkijs.ExtKeyUsage({ keyPurposes: ["1.3.6.1.5.5.7.3.3"] }).toSchema().toBER(false),
+      extnValue: new pkijs.ExtKeyUsage({ keyPurposes: [OID_EKU_CODE_SIGNING] }).toSchema().toBER(false),
     }),
   ];
   await certificate.subjectPublicKeyInfo.importKey(keys.publicKey);

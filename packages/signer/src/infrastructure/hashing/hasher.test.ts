@@ -55,6 +55,15 @@ describe("createHasher", () => {
     const [a, b] = await Promise.all(hashers.map((h) => h.digestPages("sha256", data, 4096)));
     expect(a?.map(toHex)).toEqual(b?.map(toHex));
   });
+
+  it("gives the same result for any WebCrypto batch size", async () => {
+    const data = randomBytes(4096 * 9 + 1);
+    const reference = (await createNobleHasher().digestPages("sha256", data, 4096)).map(toHex);
+    for (const batchSize of [1, 3, 1000]) {
+      const pages = await createWebCryptoHasher(crypto.subtle, { batchSize }).digestPages("sha256", data, 4096);
+      expect(pages.map(toHex)).toEqual(reference);
+    }
+  });
 });
 
 describe.skipIf(!process.env.LOADSTAR_BENCH)("throughput (LOADSTAR_BENCH=1)", () => {

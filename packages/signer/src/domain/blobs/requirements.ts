@@ -17,7 +17,7 @@ const matchEqual = 1;
 const ANCHOR_SLOT = -1;
 
 /** Apple WWDR intermediate marker OID 1.2.840.113635.100.6.2.1 (DER content bytes). */
-const WWDR_MARKER_OID = new Uint8Array([0x2a, 0x86, 0x48, 0x86, 0xf7, 0x63, 0x64, 0x06, 0x02, 0x01]);
+export const WWDR_MARKER_OID = new Uint8Array([0x2a, 0x86, 0x48, 0x86, 0xf7, 0x63, 0x64, 0x06, 0x02, 0x01]);
 
 export type DesignatedRequirement =
   /** What codesign writes for Apple Development certificates (production). */

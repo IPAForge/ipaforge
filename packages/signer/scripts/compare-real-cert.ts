@@ -17,6 +17,7 @@ import { CSSLOT_SIGNATURESLOT, parseSuperBlob } from "@signer/domain/blobs/index
 import type { BundleTree } from "@signer/domain/bundle/tree.ts";
 import { parseMachO } from "@signer/domain/macho/parse.ts";
 import { certificateInfo, createHasher, isPlistDict, parsePlist, resolveChain, signBundle } from "@signer/index.ts";
+import { OID_APPLE_CDHASHES, OID_APPLE_CDHASHES2, OID_MESSAGE_DIGEST } from "@signer/infrastructure/cms/oids.ts";
 import * as asn1js from "asn1js";
 import * as pkijs from "pkijs";
 
@@ -39,11 +40,11 @@ const cdAttributesConsistent = async (cms: Uint8Array, cd: Uint8Array): Promise<
     }
     return undefined;
   };
-  const plist = parsePlist(octets("1.2.840.113635.100.9.1") ?? new Uint8Array());
+  const plist = parsePlist(octets(OID_APPLE_CDHASHES) ?? new Uint8Array());
   const listed = isPlistDict(plist) && Array.isArray(plist.cdhashes) ? plist.cdhashes[0] : undefined;
   return (
-    toHex(octets("1.2.840.113549.1.9.4") ?? new Uint8Array()) === toHex(digest) &&
-    toHex(octets("1.2.840.113635.100.9.2") ?? new Uint8Array()) === toHex(digest) &&
+    toHex(octets(OID_MESSAGE_DIGEST) ?? new Uint8Array()) === toHex(digest) &&
+    toHex(octets(OID_APPLE_CDHASHES2) ?? new Uint8Array()) === toHex(digest) &&
     listed instanceof Uint8Array &&
     toHex(listed) === toHex(digest.subarray(0, 20))
   );

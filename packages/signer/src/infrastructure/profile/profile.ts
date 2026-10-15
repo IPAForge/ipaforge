@@ -1,4 +1,5 @@
 import { ErrorCode, equalBytes, LoadstarError } from "@loadstar/kernel";
+import { DEFAULT_SIGNER_LIMITS, type PlistLimits } from "@signer/domain/config.ts";
 import { isPlistDict, type PlistDict, parseXmlPlist } from "@signer/domain/plist/index.ts";
 import * as asn1js from "asn1js";
 import * as pkijs from "pkijs";
@@ -58,11 +59,14 @@ const extractPlist = (raw: Uint8Array): Uint8Array => {
   return raw.slice(start, end + "</plist>".length);
 };
 
-export const parseProvisioningProfile = (raw: Uint8Array): ProvisioningProfile => {
+export const parseProvisioningProfile = (
+  raw: Uint8Array,
+  limits: PlistLimits = DEFAULT_SIGNER_LIMITS.plist,
+): ProvisioningProfile => {
   const plistBytes = extractPlist(raw);
   let value: unknown;
   try {
-    value = parseXmlPlist(plistBytes);
+    value = parseXmlPlist(plistBytes, limits);
   } catch (error) {
     throw invalid("provisioning profile plist is malformed", error);
   }

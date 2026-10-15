@@ -1,6 +1,8 @@
 import { ErrorCode, LoadstarError } from "@loadstar/kernel";
+import { CODE_SIGNATURE_DIR, INFO_PLIST } from "@signer/domain/bundle/layout.ts";
 import { type BundleTree, isWithin, joinPath, readFile, relativeTo } from "@signer/domain/bundle/tree.ts";
 import type { ResourceEntry } from "@signer/domain/code-resources/index.ts";
+import { DEFAULT_SIGNER_LIMITS, type PlistLimits, type SignerLimits } from "@signer/domain/config.ts";
 import { MH_BUNDLE, MH_DYLIB, MH_EXECUTE } from "@signer/domain/macho/constants.ts";
 import { isMachO, parseMachO } from "@signer/domain/macho/parse.ts";
 import { isPlistDict, type PlistDict, parsePlist, stringAt } from "@signer/domain/plist/index.ts";
@@ -35,15 +37,20 @@ const BUNDLE_SUFFIXES: readonly [string, BundleKind][] = [
 
 const SIGNABLE_FILETYPES = new Set([MH_EXECUTE, MH_DYLIB, MH_BUNDLE]);
 
-const readInfoPlist = (tree: BundleTree, bundlePath: string): PlistDict | undefined => {
-  const bytes = readFile(tree, joinPath(bundlePath, "Info.plist"));
+const readInfoPlist = (tree: BundleTree, bundlePath: string, limits: PlistLimits): PlistDict | undefined => {
+  const bytes = readFile(tree, joinPath(bundlePath, INFO_PLIST));
   if (!bytes) return undefined;
-  const value = parsePlist(bytes);
+  const value = parsePlist(bytes, limits);
   return isPlistDict(value) ? value : undefined;
 };
 
-const describeBundle = (tree: BundleTree, path: string, kind: BundleKind): CodeBundle | undefined => {
-  const infoPlist = readInfoPlist(tree, path);
+const describeBundle = (
+  tree: BundleTree,
+  path: string,
+  kind: BundleKind,
+  limits: PlistLimits,
+): CodeBundle | undefined => {
+  const infoPlist = readInfoPlist(tree, path, limits);
   const executableName = infoPlist && stringAt(infoPlist, "CFBundleExecutable");
   const identifier = infoPlist && stringAt(infoPlist, "CFBundleIdentifier");
   if (!infoPlist || !executableName || !identifier) return undefined; // resource-only bundle
@@ -53,8 +60,8 @@ const describeBundle = (tree: BundleTree, path: string, kind: BundleKind): CodeB
 };
 
 /** Code bundles in the tree, deepest first (the order they must be signed in), main app last. */
-export const discoverBundles = (tree: BundleTree): CodeBundle[] => {
-  const main = describeBundle(tree, "", "app");
+export const discoverBundles = (tree: BundleTree, limits: SignerLimits = DEFAULT_SIGNER_LIMITS): CodeBundle[] => {
+  const main = describeBundle(tree, "", "app", limits.plist);
   if (!main) {
     throw new LoadstarError(ErrorCode.InvalidBundle, {
       message: "app bundle has no Info.plist with CFBundleExecutable/CFBundleIdentifier, or its executable is missing",
@@ -73,7 +80,7 @@ export const discoverBundles = (tree: BundleTree): CodeBundle[] => {
   const nested = [...candidates]
     .map((dir) => {
       const kind = BUNDLE_SUFFIXES.find(([suffix]) => dir.endsWith(suffix))?.[1] ?? "framework";
-      return describeBundle(tree, dir, kind);
+      return describeBundle(tree, dir, kind, limits.plist);
     })
     .filter((bundle): bundle is CodeBundle => bundle !== undefined);
 
@@ -90,15 +97,19 @@ export const owningBundle = (bundles: readonly CodeBundle[], path: string): Code
  * Mach-O executables/dylibs/bundles that are not a bundle's main executable (e.g. Frameworks/*.dylib,
  * helper tools). Detected by magic and filetype, never by extension.
  */
-export const discoverLooseBinaries = (tree: BundleTree, bundles: readonly CodeBundle[]): LooseBinary[] => {
+export const discoverLooseBinaries = (
+  tree: BundleTree,
+  bundles: readonly CodeBundle[],
+  limits: SignerLimits = DEFAULT_SIGNER_LIMITS,
+): LooseBinary[] => {
   const executables = new Set(bundles.map((bundle) => bundle.executable));
   const loose: LooseBinary[] = [];
   for (const [path, entry] of tree) {
     if (entry.kind !== "file" || executables.has(path) || !isMachO(entry.data)) continue;
-    if (path.split("/").includes("_CodeSignature")) continue;
+    if (path.split("/").includes(CODE_SIGNATURE_DIR)) continue;
     const signable = (() => {
       try {
-        return parseMachO(entry.data).slices.every((slice) => SIGNABLE_FILETYPES.has(slice.filetype));
+        return parseMachO(entry.data, limits.machO).slices.every((slice) => SIGNABLE_FILETYPES.has(slice.filetype));
       } catch {
         return false; // not a well-formed Mach-O: leave it as a plain resource
       }

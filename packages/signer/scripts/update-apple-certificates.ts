@@ -14,6 +14,7 @@ import { join } from "node:path";
 import { toBase64, toHex } from "@loadstar/kernel";
 import { APPLE_CERTIFICATES } from "@signer/infrastructure/cms/apple-certificates.ts";
 import { parseCertificate } from "@signer/infrastructure/cms/certificate.ts";
+import { OID_BASIC_CONSTRAINTS } from "@signer/infrastructure/cms/oids.ts";
 import * as pkijs from "pkijs";
 
 const CA_PAGE = "https://www.apple.com/certificateauthority/";
@@ -37,7 +38,7 @@ const sha256 = async (bytes: Uint8Array): Promise<string> =>
   toHex(new Uint8Array(await crypto.subtle.digest("SHA-256", bytes as Uint8Array<ArrayBuffer>)));
 
 const isCa = (cert: pkijs.Certificate): boolean => {
-  const value = cert.extensions?.find((e) => e.extnID === "2.5.29.19")?.parsedValue;
+  const value = cert.extensions?.find((e) => e.extnID === OID_BASIC_CONSTRAINTS)?.parsedValue;
   return value instanceof pkijs.BasicConstraints && value.cA === true;
 };
 

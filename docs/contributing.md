@@ -9,6 +9,7 @@
 - Absolute imports only: `@signer/domain/…` inside a package, `@loadstar/kernel` across packages. Relative imports fail `pnpm check:boundaries`.
 - `packages/*` are platform-free: no `node:*`, `electron` or DOM-only APIs. `pnpm check:boundaries` enforces this.
 - Errors are `LoadstarError` with an `ErrorCode`. External input is validated with zod.
+- No magic values: format constants go in named constants modules, and tunables go in `domain/config.ts` with overridable defaults.
 - Binary code always states its endianness: Mach-O is little-endian, signature blobs are big-endian.
 - UI uses HeroUI components and Tailwind utilities only. No CSS files, and every string goes through i18next.
 - Log through the `Logger` port. Secrets are redacted by default.

@@ -1,20 +1,11 @@
 import { ErrorCode, LoadstarError } from "@loadstar/kernel";
+import { DEFAULT_SIGNER_LIMITS, type PlistLimits } from "@signer/domain/config.ts";
 import { createDict, type PlistValue, real } from "@signer/domain/plist/model.ts";
 
 const HEADER = "bplist00";
 const TRAILER_SIZE = 32;
 /** Seconds between the Unix epoch and the Core Foundation epoch (2001-01-01T00:00:00Z). */
 const CF_EPOCH_OFFSET = 978307200;
-const MAX_DEPTH = 64;
-/**
- * Limits on the EXPANDED result. Objects may be shared (a DAG), so a tiny file can describe an
- * exponentially large tree, or one large string referenced millions of times. Every object is parsed
- * once (memoised) and carries the node and byte totals of its expansion; anything that later walks
- * the result (serializers, rewriters) is bounded by the same totals. Real Info.plists are far smaller.
- */
-export const MAX_EXPANDED_NODES = 1_000_000;
-export const MAX_EXPANDED_BYTES = 64 * 1024 * 1024;
-
 interface Parsed {
   readonly value: PlistValue;
   /** Nodes in the fully expanded subtree. */
@@ -32,8 +23,12 @@ const fail = (message: string, data?: Record<string, unknown>): never => {
 export const isBinaryPlist = (bytes: Uint8Array): boolean =>
   bytes.byteLength >= 8 && String.fromCharCode(...bytes.subarray(0, 8)) === HEADER;
 
-/** Parses a `bplist00` property list (the format of most Info.plist files inside IPAs). */
-export const parseBinaryPlist = (bytes: Uint8Array): PlistValue => {
+/**
+ * Parses a `bplist00` property list. Objects may be shared (a DAG), so a tiny file can describe an
+ * exponentially large tree; each object is parsed once and carries the node/byte totals and height of its
+ * expansion, which `limits` caps (anything that later walks the result is bounded by the same totals).
+ */
+export const parseBinaryPlist = (bytes: Uint8Array, limits: PlistLimits = DEFAULT_SIGNER_LIMITS.plist): PlistValue => {
   if (!isBinaryPlist(bytes) || bytes.byteLength < 8 + TRAILER_SIZE) fail("not a bplist00 file");
   const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
 
@@ -82,7 +77,7 @@ export const parseBinaryPlist = (bytes: Uint8Array): PlistValue => {
   const leaf = (value: PlistValue, size = 8): Parsed => ({ value, nodes: 1, bytes: size, height: 1 });
 
   const checkBudget = (parsed: Parsed, offset: number): Parsed => {
-    if (parsed.nodes > MAX_EXPANDED_NODES || parsed.bytes > MAX_EXPANDED_BYTES) {
+    if (parsed.nodes > limits.maxExpandedNodes || parsed.bytes > limits.maxExpandedBytes) {
       fail("expands beyond the size limits (shared-reference expansion)", {
         offset,
         nodes: parsed.nodes,
@@ -96,10 +91,10 @@ export const parseBinaryPlist = (bytes: Uint8Array): PlistValue => {
     const cached = memo.get(ref);
     if (cached) {
       // a subtree first parsed near the root must not be re-attached deeper than the limit allows
-      if (depth + cached.height - 1 > MAX_DEPTH) fail("nesting too deep", { ref });
+      if (depth + cached.height - 1 > limits.maxDepth) fail("nesting too deep", { ref });
       return cached;
     }
-    if (depth > MAX_DEPTH) fail("nesting too deep");
+    if (depth > limits.maxDepth) fail("nesting too deep");
     if (stack.has(ref)) fail("reference cycle", { ref });
     const offset = objectOffset(ref);
     const parsed = checkBudget(decode(ref, offset, depth, stack), offset);
@@ -170,7 +165,7 @@ export const parseBinaryPlist = (bytes: Uint8Array): PlistValue => {
           nodes += child.nodes;
           size += child.bytes;
           height = Math.max(height, child.height + 1);
-          if (nodes > MAX_EXPANDED_NODES || size > MAX_EXPANDED_BYTES) break; // checkBudget reports it
+          if (nodes > limits.maxExpandedNodes || size > limits.maxExpandedBytes) break; // checkBudget reports it
         }
         return { value: items, nodes, bytes: size, height };
       }
@@ -191,7 +186,7 @@ export const parseBinaryPlist = (bytes: Uint8Array): PlistValue => {
           nodes += key.nodes + value.nodes;
           size += key.bytes + value.bytes;
           height = Math.max(height, value.height + 1);
-          if (nodes > MAX_EXPANDED_NODES || size > MAX_EXPANDED_BYTES) break; // checkBudget reports it
+          if (nodes > limits.maxExpandedNodes || size > limits.maxExpandedBytes) break; // checkBudget reports it
         }
         return { value: createDict(entries), nodes, bytes: size, height };
       }
