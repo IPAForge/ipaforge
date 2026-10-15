@@ -7,6 +7,7 @@ import { assertNestedId } from "@signer/domain/bundle/info-plist.ts";
 import { IPA_PAYLOAD_DIR } from "@signer/domain/bundle/layout.ts";
 import { type BundleTree, joinPath, readFile } from "@signer/domain/bundle/tree.ts";
 import { type Overrides, resolveLimits, type SignerLimits } from "@signer/domain/config.ts";
+import { architecturesOf } from "@signer/domain/macho/architecture.ts";
 import { isEncryptedSlice } from "@signer/domain/macho/encryption.ts";
 import { isMachO, parseMachO } from "@signer/domain/macho/parse.ts";
 import {
@@ -50,7 +51,8 @@ const assertDecrypted = (tree: BundleTree, limits: SignerLimits, signal: AbortSi
 
 /**
  * Reads an .ipa without changing it and reports the app, its provisioned extensions and watch apps, and
- * the groups it declares. Fails early with `InvalidBundle`, `EncryptedBinary` or `ExtensionPrefix`.
+ * the groups it declares, and what the app needs from a device (minimum iOS, device families, architectures; see
+ * `checkCompatibility`). Fails early with `InvalidBundle`, `EncryptedBinary` or `ExtensionPrefix`.
  */
 export const inspectIpa = async (
   source: FileSource,
@@ -67,9 +69,11 @@ export const inspectIpa = async (
     for (const bundle of nested) assertNestedId(bundle.identifier, main.identifier);
     assertDecrypted(ipa.app, limits, options.signal);
 
-    const entitlements = embeddedEntitlements(readFile(ipa.app, main.executable), limits)?.dict;
+    const executable = readFile(ipa.app, main.executable);
+    const entitlements = embeddedEntitlements(executable, limits)?.dict;
+    const architectures = executable ? architecturesOf(executable, limits.machO) : [];
     const inspection: IpaInspection = {
-      app: inspectedApp(main, joinPath(IPA_PAYLOAD_DIR, ipa.appName)),
+      app: inspectedApp(main, joinPath(IPA_PAYLOAD_DIR, ipa.appName), architectures),
       nested: nested.map(inspectedBundle),
       ...declaredGroups(main, entitlements),
     };

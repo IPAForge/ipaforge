@@ -14,7 +14,7 @@ Loadstar is **pre-alpha**. Phases 0–4 are complete: foundation, signer, device
 | Device layer (`@loadstar/device`, `apps/desktop` adapters) | Implemented (Phase 2): tested against a fake device and read-only on a real iPhone |
 | Apple account (`@loadstar/apple`) | Implemented (Phase 3): sign-in, device 2FA and developer token verified with a real account |
 | Developer services (`apple.developer`) | Implemented (Phase 4): reads verified with a real account |
-| Installer (`@loadstar/installer`) | Implemented (Phase 5): pipelines, catalog, install flows, free-app limit, diagnostics and the Engine facade |
+| Installer (`@loadstar/installer`) | Implemented (Phase 5): pipelines, catalog, install flows, IPA checks against the device, free-app limit, diagnostics and the Engine facade |
 | Engine RPC (`@loadstar/rpc`) | Implemented (Phase 5): typed, validated Engine ⇄ UI messages; the Electron wiring comes with the desktop app |
 | UI (`@loadstar/ui`) | In progress (Phase 6): palettes, the shell and routes |
 | Desktop app (`apps/desktop`) | A minimal Electron shell renders the UI; Engine wiring and packaging come later |

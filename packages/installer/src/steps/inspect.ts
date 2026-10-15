@@ -1,10 +1,12 @@
-// Reads the IPA before any Apple call, so a broken or encrypted app fails without using up App IDs.
+// Reads the IPA before any Apple call, so a broken or encrypted app, or one the device cannot run (iOS too old,
+// wrong device family, no 64-bit slice), fails without using up App IDs. The device step runs first.
 import type { FlowRuntime } from "@installer/application/runtime.ts";
 import { StepLabel } from "@installer/domain/labels.ts";
 import type { InstallState } from "@installer/domain/state.ts";
 import { StepWeight } from "@installer/domain/step-weights.ts";
 import type { Step } from "@installer/pipeline/step.ts";
 import { appStepId, jobAt, required, updateJob } from "@installer/steps/app-job.ts";
+import { assertCompatible } from "@loadstar/signer";
 
 export const inspectStep = (runtime: FlowRuntime, index: number): Step<InstallState> => ({
   id: appStepId("inspect", index),
@@ -13,6 +15,8 @@ export const inspectStep = (runtime: FlowRuntime, index: number): Step<InstallSt
   idempotent: true,
   run: async (state, context) => {
     const file = required(jobAt(state, index).file, "IPA file");
-    return updateJob(state, index, { inspection: await runtime.deps.signer.inspect(file, context.signal) });
+    const inspection = await runtime.deps.signer.inspect(file, context.signal);
+    assertCompatible(inspection, required(state.device, "device summary"));
+    return updateJob(state, index, { inspection });
   },
 });

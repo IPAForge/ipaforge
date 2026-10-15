@@ -19,3 +19,7 @@ export const parseVersion = (text: string): PackedVersion => {
   const [major = 0, minor = 0, patch = 0] = text.split(".").map((part) => Number.parseInt(part, 10) || 0);
   return packVersion(major, minor, patch);
 };
+
+/** Numeric, dotted comparison ("26.1" ≥ "15.0", "9.3.5" < "10"); missing parts count as 0. */
+export const isVersionAtLeast = (version: string, minimum: string): boolean =>
+  parseVersion(version) >= parseVersion(minimum);

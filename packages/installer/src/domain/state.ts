@@ -38,6 +38,8 @@ export interface DeviceSummary {
   readonly udid: string;
   readonly name: string;
   readonly iosVersion: string;
+  /** lockdownd's `DeviceClass` (`iPhone`, `iPad`, `iPod`), for checking an app's device families. */
+  readonly deviceClass: string;
 }
 
 /** What every flow that talks to a device and an Apple account knows. */

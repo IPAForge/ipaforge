@@ -73,7 +73,14 @@ export const ErrorCode = {
   // signer
   InvalidMachO: "signer.invalid_macho",
   EncryptedBinary: "signer.encrypted_binary",
+  /** The Mach-O file format itself is not one iOS uses (e.g. `fat_arch_64`). */
   UnsupportedArch: "signer.unsupported_arch",
+  /** The device's iOS is older than the app's `MinimumOSVersion`. */
+  UnsupportedIos: "signer.unsupported_ios",
+  /** The app's `UIDeviceFamily` does not include this kind of device (e.g. an iPad-only app on an iPhone). */
+  UnsupportedDevice: "signer.unsupported_device",
+  /** The main executable has no arm64 or arm64e slice (e.g. a 32-bit-only or simulator build). */
+  NoArm64Build: "signer.no_arm64_build",
   NoHeaderSpace: "signer.no_header_space",
   ZipSlip: "signer.zip_slip",
   InvalidCertificate: "signer.invalid_certificate",

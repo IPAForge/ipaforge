@@ -11,7 +11,7 @@ The detailed roadmap, with each phase's scope, is [design/roadmap.md](design/roa
 | 2 | Device layer ✓ | usbmux, lockdown, pairing, AFC, house_arrest, install, profiles |
 | 3 | Apple account ✓ | Anisette with fallback, login, 2FA, saved credentials |
 | 4 | Developer services ✓ | Teams, certificates, app IDs, groups, profiles |
-| 5 | Installer engine + catalog | Pipelines, flows, release catalog, error catalog |
+| 5 | Installer engine + catalog ✓ | Pipelines, flows, release catalog, error catalog |
 | 6 | UI foundation | HeroUI + Tailwind shell, colour palettes, i18n |
 | 7 | Onboarding | First-run guided wizard |
 | 8 | Install & preload UX | One-click SideStore, preload picker, recovery screens |
