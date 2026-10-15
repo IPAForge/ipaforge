@@ -1,4 +1,4 @@
-import { isPlistDict, type PlistLimits, parsePlist, utf8Encode } from "@loadstar/kernel";
+import { compact, isPlistDict, type PlistDict, type PlistLimits, parsePlist, utf8Encode } from "@loadstar/kernel";
 
 /** A provisioning profile installed on the device, as misagent returns it (summary only; the CMS is not verified). */
 export interface DeviceProfile {
@@ -32,32 +32,38 @@ export const embeddedProfilePlist = (profile: Uint8Array): Uint8Array | undefine
   return profile.subarray(start, end + PLIST_END.byteLength);
 };
 
-/** Summarises a profile, or returns `undefined` if it is not a readable provisioning profile. */
-export const summarizeProfile = (raw: Uint8Array, limits?: PlistLimits): DeviceProfile | undefined => {
+/** The profile's plist dict, or `undefined` when it has none or it does not parse. */
+const profileDict = (raw: Uint8Array, limits?: PlistLimits): PlistDict | undefined => {
   const xml = embeddedProfilePlist(raw);
   if (!xml) return undefined;
-  let value: ReturnType<typeof parsePlist>;
   try {
-    value = parsePlist(xml, limits);
+    const value = parsePlist(xml, limits);
+    return isPlistDict(value) ? value : undefined;
   } catch {
     return undefined;
   }
-  if (!isPlistDict(value)) return undefined;
-  const uuid = value.UUID;
-  const name = value.Name;
-  if (typeof uuid !== "string" || typeof name !== "string") return undefined;
-  const team = Array.isArray(value.TeamIdentifier) ? value.TeamIdentifier[0] : undefined;
-  const entitlements = isPlistDict(value.Entitlements) ? value.Entitlements : undefined;
-  const appId = entitlements?.["application-identifier"];
-  return {
+};
+
+const asString = (value: unknown): string | undefined => (typeof value === "string" ? value : undefined);
+
+/** Summarises a profile, or returns `undefined` if it is not a readable provisioning profile. */
+export const summarizeProfile = (raw: Uint8Array, limits?: PlistLimits): DeviceProfile | undefined => {
+  const dict = profileDict(raw, limits);
+  if (!dict) return undefined;
+  const uuid = asString(dict.UUID);
+  const name = asString(dict.Name);
+  if (uuid === undefined || name === undefined) return undefined;
+  const team = Array.isArray(dict.TeamIdentifier) ? dict.TeamIdentifier[0] : undefined;
+  const entitlements = isPlistDict(dict.Entitlements) ? dict.Entitlements : undefined;
+  return compact({
     uuid,
     name,
     raw,
-    ...(typeof team === "string" ? { teamId: team } : {}),
-    ...(typeof value.AppIDName === "string" ? { appIdName: value.AppIDName } : {}),
-    ...(typeof appId === "string" ? { applicationIdentifier: appId } : {}),
-    ...(value.ExpirationDate instanceof Date ? { expirationDate: value.ExpirationDate } : {}),
-  };
+    teamId: asString(team),
+    appIdName: asString(dict.AppIDName),
+    applicationIdentifier: asString(entitlements?.["application-identifier"]),
+    expirationDate: dict.ExpirationDate instanceof Date ? dict.ExpirationDate : undefined,
+  });
 };
 
 /** Bundle ID part of an application identifier (`TEAMID.com.example.app` → `com.example.app`). */
@@ -65,3 +71,29 @@ export const bundleIdOf = (applicationIdentifier: string): string => {
   const dot = applicationIdentifier.indexOf(".");
   return dot < 0 ? applicationIdentifier : applicationIdentifier.slice(dot + 1);
 };
+
+export interface RemoveStaleOptions {
+  readonly now: Date;
+  /** Also remove this team's profiles whose app is no longer installed. */
+  readonly teamId?: string;
+}
+
+const isExpired = (profile: DeviceProfile, now: Date): boolean =>
+  profile.expirationDate !== undefined && profile.expirationDate.getTime() <= now.getTime();
+
+/** A `teamId` profile for a specific app (never a wildcard) that is not installed. */
+const isOrphaned = (profile: DeviceProfile, installedBundleIds: ReadonlySet<string>, teamId?: string): boolean => {
+  if (!teamId || profile.teamId !== teamId || !profile.applicationIdentifier) return false;
+  const bundleId = bundleIdOf(profile.applicationIdentifier);
+  return !bundleId.includes("*") && !installedBundleIds.has(bundleId);
+};
+
+/** Profiles to remove: expired ones, and (with `teamId`) the team's profiles for apps that are gone. */
+export const staleProfiles = (
+  profiles: readonly DeviceProfile[],
+  installedBundleIds: ReadonlySet<string>,
+  options: RemoveStaleOptions,
+): DeviceProfile[] =>
+  profiles.filter(
+    (profile) => isExpired(profile, options.now) || isOrphaned(profile, installedBundleIds, options.teamId),
+  );

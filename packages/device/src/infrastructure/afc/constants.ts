@@ -5,6 +5,9 @@ export const AFC_MAGIC = new Uint8Array([0x43, 0x46, 0x41, 0x36, 0x4c, 0x50, 0x4
 /** magic(8) + entire length(8) + this length(8) + packet number(8) + operation(8). */
 export const AFC_HEADER_SIZE = 40;
 
+/** Size of the u64 fields in requests and responses (status, file handle, offsets). */
+export const AFC_U64_SIZE = 8;
+
 export const AfcOperation = {
   Status: 0x01,
   Data: 0x02,
@@ -60,5 +63,6 @@ export const AFC_STATUS_NAMES: Readonly<Record<number, string>> = {
   33: "DirNotEmpty",
 };
 
+export const AFC_STATUS_SUCCESS = 0;
 export const AFC_STATUS_OBJECT_NOT_FOUND = 8;
 export const AFC_STATUS_OBJECT_EXISTS = 16;

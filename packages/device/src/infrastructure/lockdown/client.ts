@@ -3,7 +3,8 @@ import type { LockdownPairRecord } from "@device/domain/pairing/pair-record.ts";
 import type { TlsCredentials } from "@device/domain/ports/transport.ts";
 import type { Link } from "@device/infrastructure/framing/link.ts";
 import { type FrameLimits, receivePlist, sendPlist } from "@device/infrastructure/framing/plist-frames.ts";
-import { lockdownError } from "@device/infrastructure/lockdown/errors.ts";
+import { plistInteger } from "@device/infrastructure/framing/plist-values.ts";
+import { isLockdownError, LockdownErrorName, lockdownError } from "@device/infrastructure/lockdown/errors.ts";
 import { createDict, ErrorCode, LoadstarError, type Logger, type PlistDict, type PlistValue } from "@loadstar/kernel";
 
 export interface StartedService {
@@ -35,8 +36,9 @@ const pairRecordDict = (record: LockdownPairRecord): PlistDict =>
     ["SystemBUID", record.systemBuid],
   ]);
 
-const asInteger = (value: PlistValue | undefined): number | undefined =>
-  typeof value === "number" ? value : typeof value === "bigint" ? Number(value) : undefined;
+const MAX_PORT = 0xffff;
+
+const isValidPort = (port: number | undefined): port is number => port !== undefined && port > 0 && port <= MAX_PORT;
 
 export const createLockdownClient = (link: Link, options: { label: string; limits: FrameLimits; logger: Logger }) => {
   const { label, limits, logger } = options;
@@ -68,7 +70,7 @@ export const createLockdownClient = (link: Link, options: { label: string; limit
         ]);
         return response.Value;
       } catch (error) {
-        if (error instanceof LoadstarError && error.data?.lockdownError === "MissingValue") return undefined;
+        if (isLockdownError(error, LockdownErrorName.MissingValue)) return undefined;
         throw error;
       }
     },
@@ -116,8 +118,8 @@ export const createLockdownClient = (link: Link, options: { label: string; limit
         ["Service", service],
         ...(escrowBag ? [["EscrowBag", escrowBag] as const] : []),
       ]);
-      const port = asInteger(response.Port);
-      if (port === undefined || port <= 0 || port > 0xffff) {
+      const port = plistInteger(response.Port);
+      if (!isValidPort(port)) {
         throw new LoadstarError(ErrorCode.ServiceUnavailable, { message: `${service}: no port`, data: { service } });
       }
       logger.debug("service started", { service, port });

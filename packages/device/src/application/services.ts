@@ -1,8 +1,10 @@
+// Opens the lockdown services a session uses, each as a client that owns its connection.
 import type { DeviceContext } from "@device/application/context.ts";
 import type { DeviceSession } from "@device/application/session.ts";
 import { Service } from "@device/domain/constants.ts";
 import { type AfcClient, type AfcClientOptions, createAfcClient } from "@device/infrastructure/afc/client.ts";
 import { revealDeveloperModeOption } from "@device/infrastructure/amfi/client.ts";
+import { closeOnError, withClient } from "@device/infrastructure/closeable.ts";
 import { type ContainerMode, vendContainer } from "@device/infrastructure/house-arrest/client.ts";
 import { createInstallationProxy, type InstallationProxy } from "@device/infrastructure/installation-proxy/client.ts";
 import { createMisagent, type Misagent } from "@device/infrastructure/misagent/client.ts";
@@ -26,15 +28,10 @@ export const openAppContainer = async (
   session: DeviceSession,
   bundleId: string,
   mode: ContainerMode = "container",
-): Promise<AfcClient> => {
-  const link = await session.startService(Service.HouseArrest);
-  try {
-    return await vendContainer(link, bundleId, mode, { ...plistOptions(ctx), afc: afcOptions(ctx) });
-  } catch (error) {
-    await link.close();
-    throw error;
-  }
-};
+): Promise<AfcClient> =>
+  closeOnError(await session.startService(Service.HouseArrest), (link) =>
+    vendContainer(link, bundleId, mode, { ...plistOptions(ctx), afc: afcOptions(ctx) }),
+  );
 
 export const openInstallationProxy = async (ctx: DeviceContext, session: DeviceSession): Promise<InstallationProxy> =>
   createInstallationProxy(await session.startService(Service.InstallationProxy), plistOptions(ctx));
@@ -42,23 +39,19 @@ export const openInstallationProxy = async (ctx: DeviceContext, session: DeviceS
 export const openMisagent = async (ctx: DeviceContext, session: DeviceSession): Promise<Misagent> =>
   createMisagent(await session.startService(Service.Misagent), plistOptions(ctx));
 
-export const revealDeveloperMode = async (ctx: DeviceContext, session: DeviceSession): Promise<void> => {
-  const link = await session.startService(Service.Amfi);
-  try {
-    await revealDeveloperModeOption(link, plistOptions(ctx));
-  } finally {
-    await link.close();
-  }
-};
+/** Runs `use` with an installation_proxy client and always closes it. */
+export const useInstallationProxy = async <T>(
+  ctx: DeviceContext,
+  session: DeviceSession,
+  use: (proxy: InstallationProxy) => Promise<T>,
+): Promise<T> => withClient(await openInstallationProxy(ctx, session), use);
 
-/** Runs `use` with a service client and always closes it. */
-export const withClient = async <C extends { close(): Promise<void> }, T>(
-  client: C,
-  use: (client: C) => Promise<T>,
-): Promise<T> => {
-  try {
-    return await use(client);
-  } finally {
-    await client.close();
-  }
-};
+/** Runs `use` with a misagent client and always closes it. */
+export const useMisagent = async <T>(
+  ctx: DeviceContext,
+  session: DeviceSession,
+  use: (misagent: Misagent) => Promise<T>,
+): Promise<T> => withClient(await openMisagent(ctx, session), use);
+
+export const revealDeveloperMode = async (ctx: DeviceContext, session: DeviceSession): Promise<void> =>
+  withClient(await session.startService(Service.Amfi), (link) => revealDeveloperModeOption(link, plistOptions(ctx)));

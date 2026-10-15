@@ -9,8 +9,7 @@ import type { DeviceTransport, TlsCredentials } from "@device/domain/ports/trans
 import { summarizeProfile } from "@device/domain/profiles.ts";
 import { createLink, type Link } from "@device/infrastructure/framing/link.ts";
 import { type FrameLimits, receivePlist, sendPlist } from "@device/infrastructure/framing/plist-frames.ts";
-import { toNetworkPort } from "@device/infrastructure/usbmux/client.ts";
-import { encodeUsbmuxPacket, readUsbmuxPacket } from "@device/infrastructure/usbmux/protocol.ts";
+import { encodeUsbmuxPacket, readUsbmuxPacket, toNetworkPort } from "@device/infrastructure/usbmux/protocol.ts";
 import {
   createDict,
   isPlistDict,

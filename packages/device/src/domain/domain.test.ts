@@ -1,9 +1,8 @@
 import { fakeProfile } from "@device/__tests__/fake-device/fake-device.ts";
 import { developerModeState } from "@device/application/checks.ts";
-import { staleProfiles } from "@device/application/profiles.ts";
 import { parseVersion, shortUdid } from "@device/domain/device.ts";
 import { decodePem, encodePem } from "@device/domain/pairing/pem.ts";
-import { bundleIdOf, summarizeProfile } from "@device/domain/profiles.ts";
+import { bundleIdOf, staleProfiles, summarizeProfile } from "@device/domain/profiles.ts";
 import { utf8Encode } from "@loadstar/kernel";
 import { describe, expect, it } from "vitest";
 

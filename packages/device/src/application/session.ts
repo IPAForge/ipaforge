@@ -1,12 +1,15 @@
 import type { DeviceContext } from "@device/application/context.ts";
-import { getPairRecord, openLockdown, type PairOptions, pairDevice } from "@device/application/pair.ts";
+import { type LockdownSession, openLockdownSession } from "@device/application/lockdown.ts";
+import { type PairOptions, pairDevice } from "@device/application/pair.ts";
+import { getPairRecord, notPairedError } from "@device/application/pair-records.ts";
 import { LockdownDomain } from "@device/domain/constants.ts";
 import { type DeviceInfo, shortUdid, type UsbmuxDevice } from "@device/domain/device.ts";
 import { type PairRecord, tlsCredentials } from "@device/domain/pairing/pair-record.ts";
+import { closeOnError } from "@device/infrastructure/closeable.ts";
 import type { Link } from "@device/infrastructure/framing/link.ts";
-import type { LockdownClient } from "@device/infrastructure/lockdown/client.ts";
-import { ErrorCode, isPlistDict, LoadstarError, type PlistValue } from "@loadstar/kernel";
-import { z } from "zod";
+import { toDeviceInfo } from "@device/infrastructure/lockdown/device-info.ts";
+import { isLockdownError, LockdownErrorName } from "@device/infrastructure/lockdown/errors.ts";
+import { ErrorCode, LoadstarError, type PlistValue } from "@loadstar/kernel";
 
 export interface OpenSessionOptions extends PairOptions {
   /** Pair automatically (trust prompt) when there is no usable pair record. Default true. */
@@ -35,57 +38,94 @@ export interface DeviceSession {
   close(): Promise<void>;
 }
 
-const deviceInfoSchema = z.looseObject({
-  UniqueDeviceID: z.string(),
-  DeviceName: z.string(),
-  ProductType: z.string(),
-  ProductVersion: z.string(),
-  BuildVersion: z.string(),
-  DeviceClass: z.string(),
-  CPUArchitecture: z.string().optional(),
-  ActivationState: z.string().optional(),
-  PasswordProtected: z.boolean().optional(),
-});
-
-export const toDeviceInfo = (values: PlistValue | undefined): DeviceInfo => {
-  const parsed = deviceInfoSchema.safeParse(isPlistDict(values) ? values : undefined);
-  if (!parsed.success) {
-    throw new LoadstarError(ErrorCode.DeviceProtocolError, {
-      message: "unexpected device values",
-      cause: parsed.error,
-    });
-  }
-  const v = parsed.data;
-  return {
-    udid: v.UniqueDeviceID,
-    name: v.DeviceName,
-    productType: v.ProductType,
-    productVersion: v.ProductVersion,
-    buildVersion: v.BuildVersion,
-    deviceClass: v.DeviceClass,
-    ...(v.CPUArchitecture ? { cpuArchitecture: v.CPUArchitecture } : {}),
-    ...(v.ActivationState ? { activationState: v.ActivationState } : {}),
-    ...(v.PasswordProtected === undefined ? {} : { locked: v.PasswordProtected }),
-  };
-};
-
 const isInvalidPairing = (error: unknown): boolean =>
   error instanceof LoadstarError && error.code === ErrorCode.InvalidPairRecord;
 
+/** The stored pair record, or a new pairing when there is none (unless `autoPair` is off). */
+const pairRecordFor = async (
+  ctx: DeviceContext,
+  device: UsbmuxDevice,
+  options: OpenSessionOptions,
+  autoPair: boolean,
+): Promise<PairRecord> => {
+  const record = await getPairRecord(ctx, device.udid);
+  if (record) return record;
+  if (!autoPair) throw notPairedError(device.udid);
+  return pairDevice(ctx, device, options);
+};
+
+/** Starts a lockdown session; when the device rejects the pair record, pairs again once (if `autoPair`). */
 const startSession = async (
   ctx: DeviceContext,
   device: UsbmuxDevice,
-  record: PairRecord,
-): Promise<{ lockdown: LockdownClient; sessionId: string }> => {
-  const lockdown = await openLockdown(ctx, device);
+  options: OpenSessionOptions,
+  autoPair: boolean,
+): Promise<LockdownSession & { readonly pairRecord: PairRecord }> => {
+  const record = await pairRecordFor(ctx, device, options, autoPair);
   try {
-    const { sessionId, enableSessionSsl } = await lockdown.startSession(record.hostId, record.systemBuid);
-    if (enableSessionSsl) await lockdown.startTls(tlsCredentials(record));
-    return { lockdown, sessionId };
+    return { ...(await openLockdownSession(ctx, device, record)), pairRecord: record };
   } catch (error) {
-    await lockdown.close();
-    throw error;
+    if (!isInvalidPairing(error) || !autoPair) throw error;
+    ctx.deps.logger.warn("the device rejected the pair record; pairing again", { device: shortUdid(device.udid) });
+    const repaired = await pairDevice(ctx, device, options);
+    return { ...(await openLockdownSession(ctx, device, repaired)), pairRecord: repaired };
   }
+};
+
+/** The `DeviceSession` over a started lockdown session. */
+const sessionFor = (
+  ctx: DeviceContext,
+  device: UsbmuxDevice,
+  pairRecord: PairRecord,
+  { lockdown, sessionId }: LockdownSession,
+): DeviceSession => {
+  const { logger } = ctx.deps;
+  const credentials = tlsCredentials(pairRecord);
+  let closed = false;
+
+  const startService = async (service: string, options: StartServiceOptions = {}): Promise<Link> => {
+    const escrowBag = options.escrowBag ? pairRecord.escrowBag : undefined;
+    const { port, enableServiceSsl } = await lockdown.startService(service, escrowBag);
+    return closeOnError(await ctx.usbmux.connect(device.deviceId, port), async (link) => {
+      if (enableServiceSsl) await link.startTls(credentials);
+      return link;
+    });
+  };
+
+  const enableWifiDebugging = async (): Promise<void> => {
+    try {
+      await lockdown.setValue(LockdownDomain.WirelessLockdown, "EnableWifiDebugging", true);
+    } catch (error) {
+      if (isLockdownError(error, LockdownErrorName.MissingValue)) {
+        throw new LoadstarError(ErrorCode.PasscodeRequired, { cause: error });
+      }
+      throw error;
+    }
+  };
+
+  const close = async (): Promise<void> => {
+    if (closed) return;
+    closed = true;
+    try {
+      await lockdown.stopSession(sessionId);
+    } catch (error) {
+      logger.debug("StopSession failed (ignored)", { cause: error });
+    } finally {
+      await lockdown.close();
+      logger.info("session closed", { device: shortUdid(device.udid) });
+    }
+  };
+
+  return {
+    device,
+    pairRecord,
+    info: async () => toDeviceInfo(await lockdown.getValue()),
+    getValue: (key, domain) => lockdown.getValue(key, domain),
+    setValue: (domain, key, value) => lockdown.setValue(domain, key, value),
+    startService,
+    enableWifiDebugging,
+    close,
+  };
 };
 
 /**
@@ -97,71 +137,7 @@ export const openSession = async (
   device: UsbmuxDevice,
   options: OpenSessionOptions = {},
 ): Promise<DeviceSession> => {
-  const { logger } = ctx.deps;
-  const autoPair = options.autoPair ?? true;
-
-  let record = await getPairRecord(ctx, device.udid);
-  if (!record) {
-    if (!autoPair) throw new LoadstarError(ErrorCode.DeviceNotPaired, { data: { device: shortUdid(device.udid) } });
-    record = await pairDevice(ctx, device, options);
-  }
-
-  let started: { lockdown: LockdownClient; sessionId: string };
-  try {
-    started = await startSession(ctx, device, record);
-  } catch (error) {
-    if (!isInvalidPairing(error) || !autoPair) throw error;
-    logger.warn("the device rejected the pair record; pairing again", { device: shortUdid(device.udid) });
-    record = await pairDevice(ctx, device, options);
-    started = await startSession(ctx, device, record);
-  }
-  const { lockdown, sessionId } = started;
-  const pairRecord = record;
-  const credentials = tlsCredentials(pairRecord);
-  logger.info("session opened", { device: shortUdid(device.udid) });
-
-  let closed = false;
-  return {
-    device,
-    pairRecord,
-    info: async () => toDeviceInfo(await lockdown.getValue()),
-    getValue: (key, domain) => lockdown.getValue(key, domain),
-    setValue: (domain, key, value) => lockdown.setValue(domain, key, value),
-    startService: async (service, serviceOptions = {}) => {
-      const { port, enableServiceSsl } = await lockdown.startService(
-        service,
-        serviceOptions.escrowBag ? pairRecord.escrowBag : undefined,
-      );
-      const link = await ctx.usbmux.connect(device.deviceId, port);
-      try {
-        if (enableServiceSsl) await link.startTls(credentials);
-        return link;
-      } catch (error) {
-        await link.close();
-        throw error;
-      }
-    },
-    enableWifiDebugging: async () => {
-      try {
-        await lockdown.setValue(LockdownDomain.WirelessLockdown, "EnableWifiDebugging", true);
-      } catch (error) {
-        if (error instanceof LoadstarError && error.data?.lockdownError === "MissingValue") {
-          throw new LoadstarError(ErrorCode.PasscodeRequired, { cause: error });
-        }
-        throw error;
-      }
-    },
-    close: async () => {
-      if (closed) return;
-      closed = true;
-      try {
-        await lockdown.stopSession(sessionId);
-      } catch (error) {
-        logger.debug("StopSession failed (ignored)", { cause: error });
-      } finally {
-        await lockdown.close();
-        logger.info("session closed", { device: shortUdid(device.udid) });
-      }
-    },
-  };
+  const { pairRecord, ...started } = await startSession(ctx, device, options, options.autoPair ?? true);
+  ctx.deps.logger.info("session opened", { device: shortUdid(device.udid) });
+  return sessionFor(ctx, device, pairRecord, started);
 };
