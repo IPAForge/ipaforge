@@ -27,6 +27,6 @@ The script:
 
 | Date | Certificate issuer | Result | Notes |
 |---|---|---|---|
-| _pending_ | | | First run by the maintainer closes signer-spec uncertainty #2 |
+| 2026-10-15 | WWDR G3 (free account) | 2 CMS differences found and fixed | Apple DER-sorts the certificate SET (G3, root, leaf) and writes an explicit NULL for sha256WithRSA. All other blobs were identical. The main app's CodeDirectory differs only in the CodeResources hash (nested binaries carry different signing times). Also: Macs with only the expired WWDR G1 show the certificate as "not trusted"; the script now imports the chain itself |
 
 If a check fails, the script keeps both CMS dumps (`*.apple.txt`, `*.ours.txt`) in the printed temp directory. Diff them, fix `packages/signer/src/infrastructure/cms/sign.ts`, and record the finding in `docs/design/signer-spec.md` §5 and §11.

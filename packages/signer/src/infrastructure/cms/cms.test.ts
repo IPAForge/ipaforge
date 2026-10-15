@@ -20,7 +20,7 @@ import {
   signCodeDirectories,
 } from "@signer/infrastructure/cms/index.ts";
 import { createHasher } from "@signer/infrastructure/hashing/index.ts";
-import type * as asn1js from "asn1js";
+import * as asn1js from "asn1js";
 import * as pkijs from "pkijs";
 import { afterAll, describe, expect, it } from "vitest";
 
@@ -134,6 +134,29 @@ describe.each(["thin-min14", "thin-min10"])("CMS over the %s CodeDirectories", (
 
     const expected = await hasher.digest("sha256", cds[0]?.bytes ?? new Uint8Array());
     expect(toHex(octets("1.2.840.113549.1.9.4"))).toBe(toHex(expected));
+  });
+
+  it("matches Apple's CMS shape: DER-sorted certificates and an explicit NULL for sha256WithRSA", async () => {
+    const identity = await createTestIdentity();
+    const intermediate = fromBase64(APPLE_CERTIFICATES.find((c) => c.name === "Apple WWDR CA G3")?.der ?? "");
+    const root = fromBase64(APPLE_CERTIFICATES.find((c) => c.name === "Apple Root CA")?.der ?? "");
+    const cms = await signCodeDirectories(cds, { ...identity, chain: [intermediate, root] }, signingTime, hasher);
+    const signed = new pkijs.SignedData({ schema: pkijs.ContentInfo.fromBER(toArrayBuffer(cms)).content });
+
+    const encoded = (signed.certificates ?? []).map(
+      (c) => new Uint8Array((c as pkijs.Certificate).toSchema(true).toBER(false)),
+    );
+    expect(encoded).toHaveLength(3);
+    for (let i = 1; i < encoded.length; i++) {
+      expect(compareBytes(encoded[i - 1] as Uint8Array, encoded[i] as Uint8Array)).toBeLessThan(0);
+    }
+
+    const algorithm = signed.signerInfos[0]?.signatureAlgorithm;
+    expect(algorithm?.algorithmId).toBe("1.2.840.113549.1.1.11");
+    expect(algorithm?.algorithmParams).toBeInstanceOf(asn1js.Null);
+    // still verifies after the parameter is made explicit
+    const primary = cds[0]?.bytes ?? new Uint8Array();
+    expect(await signed.verify({ signer: 0, data: toArrayBuffer(primary), checkChain: false })).toBe(true);
   });
 
   it.skipIf(!hasOpenssl)("verifies with openssl cms (detached content)", async () => {
