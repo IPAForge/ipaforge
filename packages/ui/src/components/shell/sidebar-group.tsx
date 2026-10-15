@@ -1,8 +1,8 @@
 import { Separator } from "@heroui/react";
 import { SidebarLink } from "@ui/components/shell/sidebar-link.tsx";
-import { t } from "@ui/locales/en-shell.ts";
 import { type SectionGroup, sectionsInGroup } from "@ui/sections.ts";
 import { useId } from "react";
+import { useTranslation } from "react-i18next";
 
 interface SidebarGroupProps {
   readonly group: SectionGroup;
@@ -12,6 +12,7 @@ interface SidebarGroupProps {
 
 /** One group of sidebar links, named by its label when it has one. */
 export const SidebarGroup = ({ group, isFirst }: SidebarGroupProps) => {
+  const { t } = useTranslation();
   const labelId = useId();
   const { labelKey } = group;
   return (

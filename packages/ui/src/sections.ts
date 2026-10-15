@@ -1,4 +1,4 @@
-import type { ShellKey } from "@ui/locales/en-shell.ts";
+import type { TranslationKey } from "@ui/utils/i18n/i18next-types.ts";
 import {
   BadgeCheck,
   Download,
@@ -14,7 +14,7 @@ import {
 export const sectionGroups = [
   { id: "primary", labelKey: undefined },
   { id: "manage", labelKey: "nav.group.manage" },
-] as const satisfies readonly { readonly id: string; readonly labelKey: ShellKey | undefined }[];
+] as const satisfies readonly { readonly id: string; readonly labelKey: TranslationKey | undefined }[];
 
 export type SectionGroup = (typeof sectionGroups)[number];
 export type SectionGroupId = SectionGroup["id"];
@@ -22,7 +22,7 @@ export type SectionGroupId = SectionGroup["id"];
 export interface Section {
   readonly id: string;
   readonly path: `/${string}`;
-  readonly labelKey: ShellKey;
+  readonly labelKey: TranslationKey;
   readonly icon: LucideIcon;
   readonly group: SectionGroupId;
 }

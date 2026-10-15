@@ -6,4 +6,6 @@ afterEach(() => {
   document.documentElement.removeAttribute("style");
   document.documentElement.removeAttribute("class");
   document.documentElement.removeAttribute("data-theme");
+  document.documentElement.removeAttribute("lang");
+  document.documentElement.removeAttribute("dir");
 });

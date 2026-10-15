@@ -15,7 +15,7 @@ Loadstar is an open-source desktop tool (Windows, macOS, Linux) for installing S
 
 ## Project Structure
 
-> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `packages/rpc`, `packages/ui` (scaffold: palettes, top bar and sidebar shell, routes; runs in a browser via its own Vite config), `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, the RPC transport and IPA resolver, maintainer probes, and a minimal Electron shell: one hardened window rendering `@loadstar/ui`, no Engine wiring yet), `fixtures/signer`, `scripts/`, `.github/workflows/`.
+> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `packages/rpc`, `packages/ui` (palettes, top bar and sidebar shell, routes, i18n with six languages; runs in a browser via its own Vite config), `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, the RPC transport and IPA resolver, maintainer probes, and a minimal Electron shell: one hardened window rendering `@loadstar/ui`, no Engine wiring yet), `fixtures/signer`, `scripts/`, `.github/workflows/`.
 
 ```
 loadstar/
@@ -30,7 +30,8 @@ loadstar/
 │   └── ui/           # shared React app (features, theme palettes, i18n)
 ├── apps/
 │   └── desktop/      # Electron composition root + Node adapters
-├── scripts/          # check-boundaries.ts (+ boundaries.config.ts edge table)
+├── scripts/          # check-boundaries.ts (+ boundaries.config.ts edge table), check-locales.ts
+├── tooling/          # Biome GritQL lint plugins, shared Vite aliases
 ├── fixtures/         # golden Apple codesign outputs for signer tests
 └── docs/             # user, contributor and design documentation
 ```
@@ -58,12 +59,15 @@ loadstar/
 | `apps/desktop/src/main/index.ts` | Electron main: app lifecycle, hardening, the window (Engine wiring over rpc comes later) |
 | `apps/desktop/src/renderer/main.tsx` | Electron renderer: mounts `@loadstar/ui` with the browser services and a hash history |
 | `apps/desktop/electron.vite.config.ts` | electron-vite builds for main, preload and renderer (`pnpm --filter @loadstar/desktop dev` / `build`) |
-| `packages/ui/src/App.tsx` | UI root that every host mounts: providers (services, query, theme) + router with the shell |
+| `packages/ui/src/App.tsx` | UI root that every host mounts: providers (services, query, language, theme) + router with the shell |
+| `packages/ui/src/locales/en.json` | English UI strings, the source of truth for every translation (`status.json` lists languages and drafts) |
+| `packages/ui/src/utils/i18n/` | i18next setup, typed keys, language matching and store, on-demand locale loading (`prepareLanguage`), pseudo-locale, `Intl` formatters |
 | `packages/ui/src/main.tsx` | Browser entry for the UI (`pnpm --filter @loadstar/ui dev` / `build`) |
 | `pnpm-workspace.yaml` / `turbo.json` | Workspace and task graph |
 | `packages/kernel/src/index.ts` | LoadstarError/ErrorCode, ports, logger, byte utilities |
 | `scripts/check-boundaries.ts` | Architecture dependency-rule checker |
-| `.github/workflows/ci.yml` | Lint, typecheck, boundaries and tests on Linux, Windows and macOS |
+| `scripts/check-locales.ts` | Locale checker: keys, ICU syntax and placeholders vs `en.json`, completion per language |
+| `.github/workflows/ci.yml` | Lint, typecheck, boundaries, locales and tests on Linux, Windows and macOS |
 
 ## Documentation
 
@@ -76,7 +80,7 @@ loadstar/
 | Code Signing | docs/signing.md | How signing works and how it is verified |
 | Device | docs/device.md | usbmuxd per OS, pairing, services, device errors |
 | Apple Account | docs/apple-account.md | Sign-in, anisette, 2FA, saved accounts, errors |
-| User Interface | docs/ui.md | Running in a browser, folder structure, UiServices, palettes and themes, shell, styling rules |
+| User Interface | docs/ui.md | Running in a browser, folder structure, UiServices, palettes and themes, shell, translations and RTL, styling rules |
 | Install Flows | docs/install-flows.md | installSideStore, installApps, placePairing: steps, prompts, free-app limit, recovery, install-probe |
 | Engine RPC | docs/rpc.md | Engine ⇄ UI message protocol, run streaming, checkpoints, error transport, Electron adapter |
 | Roadmap | docs/roadmap.md | Phases with links to plans |

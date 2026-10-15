@@ -13,13 +13,15 @@
     "lint": "biome check .",
     "format": "biome format --write .",
     "check:boundaries": "node scripts/check-boundaries.ts",
+    "check:locales": "node scripts/check-locales.ts",
     "test:coverage": "vitest run --coverage",
     "prepare": "git config core.hooksPath .githooks || true",
     "lint:fix": "biome check --write .",
-    "verify": "pnpm lint && pnpm typecheck && pnpm check:boundaries && pnpm test"
+    "verify": "pnpm lint && pnpm typecheck && pnpm check:boundaries && pnpm check:locales && pnpm test"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
+    "@formatjs/icu-messageformat-parser": "3.5.18",
     "@types/node": "22.20.5",
     "@vitest/coverage-v8": "5.0.4",
     "tsx": "4.23.15",

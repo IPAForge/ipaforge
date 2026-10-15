@@ -1,0 +1,5 @@
+{
+  "nav": { "install": "Install" },
+  "devices": "{count, plural, =0 {No devices} one {# device} other {# devices}}",
+  "greeting": "Hello, {name}"
+}

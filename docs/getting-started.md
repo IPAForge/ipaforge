@@ -39,6 +39,7 @@ pnpm install
 pnpm lint               # Biome: formatting + lint, including the platform-free import ban
 pnpm typecheck          # tsc for every package and the scripts
 pnpm check:boundaries   # architecture dependency rules
+pnpm check:locales      # UI translations: keys, ICU, placeholders, completion
 pnpm test               # Vitest across all packages
 pnpm test:coverage      # same, with v8 coverage
 ```

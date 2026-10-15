@@ -14,6 +14,7 @@
       "!fixtures/**/inputs",
       "!fixtures/**/expected",
       "!scripts/__fixtures__",
+      "!tooling/biome/__fixtures__",
       "!fixtures/**/manifest.json"
     ]
   },
@@ -96,6 +97,10 @@
           "a11y": "error"
         }
       }
+    },
+    {
+      "includes": ["packages/ui/src/**/*.tsx"],
+      "plugins": ["./tooling/biome/no-jsx-literal-text.grit"]
     }
   ],
   "plugins": ["./tooling/biome/no-function-declaration.grit"]

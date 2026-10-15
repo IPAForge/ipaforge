@@ -1,0 +1,6 @@
+{
+  "nav": { "install": "Installieren", "extra": "Zusätzlich" },
+  "devices": "{count, plural, one {# Gerät}}",
+  "greeting": "Hallo, {nombre}",
+  "broken": 42
+}
