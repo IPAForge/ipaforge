@@ -16,7 +16,8 @@ Loadstar is **pre-alpha**. Phases 0–4 are complete: foundation, signer, device
 | Developer services (`apple.developer`) | Implemented (Phase 4): reads verified with a real account |
 | Installer (`@loadstar/installer`) | Implemented (Phase 5): pipelines, catalog, install flows, free-app limit, diagnostics and the Engine facade |
 | Engine RPC (`@loadstar/rpc`) | Implemented (Phase 5): typed, validated Engine ⇄ UI messages; the Electron wiring comes with the desktop app |
-| UI, desktop app | Planned |
+| UI (`@loadstar/ui`) | In progress (Phase 6): palettes, the shell and routes |
+| Desktop app (`apps/desktop`) | A minimal Electron shell renders the UI; Engine wiring and packaging come later |
 
 ## What you'll need (once released)
 
@@ -42,7 +43,18 @@ pnpm test               # Vitest across all packages
 pnpm test:coverage      # same, with v8 coverage
 ```
 
-CI runs the same commands on Ubuntu, Windows and macOS (`.github/workflows/ci.yml`).
+CI runs the same commands on Ubuntu, Windows and macOS (`.github/workflows/ci.yml`), and builds the desktop app on all three.
+
+### Running the app
+
+```bash
+pnpm --filter @loadstar/desktop dev      # the app in Electron, with hot reload
+pnpm --filter @loadstar/desktop build    # main, preload and renderer into apps/desktop/out
+pnpm --filter @loadstar/desktop preview  # build, then launch the built app
+pnpm --filter @loadstar/ui dev           # the UI alone in a browser, http://localhost:5173
+```
+
+Electron downloads its binary the first time the app is launched, not during `pnpm install`. The window is not wired to the Engine yet, so the device and Apple ID pickers are placeholders. See [The User Interface](ui.md).
 
 Opt-in test suites:
 

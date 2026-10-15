@@ -4,9 +4,18 @@
 
 `@loadstar/ui` is the React app the desktop shell renders: React 19, HeroUI v3, Tailwind v4, TanStack Router and Query, and Lucide icons. It is a package like the others. It can import only `@loadstar/kernel` and `@loadstar/rpc`, and it never reaches a device, Apple or the file system on its own. The host gives it everything it needs.
 
+## Running it in Electron
+
+```sh
+pnpm --filter @loadstar/desktop dev      # opens the app in Electron, hot reload
+pnpm --filter @loadstar/desktop build    # main, preload and renderer into apps/desktop/out
+```
+
+`apps/desktop/src/renderer/main.tsx` mounts `App` the same way as the browser entry: with `createBrowserServices`, since the renderer is a sandboxed browser context, and with a hash history, because a build is loaded from `file://`. The window runs with `contextIsolation`, `sandbox` and no Node integration, under a strict Content-Security-Policy, and it blocks new windows and navigation. The preload exposes nothing the UI uses yet; it will carry only the rpc port once the Engine is wired.
+
 ## Running it in a browser
 
-The UI runs without Electron. The package is a plain Vite app: `index.html` and `vite.config.ts` sit at the package root, and `src/main.tsx` mounts `App` with the browser services.
+The UI also runs without Electron. The package is a plain Vite app: `index.html` and `vite.config.ts` sit at the package root, and `src/main.tsx` mounts `App` with the browser services.
 
 ```sh
 pnpm --filter @loadstar/ui dev      # http://localhost:5173, hot reload

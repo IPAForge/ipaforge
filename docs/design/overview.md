@@ -31,7 +31,7 @@ The whole engine is written in **TypeScript** and runs in Electron on all three 
 - **Monorepo:** pnpm 12 workspaces + Turborepo. Packages are source-only (`exports` → `src/index.ts`, no build step); the apps' bundlers compile them
 - **UI:** React 19, HeroUI v3 (React Aria based), Tailwind CSS v4 (utility classes only, no hand-written CSS), Motion for animation, Lucide icons
 - **UI state and data:** TanStack Router, TanStack Query (async/server state), Zustand (local UI state)
-- **Desktop shell:** Electron 44 via electron-vite 5, packaged with electron-builder (Windows, macOS, Linux)
+- **Desktop shell:** Electron 44 via electron-vite 6, packaged with electron-builder (Windows, macOS, Linux)
 - **Crypto and formats:** WebCrypto, pkijs + asn1js (CMS, CSR, X.509), @noble/hashes (fallback hasher), node-forge (legacy `.p12` import only, Phase 10), @zip.js/zip.js (IPA streaming). Plists use an **in-house** XML and binary parser and a CoreFoundation-exact writer, because `@plist/*` loses the real-vs-integer distinction.
 - **Validation:** zod 4 at all I/O boundaries (e.g. provisioning profiles)
 - **Quality:** Vitest 5, Playwright (Electron UI e2e, added in Phase 9), Biome 2 (lint and format)

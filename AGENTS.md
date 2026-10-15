@@ -15,7 +15,7 @@ Loadstar is an open-source desktop tool (Windows, macOS, Linux) for installing S
 
 ## Project Structure
 
-> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `packages/rpc`, `packages/ui` (scaffold: palettes, top bar and sidebar shell, routes; runs in a browser via its own Vite config), `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, the RPC transport and IPA resolver, maintainer probes), `fixtures/signer`, `scripts/`, `.github/workflows/`.
+> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `packages/rpc`, `packages/ui` (scaffold: palettes, top bar and sidebar shell, routes; runs in a browser via its own Vite config), `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, the RPC transport and IPA resolver, maintainer probes, and a minimal Electron shell: one hardened window rendering `@loadstar/ui`, no Engine wiring yet), `fixtures/signer`, `scripts/`, `.github/workflows/`.
 
 ```
 loadstar/
@@ -55,7 +55,9 @@ loadstar/
 | `packages/catalog/src/index.ts` | Public catalog API (`createCatalog`: manifest, release resolution with mirrors, verified downloads) |
 | `packages/rpc/src/index.ts` | Public RPC API (`createRpcServer`, `createEngineClient`, `EngineClient`, `Transport`, in-memory transport) |
 | `apps/desktop/src/main/rpc/` | Electron `MessagePortMain` transport and the IPA resolver (file path, URL download) |
-| `apps/desktop/src/main/index.ts` | Electron main: wires Node adapters into the Engine (Phase 9) |
+| `apps/desktop/src/main/index.ts` | Electron main: app lifecycle, hardening, the window (Engine wiring over rpc comes later) |
+| `apps/desktop/src/renderer/main.tsx` | Electron renderer: mounts `@loadstar/ui` with the browser services and a hash history |
+| `apps/desktop/electron.vite.config.ts` | electron-vite builds for main, preload and renderer (`pnpm --filter @loadstar/desktop dev` / `build`) |
 | `packages/ui/src/App.tsx` | UI root that every host mounts: providers (services, query, theme) + router with the shell |
 | `packages/ui/src/main.tsx` | Browser entry for the UI (`pnpm --filter @loadstar/ui dev` / `build`) |
 | `pnpm-workspace.yaml` / `turbo.json` | Workspace and task graph |
