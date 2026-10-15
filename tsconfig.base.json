@@ -28,6 +28,7 @@
       "@catalog/*": ["./packages/catalog/src/*"],
       "@installer/*": ["./packages/installer/src/*"],
       "@rpc/*": ["./packages/rpc/src/*"],
+      "@ui/*": ["./packages/ui/src/*"],
       "@desktop/*": ["./apps/desktop/src/*"]
     }
   }

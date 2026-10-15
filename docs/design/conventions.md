@@ -4,7 +4,7 @@
 
 ## Naming Conventions
 
-- Files: `kebab-case.ts` / `kebab-case.tsx`; tests sit next to the source as `*.test.ts`
+- Files: `kebab-case.ts` / `kebab-case.tsx`; tests sit next to the source as `*.test.ts`. React components follow the same rule (`top-bar.tsx` exports `TopBar`). The one exception is the UI's root component, `packages/ui/src/App.tsx` (with `App.test.tsx`), which keeps the name every React project uses.
 - Variables and functions: `camelCase`; booleans read as predicates (`isLocked`, `hasPairRecord`)
 - Types, interfaces, classes, React components: `PascalCase`; no `I` prefix on interfaces
 - Constants: `camelCase`, except frozen lookup tables, which use `PascalCase` objects with `as const` (e.g. `ErrorCode`)
@@ -53,11 +53,14 @@
 
 - Build UI from HeroUI components and Tailwind utilities only. No `.css` files beyond the single entry import, and no `style={{}}` for theming.
 - Every user-visible string goes through i18next (`t("…")`), so string literals don't appear in JSX.
-- Components never call adapters or the engine directly. They use `EngineClient` hooks (TanStack Query) from `ui/app`.
+- Components never call adapters or the engine directly. They use `EngineClient` hooks (TanStack Query) from `ui/hooks`.
+- The host reaches the UI only through `UiServices` (`ui/services`), passed to `<App services={…}/>`: the kernel `Logger`, `PreferencesStore` (synchronous `read`/`write` of UI preferences such as palette and colour mode) and `ColorSchemeSource` (the OS light/dark preference). `ui/services` also holds their implementations: browser ones (`createBrowserServices`, used by `src/main.tsx`) and in-memory ones for tests. The Electron renderer passes its own. `App` touches no browser global at import time.
+- `packages/ui/src` layout: `App.tsx` (providers + router), `main.tsx` (browser entry), `router.tsx`, `sections.ts`, `styles.css`, then `components/`, `features/<section>/`, `hooks/`, `services/`, `theme/` and `locales/`.
+- Use logical Tailwind utilities only (`ms-`/`me-`, `ps-`/`pe-`, `start-`/`end-`, `border-s`/`border-e`), so layouts mirror in right-to-left languages.
 
 ## Logging
 
-- Use the `Logger` port only (`logger.debug|info|warn|error(msg, fields)`), with structured fields.
+- Use the `Logger` port only (`logger.debug|info|warn|error(msg, fields)`), with structured fields. Never call `console` directly; the one exception is the UI's browser log sink (`packages/ui/src/services/console-log-sink.ts`).
 - Redact passwords, tokens, anisette headers, private keys and device serials by default. Log level comes from `LOG_LEVEL` or the settings screen.
 
 ## Testing

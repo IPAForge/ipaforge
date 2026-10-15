@@ -73,6 +73,7 @@ The signer (`@loadstar/signer`) is done. Its output is **byte-identical to Apple
 | [Apple Account](docs/apple-account.md) | Apple ID sign-in, 2FA, saved accounts, sign-in errors |
 | [Install Flows](docs/install-flows.md) | Installing SideStore and apps: steps, prompts, free-app limit, recovery |
 | [Engine RPC](docs/rpc.md) | How the UI talks to the Engine: messages, runs, errors |
+| [User Interface](docs/ui.md) | The UI package: running it in a browser, folder structure, palettes and themes, the shell, styling rules |
 | [Roadmap](docs/roadmap.md) | Phases from foundation to 1.0 |
 | [Contributing](docs/contributing.md) | How to contribute, pull request rules, conventions |
 | [Code of Conduct](docs/CODE_OF_CONDUCT.md) | How we treat each other |
