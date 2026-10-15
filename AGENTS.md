@@ -15,7 +15,7 @@ Loadstar is an open-source desktop tool (Windows, macOS, Linux) for installing S
 
 ## Project Structure
 
-> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `apps/desktop` (Node adapters only), `fixtures/signer`, `scripts/`, `.github/workflows/`.
+> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `apps/desktop` (Node adapters only), `fixtures/signer`, `scripts/`, `.github/workflows/`.
 
 ```
 loadstar/
@@ -46,6 +46,8 @@ loadstar/
 | `packages/device/src/index.ts` | Public device API (`createDeviceManager`: pairing, install, profiles, app files, checks) |
 | `apps/desktop/src/main/adapters/` | Node adapters: usbmuxd transport, pinned TLS, file source |
 | `apps/desktop/scripts/device-probe.ts` | Maintainer CLI against a real device |
+| `packages/apple/src/index.ts` | Public Apple API (`createAppleAccounts`: anisette, sign-in + 2FA, app tokens, saved accounts) |
+| `apps/desktop/scripts/apple-probe.ts` | Maintainer CLI: sign in with real Apple IDs |
 | `apps/desktop/src/main/index.ts` | Electron main: wires Node adapters into the Engine (Phase 9) |
 | `packages/ui/src/app/root.tsx` | UI root: router, providers, theme, i18n |
 | `pnpm-workspace.yaml` / `turbo.json` | Workspace and task graph |
@@ -62,6 +64,7 @@ loadstar/
 | Architecture | docs/architecture.md | Packages, ports & adapters, dependency rules |
 | Code Signing | docs/signing.md | How signing works and how it is verified |
 | Device | docs/device.md | usbmuxd per OS, pairing, services, device errors |
+| Apple Account | docs/apple-account.md | Sign-in, anisette, 2FA, saved accounts, errors |
 | Roadmap | docs/roadmap.md | Phases with links to plans |
 | Contributing | docs/contributing.md | PR rules, conventions, clean-room policy |
 | Signer format spec | docs/design/signer-spec.md | Byte-level iOS code-signing reference |

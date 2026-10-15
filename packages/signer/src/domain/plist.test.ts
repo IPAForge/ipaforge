@@ -64,7 +64,7 @@ describe("XML round-trip with CoreFoundation formatting", () => {
   });
 
   it.each([
-    ["no root", "<dict/>"],
+    ["no root element", "just text"],
     ["bad integer", "<plist><integer>x</integer></plist>"],
     ["unknown element", "<plist><foo/></plist>"],
     ["unterminated", "<plist><dict><key>a</key>"],

@@ -35,10 +35,14 @@
 | Code | Meaning | Handling |
 |---|---|---|
 | -80045 | Client identity rejected before credentials | Refresh client info / switch anisette provider; dedicated message |
+| -90010 | Same message as -80045, at `init`; first seen 2026-10-15 with a real account through a server-provided Windows iTunes identity | Treated as `apple.client_rejected` |
+| -22421 (+ hsc 434) | Returned with `hsc 434` and `X-Apple-I-MD-DATA` when Apple wants an anisette resync (verified 2026-10-15) | Resync with the same anisette server (`sim`, `device_id`, `md_lu` in `get_headers`) and retry `init` once; without 434 → `apple.account_refused` |
+| -20970 | "Your account information was entered incorrectly." (unknown Apple ID) | `apple.invalid_credentials` |
 | -22411 | Account refused right now (new, flagged) | Wait, sign in on an Apple device once, or use another Apple ID |
 | -22406 | Wrong password (or email casing) | Re-prompt; no automatic retry |
 | -21669 | Wrong 2FA code | Re-prompt |
 | -28248 | SMS cannot be sent to this number | Offer device 2FA or wait |
+| HTTP 403 on `/auth` or `/auth/verify/phone` | Apple refuses the SMS flow for third-party clients (confirmed 2026-10-15 with two different clients on the same account) | `apple.sms_unavailable`: suggest a trusted device or another Apple ID; never retried or worked around |
 | -22979 / -22981, hsc 409, HTTP 412 with an active challenge | A code was already sent | Go to code entry |
 | -45061 | Anisette/ADI not provisioned | Re-provision automatically |
 | hsc 434 | Anisette resync required | Resync with `X-Apple-I-MD-DATA`, retry |

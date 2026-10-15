@@ -30,4 +30,17 @@ describe("plist", () => {
       expect.objectContaining({ code: ErrorCode.InvalidPlist }),
     );
   });
+
+  it("accepts a bare root value without the <plist> wrapper (Apple session data)", () => {
+    const bare = utf8Encode("<dict><key>adsid</key><string>x</string><key>n</key><integer>3</integer></dict>\n");
+    expect(parsePlist(bare)).toEqual(
+      createDict([
+        ["adsid", "x"],
+        ["n", 3],
+      ]),
+    );
+    expect(() => parsePlist(utf8Encode("<dict></dict><dict></dict>"))).toThrow(
+      expect.objectContaining({ code: ErrorCode.InvalidPlist }),
+    );
+  });
 });

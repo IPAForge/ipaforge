@@ -1,4 +1,4 @@
-[← Device](device.md) · [Back to README](../README.md) · [Contributing →](contributing.md)
+[← Apple Account](apple-account.md) · [Back to README](../README.md) · [Contributing →](contributing.md)
 
 # Roadmap
 
@@ -9,7 +9,7 @@ The detailed roadmap, with each phase's scope, is [design/roadmap.md](design/roa
 | 0 | Foundation ✓ | Monorepo, `kernel`, boundary checker, multi-OS CI |
 | 1 | Signer ✓ | Production pure-TS signer with Apple-parity fixtures, verified against a real Apple Development certificate |
 | 2 | Device layer ✓ | usbmux, lockdown, pairing, AFC, house_arrest, install, profiles |
-| 3 | Apple account | Anisette with fallback, login, 2FA, saved credentials |
+| 3 | Apple account ✓ | Anisette with fallback, login, 2FA, saved credentials |
 | 4 | Developer services | Teams, certificates, app IDs, groups, profiles |
 | 5 | Installer engine + catalog | Pipelines, flows, release catalog, error catalog |
 | 6 | UI foundation | HeroUI + Tailwind shell, colour palettes, i18n |

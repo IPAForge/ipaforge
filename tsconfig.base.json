@@ -24,6 +24,7 @@
       "@kernel/*": ["./packages/kernel/src/*"],
       "@signer/*": ["./packages/signer/src/*"],
       "@device/*": ["./packages/device/src/*"],
+      "@apple/*": ["./packages/apple/src/*"],
       "@desktop/*": ["./apps/desktop/src/*"]
     }
   }

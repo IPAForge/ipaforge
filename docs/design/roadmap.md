@@ -32,8 +32,8 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
   - pairing: read existing pair records and create new ones with a trust prompt;
   - services: TLS sessions, AFC, house_arrest, installation_proxy (install with progress, list apps), misagent (profiles on the device);
   - checks: Developer Mode and locked device. Node adapters are tested on real hardware
-- [ ] **3. Apple account**: `@loadstar/apple`:
-  - anisette v3 client with a health-checked server chain and automatic fallback (native anisette on macOS), plus an opt-in **local anisette** provider: a Provision `anisette-server` sidecar that downloads Apple's libraries itself, so no third-party server is needed (RESEARCH.md §4);
+- [x] **3. Apple account**: `@loadstar/apple`:
+  - anisette v3 client with a health-checked server chain and automatic fallback (native anisette on macOS), plus an opt-in **local anisette** provider: a Provision `anisette-server` sidecar that downloads Apple's libraries itself, so no third-party server is needed (RESEARCH.md §4; v1 protocol client done, sidecar process management moves to Phase 9);
   - GSA SRP-6a login, 2FA (trusted device and SMS, with non-fatal phone lookup), token refresh;
   - multiple Apple IDs: `SecretStore`-backed saved accounts with switch, sign-out and per-account team/certificate state;
   - Apple-facing client identity as remotely updatable data (from the anisette server's `client_info` or signed config), never constants;
@@ -64,3 +64,4 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
 | 0. Foundation | 2026-10-13 |
 | 1. Signer | 2026-10-15 |
 | 2. Device layer (hardware verification across OSes deferred to the end-to-end test pass) | 2026-10-15 |
+| 3. Apple account (sign-in + device 2FA + app token verified with a real account; SMS refused by Apple) | 2026-10-15 |

@@ -138,3 +138,41 @@ describe("file source", () => {
     }
   });
 });
+
+describe("HTTP redirects", () => {
+  it("refuses HTTPS → HTTP and drops identifying headers on cross-host redirects", async () => {
+    const { redirectTarget } = await import("@desktop/main/adapters/http-client.ts");
+    const from = new URL("https://gsa.apple.com/auth");
+    const headers = { "X-Apple-Identity-Token": "secret", "X-Apple-I-MD": "md", Accept: "application/json" };
+    expect(() => redirectTarget(from, "http://gsa.apple.com/auth", headers)).toThrow(LoadstarError);
+    expect(redirectTarget(from, "/other", headers).headers).toEqual(headers);
+    expect(redirectTarget(from, "https://elsewhere.example/x", headers).headers).toEqual({
+      Accept: "application/json",
+    });
+  });
+});
+
+describe("file secret store", () => {
+  it("persists values in a 0600 file and routes by prefix", async () => {
+    const { createFileSecretStore, createRoutedSecretStore } = await import(
+      "@desktop/main/adapters/file-secret-store.ts"
+    );
+    const { createMemorySecretStore } = await import("@desktop/main/adapters/memory-secret-store.ts");
+    const { stat } = await import("node:fs/promises");
+    const dir = await mkdtemp(join(tmpdir(), "loadstar-secrets-"));
+    try {
+      const path = join(dir, "nested", "store.json");
+      const store = createRoutedSecretStore(["anisette/"], createFileSecretStore(path), createMemorySecretStore());
+      await store.set("anisette/state", utf8Encode("machine"));
+      await store.set("apple/session", utf8Encode("in memory only"));
+      const reopened = createFileSecretStore(path);
+      expect(utf8Decode((await reopened.get("anisette/state")) ?? new Uint8Array())).toBe("machine");
+      expect(await reopened.get("apple/session")).toBeUndefined();
+      if (process.platform !== "win32") expect((await stat(path)).mode & 0o777).toBe(0o600);
+      await reopened.delete("anisette/state");
+      expect(await createFileSecretStore(path).get("anisette/state")).toBeUndefined();
+    } finally {
+      await rm(dir, { recursive: true, force: true });
+    }
+  });
+});
