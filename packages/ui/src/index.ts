@@ -8,7 +8,13 @@ export {
 } from "@ui/services/color-scheme-source.ts";
 export { consoleLogSink } from "@ui/services/console-log-sink.ts";
 export { createLocalStoragePreferences } from "@ui/services/local-storage-preferences.ts";
+export {
+  createFixedLocaleSource,
+  createNavigatorLocaleSource,
+  type LocaleSource,
+} from "@ui/services/locale-source.ts";
 export { createMemoryPreferencesStore, type PreferencesStore } from "@ui/services/preferences-store.ts";
 export type { UiServices } from "@ui/services/ui-services.ts";
 export { palettes } from "@ui/theme/palettes.ts";
 export type { ColorMode, PaletteId, PaletteTokens } from "@ui/theme/theme-types.ts";
+export { type LanguageSetup, prepareLanguage } from "@ui/utils/i18n/prepare-language.ts";

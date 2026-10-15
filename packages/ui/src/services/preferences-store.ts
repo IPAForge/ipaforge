@@ -1,5 +1,5 @@
 /**
- * Where UI preferences (palette, colour mode, later the language) are kept between launches.
+ * Where UI preferences (palette, colour mode, language) are kept between launches.
  * Synchronous so the first frame already renders with the saved theme. Provided by the host:
  * localStorage in a browser (`createLocalStoragePreferences`), the Electron renderer later.
  */

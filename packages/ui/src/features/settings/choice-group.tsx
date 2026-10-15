@@ -1,11 +1,12 @@
 import { ToggleButton, ToggleButtonGroup } from "@heroui/react";
-import { type ShellKey, t } from "@ui/locales/en-shell.ts";
+import type { TranslationKey } from "@ui/utils/i18n/i18next-types.ts";
 import { type Key, useId } from "react";
+import { useTranslation } from "react-i18next";
 
 interface ChoiceGroupProps<T extends string> {
-  readonly labelKey: ShellKey;
+  readonly labelKey: TranslationKey;
   readonly options: readonly T[];
-  readonly optionLabelKey: (option: T) => ShellKey;
+  readonly optionLabelKey: (option: T) => TranslationKey;
   readonly value: T;
   readonly onChange: (value: T) => void;
 }
@@ -18,6 +19,7 @@ export const ChoiceGroup = <T extends string>({
   value,
   onChange,
 }: ChoiceGroupProps<T>) => {
+  const { t } = useTranslation();
   const labelId = useId();
   const onSelectionChange = (keys: Set<Key>) => {
     const [selected] = keys;

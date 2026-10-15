@@ -1,7 +1,7 @@
 import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { t } from "@ui/__tests__/test-i18n.ts";
 import { renderApp } from "@ui/__tests__/test-services.tsx";
-import { t } from "@ui/locales/en-shell.ts";
 import { palettes } from "@ui/theme/palettes.ts";
 import { ThemePreferenceKey } from "@ui/theme/theme-config.ts";
 import { describe, expect, it } from "vitest";
@@ -10,20 +10,20 @@ const html = () => document.documentElement;
 
 describe("App", () => {
   it("mounts and redirects / to the install section", async () => {
-    const { history } = renderApp("/");
+    const { history } = await renderApp("/");
     expect((await screen.findByRole("heading", { level: 1 })).textContent).toBe(t("install.title"));
     expect(history.location.pathname).toBe("/install");
   });
 
   it("applies the default palette to <html>", async () => {
-    renderApp("/devices");
+    await renderApp("/devices");
     await screen.findByRole("main");
     expect(html().style.getPropertyValue("--accent")).toBe(palettes.graphite.light.accent);
     expect(html().getAttribute("data-theme")).toBe("light");
   });
 
   it("logs navigation under ui.router", async () => {
-    const { records } = renderApp("/");
+    const { records } = await renderApp("/");
     await screen.findByRole("main");
     await waitFor(() =>
       expect(records).toContainEqual(
@@ -33,7 +33,7 @@ describe("App", () => {
   });
 
   it("follows the OS scheme in system mode", async () => {
-    const { scheme } = renderApp("/devices");
+    const { scheme } = await renderApp("/devices");
     await screen.findByRole("main");
     scheme.change("dark");
     await waitFor(() => expect(html().getAttribute("data-theme")).toBe("dark"));
@@ -42,7 +42,7 @@ describe("App", () => {
 
   it("changes and persists the palette and mode from Settings", async () => {
     const user = userEvent.setup();
-    const { services, records } = renderApp("/settings");
+    const { services, records } = await renderApp("/settings");
 
     await user.click(await screen.findByRole("radio", { name: t("theme.palette.ocean") }));
     await user.click(screen.getByRole("radio", { name: t("theme.mode.dark") }));

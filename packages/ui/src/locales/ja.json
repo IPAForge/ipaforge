@@ -1,0 +1,464 @@
+{
+  "app": {
+    "name": "Loadstar"
+  },
+  "shell": {
+    "skipToContent": "コンテンツへスキップ",
+    "navigation": "セクション"
+  },
+  "topBar": {
+    "device": "デバイス",
+    "noDevice": "なし",
+    "deviceMenu": "デバイス",
+    "devicesFound": "{count, plural, =0 {まだデバイスがありません} other {#台のデバイスが接続されています}}",
+    "account": "Apple ID",
+    "notSignedIn": "サインインしていません",
+    "accountMenu": "Apple ID",
+    "addAppleIdSoon": "Apple IDを追加…（近日対応）"
+  },
+  "nav": {
+    "group": {
+      "manage": "管理"
+    },
+    "install": "インストール",
+    "preload": "プリロード",
+    "devices": "デバイス",
+    "accounts": "アカウント",
+    "certificates": "証明書",
+    "logs": "ログ",
+    "settings": "設定"
+  },
+  "placeholder": {
+    "body": "このセクションは準備中です。"
+  },
+  "install": {
+    "title": "SideStoreをインストール",
+    "description": "あなたのApple IDで署名し、USB経由でインストールします。",
+    "steps": {
+      "device": "デバイスを確認",
+      "resolve": "リリースを検索",
+      "download": "ダウンロード",
+      "inspect": "Appを検査",
+      "certificate_sharing": "証明書を共有",
+      "sign_in": "Appleにサインイン",
+      "team": "チームを選択",
+      "register_device": "デバイスを登録",
+      "certificate": "証明書を準備",
+      "app_ids": "App IDを登録",
+      "free_apps": "無料Appの上限を確認",
+      "provision": "プロビジョニングプロファイルを取得",
+      "sign": "Appに署名",
+      "install": "デバイスにインストール",
+      "pairing": "ペアリングファイルを配置",
+      "remember": "このインストールを記録"
+    }
+  },
+  "pairing": {
+    "steps": {
+      "targets": "ペアリングが必要なAppを検索",
+      "place": "ペアリングファイルを配置"
+    }
+  },
+  "settings": {
+    "appearance": "外観",
+    "mode": "カラーモード",
+    "palette": "パレット",
+    "language": {
+      "title": "言語",
+      "system": "システム（{language}）",
+      "hint": "ここで言語を選ばない限り、Loadstarはシステムの言語に従います。",
+      "draft": "下書き"
+    }
+  },
+  "theme": {
+    "mode": {
+      "system": "システム",
+      "light": "ライト",
+      "dark": "ダーク"
+    },
+    "palette": {
+      "graphite": "グラファイト",
+      "ocean": "オーシャン",
+      "aurora": "オーロラ",
+      "sunset": "サンセット",
+      "forest": "フォレスト",
+      "rose": "ローズ"
+    }
+  },
+  "errors": {
+    "device": {
+      "locked": {
+        "title": "デバイスのロックを解除してください",
+        "body": "デバイスがロックされているため、Loadstarが通信できません。ロックを解除し、インストールが終わるまでロックしないでください。"
+      },
+      "developer_mode_off": {
+        "title": "デベロッパモードがオフです",
+        "body": "サイドロードしたAppにはデベロッパモードが必要です。「設定」›「プライバシーとセキュリティ」›「デベロッパモード」でオンにしてから、デバイスを再起動してください。"
+      },
+      "not_paired": {
+        "title": "このコンピュータはまだ信頼されていません",
+        "body": "デバイスのロックを解除し、このコンピュータを信頼するか尋ねられたら「信頼」をタップしてください。"
+      },
+      "usbmuxd_unavailable": {
+        "title": "デバイスサポートが動作していません",
+        "body": "LoadstarがiPhoneやiPadと通信するシステムサービスに接続できません。インストールまたは起動してから、もう一度お試しください。"
+      },
+      "not_found": {
+        "title": "デバイスが見つかりません",
+        "body": "iPhoneまたはiPadをUSBケーブルで接続し、ロックを解除してください。"
+      },
+      "disconnected": {
+        "title": "デバイスが切断されました",
+        "body": "接続が切れました。ケーブルを接続し直し、デバイスのロックを解除してから、もう一度お試しください。"
+      },
+      "pairing_pending": {
+        "title": "「信頼」を待っています",
+        "body": "デバイスのロックを解除し、表示された確認で「信頼」をタップしてください。"
+      },
+      "pairing_denied": {
+        "title": "信頼が拒否されました",
+        "body": "デバイスがこのコンピュータの信頼を拒否しました。もう一度ペアリングし、今度は「信頼」をタップしてください。"
+      },
+      "invalid_pair_record": {
+        "title": "ペアリングが無効になりました",
+        "body": "デバイスがこのコンピュータとのペアリングを受け付けなくなりました。ケーブルを抜いて挿し直し、ロックを解除して「信頼」をタップしてください。"
+      },
+      "service_unavailable": {
+        "title": "デバイスのサービスが起動しませんでした",
+        "body": "Loadstarに必要なサービスの起動をデバイスが拒否しました。ロックを解除して接続し直し、もう一度お試しください。"
+      },
+      "protocol_error": {
+        "title": "デバイスから予期しない応答がありました",
+        "body": "デバイスからLoadstarが理解できないデータが送られてきました。接続し直してください。再発する場合は、Loadstarをアップデートするか問題を報告してください。"
+      },
+      "install_failed": {
+        "title": "インストールに失敗しました",
+        "body": "デバイスがAppのインストールを拒否しました。もう一度お試しください。失敗が続く場合は、Appを再インストールするか問題を報告してください。"
+      },
+      "afc_error": {
+        "title": "ファイルを転送できませんでした",
+        "body": "デバイスへのファイルのコピーに失敗しました。ロックを解除して、もう一度お試しください。"
+      },
+      "timeout": {
+        "title": "デバイスが応答しなくなりました",
+        "body": "デバイスの応答に時間がかかりすぎました。ロックを解除して接続し直し、もう一度お試しください。"
+      },
+      "passcode_required": {
+        "title": "パスコードを設定してください",
+        "body": "デバイスのパスコードが必要です。「設定」›「Face IDとパスコード」で設定してから、もう一度お試しください。"
+      },
+      "free_app_limit": {
+        "title": "サイドロードしたAppが多すぎます",
+        "body": "無料のApple IDでは、1台のデバイスで有効にできるサイドロードAppは3つまでです。1つ削除してから、もう一度お試しください。"
+      },
+      "profile_banned": {
+        "title": "AppleがこのデバイスでこのApple IDをブロックしました",
+        "body": "このApple IDで署名されたAppをデバイスが受け付けません。再試行しても解決しないため、別のApple IDを使用してください。"
+      },
+      "identity_invalid": {
+        "title": "署名用証明書が無効になりました",
+        "body": "Appの署名に使われた証明書をデバイスが拒否しました。コンピュータの時計を確認するか、証明書を失効させてからもう一度お試しください。"
+      },
+      "profile_not_found": {
+        "title": "プロビジョニングプロファイルがありません",
+        "body": "デバイスがAppのプロビジョニングプロファイルを見つけられませんでした。もう一度試すか、Appを再インストールしてください。"
+      }
+    },
+    "apple": {
+      "anisette_unavailable": {
+        "title": "anisetteサーバが応答しません",
+        "body": "Appleへのサインインにはanisetteサーバが必要ですが、現在のサーバが応答しませんでした。別のサーバを選ぶか、ネットワークを確認してください。"
+      },
+      "anisette_not_provisioned": {
+        "title": "anisetteサーバの準備ができていません",
+        "body": "anisetteサーバのセットアップに失敗しました。別のサーバを選んで、もう一度お試しください。"
+      },
+      "app_id_quota": {
+        "title": "今週のApp IDの上限に達しました",
+        "body": "無料のApple IDで登録できるApp IDは7日間で10個までです。空きが出るまで待つか、別のApple IDを使用してください。"
+      },
+      "certificate_limit": {
+        "title": "証明書が多すぎます",
+        "body": "このApple IDは開発用証明書の上限に達しています。1つ失効させるか、別のApple IDを使用してください。"
+      },
+      "invalid_credentials": {
+        "title": "Apple IDまたはパスワードが正しくありません",
+        "body": "Appleがメールアドレスまたはパスワードを受け付けませんでした。確認してから、パスワードをもう一度入力してください。"
+      },
+      "account_locked": {
+        "title": "このApple IDはロックされています",
+        "body": "セキュリティ上の理由により、Appleがこのアカウントをロックしました。Appleデバイスまたは AppleのWebサイトでロックを解除するか、別のApple IDを使用してください。"
+      },
+      "account_refused": {
+        "title": "Appleがサインインを拒否しました",
+        "body": "現在、AppleはこのApple IDでのここからのサインインを許可していません。しばらく待つか、Appleデバイスで一度サインインするか、別のApple IDを使用してください。"
+      },
+      "client_rejected": {
+        "title": "Appleがサインイン要求を拒否しました",
+        "body": "サインイン時に送信された識別情報をAppleが受け付けませんでした。別のanisetteサーバを選ぶか、しばらく待ってからもう一度お試しください。"
+      },
+      "rate_limited": {
+        "title": "リクエストが多すぎます",
+        "body": "Appleが現在リクエストを制限しています。数分待ってから、もう一度お試しください。"
+      },
+      "service_unavailable": {
+        "title": "Appleのサーバを利用できません",
+        "body": "Appleのサーバが応答しませんでした。数分待ってから、ネットワークを確認してください。"
+      },
+      "two_factor_required": {
+        "title": "確認コードを入力してください",
+        "body": "Appleが信頼できるデバイスに確認コードを送信しました。続けるにはコードを入力してください。"
+      },
+      "two_factor_invalid_code": {
+        "title": "確認コードが正しくありません",
+        "body": "このコードは使用できませんでした。確認して、もう一度入力してください。"
+      },
+      "two_factor_unsupported": {
+        "title": "このサインイン方法には対応していません",
+        "body": "このApple IDは、セキュリティキーなど、Loadstarがまだ対応していない2ファクタ認証の方法を使用しています。別のApple IDを使用してください。"
+      },
+      "sms_unavailable": {
+        "title": "SMSでのコード送信は利用できません",
+        "body": "ここではAppleがSMSでコードを送信しません。信頼できるデバイスでコードを受け取るか、別のApple IDを使用してください。"
+      },
+      "clock_skew": {
+        "title": "コンピュータの時計がずれています",
+        "body": "時計がずれているとAppleはリクエストを拒否します。日付と時刻を自動で設定してから、もう一度お試しください。"
+      },
+      "protocol_error": {
+        "title": "Appleから予期しない応答がありました",
+        "body": "AppleからLoadstarが理解できないデータが送られてきました。Loadstarをアップデートするか、再発する場合は問題を報告してください。"
+      },
+      "session_expired": {
+        "title": "セッションの有効期限が切れました",
+        "body": "このApple IDでもう一度サインインしてください。何度も期限切れになる場合は、コンピュータの時計を確認してください。"
+      },
+      "account_not_found": {
+        "title": "Apple IDが見つかりません",
+        "body": "LoadstarにはこのApple IDの保存済みセッションがありません。もう一度サインインしてください。"
+      },
+      "not_eligible": {
+        "title": "このApple IDは開発に使用できません",
+        "body": "年齢や規約などの理由により、Appleはこのアカウントでの App の署名を許可していません。別のApple IDを使用してください。"
+      },
+      "email_unverified": {
+        "title": "メールアドレスを確認してください",
+        "body": "このApple IDのメールアドレスを先に確認する必要があります。確認してから、もう一度お試しください。"
+      },
+      "team_agreement": {
+        "title": "Appleの契約に同意してください",
+        "body": "このチームはAppleの最新のデベロッパ契約にまだ同意していません。AppleのデベロッパWebサイトで同意するか、別のチームを選んでください。"
+      },
+      "no_teams": {
+        "title": "デベロッパチームがありません",
+        "body": "このApple IDにはまだデベロッパチームがありません。Appleのデベロッパ契約に同意するか、別のApple IDを使用してください。"
+      },
+      "device_limit": {
+        "title": "デバイスの上限に達しました",
+        "body": "このチームではこれ以上デバイスを登録できません。別のチームを選ぶか、別のApple IDを使用してください。"
+      },
+      "app_id_unavailable": {
+        "title": "このApp IDは使用されています",
+        "body": "このApp IDはすでに別のチームが使用しています。別のチームを選ぶか、別のApple IDを使用してください。"
+      },
+      "invalid_app_id_name": {
+        "title": "AppleがApp IDの名前を拒否しました",
+        "body": "LoadstarがApp IDに付けた名前をAppleが受け付けませんでした。Loadstarをアップデートするか、問題を報告してください。"
+      },
+      "certificate_not_revocable": {
+        "title": "この証明書はここでは失効できません",
+        "body": "この証明書を失効できるのはAppleだけです。代わりに別の証明書を失効させてください。"
+      },
+      "no_devices_for_profile": {
+        "title": "デバイスはまだ登録されていません",
+        "body": "Appleでのデバイス登録がまだ完了していません。1分ほど待ってから、もう一度お試しください。"
+      },
+      "developer_request_failed": {
+        "title": "Appleのデベロッパサービスでエラーが発生しました",
+        "body": "Appleのデベロッパサービスへのリクエストに失敗しました。もう一度試し、続く場合は問題を報告してください。"
+      }
+    },
+    "catalog": {
+      "source_gone": {
+        "title": "このリリースは利用できなくなりました",
+        "body": "このAppのダウンロード元がなくなりました。別のチャンネルを選ぶか、IPAを読み込むか、Loadstarをアップデートしてください。"
+      },
+      "unavailable": {
+        "title": "Appの一覧を読み込めませんでした",
+        "body": "LoadstarがAppの一覧を取得できませんでした。ネットワークを確認して、もう一度お試しください。"
+      },
+      "download_failed": {
+        "title": "ダウンロードに失敗しました",
+        "body": "Appをダウンロードできませんでした。ネットワークを確認して、もう一度お試しください。"
+      },
+      "checksum_mismatch": {
+        "title": "ダウンロードしたファイルが破損しています",
+        "body": "ダウンロードしたファイルがチェックサムと一致しないため、使用しませんでした。もう一度試すか、別のチャンネルを選んでください。"
+      },
+      "checksum_missing": {
+        "title": "ダウンロードを検証できません",
+        "body": "このリリースにはチェックサムがないため、Loadstarで検証できません。別のチャンネルを選ぶか、IPAをご自身で読み込んでください。"
+      },
+      "rate_limited": {
+        "title": "GitHubへのリクエストが多すぎます",
+        "body": "GitHubが現在ダウンロードを制限しています。数分待ってから、もう一度お試しください。"
+      }
+    },
+    "plist": {
+      "invalid": {
+        "title": "Appの設定ファイルが破損しています",
+        "body": "App内のプロパティリストを読み込めませんでした。別のIPAを選ぶか、問題を報告してください。"
+      }
+    },
+    "net": {
+      "offline": {
+        "title": "オフラインです",
+        "body": "Loadstarがインターネットに接続できません。ネットワーク接続を確認して、もう一度お試しください。"
+      }
+    },
+    "signer": {
+      "invalid_macho": {
+        "title": "Appのプログラムが破損しています",
+        "body": "Appの実行ファイルを読み込めませんでした。別のIPAを選んでください。"
+      },
+      "encrypted_binary": {
+        "title": "Appが暗号化されています",
+        "body": "このIPAはApp Storeから入手したもので暗号化されたままのため、再署名できません。復号済みのIPAを選んでください。"
+      },
+      "unsupported_arch": {
+        "title": "サポートされていないApp形式です",
+        "body": "Appの実行ファイルが、iOSで実行できない形式になっています。別のIPAを選んでください。"
+      },
+      "unsupported_ios": {
+        "title": "新しいiOSが必要です",
+        "body": "このAppには、デバイスより新しいバージョンのiOSが必要です。デバイスをアップデートするか、別のチャンネルまたはIPAを選んでください。"
+      },
+      "unsupported_device": {
+        "title": "このデバイス向けではありません",
+        "body": "このAppはこの種類のデバイスに対応していません（例：iPhoneでのiPad専用App）。別のIPAを選んでください。"
+      },
+      "no_arm64_build": {
+        "title": "iPhoneまたはiPad向けのビルドがありません",
+        "body": "このAppには、iPhoneまたはiPad向けの64ビットビルドがありません（例：32ビットビルドやシミュレータ用ビルド）。別のIPAを選んでください。"
+      },
+      "no_header_space": {
+        "title": "Appに署名できません",
+        "body": "Appの実行ファイルに署名を入れる余地がありません。別のIPAを選ぶか、問題を報告してください。"
+      },
+      "zip_slip": {
+        "title": "このIPAは安全ではありません",
+        "body": "このIPAは自身のフォルダの外にファイルを書き込もうとするため、Loadstarが拒否しました。別のIPAを選んでください。"
+      },
+      "invalid_certificate": {
+        "title": "証明書が無効です",
+        "body": "署名用証明書を使用できませんでした。Loadstarが新しい証明書を作成できるよう失効させてから、もう一度お試しください。"
+      },
+      "unknown_issuer": {
+        "title": "証明書の発行元が不明です",
+        "body": "Loadstarは証明書の発行元を認識できません。Loadstarをアップデートし、ネットワークを確認してください。"
+      },
+      "invalid_bundle": {
+        "title": "Appバンドルが無効です",
+        "body": "このIPAには有効なAppが含まれていません。別のIPAを選んでください。"
+      },
+      "invalid_profile": {
+        "title": "プロビジョニングプロファイルが無効です",
+        "body": "Appleから受け取ったプロビジョニングプロファイルを読み込めませんでした。もう一度試し、続く場合は問題を報告してください。"
+      },
+      "extension_prefix": {
+        "title": "App拡張機能のIDが正しくありません",
+        "body": "拡張機能のバンドルIDが、App自体のIDで始まっていません。別のIPAを選んでください。"
+      },
+      "profile_mismatch": {
+        "title": "プロビジョニングプロファイルが一致しません",
+        "body": "プロファイルが作成対象のAppと一致しません。もう一度試し、続く場合は問題を報告してください。"
+      },
+      "profile_expired": {
+        "title": "プロビジョニングプロファイルの有効期限が切れました",
+        "body": "プロファイルの有効期限が切れているか、コンピュータの時計がずれています。時計を確認して、もう一度お試しください。"
+      },
+      "cert_not_in_profile": {
+        "title": "証明書がプロファイルに含まれていません",
+        "body": "プロビジョニングプロファイルに署名用証明書が含まれていません。新しいプロファイルを取得するため、もう一度お試しください。"
+      },
+      "device_not_provisioned": {
+        "title": "デバイスがプロファイルに含まれていません",
+        "body": "プロビジョニングプロファイルにこのデバイスが含まれていません。新しいプロファイルを取得するため、もう一度お試しください。"
+      }
+    },
+    "installer": {
+      "step_failed": {
+        "title": "ステップに失敗しました",
+        "body": "インストール中に問題が発生しました。もう一度試し、続く場合は問題を報告してください。"
+      },
+      "prompt_cancelled": {
+        "title": "キャンセルしました",
+        "body": "確認がキャンセルされたため、インストールを中止しました。準備ができたら、もう一度始めてください。"
+      },
+      "certificate_machine_id_missing": {
+        "title": "証明書を共有できません",
+        "body": "この証明書には、SideStoreが開くのに必要なデータがありません。Loadstarが新しい証明書を作成できるよう失効させてから、もう一度お試しください。"
+      },
+      "team_required": {
+        "title": "チームを選択してください",
+        "body": "このApple IDは複数のチームに所属しています。署名に使うチームを選んでください。"
+      }
+    },
+    "rpc": {
+      "invalid_message": {
+        "title": "内部通信エラー",
+        "body": "Loadstarの内部で通信が噛み合いませんでした。Loadstarをアップデートするか、問題を報告してください。"
+      },
+      "disconnected": {
+        "title": "エンジンとの接続が切れました",
+        "body": "Loadstarのエンジンが応答しなくなりました。もう一度試し、続く場合は問題を報告してください。"
+      },
+      "timeout": {
+        "title": "エンジンが応答しませんでした",
+        "body": "Loadstarのエンジンの応答に時間がかかりすぎました。もう一度試し、続く場合は問題を報告してください。"
+      }
+    },
+    "internal": {
+      "aborted": {
+        "title": "中止しました",
+        "body": "操作は完了する前に中止されました。"
+      },
+      "unexpected": {
+        "title": "問題が発生しました",
+        "body": "予期しないエラーが発生しました。もう一度試し、続く場合は問題を報告してください。"
+      }
+    }
+  },
+  "recovery": {
+    "retry": "もう一度試す",
+    "wait-and-retry": "待ってから再試行",
+    "check-network": "ネットワークを確認",
+    "check-clock": "日付と時刻を確認",
+    "change-anisette-server": "別のanisetteサーバを選択",
+    "re-enter-password": "パスワードを再入力",
+    "re-enter-code": "コードを再入力",
+    "use-trusted-device": "信頼できるデバイスを使用",
+    "sign-in-again": "もう一度サインイン",
+    "sign-in-on-apple-device": "Appleデバイスでサインイン",
+    "switch-account": "別のApple IDを使用",
+    "verify-email": "メールアドレスを確認",
+    "accept-agreement": "Appleの契約に同意",
+    "choose-team": "チームを選択",
+    "revoke-certificate": "証明書を失効",
+    "wait-for-app-id-slot": "App IDの空きを待つ",
+    "choose-app-to-remove": "削除するAppを選択",
+    "unlock-device": "デバイスのロックを解除",
+    "enable-developer-mode": "デベロッパモードをオンにする",
+    "trust-computer": "このコンピュータを信頼",
+    "reconnect-device": "デバイスを接続し直す",
+    "pair-again": "もう一度ペアリング",
+    "set-passcode": "パスコードを設定",
+    "install-device-support": "デバイスサポートをインストール",
+    "reinstall-app": "Appを再インストール",
+    "choose-another-ipa": "別のIPAを選択",
+    "choose-another-channel": "別のチャンネルを選択",
+    "import-ipa": "IPAを読み込む",
+    "update-loadstar": "Loadstarをアップデート",
+    "report-issue": "問題を報告"
+  }
+}

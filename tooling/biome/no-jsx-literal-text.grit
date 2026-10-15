@@ -1,0 +1,30 @@
+// Every user-visible string in the UI goes through i18next (`t("…")`), so JSX carries no literal text:
+// no text between tags with a letter in it, and no string literal in a prop that people see or hear.
+// Props that are not shown (className, key, id, data-testid, type, href, …) may hold literals.
+or {
+  JsxText() as $text where {
+    $text <: r"(?s).*\p{L}.*",
+    register_diagnostic(span=$text, message="Hard-coded text in JSX: add it to locales/en.json and render it with t(key).")
+  },
+  JsxAttribute(name=$name, initializer=$value) as $attribute where {
+    $name <: or {
+      `aria-label`,
+      `aria-description`,
+      `aria-placeholder`,
+      `aria-roledescription`,
+      `aria-valuetext`,
+      `title`,
+      `placeholder`,
+      `label`,
+      `alt`
+    },
+    $value <: JsxAttributeInitializerClause(value=or {
+      JsxString(),
+      JsxExpressionAttributeValue(expression=or {
+        JsStringLiteralExpression(),
+        JsTemplateExpression()
+      })
+    }),
+    register_diagnostic(span=$attribute, message="Hard-coded text in a user-visible prop: pass t(key) instead of a string literal.")
+  }
+}

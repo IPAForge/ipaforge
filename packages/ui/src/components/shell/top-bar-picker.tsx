@@ -1,19 +1,23 @@
 import { Dropdown } from "@heroui/react";
+import { compact } from "@loadstar/kernel";
 import { StatusDot } from "@ui/components/shell/status-dot.tsx";
-import { type ShellKey, t } from "@ui/locales/en-shell.ts";
+import type { TranslationKey } from "@ui/utils/i18n/i18next-types.ts";
 import { ChevronDown } from "lucide-react";
 import { useId } from "react";
+import { useTranslation } from "react-i18next";
 
 export interface TopBarPickerProps {
   readonly id: string;
   /** What is picked ("Device"); with the value it names the button. */
-  readonly labelKey: ShellKey;
+  readonly labelKey: TranslationKey;
   /** The current choice, or its placeholder. */
-  readonly valueKey: ShellKey;
+  readonly valueKey: TranslationKey;
   readonly isOn: boolean;
-  readonly menuLabelKey: ShellKey;
+  readonly menuLabelKey: TranslationKey;
   /** The single disabled entry shown until real choices exist (6c). */
-  readonly emptyItemKey: ShellKey;
+  readonly emptyItemKey: TranslationKey;
+  /** For an entry that counts what was found ("No devices yet"). */
+  readonly emptyItemCount?: number;
 }
 
 const TRIGGER_CLASSES = [
@@ -22,7 +26,16 @@ const TRIGGER_CLASSES = [
 ].join(" ");
 
 /** A menu button in the top bar: status dot, label and current value, opening a menu of choices. */
-export const TopBarPicker = ({ id, labelKey, valueKey, isOn, menuLabelKey, emptyItemKey }: TopBarPickerProps) => {
+export const TopBarPicker = ({
+  id,
+  labelKey,
+  valueKey,
+  isOn,
+  menuLabelKey,
+  emptyItemKey,
+  emptyItemCount,
+}: TopBarPickerProps) => {
+  const { t } = useTranslation();
   const labelId = useId();
   const valueId = useId();
   return (
@@ -40,7 +53,7 @@ export const TopBarPicker = ({ id, labelKey, valueKey, isOn, menuLabelKey, empty
       <Dropdown.Popover placement="bottom end">
         <Dropdown.Menu aria-label={t(menuLabelKey)}>
           <Dropdown.Item id={`${id}-empty`} isDisabled>
-            {t(emptyItemKey)}
+            {t(emptyItemKey, compact({ count: emptyItemCount }))}
           </Dropdown.Item>
         </Dropdown.Menu>
       </Dropdown.Popover>

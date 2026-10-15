@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { t } from "@ui/locales/en-shell.ts";
 import type { AppSection } from "@ui/sections.ts";
+import { useTranslation } from "react-i18next";
 
 // The router marks the current route with `aria-current="page"`; the styling keys off that attribute.
 const LINK_CLASSES = [
@@ -11,6 +11,7 @@ const LINK_CLASSES = [
 ].join(" ");
 
 export const SidebarLink = ({ section }: { section: AppSection }) => {
+  const { t } = useTranslation();
   const Icon = section.icon;
   return (
     <Link to={section.path} className={LINK_CLASSES}>

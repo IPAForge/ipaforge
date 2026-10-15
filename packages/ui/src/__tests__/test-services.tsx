@@ -1,10 +1,13 @@
-import { createLogger, type LogRecord } from "@loadstar/kernel";
+import { compact, createLogger, type LogRecord } from "@loadstar/kernel";
 import { createMemoryHistory } from "@tanstack/react-router";
 import { render } from "@testing-library/react";
 import { App } from "@ui/App.tsx";
 import type { ColorScheme, ColorSchemeSource } from "@ui/services/color-scheme-source.ts";
+import { createFixedLocaleSource } from "@ui/services/locale-source.ts";
 import { createMemoryPreferencesStore } from "@ui/services/preferences-store.ts";
 import type { UiServices } from "@ui/services/ui-services.ts";
+import type { LoadBundle } from "@ui/utils/i18n/locale-bundles.ts";
+import { prepareLanguage } from "@ui/utils/i18n/prepare-language.ts";
 
 /** A colour-scheme source the test can flip, like the OS switching to dark. */
 export const createControllableScheme = (initial: ColorScheme) => {
@@ -24,21 +27,39 @@ export const createControllableScheme = (initial: ColorScheme) => {
   return { source, change, listenerCount: () => listeners.size };
 };
 
+export interface TestServicesOptions {
+  /** Saved preferences the app starts with. */
+  readonly preferences?: Readonly<Record<string, string>>;
+  /** The OS languages; English by default. */
+  readonly languages?: readonly string[];
+  /** Replaces the real (dynamic import) bundle loader, e.g. to delay or fail a load. */
+  readonly load?: LoadBundle;
+}
+
+const ENGLISH = ["en-US"];
+
 /** Services backed by memory, collecting every log record at debug level. */
-export const createTestServices = (preferences: Readonly<Record<string, string>> = {}) => {
+export const createTestServices = ({ preferences = {}, languages = ENGLISH }: TestServicesOptions = {}) => {
   const records: LogRecord[] = [];
   const scheme = createControllableScheme("light");
   const services: UiServices = {
     logger: createLogger({ level: "debug", sink: (record) => records.push(record) }),
     preferences: createMemoryPreferencesStore(preferences),
     colorScheme: scheme.source,
+    localeSource: createFixedLocaleSource(languages),
   };
   return { services, records, scheme };
 };
 
-/** Renders the whole app at `path` with in-memory services. */
-export const renderApp = (path = "/") => {
-  const test = createTestServices();
+/** Prepares the language like a host does, then renders the whole app at `path` with in-memory services. */
+export const renderApp = async (path = "/", options: TestServicesOptions = {}) => {
+  const test = createTestServices(options);
   const history = createMemoryHistory({ initialEntries: [path] });
-  return { ...test, history, ...render(<App services={test.services} history={history} />) };
+  const language = await prepareLanguage(test.services, compact({ load: options.load }));
+  return {
+    ...test,
+    history,
+    language,
+    ...render(<App services={test.services} language={language} history={history} />),
+  };
 };

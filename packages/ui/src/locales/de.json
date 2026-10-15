@@ -1,0 +1,464 @@
+{
+  "app": {
+    "name": "Loadstar"
+  },
+  "shell": {
+    "skipToContent": "Zum Inhalt springen",
+    "navigation": "Bereiche"
+  },
+  "topBar": {
+    "device": "Gerät",
+    "noDevice": "Keins",
+    "deviceMenu": "Geräte",
+    "devicesFound": "{count, plural, =0 {Noch keine Geräte} one {# Gerät verbunden} other {# Geräte verbunden}}",
+    "account": "Apple-ID",
+    "notSignedIn": "Nicht angemeldet",
+    "accountMenu": "Apple-IDs",
+    "addAppleIdSoon": "Apple-ID hinzufügen … (bald verfügbar)"
+  },
+  "nav": {
+    "group": {
+      "manage": "Verwalten"
+    },
+    "install": "Installieren",
+    "preload": "Vorladen",
+    "devices": "Geräte",
+    "accounts": "Accounts",
+    "certificates": "Zertifikate",
+    "logs": "Protokolle",
+    "settings": "Einstellungen"
+  },
+  "placeholder": {
+    "body": "Dieser Bereich ist noch in Arbeit."
+  },
+  "install": {
+    "title": "SideStore installieren",
+    "description": "Mit deiner Apple-ID signiert und dann per USB installiert.",
+    "steps": {
+      "device": "Gerät prüfen",
+      "resolve": "Version finden",
+      "download": "Herunterladen",
+      "inspect": "App prüfen",
+      "certificate_sharing": "Zertifikat freigeben",
+      "sign_in": "Bei Apple anmelden",
+      "team": "Team auswählen",
+      "register_device": "Gerät registrieren",
+      "certificate": "Zertifikat vorbereiten",
+      "app_ids": "App-IDs registrieren",
+      "free_apps": "Limit für kostenlose Apps prüfen",
+      "provision": "Bereitstellungsprofile abrufen",
+      "sign": "App signieren",
+      "install": "Auf dem Gerät installieren",
+      "pairing": "Kopplungsdatei ablegen",
+      "remember": "Installation merken"
+    }
+  },
+  "pairing": {
+    "steps": {
+      "targets": "Apps finden, die eine Kopplung brauchen",
+      "place": "Kopplungsdatei ablegen"
+    }
+  },
+  "settings": {
+    "appearance": "Darstellung",
+    "mode": "Farbmodus",
+    "palette": "Farbpalette",
+    "language": {
+      "title": "Sprache",
+      "system": "System ({language})",
+      "hint": "Loadstar verwendet die Systemsprache, solange du hier keine andere auswählst.",
+      "draft": "Entwurf"
+    }
+  },
+  "theme": {
+    "mode": {
+      "system": "System",
+      "light": "Hell",
+      "dark": "Dunkel"
+    },
+    "palette": {
+      "graphite": "Graphit",
+      "ocean": "Ozean",
+      "aurora": "Polarlicht",
+      "sunset": "Sonnenuntergang",
+      "forest": "Wald",
+      "rose": "Rosé"
+    }
+  },
+  "errors": {
+    "device": {
+      "locked": {
+        "title": "Entsperre dein Gerät",
+        "body": "Das Gerät ist gesperrt, daher kann Loadstar nicht mit ihm kommunizieren. Entsperre es und lass es entsperrt, bis die Installation abgeschlossen ist."
+      },
+      "developer_mode_off": {
+        "title": "Der Entwicklermodus ist aus",
+        "body": "Selbst installierte Apps brauchen den Entwicklermodus. Aktiviere ihn unter „Einstellungen“ › „Datenschutz & Sicherheit“ › „Entwicklermodus“ und starte das Gerät dann neu."
+      },
+      "not_paired": {
+        "title": "Diesem Computer wird noch nicht vertraut",
+        "body": "Entsperre das Gerät und tippe auf „Vertrauen“, wenn es fragt, ob es diesem Computer vertrauen soll."
+      },
+      "usbmuxd_unavailable": {
+        "title": "Die Geräteunterstützung läuft nicht",
+        "body": "Loadstar erreicht den Systemdienst nicht, der mit iPhone und iPad kommuniziert. Installiere oder starte ihn und versuche es dann erneut."
+      },
+      "not_found": {
+        "title": "Kein Gerät gefunden",
+        "body": "Verbinde dein iPhone oder iPad mit einem USB-Kabel und entsperre es."
+      },
+      "disconnected": {
+        "title": "Das Gerät wurde getrennt",
+        "body": "Die Verbindung ist abgebrochen. Schließe das Kabel wieder an, entsperre das Gerät und versuche es erneut."
+      },
+      "pairing_pending": {
+        "title": "Warten auf „Vertrauen“",
+        "body": "Entsperre das Gerät und tippe in der angezeigten Abfrage auf „Vertrauen“."
+      },
+      "pairing_denied": {
+        "title": "Vertrauen wurde abgelehnt",
+        "body": "Das Gerät hat abgelehnt, diesem Computer zu vertrauen. Kopple es erneut und tippe diesmal auf „Vertrauen“."
+      },
+      "invalid_pair_record": {
+        "title": "Die Kopplung ist nicht mehr gültig",
+        "body": "Das Gerät akzeptiert die Kopplung mit diesem Computer nicht mehr. Trenne es, schließe es wieder an, entsperre es und tippe auf „Vertrauen“."
+      },
+      "service_unavailable": {
+        "title": "Ein Gerätedienst ist nicht gestartet",
+        "body": "Das Gerät hat einen Dienst, den Loadstar braucht, nicht gestartet. Entsperre es, verbinde es erneut und versuche es noch einmal."
+      },
+      "protocol_error": {
+        "title": "Unerwartete Antwort vom Gerät",
+        "body": "Das Gerät hat etwas gesendet, das Loadstar nicht versteht. Verbinde es erneut. Wenn es wieder passiert, aktualisiere Loadstar oder melde das Problem."
+      },
+      "install_failed": {
+        "title": "Die Installation ist fehlgeschlagen",
+        "body": "Das Gerät hat die Installation der App abgelehnt. Versuche es erneut. Wenn es weiter fehlschlägt, installiere die App neu oder melde das Problem."
+      },
+      "afc_error": {
+        "title": "Dateien konnten nicht übertragen werden",
+        "body": "Das Kopieren von Dateien auf das Gerät ist fehlgeschlagen. Entsperre es und versuche es erneut."
+      },
+      "timeout": {
+        "title": "Das Gerät reagiert nicht mehr",
+        "body": "Das Gerät hat zu lange nicht geantwortet. Entsperre es, verbinde es erneut und versuche es noch einmal."
+      },
+      "passcode_required": {
+        "title": "Code festlegen",
+        "body": "Dafür ist ein Gerätecode nötig. Lege einen unter „Einstellungen“ › „Face ID & Code“ fest und versuche es dann erneut."
+      },
+      "free_app_limit": {
+        "title": "Zu viele selbst installierte Apps",
+        "body": "Mit einer kostenlosen Apple-ID können nur drei selbst installierte Apps gleichzeitig auf einem Gerät aktiv sein. Entferne eine und versuche es dann erneut."
+      },
+      "profile_banned": {
+        "title": "Apple hat diese Apple-ID auf dem Gerät blockiert",
+        "body": "Das Gerät akzeptiert keine Apps, die mit dieser Apple-ID signiert sind. Ein neuer Versuch hilft nicht: Verwende eine andere Apple-ID."
+      },
+      "identity_invalid": {
+        "title": "Das Signaturzertifikat ist nicht mehr gültig",
+        "body": "Das Gerät hat das Zertifikat abgelehnt, mit dem die App signiert wurde. Prüfe die Uhr des Computers oder widerrufe das Zertifikat und versuche es erneut."
+      },
+      "profile_not_found": {
+        "title": "Bereitstellungsprofil fehlt",
+        "body": "Das Gerät findet das Bereitstellungsprofil der App nicht. Versuche es erneut oder installiere die App neu."
+      }
+    },
+    "apple": {
+      "anisette_unavailable": {
+        "title": "Der anisette-Server antwortet nicht",
+        "body": "Für die Anmeldung bei Apple ist ein anisette-Server nötig, und der aktuelle hat nicht geantwortet. Wähle einen anderen Server oder prüfe dein Netzwerk."
+      },
+      "anisette_not_provisioned": {
+        "title": "Der anisette-Server ist nicht bereit",
+        "body": "Der anisette-Server konnte sich nicht einrichten. Wähle einen anderen Server und versuche es erneut."
+      },
+      "app_id_quota": {
+        "title": "Diese Woche keine App-IDs mehr frei",
+        "body": "Mit einer kostenlosen Apple-ID lassen sich nur 10 App-IDs alle 7 Tage registrieren. Warte, bis wieder eine frei wird, oder verwende eine andere Apple-ID."
+      },
+      "certificate_limit": {
+        "title": "Zu viele Zertifikate",
+        "body": "Diese Apple-ID hat ihr Limit an Entwicklungszertifikaten erreicht. Widerrufe eines oder verwende eine andere Apple-ID."
+      },
+      "invalid_credentials": {
+        "title": "Falsche Apple-ID oder falsches Passwort",
+        "body": "Apple hat die E-Mail-Adresse oder das Passwort nicht akzeptiert. Prüfe beides und gib das Passwort erneut ein."
+      },
+      "account_locked": {
+        "title": "Diese Apple-ID ist gesperrt",
+        "body": "Apple hat diesen Account aus Sicherheitsgründen gesperrt. Entsperre ihn auf einem Apple-Gerät oder auf der Website von Apple oder verwende eine andere Apple-ID."
+      },
+      "account_refused": {
+        "title": "Apple hat die Anmeldung abgelehnt",
+        "body": "Apple lässt diese Apple-ID gerade nicht von hier aus anmelden. Warte eine Weile, melde dich einmal auf einem Apple-Gerät an oder verwende eine andere Apple-ID."
+      },
+      "client_rejected": {
+        "title": "Apple hat die Anmeldeanfrage abgelehnt",
+        "body": "Apple hat die mit der Anmeldung gesendete Identität nicht akzeptiert. Wähle einen anderen anisette-Server oder warte und versuche es erneut."
+      },
+      "rate_limited": {
+        "title": "Zu viele Anfragen",
+        "body": "Apple begrenzt Anfragen gerade. Warte ein paar Minuten und versuche es erneut."
+      },
+      "service_unavailable": {
+        "title": "Die Server von Apple sind nicht erreichbar",
+        "body": "Die Server von Apple haben nicht geantwortet. Warte ein paar Minuten und prüfe dein Netzwerk."
+      },
+      "two_factor_required": {
+        "title": "Bestätigungscode eingeben",
+        "body": "Apple hat einen Bestätigungscode an deine vertrauenswürdigen Geräte gesendet. Gib ihn ein, um fortzufahren."
+      },
+      "two_factor_invalid_code": {
+        "title": "Falscher Bestätigungscode",
+        "body": "Dieser Code hat nicht funktioniert. Prüfe ihn und gib ihn erneut ein."
+      },
+      "two_factor_unsupported": {
+        "title": "Diese Anmeldemethode wird nicht unterstützt",
+        "body": "Diese Apple-ID verwendet eine Zwei-Faktor-Methode, die Loadstar noch nicht beherrscht, etwa einen Sicherheitsschlüssel. Verwende eine andere Apple-ID."
+      },
+      "sms_unavailable": {
+        "title": "Codes per SMS sind nicht verfügbar",
+        "body": "Apple sendet den Code hier nicht per SMS. Hol ihn dir auf einem vertrauenswürdigen Gerät oder verwende eine andere Apple-ID."
+      },
+      "clock_skew": {
+        "title": "Die Uhr des Computers geht falsch",
+        "body": "Apple lehnt Anfragen ab, wenn die Uhr nicht stimmt. Lass Datum und Uhrzeit automatisch einstellen und versuche es dann erneut."
+      },
+      "protocol_error": {
+        "title": "Unerwartete Antwort von Apple",
+        "body": "Apple hat etwas gesendet, das Loadstar nicht versteht. Aktualisiere Loadstar oder melde das Problem, wenn es weiter auftritt."
+      },
+      "session_expired": {
+        "title": "Deine Sitzung ist abgelaufen",
+        "body": "Melde dich erneut mit dieser Apple-ID an. Wenn sie immer wieder abläuft, prüfe die Uhr des Computers."
+      },
+      "account_not_found": {
+        "title": "Apple-ID nicht gefunden",
+        "body": "Loadstar hat keine gespeicherte Sitzung für diese Apple-ID. Melde dich erneut an."
+      },
+      "not_eligible": {
+        "title": "Diese Apple-ID kann nicht für die Entwicklung verwendet werden",
+        "body": "Apple erlaubt diesem Account nicht, Apps zu signieren, zum Beispiel wegen des Alters oder der Nutzungsbedingungen. Verwende eine andere Apple-ID."
+      },
+      "email_unverified": {
+        "title": "E-Mail-Adresse bestätigen",
+        "body": "Apple verlangt zuerst eine bestätigte E-Mail-Adresse für diese Apple-ID. Bestätige sie und versuche es dann erneut."
+      },
+      "team_agreement": {
+        "title": "Vereinbarung von Apple akzeptieren",
+        "body": "Das Team hat die neueste Entwicklervereinbarung von Apple noch nicht akzeptiert. Akzeptiere sie auf der Entwickler-Website von Apple oder wähle ein anderes Team."
+      },
+      "no_teams": {
+        "title": "Kein Entwicklerteam",
+        "body": "Diese Apple-ID hat noch kein Entwicklerteam. Akzeptiere die Entwicklervereinbarung von Apple oder verwende eine andere Apple-ID."
+      },
+      "device_limit": {
+        "title": "Gerätelimit erreicht",
+        "body": "Dieses Team kann keine weiteren Geräte registrieren. Wähle ein anderes Team oder verwende eine andere Apple-ID."
+      },
+      "app_id_unavailable": {
+        "title": "Diese App-ID ist vergeben",
+        "body": "Ein anderes Team verwendet diese App-ID bereits. Wähle ein anderes Team oder verwende eine andere Apple-ID."
+      },
+      "invalid_app_id_name": {
+        "title": "Apple hat den Namen der App-ID abgelehnt",
+        "body": "Apple hat den Namen, den Loadstar für die App-ID gewählt hat, nicht akzeptiert. Aktualisiere Loadstar oder melde das Problem."
+      },
+      "certificate_not_revocable": {
+        "title": "Dieses Zertifikat kann hier nicht widerrufen werden",
+        "body": "Nur Apple kann dieses Zertifikat widerrufen. Widerrufe stattdessen ein anderes."
+      },
+      "no_devices_for_profile": {
+        "title": "Das Gerät ist noch nicht registriert",
+        "body": "Apple hat die Registrierung des Geräts noch nicht abgeschlossen. Warte eine Minute und versuche es erneut."
+      },
+      "developer_request_failed": {
+        "title": "Die Entwicklerdienste von Apple sind fehlgeschlagen",
+        "body": "Eine Anfrage an die Entwicklerdienste von Apple ist fehlgeschlagen. Versuche es erneut und melde das Problem, wenn es weiter auftritt."
+      }
+    },
+    "catalog": {
+      "source_gone": {
+        "title": "Die Version ist nicht mehr verfügbar",
+        "body": "Die Quelle, aus der diese App geladen wurde, existiert nicht mehr. Wähle einen anderen Kanal, importiere eine IPA oder aktualisiere Loadstar."
+      },
+      "unavailable": {
+        "title": "Die App-Liste konnte nicht geladen werden",
+        "body": "Loadstar konnte die Liste der Apps nicht abrufen. Prüfe dein Netzwerk und versuche es erneut."
+      },
+      "download_failed": {
+        "title": "Der Download ist fehlgeschlagen",
+        "body": "Die App konnte nicht geladen werden. Prüfe dein Netzwerk und versuche es erneut."
+      },
+      "checksum_mismatch": {
+        "title": "Der Download ist beschädigt",
+        "body": "Die geladene Datei passt nicht zu ihrer Prüfsumme und wurde deshalb nicht verwendet. Versuche es erneut oder wähle einen anderen Kanal."
+      },
+      "checksum_missing": {
+        "title": "Der Download kann nicht überprüft werden",
+        "body": "Diese Version hat keine Prüfsumme, daher kann Loadstar sie nicht überprüfen. Wähle einen anderen Kanal oder importiere die IPA selbst."
+      },
+      "rate_limited": {
+        "title": "Zu viele Anfragen an GitHub",
+        "body": "GitHub begrenzt Downloads gerade. Warte ein paar Minuten und versuche es erneut."
+      }
+    },
+    "plist": {
+      "invalid": {
+        "title": "Die Einstellungsdatei der App ist beschädigt",
+        "body": "Eine Property-List in der App konnte nicht gelesen werden. Wähle eine andere IPA oder melde das Problem."
+      }
+    },
+    "net": {
+      "offline": {
+        "title": "Du bist offline",
+        "body": "Loadstar erreicht das Internet nicht. Prüfe deine Netzwerkverbindung und versuche es erneut."
+      }
+    },
+    "signer": {
+      "invalid_macho": {
+        "title": "Das Programm der App ist beschädigt",
+        "body": "Die ausführbare Datei der App konnte nicht gelesen werden. Wähle eine andere IPA."
+      },
+      "encrypted_binary": {
+        "title": "Die App ist verschlüsselt",
+        "body": "Diese IPA stammt aus dem App Store und ist noch verschlüsselt, daher kann sie nicht neu signiert werden. Wähle eine entschlüsselte IPA."
+      },
+      "unsupported_arch": {
+        "title": "Nicht unterstütztes App-Format",
+        "body": "Die ausführbare Datei der App hat ein Format, das iOS nicht ausführen kann. Wähle eine andere IPA."
+      },
+      "unsupported_ios": {
+        "title": "Neueres iOS erforderlich",
+        "body": "Diese App braucht eine neuere iOS-Version als die auf dem Gerät. Aktualisiere das Gerät oder wähle einen anderen Kanal oder eine andere IPA."
+      },
+      "unsupported_device": {
+        "title": "Nicht für dieses Gerät gemacht",
+        "body": "Diese App unterstützt diese Art von Gerät nicht, zum Beispiel eine reine iPad-App auf einem iPhone. Wähle eine andere IPA."
+      },
+      "no_arm64_build": {
+        "title": "Kein Build für iPhone oder iPad",
+        "body": "Die App hat keinen 64-Bit-Build für iPhone oder iPad, sondern zum Beispiel einen 32-Bit- oder Simulator-Build. Wähle eine andere IPA."
+      },
+      "no_header_space": {
+        "title": "Die App kann nicht signiert werden",
+        "body": "In der ausführbaren Datei der App ist kein Platz für eine Signatur. Wähle eine andere IPA oder melde das Problem."
+      },
+      "zip_slip": {
+        "title": "Die IPA ist unsicher",
+        "body": "Die IPA versucht, Dateien außerhalb ihres eigenen Ordners zu schreiben, daher hat Loadstar sie abgelehnt. Wähle eine andere IPA."
+      },
+      "invalid_certificate": {
+        "title": "Das Zertifikat ist ungültig",
+        "body": "Das Signaturzertifikat konnte nicht verwendet werden. Widerrufe es, damit Loadstar ein neues erstellen kann, und versuche es dann erneut."
+      },
+      "unknown_issuer": {
+        "title": "Unbekannter Zertifikatsaussteller",
+        "body": "Loadstar erkennt nicht, wer das Zertifikat ausgestellt hat. Aktualisiere Loadstar und prüfe dein Netzwerk."
+      },
+      "invalid_bundle": {
+        "title": "Das App-Bundle ist ungültig",
+        "body": "Die IPA enthält keine gültige App. Wähle eine andere IPA."
+      },
+      "invalid_profile": {
+        "title": "Das Bereitstellungsprofil ist ungültig",
+        "body": "Das Bereitstellungsprofil von Apple konnte nicht gelesen werden. Versuche es erneut und melde das Problem, wenn es weiter auftritt."
+      },
+      "extension_prefix": {
+        "title": "Eine App-Erweiterung hat die falsche ID",
+        "body": "Die Bundle-ID einer Erweiterung beginnt nicht mit der ID der App selbst. Wähle eine andere IPA."
+      },
+      "profile_mismatch": {
+        "title": "Das Bereitstellungsprofil passt nicht",
+        "body": "Das Profil passt nicht zu der App, für die es erstellt wurde. Versuche es erneut und melde das Problem, wenn es weiter auftritt."
+      },
+      "profile_expired": {
+        "title": "Das Bereitstellungsprofil ist abgelaufen",
+        "body": "Das Profil ist abgelaufen oder die Uhr des Computers geht falsch. Prüfe die Uhr und versuche es erneut."
+      },
+      "cert_not_in_profile": {
+        "title": "Das Zertifikat ist nicht im Profil",
+        "body": "Das Bereitstellungsprofil enthält das Signaturzertifikat nicht. Versuche es erneut, um ein neues Profil zu erhalten."
+      },
+      "device_not_provisioned": {
+        "title": "Das Gerät ist nicht im Profil",
+        "body": "Das Bereitstellungsprofil enthält dieses Gerät nicht. Versuche es erneut, um ein neues Profil zu erhalten."
+      }
+    },
+    "installer": {
+      "step_failed": {
+        "title": "Ein Schritt ist fehlgeschlagen",
+        "body": "Bei der Installation ist etwas schiefgelaufen. Versuche es erneut und melde das Problem, wenn es weiter auftritt."
+      },
+      "prompt_cancelled": {
+        "title": "Abgebrochen",
+        "body": "Die Installation wurde beendet, weil eine Abfrage abgebrochen wurde. Starte neu, wenn du so weit bist."
+      },
+      "certificate_machine_id_missing": {
+        "title": "Das Zertifikat kann nicht freigegeben werden",
+        "body": "Diesem Zertifikat fehlen Daten, die SideStore zum Öffnen braucht. Widerrufe es, damit Loadstar ein neues erstellen kann, und versuche es dann erneut."
+      },
+      "team_required": {
+        "title": "Team auswählen",
+        "body": "Diese Apple-ID gehört zu mehreren Teams. Wähle das Team, mit dem signiert werden soll."
+      }
+    },
+    "rpc": {
+      "invalid_message": {
+        "title": "Interner Kommunikationsfehler",
+        "body": "Teile von Loadstar konnten sich nicht verständigen. Aktualisiere Loadstar oder melde das Problem."
+      },
+      "disconnected": {
+        "title": "Verbindung zur Engine verloren",
+        "body": "Die Engine von Loadstar reagiert nicht mehr. Versuche es erneut und melde das Problem, wenn es weiter auftritt."
+      },
+      "timeout": {
+        "title": "Die Engine hat nicht geantwortet",
+        "body": "Die Engine von Loadstar hat zu lange gebraucht. Versuche es erneut und melde das Problem, wenn es weiter auftritt."
+      }
+    },
+    "internal": {
+      "aborted": {
+        "title": "Gestoppt",
+        "body": "Der Vorgang wurde gestoppt, bevor er abgeschlossen war."
+      },
+      "unexpected": {
+        "title": "Etwas ist schiefgelaufen",
+        "body": "Ein unerwarteter Fehler ist aufgetreten. Versuche es erneut und melde das Problem, wenn es weiter auftritt."
+      }
+    }
+  },
+  "recovery": {
+    "retry": "Erneut versuchen",
+    "wait-and-retry": "Warten und erneut versuchen",
+    "check-network": "Netzwerk prüfen",
+    "check-clock": "Datum und Uhrzeit prüfen",
+    "change-anisette-server": "Anderen anisette-Server wählen",
+    "re-enter-password": "Passwort erneut eingeben",
+    "re-enter-code": "Code erneut eingeben",
+    "use-trusted-device": "Vertrauenswürdiges Gerät verwenden",
+    "sign-in-again": "Erneut anmelden",
+    "sign-in-on-apple-device": "Auf einem Apple-Gerät anmelden",
+    "switch-account": "Andere Apple-ID verwenden",
+    "verify-email": "E-Mail-Adresse bestätigen",
+    "accept-agreement": "Vereinbarung von Apple akzeptieren",
+    "choose-team": "Team auswählen",
+    "revoke-certificate": "Zertifikat widerrufen",
+    "wait-for-app-id-slot": "Auf eine freie App-ID warten",
+    "choose-app-to-remove": "App zum Entfernen auswählen",
+    "unlock-device": "Gerät entsperren",
+    "enable-developer-mode": "Entwicklermodus aktivieren",
+    "trust-computer": "Diesem Computer vertrauen",
+    "reconnect-device": "Gerät erneut verbinden",
+    "pair-again": "Erneut koppeln",
+    "set-passcode": "Code festlegen",
+    "install-device-support": "Geräteunterstützung installieren",
+    "reinstall-app": "App neu installieren",
+    "choose-another-ipa": "Andere IPA wählen",
+    "choose-another-channel": "Anderen Kanal wählen",
+    "import-ipa": "IPA importieren",
+    "update-loadstar": "Loadstar aktualisieren",
+    "report-issue": "Problem melden"
+  }
+}

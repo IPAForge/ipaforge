@@ -1,5 +1,6 @@
 import type { Logger } from "@loadstar/kernel";
 import type { ColorSchemeSource } from "@ui/services/color-scheme-source.ts";
+import type { LocaleSource } from "@ui/services/locale-source.ts";
 import type { PreferencesStore } from "@ui/services/preferences-store.ts";
 import { createContext } from "react";
 
@@ -8,10 +9,11 @@ import { createContext } from "react";
  * The Engine client joins these in a later phase.
  */
 export interface UiServices {
-  /** `App` scopes it to `ui`; features add their own child scope (`ui.theme`, `ui.router`). */
+  /** `App` scopes it to `ui`; features add their own child scope (`ui.theme`, `ui.router`, `ui.i18n`). */
   readonly logger: Logger;
   readonly preferences: PreferencesStore;
   readonly colorScheme: ColorSchemeSource;
+  readonly localeSource: LocaleSource;
 }
 
 export const UiServicesContext = createContext<UiServices | undefined>(undefined);

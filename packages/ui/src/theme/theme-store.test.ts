@@ -4,7 +4,7 @@ import { createThemeStore } from "@ui/theme/theme-store.ts";
 import { describe, expect, it, vi } from "vitest";
 
 const setup = (saved: Readonly<Record<string, string>> = {}) => {
-  const { services, records, scheme } = createTestServices(saved);
+  const { services, records, scheme } = createTestServices({ preferences: saved });
   const store = createThemeStore({ preferences: services.preferences, system: scheme.source, logger: services.logger });
   return { store, records, scheme, preferences: services.preferences };
 };

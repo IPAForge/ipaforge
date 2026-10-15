@@ -1,0 +1,464 @@
+{
+  "app": {
+    "name": "Loadstar"
+  },
+  "shell": {
+    "skipToContent": "Salt la conținut",
+    "navigation": "Secțiuni"
+  },
+  "topBar": {
+    "device": "Dispozitiv",
+    "noDevice": "Niciunul",
+    "deviceMenu": "Dispozitive",
+    "devicesFound": "{count, plural, =0 {Încă niciun dispozitiv} one {# dispozitiv conectat} few {# dispozitive conectate} other {# de dispozitive conectate}}",
+    "account": "ID Apple",
+    "notSignedIn": "Neconectat",
+    "accountMenu": "ID-uri Apple",
+    "addAppleIdSoon": "Adaugă un ID Apple… (în curând)"
+  },
+  "nav": {
+    "group": {
+      "manage": "Gestionare"
+    },
+    "install": "Instalare",
+    "preload": "Preîncărcare",
+    "devices": "Dispozitive",
+    "accounts": "Conturi",
+    "certificates": "Certificate",
+    "logs": "Jurnale",
+    "settings": "Configurări"
+  },
+  "placeholder": {
+    "body": "Această secțiune este în lucru."
+  },
+  "install": {
+    "title": "Instalează SideStore",
+    "description": "Semnat cu ID-ul tău Apple, apoi instalat prin USB.",
+    "steps": {
+      "device": "Verifică dispozitivul",
+      "resolve": "Găsește versiunea",
+      "download": "Descarcă",
+      "inspect": "Inspectează aplicația",
+      "certificate_sharing": "Partajează certificatul",
+      "sign_in": "Autentifică-te la Apple",
+      "team": "Alege echipa",
+      "register_device": "Înregistrează dispozitivul",
+      "certificate": "Pregătește certificatul",
+      "app_ids": "Înregistrează App ID-urile",
+      "free_apps": "Verifică limita de aplicații gratuite",
+      "provision": "Obține profilurile de provizionare",
+      "sign": "Semnează aplicația",
+      "install": "Instalează pe dispozitiv",
+      "pairing": "Plasează fișierul de asociere",
+      "remember": "Memorează această instalare"
+    }
+  },
+  "pairing": {
+    "steps": {
+      "targets": "Găsește aplicațiile care au nevoie de asociere",
+      "place": "Plasează fișierul de asociere"
+    }
+  },
+  "settings": {
+    "appearance": "Aspect",
+    "mode": "Mod de culoare",
+    "palette": "Paletă",
+    "language": {
+      "title": "Limbă",
+      "system": "Sistem ({language})",
+      "hint": "Loadstar folosește limba sistemului, dacă nu alegi alta aici.",
+      "draft": "ciornă"
+    }
+  },
+  "theme": {
+    "mode": {
+      "system": "Sistem",
+      "light": "Luminos",
+      "dark": "Întunecat"
+    },
+    "palette": {
+      "graphite": "Grafit",
+      "ocean": "Ocean",
+      "aurora": "Auroră",
+      "sunset": "Apus",
+      "forest": "Pădure",
+      "rose": "Roz"
+    }
+  },
+  "errors": {
+    "device": {
+      "locked": {
+        "title": "Deblochează dispozitivul",
+        "body": "Dispozitivul este blocat, așa că Loadstar nu poate comunica cu el. Deblochează-l și ține-l deblocat până se termină instalarea."
+      },
+      "developer_mode_off": {
+        "title": "Modul dezvoltator este dezactivat",
+        "body": "Aplicațiile instalate manual au nevoie de Modul dezvoltator. Activează-l din Configurări › Confidențialitate și securitate › Mod dezvoltator, apoi repornește dispozitivul."
+      },
+      "not_paired": {
+        "title": "Acest computer nu este încă de încredere",
+        "body": "Deblochează dispozitivul și apasă „Încredere” când te întreabă dacă ai încredere în acest computer."
+      },
+      "usbmuxd_unavailable": {
+        "title": "Suportul pentru dispozitive nu rulează",
+        "body": "Loadstar nu poate accesa serviciul de sistem care comunică cu iPhone și iPad. Instalează-l sau pornește-l, apoi încearcă din nou."
+      },
+      "not_found": {
+        "title": "Niciun dispozitiv găsit",
+        "body": "Conectează iPhone-ul sau iPad-ul cu un cablu USB și deblochează-l."
+      },
+      "disconnected": {
+        "title": "Dispozitivul a fost deconectat",
+        "body": "Conexiunea s-a întrerupt. Reconectează cablul, deblochează dispozitivul și încearcă din nou."
+      },
+      "pairing_pending": {
+        "title": "Se așteaptă confirmarea încrederii",
+        "body": "Deblochează dispozitivul și apasă „Încredere” în mesajul afișat."
+      },
+      "pairing_denied": {
+        "title": "Încrederea a fost refuzată",
+        "body": "Dispozitivul a refuzat să aibă încredere în acest computer. Asociază-l din nou și de data aceasta apasă „Încredere”."
+      },
+      "invalid_pair_record": {
+        "title": "Asocierea nu mai este validă",
+        "body": "Dispozitivul nu mai acceptă asocierea cu acest computer. Deconectează-l, conectează-l din nou, deblochează-l și apasă „Încredere”."
+      },
+      "service_unavailable": {
+        "title": "Un serviciu al dispozitivului nu a pornit",
+        "body": "Dispozitivul a refuzat să pornească un serviciu de care Loadstar are nevoie. Deblochează-l, reconectează-l și încearcă din nou."
+      },
+      "protocol_error": {
+        "title": "Răspuns neașteptat de la dispozitiv",
+        "body": "Dispozitivul a trimis ceva ce Loadstar nu a înțeles. Reconectează-l; dacă se repetă, actualizează Loadstar sau raportează problema."
+      },
+      "install_failed": {
+        "title": "Instalarea a eșuat",
+        "body": "Dispozitivul a refuzat să instaleze aplicația. Încearcă din nou; dacă tot eșuează, reinstalează aplicația sau raportează problema."
+      },
+      "afc_error": {
+        "title": "Fișierele nu au putut fi transferate",
+        "body": "Copierea fișierelor pe dispozitiv a eșuat. Deblochează-l și încearcă din nou."
+      },
+      "timeout": {
+        "title": "Dispozitivul nu mai răspunde",
+        "body": "Dispozitivul a răspuns prea greu. Deblochează-l, reconectează-l și încearcă din nou."
+      },
+      "passcode_required": {
+        "title": "Setează un cod de acces",
+        "body": "Este nevoie de un cod de acces pe dispozitiv. Setează unul din Configurări › Face ID și cod, apoi încearcă din nou."
+      },
+      "free_app_limit": {
+        "title": "Prea multe aplicații instalate manual",
+        "body": "Cu un ID Apple gratuit pot fi active doar trei aplicații instalate manual pe un dispozitiv. Elimină una, apoi încearcă din nou."
+      },
+      "profile_banned": {
+        "title": "Apple a blocat acest ID Apple pe dispozitiv",
+        "body": "Dispozitivul nu acceptă aplicații semnate cu acest ID Apple. O nouă încercare nu va ajuta: folosește alt ID Apple."
+      },
+      "identity_invalid": {
+        "title": "Certificatul de semnare nu mai este valid",
+        "body": "Dispozitivul a respins certificatul cu care a fost semnată aplicația. Verifică ceasul computerului sau revocă certificatul și încearcă din nou."
+      },
+      "profile_not_found": {
+        "title": "Lipsește profilul de provizionare",
+        "body": "Dispozitivul nu a găsit profilul de provizionare al aplicației. Încearcă din nou sau reinstalează aplicația."
+      }
+    },
+    "apple": {
+      "anisette_unavailable": {
+        "title": "Serverul anisette nu răspunde",
+        "body": "Autentificarea la Apple are nevoie de un server anisette, iar cel actual nu a răspuns. Alege alt server sau verifică rețeaua."
+      },
+      "anisette_not_provisioned": {
+        "title": "Serverul anisette nu este pregătit",
+        "body": "Serverul anisette nu s-a putut configura. Alege alt server și încearcă din nou."
+      },
+      "app_id_quota": {
+        "title": "Nu mai ai App ID-uri săptămâna aceasta",
+        "body": "Un ID Apple gratuit poate înregistra doar 10 App ID-uri la fiecare 7 zile. Așteaptă să se elibereze un loc sau folosește alt ID Apple."
+      },
+      "certificate_limit": {
+        "title": "Prea multe certificate",
+        "body": "Acest ID Apple a atins limita de certificate de dezvoltare. Revocă unul sau folosește alt ID Apple."
+      },
+      "invalid_credentials": {
+        "title": "ID Apple sau parolă greșită",
+        "body": "Apple nu a acceptat adresa de e-mail sau parola. Verifică-le și introdu din nou parola."
+      },
+      "account_locked": {
+        "title": "Acest ID Apple este blocat",
+        "body": "Apple a blocat acest cont din motive de securitate. Deblochează-l pe un dispozitiv Apple sau pe site-ul Apple ori folosește alt ID Apple."
+      },
+      "account_refused": {
+        "title": "Apple a refuzat autentificarea",
+        "body": "Apple nu permite deocamdată autentificarea cu acest ID Apple de aici. Așteaptă puțin, autentifică-te o dată pe un dispozitiv Apple sau folosește alt ID Apple."
+      },
+      "client_rejected": {
+        "title": "Apple a respins cererea de autentificare",
+        "body": "Apple nu a acceptat identitatea trimisă la autentificare. Alege alt server anisette sau așteaptă și încearcă din nou."
+      },
+      "rate_limited": {
+        "title": "Prea multe cereri",
+        "body": "Apple limitează cererile deocamdată. Așteaptă câteva minute și încearcă din nou."
+      },
+      "service_unavailable": {
+        "title": "Serverele Apple nu sunt disponibile",
+        "body": "Serverele Apple nu au răspuns. Așteaptă câteva minute și verifică rețeaua."
+      },
+      "two_factor_required": {
+        "title": "Introdu codul de verificare",
+        "body": "Apple a trimis un cod de verificare pe dispozitivele tale de încredere. Introdu-l pentru a continua."
+      },
+      "two_factor_invalid_code": {
+        "title": "Cod de verificare greșit",
+        "body": "Codul nu a funcționat. Verifică-l și introdu-l din nou."
+      },
+      "two_factor_unsupported": {
+        "title": "Această metodă de autentificare nu este acceptată",
+        "body": "Acest ID Apple folosește o metodă de autentificare cu doi factori pe care Loadstar nu o acceptă încă, de exemplu o cheie de securitate. Folosește alt ID Apple."
+      },
+      "sms_unavailable": {
+        "title": "Codurile prin SMS nu sunt disponibile",
+        "body": "Apple nu trimite codul prin SMS aici. Obține-l pe un dispozitiv de încredere sau folosește alt ID Apple."
+      },
+      "clock_skew": {
+        "title": "Ceasul computerului este greșit",
+        "body": "Apple respinge cererile când ceasul nu este corect. Setează automat data și ora, apoi încearcă din nou."
+      },
+      "protocol_error": {
+        "title": "Răspuns neașteptat de la Apple",
+        "body": "Apple a trimis ceva ce Loadstar nu a înțeles. Actualizează Loadstar sau raportează problema dacă se repetă."
+      },
+      "session_expired": {
+        "title": "Sesiunea a expirat",
+        "body": "Autentifică-te din nou cu acest ID Apple. Dacă expiră des, verifică ceasul computerului."
+      },
+      "account_not_found": {
+        "title": "ID-ul Apple nu a fost găsit",
+        "body": "Loadstar nu are o sesiune salvată pentru acest ID Apple. Autentifică-te din nou."
+      },
+      "not_eligible": {
+        "title": "Acest ID Apple nu poate fi folosit pentru dezvoltare",
+        "body": "Apple nu permite acestui cont să semneze aplicații, de exemplu din cauza vârstei sau a termenilor. Folosește alt ID Apple."
+      },
+      "email_unverified": {
+        "title": "Verifică adresa de e-mail",
+        "body": "Apple cere mai întâi verificarea adresei de e-mail a acestui ID Apple. Verific-o, apoi încearcă din nou."
+      },
+      "team_agreement": {
+        "title": "Acceptă acordul Apple",
+        "body": "Echipa nu a acceptat cel mai recent acord pentru dezvoltatori Apple. Acceptă-l pe site-ul Apple pentru dezvoltatori sau alege altă echipă."
+      },
+      "no_teams": {
+        "title": "Nicio echipă de dezvoltare",
+        "body": "Acest ID Apple nu are încă o echipă de dezvoltare. Acceptă acordul pentru dezvoltatori Apple sau folosește alt ID Apple."
+      },
+      "device_limit": {
+        "title": "Limita de dispozitive a fost atinsă",
+        "body": "Această echipă nu mai poate înregistra dispozitive. Alege altă echipă sau folosește alt ID Apple."
+      },
+      "app_id_unavailable": {
+        "title": "Acest App ID este ocupat",
+        "body": "O altă echipă folosește deja acest App ID. Alege altă echipă sau folosește alt ID Apple."
+      },
+      "invalid_app_id_name": {
+        "title": "Apple a respins numele App ID-ului",
+        "body": "Apple nu a acceptat numele ales de Loadstar pentru App ID. Actualizează Loadstar sau raportează problema."
+      },
+      "certificate_not_revocable": {
+        "title": "Acest certificat nu poate fi revocat aici",
+        "body": "Doar Apple poate revoca acest certificat. Revocă altul în locul lui."
+      },
+      "no_devices_for_profile": {
+        "title": "Dispozitivul nu este încă înregistrat",
+        "body": "Apple nu a terminat înregistrarea dispozitivului. Așteaptă un minut și încearcă din nou."
+      },
+      "developer_request_failed": {
+        "title": "Serviciile Apple pentru dezvoltatori au eșuat",
+        "body": "O cerere către serviciile Apple pentru dezvoltatori a eșuat. Încearcă din nou și raportează problema dacă se repetă."
+      }
+    },
+    "catalog": {
+      "source_gone": {
+        "title": "Versiunea nu mai este disponibilă",
+        "body": "Locul din care a fost descărcată aplicația nu mai există. Alege alt canal, importă un IPA sau actualizează Loadstar."
+      },
+      "unavailable": {
+        "title": "Lista de aplicații nu a putut fi încărcată",
+        "body": "Loadstar nu a putut obține lista de aplicații. Verifică rețeaua și încearcă din nou."
+      },
+      "download_failed": {
+        "title": "Descărcarea a eșuat",
+        "body": "Aplicația nu a putut fi descărcată. Verifică rețeaua și încearcă din nou."
+      },
+      "checksum_mismatch": {
+        "title": "Descărcarea este deteriorată",
+        "body": "Fișierul descărcat nu corespunde sumei de control, așa că nu a fost folosit. Încearcă din nou sau alege alt canal."
+      },
+      "checksum_missing": {
+        "title": "Descărcarea nu poate fi verificată",
+        "body": "Această versiune nu are sumă de control, așa că Loadstar nu o poate verifica. Alege alt canal sau importă singur fișierul IPA."
+      },
+      "rate_limited": {
+        "title": "Prea multe cereri către GitHub",
+        "body": "GitHub limitează descărcările deocamdată. Așteaptă câteva minute și încearcă din nou."
+      }
+    },
+    "plist": {
+      "invalid": {
+        "title": "Fișierul de configurare al aplicației este deteriorat",
+        "body": "O listă de proprietăți din aplicație nu a putut fi citită. Alege alt IPA sau raportează problema."
+      }
+    },
+    "net": {
+      "offline": {
+        "title": "Ești offline",
+        "body": "Loadstar nu poate accesa internetul. Verifică conexiunea la rețea și încearcă din nou."
+      }
+    },
+    "signer": {
+      "invalid_macho": {
+        "title": "Programul aplicației este deteriorat",
+        "body": "Executabilul aplicației nu a putut fi citit. Alege alt IPA."
+      },
+      "encrypted_binary": {
+        "title": "Aplicația este criptată",
+        "body": "Acest IPA provine din App Store și este încă criptat, așa că nu poate fi resemnat. Alege un IPA decriptat."
+      },
+      "unsupported_arch": {
+        "title": "Format de aplicație neacceptat",
+        "body": "Executabilul aplicației folosește un format pe care iOS nu îl poate rula. Alege alt IPA."
+      },
+      "unsupported_ios": {
+        "title": "Necesită un iOS mai nou",
+        "body": "Această aplicație necesită o versiune iOS mai nouă decât cea de pe dispozitiv. Actualizează dispozitivul sau alege alt canal ori alt IPA."
+      },
+      "unsupported_device": {
+        "title": "Nu este făcută pentru acest dispozitiv",
+        "body": "Această aplicație nu acceptă acest tip de dispozitiv, de exemplu o aplicație doar pentru iPad pe un iPhone. Alege alt IPA."
+      },
+      "no_arm64_build": {
+        "title": "Nicio versiune pentru iPhone sau iPad",
+        "body": "Aplicația nu are o versiune pe 64 de biți pentru iPhone sau iPad, ci de exemplu una pe 32 de biți sau pentru simulator. Alege alt IPA."
+      },
+      "no_header_space": {
+        "title": "Aplicația nu poate fi semnată",
+        "body": "În executabilul aplicației nu este loc pentru o semnătură. Alege alt IPA sau raportează problema."
+      },
+      "zip_slip": {
+        "title": "IPA-ul este nesigur",
+        "body": "IPA-ul încearcă să scrie fișiere în afara propriului dosar, așa că Loadstar l-a refuzat. Alege alt IPA."
+      },
+      "invalid_certificate": {
+        "title": "Certificatul nu este valid",
+        "body": "Certificatul de semnare nu a putut fi folosit. Revocă-l ca Loadstar să poată crea unul nou, apoi încearcă din nou."
+      },
+      "unknown_issuer": {
+        "title": "Emitent de certificat necunoscut",
+        "body": "Loadstar nu recunoaște emitentul certificatului. Actualizează Loadstar și verifică rețeaua."
+      },
+      "invalid_bundle": {
+        "title": "Pachetul aplicației nu este valid",
+        "body": "IPA-ul nu conține o aplicație validă. Alege alt IPA."
+      },
+      "invalid_profile": {
+        "title": "Profilul de provizionare nu este valid",
+        "body": "Profilul de provizionare primit de la Apple nu a putut fi citit. Încearcă din nou și raportează problema dacă se repetă."
+      },
+      "extension_prefix": {
+        "title": "O extensie a aplicației are ID-ul greșit",
+        "body": "ID-ul de pachet al unei extensii nu începe cu ID-ul aplicației. Alege alt IPA."
+      },
+      "profile_mismatch": {
+        "title": "Profilul de provizionare nu se potrivește",
+        "body": "Profilul nu se potrivește cu aplicația pentru care a fost creat. Încearcă din nou și raportează problema dacă se repetă."
+      },
+      "profile_expired": {
+        "title": "Profilul de provizionare a expirat",
+        "body": "Profilul a expirat sau ceasul computerului este greșit. Verifică ceasul și încearcă din nou."
+      },
+      "cert_not_in_profile": {
+        "title": "Certificatul nu este în profil",
+        "body": "Profilul de provizionare nu include certificatul de semnare. Încearcă din nou pentru a obține un profil nou."
+      },
+      "device_not_provisioned": {
+        "title": "Dispozitivul nu este în profil",
+        "body": "Profilul de provizionare nu include acest dispozitiv. Încearcă din nou pentru a obține un profil nou."
+      }
+    },
+    "installer": {
+      "step_failed": {
+        "title": "Un pas a eșuat",
+        "body": "Ceva nu a mers bine în timpul instalării. Încearcă din nou și raportează problema dacă se repetă."
+      },
+      "prompt_cancelled": {
+        "title": "Anulat",
+        "body": "Instalarea s-a oprit pentru că o întrebare a fost anulată. Începe din nou când ești gata."
+      },
+      "certificate_machine_id_missing": {
+        "title": "Certificatul nu poate fi partajat",
+        "body": "Acestui certificat îi lipsesc datele de care SideStore are nevoie pentru a-l deschide. Revocă-l ca Loadstar să poată crea unul nou, apoi încearcă din nou."
+      },
+      "team_required": {
+        "title": "Alege o echipă",
+        "body": "Acest ID Apple face parte din mai multe echipe. Alege-o pe cea cu care să semnezi."
+      }
+    },
+    "rpc": {
+      "invalid_message": {
+        "title": "Eroare de comunicare internă",
+        "body": "Componentele Loadstar nu s-au putut înțelege între ele. Actualizează Loadstar sau raportează problema."
+      },
+      "disconnected": {
+        "title": "Conexiunea cu motorul s-a pierdut",
+        "body": "Motorul Loadstar nu mai răspunde. Încearcă din nou și raportează problema dacă se repetă."
+      },
+      "timeout": {
+        "title": "Motorul nu a răspuns",
+        "body": "Motorul Loadstar a răspuns prea greu. Încearcă din nou și raportează problema dacă se repetă."
+      }
+    },
+    "internal": {
+      "aborted": {
+        "title": "Oprit",
+        "body": "Operațiunea a fost oprită înainte să se termine."
+      },
+      "unexpected": {
+        "title": "Ceva nu a mers bine",
+        "body": "A apărut o eroare neașteptată. Încearcă din nou și raportează problema dacă se repetă."
+      }
+    }
+  },
+  "recovery": {
+    "retry": "Încearcă din nou",
+    "wait-and-retry": "Așteaptă, apoi încearcă din nou",
+    "check-network": "Verifică rețeaua",
+    "check-clock": "Verifică data și ora",
+    "change-anisette-server": "Alege alt server anisette",
+    "re-enter-password": "Introdu din nou parola",
+    "re-enter-code": "Introdu din nou codul",
+    "use-trusted-device": "Folosește un dispozitiv de încredere",
+    "sign-in-again": "Autentifică-te din nou",
+    "sign-in-on-apple-device": "Autentifică-te pe un dispozitiv Apple",
+    "switch-account": "Folosește alt ID Apple",
+    "verify-email": "Verifică adresa de e-mail",
+    "accept-agreement": "Acceptă acordul Apple",
+    "choose-team": "Alege o echipă",
+    "revoke-certificate": "Revocă un certificat",
+    "wait-for-app-id-slot": "Așteaptă un App ID liber",
+    "choose-app-to-remove": "Alege o aplicație de eliminat",
+    "unlock-device": "Deblochează dispozitivul",
+    "enable-developer-mode": "Activează Modul dezvoltator",
+    "trust-computer": "Acordă încredere acestui computer",
+    "reconnect-device": "Reconectează dispozitivul",
+    "pair-again": "Asociază din nou",
+    "set-passcode": "Setează un cod de acces",
+    "install-device-support": "Instalează suportul pentru dispozitive",
+    "reinstall-app": "Reinstalează aplicația",
+    "choose-another-ipa": "Alege alt IPA",
+    "choose-another-channel": "Alege alt canal",
+    "import-ipa": "Importă un IPA",
+    "update-loadstar": "Actualizează Loadstar",
+    "report-issue": "Raportează problema"
+  }
+}

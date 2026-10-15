@@ -61,10 +61,20 @@ This project follows the [Code of Conduct](CODE_OF_CONDUCT.md). Security issues 
 - Errors are `LoadstarError` with an `ErrorCode`. External input is validated with zod.
 - No magic values: format constants go in named constants modules, and tunables go in `domain/config.ts` with overridable defaults.
 - Binary code always states its endianness: Mach-O is little-endian, signature blobs are big-endian.
-- UI uses HeroUI components and Tailwind utilities only. No CSS files, and every string goes through i18next.
+- UI uses HeroUI components and Tailwind utilities only. No CSS files, and every string goes through i18next (a Biome plugin rejects text in JSX).
 - Log through the `Logger` port. Secrets are redacted by default.
 
 The full rules are in [design/conventions.md](design/conventions.md).
+
+## Translating
+
+The UI's strings live in `packages/ui/src/locales/`: one JSON file per language, with `en.json` as the source of truth, and `status.json` listing every language as `source`, `draft` or `reviewed`.
+
+- **Improve a language:** edit its file. Keep every key, and keep ICU placeholders (`{count}`, `{language}`) and plural syntax intact; use your language's plural categories (`one`, `few`, `many`, …). An empty string means "not translated yet" and shows English.
+- **Review a draft:** most languages start as machine drafts marked `"draft"` in `status.json`, and the picker labels them. A native speaker who has read the whole file sets it to `"reviewed"` in the same pull request.
+- **Add a language:** copy `en.json` to `<code>.json`, translate it, and add `"<code>": "draft"` to `status.json`. Nothing else needs registering: each file becomes its own chunk, loaded when the language is chosen.
+
+`pnpm check:locales` checks missing or extra keys, ICU syntax and placeholders, and prints each language's completion. See [ui.md](ui.md#translations) for the details.
 
 ## Boundary checker
 

@@ -1,8 +1,8 @@
 import { useTheme } from "@ui/hooks/use-theme.ts";
-import { t } from "@ui/locales/en-shell.ts";
 import { palettes } from "@ui/theme/palettes.ts";
 import { type PaletteId, type PaletteTokens, paletteIds } from "@ui/theme/theme-types.ts";
 import { Label, Radio, RadioGroup } from "react-aria-components";
+import { useTranslation } from "react-i18next";
 
 /** The tokens each swatch previews, in display order. */
 const PREVIEW_TOKENS = ["accent", "background", "surfaceTertiary"] as const satisfies readonly (keyof PaletteTokens)[];
@@ -27,6 +27,7 @@ const swatchClass = ({ isSelected, isFocusVisible }: { isSelected: boolean; isFo
 
 /** The palettes as selectable swatches, previewed in the scheme currently shown. */
 export const PaletteSwatches = () => {
+  const { t } = useTranslation();
   const { palette, scheme, setPalette } = useTheme();
   const onChange = (value: string) => {
     if (isPaletteId(value)) setPalette(value);

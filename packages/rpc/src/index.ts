@@ -1,4 +1,7 @@
 // Public API of @loadstar/rpc: the typed channel between the Engine (server) and the UI (EngineClient).
+
+// Installer data the UI needs (to translate recovery actions and step labels) without importing the installer.
+export { RecoveryAction, StepLabel } from "@loadstar/installer";
 export { createEngineClient, type EngineClientOptions } from "@rpc/application/client.ts";
 export { createRpcServer, type RpcServer, type RpcServerOptions } from "@rpc/application/server.ts";
 export { DEFAULT_RPC_CONFIG, type RpcConfig } from "@rpc/domain/config.ts";
