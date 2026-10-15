@@ -6,7 +6,7 @@ import { join } from "node:path";
 import { TLSSocket } from "node:tls";
 import { nodeFileSource } from "@desktop/main/adapters/file-source.ts";
 import { createNodeConnection } from "@desktop/main/adapters/node-connection.ts";
-import { resolveUsbmuxdEndpoint } from "@desktop/main/adapters/usbmux-transport.ts";
+import { resolveUsbmuxdEndpoint } from "@desktop/main/adapters/usbmux/usbmuxd-endpoint.ts";
 import { createPairRecord, decodePem, type PairRecord, tlsCredentials } from "@loadstar/device";
 import { ErrorCode, LoadstarError, utf8Decode, utf8Encode } from "@loadstar/kernel";
 import { afterEach, describe, expect, it } from "vitest";
@@ -141,7 +141,7 @@ describe("file source", () => {
 
 describe("HTTP redirects", () => {
   it("refuses HTTPS → HTTP and drops identifying headers on cross-host redirects", async () => {
-    const { redirectTarget } = await import("@desktop/main/adapters/http-client.ts");
+    const { redirectTarget } = await import("@desktop/main/adapters/http/redirects.ts");
     const from = new URL("https://gsa.apple.com/auth");
     const headers = { "X-Apple-Identity-Token": "secret", "X-Apple-I-MD": "md", Accept: "application/json" };
     expect(() => redirectTarget(from, "http://gsa.apple.com/auth", headers)).toThrow(LoadstarError);
@@ -154,9 +154,8 @@ describe("HTTP redirects", () => {
 
 describe("file secret store", () => {
   it("persists values in a 0600 file and routes by prefix", async () => {
-    const { createFileSecretStore, createRoutedSecretStore } = await import(
-      "@desktop/main/adapters/file-secret-store.ts"
-    );
+    const { createFileSecretStore } = await import("@desktop/main/adapters/file-secret-store.ts");
+    const { createRoutedSecretStore } = await import("@desktop/main/adapters/routed-secret-store.ts");
     const { createMemorySecretStore } = await import("@desktop/main/adapters/memory-secret-store.ts");
     const { stat } = await import("node:fs/promises");
     const dir = await mkdtemp(join(tmpdir(), "loadstar-secrets-"));
