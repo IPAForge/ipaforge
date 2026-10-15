@@ -4,10 +4,13 @@
 import type { AppleDeps } from "@apple/deps.ts";
 import type { AnisetteData } from "@apple/domain/anisette.ts";
 import { developerErrorCode } from "@apple/domain/developer.ts";
-import { appleHeaders } from "@apple/infrastructure/gsa/client.ts";
-import { fetchApple } from "@apple/infrastructure/http.ts";
+import { nonEmpty } from "@apple/domain/values.ts";
+import { appleHeaders, PLIST_HEADERS, pickHeaders } from "@apple/infrastructure/apple-headers.ts";
+import { type FetchResult, fetchApple, successOr } from "@apple/infrastructure/http.ts";
 import { parseApplePlist } from "@apple/infrastructure/plist-diagnostics.ts";
+import { plistNumber } from "@apple/infrastructure/plist-fields.ts";
 import {
+  compact,
   createDict,
   ErrorCode,
   isPlistDict,
@@ -15,14 +18,21 @@ import {
   type PlistDict,
   type PlistValue,
   serializeXmlPlist,
+  stringAt,
 } from "@loadstar/kernel";
 
 export const DEVELOPER_BASE = "https://developerservices2.apple.com/services/QH65B2/";
 export const DEVELOPER_CLIENT_ID = "XABBG36SBA";
 export const DEVELOPER_PROTOCOL = "QH65B2";
 
+const HTTP_UNAUTHORIZED = 401;
+const HTTP_FORBIDDEN = 403;
+
 /** `ios/` resources (devices, certificates, App IDs, …) or team-level actions (`listTeams`). */
 export type DeveloperPlatform = "ios" | "any";
+
+/** Request fields, in the order they are sent. */
+export type DeveloperFields = readonly (readonly [string, PlistValue])[];
 
 export interface DeveloperAuth {
   /** `com.apple.gs.xcode.auth` app token. */
@@ -38,8 +48,46 @@ export interface DeveloperRequestOptions {
 export const developerUrl = (action: string, platform: DeveloperPlatform): string =>
   `${DEVELOPER_BASE}${platform === "ios" ? "ios/" : ""}${action}.action?clientId=${DEVELOPER_CLIENT_ID}`;
 
-const asNumber = (value: PlistValue | undefined): number | undefined =>
-  typeof value === "number" ? value : typeof value === "bigint" ? Number(value) : undefined;
+const requestHeaders = (deps: AppleDeps, anisette: AnisetteData, auth: DeveloperAuth): Record<string, string> => ({
+  ...appleHeaders(deps, anisette),
+  ...pickHeaders(anisette.headers, deps.config.cpdAnisetteHeaders),
+  ...PLIST_HEADERS,
+  "X-Apple-GS-Token": auth.token,
+  "X-Apple-I-Identity-Id": auth.adsid,
+});
+
+const requestBody = (deps: AppleDeps, fields: DeveloperFields): PlistDict =>
+  createDict([
+    ["clientId", DEVELOPER_CLIENT_ID],
+    ["protocolVersion", DEVELOPER_PROTOCOL],
+    ["requestId", globalThis.crypto.randomUUID().toUpperCase()],
+    ["userLocale", [deps.config.locale]],
+    ...fields,
+  ]);
+
+/** 401 means the app token expired; 403 on `listTeams` means the Apple ID cannot use developer services. */
+const assertAuthorized = (response: FetchResult, action: string): void => {
+  if (response.status === HTTP_UNAUTHORIZED) throw new LoadstarError(ErrorCode.SessionExpired, { data: { action } });
+  if (response.status !== HTTP_FORBIDDEN) return;
+  throw new LoadstarError(
+    action === "listTeams" ? ErrorCode.NotEligibleForDevelopment : ErrorCode.DeveloperRequestFailed,
+    {
+      message: `developer services refused ${action} (HTTP 403)`,
+      data: { action, status: HTTP_FORBIDDEN },
+    },
+  );
+};
+
+/** Throws the catalogued error for a non-zero `resultCode`. */
+const assertResultOk = (value: PlistDict, action: string): void => {
+  const resultCode = plistNumber(value.resultCode) ?? 0;
+  if (resultCode === 0) return;
+  const message = stringAt(value, "userString") ?? stringAt(value, "resultString") ?? "";
+  throw new LoadstarError(developerErrorCode(resultCode, message), {
+    message: `${action} failed: ${resultCode} ${message}`.trim(),
+    data: compact({ action, resultCode, appleMessage: nonEmpty(message) }),
+  });
+};
 
 /** Sends one developer-API request and returns the response dict (throws a catalogued error on resultCode ≠ 0). */
 export const developerRequest = async (
@@ -47,56 +95,20 @@ export const developerRequest = async (
   options: DeveloperRequestOptions,
   action: string,
   platform: DeveloperPlatform,
-  fields: readonly (readonly [string, PlistValue])[] = [],
+  fields: DeveloperFields = [],
 ): Promise<PlistDict> => {
   const [anisette, auth] = await Promise.all([options.anisette(), options.auth()]);
-  const anisetteHeaders: Record<string, string> = {};
-  for (const name of deps.config.cpdAnisetteHeaders) {
-    const value = anisette.headers[name];
-    if (value !== undefined) anisetteHeaders[name] = value;
-  }
-  const body = createDict([
-    ["clientId", DEVELOPER_CLIENT_ID],
-    ["protocolVersion", DEVELOPER_PROTOCOL],
-    ["requestId", globalThis.crypto.randomUUID().toUpperCase()],
-    ["userLocale", [deps.config.locale]],
-    ...fields,
-  ]);
+  const body = requestBody(deps, fields);
   deps.logger.debug("developer request", { action, fields: fields.map(([key]) => key) });
   const response = await fetchApple(deps, developerUrl(action, platform), {
     method: "POST",
-    headers: {
-      ...appleHeaders(deps, anisette),
-      ...anisetteHeaders,
-      "Content-Type": "text/x-xml-plist",
-      Accept: "text/x-xml-plist",
-      "X-Apple-GS-Token": auth.token,
-      "X-Apple-I-Identity-Id": auth.adsid,
-    },
+    headers: requestHeaders(deps, anisette, auth),
     body: serializeXmlPlist(body),
-    acceptStatus: (status) => (status >= 200 && status < 300) || status === 401 || status === 403,
+    acceptStatus: successOr(HTTP_UNAUTHORIZED, HTTP_FORBIDDEN),
   });
-  if (response.status === 401) throw new LoadstarError(ErrorCode.SessionExpired, { data: { action } });
-  if (response.status === 403) {
-    throw new LoadstarError(
-      action === "listTeams" ? ErrorCode.NotEligibleForDevelopment : ErrorCode.DeveloperRequestFailed,
-      {
-        message: `developer services refused ${action} (HTTP 403)`,
-        data: { action, status: 403 },
-      },
-    );
-  }
+  assertAuthorized(response, action);
   const value = parseApplePlist(response.body, `developer ${action}`);
   if (!isPlistDict(value)) throw new LoadstarError(ErrorCode.AppleProtocolError, { message: `${action}: not a dict` });
-  const resultCode = asNumber(value.resultCode) ?? 0;
-  if (resultCode !== 0) {
-    const userString = typeof value.userString === "string" ? value.userString : undefined;
-    const resultString = typeof value.resultString === "string" ? value.resultString : undefined;
-    const message = userString ?? resultString ?? "";
-    throw new LoadstarError(developerErrorCode(resultCode, message), {
-      message: `${action} failed: ${resultCode} ${message}`.trim(),
-      data: { action, resultCode, ...(message ? { appleMessage: message } : {}) },
-    });
-  }
+  assertResultOk(value, action);
   return value;
 };

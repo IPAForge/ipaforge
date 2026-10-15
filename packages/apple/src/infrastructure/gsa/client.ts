@@ -3,10 +3,14 @@
 import type { AppleDeps } from "@apple/deps.ts";
 import type { AnisetteData } from "@apple/domain/anisette.ts";
 import type { GsaStatus } from "@apple/domain/gsa-status.ts";
+import { nonEmpty } from "@apple/domain/values.ts";
+import { appleHeaders, PLIST_HEADERS, pickHeaders } from "@apple/infrastructure/apple-headers.ts";
 import { bagUrl } from "@apple/infrastructure/gsa/url-bag.ts";
 import { fetchApple } from "@apple/infrastructure/http.ts";
 import { parseApplePlist } from "@apple/infrastructure/plist-diagnostics.ts";
+import { plistNumber } from "@apple/infrastructure/plist-fields.ts";
 import {
+  compact,
   createDict,
   ErrorCode,
   isPlistDict,
@@ -14,8 +18,12 @@ import {
   type PlistDict,
   type PlistValue,
   serializeXmlPlist,
+  stringAt,
   toBase64,
 } from "@loadstar/kernel";
+
+/** `Header.Version` of every GsService2 request. */
+const GSA_PROTOCOL_VERSION = "1.0.1";
 
 /** `cpd`: the anisette headers plus the flags an Apple client sends with every GrandSlam request. */
 export const clientProvidedData = (deps: AppleDeps, anisette: AnisetteData): PlistDict =>
@@ -27,37 +35,24 @@ export const clientProvidedData = (deps: AppleDeps, anisette: AnisetteData): Pli
     ["pbe", "false"],
     ["prkgen", "true"],
     ["svct", "iCloud"],
-    ...deps.config.cpdAnisetteHeaders.flatMap((name) => {
-      const value = anisette.headers[name];
-      return value === undefined ? [] : [[name, value] as const];
-    }),
+    ...Object.entries(pickHeaders(anisette.headers, deps.config.cpdAnisetteHeaders)),
   ]);
 
-/** Base headers for every Apple request made on behalf of this client. */
-export const appleHeaders = (deps: AppleDeps, anisette: AnisetteData): Record<string, string> => ({
-  "User-Agent": anisette.identity.userAgent,
-  "X-Mme-Client-Info": anisette.identity.clientInfo,
-  "X-Xcode-Version": deps.config.xcode.xcodeVersion,
-  "X-Apple-App-Info": deps.config.xcode.appInfo,
-});
-
-const asNumber = (value: PlistValue | undefined): number | undefined =>
-  typeof value === "number" ? value : typeof value === "bigint" ? Number(value) : undefined;
+/** `X-Apple-I-MD-DATA` as base64, whichever way Apple encoded it. */
+const resyncDataOf = (value: PlistValue | undefined): string | undefined => {
+  if (value instanceof Uint8Array) return toBase64(value);
+  return typeof value === "string" ? value : undefined;
+};
 
 export const statusOf = (response: PlistDict): GsaStatus => {
   const status = isPlistDict(response.Status) ? response.Status : createDict();
-  const em = status.em;
-  const au = status.au;
-  const hsc = asNumber(status.hsc);
-  const mdData = status["X-Apple-I-MD-DATA"];
-  const resyncData = mdData instanceof Uint8Array ? toBase64(mdData) : typeof mdData === "string" ? mdData : undefined;
-  return {
-    ec: asNumber(status.ec) ?? 0,
-    ...(typeof em === "string" ? { em } : {}),
-    ...(hsc === undefined ? {} : { hsc }),
-    ...(typeof au === "string" ? { au } : {}),
-    ...(resyncData ? { resyncData } : {}),
-  };
+  return compact({
+    ec: plistNumber(status.ec) ?? 0,
+    em: stringAt(status, "em"),
+    hsc: plistNumber(status.hsc),
+    au: stringAt(status, "au"),
+    resyncData: nonEmpty(resyncDataOf(status["X-Apple-I-MD-DATA"])),
+  });
 };
 
 export interface GsaResponse {
@@ -66,19 +61,8 @@ export interface GsaResponse {
   readonly clockSkewMs?: number;
 }
 
-/** POSTs `{ Header: { Version }, Request }` to GsService2 and returns `Response` with its status. */
-export const gsaRequest = async (
-  deps: AppleDeps,
-  anisette: AnisetteData,
-  request: PlistDict,
-  options: { readonly retryTransient?: boolean; readonly signal?: AbortSignal } = {},
-): Promise<GsaResponse> => {
-  const headers: Record<string, string> = {
-    ...appleHeaders(deps, anisette),
-    "Content-Type": "text/x-xml-plist",
-    Accept: "text/x-xml-plist",
-  };
-  // Shape of the request (names and non-secret values only), for comparing with clients Apple accepts.
+/** Shape of the request (names and non-secret values only), for comparing with clients Apple accepts. */
+const logRequestShape = (deps: AppleDeps, request: PlistDict, headers: Record<string, string>): void =>
   deps.logger.debug("GSA request", {
     operation: request.o,
     headers: Object.keys(headers),
@@ -87,24 +71,37 @@ export const gsaRequest = async (
     requestFields: Object.keys(request),
     cpdFields: isPlistDict(request.cpd) ? Object.keys(request.cpd) : [],
   });
-  const result = await fetchApple(deps, await bagUrl(deps, "gsService", deps.config.endpoints.gsaService), {
-    method: "POST",
-    headers,
-    body: serializeXmlPlist(
-      createDict([
-        ["Header", createDict([["Version", "1.0.1"]])],
-        ["Request", request],
-      ]),
-    ),
-    retryTransient: options.retryTransient ?? true,
-    ...(options.signal ? { signal: options.signal } : {}),
-  });
+
+const envelope = (request: PlistDict): Uint8Array =>
+  serializeXmlPlist(
+    createDict([
+      ["Header", createDict([["Version", GSA_PROTOCOL_VERSION]])],
+      ["Request", request],
+    ]),
+  );
+
+/** POSTs `{ Header: { Version }, Request }` to GsService2 and returns `Response` with its status. */
+export const gsaRequest = async (
+  deps: AppleDeps,
+  anisette: AnisetteData,
+  request: PlistDict,
+  options: { readonly retryTransient?: boolean; readonly signal?: AbortSignal } = {},
+): Promise<GsaResponse> => {
+  const headers = { ...appleHeaders(deps, anisette), ...PLIST_HEADERS };
+  logRequestShape(deps, request, headers);
+  const result = await fetchApple(
+    deps,
+    await bagUrl(deps, "gsService", deps.config.endpoints.gsaService),
+    compact({
+      method: "POST" as const,
+      headers,
+      body: envelope(request),
+      retryTransient: options.retryTransient ?? true,
+      signal: options.signal,
+    }),
+  );
   const value = parseApplePlist(result.body, `GSA ${String(request.o)} response`);
   const response = isPlistDict(value) && isPlistDict(value.Response) ? value.Response : undefined;
   if (!response) throw new LoadstarError(ErrorCode.AppleProtocolError, { message: "GSA answered without a Response" });
-  return {
-    response,
-    status: statusOf(response),
-    ...(result.clockSkewMs === undefined ? {} : { clockSkewMs: result.clockSkewMs }),
-  };
+  return compact({ response, status: statusOf(response), clockSkewMs: result.clockSkewMs });
 };

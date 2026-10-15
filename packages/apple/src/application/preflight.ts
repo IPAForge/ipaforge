@@ -3,8 +3,9 @@
 
 import type { AnisetteService, ServerHealth } from "@apple/application/anisette.ts";
 import type { AppleDeps } from "@apple/deps.ts";
+import { errorMessage, nonEmpty } from "@apple/domain/values.ts";
 import { fetchApple } from "@apple/infrastructure/http.ts";
-import { ErrorCode, LoadstarError } from "@loadstar/kernel";
+import { compact, ErrorCode, LoadstarError } from "@loadstar/kernel";
 
 export interface PreflightReport {
   readonly apple: { readonly ok: boolean; readonly error?: string };
@@ -18,47 +19,60 @@ export interface PreflightReport {
 
 /** How many anisette servers to probe (they are probed in parallel). */
 const ANISETTE_PROBES = 3;
+const HTTP_SERVER_ERROR = 500;
+
+interface AppleProbe {
+  readonly ok: boolean;
+  readonly skewMs?: number | undefined;
+  readonly error?: string | undefined;
+}
+
+/** Whether Apple answers at all (any status below 500), and how far its clock is from ours. */
+const probeApple = (deps: AppleDeps): Promise<AppleProbe> =>
+  fetchApple(deps, deps.config.endpoints.gsaLookup, {
+    timeoutMs: deps.config.timeouts.healthCheckMs,
+    retryTransient: false,
+    acceptStatus: () => true,
+  }).then(
+    (result) => ({ ok: result.status < HTTP_SERVER_ERROR, skewMs: result.clockSkewMs }),
+    (error: unknown) => ({ ok: false, error: errorMessage(error) }),
+  );
+
+const firstProblem = (appleOk: boolean, clockOk: boolean, anisetteOk: boolean): ErrorCode | undefined => {
+  if (!appleOk) return ErrorCode.Offline;
+  if (!clockOk) return ErrorCode.ClockSkew;
+  if (!anisetteOk) return ErrorCode.AnisetteUnavailable;
+  return undefined;
+};
 
 export const runPreflight = async (deps: AppleDeps, anisette: AnisetteService): Promise<PreflightReport> => {
   const servers = (await anisette.servers()).slice(0, ANISETTE_PROBES);
   const [apple, health] = await Promise.all([
-    fetchApple(deps, deps.config.endpoints.gsaLookup, {
-      timeoutMs: deps.config.timeouts.healthCheckMs,
-      retryTransient: false,
-      acceptStatus: () => true,
-    }).then(
-      (result) => ({ ok: result.status < 500, skew: result.clockSkewMs }),
-      (error: unknown) => ({ ok: false, error: error instanceof Error ? error.message : String(error) }),
-    ),
+    probeApple(deps),
     Promise.all(servers.map((server) => anisette.health(server))),
   ]);
-  const skewMs = "skew" in apple ? apple.skew : undefined;
+  const { skewMs } = apple;
   const clockOk = skewMs === undefined || Math.abs(skewMs) <= deps.config.maxClockSkewMs;
-  const anisetteOk = health.some((server) => server.ok);
-  const problem = !apple.ok
-    ? ErrorCode.Offline
-    : !clockOk
-      ? ErrorCode.ClockSkew
-      : !anisetteOk
-        ? ErrorCode.AnisetteUnavailable
-        : undefined;
-  return {
-    apple: { ok: apple.ok, ...("error" in apple && apple.error ? { error: apple.error } : {}) },
-    ...(skewMs === undefined ? {} : { clockSkewSeconds: Math.round(skewMs / 1000) }),
+  return compact({
+    apple: compact({ ok: apple.ok, error: nonEmpty(apple.error) }),
+    clockSkewSeconds: skewMs === undefined ? undefined : Math.round(skewMs / 1000),
     clockOk,
     anisette: health,
-    ...(problem ? { problem } : {}),
-  };
+    problem: firstProblem(
+      apple.ok,
+      clockOk,
+      health.some((server) => server.ok),
+    ),
+  });
 };
 
 /** Throws the report's problem, if any. */
 export const assertPreflight = (report: PreflightReport): void => {
-  if (report.problem) {
-    throw new LoadstarError(report.problem, {
-      data: {
-        ...(report.clockSkewSeconds === undefined ? {} : { skewSeconds: report.clockSkewSeconds }),
-        anisette: report.anisette.map((server) => ({ name: server.server.name, ok: server.ok })),
-      },
-    });
-  }
+  if (!report.problem) return;
+  throw new LoadstarError(report.problem, {
+    data: compact({
+      skewSeconds: report.clockSkewSeconds,
+      anisette: report.anisette.map((server) => ({ name: server.server.name, ok: server.ok })),
+    }),
+  });
 };

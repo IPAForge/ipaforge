@@ -22,6 +22,11 @@ export interface AnisetteState {
 
 export const ANISETTE_IDENTIFIER_BYTES = 16;
 
+/** `X-Apple-I-SRL-NO`: anisette clients report no machine serial. */
+export const ANISETTE_SERIAL_NUMBER = "0";
+/** `X-Apple-I-TimeZone` for machine headers built on this computer. */
+export const ANISETTE_TIME_ZONE = "UTC";
+
 /** `X-Mme-Device-Id`: the identifier's 16 bytes as a standard (lower-case) UUID. */
 export const deviceIdFor = (identifier: Uint8Array): string => {
   const hex = toHex(identifier).padEnd(32, "0").slice(0, 32);

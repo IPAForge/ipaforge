@@ -3,12 +3,20 @@
 // resulting `adi.pb` into one-time headers on request.
 
 import type { AppleDeps } from "@apple/deps.ts";
-import { appleTimestamp, deviceIdFor, localUserIdFor } from "@apple/domain/anisette.ts";
+import {
+  ANISETTE_SERIAL_NUMBER,
+  ANISETTE_TIME_ZONE,
+  appleTimestamp,
+  deviceIdFor,
+  localUserIdFor,
+} from "@apple/domain/anisette.ts";
 import type { AnisetteServer, ClientIdentity } from "@apple/domain/config.ts";
 import type { WebSocketLike } from "@apple/domain/ports/web-socket.ts";
+import { JSON_CONTENT_TYPE, PLIST_CONTENT_TYPE } from "@apple/infrastructure/apple-headers.ts";
 import { bagUrl } from "@apple/infrastructure/gsa/url-bag.ts";
 import { fetchApple } from "@apple/infrastructure/http.ts";
 import {
+  compact,
   createDict,
   ErrorCode,
   fromBase64,
@@ -62,9 +70,9 @@ const machineHeaders = async (
   "X-Apple-I-MD-LU": await localUserIdFor(identifier),
   "X-Mme-Device-Id": deviceIdFor(identifier),
   "X-Apple-I-Client-Time": appleTimestamp(deps.clock.now()),
-  "X-Apple-I-TimeZone": "UTC",
+  "X-Apple-I-TimeZone": ANISETTE_TIME_ZONE,
   "X-Apple-Locale": deps.config.locale,
-  "X-Apple-I-SRL-NO": "0",
+  "X-Apple-I-SRL-NO": ANISETTE_SERIAL_NUMBER,
 });
 
 const applePlist = async (
@@ -75,7 +83,7 @@ const applePlist = async (
 ): Promise<PlistDict> => {
   const response = await fetchApple(deps, url, {
     method: "POST",
-    headers: { ...headers, "Content-Type": "text/x-xml-plist", Accept: "*/*" },
+    headers: { ...headers, "Content-Type": PLIST_CONTENT_TYPE, Accept: "*/*" },
     body: serializeXmlPlist(
       createDict([
         ["Header", createDict()],
@@ -94,6 +102,17 @@ const provisioningUrls = async (deps: AppleDeps) => ({
   finish: await bagUrl(deps, "midFinishProvisioning"),
 });
 
+type SocketMessage = z.infer<typeof socketMessageSchema>;
+
+const anisetteError = (message: string, cause?: unknown): LoadstarError =>
+  new LoadstarError(ErrorCode.AnisetteUnavailable, compact({ message, cause }));
+
+const parseSocketMessage = (value: unknown): SocketMessage => {
+  const parsed = socketMessageSchema.safeParse(value);
+  if (!parsed.success) throw anisetteError("unexpected anisette message");
+  return parsed.data;
+};
+
 /** Pull-based reader over a WebSocket's JSON messages. */
 const socketReader = (socket: WebSocketLike, timeoutMs: number) => {
   const queue: unknown[] = [];
@@ -103,54 +122,46 @@ const socketReader = (socket: WebSocketLike, timeoutMs: number) => {
     failure ??= error;
     for (const waiter of waiters.splice(0)) waiter.reject(failure);
   };
+  const deliver = (message: unknown) => {
+    const waiter = waiters.shift();
+    if (waiter) waiter.resolve(message);
+    else queue.push(message);
+  };
   socket.onmessage = (event) => {
     let message: unknown;
     try {
       message = JSON.parse(typeof event.data === "string" ? event.data : String(event.data));
     } catch (error) {
-      fail(new LoadstarError(ErrorCode.AnisetteUnavailable, { message: "anisette sent invalid JSON", cause: error }));
+      fail(anisetteError("anisette sent invalid JSON", error));
       return;
     }
-    const waiter = waiters.shift();
-    if (waiter) waiter.resolve(message);
-    else queue.push(message);
+    deliver(message);
   };
-  socket.onerror = () =>
-    fail(new LoadstarError(ErrorCode.AnisetteUnavailable, { message: "anisette WebSocket error" }));
-  socket.onclose = (event) =>
-    fail(
-      new LoadstarError(ErrorCode.AnisetteUnavailable, {
-        message: `anisette closed the session (${event.code ?? "?"})`,
-      }),
-    );
-  return {
-    next: (): Promise<z.infer<typeof socketMessageSchema>> =>
-      new Promise((resolve, reject) => {
-        const timer = setTimeout(
-          () =>
-            reject(new LoadstarError(ErrorCode.AnisetteUnavailable, { message: "anisette provisioning timed out" })),
-          timeoutMs,
-        );
-        const settle = (value: unknown) => {
+  socket.onerror = () => fail(anisetteError("anisette WebSocket error"));
+  socket.onclose = (event) => fail(anisetteError(`anisette closed the session (${event.code ?? "?"})`));
+
+  /** Waits for the next message, failing after `timeoutMs`. */
+  const wait = (): Promise<unknown> =>
+    new Promise((resolve, reject) => {
+      const timer = setTimeout(() => reject(anisetteError("anisette provisioning timed out")), timeoutMs);
+      waiters.push({
+        resolve: (value) => {
           clearTimeout(timer);
-          const parsed = socketMessageSchema.safeParse(value);
-          if (parsed.success) resolve(parsed.data);
-          else reject(new LoadstarError(ErrorCode.AnisetteUnavailable, { message: "unexpected anisette message" }));
-        };
-        if (queue.length > 0) settle(queue.shift());
-        else if (failure) {
+          resolve(value);
+        },
+        reject: (error) => {
           clearTimeout(timer);
-          reject(failure);
-        } else
-          waiters.push({
-            resolve: settle,
-            reject: (error) => {
-              clearTimeout(timer);
-              reject(error);
-            },
-          });
-      }),
+          reject(error);
+        },
+      });
+    });
+
+  const next = async (): Promise<SocketMessage> => {
+    if (queue.length > 0) return parseSocketMessage(queue.shift());
+    if (failure) throw failure;
+    return parseSocketMessage(await wait());
   };
+  return { next };
 };
 
 const expect = (message: { result: string }, wanted: string): void => {
@@ -227,7 +238,7 @@ export const getHeadersV3 = async (
   }
   const response = await fetchApple(deps, `${server.address}/v3/get_headers`, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": JSON_CONTENT_TYPE },
     body: JSON.stringify(body),
   });
   const parsed = headersSchema.parse(json(response.body));
@@ -251,8 +262,8 @@ export const completeHeaders = async (
   ...oneTime,
   "X-Apple-I-MD-LU": await localUserIdFor(identifier),
   "X-Mme-Device-Id": deviceIdFor(identifier),
-  "X-Apple-I-SRL-NO": "0",
+  "X-Apple-I-SRL-NO": ANISETTE_SERIAL_NUMBER,
   "X-Apple-I-Client-Time": appleTimestamp(deps.clock.now()),
-  "X-Apple-I-TimeZone": "UTC",
+  "X-Apple-I-TimeZone": ANISETTE_TIME_ZONE,
   "X-Apple-Locale": deps.config.locale,
 });

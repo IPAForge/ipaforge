@@ -10,7 +10,8 @@ import type {
   RegisteredDevice,
   Team,
 } from "@apple/domain/developer.ts";
-import { ErrorCode, isPlistDict, LoadstarError, type PlistDict, type PlistValue } from "@loadstar/kernel";
+import { nonEmpty } from "@apple/domain/values.ts";
+import { compact, ErrorCode, isPlistDict, LoadstarError, type PlistDict, type PlistValue } from "@loadstar/kernel";
 import { z } from "zod";
 
 const text = z.string();
@@ -96,13 +97,14 @@ export const toTeams = (response: PlistDict, onSkip: (entry: unknown) => void): 
   parseList(
     response.teams,
     teamSchema,
-    (team) => ({
-      id: team.teamId,
-      name: team.name ?? team.teamId,
-      ...(team.type ? { type: team.type } : {}),
-      ...(team.status ? { status: team.status } : {}),
-      isFree: (team.memberships ?? []).some((membership) => FREE_MEMBERSHIP.test(membership.name ?? "")),
-    }),
+    (team) =>
+      compact({
+        id: team.teamId,
+        name: team.name ?? team.teamId,
+        type: nonEmpty(team.type),
+        status: nonEmpty(team.status),
+        isFree: (team.memberships ?? []).some((membership) => FREE_MEMBERSHIP.test(membership.name ?? "")),
+      }),
     onSkip,
   );
 
@@ -110,40 +112,42 @@ export const toDevices = (response: PlistDict, onSkip: (entry: unknown) => void)
   parseList(
     response.devices,
     deviceSchema,
-    (device) => ({
-      udid: device.deviceNumber,
-      ...(device.deviceId ? { id: device.deviceId } : {}),
-      ...(device.name ? { name: device.name } : {}),
-      ...(device.status ? { status: device.status } : {}),
-    }),
+    (device) =>
+      compact({
+        udid: device.deviceNumber,
+        id: nonEmpty(device.deviceId),
+        name: nonEmpty(device.name),
+        status: nonEmpty(device.status),
+      }),
     onSkip,
   );
 
 export const toCertificate = (entry: z.infer<typeof certificateSchema>): DevelopmentCertificate => {
   const platform = entry.certificatePlatform ?? entry.certificateType?.platform;
-  return {
+  return compact({
     serialNumber: entry.serialNumber,
-    ...(entry.certificateId ? { id: entry.certificateId } : {}),
-    ...(entry.name ? { name: entry.name } : {}),
-    ...(entry.machineName ? { machineName: entry.machineName } : {}),
-    ...(entry.machineId ? { machineId: entry.machineId } : {}),
-    ...(entry.certContent ? { content: entry.certContent } : {}),
-    ...(platform ? { platform } : {}),
-    ...(entry.status ? { status: entry.status } : {}),
-    ...(entry.expirationDate ? { expiresAt: entry.expirationDate } : {}),
-  };
+    id: nonEmpty(entry.certificateId),
+    name: nonEmpty(entry.name),
+    machineName: nonEmpty(entry.machineName),
+    machineId: nonEmpty(entry.machineId),
+    content: entry.certContent,
+    platform: nonEmpty(platform),
+    status: nonEmpty(entry.status),
+    expiresAt: entry.expirationDate,
+  });
 };
 
 export const toCertificates = (response: PlistDict, onSkip: (entry: unknown) => void): DevelopmentCertificate[] =>
   parseList(response.certificates, certificateSchema, toCertificate, onSkip);
 
-const toAppId = (entry: z.infer<typeof appIdSchema>): AppId => ({
-  id: entry.appIdId,
-  identifier: entry.identifier,
-  name: entry.name,
-  features: entry.features ?? ({} as PlistDict),
-  ...(entry.expirationDate ? { expiresAt: entry.expirationDate } : {}),
-});
+const toAppId = (entry: z.infer<typeof appIdSchema>): AppId =>
+  compact({
+    id: entry.appIdId,
+    identifier: entry.identifier,
+    name: entry.name,
+    features: entry.features ?? ({} as PlistDict),
+    expiresAt: entry.expirationDate,
+  });
 
 export const toAppIds = (
   response: PlistDict,
@@ -153,33 +157,25 @@ export const toAppIds = (
   const available = integer.safeParse(response.availableQuantity);
   return {
     appIds: parseList(response.appIds, appIdSchema, toAppId, onSkip),
-    quota: {
-      ...(max.success ? { max: max.data } : {}),
+    quota: compact({
+      max: max.success ? max.data : undefined,
       // Apple sometimes reports a negative or missing quantity; never let that turn into "plenty".
       available: available.success ? Math.max(0, available.data) : 0,
-    },
+    }),
   };
 };
 
 export const toCreatedAppId = (response: PlistDict): AppId =>
   toAppId(appIdSchema.parse(required(response.appId, "appId")));
 
-export const toAppGroups = (response: PlistDict, onSkip: (entry: unknown) => void): AppGroup[] =>
-  parseList(
-    response.applicationGroupList,
-    appGroupSchema,
-    (group) => ({
-      id: group.applicationGroup,
-      identifier: group.identifier,
-      ...(group.name ? { name: group.name } : {}),
-    }),
-    onSkip,
-  );
+const toAppGroupEntry = (group: z.infer<typeof appGroupSchema>): AppGroup =>
+  compact({ id: group.applicationGroup, identifier: group.identifier, name: nonEmpty(group.name) });
 
-export const toAppGroup = (response: PlistDict): AppGroup => {
-  const group = appGroupSchema.parse(required(response.applicationGroup, "applicationGroup"));
-  return { id: group.applicationGroup, identifier: group.identifier, ...(group.name ? { name: group.name } : {}) };
-};
+export const toAppGroups = (response: PlistDict, onSkip: (entry: unknown) => void): AppGroup[] =>
+  parseList(response.applicationGroupList, appGroupSchema, toAppGroupEntry, onSkip);
+
+export const toAppGroup = (response: PlistDict): AppGroup =>
+  toAppGroupEntry(appGroupSchema.parse(required(response.applicationGroup, "applicationGroup")));
 
 export const toProfile = (response: PlistDict): ProvisioningProfile => {
   const profile = profileSchema.parse(required(response.provisioningProfile, "provisioningProfile"));
@@ -198,8 +194,8 @@ export const toSubmittedCertificate = (response: PlistDict): { serialNumber?: st
   if (!isPlistDict(request)) throw new LoadstarError(ErrorCode.AppleProtocolError, { message: "no certRequest" });
   const serial = request.serialNum ?? request.serialNumber;
   const id = request.certificateId ?? request.certRequestId;
-  return {
-    ...(typeof serial === "string" ? { serialNumber: serial } : {}),
-    ...(typeof id === "string" ? { id } : {}),
-  };
+  return compact({
+    serialNumber: typeof serial === "string" ? serial : undefined,
+    id: typeof id === "string" ? id : undefined,
+  });
 };

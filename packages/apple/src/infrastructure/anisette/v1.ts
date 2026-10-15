@@ -1,9 +1,11 @@
 // Anisette v1: `GET /` returns a complete header set. Used by older servers and the local sidecar.
 
 import type { AppleDeps } from "@apple/deps.ts";
+import { ANISETTE_SERIAL_NUMBER } from "@apple/domain/anisette.ts";
 import type { AnisetteServer, ClientIdentity } from "@apple/domain/config.ts";
+import { nonEmpty } from "@apple/domain/values.ts";
 import { fetchApple } from "@apple/infrastructure/http.ts";
-import { utf8Decode } from "@loadstar/kernel";
+import { compact, utf8Decode } from "@loadstar/kernel";
 import { z } from "zod";
 
 const v1Schema = z.looseObject({
@@ -26,13 +28,13 @@ export interface V1Result {
 }
 
 export const fetchV1 = async (deps: AppleDeps, server: AnisetteServer, timeoutMs?: number): Promise<V1Result> => {
-  const response = await fetchApple(deps, `${server.address}/`, timeoutMs === undefined ? {} : { timeoutMs });
+  const response = await fetchApple(deps, `${server.address}/`, compact({ timeoutMs }));
   const data = v1Schema.parse(JSON.parse(utf8Decode(response.body)));
   const { "X-Mme-Client-Info": clientInfo, ...rest } = data;
   const headers: Record<string, string> = {};
   for (const [key, value] of Object.entries(rest)) if (typeof value === "string") headers[key] = value;
-  headers["X-Apple-I-SRL-NO"] ??= "0";
-  return { headers, ...(clientInfo ? { clientInfo } : {}) };
+  headers["X-Apple-I-SRL-NO"] ??= ANISETTE_SERIAL_NUMBER;
+  return compact({ headers, clientInfo: nonEmpty(clientInfo) });
 };
 
 export const identityFromV1 = (result: V1Result, fallback: ClientIdentity): ClientIdentity =>
