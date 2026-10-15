@@ -1,5 +1,12 @@
 // Retry with exponential backoff and jitter. Callers decide which failures are worth retrying.
 
+const DEFAULT_ATTEMPTS = 4;
+const DEFAULT_BASE_MS = 500;
+const DEFAULT_MAX_MS = 10_000;
+const DEFAULT_JITTER = 0.5;
+
+const TRANSIENT_HTTP_STATUSES: ReadonlySet<number> = new Set([429, 502, 503, 504]);
+
 export interface RetryOptions {
   /** Total attempts, including the first (default 4). */
   readonly attempts?: number;
@@ -39,15 +46,15 @@ export const backoffDelay = (
   options: RetryOptions = {},
   random: () => number = Math.random,
 ): number => {
-  const base = options.baseMs ?? 500;
-  const max = options.maxMs ?? 10_000;
-  const jitter = Math.min(Math.max(options.jitter ?? 0.5, 0), 1);
+  const base = options.baseMs ?? DEFAULT_BASE_MS;
+  const max = options.maxMs ?? DEFAULT_MAX_MS;
+  const jitter = Math.min(Math.max(options.jitter ?? DEFAULT_JITTER, 0), 1);
   const exponential = Math.min(max, base * 2 ** (attempt - 1));
   return Math.round(exponential * (1 - jitter + jitter * random()));
 };
 
 export const retry = async <T>(run: (attempt: number) => Promise<T>, options: RetryOptions = {}): Promise<T> => {
-  const attempts = Math.max(1, options.attempts ?? 4);
+  const attempts = Math.max(1, options.attempts ?? DEFAULT_ATTEMPTS);
   const sleep = options.sleep ?? defaultSleep;
   const random = options.random ?? Math.random;
   for (let attempt = 1; ; attempt++) {
@@ -64,5 +71,4 @@ export const retry = async <T>(run: (attempt: number) => Promise<T>, options: Re
 };
 
 /** HTTP statuses that are worth retrying: rate limits and temporary server failures. */
-export const isTransientHttpStatus = (status: number): boolean =>
-  status === 429 || status === 502 || status === 503 || status === 504;
+export const isTransientHttpStatus = (status: number): boolean => TRANSIENT_HTTP_STATUSES.has(status);

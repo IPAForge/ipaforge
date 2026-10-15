@@ -1,9 +1,11 @@
-import { isBinaryPlist, parseBinaryPlist } from "@kernel/plist/binary-parse.ts";
+import { isBinaryPlist } from "@kernel/plist/binary-format.ts";
+import { parseBinaryPlist } from "@kernel/plist/binary-parse.ts";
 import type { PlistLimits } from "@kernel/plist/limits.ts";
 import type { PlistValue } from "@kernel/plist/model.ts";
 import { parseXmlPlist } from "@kernel/plist/xml-parse.ts";
 
-export { isBinaryPlist, parseBinaryPlist } from "@kernel/plist/binary-parse.ts";
+export { isBinaryPlist } from "@kernel/plist/binary-format.ts";
+export { parseBinaryPlist } from "@kernel/plist/binary-parse.ts";
 export { DEFAULT_PLIST_LIMITS, type PlistLimits } from "@kernel/plist/limits.ts";
 export {
   createDict,

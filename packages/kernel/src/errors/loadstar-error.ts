@@ -1,4 +1,5 @@
 import { ErrorCode, isErrorCode } from "@kernel/errors/codes.ts";
+import { compact } from "@kernel/objects/compact.ts";
 
 export type ErrorData = Readonly<Record<string, unknown>>;
 
@@ -35,11 +36,11 @@ export class LoadstarError extends Error {
   }
 
   static fromJSON(json: SerializedError): LoadstarError {
-    const options: { cause?: unknown; data?: ErrorData; message: string } = { message: json.message };
-    if (json.cause)
-      options.cause = json.cause.code ? LoadstarError.fromJSON(json.cause) : deserializeForeign(json.cause);
-    if (json.data) options.data = json.data;
-    return new LoadstarError(json.code ?? ErrorCode.Unexpected, options);
+    const cause = json.cause ? deserializeCause(json.cause) : undefined;
+    return new LoadstarError(
+      json.code ?? ErrorCode.Unexpected,
+      compact({ message: json.message, cause, data: json.data }),
+    );
   }
 }
 
@@ -55,33 +56,34 @@ export const toLoadstarError = (error: unknown, fallbackCode: ErrorCode = ErrorC
   return new LoadstarError(fallbackCode, { cause: error, message: describe(error) });
 };
 
-export const isAbortError = (error: unknown): boolean => {
-  return (
-    typeof error === "object" &&
-    error !== null &&
-    "name" in error &&
-    ((error as { name: unknown }).name === "AbortError" || (error as { name: unknown }).name === "TimeoutError")
-  );
-};
+const ABORT_ERROR_NAMES: ReadonlySet<unknown> = new Set(["AbortError", "TimeoutError"]);
+
+export const isAbortError = (error: unknown): boolean =>
+  typeof error === "object" && error !== null && "name" in error && ABORT_ERROR_NAMES.has(error.name);
 
 const MAX_CAUSE_DEPTH = 8;
 
+/** A LoadstarError's code, or a foreign error's `code` when it is a catalogued one. */
+const codeOf = (error: Error): ErrorCode | undefined => {
+  if (error instanceof LoadstarError) return error.code;
+  return "code" in error && isErrorCode(error.code) ? error.code : undefined;
+};
+
 const serializeError = (error: unknown, depth = 0): SerializedError => {
   if (!(error instanceof Error)) return { name: typeof error, message: describe(error) };
-
-  const result: { -readonly [K in keyof SerializedError]: SerializedError[K] } = {
+  const hasCause = error.cause !== undefined && depth < MAX_CAUSE_DEPTH;
+  return compact({
     name: error.name,
     message: error.message,
-  };
-  if (error instanceof LoadstarError) {
-    result.code = error.code;
-    if (error.data) result.data = error.data;
-  } else if ("code" in error && isErrorCode(error.code)) {
-    result.code = error.code;
-  }
-  if (error.cause !== undefined && depth < MAX_CAUSE_DEPTH) result.cause = serializeError(error.cause, depth + 1);
-  return result;
+    code: codeOf(error),
+    data: error instanceof LoadstarError ? error.data : undefined,
+    cause: hasCause ? serializeError(error.cause, depth + 1) : undefined,
+  });
 };
+
+/** Causes that carry a code were LoadstarErrors; anything else comes back as a plain Error. */
+const deserializeCause = (json: SerializedError): Error =>
+  json.code ? LoadstarError.fromJSON(json) : deserializeForeign(json);
 
 const deserializeForeign = (json: SerializedError): Error => {
   const error = new Error(json.message, json.cause ? { cause: deserializeForeign(json.cause) } : undefined);
