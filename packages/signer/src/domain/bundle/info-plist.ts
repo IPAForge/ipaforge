@@ -1,4 +1,15 @@
 import { createDict, ErrorCode, isPlistDict, LoadstarError, type PlistDict, type PlistValue } from "@loadstar/kernel";
+import {
+  ALT_APP_GROUPS,
+  BG_TASK_SCHEDULER_PERMITTED_IDENTIFIERS,
+  CF_BUNDLE_IDENTIFIER,
+  NS_EXTENSION,
+  NS_EXTENSION_ATTRIBUTES,
+  NS_EXTENSION_FILE_PROVIDER_DOCUMENT_GROUP,
+  WK_APP_BUNDLE_IDENTIFIER,
+  WK_COMPANION_APP_BUNDLE_IDENTIFIER,
+} from "@signer/domain/bundle/info-keys.ts";
+import { assignKey, stringsOf } from "@signer/domain/dict.ts";
 
 export interface IdentityRewrite {
   readonly oldMainId: string;
@@ -8,20 +19,23 @@ export interface IdentityRewrite {
 }
 
 /** The main app's ID itself, or an ID nested under it (`<main>.suffix`). */
-const isUnderMainId = (value: string, rewrite: IdentityRewrite): boolean =>
-  value === rewrite.oldMainId || value.startsWith(`${rewrite.oldMainId}.`);
+const isUnderId = (value: string, mainId: string): boolean => value === mainId || value.startsWith(`${mainId}.`);
 
 const replacePrefix = (value: string, rewrite: IdentityRewrite): string =>
-  isUnderMainId(value, rewrite) ? rewrite.newMainId + value.slice(rewrite.oldMainId.length) : value;
+  isUnderId(value, rewrite.oldMainId) ? rewrite.newMainId + value.slice(rewrite.oldMainId.length) : value;
+
+/** installd rejects an extension or watch app whose ID is not prefixed by its app's ID. */
+export const assertNestedId = (nestedId: string, mainId: string): void => {
+  if (isUnderId(nestedId, mainId)) return;
+  throw new LoadstarError(ErrorCode.ExtensionPrefix, {
+    message: `bundle ID "${nestedId}" is not prefixed by its app's ID "${mainId}"`,
+    data: { bundleId: nestedId, appId: mainId },
+  });
+};
 
 /** New bundle ID for an extension/watch app: keep the suffix after the parent's ID. */
 export const rewriteNestedId = (oldId: string, rewrite: IdentityRewrite): string => {
-  if (!isUnderMainId(oldId, rewrite)) {
-    throw new LoadstarError(ErrorCode.ExtensionPrefix, {
-      message: `bundle ID "${oldId}" is not prefixed by its app's ID "${rewrite.oldMainId}"`,
-      data: { bundleId: oldId, appId: rewrite.oldMainId },
-    });
-  }
+  assertNestedId(oldId, rewrite.oldMainId);
   return replacePrefix(oldId, rewrite);
 };
 
@@ -50,12 +64,19 @@ export const rewriteInfoPlist = (info: PlistDict, newBundleId: string, rewrite: 
   const bundleIds: ValueUpdate = (value) => mapStrings(value, (text) => replacePrefix(text, rewrite));
   const appGroups: ValueUpdate = (value) => mapStrings(value, (text) => rewrite.appGroups.get(text) ?? text);
   const updates: readonly [readonly string[], ValueUpdate][] = [
-    [["CFBundleIdentifier"], () => newBundleId],
-    [["WKCompanionAppBundleIdentifier"], bundleIds],
-    [["NSExtension", "NSExtensionAttributes", "WKAppBundleIdentifier"], bundleIds],
-    [["BGTaskSchedulerPermittedIdentifiers"], bundleIds],
-    [["NSExtension", "NSExtensionFileProviderDocumentGroup"], appGroups],
-    [["ALTAppGroups"], appGroups],
+    [[CF_BUNDLE_IDENTIFIER], () => newBundleId],
+    [[WK_COMPANION_APP_BUNDLE_IDENTIFIER], bundleIds],
+    [[NS_EXTENSION, NS_EXTENSION_ATTRIBUTES, WK_APP_BUNDLE_IDENTIFIER], bundleIds],
+    [[BG_TASK_SCHEDULER_PERMITTED_IDENTIFIERS], bundleIds],
+    [[NS_EXTENSION, NS_EXTENSION_FILE_PROVIDER_DOCUMENT_GROUP], appGroups],
+    [[ALT_APP_GROUPS], appGroups],
   ];
   return updates.reduce((out, [path, update]) => setIn(out, path, update), info);
 };
+
+/** The app groups an Info.plist lists in `ALTAppGroups`. */
+export const altAppGroupsOf = (info: PlistDict): string[] => stringsOf(info[ALT_APP_GROUPS]);
+
+/** Lists the app's `ALTAppGroups` in an extension's Info.plist too (none listed: unchanged). */
+export const withAltAppGroups = (info: PlistDict, groups: readonly string[]): PlistDict =>
+  groups.length === 0 ? info : assignKey(info, ALT_APP_GROUPS, [...groups]);

@@ -40,7 +40,7 @@ loadstar/
 | File | Purpose |
 |------|---------|
 | `packages/installer/src/engine.ts` | The Engine facade: every capability the UI can call |
-| `packages/signer/src/index.ts` | Public signer API (`signIpa`, `signBundle`, `signBinary`, `reconcileForSideload`, plist, IPA I/O) |
+| `packages/signer/src/index.ts` | Public signer API (`inspectIpa`, `planSideloadIdentity`, `signIpa`, `signBundle`, `signBinary`, `reconcileForSideload`, plist, IPA I/O) |
 | `fixtures/signer/generate.sh` | Regenerates the Apple `codesign` golden fixtures (macOS) |
 | `packages/signer/scripts/compare-real-cert.ts` | Maintainer check against a real Apple Development `.p12` |
 | `packages/device/src/index.ts` | Public device API (`createDeviceManager`: pairing, install, profiles, app files, checks) |

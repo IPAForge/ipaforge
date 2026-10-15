@@ -11,6 +11,7 @@ export {
   serializeXmlPlist,
 } from "@loadstar/kernel";
 export { embeddedEntitlements } from "@signer/application/embedded-entitlements.ts";
+export { type InspectIpaOptions, inspectIpa } from "@signer/application/inspect-ipa.ts";
 export {
   type BundleProvisioning,
   type ReconcileOptions,
@@ -55,6 +56,17 @@ export {
   type SigningPolicy,
 } from "@signer/domain/config.ts";
 export type { HashAlgorithm, Hasher } from "@signer/domain/ports/hasher.ts";
+export {
+  type BundleIdentity,
+  planSideloadIdentity,
+  type SideloadIdentityPlan,
+} from "@signer/domain/sideload/identity-plan.ts";
+export type {
+  InspectedApp,
+  InspectedBundle,
+  IpaInspection,
+  NestedBundleKind,
+} from "@signer/domain/sideload/inspection.ts";
 export {
   APPLE_CERTIFICATES,
   type CertificateInfo,
