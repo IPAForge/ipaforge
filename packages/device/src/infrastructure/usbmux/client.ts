@@ -29,10 +29,11 @@ export interface UsbmuxClient {
   /** Opens a raw stream to `port` on the device. */
   connect(deviceId: number, port: number): Promise<Link>;
   readBuid(): Promise<string>;
-  /** The raw pair record plist bytes, or `undefined` when usbmuxd has none for this device. */
+  /**
+   * The raw pair record plist bytes, or `undefined` when usbmuxd has none for this device. Read only: the record
+   * belongs to the OS, so this client never saves or deletes one.
+   */
   readPairRecord(udid: string): Promise<Uint8Array | undefined>;
-  savePairRecord(udid: string, record: Uint8Array, deviceId?: number): Promise<void>;
-  deletePairRecord(udid: string): Promise<void>;
 }
 
 /** usbmuxd `Result` numbers with a dedicated error code; anything else is a protocol error. */
@@ -176,22 +177,6 @@ export const createUsbmuxClient = (options: UsbmuxClientOptions): UsbmuxClient =
       const response = await oneShot("ReadPairRecord", createDict([["PairRecordID", udid]]));
       const parsed = pairRecordResponseSchema.safeParse(response);
       return parsed.success ? parsed.data.PairRecordData : undefined;
-    },
-
-    savePairRecord: async (udid, record, deviceId) => {
-      const response = await oneShot(
-        "SavePairRecord",
-        createDict([
-          ["PairRecordID", udid],
-          ["PairRecordData", record],
-          ...(deviceId === undefined ? [] : [["DeviceID", deviceId] as const]),
-        ]),
-      );
-      expectOk(response, "SavePairRecord");
-    },
-
-    deletePairRecord: async (udid) => {
-      expectOk(await oneShot("DeletePairRecord", createDict([["PairRecordID", udid]])), "DeletePairRecord");
     },
   };
 };

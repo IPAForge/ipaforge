@@ -22,7 +22,7 @@
 | Profile/extension/Info.plist rewrite (`0xe8008015`, extension placeholders, Watch companion, BGTask IDs) | ~2 % | Signer gaps | Walk `PlugIns/`, `Extensions/`, `Watch/`; rewrite every bundle-ID-derived key; profile per appex; IPA validation before Apple calls | 5 |
 | Signer and filesystem (non-BMP names in certificate/P12, Windows locks and symlink privileges, truncated zips) | ~2 % | Engine and OS | Sanitised Unicode in subjects/friendly names; per-job temp dirs; no symlinks on Windows; verify downloads | 1 ✓, 5 |
 | Developer-services network errors (DNS, hotspot, filtered networks) | ~1.5 % | Network | Connectivity preflight (GSA lookup, developerservices2, anisette); hotspot detection; retries for idempotent calls | 3, 7 |
-| Pairing / lockdown / house_arrest | ~12 % | No passcode, locked device, trust not accepted, network instead of USB, old Apple Mobile Device Support, cleared trusted computers | Device preflight (passcode, lock, trust, Developer Mode, iOS version, USB); USB preferred; Wi-Fi debugging enabled with passcode detection; per-app pairing files from a data table, verified after writing; retry once on AFC drops | 2 ✓, 7 |
+| Pairing / lockdown / house_arrest | ~12 % | No passcode, locked device, trust not accepted, network instead of USB, old Apple Mobile Device Support, cleared trusted computers, a tool's own pair record replacing the OS's in usbmuxd | Device preflight (passcode, lock, trust, Developer Mode, iOS version, USB); USB preferred; use the OS's pair record and never write to usbmuxd (own pairing only as a fallback, kept in Loadstar's secret store); Wi-Fi debugging enabled with passcode detection; per-app pairing files from a data table, verified after writing; retry once on AFC drops | 2 ✓, 7 |
 | usbmuxd / device not detected (Windows driver, Linux socket activation) | ~3 % | Host OS | Per-OS checks with copyable fixes (Apple Devices app / Apple Mobile Device Service on Windows; `systemctl`/udev on Linux); one bad device never hides others | 2 ✓, 7 |
 | App won't start (WebView, Wayland/EGL) | ~2 % | Shell runtime | Electron bundles Chromium; no bundled system graphics libraries; GPU fallbacks | 9 |
 | Packaging (antivirus false positives, Gatekeeper) | ~2 % | Distribution | Signed + notarised builds, signed auto-update | 9, 12 |
@@ -76,7 +76,9 @@
 | lockdown `PasswordProtected` | `device.locked` |
 | lockdown `PairingDialogResponsePending` | `device.pairing_pending` (polled until Trust) |
 | lockdown `UserDeniedPairing` | `device.pairing_denied` |
-| lockdown `InvalidHostID` / `InvalidPairRecord` | `device.invalid_pair_record` (re-pair once) |
+| lockdown `InvalidHostID` / `InvalidPairRecord` with the OS's record (usbmuxd) | `device.invalid_pair_record`, `data.source: "usbmuxd"`; never re-paired over: unplug, replug, unlock, tap Trust |
+| lockdown `InvalidHostID` / `InvalidPairRecord` with Loadstar's own record | `device.invalid_pair_record` (re-pair once) |
+| TLS handshake with lockdownd fails | `device.protocol_error` with the TLS error code and reason; not a pairing problem, never re-paired |
 | `MissingValue` on `EnableWifiDebugging` | `device.passcode_required` |
 | usbmuxd unreachable | `device.usbmuxd_unavailable` |
 

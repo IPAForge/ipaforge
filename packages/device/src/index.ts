@@ -4,8 +4,8 @@ export { assertCanRunSideloadedApps, type DeveloperModeState, type DeviceCheck }
 export type { DeviceHandle } from "@device/application/handle.ts";
 export type { InstallIpaOptions, InstallIpaProgress, InstallStage } from "@device/application/install.ts";
 export { createDeviceManager, type DeviceManager } from "@device/application/manager.ts";
-export type { PairingProgress, PairOptions } from "@device/application/pair.ts";
-export { pairRecordSecretKey } from "@device/application/pair-records.ts";
+export type { PairingProgress, PairMethod, PairOptions } from "@device/application/pair-options.ts";
+export { type PairRecordStore, pairRecordSecretKey } from "@device/application/pair-records.ts";
 export type { PairingTarget, PlacePairingOptions } from "@device/application/pairing-file.ts";
 export type { DeviceSession, OpenSessionOptions, StartServiceOptions } from "@device/application/session.ts";
 export { type DeviceDeps, type DeviceDepsInput, realSleep, type Sleep } from "@device/deps.ts";

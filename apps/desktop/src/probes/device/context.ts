@@ -24,8 +24,13 @@ export interface DeviceProbe {
   readonly withDevice: (use: (handle: DeviceHandle) => Promise<void>) => Promise<void>;
 }
 
+const describePairingProgress = (event: PairingProgress): string => {
+  const stage = event.stage.replaceAll("_", " ");
+  return event.stage === "paired" ? `${stage} (record in ${event.savedTo.replaceAll("_", " ")})` : stage;
+};
+
 export const printPairingProgress = (event: PairingProgress): void =>
-  console.log(`pairing: ${event.stage.replaceAll("_", " ")}`);
+  console.log(`pairing: ${describePairingProgress(event)}`);
 
 export const createDeviceProbe = (args: DeviceProbeArgs): DeviceProbe => {
   const manager = createDeviceManager({

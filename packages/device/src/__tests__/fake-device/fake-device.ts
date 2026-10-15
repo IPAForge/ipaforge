@@ -4,15 +4,19 @@ import { createFakeFs, type FakeFs, serveAfc } from "@device/__tests__/fake-devi
 import { createPipe } from "@device/__tests__/fake-device/pipe.ts";
 import { DEFAULT_DEVICE_CONFIG } from "@device/domain/config.ts";
 import { LOCKDOWN_PORT, Service, UsbmuxResult } from "@device/domain/constants.ts";
+import { serializePairRecord } from "@device/domain/pairing/pair-record.ts";
 import { encodePem } from "@device/domain/pairing/pem.ts";
 import type { DeviceTransport, TlsCredentials } from "@device/domain/ports/transport.ts";
 import { summarizeProfile } from "@device/domain/profiles.ts";
 import { createLink, type Link } from "@device/infrastructure/framing/link.ts";
 import { type FrameLimits, receivePlist, sendPlist } from "@device/infrastructure/framing/plist-frames.ts";
+import { createPairRecord } from "@device/infrastructure/pairing/certificates.ts";
 import { encodeUsbmuxPacket, readUsbmuxPacket, toNetworkPort } from "@device/infrastructure/usbmux/protocol.ts";
 import {
   createDict,
+  ErrorCode,
   isPlistDict,
+  LoadstarError,
   type PlistDict,
   type PlistValue,
   type SecretStore,
@@ -51,6 +55,10 @@ export interface FakeDeviceOptions {
   readonly hasPasscode?: boolean;
 }
 
+/** What the host's TLS adapter throws when the handshake fails (`tlsHandshakeFails`). */
+const tlsHandshakeFailure = (): LoadstarError =>
+  new LoadstarError(ErrorCode.DeviceProtocolError, { message: "TLS handshake with the device failed: fake" });
+
 export interface FakeDevice {
   readonly udid: string;
   readonly deviceId: number;
@@ -69,10 +77,17 @@ export interface FakeDevice {
   developerMode: boolean | undefined;
   locked: boolean;
   hasPasscode: boolean;
+  /** Every TLS upgrade fails, as a dropped handshake does. */
+  tlsHandshakeFails: boolean;
   /** The next install fails with this installation_proxy error. */
   nextInstallError: string | undefined;
   nextInstallDescription: string | undefined;
   devicePublicKeyPem: Uint8Array;
+}
+
+export interface FakeUsbmuxdOptions {
+  /** The OS pairs (the user taps Trust) after this many `ReadPairRecord` misses; `undefined` = it never does. */
+  readonly osPairsAfterMisses?: number;
 }
 
 export interface FakeUsbmuxd {
@@ -80,7 +95,10 @@ export interface FakeUsbmuxd {
   readonly devices: FakeDevice[];
   readonly pairRecords: Map<string, Uint8Array>;
   readonly buid: string;
-  refuseSavePairRecord: boolean;
+  /** Every usbmuxd `MessageType` received, in order. */
+  readonly requests: string[];
+  /** See `FakeUsbmuxdOptions`. */
+  osPairsAfterMisses: number | undefined;
   /** usbmuxd is not running: every connection fails. */
   unavailable: boolean;
   attach(device: FakeDevice): void;
@@ -122,6 +140,7 @@ export const createFakeDevice = async (options: FakeDeviceOptions = {}): Promise
   developerMode: "developerMode" in options ? options.developerMode : true,
   locked: options.locked ?? false,
   hasPasscode: options.hasPasscode ?? true,
+  tlsHandshakeFails: false,
   nextInstallError: undefined,
   nextInstallDescription: undefined,
   devicePublicKeyPem: await sharedDevicePublicKey(),
@@ -402,8 +421,9 @@ const serveService = (service: string, link: Link, device: FakeDevice): Promise<
   }
 };
 
-export const createFakeUsbmuxd = (devices: FakeDevice[] = []): FakeUsbmuxd => {
+export const createFakeUsbmuxd = (devices: FakeDevice[] = [], options: FakeUsbmuxdOptions = {}): FakeUsbmuxd => {
   const listeners = new Set<(packet: Uint8Array) => void>();
+  const pairRecordMisses = new Map<string, number>();
   const ports = new Map<FakeDevice, Map<number, string>>();
   const portsOf = (device: FakeDevice) => {
     let map = ports.get(device);
@@ -436,7 +456,8 @@ export const createFakeUsbmuxd = (devices: FakeDevice[] = []): FakeUsbmuxd => {
     devices,
     pairRecords: new Map(),
     buid: "11111111-2222-3333-4444-555555555555",
-    refuseSavePairRecord: false,
+    requests: [],
+    osPairsAfterMisses: options.osPairsAfterMisses,
     unavailable: false,
     attach: (device) => {
       devices.push(device);
@@ -465,6 +486,34 @@ export const createFakeUsbmuxd = (devices: FakeDevice[] = []): FakeUsbmuxd => {
     },
   };
 
+  /** What the OS does when the user taps Trust: it pairs with its own certificates and keeps the record. */
+  const osPair = async (udid: string): Promise<Uint8Array | undefined> => {
+    const device = devices.find((candidate) => candidate.udid === udid);
+    if (!device) return undefined;
+    const record = await createPairRecord({
+      devicePublicKey: device.devicePublicKeyPem,
+      systemBuid: fake.buid,
+      now: new Date(),
+    });
+    device.acceptedHostIds.add(record.hostId);
+    const bytes = serializePairRecord({ ...record, udid });
+    fake.pairRecords.set(udid, bytes);
+    return bytes;
+  };
+
+  /** The stored record; otherwise counts a miss, and the OS pairs once `osPairsAfterMisses` have passed. */
+  const readPairRecord = async (udid: string): Promise<Uint8Array | undefined> => {
+    const stored = fake.pairRecords.get(udid);
+    if (stored) return stored;
+    const misses = pairRecordMisses.get(udid) ?? 0;
+    if (fake.osPairsAfterMisses === undefined || misses < fake.osPairsAfterMisses) {
+      pairRecordMisses.set(udid, misses + 1);
+      return undefined;
+    }
+    pairRecordMisses.delete(udid);
+    return osPair(udid);
+  };
+
   const serve = async (link: Link, onTls: (handler: (credentials: TlsCredentials) => void) => void): Promise<void> => {
     for (;;) {
       let packet: Awaited<ReturnType<typeof readUsbmuxPacket>>;
@@ -481,6 +530,7 @@ export const createFakeUsbmuxd = (devices: FakeDevice[] = []): FakeUsbmuxd => {
           ["MessageType", "Result"],
           ["Number", number],
         ]);
+      fake.requests.push(String(message.MessageType));
       switch (message.MessageType) {
         case "ListDevices":
           await reply([
@@ -522,7 +572,10 @@ export const createFakeUsbmuxd = (devices: FakeDevice[] = []): FakeUsbmuxd => {
           }
           await result(UsbmuxResult.Ok);
           // From here on the connection belongs to the device.
-          onTls((credentials) => device.tlsUpgrades.push(credentials));
+          onTls((credentials) => {
+            if (device.tlsHandshakeFails) throw tlsHandshakeFailure();
+            device.tlsUpgrades.push(credentials);
+          });
           if (service === "lockdown") await serveLockdown(link, device, portsOf(device));
           else await serveService(service, link, device);
           return;
@@ -531,23 +584,11 @@ export const createFakeUsbmuxd = (devices: FakeDevice[] = []): FakeUsbmuxd => {
           await reply([["BUID", fake.buid]]);
           break;
         case "ReadPairRecord": {
-          const record = fake.pairRecords.get(String(message.PairRecordID));
+          const record = await readPairRecord(String(message.PairRecordID));
           if (record) await reply([["PairRecordData", record]]);
           else await result(UsbmuxResult.BadDevice);
           break;
         }
-        case "SavePairRecord":
-          if (fake.refuseSavePairRecord || !(message.PairRecordData instanceof Uint8Array)) {
-            await result(UsbmuxResult.BadCommand);
-          } else {
-            fake.pairRecords.set(String(message.PairRecordID), message.PairRecordData);
-            await result(UsbmuxResult.Ok);
-          }
-          break;
-        case "DeletePairRecord":
-          fake.pairRecords.delete(String(message.PairRecordID));
-          await result(UsbmuxResult.Ok);
-          break;
         default:
           await result(UsbmuxResult.BadCommand);
       }
