@@ -72,6 +72,10 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
     - community translation through a hosted platform (Weblate's free plan for open-source projects), synced into the repository by pull request;
     - drafts may be machine-assisted, but are marked for review until a native speaker approves them;
   - CI fails on missing or extra keys and broken placeholders, and reports each language's completion; languages below 90 % are labelled "beta" in the picker
+  - publishing reusable packages to npm, from this monorepo (no separate repositories):
+    - candidates: `@loadstar/signer` first (pure-TypeScript iOS code signing), then `@loadstar/device` (usbmux, lockdown, AFC, installation_proxy and the other device services), and the generic plist codec and byte helpers from `kernel` as a small package of their own;
+    - kept private: `catalog`, `installer`, `rpc` and `ui` (Loadstar's product), and `apple` unless we decide otherwise, because it automates Apple's private endpoints;
+    - prerequisites: a build step (compiled JavaScript plus `.d.ts`, internal `@…` aliases resolved), per-package error codes instead of the app-wide catalogue, a semver-stable API with a README per package, and release tooling (e.g. Changesets) that versions and publishes from the monorepo
 
 ## Completed
 
