@@ -1,8 +1,7 @@
 import { ByteWriter } from "@loadstar/kernel";
+import { alignUp } from "@signer/domain/macho/align.ts";
 import { FAT_ARCH_SIZE, FAT_HEADER_SIZE, FAT_MAGIC } from "@signer/domain/macho/constants.ts";
 import type { FatArch } from "@signer/domain/macho/types.ts";
-
-const alignUp = (value: number, alignment: number): number => Math.ceil(value / alignment) * alignment;
 
 /**
  * Reassemble a universal binary from independently signed slices, keeping each arch's
