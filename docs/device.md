@@ -42,7 +42,7 @@ On-device tools such as SideStore and StikDebug use a copy of this computer's pa
 3. shows the targets for confirmation. The file grants access to the device, so it is never written anywhere implicitly;
 4. writes every file name each app reads, then checks the size that landed.
 
-The pairing file leaves out the root private key, which apps never need.
+The pairing file is the whole pair record plus the device UDID, including the root private key and the Wi-Fi MAC address (read from the device when the record lacks it). On-device tools refuse a file without them: SideStore fails to start its device connection ("devicegateway not initialized").
 
 ## Errors you may see
 

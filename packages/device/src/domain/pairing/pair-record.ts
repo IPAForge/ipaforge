@@ -106,11 +106,9 @@ export const tlsCredentials = (record: PairRecord): TlsCredentials => ({
 });
 
 /**
- * The pairing file SideStore (and other apps that talk to lockdownd from the device) import: the pair record
- * plus the device's UDID, **without the root private key**. Apps only need the host identity to connect;
- * the root key could mint new host certificates, so it never leaves this computer.
+ * The pairing file SideStore (and other apps that talk to lockdownd from the device) import: the whole pair
+ * record plus the device's UDID. Those apps refuse a file without `RootPrivateKey` or `WiFiMACAddress`; the root
+ * key adds little to what the host private key already grants (a full lockdown session).
  */
-export const pairingFile = (record: PairRecord, udid: string): Uint8Array => {
-  const { RootPrivateKey: _root, ...withoutRootKey } = pairRecordToPlist({ ...record, udid });
-  return serializeXmlPlist(createDict(Object.entries(withoutRootKey)));
-};
+export const pairingFile = (record: PairRecord, udid: string): Uint8Array =>
+  serializeXmlPlist(pairRecordToPlist({ ...record, udid }));

@@ -20,6 +20,8 @@ export const UsbmuxResult = {
 export const LOCKDOWN_PORT = 62078;
 export const LOCKDOWN_PROTOCOL_VERSION = "2";
 export const LOCKDOWN_QUERY_TYPE = "com.apple.mobile.lockdown";
+/** lockdownd key holding the device's Wi-Fi MAC address (pair records and pairing files need it). */
+export const LOCKDOWN_WIFI_ADDRESS_KEY = "WiFiAddress";
 
 /** Plist-service frames: a 4-byte big-endian length, then an XML plist. */
 export const PLIST_SERVICE_HEADER_SIZE = 4;

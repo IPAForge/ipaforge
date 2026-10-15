@@ -4,6 +4,7 @@ import type { DeviceContext } from "@device/application/context.ts";
 import { openLockdown } from "@device/application/lockdown.ts";
 import { type PairOptions, reportPaired } from "@device/application/pair-options.ts";
 import { saveOwnPairRecord } from "@device/application/pair-records.ts";
+import { LOCKDOWN_WIFI_ADDRESS_KEY } from "@device/domain/constants.ts";
 import type { UsbmuxDevice } from "@device/domain/device.ts";
 import { lockdownPairRecord, type PairRecord } from "@device/domain/pairing/pair-record.ts";
 import { withClient } from "@device/infrastructure/closeable.ts";
@@ -71,7 +72,7 @@ const createTrustedRecord = async (
   options: PairOptions,
 ): Promise<PairRecord> => {
   const devicePublicKey = await readDevicePublicKey(lockdown);
-  const wifiMacAddress = await optionalString(lockdown, "WiFiAddress");
+  const wifiMacAddress = await optionalString(lockdown, LOCKDOWN_WIFI_ADDRESS_KEY);
   const systemBuid = await ctx.usbmux.readBuid();
   const created = await createPairRecord({ devicePublicKey, systemBuid, now: ctx.deps.clock.now() });
   const escrowBag = await pairUntilTrusted(ctx, lockdown, created, options);
