@@ -58,6 +58,11 @@ export const ErrorCode = {
 
   // catalog
   ReleaseSourceGone: "catalog.source_gone",
+  CatalogUnavailable: "catalog.unavailable",
+  DownloadFailed: "catalog.download_failed",
+  ChecksumMismatch: "catalog.checksum_mismatch",
+  ChecksumMissing: "catalog.checksum_missing",
+  GithubRateLimited: "catalog.rate_limited",
 
   // plist
   InvalidPlist: "plist.invalid",

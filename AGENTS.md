@@ -15,7 +15,7 @@ Loadstar is an open-source desktop tool (Windows, macOS, Linux) for installing S
 
 ## Project Structure
 
-> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `apps/desktop` (Node adapters only), `fixtures/signer`, `scripts/`, `.github/workflows/`.
+> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `catalog/sources.json`, `apps/desktop` (Node adapters only), `fixtures/signer`, `scripts/`, `.github/workflows/`.
 
 ```
 loadstar/
@@ -48,6 +48,8 @@ loadstar/
 | `apps/desktop/scripts/device-probe.ts` | Maintainer CLI against a real device |
 | `packages/apple/src/index.ts` | Public Apple API (`createAppleAccounts`: anisette, sign-in + 2FA, app tokens, saved accounts) |
 | `apps/desktop/scripts/apple-probe.ts` | Maintainer CLI: sign in with real Apple IDs |
+| `catalog/sources.json` | What can be installed and where releases come from (fetched by the app from `main`) |
+| `packages/catalog/src/index.ts` | Public catalog API (`createCatalog`: manifest, release resolution with mirrors, verified downloads) |
 | `apps/desktop/src/main/index.ts` | Electron main: wires Node adapters into the Engine (Phase 9) |
 | `packages/ui/src/app/root.tsx` | UI root: router, providers, theme, i18n |
 | `pnpm-workspace.yaml` / `turbo.json` | Workspace and task graph |
