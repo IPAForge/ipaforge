@@ -8,7 +8,7 @@ The detailed roadmap, with each phase's scope, is [design/roadmap.md](design/roa
 |---|---|---|
 | 0 | Foundation ✓ | Monorepo, `kernel`, boundary checker, multi-OS CI |
 | 1 | Signer ✓ | Production pure-TS signer with Apple-parity fixtures, verified against a real Apple Development certificate |
-| 2 | Device layer | usbmux, lockdown, pairing, AFC, house_arrest, install |
+| 2 | Device layer ✓ | usbmux, lockdown, pairing, AFC, house_arrest, install, profiles |
 | 3 | Apple account | Anisette with fallback, login, 2FA, saved credentials |
 | 4 | Developer services | Teams, certificates, app IDs, groups, profiles |
 | 5 | Installer engine + catalog | Pipelines, flows, release catalog, error catalog |
@@ -20,7 +20,7 @@ The detailed roadmap, with each phase's scope, is [design/roadmap.md](design/roa
 | 11 | Wireless & remote pairing | Wi-Fi installs and the iOS 17+ RP pairing file |
 | 12 | Release 1.0 | Docs site, translations, security review, release pipeline |
 
-Phases 2 and 3 can run in parallel. Loadstar is desktop-only (Windows, macOS, Linux); the web version was dropped on 2026-10-15.
+Real-device and real-account testing for every phase happens in one end-to-end pass once the desktop app runs. Loadstar is desktop-only (Windows, macOS, Linux); the web version was dropped on 2026-10-15.
 
 ## See Also
 

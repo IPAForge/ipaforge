@@ -136,7 +136,7 @@ describe("device checks", () => {
     const handle = await rig.manager.open(rig.device.udid);
     const check = await handle.check();
     expect(check.info.productVersion).toBe("18.2");
-    expect(check.passcodeSet).toBe(true);
+    expect(check.locked).toBe(false);
     expect(check.developerMode).toBe("off");
     await handle.revealDeveloperMode();
     expect(rig.device.requests).toContain("amfi:0");
@@ -296,7 +296,7 @@ describe("automatic pairing placement", () => {
   });
 
   it("requires a passcode for Wi-Fi debugging", async () => {
-    const rig = await createRig({ passwordProtected: false });
+    const rig = await createRig({ hasPasscode: false });
     addApp(rig.device, "com.SideStore.SideStore.ABCDE12345");
     const handle = await rig.manager.open(rig.device.udid);
     const targets = await handle.pairingTargets(["ABCDE12345"]);

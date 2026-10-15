@@ -73,7 +73,7 @@ const commands: Record<string, () => Promise<void>> = {
     withDevice(async (handle) => {
       const check = await handle.check();
       console.log({ ...check.info, udid: show(check.info.udid) });
-      console.log({ passcodeSet: check.passcodeSet, developerMode: check.developerMode, activated: check.activated });
+      console.log({ locked: check.locked, developerMode: check.developerMode, activated: check.activated });
     }),
   pair: async () => {
     const device = await pickDevice();

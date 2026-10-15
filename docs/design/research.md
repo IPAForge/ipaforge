@@ -119,7 +119,7 @@ Summary of `references/failure-catalogue.md`:
 - Lockdown session + TLS, `GetValue`, installation_proxy `Browse`, misagent `CopyAll`, house_arrest `VendDocuments` + AFC stat all work.
 - LiveContainer + SideStore keeps the pairing file at `Documents/SideStore/Documents/ALTPairingFile.mobiledevicepairing` in the LiveContainer container (confirmed on device). SideStore 0.7.0 nightly (2026-09-11) still reads `ALTPairingFile.mobiledevicepairing`.
 - **Writes (2026-10-15, same device):** an AFC write/stat/read/delete round trip in `PublicStaging` is byte-identical. Pairing placement with `--only-missing` turned on `EnableWifiDebugging` (read back `true`), wrote 7,190-byte `PairingFile_Lockdown.plist` files into SideStore and LiveContainer + SideStore, and verified them (correct UDID and HostID, no `RootPrivateKey`); existing pairing files were left untouched.
-- `PasswordProtected` read `false` while `EnableWifiDebugging` was accepted, so the value probably reflects the lock state rather than "a passcode exists"; to confirm with the owner before the UI relies on it.
+- `PasswordProtected` read `false` on a device that **has a passcode** (confirmed by the owner) while it was unlocked: it reports the current lock state, not passcode presence. Passcode presence is detected through Wi-Fi debugging (`MissingValue` → `device.passcode_required`).
 - Still to verify: SideStore actually using the new file, a new pairing (trust prompt) over USB, installs and profile writes, Windows and Linux.
 
 ## 7. Web platform constraints

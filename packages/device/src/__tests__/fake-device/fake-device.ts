@@ -46,7 +46,10 @@ export interface FakeDeviceOptions {
   readonly denyPairing?: boolean;
   /** `undefined` = the device does not report it (before iOS 16). */
   readonly developerMode?: boolean | undefined;
-  readonly passwordProtected?: boolean;
+  /** The screen is locked (lockdownd `PasswordProtected`). */
+  readonly locked?: boolean;
+  /** A passcode is set (Wi-Fi debugging needs one). */
+  readonly hasPasscode?: boolean;
 }
 
 export interface FakeDevice {
@@ -65,7 +68,8 @@ export interface FakeDevice {
   lockedPolls: number;
   denyPairing: boolean;
   developerMode: boolean | undefined;
-  passwordProtected: boolean;
+  locked: boolean;
+  hasPasscode: boolean;
   /** The next install fails with this installation_proxy error. */
   nextInstallError: string | undefined;
   nextInstallDescription: string | undefined;
@@ -117,7 +121,8 @@ export const createFakeDevice = async (options: FakeDeviceOptions = {}): Promise
   lockedPolls: options.lockedPolls ?? 0,
   denyPairing: options.denyPairing ?? false,
   developerMode: "developerMode" in options ? options.developerMode : true,
-  passwordProtected: options.passwordProtected ?? true,
+  locked: options.locked ?? false,
+  hasPasscode: options.hasPasscode ?? true,
   nextInstallError: undefined,
   nextInstallDescription: undefined,
   devicePublicKeyPem: await sharedDevicePublicKey(),
@@ -157,7 +162,7 @@ const deviceValues = (device: FakeDevice): PlistDict =>
     ["DeviceClass", "iPhone"],
     ["CPUArchitecture", "arm64e"],
     ["ActivationState", "Activated"],
-    ["PasswordProtected", device.passwordProtected],
+    ["PasswordProtected", device.locked],
   ]);
 
 const serveLockdown = async (link: Link, device: FakeDevice, ports: Map<number, string>): Promise<void> => {
@@ -196,7 +201,7 @@ const serveLockdown = async (link: Link, device: FakeDevice, ports: Map<number, 
         break;
       }
       case "SetValue":
-        if (message.Key === "EnableWifiDebugging" && !device.passwordProtected) {
+        if (message.Key === "EnableWifiDebugging" && !device.hasPasscode) {
           await fail("MissingValue");
           break;
         }
