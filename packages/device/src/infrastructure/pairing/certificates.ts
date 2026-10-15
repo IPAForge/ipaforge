@@ -1,5 +1,7 @@
-// Creates a new pair record: a root CA, a host certificate and a device certificate over the device's own
-// public key, the way a desktop pairs with an iPhone. Platform-free (WebCrypto + pkijs).
+// Creates a new pair record: a root CA and a device certificate over the device's own public key, the way a
+// desktop pairs with an iPhone. The host presents the root itself as its TLS certificate: the device trusts
+// exactly that certificate, and with the empty names lockdown certificates carry, a separate host leaf would leave
+// it a chain it cannot build (the device drops the handshake). Platform-free (WebCrypto + pkijs).
 
 import type { PairRecord } from "@device/domain/pairing/pair-record.ts";
 import { decodePem, pemBytes } from "@device/domain/pairing/pem.ts";
@@ -112,23 +114,22 @@ const privateKeyPem = async (crypto: Crypto, key: CryptoKey): Promise<Uint8Array
 
 export const createPairRecord = async (input: CreatePairRecordInput): Promise<PairRecord> => {
   const crypto = input.crypto ?? globalThis.crypto;
-  const [root, host] = await Promise.all([generateKeyPair(crypto), generateKeyPair(crypto)]);
-  const rootInfo = await publicKeyInfo(crypto, root.publicKey);
-  const hostInfo = await publicKeyInfo(crypto, host.publicKey);
+  const root = await generateKeyPair(crypto);
   const base = { crypto, issuerKey: root.privateKey, now: input.now };
 
-  const [rootCertificate, hostCertificate, deviceCertificate] = await Promise.all([
-    issue({ ...base, serial: 1, publicKey: rootInfo, ca: true }),
-    issue({ ...base, serial: 2, publicKey: hostInfo, ca: false }),
-    issue({ ...base, serial: 3, publicKey: devicePublicKeyInfo(input.devicePublicKey), ca: false }),
+  const [rootCertificate, deviceCertificate] = await Promise.all([
+    issue({ ...base, serial: 1, publicKey: await publicKeyInfo(crypto, root.publicKey), ca: true }),
+    issue({ ...base, serial: 2, publicKey: devicePublicKeyInfo(input.devicePublicKey), ca: false }),
   ]);
+  const rootPem = pemBytes("CERTIFICATE", rootCertificate);
+  const rootKeyPem = await privateKeyPem(crypto, root.privateKey);
 
   return {
     deviceCertificate: pemBytes("CERTIFICATE", deviceCertificate),
-    hostCertificate: pemBytes("CERTIFICATE", hostCertificate),
-    hostPrivateKey: await privateKeyPem(crypto, host.privateKey),
-    rootCertificate: pemBytes("CERTIFICATE", rootCertificate),
-    rootPrivateKey: await privateKeyPem(crypto, root.privateKey),
+    hostCertificate: rootPem,
+    hostPrivateKey: rootKeyPem,
+    rootCertificate: rootPem,
+    rootPrivateKey: rootKeyPem,
     hostId: input.hostId ?? crypto.randomUUID().toUpperCase(),
     systemBuid: input.systemBuid,
   };
