@@ -248,6 +248,12 @@ importers:
         specifier: 4.6.6
         version: 4.6.6
 
+  packages/installer:
+    dependencies:
+      '@loadstar/kernel':
+        specifier: workspace:*
+        version: link:../kernel
+
   packages/kernel: {}
 
   packages/signer:
