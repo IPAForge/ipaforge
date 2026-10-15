@@ -9,6 +9,7 @@ An iPhone only runs code that carries a valid signature from a certificate Apple
 ```
  .ipa ──read (streamed, zip-slip safe)──▶ app tree
         └─ reconcile for sideloading: new bundle IDs, Info.plist keys, per-bundle profile + entitlements
+        └─ additions: extra files and Info.plist keys from the caller (sealed like everything else)
         └─ sign bottom-up, for each nested framework / plug-in / loose dylib, then the app:
               embedded.mobileprovision → _CodeSignature/CodeResources (seal every file)
               → per Mach-O slice: patch LC_CODE_SIGNATURE + __LINKEDIT (codesign_allocate rules)
@@ -48,6 +49,45 @@ const { ipa, summary } = await signIpa(bytesFileSource("SideStore.ipa", ipaBytes
 // `ipa` is a ReadableStream<Uint8Array>; `summary.bundles` lists every signed bundle and its cdhash.
 ```
 
+### Adding content before signing
+
+`additions` puts files and Info.plist keys into bundles after reconciliation and before signing, so the
+signature seals them. The callback receives the discovered bundles with their **original** bundle IDs (before
+any sideload rewrite), so it can recognise an app by the ID it ships with:
+
+```ts
+await signIpa(source, {
+  signing,
+  sideload,
+  additions: (bundles) => [
+    {
+      bundlePath: "", // CodeBundle.path; "" is the main app
+      files: new Map([["Config.bin", bytes]]), // paths relative to that bundle
+      infoPlist: createDict([["SomeKey", "value"]]), // keys to set
+    },
+  ],
+});
+```
+
+A file path that would leave its bundle (`..`, absolute, backslashes, empty segments), or a `bundlePath` that is
+not a code bundle, fails with `signer.invalid_bundle`. The installer uses this hook to give SideStore its
+certificate (`sideStoreCertificateAdditions`, see below).
+
+### Exporting a certificate as PKCS#12
+
+`exportPkcs12({ certificate, privateKey, password, friendlyName? })` turns a DER certificate and its PKCS#8 DER
+private key into a `.p12` that iOS can import. iOS only accepts the **legacy** profile, so both the key bag and the
+certificate bag use `pbeWithSHAAnd3-KeyTripleDES-CBC`, the MAC is HMAC-SHA1, and the iteration count is 2048
+(`infrastructure/pkcs12/constants.ts`). WebCrypto has no DES, so this one module uses node-forge; nothing else in
+the signer does. Bad input fails with `signer.invalid_certificate`. The output is checked with `openssl pkcs12
+-info -legacy`.
+
+SideStore holds the certificate this way so it can refresh apps by itself. The installer's
+`sideStoreCertificateAdditions({ certificate, privateKey, serialNumber, machineId })` returns an `additions`
+callback that writes `ALTCertificate.p12` (password = the certificate's `machineId`) and sets Info.plist
+`ALTCertificateID` = serial number in SideStore's bundle, or in the SideStore framework inside LiveContainer. Any
+other app gets nothing. Without a `machineId` it fails with `installer.certificate_machine_id_missing`.
+
 ### Tuning
 
 Nothing in the engine is hard-coded beyond what the file formats themselves fix. Every tunable has a
@@ -75,7 +115,7 @@ The defaults are exported as `DEFAULT_SIGNING_POLICY`, `DEFAULT_SIGNER_LIMITS`, 
 and `limits`. `createHasher({ batchSize })` controls how many pages WebCrypto hashes concurrently.
 
 Format constants are not options: blob magics, slot numbers and flags are in `domain/blobs/constants.ts`,
-OIDs are in `infrastructure/cms/oids.ts`, and bundle paths and file modes are in `domain/bundle/layout.ts`.
+OIDs are in `infrastructure/cms/oids.ts` and `infrastructure/pkcs12/constants.ts`, and bundle paths and file modes are in `domain/bundle/layout.ts`.
 
 Lower-level building blocks are also exported: `signBundle`, `signBinary`, `reconcileForSideload`, `readIpa`/`writeIpa`, `parseProvisioningProfile`, and the plist API (`parsePlist`, `serializeXmlPlist`).
 
@@ -89,6 +129,8 @@ Lower-level building blocks are also exported: `signBundle`, `signBinary`, `reco
 | A whole `.app` signed ad-hoc is **file-for-file identical** to Apple's | `application/sign-bundle.test.ts` |
 | Certificate-signed binaries, bundles, sideload-reconciled apps and written IPAs pass `codesign --verify --deep --strict` | macOS tests |
 | CMS verifies with pkijs and `openssl cms` | `infrastructure/cms/cms.test.ts` |
+| PKCS#12 export round-trips (key matches certificate, wrong password fails) and uses 3DES bags + HMAC-SHA1 at 2048 iterations | `infrastructure/pkcs12/pkcs12.test.ts` |
+| Added files are sealed in their bundle's and their parent's `CodeResources` | `application/bundle-additions.test.ts` |
 | Plist writer matches `plutil` byte for byte (including `%.17g` reals) | `domain/plist/plist.test.ts` |
 | Real SideStore 0.7.0-alpha is sideload-signed in ~0.5 s and verifies | `application/sign-ipa.test.ts` (`LOADSTAR_E2E=1`) |
 

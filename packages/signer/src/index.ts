@@ -10,6 +10,7 @@ export {
   real,
   serializeXmlPlist,
 } from "@loadstar/kernel";
+export type { BundleAddition, BundleAdditions } from "@signer/application/bundle-additions.ts";
 export { embeddedEntitlements } from "@signer/application/embedded-entitlements.ts";
 export {
   type BundleProvisioning,
@@ -77,4 +78,5 @@ export {
   type WriteIpaOptions,
   writeIpa,
 } from "@signer/infrastructure/ipa/index.ts";
+export { exportPkcs12, type Pkcs12Input } from "@signer/infrastructure/pkcs12/index.ts";
 export { type ProvisioningProfile, parseProvisioningProfile } from "@signer/infrastructure/profile/profile.ts";

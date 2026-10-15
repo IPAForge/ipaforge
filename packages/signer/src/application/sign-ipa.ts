@@ -1,4 +1,5 @@
 import { type Clock, compact, type FileSource, type Logger, toLoadstarError } from "@loadstar/kernel";
+import { applyBundleAdditions, type BundleAdditions } from "@signer/application/bundle-additions.ts";
 import { embeddedEntitlements } from "@signer/application/embedded-entitlements.ts";
 import { type ReconcileOptions, type ReconcileResult, reconcileForSideload } from "@signer/application/reconcile.ts";
 import { type BundleSigningConfig, type SignBundleProgress, signBundle } from "@signer/application/sign-bundle.ts";
@@ -24,6 +25,8 @@ export interface SignIpaOptions {
    * re-signed in place, keeping each executable's existing entitlements.
    */
   readonly sideload?: Omit<ReconcileOptions, "now">;
+  /** Files and Info.plist keys to put into bundles after reconciliation and before signing, so they are sealed. */
+  readonly additions?: BundleAdditions;
   readonly onProgress?: (progress: SignerProgress) => void;
   readonly signal?: AbortSignal;
   /** Page size, hash algorithms and CMS reservation (defaults follow Apple codesign 26). */
@@ -119,6 +122,7 @@ export const signIpa = async (
       options.onProgress?.({ stage: "reconciling" });
       reconciled = reconcileForSideload(ipa.app, { limits, ...options.sideload, now: clock.now() }, logger);
     }
+    applyBundleAdditions(ipa.app, options.additions, compact({ limits, logger, renamed: reconciled?.bundleIds }));
     const preserved = reconciled ? new Map<string, EntitlementsInput>() : preservedEntitlements(ipa.app, limits);
 
     const signed = await signBundle(

@@ -12,6 +12,7 @@
     "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.test.json"
   },
   "dependencies": {
-    "@loadstar/kernel": "workspace:*"
+    "@loadstar/kernel": "workspace:*",
+    "@loadstar/signer": "workspace:*"
   }
 }

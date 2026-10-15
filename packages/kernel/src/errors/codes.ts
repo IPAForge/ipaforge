@@ -89,6 +89,8 @@ export const ErrorCode = {
   // installer
   StepFailed: "installer.step_failed",
   PromptCancelled: "installer.prompt_cancelled",
+  /** The certificate has no machineId, which is the password SideStore opens its `.p12` with. */
+  CertificateMachineIdMissing: "installer.certificate_machine_id_missing",
 
   // generic
   Aborted: "internal.aborted",
