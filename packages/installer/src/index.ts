@@ -9,3 +9,4 @@ export {
   type SideStoreCertificate,
   sideStoreCertificateAdditions,
 } from "@installer/sidestore/certificate.ts";
+export type { CertificateTrust } from "@installer/sidestore/trust.ts";

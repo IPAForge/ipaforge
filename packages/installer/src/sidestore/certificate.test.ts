@@ -13,6 +13,7 @@ vi.mock("@loadstar/signer", async (importOriginal) => ({
 const certificate = new Uint8Array([1]);
 const privateKey = new Uint8Array([2]);
 const input = { certificate, privateKey, serialNumber: "1A2B3C", machineId: "MACHINE-ID" };
+const trust = { kind: "user-approved" } as const;
 
 const bundle = (path: string, identifier: string, kind: CodeBundle["kind"]): CodeBundle => ({
   path,
@@ -33,7 +34,7 @@ beforeEach(() => vi.mocked(exportPkcs12).mockClear());
 
 describe("sideStoreCertificateAdditions", () => {
   it("adds ALTCertificate.p12 (password = machineId) and ALTCertificateID to SideStore", () => {
-    const [addition, ...rest] = sideStoreCertificateAdditions(input)(sideStore);
+    const [addition, ...rest] = sideStoreCertificateAdditions(input, trust)(sideStore);
 
     expect(rest).toEqual([]);
     expect(addition?.bundlePath).toBe("");
@@ -43,18 +44,18 @@ describe("sideStoreCertificateAdditions", () => {
   });
 
   it("targets the SideStore framework inside LiveContainer", () => {
-    const additions = sideStoreCertificateAdditions(input)(liveContainer);
+    const additions = sideStoreCertificateAdditions(input, trust)(liveContainer);
     expect(additions.map((addition) => addition.bundlePath)).toEqual(["Frameworks/SideStoreApp.framework"]);
   });
 
   it("adds nothing to other apps, and does not need a machineId for them", () => {
     const other = [bundle("", "com.example.app", "app")];
-    expect(sideStoreCertificateAdditions({ ...input, machineId: undefined })(other)).toEqual([]);
+    expect(sideStoreCertificateAdditions({ ...input, machineId: undefined }, trust)(other)).toEqual([]);
     expect(exportPkcs12).not.toHaveBeenCalled();
   });
 
   it("fails clearly when SideStore needs the certificate but it has no machineId", () => {
-    expect(() => sideStoreCertificateAdditions({ ...input, machineId: undefined })(sideStore)).toThrow(
+    expect(() => sideStoreCertificateAdditions({ ...input, machineId: undefined }, trust)(sideStore)).toThrow(
       expect.objectContaining({ code: ErrorCode.CertificateMachineIdMissing }),
     );
   });

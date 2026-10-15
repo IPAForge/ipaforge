@@ -1,5 +1,6 @@
 import { CERTIFICATE_FILE, CERTIFICATE_ID_KEY } from "@installer/sidestore/constants.ts";
 import { findSideStoreTarget } from "@installer/sidestore/target.ts";
+import type { CertificateTrust } from "@installer/sidestore/trust.ts";
 import { createDict, ErrorCode, LoadstarError } from "@loadstar/kernel";
 import { type BundleAdditions, exportPkcs12 } from "@loadstar/signer";
 
@@ -26,9 +27,11 @@ const requireMachineId = (input: SideStoreCertificate): string => {
  * Additions that give SideStore (or the SideStore inside LiveContainer) the signing certificate, so it can
  * refresh apps by itself: `ALTCertificate.p12` at the target bundle's root and `ALTCertificateID` in its
  * Info.plist. Any other app gets no additions.
+ *
+ * This hands the private key to the app, so `trust` must say why the IPA is genuine (see CertificateTrust).
  */
 export const sideStoreCertificateAdditions =
-  (input: SideStoreCertificate): BundleAdditions =>
+  (input: SideStoreCertificate, _trust: CertificateTrust): BundleAdditions =>
   (bundles) => {
     const target = findSideStoreTarget(bundles);
     if (!target) return [];
