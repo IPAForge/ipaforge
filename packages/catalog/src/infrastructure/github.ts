@@ -70,6 +70,12 @@ export const findGithubAsset = async (
       data: { repo, version: release.tag_name, asset },
     });
   }
+  if (!found.browser_download_url.startsWith("https://")) {
+    throw new LoadstarError(ErrorCode.CatalogUnavailable, {
+      message: `${repo}: asset URL is not HTTPS`,
+      data: { repo },
+    });
+  }
   const digest = found.digest?.startsWith("sha256:") ? found.digest.slice("sha256:".length).toLowerCase() : undefined;
   return {
     version: release.tag_name,

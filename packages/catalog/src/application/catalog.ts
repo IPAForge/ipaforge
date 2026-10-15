@@ -164,8 +164,22 @@ export const createCatalog = (input: CatalogDepsInput): Catalog => {
       const key = cacheKey(release);
       const existing = release.sha256 ? await deps.store.get(key) : undefined;
       if (existing && release.sha256) {
+        // The cache only ever holds verified files (DownloadStore keeps an entry after verify()).
         logger.debug("using cached download", { appId: release.appId, version: release.version });
         return { file: existing, sha256: release.sha256, cached: true };
+      }
+      // Fail closed: every download is verified against a checksum from the manifest or GitHub.
+      if (!release.sha256) {
+        throw new LoadstarError(ErrorCode.ChecksumMissing, {
+          message: "no published checksum for this release; refusing to install an unverified file",
+          data: { appId: release.appId, version: release.version },
+        });
+      }
+      if (!release.url.startsWith("https://")) {
+        throw new LoadstarError(ErrorCode.DownloadFailed, {
+          message: "release URL is not HTTPS",
+          data: { appId: release.appId },
+        });
       }
       if (release.size !== undefined && release.size > config.maxDownloadBytes) {
         throw new LoadstarError(ErrorCode.DownloadFailed, {
@@ -206,7 +220,7 @@ export const createCatalog = (input: CatalogDepsInput): Catalog => {
             data: { received, total },
           });
         }
-        if (release.sha256 && digest !== release.sha256) {
+        if (digest !== release.sha256) {
           throw new LoadstarError(ErrorCode.ChecksumMismatch, {
             message: "the downloaded file does not match its published checksum",
             data: { appId: release.appId, version: release.version },

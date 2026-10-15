@@ -62,6 +62,7 @@ export const ErrorCode = {
   AssetNotFound: "catalog.asset_not_found",
   DownloadFailed: "catalog.download_failed",
   ChecksumMismatch: "catalog.checksum_mismatch",
+  ChecksumMissing: "catalog.checksum_missing",
   GithubRateLimited: "catalog.rate_limited",
 
   // plist

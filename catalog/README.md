@@ -29,7 +29,10 @@
   - `github` resolves through the GitHub API: the latest release, or `tag`, and the asset with exactly that name.
   - `{ "url": "https://…", "sha256": "…", "size": … }` is a direct HTTPS download.
 - **Mirrors** are tried in order when the primary repository, release or asset is gone.
-- **Checksums:** GitHub publishes a SHA-256 for release assets, and Loadstar verifies every download against it. A `sha256` in the manifest pins a specific file.
+- **Checksums are mandatory (fail closed).**
+  - Every download is verified against a SHA-256, either the one GitHub publishes for the release asset or a `sha256` in the manifest, which pins a specific file.
+  - `url` entries must always include `sha256`.
+  - A release without any known checksum is refused (`catalog.checksum_missing`), never installed unverified.
 - **`compatibility`** picks the recommended channel per iOS range (first match wins).
 
 ## Changing it

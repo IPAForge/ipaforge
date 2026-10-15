@@ -16,7 +16,8 @@ const locationSchema = z.union([
   z.object({ github: githubSchema, sha256: sha256.optional() }),
   z.object({
     url: z.string().url().startsWith("https://"),
-    sha256: sha256.optional(),
+    // A direct download has no other integrity source, so its checksum is mandatory.
+    sha256,
     size: z.number().int().positive().optional(),
   }),
 ]);

@@ -207,6 +207,25 @@ describe("downloads", () => {
     expect(store.entries.size).toBe(0);
   });
 
+  it("refuses to download a release without a known checksum (fails closed)", async () => {
+    const http = fakeHttp({ "SideStore.ipa": () => respond(200, ipa) });
+    const catalog = createCatalog({ http: http.client, store: memoryStore() });
+    const { sha256: _omit, ...unverified } = release;
+    await expect(catalog.download(unverified)).rejects.toMatchObject({ code: ErrorCode.ChecksumMissing });
+    expect(http.requested).toHaveLength(0);
+  });
+
+  it("rejects manifest URL entries without a checksum", () => {
+    const entry = {
+      id: "x",
+      name: "X",
+      bundleId: "com.x",
+      kind: "app",
+      channels: { stable: { url: "https://example.com/X.ipa" } },
+    };
+    expect(manifestSchema.safeParse({ version: 1, apps: [entry] }).success).toBe(false);
+  });
+
   it("maps a missing download to source_gone", async () => {
     const catalog = createCatalog({ http: fakeHttp({}).client, store: memoryStore() });
     await expect(catalog.download(release)).rejects.toMatchObject({ code: ErrorCode.ReleaseSourceGone });
