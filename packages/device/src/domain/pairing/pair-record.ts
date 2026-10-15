@@ -1,6 +1,7 @@
 import { decodePem, pemText } from "@device/domain/pairing/pem.ts";
 import type { TlsCredentials } from "@device/domain/ports/transport.ts";
 import {
+  compact,
   createDict,
   ErrorCode,
   isPlistDict,
@@ -57,7 +58,7 @@ export const parsePairRecord = (data: Uint8Array, limits?: PlistLimits): PairRec
     throw new LoadstarError(ErrorCode.InvalidPairRecord, { message: "malformed pair record", cause: parsed.error });
   }
   const r = parsed.data;
-  return {
+  return compact({
     deviceCertificate: r.DeviceCertificate,
     hostCertificate: r.HostCertificate,
     hostPrivateKey: r.HostPrivateKey,
@@ -65,10 +66,11 @@ export const parsePairRecord = (data: Uint8Array, limits?: PlistLimits): PairRec
     rootPrivateKey: r.RootPrivateKey,
     hostId: r.HostID,
     systemBuid: r.SystemBUID,
-    ...(r.EscrowBag ? { escrowBag: r.EscrowBag } : {}),
-    ...(r.WiFiMACAddress ? { wifiMacAddress: r.WiFiMACAddress } : {}),
-    ...(r.UDID ? { udid: r.UDID } : {}),
-  };
+    escrowBag: r.EscrowBag,
+    // Empty strings count as missing.
+    wifiMacAddress: r.WiFiMACAddress || undefined,
+    udid: r.UDID || undefined,
+  });
 };
 
 export const pairRecordToPlist = (record: PairRecord): PlistDict =>
