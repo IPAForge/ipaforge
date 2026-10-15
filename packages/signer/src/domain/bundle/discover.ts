@@ -1,4 +1,5 @@
 import { ErrorCode, isPlistDict, LoadstarError, type PlistDict, parsePlist, stringAt } from "@loadstar/kernel";
+import { CF_BUNDLE_EXECUTABLE, CF_BUNDLE_IDENTIFIER } from "@signer/domain/bundle/info-keys.ts";
 import { CODE_SIGNATURE_DIR, INFO_PLIST } from "@signer/domain/bundle/layout.ts";
 import { type BundleTree, isWithin, joinPath, readFile, relativeTo } from "@signer/domain/bundle/tree.ts";
 import type { ResourceEntry } from "@signer/domain/code-resources/index.ts";
@@ -33,6 +34,11 @@ const BUNDLE_SUFFIXES: readonly [string, BundleKind][] = [
   [".app", "watch-app"],
   [".xctest", "xctest"],
 ];
+
+/** Bundles that need their own App ID and provisioning profile. */
+const PROVISIONED_KINDS = new Set<BundleKind>(["app", "appex", "watch-app"]);
+
+export const isProvisioned = (bundle: CodeBundle): boolean => PROVISIONED_KINDS.has(bundle.kind);
 
 const SIGNABLE_FILETYPES = new Set([MH_EXECUTE, MH_DYLIB, MH_BUNDLE]);
 
@@ -73,8 +79,8 @@ const describeBundle = (
   limits: PlistLimits,
 ): CodeBundle | undefined => {
   const infoPlist = readInfoPlist(tree, path, limits);
-  const executableName = infoPlist && stringAt(infoPlist, "CFBundleExecutable");
-  const identifier = infoPlist && stringAt(infoPlist, "CFBundleIdentifier");
+  const executableName = infoPlist && stringAt(infoPlist, CF_BUNDLE_EXECUTABLE);
+  const identifier = infoPlist && stringAt(infoPlist, CF_BUNDLE_IDENTIFIER);
   if (!infoPlist || !executableName || !identifier) return undefined; // resource-only bundle
   const executable = joinPath(path, executableName);
   if (!readFile(tree, executable)) return undefined;

@@ -25,6 +25,7 @@ import {
 } from "@signer/domain/blobs/index.ts";
 import type { SigningPolicy } from "@signer/domain/config.ts";
 import { estimateSignatureSize, type PreparedImage, prepareImage } from "@signer/domain/macho/allocate.ts";
+import { isEncryptedSlice } from "@signer/domain/macho/encryption.ts";
 import { findSegment } from "@signer/domain/macho/parse.ts";
 import type { Slice } from "@signer/domain/macho/types.ts";
 import { DIGEST_SIZE, type HashAlgorithm } from "@signer/domain/ports/hasher.ts";
@@ -63,7 +64,7 @@ const highestSpecialSlot = (special: SpecialSlotData): number =>
   Math.max(0, ...Object.entries(NSPECIAL).map(([key, slot]) => (special[key as keyof SpecialSlotData] ? slot : 0)));
 
 const assertDecrypted = (slice: Slice, identifier: string): void => {
-  if (slice.cryptid === 0) return;
+  if (!isEncryptedSlice(slice)) return;
   throw new LoadstarError(ErrorCode.EncryptedBinary, {
     message: "binary is FairPlay-encrypted (App Store build); a decrypted IPA is required",
     data: { identifier },
