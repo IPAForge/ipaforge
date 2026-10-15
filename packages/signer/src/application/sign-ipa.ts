@@ -9,7 +9,7 @@ import { type BundleTree, readFile } from "@signer/domain/bundle/tree.ts";
 import { type Overrides, resolveLimits, type SignerLimits, type SigningPolicy } from "@signer/domain/config.ts";
 import type { Hasher } from "@signer/domain/ports/hasher.ts";
 import { createHasher } from "@signer/infrastructure/hashing/index.ts";
-import { type Ipa, readIpa, writeIpa } from "@signer/infrastructure/ipa/ipa.ts";
+import { type Ipa, readIpa, writeIpa } from "@signer/infrastructure/ipa/index.ts";
 
 export type SignerProgress =
   | { readonly stage: "reading" }

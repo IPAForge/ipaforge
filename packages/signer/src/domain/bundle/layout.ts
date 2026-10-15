@@ -23,3 +23,5 @@ export const EXECUTABLE_MODE = 0o755;
 export const DIRECTORY_MODE = 0o755;
 /** Mode recorded for symlinks (their permissions are not used by iOS). */
 export const SYMLINK_MODE = 0o755;
+/** Permission bits written for symlinks in an archive (conventionally rwxrwxrwx). */
+export const SYMLINK_ARCHIVE_PERMISSIONS = 0o777;

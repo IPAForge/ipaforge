@@ -76,5 +76,5 @@ export {
   readIpa,
   type WriteIpaOptions,
   writeIpa,
-} from "@signer/infrastructure/ipa/ipa.ts";
+} from "@signer/infrastructure/ipa/index.ts";
 export { type ProvisioningProfile, parseProvisioningProfile } from "@signer/infrastructure/profile/profile.ts";
