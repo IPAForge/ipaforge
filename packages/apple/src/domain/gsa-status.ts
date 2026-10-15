@@ -1,5 +1,6 @@
 // GrandSlam status codes → catalogued errors (see docs/design/failure-catalogue.md §2).
-import { ErrorCode, LoadstarError } from "@loadstar/kernel";
+import { nonEmpty } from "@apple/domain/values.ts";
+import { compact, ErrorCode, LoadstarError } from "@loadstar/kernel";
 
 /** GSA error codes (`Status.ec`) with a dedicated meaning. */
 export const GsaCode = {
@@ -73,7 +74,7 @@ export const assertGsaOk = (status: GsaStatus, operation: string): void => {
   if (status.ec === 0) return;
   throw new LoadstarError(gsaErrorCode(status), {
     message: `GSA ${operation} failed: ${status.ec}${status.em ? ` ${status.em}` : ""}`,
-    data: { gsaCode: status.ec, ...(status.em ? { gsaMessage: status.em } : {}), operation },
+    data: compact({ gsaCode: status.ec, gsaMessage: nonEmpty(status.em), operation }),
   });
 };
 

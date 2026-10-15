@@ -1,6 +1,6 @@
 // Apple developer-account resources as Loadstar uses them, plus the rules that keep free accounts within Apple's
 // limits (10 App IDs per 7 days, few development certificates).
-import { ErrorCode, type PlistDict } from "@loadstar/kernel";
+import { compact, ErrorCode, type PlistDict } from "@loadstar/kernel";
 
 export interface Team {
   readonly id: string;
@@ -147,13 +147,13 @@ export const planAppIds = (
     .map((appId) => appId.expiresAt)
     .filter((date): date is Date => date !== undefined && date.getTime() > now.getTime())
     .sort((a, b) => a.getTime() - b.getTime())[0];
-  return {
+  return compact({
     reuse,
     create,
     available: quota.available,
     enough: create.length <= quota.available,
-    ...(nextSlotAt ? { nextSlotAt } : {}),
-  };
+    nextSlotAt,
+  });
 };
 
 /** True when `certificate` is an iOS development certificate that has not expired. */

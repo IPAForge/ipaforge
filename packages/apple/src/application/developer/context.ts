@@ -1,0 +1,47 @@
+// What every developer-services use case shares: authenticated requests for one session, and logging of
+// malformed list entries.
+
+import type { AnisetteService } from "@apple/application/anisette.ts";
+import type { AppTokenService } from "@apple/application/app-token.ts";
+import type { AppleDeps } from "@apple/deps.ts";
+import type { Team } from "@apple/domain/developer.ts";
+import type { AppleSession } from "@apple/domain/session.ts";
+import {
+  type DeveloperFields,
+  type DeveloperPlatform,
+  type DeveloperRequestOptions,
+  developerRequest,
+} from "@apple/infrastructure/developer/client.ts";
+import type { PlistDict } from "@loadstar/kernel";
+
+export interface DeveloperContext {
+  readonly deps: AppleDeps;
+  readonly request: (action: string, platform: DeveloperPlatform, fields?: DeveloperFields) => Promise<PlistDict>;
+  /** An `ios/` request on behalf of `team` (`teamId` is sent first). */
+  readonly teamRequest: (team: Team, action: string, fields?: DeveloperFields) => Promise<PlistDict>;
+  /** A callback that logs a skipped malformed `what` entry (only its keys, never values). */
+  readonly skip: (what: string) => (entry: unknown) => void;
+}
+
+export const createDeveloperContext = (
+  deps: AppleDeps,
+  anisette: AnisetteService,
+  tokens: AppTokenService,
+  session: AppleSession,
+): DeveloperContext => {
+  const options: DeveloperRequestOptions = {
+    anisette: () => anisette.get(),
+    auth: async () => ({ token: (await tokens.appToken(session)).token, adsid: session.adsid }),
+  };
+  const request: DeveloperContext["request"] = (action, platform, fields = []) =>
+    developerRequest(deps, options, action, platform, fields);
+  return {
+    deps,
+    request,
+    teamRequest: (team, action, fields = []) => request(action, "ios", [["teamId", team.id], ...fields]),
+    skip: (what) => (entry) =>
+      deps.logger.warn(`skipped a malformed ${what} entry`, {
+        keys: entry && typeof entry === "object" ? Object.keys(entry) : [],
+      }),
+  };
+};

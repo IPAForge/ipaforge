@@ -4,8 +4,10 @@
 import type { AppleDeps } from "@apple/deps.ts";
 import { httpErrorCode } from "@apple/domain/gsa-status.ts";
 import {
+  compact,
   ErrorCode,
   type HttpMethod,
+  type HttpResponse,
   isTransientHttpStatus,
   LoadstarError,
   readBody,
@@ -34,6 +36,18 @@ export interface FetchResult {
   readonly clockSkewMs?: number;
 }
 
+/** Bytes of an unexpected response body kept in the error, for diagnosis. */
+const ERROR_BODY_PREVIEW_BYTES = 512;
+const DEFAULT_METHOD: HttpMethod = "GET";
+
+export const isSuccessStatus = (status: number): boolean => status >= 200 && status < 300;
+
+/** An `acceptStatus` that takes 2xx plus the listed statuses. */
+export const successOr =
+  (...statuses: readonly number[]) =>
+  (status: number): boolean =>
+    isSuccessStatus(status) || statuses.includes(status);
+
 class TransientHttpError extends Error {
   readonly status: number;
   constructor(status: number) {
@@ -54,58 +68,79 @@ const headerValue = (headers: Readonly<Record<string, string>>, name: string): s
   return undefined;
 };
 
-export const fetchApple = async (deps: AppleDeps, url: string, options: FetchOptions = {}): Promise<FetchResult> => {
-  const accept = options.acceptStatus ?? ((status: number) => status >= 200 && status < 300);
-  const timeoutMs = options.timeoutMs ?? deps.config.timeouts.requestMs;
+const hostOf = (url: string): string => new URL(url).host;
 
-  const attempt = async (): Promise<FetchResult> => {
-    const timeout = AbortSignal.timeout(timeoutMs);
-    const signal = options.signal ? AbortSignal.any([options.signal, timeout]) : timeout;
-    const response = await deps.http.request({
-      method: options.method ?? "GET",
-      url,
-      signal,
-      ...(options.headers ? { headers: options.headers } : {}),
-      ...(options.body === undefined ? {} : { body: options.body }),
-    });
-    const body = await readBody(response, options.maxBodyBytes);
-    if (!accept(response.status)) {
-      if (isTransientHttpStatus(response.status)) throw new TransientHttpError(response.status);
-      throw new LoadstarError(httpErrorCode(response.status), {
-        message: `${options.method ?? "GET"} ${new URL(url).host}${new URL(url).pathname} → HTTP ${response.status}`,
-        data: { status: response.status, host: new URL(url).host, body: utf8DecodeLenient(body.subarray(0, 512)) },
-      });
-    }
-    const date = headerValue(response.headers, "date");
-    const serverTime = date ? Date.parse(date) : Number.NaN;
-    return {
-      status: response.status,
-      headers: response.headers,
-      body,
-      ...(Number.isFinite(serverTime) ? { clockSkewMs: serverTime - deps.clock.now().getTime() } : {}),
-    };
-  };
-
-  try {
-    return await retry(attempt, {
-      attempts: options.retryTransient === false ? 1 : deps.config.retryAttempts,
-      retryOn: isTransient,
-      sleep: deps.sleep,
-      random: deps.random,
-      onRetry: (error, n, delayMs) =>
-        deps.logger.warn("retrying request", { host: new URL(url).host, attempt: n, delayMs, cause: error }),
-      ...(options.signal ? { signal: options.signal } : {}),
-    });
-  } catch (error) {
-    if (error instanceof TransientHttpError) {
-      throw new LoadstarError(httpErrorCode(error.status), {
-        message: `${new URL(url).host} answered HTTP ${error.status}`,
-        data: { status: error.status, host: new URL(url).host },
-      });
-    }
-    if (error instanceof LoadstarError) throw error;
-    throw new LoadstarError(ErrorCode.Offline, { cause: error, data: { host: new URL(url).host } });
-  }
+/** Server clock minus local clock, from the response's `Date` header. */
+const clockSkewOf = (deps: AppleDeps, response: HttpResponse): number | undefined => {
+  const date = headerValue(response.headers, "date");
+  const serverTime = date ? Date.parse(date) : Number.NaN;
+  return Number.isFinite(serverTime) ? serverTime - deps.clock.now().getTime() : undefined;
 };
 
-export const header = headerValue;
+const rejectedStatusError = (url: string, method: HttpMethod, status: number, body: Uint8Array): LoadstarError => {
+  const target = new URL(url);
+  return new LoadstarError(httpErrorCode(status), {
+    message: `${method} ${target.host}${target.pathname} → HTTP ${status}`,
+    data: { status, host: target.host, body: utf8DecodeLenient(body.subarray(0, ERROR_BODY_PREVIEW_BYTES)) },
+  });
+};
+
+/** One request with its own timeout; throws `TransientHttpError` for statuses worth retrying. */
+const fetchOnce = async (
+  deps: AppleDeps,
+  url: string,
+  options: FetchOptions,
+  timeoutMs: number,
+  accept: (status: number) => boolean,
+): Promise<FetchResult> => {
+  const timeout = AbortSignal.timeout(timeoutMs);
+  const signal = options.signal ? AbortSignal.any([options.signal, timeout]) : timeout;
+  const method = options.method ?? DEFAULT_METHOD;
+  const response = await deps.http.request(
+    compact({ method, url, signal, headers: options.headers, body: options.body }),
+  );
+  const body = await readBody(response, options.maxBodyBytes);
+  if (!accept(response.status)) {
+    if (isTransientHttpStatus(response.status)) throw new TransientHttpError(response.status);
+    throw rejectedStatusError(url, method, response.status, body);
+  }
+  return compact({
+    status: response.status,
+    headers: response.headers,
+    body,
+    clockSkewMs: clockSkewOf(deps, response),
+  });
+};
+
+/** What a failure that survived the retries becomes: always a catalogued `LoadstarError`. */
+const toFetchError = (url: string, error: unknown): LoadstarError => {
+  if (error instanceof TransientHttpError) {
+    return new LoadstarError(httpErrorCode(error.status), {
+      message: `${hostOf(url)} answered HTTP ${error.status}`,
+      data: { status: error.status, host: hostOf(url) },
+    });
+  }
+  if (error instanceof LoadstarError) return error;
+  return new LoadstarError(ErrorCode.Offline, { cause: error, data: { host: hostOf(url) } });
+};
+
+export const fetchApple = async (deps: AppleDeps, url: string, options: FetchOptions = {}): Promise<FetchResult> => {
+  const accept = options.acceptStatus ?? isSuccessStatus;
+  const timeoutMs = options.timeoutMs ?? deps.config.timeouts.requestMs;
+  try {
+    return await retry(
+      () => fetchOnce(deps, url, options, timeoutMs, accept),
+      compact({
+        attempts: options.retryTransient === false ? 1 : deps.config.retryAttempts,
+        retryOn: isTransient,
+        sleep: deps.sleep,
+        random: deps.random,
+        onRetry: (error: unknown, n: number, delayMs: number) =>
+          deps.logger.warn("retrying request", { host: hostOf(url), attempt: n, delayMs, cause: error }),
+        signal: options.signal,
+      }),
+    );
+  } catch (error) {
+    throw toFetchError(url, error);
+  }
+};

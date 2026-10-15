@@ -4,6 +4,7 @@
 // (other identities can be handed a different bag); the config URLs are the fallback.
 
 import type { AppleDeps } from "@apple/deps.ts";
+import { PLIST_CONTENT_TYPE } from "@apple/infrastructure/apple-headers.ts";
 import { fetchApple } from "@apple/infrastructure/http.ts";
 import { parseApplePlist } from "@apple/infrastructure/plist-diagnostics.ts";
 import { ErrorCode, isPlistDict, LoadstarError } from "@loadstar/kernel";
@@ -17,7 +18,7 @@ const fetchBag = async (deps: AppleDeps): Promise<UrlBag> => {
     headers: {
       "User-Agent": deps.config.defaultIdentity.userAgent,
       "X-Mme-Client-Info": deps.config.urlBagClientInfo,
-      Accept: "text/x-xml-plist",
+      Accept: PLIST_CONTENT_TYPE,
     },
   });
   const value = parseApplePlist(response.body, "URL bag");
