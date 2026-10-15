@@ -7,7 +7,7 @@ Each milestone is a **phase**. Phases are ordered by dependency. Phases 3 and 4 
 ## Milestones
 
 - [x] **0. Foundation**: pnpm + Turborepo monorepo, TS 7 strict config, Biome, Vitest, the `kernel` package (Result, `LoadstarError`/`ErrorCode`, ports, bytes utils), a boundary checker (no `node:*`/DOM in `packages/`), and GitHub Actions CI on Linux, Windows and macOS (macOS also runs `codesign`)
-- [ ] **1. Signer**: production `@loadstar/signer` built from the spike and the format spec:
+- [x] **1. Signer**: production `@loadstar/signer` built from the spike and the format spec:
   - binaries: thin and fat, adding `LC_CODE_SIGNATURE` when missing, 4K/16K pages, SHA-1 + SHA-256 dual CDs for minimum iOS below 11;
   - bundles: frameworks, dylibs and appexes signed inner-first, plus streaming IPA read and write;
   - bundle ID, entitlement and profile reconciliation;
@@ -44,3 +44,4 @@ Each milestone is a **phase**. Phases are ordered by dependency. Phases 3 and 4 
 | Milestone | Date |
 |-----------|------|
 | 0. Foundation | 2026-10-13 |
+| 1. Signer | 2026-10-15 |

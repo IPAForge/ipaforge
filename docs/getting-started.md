@@ -4,13 +4,13 @@
 
 ## Current status
 
-Loadstar is **pre-alpha**. Phase 0 (Foundation) and the Phase 1 signer are implemented. Phase 1 closes once CI has run on GitHub and the real-certificate check is done. There is no installable build yet.
+Loadstar is **pre-alpha**. Phase 0 (Foundation) and Phase 1 (Signer) are complete. There is no installable build yet.
 
 | Area | State |
 |---|---|
 | Architecture and roadmap | Done (`docs/design/`) |
 | Workspace, `@loadstar/kernel`, boundary checker, CI | Done (Phase 0) |
-| Code signer (`@loadstar/signer`) | Implemented and verified against Apple `codesign` |
+| Code signer (`@loadstar/signer`) | Done (Phase 1): matches Apple `codesign`, verified with a real Apple Development certificate |
 | Device, Apple, UI, apps | Planned |
 
 ## What you'll need (once released)

@@ -7,7 +7,7 @@ The detailed roadmap, with each phase's scope, is [design/roadmap.md](design/roa
 | # | Phase | Delivers |
 |---|---|---|
 | 0 | Foundation ✓ | Monorepo, `kernel`, boundary checker, multi-OS CI |
-| 1 | Signer | Production pure-TS signer with Apple-parity fixtures (implemented; closing on first CI run + real-cert check) |
+| 1 | Signer ✓ | Production pure-TS signer with Apple-parity fixtures, verified against a real Apple Development certificate |
 | 2 | Web device spike | Go/no-go on WebUSB device access and in-browser TLS |
 | 3 | Device layer | usbmux, lockdown, pairing, AFC, house_arrest, install |
 | 4 | Apple account | Anisette with fallback, login, 2FA, saved credentials |
