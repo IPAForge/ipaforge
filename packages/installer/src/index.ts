@@ -1,4 +1,11 @@
 // Public API of @loadstar/installer: the Engine facade, its flows, prompts and diagnostics, and the pipeline runner.
+
+export {
+  createDeviceWatch,
+  type DeviceWatch,
+  type DeviceWatchEvent,
+  type DeviceWatchListener
+} from '@installer/application/device-watch.ts'
 export {
   type InstallerDeps,
   type InstallerDepsInput,
@@ -74,8 +81,16 @@ export {
   PLACE_PAIRING,
   type PlacePairingInput
 } from '@installer/flows/place-pairing.ts'
+export {
+  SIGN_IN,
+  type SignInFlowInput,
+  type SignInState
+} from '@installer/flows/sign-in.ts'
 export { isTransient } from '@installer/pipeline/errors.ts'
-export type { PipelineEvent } from '@installer/pipeline/events.ts'
+export type {
+  PipelineEvent,
+  PlannedStep
+} from '@installer/pipeline/events.ts'
 export { type Pipeline, pipeline } from '@installer/pipeline/pipeline.ts'
 export type { Checkpoint, PipelineResult } from '@installer/pipeline/result.ts'
 export type { RunOptions } from '@installer/pipeline/run.ts'

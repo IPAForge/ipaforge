@@ -1,6 +1,10 @@
 // The Engine facade: every capability the UI can call. Commands start a flow and return a run handle; queries
 // read; `classify` turns any failure into a catalogued code with its recovery actions.
 import {
+  createDeviceWatch,
+  type DeviceWatchListener
+} from '@installer/application/device-watch.ts'
+import {
   type InstallerDepsInput,
   resolveInstallerDeps
 } from '@installer/deps.ts'
@@ -28,6 +32,11 @@ import {
   type PlacePairingInput,
   placePairingFlow
 } from '@installer/flows/place-pairing.ts'
+import {
+  type SignInFlowInput,
+  type SignInState,
+  signInFlow
+} from '@installer/flows/sign-in.ts'
 
 export type Engine = EngineQueries & {
   installSideStore(
@@ -42,11 +51,25 @@ export type Engine = EngineQueries & {
     input: PlacePairingInput,
     options?: CommandOptions<PairingState>
   ): RunHandle<PairingState>
+  /** Adds an Apple ID: asks for its password (and a second factor) through prompts, then saves it. */
+  signIn(
+    input: SignInFlowInput,
+    options?: CommandOptions<SignInState>
+  ): RunHandle<SignInState>
+  /**
+   * Connected devices as they come and go (usbmuxd `Listen`): the full list first, then each attach and detach
+   * with the list after it. Returns the function that stops listening; aborting `signal` stops it too.
+   */
+  watchDevices(
+    listener: DeviceWatchListener,
+    options?: { readonly signal?: AbortSignal }
+  ): () => void
   classify(error: unknown): Diagnosis
 }
 
 export const createEngine = (input: InstallerDepsInput): Engine => {
   const deps = resolveInstallerDeps(input)
+  const deviceWatch = createDeviceWatch(deps)
 
   return {
     ...createEngineQueries(deps),
@@ -60,6 +83,10 @@ export const createEngine = (input: InstallerDepsInput): Engine => {
       startRun(deps, (runtime) => installAppsFlow(runtime, command), options),
     placePairing: (command, options) =>
       startRun(deps, (runtime) => placePairingFlow(runtime, command), options),
+    signIn: (command, options) =>
+      startRun(deps, (runtime) => signInFlow(runtime, command), options),
+    watchDevices: (listener, options) =>
+      deviceWatch.subscribe(listener, options?.signal),
     classify
   }
 }

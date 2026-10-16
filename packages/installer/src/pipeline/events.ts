@@ -1,7 +1,21 @@
 // What a running pipeline reports to the UI.
 import type { LoadstarError } from '@loadstar/kernel'
 
+/** A step as the run announces it up front, so the UI can list every step before it starts. */
+export type PlannedStep = {
+  readonly stepId: string
+  readonly labelKey: string
+}
+
 export type PipelineEvent =
+  | {
+      /** First event of every run: all its steps, those a resumed run already finished, and the progress so far. */
+      readonly type: 'run-started'
+      readonly pipelineId: string
+      readonly steps: readonly PlannedStep[]
+      readonly completed: readonly string[]
+      readonly fraction: number
+    }
   | {
       readonly type: 'step-started'
       readonly stepId: string

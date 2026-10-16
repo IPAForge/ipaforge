@@ -11,7 +11,7 @@ import {
   required,
   updateJob
 } from '@installer/steps/app-job.ts'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
 
 type CatalogSource = Extract<AppSource, { kind: 'catalog' }>
 
@@ -56,7 +56,10 @@ export const downloadStep = (
     const release = required(jobAt(state, index).release, 'release')
     const { file, sha256 } = await runtime.deps.catalog.download(release, {
       onProgress: ({ received, total }) =>
-        context.progress(total ? received / total : 0),
+        context.progress(
+          total ? received / total : 0,
+          compact({ received, total })
+        ),
       signal: context.signal
     })
 

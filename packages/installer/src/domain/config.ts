@@ -14,11 +14,20 @@ export type InstallerConfig = {
   readonly machineName: string
   /** Wrong second-factor codes accepted before the sign-in step gives up. */
   readonly twoFactorAttempts: number
+  /** First wait before reconnecting to usbmuxd after the device watch dropped; doubles on each failure. */
+  readonly deviceReconnectBaseMs: number
+  /** Longest wait between reconnect attempts. */
+  readonly deviceReconnectMaxMs: number
+  /** How often the device list is read when usbmuxd refuses `Listen` (the fallback; normally devices are pushed). */
+  readonly devicePollIntervalMs: number
 }
 
 export const DEFAULT_INSTALLER_CONFIG: InstallerConfig = {
   freeAppLimit: 3,
   freeProfileMaxLifetimeMs: 8 * DAY_MS,
   machineName: 'Loadstar',
-  twoFactorAttempts: 5
+  twoFactorAttempts: 5,
+  deviceReconnectBaseMs: 1000,
+  deviceReconnectMaxMs: 30_000,
+  devicePollIntervalMs: 30_000
 }

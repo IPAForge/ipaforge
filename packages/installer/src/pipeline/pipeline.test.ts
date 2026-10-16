@@ -127,6 +127,36 @@ describe('pipeline', () => {
     ])
   })
 
+  it('announces every step first, with what a resumed run already finished', async () => {
+    const flow = pipeline<State>('install', [
+      { id: 'sign', labelKey: 's', weight: 1, run: record('sign') },
+      { id: 'upload', labelKey: 'u', weight: 3, run: record('upload') }
+    ])
+    const events: PipelineEvent[] = []
+    await flow.run(
+      { log: [] },
+      {
+        onEvent: (event) => events.push(event),
+        resume: {
+          pipelineId: 'install',
+          completed: ['sign'],
+          state: { log: ['sign'] }
+        }
+      }
+    )
+    expect(events[0]).toEqual({
+      type: 'run-started',
+      pipelineId: 'install',
+      steps: [
+        { stepId: 'sign', labelKey: 's' },
+        { stepId: 'upload', labelKey: 'u' }
+      ],
+      completed: ['sign'],
+      fraction: 0.25
+    })
+    expect(events.filter((e) => e.type === 'step-started')).toHaveLength(1)
+  })
+
   it('wraps unexpected errors and refuses a checkpoint from another pipeline', async () => {
     const flow = pipeline<State>('x', [
       {

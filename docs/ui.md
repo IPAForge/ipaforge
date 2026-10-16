@@ -11,7 +11,7 @@ pnpm --filter @loadstar/desktop dev      # opens the app in Electron, hot reload
 pnpm --filter @loadstar/desktop build    # main, preload and renderer into apps/desktop/out
 ```
 
-`apps/desktop/src/renderer/main.tsx` mounts `App` the same way as the browser entry: with `createBrowserServices` and `prepareLanguage` (see [Loading languages](#loading-languages)), since the renderer is a sandboxed browser context, and with a hash history, because a build is loaded from `file://`. The window runs with `contextIsolation`, `sandbox` and no Node integration, under a strict Content-Security-Policy, and it blocks new windows and navigation. The preload exposes nothing the UI uses yet; it will carry only the rpc port once the Engine is wired.
+`apps/desktop/src/renderer/main.tsx` mounts `App` the same way as the browser entry: with `createBrowserServices` and `prepareLanguage` (see [Loading languages](#loading-languages)), since the renderer is a sandboxed browser context, and with a hash history, because a build is loaded from `file://`. The window runs with `contextIsolation`, `sandbox` and no Node integration, under a strict Content-Security-Policy, and it blocks new windows and navigation. The main process serves the Engine over a `MessageChannelMain` (one per page load); the preload only forwards the other end of it to the page, which wraps it in a `Transport` for `createEngineClient`. Nothing else is exposed to the page.
 
 ## Running it in a browser
 
@@ -23,7 +23,7 @@ pnpm --filter @loadstar/ui build    # production build into packages/ui/dist
 pnpm --filter @loadstar/ui preview  # serve the build
 ```
 
-In development it logs at debug level to the browser console; a production build logs from `info` up. Preferences are kept in `localStorage`. The top bar pickers are placeholders until the Engine client is connected.
+In development it logs at debug level to the browser console; a production build logs from `info` up. Preferences are kept in `localStorage`. Without Electron there is no real Engine: `src/main.tsx` connects a fake one (`src/services/engine/fake/`) over the rpc memory transport. In development `?scenario=<id>` picks what it plays (`happy`, `hot-plug`, `two-factor`, `two-teams`, `certificate-limit`, `free-app-limit`, `retry`, and the failures `device-locked`, `app-id-quota`, `profile-banned`, `offline`, `checksum`, `unsupported-ios`, `anisette`); tests use the same fake. The top bar pickers are still placeholders; the **Devices** page shows whether the Engine answers and how many devices it sees, updated as devices come and go. The `hot-plug` scenario plugs the fake iPad in and out every 5 s to show it.
 
 ## Folder structure
 
@@ -39,8 +39,8 @@ packages/ui/
     ├── index.ts        # public API
     ├── components/     # the shell (app-shell, top-bar, sidebar, …) and shared pieces
     ├── features/       # one folder per section: install, preload, devices, accounts, certificates, logs, settings
-    ├── hooks/          # useTheme, useUiServices, useLanguage, useFormat
-    ├── services/       # what the UI gets from its host: preferences/, system/ (OS colour scheme, languages), logging/
+    ├── hooks/          # useTheme, useUiServices, useLanguage, useFormat, useEngine; queries/ (Engine query hooks)
+    ├── services/       # what the UI gets from its host: preferences/, system/ (OS colour scheme, languages, clipboard), logging/, engine/ (request logging, the fake Engine)
     ├── theme/          # palettes/ (data + applying them), store/, provider/
     ├── locales/        # one JSON file per language (en.json is the source of truth) and status.json
     └── i18n/           # setup/, languages/, loading/, provider/, plus formatters, pseudo-locale, required keys
@@ -58,8 +58,24 @@ The package exports `App`, the service types and factories, the palettes and the
 | `PreferencesStore` | Synchronous `read`/`write` of UI preferences (palette, colour mode, language) | `createLocalStoragePreferences`, under keys prefixed `loadstar.` |
 | `ColorSchemeSource` | The OS light/dark preference, and when it changes | `createMediaColorSchemeSource(matchMedia)` |
 | `LocaleSource` | The OS's preferred languages, most preferred first | `createNavigatorLocaleSource(navigator)` |
+| `EngineClient` (rpc) | The Engine: queries, runs and `classify`. `App` logs every request at debug level under `ui.engine` (the method, and the code of a failure; never the arguments) | the fake Engine over the memory transport (`createFakeEngineClient`); in Electron, `createEngineClient` over the MessagePort |
+| `ClipboardWriter` | Writes text to the clipboard (copied diagnostics) | `createNavigatorClipboard(navigator)` |
+| `appVersion` | The app's version, for diagnostics | the package version, defined by Vite as `import.meta.env.VITE_APP_VERSION` |
 
-`createBrowserServices(window, logLevel)` builds all four. `App` touches no browser global when it is imported, so the Electron renderer can mount `<App services={…} language={…}/>` with its own services and history. Tests use `createMemoryPreferencesStore()`, a fixed or controllable colour-scheme source and `createFixedLocaleSource([...])`.
+`createBrowserServices(window, { logLevel, engine, appVersion })` builds them all; `engine` is a function that gets the logger and returns the host's `EngineClient`. `App` touches no browser global when it is imported, so the Electron renderer can mount `<App services={…} language={…}/>` with its own services and history. Tests use `createMemoryPreferencesStore()`, a fixed or controllable colour-scheme source, `createFixedLocaleSource([...])`, `createMemoryClipboard()` and the fake Engine with no delay (`renderApp(path, { scenario })`).
+
+## Engine queries
+
+Components reach the Engine only through the TanStack Query hooks in `src/hooks/queries/`: `useDevices` (one entry per device), `useDeviceStatus`, `useAccounts`, `useTeams`, `useCatalogApps`, `useRecommendedChannel`, `useAppIdQuota`, `useCertificates` and `usePlanInstall`. Their cache keys live in one module, `query-keys.ts`, with every account query under `['accounts', …]` so one invalidation refreshes them all. A hook whose input is not known yet (no device picked) waits instead of asking. Failures arrive as `LoadstarError`s with their code.
+
+### Live data: push, not polling
+
+- **Live state comes from push events.** Devices come from the Engine's device feed (usbmuxd `Listen`, `engine.watchDevices`): `App` mounts `DeviceFeed` (`useDeviceFeed`), which writes every new list into the `devices` query and reads a device's status again when it comes or goes, so plugging a device in or out shows at once. Installs stream their run events; local data such as accounts gets a store-change stream, and logs a log stream, when those land.
+- **Polling only as a fallback** where no event source exists: slow, and only while the UI is waiting for something (for example "unlock the device" during a step), then it stops. The Engine itself falls back to reading the device list every 30 s only when usbmuxd refuses `Listen`.
+- **Apple and network data** (teams, certificates, the App ID quota, the catalog) is fetched **on demand and cached**: when a screen needs it or right before an install, plus an explicit Refresh.
+- **No `refetchInterval`**, and no refetch on window focus or reconnect for queries that reach Apple or GitHub.
+
+The query client (`hooks/queries/query-client.ts`) sets these defaults for every query: `retry: false` (an Engine error is a catalogued answer, not a glitch), a `staleTime` of 5 minutes, `refetchOnWindowFocus: false` and `refetchOnReconnect: false`. The `devices` query never goes stale (`staleTime: Infinity`); the feed keeps it current.
 
 ## Themes and palettes
 

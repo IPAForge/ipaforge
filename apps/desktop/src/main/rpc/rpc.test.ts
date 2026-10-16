@@ -1,4 +1,3 @@
-import { EventEmitter } from 'node:events'
 import { mkdtemp, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
@@ -6,33 +5,12 @@ import { join } from 'node:path'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { createFileDownloadStore } from '@desktop/main/adapters/file-download-store.ts'
-import {
-  type MainMessagePort,
-  messagePortTransport
-} from '@desktop/main/rpc/message-port-transport.ts'
+import { portPair } from '@desktop/main/rpc/__tests__/port-pair.ts'
+import { messagePortTransport } from '@desktop/main/rpc/message-port-transport.ts'
 import { createIpaResolver } from '@desktop/main/rpc/resolve-ipa.ts'
 import type { Engine } from '@loadstar/installer'
 import { ErrorCode, type HttpClient } from '@loadstar/kernel'
 import { createEngineClient, createRpcServer } from '@loadstar/rpc'
-
-/** Two linked ports that behave like Electron's: `{ data }` events, delivered asynchronously, `close` on both. */
-const portPair = (): [MainMessagePort, MainMessagePort] => {
-  const emitters = [new EventEmitter(), new EventEmitter()] as const
-  const port = (own: EventEmitter, peer: EventEmitter): MainMessagePort =>
-    Object.assign(own, {
-      postMessage: (message: unknown) =>
-        setImmediate(() =>
-          peer.emit('message', { data: structuredClone(message) })
-        ),
-      start: () => {},
-      close: () =>
-        setImmediate(() => {
-          for (const emitter of emitters) emitter.emit('close')
-        })
-    })
-
-  return [port(emitters[0], emitters[1]), port(emitters[1], emitters[0])]
-}
 
 const dirs: string[] = []
 const tempDir = async () => {

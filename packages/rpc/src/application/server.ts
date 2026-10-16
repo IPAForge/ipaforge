@@ -14,6 +14,7 @@ import { createCheckpointStore } from '@rpc/application/server/checkpoints.ts'
 import { createCommandStarter } from '@rpc/application/server/commands.ts'
 import { createQueryRunner } from '@rpc/application/server/queries.ts'
 import { createRunRegistry } from '@rpc/application/server/runs.ts'
+import { createSubscriptionRegistry } from '@rpc/application/server/subscriptions.ts'
 import { invalidMessage } from '@rpc/domain/errors.ts'
 import type { ResolveIpa } from '@rpc/domain/ports/resolve-ipa.ts'
 import type { Transport } from '@rpc/domain/ports/transport.ts'
@@ -67,12 +68,17 @@ export const createRpcServer = ({
     send
   })
 
+  const subscriptions = createSubscriptionRegistry(engine, send)
+
   const handlers: RequestHandlers = {
     query: (request) => runQuery(request.call, lifetime.signal),
     start: (request) => runs.start(request),
     answer: (request) => runs.answer(request.runId, request.answer),
     decline: (request) => runs.decline(request.runId),
-    cancel: (request) => runs.cancel(request.runId)
+    cancel: (request) => runs.cancel(request.runId),
+    subscribe: (request) =>
+      subscriptions.subscribe(request.subscriptionId, request.topic),
+    unsubscribe: (request) => subscriptions.unsubscribe(request.subscriptionId)
   }
 
   const sendError = (id: string, error: LoadstarError): void => {
@@ -115,6 +121,7 @@ export const createRpcServer = ({
     unsubscribe()
     stopWatchingClose()
     runs.cancelAll()
+    subscriptions.closeAll()
     checkpoints.clear()
   }
 

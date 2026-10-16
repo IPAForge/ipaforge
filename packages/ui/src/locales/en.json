@@ -460,5 +460,12 @@
     "import-ipa": "Import an IPA",
     "update-loadstar": "Update Loadstar",
     "report-issue": "Report the problem"
+  },
+  "devices": {
+    "engine": {
+      "connecting": "Connecting to the Engine…",
+      "connected": "{count, plural, =0 {Engine connected · no devices} one {Engine connected · # device} other {Engine connected · # devices}}",
+      "failed": "Can't reach the Engine: {reason}"
+    }
   }
 }

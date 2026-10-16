@@ -77,6 +77,10 @@ Declining a prompt ends the run with `installer.prompt_cancelled`.
 
 A failed or cancelled run returns a checkpoint. Passing it back as `resume` skips the finished steps. The device and the Apple session are opened again as needed.
 
+## Watching devices
+
+`engine.watchDevices(listener, { signal })` streams connected devices from usbmuxd's `Listen` instead of polling. It reads the list once, then sends each attach and detach with the list after it. One usbmuxd connection serves every listener, and a late listener gets the current list at once. If the connection drops (the usbmuxd service restarted, the computer slept), it reconnects with backoff (1 s doubling to 30 s) and sends one full list after reconnecting. Only when usbmuxd refuses `Listen` outright does it fall back to reading the list every 30 s. It stops when the last listener unsubscribes or its signal aborts. The timings are `deviceReconnectBaseMs`, `deviceReconnectMaxMs` and `devicePollIntervalMs` in `packages/installer/src/domain/config.ts`.
+
 ## For contributors
 
 `install-probe` runs the real flows against a real iPhone and Apple account. Sign in first with `apple-probe signin`, and pair the device with `device-probe pair`.

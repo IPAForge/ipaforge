@@ -1,20 +1,23 @@
 // The Engine as the UI sees it across the channel: the same queries and run handles, with IPAs named instead of
 // opened, run states without their file handles, and checkpoints held by the server and resumed by reference.
 import type {
+  DeviceWatchEvent,
   Diagnosis,
   EngineQueries,
   InstallPlan,
   InstallState,
   PairingState,
   PromptRequest,
-  RunEvent
+  RunEvent,
+  SignInState
 } from '@loadstar/installer'
 import type { LoadstarError } from '@loadstar/kernel'
 import type {
   RemoteInstallAppsInput,
   RemoteInstallSideStoreInput,
   RemotePlacePairingInput,
-  RemotePlanInstallInput
+  RemotePlanInstallInput,
+  RemoteSignInInput
 } from '@rpc/domain/protocol/inputs.ts'
 import type { RemoteCheckpoint } from '@rpc/domain/protocol/messages.ts'
 import type { Wire } from '@rpc/domain/wire.ts'
@@ -60,6 +63,16 @@ export type EngineClient = Omit<EngineQueries, 'planInstall'> & {
     input: RemotePlacePairingInput,
     options?: RemoteCommandOptions
   ): RemoteRunHandle<Wire<PairingState>>
+  /** Adds an Apple ID; answer its `apple.password` prompt (and any second factor) through the handle. */
+  signIn(
+    input: RemoteSignInInput,
+    options?: RemoteCommandOptions
+  ): RemoteRunHandle<Wire<SignInState>>
+  /**
+   * Connected devices as they come and go: the full list first, then each attach and detach with the list after
+   * it. Returns the function that stops listening; the channel closing stops it too.
+   */
+  watchDevices(listener: (event: DeviceWatchEvent) => void): () => void
   /** Runs locally: errors arrive as LoadstarErrors with their code, data and cause chain intact. */
   classify(error: unknown): Diagnosis
 }

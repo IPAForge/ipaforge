@@ -34,7 +34,7 @@ A `Transport` sends a message, delivers messages from the other side, reports wh
 | `createMemoryTransportPair()` | `packages/rpc` | Tests, and running the UI without Electron. It delivers asynchronously and structured-clones every message, like a real port |
 | `messagePortTransport(port)` | `apps/desktop/src/main/rpc/` | The main process's end of an Electron `MessageChannelMain`. The port type is structural, so it compiles without the electron package |
 
-The renderer's end of the port is wired in Phase 9, when the preload exposes it.
+The main process creates one `MessageChannelMain` per page load (`serveEngine`) and posts the other end to the page; the preload forwards it with `window.postMessage`, and the renderer wraps it in a `Transport` (`apps/desktop/src/renderer/engine-port.ts`).
 
 ## Messages
 
@@ -45,10 +45,12 @@ UI to Engine, each with an `id` that its response echoes:
 | `type` | Fields | Engine call |
 |---|---|---|
 | `query` | `call: { method, args }` | `listDevices`, `deviceStatus`, `listAccounts`, `listTeams`, `catalogApps`, `recommendedChannel`, `appIdQuota`, `listCertificates`, `planInstall` |
-| `start` | `runId`, `call: { command, input }`, `resume?` | `installSideStore`, `installApps`, `placePairing` |
+| `start` | `runId`, `call: { command, input }`, `resume?` | `installSideStore`, `installApps`, `placePairing`, `signIn` |
 | `answer` | `runId`, `answer` | `handle.answer()` |
 | `decline` | `runId` | `handle.decline()` |
 | `cancel` | `runId` | `handle.cancel()` |
+| `subscribe` | `subscriptionId`, `topic` (`devices`) | `engine.watchDevices()` |
+| `unsubscribe` | `subscriptionId` | the unsubscribe it returned |
 
 Engine to UI:
 
@@ -59,15 +61,22 @@ Engine to UI:
 | `run-event` | `runId`, `event` | A pipeline event or a `prompt` |
 | `run-result` | `runId`, `result` | The run ended: `completed`, `failed` or `cancelled` |
 | `run-error` | `runId`, `error` | The run threw instead of returning a result |
+| `subscription-event` | `subscriptionId`, `event` | One event of a live feed (for `devices`: the list, an attach or a detach) |
 
 ## How a run streams
 
 1. The client picks the `runId` and returns a handle at once, so events are collected even before the server acknowledges the start. A late `subscribe` gets every earlier event replayed, as with the Engine.
-2. The server resolves the inputs and starts the command. Events and prompts flow back as `run-event`s. The handle's `pending()` shows the waiting prompt, and `answer`, `decline` and `cancel` go back by `runId`. An `AbortSignal` in the options cancels the run as well.
+2. The server resolves the inputs and starts the command. Events and prompts flow back as `run-event`s. The first is always `run-started`: every step of the run (id and label key), the steps a resumed run already finished, and the progress so far, so the UI can list all steps up front. The handle's `pending()` shows the waiting prompt, and `answer`, `decline` and `cancel` go back by `runId`. An `AbortSignal` in the options cancels the run as well.
 3. The run ends with one `run-result`. A completed state arrives without file handles: a `FileSource` becomes `{ name, size }` (the `Wire<T>` type).
 4. A failed or cancelled run's checkpoint stays on the Engine side, because its state holds open files and the UI must not be able to hand the Engine a state of its own. The UI gets `{ id, pipelineId, completed }` and resumes by passing it back as `resume`. A checkpoint resumes only the command that made it, and only once.
 
-When the channel closes, the server cancels its runs and forgets their checkpoints. The client rejects everything waiting with `rpc.disconnected`.
+## Live feeds
+
+`client.watchDevices(listener)` subscribes to connected devices under an id the client picks and returns the function that unsubscribes. The listener gets `{ type: 'devices', devices }` first, then `attached` / `detached` events, each followed by the new list. Events are validated with zod on both sides, like every other message; an event for a subscription the client no longer has is dropped. Subscribing twice under one id is `rpc.invalid_message`; unsubscribing twice is harmless.
+
+When the channel closes, the server cancels its runs, ends its subscriptions and forgets its checkpoints. The client rejects everything waiting with `rpc.disconnected` and drops its subscriptions.
+
+`signIn({ appleId })` adds an Apple ID: answer its `apple.password` prompt (and any second factor) through the handle. The password is only ever a prompt answer, never part of a run's input, state or checkpoint.
 
 ## IPAs
 

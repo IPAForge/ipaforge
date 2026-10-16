@@ -1,6 +1,6 @@
 import { join } from 'node:path'
 
-import { app, BrowserWindow } from 'electron'
+import { app, BrowserWindow, type WebContents } from 'electron'
 
 import type { Logger } from '@loadstar/kernel'
 
@@ -26,9 +26,13 @@ const loadRenderer = (window: BrowserWindow, logger: Logger): Promise<void> => {
     : window.loadFile(RENDERER_HTML_PATH)
 }
 
-/** The one app window: an isolated, sandboxed renderer without Node, shown once its first frame is ready. */
+/**
+ * The one app window: an isolated, sandboxed renderer without Node, shown once its first frame is ready.
+ * `connect` runs before the page loads, to serve the Engine to it.
+ */
 export const createMainWindow = async (
-  logger: Logger
+  logger: Logger,
+  connect: (contents: WebContents) => void
 ): Promise<BrowserWindow> => {
   const window = new BrowserWindow({
     width: WINDOW_WIDTH,
@@ -52,6 +56,7 @@ export const createMainWindow = async (
       exitCode: details.exitCode
     })
   })
+  connect(window.webContents)
   await loadRenderer(window, logger)
   return window
 }

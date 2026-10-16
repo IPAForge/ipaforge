@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 
+import type { DeviceWatchEvent, RunEvent } from '@loadstar/installer'
 import { bytesFileSource, ErrorCode, LoadstarError } from '@loadstar/kernel'
 import {
   createFakeEngine,
@@ -155,6 +156,29 @@ describe('runs', () => {
     expect(replayed).toEqual(events)
   })
 
+  it('starts a sign-in with the Apple ID only, announcing its steps first', async () => {
+    const { client, control } = setup()
+    const handle = client.signIn({ appleId: 'someone@example.com' })
+    const events: RunEvent[] = []
+    handle.subscribe((event) => events.push(event))
+    await nextPrompt(handle)
+    handle.cancel()
+    await handle.result
+
+    expect(control.signIns).toEqual([{ appleId: 'someone@example.com' }])
+    expect(events[0]).toEqual({
+      type: 'run-started',
+      pipelineId: 'fake.install',
+      steps: [
+        { stepId: 'prepare', labelKey: 'step.prepare' },
+        { stepId: 'choose-team', labelKey: 'step.team' },
+        { stepId: 'install', labelKey: 'step.install' }
+      ],
+      completed: [],
+      fraction: 0
+    })
+  })
+
   it('resolves every app of a preload, URLs included', async () => {
     const { client, control, resolveIpa } = setup()
     const url = { kind: 'url', url: 'https://example.com/a.ipa' } as const
@@ -287,6 +311,71 @@ describe('runs', () => {
       code: ErrorCode.TeamRequired,
       data: { accountId: 'acct' }
     })
+  })
+})
+
+describe('device watch', () => {
+  const IPAD = {
+    udid: 'UDID2',
+    deviceId: 2,
+    connectionType: 'network' as const
+  }
+  const settle = () => new Promise((resolve) => setTimeout(resolve, 0))
+
+  it('streams the list, then attach and detach events, until unsubscribed', async () => {
+    const { client, control } = setup()
+    const events: DeviceWatchEvent[] = []
+    const stop = client.watchDevices((event) => events.push(event))
+    await vi.waitFor(() => expect(events).toHaveLength(1))
+    expect(events[0]).toEqual({
+      type: 'devices',
+      devices: [{ udid: 'UDID1', deviceId: 1, connectionType: 'usb' }]
+    })
+
+    for (const watcher of control.watchers) {
+      watcher({ type: 'attached', device: IPAD })
+      watcher({ type: 'detached', deviceId: 1 })
+    }
+    await vi.waitFor(() => expect(events).toHaveLength(3))
+    expect(events[1]).toEqual({ type: 'attached', device: IPAD })
+    expect(events[2]).toEqual({ type: 'detached', deviceId: 1 })
+
+    stop()
+    await vi.waitFor(() => expect(control.watchers.size).toBe(0))
+    stop()
+    await settle()
+    expect(events).toHaveLength(3)
+  })
+
+  it('ends the Engine subscription when the channel closes', async () => {
+    const { client, control, clientEnd } = setup()
+    client.watchDevices(() => {})
+    await vi.waitFor(() => expect(control.watchers.size).toBe(1))
+    clientEnd.close()
+    await vi.waitFor(() => expect(control.watchers.size).toBe(0))
+  })
+
+  it('refuses a subscription id already in use, and an event that fails validation', async () => {
+    const [serverEnd, clientEnd] = createMemoryTransportPair()
+    const { engine, control } = createFakeEngine()
+    createRpcServer({ engine, transport: serverEnd, resolveIpa: vi.fn() })
+    const peer = rawPeer(clientEnd)
+    const subscribe = {
+      v: 1,
+      type: 'subscribe',
+      subscriptionId: 's1',
+      topic: 'devices'
+    }
+    peer.send({ ...subscribe, id: 'a' })
+    peer.send({ ...subscribe, id: 'b' })
+    peer.send({ ...subscribe, id: 'c', subscriptionId: 's2', topic: 'apps' })
+    await vi.waitFor(() =>
+      expect(peer.received.length).toBeGreaterThanOrEqual(4)
+    )
+
+    const errors = peer.received.filter((message) => message.type === 'error')
+    expect(errors.map((message) => message.id).sort()).toEqual(['b', 'c'])
+    expect(control.watchers.size).toBe(1)
   })
 })
 
