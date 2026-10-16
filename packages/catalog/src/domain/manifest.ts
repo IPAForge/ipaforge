@@ -20,7 +20,7 @@ const githubLocationSchema = z.object({
 })
 
 const urlLocationSchema = z.object({
-  url: z.string().url().startsWith('https://'),
+  url: z.url().startsWith('https://'),
   // A direct download has no other integrity source, so its checksum is mandatory.
   sha256,
   size: z.number().int().positive().optional()

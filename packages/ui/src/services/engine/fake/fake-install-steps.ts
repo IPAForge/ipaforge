@@ -82,7 +82,8 @@ const signIn =
   async (state, context) => {
     if (world.signedIn.has(state.accountId)) return undefined
     await askPassword(context, state.accountId)
-    await completeTwoFactor(context)
+    await world.appleAnswer()
+    await completeTwoFactor(context, world.appleAnswer)
     world.signedIn.add(state.accountId)
     return undefined
   }

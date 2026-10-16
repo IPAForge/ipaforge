@@ -52,7 +52,7 @@ CI runs the same commands on Ubuntu, Windows and macOS (`.github/workflows/ci.ym
 pnpm --filter @loadstar/desktop dev      # the app in Electron, with hot reload
 pnpm --filter @loadstar/desktop build    # main, preload and renderer into apps/desktop/out
 pnpm --filter @loadstar/desktop preview  # build, then launch the built app
-pnpm --filter @loadstar/ui dev           # the UI alone in a browser, http://localhost:5173
+pnpm --filter @loadstar/ui dev           # the UI alone in a browser, http://localhost:5180
 ```
 
 Electron downloads its binary (about 100 MB) the first time `dev` or `preview` runs, not during `pnpm install`; `pnpm --filter @loadstar/desktop ensure-electron` does the download on its own. The window is not wired to the Engine yet, so the device and Apple ID pickers are placeholders. See [The User Interface](ui.md).

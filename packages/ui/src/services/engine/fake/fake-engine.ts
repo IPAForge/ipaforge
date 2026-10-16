@@ -46,11 +46,16 @@ export type FakeEngineOptions = {
   readonly devices?: FakeDeviceFeed
   /** Pause between run events, so a run can be watched; 0 in tests. */
   readonly delayMs?: number
+  /** How long Apple takes to answer a sign-in request, so the dev host shows the waiting states. */
+  readonly appleDelayMs?: number
+  /** Replaces that wait (tests hold Apple's answer until they release it). */
+  readonly appleAnswer?: () => Promise<void>
 }
 
 type TeamQuery = { readonly accountId: string; readonly teamId?: string }
 
 const DEFAULT_DELAY_MS = 120
+const DEFAULT_APPLE_DELAY_MS = 600
 
 const teamOf = (world: FakeWorld, { accountId, teamId }: TeamQuery) => {
   requireSession(world, accountId)
@@ -109,9 +114,13 @@ const signInRun = (
         labelKey: StepLabel.signIn,
         run: async (_state, context) => {
           const password = await askPassword(context, appleId)
-          if (password.length === 0)
+          // Apple checks the password.
+          await world.appleAnswer()
+          if (password.length === 0 || world.scenario === 'wrong-password')
             throw new LoadstarError(ErrorCode.InvalidCredentials)
-          await completeTwoFactor(context)
+          // Apple skips the second factor for a computer it already knows.
+          if (world.scenario !== 'sign-in-no-2fa')
+            await completeTwoFactor(context, world.appleAnswer)
           return { account: saveAccount(world, appleId) }
         }
       }
@@ -151,9 +160,12 @@ const asRun = <S>(handle: RunHandle<unknown>) => handle as RunHandle<S>
 export const createFakeEngine = ({
   scenario = 'happy',
   delayMs = DEFAULT_DELAY_MS,
+  appleDelayMs = DEFAULT_APPLE_DELAY_MS,
+  appleAnswer = () =>
+    new Promise<void>((resolve) => setTimeout(resolve, appleDelayMs)),
   devices = createFakeDeviceFeed(scenario === 'hot-plug')
 }: FakeEngineOptions = {}): Engine => {
-  const world = createFakeWorld(scenario, delayMs)
+  const world = createFakeWorld(scenario, delayMs, appleAnswer)
 
   return {
     listDevices: async () => devices.list(),

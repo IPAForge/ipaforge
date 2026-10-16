@@ -14,7 +14,7 @@
     "account": "ID Apple",
     "notSignedIn": "Neconectat",
     "accountMenu": "ID-uri Apple",
-    "addAppleIdSoon": "Adaugă un ID Apple… (în curând)"
+    "addAppleId": "Adaugă un Apple ID…"
   },
   "nav": {
     "group": {
@@ -466,6 +466,46 @@
       "connecting": "Se conectează la Engine…",
       "connected": "{count, plural, =0 {Engine conectat · niciun dispozitiv} one {Engine conectat · # dispozitiv} few {Engine conectat · # dispozitive} other {Engine conectat · # de dispozitive}}",
       "failed": "Engine-ul nu poate fi accesat: {reason}"
+    }
+  },
+  "prompts": {
+    "cancel": "Anulează",
+    "continue": "Continuă",
+    "password": {
+      "title": "Autentifică-te din nou",
+      "body": "Sesiunea salvată pentru {appleId} a expirat. Introdu parola pentru a continua.",
+      "label": "Parolă",
+      "checking": "Se verifică parola…"
+    },
+    "method": {
+      "title": "Unde să trimită Apple codul?",
+      "body": "Alege cum primești codul de verificare.",
+      "trustedDevice": "Un dispozitiv de încredere",
+      "trustedDeviceHint": "iPhone-ul, iPad-ul sau Mac-ul tău conectat la acest Apple ID",
+      "sms": "Mesaj text la {number}",
+      "smsHint": "Se pot aplica tarife SMS standard",
+      "sending": "Se trimite codul…"
+    },
+    "code": {
+      "title": "Introdu codul de verificare",
+      "body": "{length, plural, one {Introdu codul de # cifră trimis de Apple.} few {Introdu codul de # cifre trimis de Apple.} other {Introdu codul de # de cifre trimis de Apple.}}",
+      "label": "Cod de verificare",
+      "wrong": "Codul nu a funcționat. Verifică-l și introdu-l din nou.",
+      "verify": "Verifică",
+      "checking": "Se verifică codul…"
+    }
+  },
+  "signIn": {
+    "title": "Adaugă un Apple ID",
+    "body": "Loadstar semnează aplicații cu el. Parola ta ajunge doar la Apple.",
+    "appleId": "Apple ID",
+    "password": "Parolă",
+    "submit": "Autentificare",
+    "signingIn": "Se autentifică…",
+    "done": {
+      "title": "Apple ID adăugat",
+      "body": "Autentificat ca {appleId}.",
+      "close": "Gata"
     }
   }
 }

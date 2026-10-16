@@ -15,6 +15,8 @@ import {
 export type FakeWorld = {
   readonly scenario: FakeScenarioId
   readonly delayMs: number
+  /** Waits as long as Apple takes to answer a sign-in request (checking a password, sending or checking a code). */
+  readonly appleAnswer: () => Promise<void>
   accounts: Account[]
   /** Accounts whose saved session Apple still accepts. */
   readonly signedIn: Set<string>
@@ -24,7 +26,8 @@ export type FakeWorld = {
 
 export const createFakeWorld = (
   scenario: FakeScenarioId,
-  delayMs: number
+  delayMs: number,
+  appleAnswer: () => Promise<void>
 ): FakeWorld => {
   const accounts = fakeAccounts()
   const expired = scenario === 'two-factor'
@@ -32,6 +35,7 @@ export const createFakeWorld = (
   return {
     scenario,
     delayMs,
+    appleAnswer,
     accounts,
     signedIn: new Set(expired ? [] : accounts.map((account) => account.id)),
     failed: new Set()

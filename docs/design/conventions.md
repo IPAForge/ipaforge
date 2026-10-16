@@ -6,6 +6,7 @@
 
 - Files: `kebab-case.ts` / `kebab-case.tsx`; tests sit next to the source as `*.test.ts`. React components follow the same rule (`top-bar.tsx` exports `TopBar`). The one exception is the UI's root component, `packages/ui/src/App.tsx` (with `App.test.tsx`), which keeps the name every React project uses.
 - Variables and functions: `camelCase`; booleans read as predicates (`isLocked`, `hasPairRecord`)
+- Event and action handlers start with `on`: props (`onClose`, `onSignedIn`) and the functions a component passes to them or attaches to events (`onAddAppleId`, `onChoose`). When a component's own handler would clash with a prop of the same name, name it after its event (`onFormSubmit` calling the `onSubmit` prop). Helpers that aren't handlers keep plain verbs (`follow`, `respond`).
 - Types, classes, React components: `PascalCase`; no `I` prefix on object types
 - Constants: `camelCase`, except frozen lookup tables, which use `PascalCase` objects with `as const` (e.g. `ErrorCode`)
 - Packages: `@loadstar/<context>` (`kernel`, `signer`, `device`, `apple`, `catalog`, `installer`, `rpc`, `ui`)

@@ -18,12 +18,14 @@ pnpm --filter @loadstar/desktop build    # main, preload and renderer into apps/
 The UI also runs without Electron. The package is a plain Vite app: `index.html` and `vite.config.ts` sit at the package root, and `src/main.tsx` mounts `App` with the browser services once `prepareLanguage` has loaded the language.
 
 ```sh
-pnpm --filter @loadstar/ui dev      # http://localhost:5173, hot reload
+pnpm --filter @loadstar/ui dev      # http://localhost:5180, hot reload
 pnpm --filter @loadstar/ui build    # production build into packages/ui/dist
 pnpm --filter @loadstar/ui preview  # serve the build
 ```
 
-In development it logs at debug level to the browser console; a production build logs from `info` up. Preferences are kept in `localStorage`. Without Electron there is no real Engine: `src/main.tsx` connects a fake one (`src/services/engine/fake/`) over the rpc memory transport. In development `?scenario=<id>` picks what it plays (`happy`, `hot-plug`, `two-factor`, `two-teams`, `certificate-limit`, `free-app-limit`, `retry`, and the failures `device-locked`, `app-id-quota`, `profile-banned`, `offline`, `checksum`, `unsupported-ios`, `anisette`); tests use the same fake. The top bar pickers are still placeholders; the **Devices** page shows whether the Engine answers and how many devices it sees, updated as devices come and go. The `hot-plug` scenario plugs the fake iPad in and out every 5 s to show it.
+In development it logs at debug level to the browser console; a production build logs from `info` up. Preferences are kept in `localStorage`. Without Electron there is no real Engine: `src/main.tsx` connects a fake one (`src/services/engine/fake/`) over the rpc memory transport. In development `?scenario=<id>` picks what it plays (`happy`, `hot-plug`, `sign-in-no-2fa`, `wrong-password`, `two-factor`, `two-teams`, `certificate-limit`, `free-app-limit`, `retry`, and the failures `device-locked`, `app-id-quota`, `profile-banned`, `offline`, `checksum`, `unsupported-ios`, `anisette`); tests use the same fake. The Device picker is still a placeholder; the **Devices** page shows whether the Engine answers and how many devices it sees, updated as devices come and go. The `hot-plug` scenario plugs the fake iPad in and out every 5 s to show it.
+
+To try **Add Apple ID** in the browser: any Apple ID and password; Apple then asks where to send the code (a trusted device or a text message) and the code is `123456` (any other code is wrong and asked again). `?scenario=sign-in-no-2fa` signs in without a second factor, `?scenario=wrong-password` fails with `apple.invalid_credentials`.
 
 ## Folder structure
 
@@ -89,7 +91,16 @@ To add a palette, add its id to `paletteIds`, add its tokens to `palettes.ts` an
 
 ## The shell
 
-- A **top bar** across the window (`header`): the app name on the start side, then two pickers on the end side, **Device** and **Apple ID**. Each is a menu button with a status dot, a label and the current value ("None", "Not signed in"). For now each menu holds one disabled placeholder item; real devices and accounts come with the Engine client.
+- A **top bar** across the window (`header`): the app name on the start side, then two pickers on the end side, **Device** and **Apple ID**. Each is a menu button with a status dot, a label and the current value ("None", "Not signed in"). The Device menu holds one disabled placeholder item until the device picker lands.
+
+  The Apple ID button shows the Apple ID signed in last in this window, else the first saved one, else "Not signed in". Its menu offers **Add Apple ID…**, which opens the sign-in dialog (`features/accounts/sign-in/`):
+  1. The Apple ID and the password. The password goes to the Engine only as the answer to the `signIn` run's password question, never as the run's input.
+  2. If Apple asks for a second factor: where to send the code (a trusted device or a text message to one of the account's numbers), then the code. A wrong code asks again and says so. Cancelling goes back to the form.
+  3. "Signed in as …", then **Done**. The Engine has saved the account, and the accounts query is invalidated (not polled).
+
+  Each step stays on screen while Apple works on its answer: the form (read-only, **Sign in** busy, "Signing in…") until the password is checked, the method choice (the chosen option busy, "Sending the code…") until the code is sent, the code step (**Verify** busy, the code locked, "Checking the code…") until Apple answers. The next step replaces it only when the Engine asks it or the run ends; the waiting text is announced through an `aria-live` region. In the browser dev host the fake Apple takes about 600 ms per answer, so these states show.
+
+  A failure (wrong password, the anisette server down…) shows its code's translated title and body under the form. Choosing between saved Apple IDs and their teams comes with the account picker. The question dialogs (`components/prompts/`) are shared with the install run.
 - A **sidebar** (`nav`) on the start edge. **Install** and **Preload** come first; after a separator, a **Manage** group holds **Devices**, **Accounts**, **Certificates**, **Logs** and **Settings**. The current section has `aria-current="page"`, and the highlight is styled from that attribute.
 - The current page in `main`. **Install** is the home page.
 
