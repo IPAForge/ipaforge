@@ -22,7 +22,7 @@ const releaseSchema = z.looseObject({
   assets: z.array(
     z.looseObject({
       name: z.string(),
-      browser_download_url: z.string().url().startsWith('https://'),
+      browser_download_url: z.url().startsWith('https://'),
       size: z.number().int().nonnegative(),
       /** "sha256:<hex>" (GitHub computes it for release assets). */
       digest: z.string().nullable().optional()
@@ -53,8 +53,12 @@ export type GithubQuery = {
   readonly asset: string
 }
 
+/** `releases/tags/<tag>`, or `releases/latest` when no tag is given. */
+const releasePath = (tag: string | undefined): string =>
+  tag ? `releases/tags/${encodeURIComponent(tag)}` : 'releases/latest'
+
 const releaseUrl = (deps: CatalogDeps, { repo, tag }: GithubQuery): string =>
-  `${deps.config.githubApi}/repos/${repo}/${tag ? `releases/tags/${encodeURIComponent(tag)}` : 'releases/latest'}`
+  `${deps.config.githubApi}/repos/${repo}/${releasePath(tag)}`
 
 const header = (response: HttpResponse, name: string): string | undefined =>
   Object.entries(response.headers).find(

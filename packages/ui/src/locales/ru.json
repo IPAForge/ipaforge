@@ -14,7 +14,7 @@
     "account": "Apple ID",
     "notSignedIn": "Вход не выполнен",
     "accountMenu": "Apple ID",
-    "addAppleIdSoon": "Добавить Apple ID… (скоро)"
+    "addAppleId": "Добавить Apple ID…"
   },
   "nav": {
     "group": {
@@ -466,6 +466,46 @@
       "connecting": "Подключение к Engine…",
       "connected": "{count, plural, =0 {Engine подключён · устройств нет} one {Engine подключён · # устройство} few {Engine подключён · # устройства} many {Engine подключён · # устройств} other {Engine подключён · # устройства}}",
       "failed": "Engine недоступен: {reason}"
+    }
+  },
+  "prompts": {
+    "cancel": "Отменить",
+    "continue": "Продолжить",
+    "password": {
+      "title": "Войдите снова",
+      "body": "Сохранённый сеанс для {appleId} истёк. Введите пароль, чтобы продолжить.",
+      "label": "Пароль",
+      "checking": "Проверка пароля…"
+    },
+    "method": {
+      "title": "Куда Apple отправить код?",
+      "body": "Выберите способ получения кода проверки.",
+      "trustedDevice": "Доверенное устройство",
+      "trustedDeviceHint": "Ваш iPhone, iPad или Mac с этим Apple ID",
+      "sms": "SMS на {number}",
+      "smsHint": "Может взиматься плата за SMS",
+      "sending": "Отправка кода…"
+    },
+    "code": {
+      "title": "Введите код проверки",
+      "body": "{length, plural, one {Введите #-значный код от Apple.} few {Введите #-значный код от Apple.} many {Введите #-значный код от Apple.} other {Введите #-значный код от Apple.}}",
+      "label": "Код проверки",
+      "wrong": "Код не подошёл. Проверьте его и введите снова.",
+      "verify": "Подтвердить",
+      "checking": "Проверка кода…"
+    }
+  },
+  "signIn": {
+    "title": "Добавить Apple ID",
+    "body": "Loadstar подписывает им приложения. Пароль отправляется только в Apple.",
+    "appleId": "Apple ID",
+    "password": "Пароль",
+    "submit": "Войти",
+    "signingIn": "Вход…",
+    "done": {
+      "title": "Apple ID добавлен",
+      "body": "Вход выполнен как {appleId}.",
+      "close": "Готово"
     }
   }
 }

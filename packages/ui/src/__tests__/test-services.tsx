@@ -50,6 +50,8 @@ export type TestServicesOptions = {
   readonly engine?: EngineClient
   /** The fake Engine's connected devices, for a test that plugs devices in and out. */
   readonly devices?: FakeDeviceFeed
+  /** Holds Apple's answers to sign-in requests until the test releases them (default: answer at once). */
+  readonly appleAnswer?: () => Promise<void>
 }
 
 const ENGLISH = ['en-US']
@@ -60,7 +62,8 @@ export const createTestServices = ({
   languages = ENGLISH,
   scenario,
   engine,
-  devices
+  devices,
+  appleAnswer
 }: TestServicesOptions = {}) => {
   const records: LogRecord[] = []
   const scheme = createControllableScheme('light')
@@ -75,7 +78,9 @@ export const createTestServices = ({
     localeSource: createFixedLocaleSource(languages),
     engine:
       engine ??
-      createFakeEngineClient(compact({ scenario, devices, delayMs: 0 })),
+      createFakeEngineClient(
+        compact({ scenario, devices, appleAnswer, delayMs: 0, appleDelayMs: 0 })
+      ),
     clipboard,
     appVersion: '0.0.0-test'
   }

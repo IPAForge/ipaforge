@@ -9,13 +9,19 @@ import { fetchApple } from '@apple/infrastructure/http.ts'
 import { utf8Decode } from '@loadstar/kernel'
 
 const serverListSchema = z.looseObject({
-  servers: z.array(
-    z.looseObject({ name: z.string().min(1), address: z.string().url() })
-  )
+  servers: z.array(z.looseObject({ name: z.string().min(1), address: z.url() }))
 })
 
+/** The address without trailing slashes; a loop, not a regex, so a hostile address can't make it backtrack. */
+const withoutTrailingSlashes = (address: string): string => {
+  let end = address.length
+  while (end > 0 && address[end - 1] === '/') end -= 1
+
+  return address.slice(0, end)
+}
+
 const serverKey = (server: AnisetteServer): string =>
-  server.address.replace(/\/+$/, '').toLowerCase()
+  withoutTrailingSlashes(server.address).toLowerCase()
 
 /** Keeps the first of servers with the same address (ignoring case and trailing slashes). */
 export const dedupe = (

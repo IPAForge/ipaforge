@@ -25,5 +25,11 @@
   "typescript.experimental.useTsgo": true,
   "typescript.preferences.importModuleSpecifier": "non-relative",
   "typescript.preferences.importModuleSpecifierEnding": "auto",
-  "files.eol": "\n"
+  "files.eol": "\n",
+  // SonarQube for IDE: S4782 calls `field?: T | undefined` redundant, but with exactOptionalPropertyTypes
+  // (tsconfig.base.json) `?` and `| undefined` mean different things, so the rule doesn't apply here.
+  "sonarlint.rules": {
+    "typescript:S4782": { "level": "off" },
+    "javascript:S4782": { "level": "off" }
+  }
 }

@@ -1,4 +1,9 @@
-import { Label, Radio, RadioGroup } from 'react-aria-components'
+import {
+  Label,
+  RadioButton,
+  RadioField,
+  RadioGroup
+} from 'react-aria-components'
 import { useTranslation } from 'react-i18next'
 
 import { useTheme } from '@ui/hooks/use-theme.ts'
@@ -64,10 +69,12 @@ export const PaletteSwatches = () => {
       <Label className="font-medium text-sm">{t('settings.palette')}</Label>
       <div className="grid grid-cols-[repeat(auto-fill,minmax(8rem,1fr))] gap-2">
         {paletteIds.map((id) => (
-          <Radio key={id} value={id} className={swatchClass}>
-            <PaletteChips tokens={palettes[id][scheme]} />
-            <span className="text-sm">{t(`theme.palette.${id}`)}</span>
-          </Radio>
+          <RadioField key={id} value={id}>
+            <RadioButton className={swatchClass}>
+              <PaletteChips tokens={palettes[id][scheme]} />
+              <span className="text-sm">{t(`theme.palette.${id}`)}</span>
+            </RadioButton>
+          </RadioField>
         ))}
       </div>
     </RadioGroup>

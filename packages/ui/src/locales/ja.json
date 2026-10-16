@@ -14,7 +14,7 @@
     "account": "Apple ID",
     "notSignedIn": "サインインしていません",
     "accountMenu": "Apple ID",
-    "addAppleIdSoon": "Apple IDを追加…（近日対応）"
+    "addAppleId": "Apple IDを追加…"
   },
   "nav": {
     "group": {
@@ -466,6 +466,46 @@
       "connecting": "Engineに接続しています…",
       "connected": "{count, plural, =0 {Engine接続済み · デバイスなし} other {Engine接続済み · デバイス#台}}",
       "failed": "Engineに接続できません:{reason}"
+    }
+  },
+  "prompts": {
+    "cancel": "キャンセル",
+    "continue": "続ける",
+    "password": {
+      "title": "もう一度サインイン",
+      "body": "{appleId}の保存されたセッションの有効期限が切れました。続けるにはパスワードを入力してください。",
+      "label": "パスワード",
+      "checking": "パスワードを確認しています…"
+    },
+    "method": {
+      "title": "コードの送信先は?",
+      "body": "確認コードの受け取り方法を選んでください。",
+      "trustedDevice": "信頼できるデバイス",
+      "trustedDeviceHint": "このApple IDでサインインしているiPhone、iPad、Mac",
+      "sms": "{number}へのテキストメッセージ",
+      "smsHint": "SMS料金がかかる場合があります",
+      "sending": "コードを送信しています…"
+    },
+    "code": {
+      "title": "確認コードを入力",
+      "body": "{length, plural, other {Appleから届いた#桁のコードを入力してください。}}",
+      "label": "確認コード",
+      "wrong": "このコードは使えませんでした。確認してもう一度入力してください。",
+      "verify": "確認",
+      "checking": "コードを確認しています…"
+    }
+  },
+  "signIn": {
+    "title": "Apple IDを追加",
+    "body": "Loadstarはこれでアプリに署名します。パスワードはAppleにのみ送られます。",
+    "appleId": "Apple ID",
+    "password": "パスワード",
+    "submit": "サインイン",
+    "signingIn": "サインイン中…",
+    "done": {
+      "title": "Apple IDを追加しました",
+      "body": "{appleId}としてサインインしました。",
+      "close": "完了"
     }
   }
 }

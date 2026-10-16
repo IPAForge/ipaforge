@@ -14,7 +14,7 @@
     "account": "Apple-ID",
     "notSignedIn": "Nicht angemeldet",
     "accountMenu": "Apple-IDs",
-    "addAppleIdSoon": "Apple-ID hinzufügen … (bald verfügbar)"
+    "addAppleId": "Apple-ID hinzufügen …"
   },
   "nav": {
     "group": {
@@ -466,6 +466,46 @@
       "connecting": "Verbindung zur Engine wird hergestellt …",
       "connected": "{count, plural, =0 {Engine verbunden · keine Geräte} one {Engine verbunden · # Gerät} other {Engine verbunden · # Geräte}}",
       "failed": "Die Engine ist nicht erreichbar: {reason}"
+    }
+  },
+  "prompts": {
+    "cancel": "Abbrechen",
+    "continue": "Weiter",
+    "password": {
+      "title": "Erneut anmelden",
+      "body": "Die gespeicherte Sitzung für {appleId} ist abgelaufen. Gib das Passwort ein, um fortzufahren.",
+      "label": "Passwort",
+      "checking": "Das Passwort wird geprüft …"
+    },
+    "method": {
+      "title": "Wohin soll Apple den Code senden?",
+      "body": "Wähle, wie du deinen Bestätigungscode erhältst.",
+      "trustedDevice": "Ein vertrauenswürdiges Gerät",
+      "trustedDeviceHint": "Dein iPhone, iPad oder Mac, angemeldet mit dieser Apple-ID",
+      "sms": "SMS an {number}",
+      "smsHint": "Es können SMS-Gebühren anfallen",
+      "sending": "Der Code wird gesendet …"
+    },
+    "code": {
+      "title": "Bestätigungscode eingeben",
+      "body": "{length, plural, one {Gib den #-stelligen Code ein, den Apple gesendet hat.} other {Gib den #-stelligen Code ein, den Apple gesendet hat.}}",
+      "label": "Bestätigungscode",
+      "wrong": "Dieser Code hat nicht funktioniert. Prüfe ihn und gib ihn erneut ein.",
+      "verify": "Bestätigen",
+      "checking": "Der Code wird geprüft …"
+    }
+  },
+  "signIn": {
+    "title": "Apple-ID hinzufügen",
+    "body": "Loadstar signiert Apps damit. Dein Passwort geht nur an Apple.",
+    "appleId": "Apple-ID",
+    "password": "Passwort",
+    "submit": "Anmelden",
+    "signingIn": "Anmeldung läuft …",
+    "done": {
+      "title": "Apple-ID hinzugefügt",
+      "body": "Angemeldet als {appleId}.",
+      "close": "Fertig"
     }
   }
 }

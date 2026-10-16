@@ -23,12 +23,15 @@ export const askPassword = (context: ScriptedStepContext, appleId: string) =>
 
 /** Asks for a method, then for the code until it is the right one (a wrong one asks again). */
 export const completeTwoFactor = async (
-  context: ScriptedStepContext
+  context: ScriptedStepContext,
+  appleAnswer: () => Promise<void>
 ): Promise<void> => {
   const method = await context.prompt<TwoFactorMethod>({
     kind: PromptKind.TwoFactorMethod,
     data: { methods: METHODS }
   })
+  // Apple sends the code.
+  await appleAnswer()
   for (let attempt = 1; attempt <= CODE_ATTEMPTS; attempt++) {
     const code = await context.prompt<string>({
       kind: PromptKind.TwoFactorCode,
@@ -38,6 +41,8 @@ export const completeTwoFactor = async (
         retry: attempt > 1
       }
     })
+    // Apple checks it.
+    await appleAnswer()
     if (code === FAKE_TWO_FACTOR_CODE) return
   }
   throw new LoadstarError(ErrorCode.TwoFactorInvalidCode)

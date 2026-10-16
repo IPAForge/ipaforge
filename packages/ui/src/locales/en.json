@@ -14,7 +14,7 @@
     "account": "Apple ID",
     "notSignedIn": "Not signed in",
     "accountMenu": "Apple IDs",
-    "addAppleIdSoon": "Add Apple ID… (coming soon)"
+    "addAppleId": "Add Apple ID…"
   },
   "nav": {
     "group": {
@@ -466,6 +466,46 @@
       "connecting": "Connecting to the Engine…",
       "connected": "{count, plural, =0 {Engine connected · no devices} one {Engine connected · # device} other {Engine connected · # devices}}",
       "failed": "Can't reach the Engine: {reason}"
+    }
+  },
+  "prompts": {
+    "cancel": "Cancel",
+    "continue": "Continue",
+    "password": {
+      "title": "Sign in again",
+      "body": "The saved session for {appleId} has expired. Enter the password to continue.",
+      "label": "Password",
+      "checking": "Checking the password…"
+    },
+    "method": {
+      "title": "Where should Apple send the code?",
+      "body": "Choose how to get your verification code.",
+      "trustedDevice": "A trusted device",
+      "trustedDeviceHint": "Your iPhone, iPad or Mac signed in to this Apple ID",
+      "sms": "Text message to {number}",
+      "smsHint": "Standard SMS charges may apply",
+      "sending": "Sending the code…"
+    },
+    "code": {
+      "title": "Enter the verification code",
+      "body": "{length, plural, one {Enter the #-digit code Apple sent.} other {Enter the #-digit code Apple sent.}}",
+      "label": "Verification code",
+      "wrong": "That code didn't work. Check it and enter it again.",
+      "verify": "Verify",
+      "checking": "Checking the code…"
+    }
+  },
+  "signIn": {
+    "title": "Add an Apple ID",
+    "body": "Loadstar signs apps with it. Your password goes only to Apple.",
+    "appleId": "Apple ID",
+    "password": "Password",
+    "submit": "Sign in",
+    "signingIn": "Signing in…",
+    "done": {
+      "title": "Apple ID added",
+      "body": "Signed in as {appleId}.",
+      "close": "Done"
     }
   }
 }
