@@ -85,9 +85,9 @@ loadstar/
 ├── apps/                           # ── COMPOSITION ROOTS (adapters + wiring) ──
 │   └── desktop/                    # Electron
 │       └── src/
-│           ├── main/               # Engine wiring: NodeUsbmuxTransport, NodeHttpClient, SafeStorageSecretStore, FsFileSource
-│           ├── preload/            # contextBridge exposes rpc port only
-│           └── renderer/           # mounts @loadstar/ui with IpcEngineClient
+│           ├── main/               # Engine wiring: Node adapters, secrets (file key sealed by safeStorage), rpc server per window
+│           ├── preload/            # forwards the rpc MessagePort to the page; exposes no API
+│           └── renderer/           # wraps the port in a Transport, createEngineClient, mounts @loadstar/ui
 │
 ├── fixtures/                       # golden inputs + Apple codesign outputs (generated on macOS CI)
 └── docs/                           # user and contributor docs; design/ holds architecture, roadmap, research
@@ -114,7 +114,7 @@ kernel  ←  signer, device, apple, catalog  ←  installer  ←  rpc  ←  ui
 
 - **Ports in, adapters out.** A context declares interfaces (`DeviceTransport.connect(udid, port): Promise<Duplex>`, `HttpClient.request(req): Promise<Response>`), and the shell injects implementations into the `Engine` constructor.
 - **Engine facade.** `installer/engine.ts` is the only API the UI sees: commands (`installSideStore`, `preload`, `signIn`, …), queries (`listDevices`, `listCertificates`, …) and progress streams.
-- **Typed RPC.** `rpc` serializes Engine calls over Electron IPC between the main (or utility) process and the renderer. Payloads are validated with zod on both sides. Long operations stream `ProgressEvent`s and accept an `AbortSignal`.
+- **Typed RPC.** `rpc` serializes Engine calls over an Electron `MessageChannelMain` between the main (or utility) process and the renderer. Payloads are validated with zod on both sides. Long operations stream `ProgressEvent`s and accept an `AbortSignal`.
 - **Pipelines.** A flow is an ordered list of `Step`s. Each step is a pure-ish async function `(ctx, input) => output` with a stable id, i18n label key, weight (for the progress bar) and an optional `undo`. The runner handles progress, cancellation, retries (only for steps marked idempotent) and resume after an interactive prompt (2FA, choose team, revoke certificate).
 - **Errors.** Everything throws or returns `LoadstarError { code, cause?, data? }`. `installer/diagnostics` classifies raw failures, such as a lockdown `PasswordProtected`, Apple result code `-80045` or installation_proxy `DeviceNotSupportedByThinning`, into a catalogued `ErrorCode`. The UI maps `ErrorCode` to a recovery screen.
 

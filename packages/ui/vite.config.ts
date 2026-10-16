@@ -5,9 +5,14 @@ import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
 import { workspaceAliases } from '../../tooling/vite/workspace-aliases.ts'
+import packageJson from './package.json' with { type: 'json' }
 
 export default defineConfig({
   root: import.meta.dirname,
   plugins: [react(), tailwindcss()],
-  resolve: { alias: workspaceAliases }
+  resolve: { alias: workspaceAliases },
+  // Shown in copied diagnostics.
+  define: {
+    'import.meta.env.VITE_APP_VERSION': JSON.stringify(packageJson.version)
+  }
 })

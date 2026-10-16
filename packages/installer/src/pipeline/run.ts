@@ -117,11 +117,20 @@ export const runPipeline = async <S>(
     return undefined
   }
 
+  emit({
+    type: 'run-started',
+    pipelineId: id,
+    steps: steps.map((step) => ({ stepId: step.id, labelKey: step.labelKey })),
+    completed: [...completed],
+    fraction: progress.complete(
+      steps
+        .filter((step) => completed.has(step.id))
+        .reduce((sum, step) => sum + stepWeight(step), 0)
+    )
+  })
+
   for (const [index, step] of steps.entries()) {
-    if (completed.has(step.id)) {
-      progress.complete(stepWeight(step))
-      continue
-    }
+    if (completed.has(step.id)) continue
     if (signal.aborted) return cancelled()
     if (step.skip?.(state)) {
       finish(step, 'step-skipped')

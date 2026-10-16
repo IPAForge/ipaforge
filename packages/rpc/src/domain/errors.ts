@@ -31,6 +31,12 @@ export const runIdInUse = (id: string): LoadstarError =>
     data: { run: id }
   })
 
+export const subscriptionIdInUse = (id: string): LoadstarError =>
+  new LoadstarError(ErrorCode.InvalidRpcMessage, {
+    message: 'subscription id already in use',
+    data: { subscription: id }
+  })
+
 export const disconnected = (): LoadstarError =>
   new LoadstarError(ErrorCode.RpcDisconnected, {
     message: 'the RPC channel closed'

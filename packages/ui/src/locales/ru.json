@@ -460,5 +460,12 @@
     "import-ipa": "Импортировать IPA",
     "update-loadstar": "Обновить Loadstar",
     "report-issue": "Сообщить о проблеме"
+  },
+  "devices": {
+    "engine": {
+      "connecting": "Подключение к Engine…",
+      "connected": "{count, plural, =0 {Engine подключён · устройств нет} one {Engine подключён · # устройство} few {Engine подключён · # устройства} many {Engine подключён · # устройств} other {Engine подключён · # устройства}}",
+      "failed": "Engine недоступен: {reason}"
+    }
   }
 }

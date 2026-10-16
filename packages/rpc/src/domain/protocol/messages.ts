@@ -8,10 +8,18 @@ import {
   serializedErrorSchema,
   versionSchema
 } from '@rpc/domain/protocol/common.ts'
+import { deviceWatchEventSchema } from '@rpc/domain/protocol/subscriptions.ts'
 
 const stepId = z.string()
 
 const pipelineEventSchema = z.discriminatedUnion('type', [
+  z.object({
+    type: z.literal('run-started'),
+    pipelineId: z.string(),
+    steps: z.array(z.object({ stepId, labelKey: z.string() })),
+    completed: z.array(stepId),
+    fraction: z.number()
+  }),
   z.object({
     type: z.literal('step-started'),
     stepId,
@@ -78,7 +86,11 @@ export const messageSchema = z.discriminatedUnion('type', [
   message('run-event', { runId: idSchema, event: pipelineEventSchema }),
   message('run-result', { runId: idSchema, result: runResultSchema }),
   /** The run could not finish normally (it threw instead of returning a result). */
-  message('run-error', { runId: idSchema, error: serializedErrorSchema })
+  message('run-error', { runId: idSchema, error: serializedErrorSchema }),
+  message('subscription-event', {
+    subscriptionId: idSchema,
+    event: deviceWatchEventSchema
+  })
 ])
 
 export type WireRunEvent = z.infer<typeof pipelineEventSchema>

@@ -63,6 +63,9 @@ export const placePairingInputSchema = z.object({
   overwrite: z.enum(['replace', 'keep-existing']).optional()
 })
 
+/** The password and any second factor come later, as prompt answers, so they never sit in the run's input. */
+export const signInInputSchema = z.object({ appleId: textSchema })
+
 export type ExternalIpa = z.infer<typeof externalIpaSchema>
 export type IpaSource = z.input<typeof ipaSourceSchema>
 export type RemotePlanInstallInput = z.input<typeof planInstallInputSchema>
@@ -71,3 +74,4 @@ export type RemoteInstallSideStoreInput = z.input<
 >
 export type RemoteInstallAppsInput = z.input<typeof installAppsInputSchema>
 export type RemotePlacePairingInput = z.input<typeof placePairingInputSchema>
+export type RemoteSignInInput = z.input<typeof signInInputSchema>

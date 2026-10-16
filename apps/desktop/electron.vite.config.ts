@@ -6,6 +6,7 @@ import { defineConfig } from 'electron-vite'
 import type { Plugin } from 'vite'
 
 import { workspaceAliases } from '../../tooling/vite/workspace-aliases.ts'
+import packageJson from './package.json' with { type: 'json' }
 import {
   DEVELOPMENT_CONTENT_SECURITY_POLICY,
   PRODUCTION_CONTENT_SECURITY_POLICY
@@ -45,6 +46,10 @@ export default defineConfig({
   },
   renderer: {
     resolve,
-    plugins: [react(), tailwindcss(), contentSecurityPolicy()]
+    plugins: [react(), tailwindcss(), contentSecurityPolicy()],
+    // Shown in copied diagnostics.
+    define: {
+      'import.meta.env.VITE_APP_VERSION': JSON.stringify(packageJson.version)
+    }
   }
 })

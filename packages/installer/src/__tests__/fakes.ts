@@ -205,6 +205,7 @@ export type FakeAppleOptions = {
   teams?: Team[]
   rememberedTeam?: string
   resume?: () => Promise<Awaited<ReturnType<AppleAccounts['resume']>>>
+  signIn?: () => Promise<Awaited<ReturnType<AppleAccounts['signIn']>>>
   /** Certificates already on the team, made by other tools. */
   existingCertificates?: DevelopmentCertificate[]
   maxCertificates?: number
@@ -343,7 +344,9 @@ export const fakeApple = (options: FakeAppleOptions = {}) => {
     },
     signIn: async () => {
       calls.sessions++
-      return { kind: 'signed_in' as const, session }
+      return options.signIn
+        ? options.signIn()
+        : { kind: 'signed_in' as const, session }
     },
     developer: () => developer,
     markBanned: async (_id: string, udid: string) => {

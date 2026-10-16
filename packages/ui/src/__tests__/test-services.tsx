@@ -2,10 +2,15 @@ import { createMemoryHistory } from '@tanstack/react-router'
 import { render } from '@testing-library/react'
 
 import { compact, createLogger, type LogRecord } from '@loadstar/kernel'
+import type { EngineClient } from '@loadstar/rpc'
 import { App } from '@ui/App.tsx'
 import type { LoadBundle } from '@ui/i18n/loading/locale-bundles.ts'
 import { prepareLanguage } from '@ui/i18n/setup/prepare-language.ts'
+import type { FakeDeviceFeed } from '@ui/services/engine/fake/fake-devices.ts'
+import { createFakeEngineClient } from '@ui/services/engine/fake/fake-engine-client.ts'
+import type { FakeScenarioId } from '@ui/services/engine/fake/fake-scenarios.ts'
 import { createMemoryPreferencesStore } from '@ui/services/preferences/preferences-store.ts'
+import { createMemoryClipboard } from '@ui/services/system/clipboard.ts'
 import type {
   ColorScheme,
   ColorSchemeSource
@@ -39,6 +44,12 @@ export type TestServicesOptions = {
   readonly languages?: readonly string[]
   /** Replaces the real (dynamic import) bundle loader, e.g. to delay or fail a load. */
   readonly load?: LoadBundle
+  /** What the fake Engine plays; the happy path by default. */
+  readonly scenario?: FakeScenarioId
+  /** Another Engine client, e.g. one whose calls never settle. */
+  readonly engine?: EngineClient
+  /** The fake Engine's connected devices, for a test that plugs devices in and out. */
+  readonly devices?: FakeDeviceFeed
 }
 
 const ENGLISH = ['en-US']
@@ -46,10 +57,14 @@ const ENGLISH = ['en-US']
 /** Services backed by memory, collecting every log record at debug level. */
 export const createTestServices = ({
   preferences = {},
-  languages = ENGLISH
+  languages = ENGLISH,
+  scenario,
+  engine,
+  devices
 }: TestServicesOptions = {}) => {
   const records: LogRecord[] = []
   const scheme = createControllableScheme('light')
+  const clipboard = createMemoryClipboard()
   const services: UiServices = {
     logger: createLogger({
       level: 'debug',
@@ -57,10 +72,15 @@ export const createTestServices = ({
     }),
     preferences: createMemoryPreferencesStore(preferences),
     colorScheme: scheme.source,
-    localeSource: createFixedLocaleSource(languages)
+    localeSource: createFixedLocaleSource(languages),
+    engine:
+      engine ??
+      createFakeEngineClient(compact({ scenario, devices, delayMs: 0 })),
+    clipboard,
+    appVersion: '0.0.0-test'
   }
 
-  return { services, records, scheme }
+  return { services, records, scheme, clipboard }
 }
 
 /** Prepares the language like a host does, then renders the whole app at `path` with in-memory services. */

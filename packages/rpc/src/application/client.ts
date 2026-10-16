@@ -3,12 +3,13 @@
 
 import type { z } from 'zod'
 
-import { classify } from '@loadstar/installer'
+import { classify, type DeviceWatchEvent } from '@loadstar/installer'
 import {
   compact,
   LoadstarError,
   type Logger,
-  silentLogger
+  silentLogger,
+  toLoadstarError
 } from '@loadstar/kernel'
 import { createRequestTable } from '@rpc/application/client/requests.ts'
 import { type ClientRun, createClientRun } from '@rpc/application/client/run.ts'
@@ -56,6 +57,7 @@ export const createEngineClient = (
   const logger = (options.logger ?? silentLogger).child({ scope: 'rpc' })
   const requests = createRequestTable(transport, config.requestTimeoutMs)
   const runs = new Map<string, ClientRun<unknown>>()
+  const subscriptions = new Map<string, (event: DeviceWatchEvent) => void>()
 
   /** Query results are trusted to have the Engine's types: the envelope is validated, the payload is the Engine's. */
   const query = <T>(call: QueryCallInput): Promise<T> =>
@@ -85,6 +87,29 @@ export const createEngineClient = (
     return run.handle
   }
 
+  /** A live feed: events go to `listener` until the returned function is called or the channel closes. */
+  const watchDevices = (
+    listener: (event: DeviceWatchEvent) => void
+  ): (() => void) => {
+    const subscriptionId = crypto.randomUUID()
+    const failed = (type: string) => (error: unknown) =>
+      logger.debug('RPC subscription request failed', {
+        subscriptionId,
+        type,
+        code: toLoadstarError(error).code
+      })
+    subscriptions.set(subscriptionId, listener)
+    requests
+      .send({ type: 'subscribe', subscriptionId, topic: 'devices' })
+      .catch(failed('subscribe'))
+    return () => {
+      if (!subscriptions.delete(subscriptionId)) return
+      requests
+        .send({ type: 'unsubscribe', subscriptionId })
+        .catch(failed('unsubscribe'))
+    }
+  }
+
   const endRun = (runId: string): ClientRun<unknown> | undefined => {
     const run = runs.get(runId)
     runs.delete(runId)
@@ -98,7 +123,11 @@ export const createEngineClient = (
     'run-event': (message) => runs.get(message.runId)?.event(message.event),
     'run-result': (message) => endRun(message.runId)?.finish(message.result),
     'run-error': (message) =>
-      endRun(message.runId)?.fail(LoadstarError.fromJSON(message.error))
+      endRun(message.runId)?.fail(LoadstarError.fromJSON(message.error)),
+    'subscription-event': (message) =>
+      subscriptions.get(message.subscriptionId)?.(
+        compact(message.event) as DeviceWatchEvent
+      )
   }
 
   const rejectInvalid = (raw: unknown, issues: z.ZodError): void => {
@@ -119,6 +148,7 @@ export const createEngineClient = (
 
   const onClose = (): void => {
     requests.close()
+    subscriptions.clear()
     for (const runId of [...runs.keys()]) endRun(runId)?.fail(disconnected())
   }
 
@@ -144,6 +174,8 @@ export const createEngineClient = (
       start({ command: 'installApps', input }, options),
     placePairing: (input, options) =>
       start({ command: 'placePairing', input }, options),
+    signIn: (input, options) => start({ command: 'signIn', input }, options),
+    watchDevices,
     classify
   }
 }

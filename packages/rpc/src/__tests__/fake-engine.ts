@@ -4,6 +4,7 @@ import {
   type AppSource,
   type CommandOptions,
   classify,
+  type DeviceWatchEvent,
   type Engine,
   type InstallAppsInput,
   PromptKind,
@@ -122,6 +123,9 @@ export type FakeControl = {
   }[]
   readonly planned: unknown[]
   readonly appInputs: InstallAppsInput[]
+  readonly signIns: unknown[]
+  /** Device-watch listeners the server holds. */
+  readonly watchers: Set<(event: DeviceWatchEvent) => void>
 }
 
 export const createFakeEngine = () => {
@@ -129,7 +133,9 @@ export const createFakeEngine = () => {
     installFailures: 0,
     runs: [],
     planned: [],
-    appInputs: []
+    appInputs: [],
+    signIns: [],
+    watchers: new Set()
   }
   const engine = {
     listDevices: async () => [{ udid: 'UDID1', connection: 'USB' }],
@@ -172,6 +178,18 @@ export const createFakeEngine = () => {
       throw new LoadstarError(ErrorCode.TeamRequired, {
         data: { accountId: 'acct' }
       })
+    },
+    signIn: (input: unknown, options?: CommandOptions<FakeState>) => {
+      control.signIns.push(input)
+      return startRun(control, { apps: [] }, options)
+    },
+    watchDevices: (listener: (event: DeviceWatchEvent) => void) => {
+      control.watchers.add(listener)
+      listener({
+        type: 'devices',
+        devices: [{ udid: 'UDID1', deviceId: 1, connectionType: 'usb' }]
+      })
+      return () => control.watchers.delete(listener)
     },
     classify
   }

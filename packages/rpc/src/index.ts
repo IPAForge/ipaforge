@@ -1,7 +1,34 @@
 // Public API of @loadstar/rpc: the typed channel between the Engine (server) and the UI (EngineClient).
 
-// Installer data the UI needs (to translate recovery actions and step labels) without importing the installer.
-export { RecoveryAction, StepLabel } from '@loadstar/installer'
+// Installer data and types the UI needs (prompt kinds, recovery actions, step labels, the Engine's shapes for a
+// stand-in Engine) without importing the installer.
+export {
+  type AppIdUsage,
+  type CertificateChoice,
+  type CommandOptions,
+  classify,
+  type DeviceWatchEvent,
+  type Diagnosis,
+  type Engine,
+  type InstallPlan,
+  type InstallState,
+  type PairingAppChoice,
+  type PipelineResult,
+  type PlannedStep,
+  type PromptAnswer,
+  type PromptData,
+  PromptKind,
+  type PromptRequest,
+  type Prompts,
+  RecoveryAction,
+  type RemovableApp,
+  type RunEvent,
+  type RunHandle,
+  type SignInState,
+  StepLabel,
+  type TeamCertificates,
+  type TeamQuery
+} from '@loadstar/installer'
 export {
   createEngineClient,
   type EngineClientOptions
@@ -27,7 +54,8 @@ export type {
   RemoteInstallAppsInput,
   RemoteInstallSideStoreInput,
   RemotePlacePairingInput,
-  RemotePlanInstallInput
+  RemotePlanInstallInput,
+  RemoteSignInInput
 } from '@rpc/domain/protocol/inputs.ts'
 export {
   type Message,
@@ -35,5 +63,6 @@ export {
   type RemoteCheckpoint
 } from '@rpc/domain/protocol/messages.ts'
 export { type Request, requestSchema } from '@rpc/domain/protocol/requests.ts'
+export type { SubscriptionTopic } from '@rpc/domain/protocol/subscriptions.ts'
 export type { Wire } from '@rpc/domain/wire.ts'
 export { createMemoryTransportPair } from '@rpc/infrastructure/memory-transport.ts'

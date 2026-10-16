@@ -5,7 +5,7 @@ import { completeTwoFactor } from '@installer/application/two-factor.ts'
 import type { InstallerDeps } from '@installer/deps.ts'
 import { PromptKind } from '@installer/domain/prompts.ts'
 import type { StepContext } from '@installer/pipeline/step.ts'
-import type { AppleSession, SignInResult } from '@loadstar/apple'
+import type { AppleSession, SavedAccount, SignInResult } from '@loadstar/apple'
 
 const finish = async (
   deps: InstallerDeps,
@@ -50,4 +50,28 @@ export const signInAccount = async (
     context,
     await signInWithPassword(deps, context, resumed.appleId)
   )
+}
+
+/** Signs in an Apple ID that is not saved yet (the password and any second factor through prompts) and saves it. */
+export const signInNewAccount = async (
+  deps: InstallerDeps,
+  context: StepContext,
+  appleId: string
+): Promise<SavedAccount> => {
+  const password = await ask(context, PromptKind.Password, { appleId })
+  const result = await deps.apple.signIn({
+    appleId,
+    password,
+    signal: context.signal
+  })
+  const session =
+    result.kind === 'signed_in'
+      ? result.session
+      : await completeTwoFactor(
+          context,
+          result.challenge,
+          deps.config.twoFactorAttempts
+        )
+
+  return deps.apple.accounts.save(session)
 }

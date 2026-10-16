@@ -460,5 +460,12 @@
     "import-ipa": "Importă un IPA",
     "update-loadstar": "Actualizează Loadstar",
     "report-issue": "Raportează problema"
+  },
+  "devices": {
+    "engine": {
+      "connecting": "Se conectează la Engine…",
+      "connected": "{count, plural, =0 {Engine conectat · niciun dispozitiv} one {Engine conectat · # dispozitiv} few {Engine conectat · # dispozitive} other {Engine conectat · # de dispozitive}}",
+      "failed": "Engine-ul nu poate fi accesat: {reason}"
+    }
   }
 }

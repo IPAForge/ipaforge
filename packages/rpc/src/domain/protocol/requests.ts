@@ -13,8 +13,10 @@ import {
   installSideStoreInputSchema,
   placePairingInputSchema,
   planInstallInputSchema,
+  signInInputSchema,
   teamQuerySchema
 } from '@rpc/domain/protocol/inputs.ts'
+import { subscriptionTopicSchema } from '@rpc/domain/protocol/subscriptions.ts'
 
 const call = <M extends string, A extends z.ZodTuple>(method: M, args: A) =>
   z.object({ method: z.literal(method), args })
@@ -43,7 +45,8 @@ export const commandCallSchema = z.discriminatedUnion('command', [
   z.object({
     command: z.literal('placePairing'),
     input: placePairingInputSchema
-  })
+  }),
+  z.object({ command: z.literal('signIn'), input: signInInputSchema })
 ])
 
 const request = <T extends string, S extends z.ZodRawShape>(
@@ -62,7 +65,13 @@ export const requestSchema = z.discriminatedUnion('type', [
   }),
   request('answer', { runId: idSchema, answer: z.unknown() }),
   request('decline', { runId: idSchema }),
-  request('cancel', { runId: idSchema })
+  request('cancel', { runId: idSchema }),
+  /** Starts a live feed under an id the client picks; `unsubscribe` ends it. */
+  request('subscribe', {
+    subscriptionId: idSchema,
+    topic: subscriptionTopicSchema
+  }),
+  request('unsubscribe', { subscriptionId: idSchema })
 ])
 
 export type QueryCall = z.infer<typeof queryCallSchema>

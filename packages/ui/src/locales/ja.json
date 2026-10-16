@@ -460,5 +460,12 @@
     "import-ipa": "IPAを読み込む",
     "update-loadstar": "Loadstarをアップデート",
     "report-issue": "問題を報告"
+  },
+  "devices": {
+    "engine": {
+      "connecting": "Engineに接続しています…",
+      "connected": "{count, plural, =0 {Engine接続済み · デバイスなし} other {Engine接続済み · デバイス#台}}",
+      "failed": "Engineに接続できません:{reason}"
+    }
   }
 }
