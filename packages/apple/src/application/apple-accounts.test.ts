@@ -1,12 +1,9 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import type { AccountStore } from '@apple/application/accounts.ts'
-import {
-  type ResumeServices,
-  resumeAccount
-} from '@apple/application/apple-accounts.ts'
-import type { AppleDeps } from '@apple/deps.ts'
-import type { AppleSession } from '@apple/domain/session.ts'
+import { resumeAccount } from '@apple/application/apple-accounts.ts'
+import type { AccountStore, ResumeServices } from '@apple/application/types.ts'
+import type { AppleSession } from '@apple/domain/types.ts'
+import type { AppleDeps } from '@apple/types.ts'
 import {
   createLogger,
   ErrorCode,

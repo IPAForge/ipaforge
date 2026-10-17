@@ -1,8 +1,7 @@
 // GrandSlam (GsService2): plist requests carrying the client-provided data (`cpd`) built from anisette.
 
-import type { AppleDeps } from '@apple/deps.ts'
-import type { AnisetteData } from '@apple/domain/anisette.ts'
 import type { GsaStatus } from '@apple/domain/gsa-status.ts'
+import type { AnisetteData } from '@apple/domain/types.ts'
 import { nonEmpty } from '@apple/domain/values.ts'
 import {
   appleHeaders,
@@ -13,6 +12,7 @@ import { bagUrl } from '@apple/infrastructure/gsa/url-bag.ts'
 import { fetchApple } from '@apple/infrastructure/http.ts'
 import { parseApplePlist } from '@apple/infrastructure/plist-diagnostics.ts'
 import { plistNumber } from '@apple/infrastructure/plist-fields.ts'
+import type { AppleDeps } from '@apple/types.ts'
 import {
   compact,
   createDict,

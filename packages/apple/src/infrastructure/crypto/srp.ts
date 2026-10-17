@@ -1,5 +1,11 @@
 // SRP-6a as GrandSlam uses it: RFC 5054 2048-bit group, SHA-256, RFC 5054 padding for k and u, and the
 // username left out of x (x = H(s | H(":" | P))). Native BigInt; no external big-number code.
+
+import type {
+  ClientEphemeral,
+  ClientProof,
+  PasswordProtocol
+} from '@apple/infrastructure/crypto/types.ts'
 import {
   concatBytes,
   ErrorCode,
@@ -89,11 +95,6 @@ export const privateKey = async (
     await sha256(salt, await sha256(utf8Encode(':'), passwordKey))
   )
 
-export type ClientEphemeral = {
-  readonly a: bigint
-  readonly A: bigint
-}
-
 export const clientEphemeral = (
   randomBytes: (length: number) => Uint8Array
 ): ClientEphemeral => {
@@ -102,12 +103,6 @@ export const clientEphemeral = (
     const A = modPow(SRP_G, a, SRP_N)
     if (a > 1n && A % SRP_N !== 0n) return { a, A }
   }
-}
-
-export type ClientProof = {
-  readonly M1: Uint8Array
-  /** Session key K = H(S). */
-  readonly K: Uint8Array
 }
 
 /** M1 = H(H(N) xor H(PAD(g)) | H(I) | s | A | B | K) */
@@ -166,8 +161,6 @@ export const serverProof = (
   M1: Uint8Array,
   K: Uint8Array
 ): Promise<Uint8Array> => sha256(bytesFromBigint(A), M1, K)
-
-export type PasswordProtocol = 's2k' | 's2k_fo'
 
 /** P = PBKDF2-SHA256(SHA256(password) [hex-encoded for s2k_fo], salt, iterations, 32). */
 export const passwordKey = async (

@@ -1,26 +1,23 @@
 // The catalog facade: which apps exist, which release to install, and downloading it safely.
-import {
-  type DownloadOptions,
-  type DownloadResult,
-  downloadRelease
-} from '@catalog/application/download.ts'
+import { downloadRelease } from '@catalog/application/download.ts'
 import { createManifestSource } from '@catalog/application/manifest-source.ts'
 import { resolveRelease } from '@catalog/application/resolve.ts'
-import { type CatalogDepsInput, resolveCatalogDeps } from '@catalog/deps.ts'
-import {
-  type CatalogApp,
-  type Channel,
-  type Manifest,
-  recommendedChannel
-} from '@catalog/domain/manifest.ts'
+import type {
+  DownloadOptions,
+  DownloadResult
+} from '@catalog/application/types.ts'
+import { resolveCatalogDeps } from '@catalog/deps.ts'
+import { recommendedChannel } from '@catalog/domain/manifest.ts'
 import type { ResolvedRelease } from '@catalog/domain/release.ts'
+import type { CatalogApp, Channel, Manifest } from '@catalog/domain/types.ts'
+import type { CatalogDepsInput } from '@catalog/types.ts'
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
 
 export type {
   DownloadOptions,
   DownloadProgress,
   DownloadResult
-} from '@catalog/application/download.ts'
+} from '@catalog/application/types.ts'
 
 export type Catalog = {
   /** The remote manifest when reachable, otherwise the built-in one. */

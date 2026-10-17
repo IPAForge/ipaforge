@@ -3,7 +3,12 @@
 
 import { z } from 'zod'
 
-import type { CatalogDeps } from '@catalog/deps.ts'
+import type {
+  GithubLookup,
+  GithubQuery,
+  GithubRelease
+} from '@catalog/infrastructure/types.ts'
+import type { CatalogDeps } from '@catalog/types.ts'
 import {
   compact,
   ErrorCode,
@@ -16,7 +21,7 @@ import {
 const MAX_API_BYTES = 8 * 1024 * 1024
 const SHA256_PREFIX = 'sha256:'
 
-const releaseSchema = z.looseObject({
+export const githubReleaseSchema = z.looseObject({
   tag_name: z.string(),
   published_at: z.string().nullable().optional(),
   assets: z.array(
@@ -29,29 +34,6 @@ const releaseSchema = z.looseObject({
     })
   )
 })
-
-type GithubRelease = z.infer<typeof releaseSchema>
-
-export type GithubAsset = {
-  readonly version: string
-  readonly url: string
-  readonly name: string
-  readonly size: number
-  readonly sha256?: string
-  readonly publishedAt?: Date
-}
-
-export type GithubLookup =
-  | { readonly kind: 'found'; readonly asset: GithubAsset }
-  | { readonly kind: 'gone' }
-  | { readonly kind: 'no-asset'; readonly version: string }
-
-export type GithubQuery = {
-  readonly repo: string
-  /** Release tag; the latest release when omitted. */
-  readonly tag?: string | undefined
-  readonly asset: string
-}
 
 /** `releases/tags/<tag>`, or `releases/latest` when no tag is given. */
 const releasePath = (tag: string | undefined): string =>
@@ -97,7 +79,7 @@ const fetchRelease = async (
       data: { repo: query.repo, status: response.status }
     })
   }
-  return releaseSchema.parse(JSON.parse(utf8Decode(body)))
+  return githubReleaseSchema.parse(JSON.parse(utf8Decode(body)))
 }
 
 const sha256Of = (digest: string | null | undefined): string | undefined =>

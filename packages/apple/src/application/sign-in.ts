@@ -1,38 +1,22 @@
 // Apple ID sign-in: SRP against GrandSlam, then (when Apple asks) a second factor. Wrong passwords are never
 // retried automatically, so the user cannot be locked out by the app.
 
-import type { AnisetteService } from '@apple/application/anisette.ts'
-import {
-  type Authenticated,
-  authenticate,
-  type Credentials
-} from '@apple/application/gsa-authenticate.ts'
-import {
-  createTwoFactorChallenge,
-  type TwoFactorChallenge
-} from '@apple/application/two-factor.ts'
-import type { AppleDeps } from '@apple/deps.ts'
-import { GsaCode } from '@apple/domain/gsa-status.ts'
-import {
-  type AppleSession,
-  normalizeAppleId,
-  type SecondFactorRequest
-} from '@apple/domain/session.ts'
+import { authenticate } from '@apple/application/gsa-authenticate.ts'
+import { createTwoFactorChallenge } from '@apple/application/two-factor.ts'
+import type {
+  AnisetteService,
+  Authenticated,
+  Credentials,
+  SignInInput,
+  SignInResult,
+  SignInService,
+  TwoFactorChallenge
+} from '@apple/application/types.ts'
+import { GsaCode } from '@apple/domain/constants.ts'
+import { normalizeAppleId } from '@apple/domain/session.ts'
+import type { AppleSession, SecondFactorRequest } from '@apple/domain/types.ts'
+import type { AppleDeps } from '@apple/types.ts'
 import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
-
-export type SignInResult =
-  | { readonly kind: 'signed_in'; readonly session: AppleSession }
-  | { readonly kind: 'two_factor'; readonly challenge: TwoFactorChallenge }
-
-export type SignInInput = {
-  readonly appleId: string
-  readonly password: string
-  readonly signal?: AbortSignal
-}
-
-export type SignInService = {
-  signIn(input: SignInInput): Promise<SignInResult>
-}
 
 const isAnisetteNotProvisioned = (error: unknown): boolean =>
   error instanceof LoadstarError &&

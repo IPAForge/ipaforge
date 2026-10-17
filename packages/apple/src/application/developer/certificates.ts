@@ -2,32 +2,21 @@
 // stored one while Apple still accepts it.
 
 import type { DeveloperContext } from '@apple/application/developer/context.ts'
+import type {
+  CertificateIdentity,
+  EnsureCertificateOptions
+} from '@apple/application/developer/types.ts'
 import {
-  type DevelopmentCertificate,
   isUsableCertificate,
-  normalizeAppIdName,
-  type Team
+  normalizeAppIdName
 } from '@apple/domain/developer.ts'
+import type { DevelopmentCertificate, Team } from '@apple/domain/types.ts'
 import { createCertificateRequest } from '@apple/infrastructure/developer/csr.ts'
 import {
   toCertificates,
   toSubmittedCertificate
 } from '@apple/infrastructure/developer/parse.ts'
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
-
-/** A certificate Loadstar created, with the private key that only exists on this computer. */
-export type CertificateIdentity = {
-  readonly certificate: DevelopmentCertificate
-  /** PKCS#8 DER. */
-  readonly privateKey: Uint8Array
-}
-
-export type EnsureCertificateOptions = {
-  /** Name Apple shows for the certificate's machine (identifies Loadstar in the revoke picker). */
-  readonly machineName: string
-  /** A certificate (and key) saved from an earlier run: reused while Apple still lists it. */
-  readonly stored?: CertificateIdentity
-}
 
 const isIosCertificate = (certificate: DevelopmentCertificate): boolean =>
   certificate.platform === undefined ||

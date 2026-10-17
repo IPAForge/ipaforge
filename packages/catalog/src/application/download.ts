@@ -3,33 +3,14 @@
 
 import { sha256 } from '@noble/hashes/sha2.js'
 
-import type { CatalogDeps } from '@catalog/deps.ts'
+import type {
+  DownloadOptions,
+  DownloadProgress,
+  DownloadResult
+} from '@catalog/application/types.ts'
 import type { ResolvedRelease } from '@catalog/domain/release.ts'
-import {
-  compact,
-  ErrorCode,
-  type FileSource,
-  LoadstarError,
-  toHex
-} from '@loadstar/kernel'
-
-export type DownloadProgress = {
-  readonly received: number
-  readonly total?: number
-}
-
-export type DownloadOptions = {
-  readonly onProgress?: (progress: DownloadProgress) => void
-  readonly signal?: AbortSignal
-}
-
-export type DownloadResult = {
-  readonly file: FileSource
-  /** SHA-256 of the file, equal to the release's expected checksum. */
-  readonly sha256: string
-  /** True when it came from the download cache. */
-  readonly cached: boolean
-}
+import type { CatalogDeps } from '@catalog/types.ts'
+import { compact, ErrorCode, LoadstarError, toHex } from '@loadstar/kernel'
 
 const cacheKey = (release: ResolvedRelease): string =>
   [
