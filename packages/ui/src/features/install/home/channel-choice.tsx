@@ -3,13 +3,15 @@ import { useTranslation } from 'react-i18next'
 
 import { type Channel, channels } from '@ui/services/engine/engine-types.ts'
 
+type SegmentClassOptions = {
+  isSelected: boolean
+  isFocusVisible: boolean
+}
+
 const segmentClass = ({
   isSelected,
   isFocusVisible
-}: {
-  isSelected: boolean
-  isFocusVisible: boolean
-}): string =>
+}: SegmentClassOptions): string =>
   [
     'cursor-pointer rounded-full px-4 py-1.5 text-sm transition-colors',
     isSelected

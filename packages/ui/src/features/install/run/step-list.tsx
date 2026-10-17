@@ -4,8 +4,10 @@ import { useTranslation } from 'react-i18next'
 import { StepRow } from '@ui/features/install/run/step-row.tsx'
 import type { StepView } from '@ui/state/active-run/run-view.ts'
 
+type StepListProps = { steps: readonly StepView[] }
+
 /** Every step of the run, in order, as the Engine announced them. */
-export const StepList = ({ steps }: { steps: readonly StepView[] }) => {
+export const StepList = ({ steps }: StepListProps) => {
   const { t } = useTranslation()
 
   return (

@@ -8,8 +8,10 @@ import {
   nativeName
 } from '@ui/i18n/languages/languages.ts'
 
+type LanguageOptionLabelProps = { language: LanguageId }
+
 /** A language's own name, marked up in that language, plus a "draft" chip while it awaits native review. */
-export const LanguageOptionLabel = ({ language }: { language: LanguageId }) => {
+export const LanguageOptionLabel = ({ language }: LanguageOptionLabelProps) => {
   const { t } = useTranslation()
 
   return (

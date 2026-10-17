@@ -31,7 +31,9 @@ const RunningBadge = () => {
   )
 }
 
-export const SidebarLink = ({ section }: { section: AppSection }) => {
+type SidebarLinkProps = { section: AppSection }
+
+export const SidebarLink = ({ section }: SidebarLinkProps) => {
   const { t } = useTranslation()
   const { run } = useRun()
   const Icon = section.icon

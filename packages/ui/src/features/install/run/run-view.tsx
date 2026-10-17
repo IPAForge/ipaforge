@@ -5,11 +5,13 @@ import { StepList } from '@ui/features/install/run/step-list.tsx'
 import { useRunTarget } from '@ui/features/install/run/use-run-target.ts'
 import type { ActiveRun } from '@ui/state/active-run/active-run-store.ts'
 
+type RunViewProps = { run: ActiveRun }
+
 /**
  * An install run, in one full-width column: title and overall progress, what is being installed, how it is going
  * or how it ended (so the result is seen without scrolling), then every step.
  */
-export const RunView = ({ run }: { run: ActiveRun }) => {
+export const RunView = ({ run }: RunViewProps) => {
   const target = useRunTarget(run.input)
 
   return (

@@ -14,8 +14,10 @@ import { useTranslation } from 'react-i18next'
 import type { LoadstarError } from '@loadstar/kernel'
 import { errorBodyKey, errorTitleKey } from '@ui/i18n/required-keys.ts'
 
+type SignInErrorProps = { error: LoadstarError }
+
 /** Why the last attempt failed, in the words for its code (never the raw message). */
-const SignInError = ({ error }: { error: LoadstarError }) => {
+const SignInError = ({ error }: SignInErrorProps) => {
   const { t } = useTranslation()
 
   return (

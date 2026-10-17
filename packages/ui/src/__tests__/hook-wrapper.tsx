@@ -18,6 +18,8 @@ import { createActiveRunStore } from '@ui/state/active-run/active-run-store.ts'
 import { SelectionContext } from '@ui/state/selection/selection-context.ts'
 import { createSelectionStore } from '@ui/state/selection/selection-store.ts'
 
+type WrapperProps = { children: ReactNode }
+
 /** The providers `App` gives everything below it: services, query cache, selection, install run and, if given, the language. */
 const createAppWrapper = (
   options: TestServicesOptions,
@@ -39,7 +41,7 @@ const createAppWrapper = (
     ) : (
       children
     )
-  const wrapper = ({ children }: { children: ReactNode }) => (
+  const wrapper = ({ children }: WrapperProps) => (
     <UiServicesContext value={test.services}>
       <QueryClientProvider client={queryClient}>
         <SelectionContext value={selection}>

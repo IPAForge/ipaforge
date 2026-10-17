@@ -41,8 +41,10 @@ const stateKeys: Partial<Record<StepState, TranslationKey>> = {
   failed: 'install.run.stepState.failed'
 }
 
+type StepRowProps = { step: StepView }
+
 /** One step: its icon, label (from the Engine's label key), state or percentage, and detail. */
-export const StepRow = ({ step }: { step: StepView }) => {
+export const StepRow = ({ step }: StepRowProps) => {
   const { t } = useTranslation()
   const detail = useStepDetail(step.detail)
   const { icon: Icon, className } = icons[step.state]

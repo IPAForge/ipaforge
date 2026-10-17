@@ -8,8 +8,10 @@ import { RunPromptHost } from '@ui/features/install/prompts/run-prompt-host.tsx'
 
 const MAIN_CONTENT_ID = 'main-content'
 
+type AppShellProps = { children: ReactNode }
+
 /** Top bar across the window, sidebar on the start edge, the current page in `main`, and the run's questions. */
-export const AppShell = ({ children }: { children: ReactNode }) => (
+export const AppShell = ({ children }: AppShellProps) => (
   <div className="flex h-dvh flex-col bg-background text-foreground">
     <SkipLink targetId={MAIN_CONTENT_ID} />
     <TopBar />

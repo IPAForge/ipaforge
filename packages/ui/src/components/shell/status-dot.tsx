@@ -8,8 +8,10 @@ const toneClasses = {
   off: 'bg-muted'
 } as const satisfies Record<StatusTone, string>
 
+type StatusDotProps = { tone: StatusTone }
+
 /** A small coloured dot for a status. Decorative: the status is also said in words next to it. */
-export const StatusDot = ({ tone }: { tone: StatusTone }) => (
+export const StatusDot = ({ tone }: StatusDotProps) => (
   <span
     aria-hidden="true"
     data-tone={tone}

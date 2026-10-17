@@ -16,13 +16,12 @@ const variants = [
 const isVariant = (value: string): value is SideStoreVariant =>
   (variants as readonly string[]).includes(value)
 
-const cardClass = ({
-  isSelected,
-  isFocusVisible
-}: {
+type CardClassOptions = {
   isSelected: boolean
   isFocusVisible: boolean
-}): string =>
+}
+
+const cardClass = ({ isSelected, isFocusVisible }: CardClassOptions): string =>
   [
     'flex h-full cursor-pointer flex-col gap-1 rounded-xl border bg-surface p-4 text-start transition-colors',
     isSelected

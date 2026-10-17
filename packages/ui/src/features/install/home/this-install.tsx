@@ -8,17 +8,14 @@ import type { InstallPlan } from '@ui/services/engine/engine-types.ts'
 
 type PlanQuery = ReturnType<typeof usePlanInstall>
 
-const Fact = ({
-  label,
-  value,
-  note,
-  tone = ''
-}: {
+type FactProps = {
   label: string
   value: string
   note?: string | undefined
   tone?: string
-}) => (
+}
+
+const Fact = ({ label, value, note, tone = '' }: FactProps) => (
   <div className="flex min-w-0 flex-col gap-0.5">
     <dt className="text-muted text-xs">{label}</dt>
     <dd className={tone}>{value}</dd>
@@ -26,7 +23,9 @@ const Fact = ({
   </div>
 )
 
-const PlanFacts = ({ plan }: { plan: InstallPlan }) => {
+type PlanFactsProps = { plan: InstallPlan }
+
+const PlanFacts = ({ plan }: PlanFactsProps) => {
   const { t } = useTranslation()
   const { date } = useFormat()
   const { appIds, freeSlots, certificate, team } = plan
@@ -89,27 +88,27 @@ const PlanFacts = ({ plan }: { plan: InstallPlan }) => {
   )
 }
 
+type WaitingProps = { children: ReactNode }
+
 /** Why there's nothing to show yet: being read, or waiting for the device or a sign-in. */
-const Waiting = ({ children }: { children: ReactNode }) => (
+const Waiting = ({ children }: WaitingProps) => (
   <p className="text-muted text-sm">{children}</p>
 )
+
+type ThisInstallProps = {
+  plan: PlanQuery
+  /** The plan isn't asked for until the device and the Apple ID are ready. */
+  isWaiting: boolean
+  /** The app being planned, named while it downloads. */
+  app: string
+}
 
 /**
  * "This install": the App IDs it uses and how many are left this week, the free-app slots on the device, whether
  * the certificate is reused, and the team. From the Engine's read-only plan, read when the device, Apple ID or
  * choice changes; never polled.
  */
-export const ThisInstall = ({
-  plan,
-  isWaiting,
-  app
-}: {
-  plan: PlanQuery
-  /** The plan isn't asked for until the device and the Apple ID are ready. */
-  isWaiting: boolean
-  /** The app being planned, named while it downloads. */
-  app: string
-}) => {
+export const ThisInstall = ({ plan, isWaiting, app }: ThisInstallProps) => {
   const { t } = useTranslation()
   const body = () => {
     if (isWaiting) return <Waiting>{t('install.plan.waiting')}</Waiting>

@@ -15,13 +15,12 @@ type SignInDialogProps = {
   onSignedIn: (account: Account) => void
 }
 
-const Shell = ({
-  onClose,
-  children
-}: {
+type ShellProps = {
   onClose: () => void
   children: ReactNode
-}) => {
+}
+
+const Shell = ({ onClose, children }: ShellProps) => {
   const onOpenChange = (open: boolean) => {
     if (!open) onClose()
   }

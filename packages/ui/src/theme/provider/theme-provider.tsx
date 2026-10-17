@@ -12,8 +12,10 @@ import { palettes } from '@ui/theme/palettes/palettes.ts'
 import { ThemeContext } from '@ui/theme/provider/theme-context.ts'
 import { createThemeStore } from '@ui/theme/store/theme-store.ts'
 
+type ThemeProviderProps = { children: ReactNode }
+
 /** Owns the theme store for the app's lifetime and keeps `<html>` in sync with it. */
-export const ThemeProvider = ({ children }: { children: ReactNode }) => {
+export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const { preferences, colorScheme, logger } = useUiServices()
   const [store] = useState(() =>
     createThemeStore({ preferences, system: colorScheme, logger })

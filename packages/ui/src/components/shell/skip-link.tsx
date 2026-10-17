@@ -1,7 +1,9 @@
 import { useTranslation } from 'react-i18next'
 
+type SkipLinkProps = { targetId: string }
+
 /** First in the tab order and visible only when focused: jumps keyboard users past the top bar and navigation. */
-export const SkipLink = ({ targetId }: { targetId: string }) => {
+export const SkipLink = ({ targetId }: SkipLinkProps) => {
   const { t } = useTranslation()
 
   return (

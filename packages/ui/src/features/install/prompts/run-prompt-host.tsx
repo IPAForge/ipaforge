@@ -14,6 +14,8 @@ type Actions = {
   declineLabelKey: 'install.run.cancelInstall'
 }
 
+type NotYetAskedProps = Actions & { kind: string }
+
 /**
  * A question this version can't ask yet (the team, a certificate to revoke, an app to remove): it says so and
  * offers to cancel, so the run never waits on a question nobody sees.
@@ -39,7 +41,7 @@ const NotYetAsked = ({
   kind,
   onDecline,
   declineLabelKey
-}: Actions & { kind: string }) => {
+}: NotYetAskedProps) => {
   const { t } = useTranslation()
 
   return (
@@ -54,10 +56,9 @@ const NotYetAsked = ({
   )
 }
 
-const PromptFor = ({
-  request,
-  ...actions
-}: Actions & { request: PromptRequest }) => {
+type PromptForProps = Actions & { request: PromptRequest }
+
+const PromptFor = ({ request, ...actions }: PromptForProps) => {
   switch (request.kind) {
     case PromptKind.Password:
       return (

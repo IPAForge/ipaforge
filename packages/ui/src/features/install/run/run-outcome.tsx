@@ -19,18 +19,15 @@ const toneClasses = {
   danger: { box: 'bg-danger-soft', title: 'text-danger' }
 } as const
 
-/** A tinted box like the device notices: the title in its tone, the text, and its buttons under it. */
-const OutcomeBox = ({
-  tone,
-  title,
-  children,
-  actions
-}: {
+type OutcomeBoxProps = {
   tone: keyof typeof toneClasses
   title: ReactNode
   children: ReactNode
   actions: ReactNode
-}) => (
+}
+
+/** A tinted box like the device notices: the title in its tone, the text, and its buttons under it. */
+const OutcomeBox = ({ tone, title, children, actions }: OutcomeBoxProps) => (
   <div
     role="status"
     className={`flex flex-col gap-1 rounded-xl px-4 py-3 ${toneClasses[tone].box}`}
@@ -41,7 +38,9 @@ const OutcomeBox = ({
   </div>
 )
 
-const RunningActions = ({ run }: { run: ActiveRun }) => {
+type RunningActionsProps = { run: ActiveRun }
+
+const RunningActions = ({ run }: RunningActionsProps) => {
   const { t } = useTranslation()
   const { cancel } = useRun()
 
@@ -64,7 +63,9 @@ const RunningActions = ({ run }: { run: ActiveRun }) => {
 const stepLabel = (run: ActiveRun, stepId: string) =>
   run.view.steps.find((step) => step.id === stepId)?.labelKey
 
-const Cancelled = ({ run }: { run: ActiveRun }) => {
+type CancelledProps = { run: ActiveRun }
+
+const Cancelled = ({ run }: CancelledProps) => {
   const { t } = useTranslation()
   const { resume, dismiss } = useRun()
   const next = run.view.steps.find((step) => step.state === 'pending')
@@ -93,7 +94,9 @@ const Cancelled = ({ run }: { run: ActiveRun }) => {
   )
 }
 
-const Done = ({ target }: { target: RunTarget }) => {
+type DoneProps = { target: RunTarget }
+
+const Done = ({ target }: DoneProps) => {
   const { t } = useTranslation()
   const { dismiss } = useRun()
 
@@ -130,7 +133,9 @@ const diagnosticsText = (
     `device: ${target.check?.info.productType ?? 'unknown'}, iOS ${target.check?.info.productVersion ?? 'unknown'}`
   ].join('\n')
 
-const CopyDiagnostics = ({ text }: { text: string }) => {
+type CopyDiagnosticsProps = { text: string }
+
+const CopyDiagnostics = ({ text }: CopyDiagnosticsProps) => {
   const { t } = useTranslation()
   const { clipboard, logger } = useUiServices()
   const [state, setState] = useState<'idle' | 'copied' | 'failed'>('idle')
@@ -162,12 +167,10 @@ const CopyDiagnostics = ({ text }: { text: string }) => {
   )
 }
 
+type FailedProps = OutcomeProps & { failure: RunFailure }
+
 /** A failed run: what went wrong in the words for its code, Try again from where it stopped, and diagnostics. */
-const Failed = ({
-  run,
-  failure,
-  target
-}: OutcomeProps & { failure: RunFailure }) => {
+const Failed = ({ run, failure, target }: FailedProps) => {
   const { t } = useTranslation()
   const { appVersion } = useUiServices()
   const { resume, restart } = useRun()

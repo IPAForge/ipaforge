@@ -28,16 +28,14 @@ type DeviceCardProps = {
   onUse: (udid: string) => void
 }
 
-/** A label over its value, in the card's facts grid. */
-const Fact = ({
-  label,
-  children,
-  className = ''
-}: {
+type FactProps = {
   label: string
   children: string
   className?: string
-}) => (
+}
+
+/** A label over its value, in the card's facts grid. */
+const Fact = ({ label, children, className = '' }: FactProps) => (
   <div className={`flex min-w-0 flex-col ${className}`}>
     <dt className="text-muted text-xs">{label}</dt>
     <dd className="truncate text-sm" title={children}>
