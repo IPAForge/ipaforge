@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest'
 
 import {
-  type AppId,
   developerErrorCode,
   isUsableCertificate,
   normalizeAppIdName,
   planAppIds
 } from '@apple/domain/developer.ts'
+import type { AppId } from '@apple/domain/types.ts'
 import { createDict, ErrorCode } from '@loadstar/kernel'
 
 const now = new Date('2026-10-15T12:00:00Z')

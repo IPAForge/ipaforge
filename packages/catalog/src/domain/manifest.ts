@@ -2,6 +2,8 @@
 // manifest that is updated remotely without an app release; the built-in copy is the fallback.
 import { z } from 'zod'
 
+import type { CatalogApp, Channel } from '@catalog/domain/types.ts'
+
 const sha256 = z
   .string()
   .regex(/^[0-9a-f]{64}$/i, 'SHA-256 as 64 hex characters')
@@ -14,21 +16,21 @@ const githubSchema = z.object({
   asset: z.string().min(1)
 })
 
-const githubLocationSchema = z.object({
+export const githubLocationSchema = z.object({
   github: githubSchema,
   sha256: sha256.optional()
 })
 
-const urlLocationSchema = z.object({
+export const urlLocationSchema = z.object({
   url: z.url().startsWith('https://'),
   // A direct download has no other integrity source, so its checksum is mandatory.
   sha256,
   size: z.number().int().positive().optional()
 })
 
-const locationSchema = z.union([githubLocationSchema, urlLocationSchema])
+export const locationSchema = z.union([githubLocationSchema, urlLocationSchema])
 
-const releaseSchema = z.intersection(
+export const releaseSchema = z.intersection(
   locationSchema,
   z.object({ mirrors: z.array(locationSchema).optional() })
 )
@@ -50,7 +52,7 @@ const compatibilitySchema = z.object({
 
 export const appKinds = ['sidestore', 'livecontainer-sidestore', 'app'] as const
 
-const appSchema = z.object({
+export const appSchema = z.object({
   id: z.string().regex(/^[a-z0-9-]+$/),
   name: z.string().min(1),
   /** Original bundle identifier (before sideload renaming). */
@@ -72,15 +74,6 @@ export const manifestSchema = z.object({
   version: z.literal(1),
   apps: z.array(appSchema).min(1)
 })
-
-export type Manifest = z.infer<typeof manifestSchema>
-export type CatalogApp = z.infer<typeof appSchema>
-export type Release = z.infer<typeof releaseSchema>
-export type ReleaseLocation = z.infer<typeof locationSchema>
-export type GithubLocation = z.infer<typeof githubLocationSchema>
-export type UrlLocation = z.infer<typeof urlLocationSchema>
-export type Channel = 'stable' | 'nightly'
-export type AppKind = (typeof appKinds)[number]
 
 const compareVersions = (a: string, b: string): number => {
   const pa = a.split('.').map(Number)

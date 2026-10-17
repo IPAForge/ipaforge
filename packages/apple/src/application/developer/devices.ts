@@ -1,11 +1,8 @@
 // Teams and registered devices.
 
 import type { DeveloperContext } from '@apple/application/developer/context.ts'
-import {
-  DeveloperCode,
-  type RegisteredDevice,
-  type Team
-} from '@apple/domain/developer.ts'
+import { DeveloperCode } from '@apple/domain/constants.ts'
+import type { RegisteredDevice, Team } from '@apple/domain/types.ts'
 import { toDevices, toTeams } from '@apple/infrastructure/developer/parse.ts'
 import {
   createDict,

@@ -1,26 +1,28 @@
 // One SRP sign-in against GrandSlam, step by step: `init` (with an anisette resync when Apple asks for one), the
 // password proof, `complete`, then the server proof and the decrypted session data.
 
-import type { AppleDeps } from '@apple/deps.ts'
-import type { AnisetteData } from '@apple/domain/anisette.ts'
+import type {
+  Authenticated,
+  Credentials,
+  Resync
+} from '@apple/application/types.ts'
 import { assertGsaOk, needsAnisetteResync } from '@apple/domain/gsa-status.ts'
-import {
-  type AppleSession,
-  type SecondFactorRequest,
-  secondFactorFromStatus
-} from '@apple/domain/session.ts'
+import { secondFactorFromStatus } from '@apple/domain/session.ts'
+import type { AnisetteData, AppleSession } from '@apple/domain/types.ts'
 import { decryptSpd } from '@apple/infrastructure/crypto/session.ts'
 import {
   bigintFromBytes,
   bytesFromBigint,
-  type ClientEphemeral,
-  type ClientProof,
   clientEphemeral,
   clientProof,
-  type PasswordProtocol,
   passwordKey,
   serverProof
 } from '@apple/infrastructure/crypto/srp.ts'
+import type {
+  ClientEphemeral,
+  ClientProof,
+  PasswordProtocol
+} from '@apple/infrastructure/crypto/types.ts'
 import {
   clientProvidedData,
   type GsaResponse,
@@ -28,6 +30,7 @@ import {
 } from '@apple/infrastructure/gsa/client.ts'
 import { parseApplePlist } from '@apple/infrastructure/plist-diagnostics.ts'
 import { plistNumber } from '@apple/infrastructure/plist-fields.ts'
+import type { AppleDeps } from '@apple/types.ts'
 import {
   compact,
   createDict,
@@ -41,22 +44,6 @@ import {
 } from '@loadstar/kernel'
 
 const PROTOCOLS: readonly PasswordProtocol[] = ['s2k', 's2k_fo']
-
-export type Resync = (
-  data: AnisetteData,
-  resyncData: string
-) => Promise<AnisetteData>
-
-export type Credentials = {
-  readonly appleId: string
-  readonly password: string
-  readonly signal?: AbortSignal
-}
-
-export type Authenticated = {
-  readonly session: AppleSession
-  readonly secondFactor?: SecondFactorRequest
-}
 
 const protocolError = (message: string): LoadstarError =>
   new LoadstarError(ErrorCode.AppleProtocolError, { message })

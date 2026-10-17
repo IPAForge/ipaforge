@@ -3,8 +3,7 @@
 
 import { z } from 'zod'
 
-import type { AnisetteState } from '@apple/domain/anisette.ts'
-import type { AnisetteServer } from '@apple/domain/config.ts'
+import type { AnisetteServer, AnisetteState } from '@apple/domain/types.ts'
 import {
   compact,
   fromBase64,
