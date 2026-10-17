@@ -58,16 +58,23 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
     - locale-aware dates, numbers and lists (`Intl.DateTimeFormat`, `NumberFormat`, `ListFormat`, `RelativeTimeFormat`);
     - a pseudo-locale (accented and about 40 % longer) for catching truncation and untranslated strings, plus screenshot tests in German (long), Arabic (RTL) and Japanese (CJK)
   - to check in the 2FA prompts: the code field accepts the length Apple asks for, including 4-digit codes for older (`hsa`) accounts
+  - devices coming and going (a refresh, a cable wiggle) never open a full-screen error: the picker and the Devices page say it quietly
+  - recovery: a dedicated error for an app that doesn't support the device (installation_proxy `DeviceNotSupportedByThinning`), with its own screen instead of the generic install failure
+  - logs: a keyboard shortcut to open them (Ctrl+L, ⌘L on macOS)
+  - to check: the sign-in dialog with password managers filling the form (e.g. Bitwarden)
 - [ ] **7. Onboarding**: a first-run guided wizard with platform checks (usbmuxd / Apple Mobile Device driver, with copyable fixes per OS), network preflight (Apple, anisette, clock skew), connecting and trusting the device, Developer Mode, Apple ID sign-in with 2FA, team choice, and choosing what to install. It can be resumed and re-run from settings
 - [ ] **8. Install and preload experience**: one-click SideStore (stable/nightly), a preload picker (local IPAs, URLs, catalog apps), source deep links and a QR code for SideStore, a live pipeline view, dedicated recovery screens for every `ErrorCode` with "copy diagnostics", an on-device checklist per iOS version, a "Repair SideStore" wizard, and one-click switching to another Apple ID when one is banned
   - to check with a real LiveContainer build: its LiveProcess extension gets the main app's `keychain-access-groups`
   - to measure: a larger AFC write chunk (`afcWriteChunkBytes`, 64 KiB today; 1 MiB is reported faster) for big IPAs
   - later: AltStore as an install target (`ALTDeviceId` in `Info.plist` and an encrypted `ALTPairingFile.dat` at the bundle root)
+  - when Apple reports a negative number of App IDs left, explain it and offer to try anyway instead of stopping
 - [ ] **9. Desktop app**: Electron 44 shell with Node adapters, a hardened preload (`contextIsolation`, typed RPC only), electron-builder packages (Windows NSIS, macOS DMG signed and notarized, Linux AppImage, deb and rpm), and auto-update
   - status: a minimal shell exists early (one window with `contextIsolation`, `sandbox`, a strict CSP and blocked navigation, rendering `@loadstar/ui`), and CI builds it with electron-vite on Linux, Windows and macOS. Packaging, signing and notarisation, auto-update, the Engine wiring and the hardened RPC preload remain
   - trust certificates installed in the OS (company proxies, self-hosted anisette servers with their own CA) for anisette and Apple requests, alongside Node's bundled roots and Apple's (`tls.getCACertificates('system')`)
 - [ ] **10. Management tools**: certificate and app-ID management, pairing files per app (place, export, version), certificate and account import/export (`.p12`), and developer portal tools
   - later: signing in with a security key (today detected and explained, not completed)
+  - export signed IPAs (save the signed `.ipa` instead of installing it)
+  - delete a pairing file from an app
 - [ ] **11. Wireless and remote pairing**: Wi-Fi device discovery and install, the iOS 17+ remote-pairing (RP) file for SideStore, and handling for a device that is visible over both USB and network
   - priority, iOS 17.4 and later: create the remote pairing (RPPairing) over USB through the lockdown service `com.apple.dt.remotepairingdeviced.lockdown` (JSON messages framed with the `RPPairing` magic and a 2-byte big-endian length, no tunnel), with a new Ed25519 identity and one host label per device, kept per device; skipped below iOS 17.4
   - give SideStore one plist that merges the lockdown pair record with the RPPairing keys, written as `ALTPairingFile.mobiledevicepairing`, `PairingFile_RemoteRP.plist` and `PairingFile_Lockdown.plist` in `Documents/`; read the lockdown record fresh from usbmuxd each time, since it expires

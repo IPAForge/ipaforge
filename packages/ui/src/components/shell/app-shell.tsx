@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import { Sidebar } from '@ui/components/shell/sidebar.tsx'
 import { SkipLink } from '@ui/components/shell/skip-link.tsx'
 import { TopBar } from '@ui/components/shell/top-bar.tsx'
+import { DeviceNotes } from '@ui/features/devices/device-notes.tsx'
 
 const MAIN_CONTENT_ID = 'main-content'
 
@@ -21,5 +22,6 @@ export const AppShell = ({ children }: { children: ReactNode }) => (
         {children}
       </main>
     </div>
+    <DeviceNotes />
   </div>
 )

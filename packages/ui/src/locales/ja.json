@@ -10,12 +10,13 @@
     "device": "デバイス",
     "noDevice": "なし",
     "deviceMenu": "デバイス",
-    "devicesFound": "{count, plural, =0 {まだデバイスがありません} other {#台のデバイスが接続されています}}",
     "account": "Apple ID",
     "notSignedIn": "サインインしていません",
     "accountMenu": "Apple ID",
     "addAppleId": "Apple IDを追加…",
-    "noAccounts": "Apple IDはまだありません。"
+    "noAccounts": "Apple IDはまだありません。",
+    "noDevicesHint": "iPhone または iPad をケーブルで接続し、ロックを解除してください。",
+    "openDevices": "デバイスを開く"
   },
   "nav": {
     "group": {
@@ -56,6 +57,11 @@
     "signInNeeded": {
       "title": "Apple IDにもう一度サインインする必要があります",
       "body": "{appleId}の保存されたセッションの有効期限が切れました。インストールはできます。その段階でLoadstarがパスワードを尋ねます。"
+    },
+    "blocked": {
+      "title": "Apple が {device} で {appleId} をブロックしました",
+      "body": "この Apple ID で署名した App はこのデバイスで開けません。別の Apple ID を使用してください。",
+      "use": "{appleId} を使用"
     }
   },
   "pairing": {
@@ -471,6 +477,77 @@
       "connecting": "Engineに接続しています…",
       "connected": "{count, plural, =0 {Engine接続済み · デバイスなし} other {Engine接続済み · デバイス#台}}",
       "failed": "Engineに接続できません:{reason}"
+    },
+    "description": "このコンピュータに接続されている iPhone と iPad。使用中のデバイスは上部バーに表示されます。",
+    "unknownDevice": "不明なデバイス",
+    "line": "{model} · iOS {ios} · {link}",
+    "model": "{model} · iOS {ios}",
+    "withState": "{line} · {state}",
+    "link": {
+      "usb": "USB",
+      "network": "Wi-Fi",
+      "both": "USB と Wi-Fi"
+    },
+    "state": {
+      "checking": "確認中…",
+      "ready": "準備完了",
+      "locked": "ロック中",
+      "developerModeOff": "デベロッパモードがオフ",
+      "notTrusted": "信頼されていません",
+      "unavailable": "デバイスを読み取れません",
+      "notConnected": "未接続"
+    },
+    "inUse": "使用中",
+    "use": "このデバイスを使用",
+    "checkAgain": "再確認",
+    "facts": {
+      "model": "モデル",
+      "ios": "iOS",
+      "connection": "接続",
+      "udid": "UDID"
+    },
+    "empty": {
+      "title": "デバイスがまだありません",
+      "body": "iPhone または iPad をケーブルで接続し、ロックを解除してください。Windows では Apple Devices または iTunes が必要です。"
+    },
+    "notice": {
+      "none": {
+        "title": "デバイスが接続されていません",
+        "body": "iPhone または iPad をケーブルで接続し、ロックを解除してください。自動的にここに表示されます。"
+      },
+      "notConnected": {
+        "title": "{name} は接続されていません",
+        "body": "もう一度接続すると自動的に使用されます。または上部バーで別のデバイスを選んでください。"
+      },
+      "notTrusted": {
+        "title": "{name} でこのコンピュータを信頼してください",
+        "body": "ロックを解除し、「信頼」をタップしてパスコードを入力してください。",
+        "action": "もう一度確認",
+        "waiting": "「信頼」を待っています…",
+        "titleUnnamed": "デバイスでこのコンピュータを信頼してください"
+      },
+      "locked": {
+        "title": "{name} のロックを解除してください",
+        "body": "App のインストール中はロックを解除したままにしてください。"
+      },
+      "developerModeOff": {
+        "title": "{name} でデベロッパモードをオンにしてください",
+        "step1": "設定 → プライバシーとセキュリティ → デベロッパモード",
+        "step2": "オンにして、求められたら再起動します",
+        "step3": "再起動後、「オンにする」をタップしてパスコードを入力します"
+      },
+      "unavailable": {
+        "title": "{name} を読み取れません",
+        "body": "一度取り外してから接続し直してください。繰り返す場合はデバイスを再起動してください。",
+        "bodyWifi": "Wi-Fi で接続されています。スリープを解除してロックを外し、このコンピュータと同じネットワークに置いてから再確認してください。ケーブルの方が確実です。",
+        "reason": "理由: {reason}",
+        "titleUnnamed": "デバイスを読み取れません"
+      }
+    },
+    "notes": {
+      "connected": "{name} が接続されました",
+      "disconnected": "{name} が切断されました",
+      "aDevice": "デバイス"
     }
   },
   "prompts": {

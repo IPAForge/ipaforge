@@ -1,16 +1,17 @@
-// What the user picked in the top bar, kept through PreferencesStore so it survives a restart. One entry per kind
-// of choice: today the Apple ID; the device joins as another entry in `selectionKeys`.
+// What the user picked in the top bar, kept through PreferencesStore so it survives a restart: the Apple ID and the
+// device in use.
 import type { Logger } from '@loadstar/kernel'
 import type { PreferencesStore } from '@ui/services/preferences/preferences-store.ts'
 
 /** The preference each choice is kept under. */
 export const selectionKeys = {
-  account: 'selection.account'
+  account: 'selection.account',
+  device: 'selection.device'
 } as const
 
 export type SelectionKind = keyof typeof selectionKeys
 
-/** The id picked for each kind (an account id); missing until something is picked. */
+/** The id picked for each kind (an account id, a device's UDID); missing until something is picked. */
 export type Selection = Readonly<Partial<Record<SelectionKind, string>>>
 
 export type SelectionStore = {

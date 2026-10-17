@@ -10,12 +10,13 @@
     "device": "الجهاز",
     "noDevice": "لا يوجد",
     "deviceMenu": "الأجهزة",
-    "devicesFound": "{count, plural, =0 {لا توجد أجهزة بعد} zero {لا توجد أجهزة متصلة} one {جهاز واحد متصل} two {جهازان متصلان} few {# أجهزة متصلة} many {# جهازًا متصلًا} other {# جهاز متصل}}",
     "account": "معرّف Apple",
     "notSignedIn": "لم يتم تسجيل الدخول",
     "accountMenu": "معرّفات Apple",
     "addAppleId": "إضافة Apple ID…",
-    "noAccounts": "لا توجد معرّفات Apple بعد."
+    "noAccounts": "لا توجد معرّفات Apple بعد.",
+    "noDevicesHint": "وصّل iPhone أو iPad بكابل وافتح قفله.",
+    "openDevices": "فتح الأجهزة"
   },
   "nav": {
     "group": {
@@ -56,6 +57,11 @@
     "signInNeeded": {
       "title": "يحتاج Apple ID الخاص بك إلى تسجيل الدخول مجددًا",
       "body": "انتهت الجلسة المحفوظة لـ {appleId}. لا يزال بإمكانك التثبيت: سيطلب Loadstar كلمة السر عند الوصول إلى تلك الخطوة."
+    },
+    "blocked": {
+      "title": "حظرت Apple الحساب {appleId} على {device}",
+      "body": "لن تفتح التطبيقات الموقّعة بمعرّف Apple هذا على هذا الجهاز. استخدم معرّف Apple آخر.",
+      "use": "استخدام {appleId}"
     }
   },
   "pairing": {
@@ -471,6 +477,77 @@
       "connecting": "جارٍ الاتصال بالمحرك…",
       "connected": "{count, plural, =0 {المحرك متصل · لا توجد أجهزة} zero {المحرك متصل · لا توجد أجهزة} one {المحرك متصل · جهاز واحد} two {المحرك متصل · جهازان} few {المحرك متصل · # أجهزة} many {المحرك متصل · # جهازًا} other {المحرك متصل · # جهاز}}",
       "failed": "تعذّر الوصول إلى المحرك: {reason}"
+    },
+    "description": "أجهزة iPhone وiPad المتصلة بهذا الكمبيوتر. يظهر الجهاز المستخدم في الشريط العلوي.",
+    "unknownDevice": "جهاز غير معروف",
+    "line": "{model} · iOS {ios} · {link}",
+    "model": "{model} · iOS {ios}",
+    "withState": "{line} · {state}",
+    "link": {
+      "usb": "USB",
+      "network": "Wi-Fi",
+      "both": "USB وWi-Fi"
+    },
+    "state": {
+      "checking": "جارٍ التحقق…",
+      "ready": "جاهز",
+      "locked": "مقفل",
+      "developerModeOff": "وضع المطوّر متوقف",
+      "notTrusted": "غير موثوق",
+      "unavailable": "تتعذر قراءة الجهاز",
+      "notConnected": "غير متصل"
+    },
+    "inUse": "قيد الاستخدام",
+    "use": "استخدام هذا الجهاز",
+    "checkAgain": "التحقق مجددًا",
+    "facts": {
+      "model": "الطراز",
+      "ios": "iOS",
+      "connection": "الاتصال",
+      "udid": "UDID"
+    },
+    "empty": {
+      "title": "لا توجد أجهزة بعد",
+      "body": "وصّل iPhone أو iPad بكابل وافتح قفله. على Windows يجب تثبيت Apple Devices أو iTunes."
+    },
+    "notice": {
+      "none": {
+        "title": "لا يوجد جهاز متصل",
+        "body": "وصّل iPhone أو iPad بكابل وافتح قفله. سيظهر هنا تلقائيًا."
+      },
+      "notConnected": {
+        "title": "{name} غير متصل",
+        "body": "وصّله مجددًا وسيُستخدم تلقائيًا، أو اختر جهازًا آخر من الشريط العلوي."
+      },
+      "notTrusted": {
+        "title": "ثق بهذا الكمبيوتر على {name}",
+        "body": "افتح قفله، واضغط «ثقة» وأدخل رمز الدخول.",
+        "action": "اطلب مجددًا",
+        "waiting": "بانتظار «ثقة»…",
+        "titleUnnamed": "ثق بهذا الكمبيوتر على الجهاز"
+      },
+      "locked": {
+        "title": "افتح قفل {name}",
+        "body": "يجب أن يبقى مفتوح القفل أثناء تثبيت التطبيقات."
+      },
+      "developerModeOff": {
+        "title": "شغّل وضع المطوّر على {name}",
+        "step1": "الإعدادات ← الخصوصية والأمن ← وضع المطوّر",
+        "step2": "شغّله وأعد التشغيل عند الطلب",
+        "step3": "بعد إعادة التشغيل اضغط «تشغيل» وأدخل رمز الدخول"
+      },
+      "unavailable": {
+        "title": "تتعذر قراءة {name}",
+        "body": "افصله ثم وصّله مجددًا. إذا تكرر ذلك، أعد تشغيل الجهاز.",
+        "bodyWifi": "إنه متصل عبر Wi-Fi: أيقظه وافتح قفله وأبقه على الشبكة نفسها مع هذا الكمبيوتر، ثم تحقق مجددًا. الكابل أكثر موثوقية.",
+        "reason": "السبب: {reason}",
+        "titleUnnamed": "تتعذر قراءة الجهاز"
+      }
+    },
+    "notes": {
+      "connected": "تم توصيل {name}",
+      "disconnected": "تم فصل {name}",
+      "aDevice": "جهاز"
     }
   },
   "prompts": {

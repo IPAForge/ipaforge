@@ -40,6 +40,11 @@ export type EngineQueries = {
   listDevices(): Promise<UsbmuxDevice[]>
   /** Lock state, Developer Mode and iOS version of a paired device. */
   deviceStatus(udid: string): Promise<DeviceCheck>
+  /**
+   * Pairs with the device when it doesn't trust this computer yet (the Trust prompt shows on the device and this
+   * waits for the tap), then reads its status like `deviceStatus`.
+   */
+  pairDevice(udid: string): Promise<DeviceCheck>
   listAccounts(): Promise<SavedAccount[]>
   listTeams(accountId: string): Promise<Team[]>
   catalogApps(): Promise<readonly CatalogApp[]>
@@ -69,9 +74,10 @@ const withTeam = async <T>(
 
 const deviceStatus = async (
   deps: InstallerDeps,
-  udid: string
+  udid: string,
+  autoPair: boolean
 ): Promise<DeviceCheck> => {
-  const handle = await deps.devices.open(udid, { autoPair: false })
+  const handle = await deps.devices.open(udid, { autoPair })
   try {
     return await handle.check()
   } finally {
@@ -81,7 +87,8 @@ const deviceStatus = async (
 
 export const createEngineQueries = (deps: InstallerDeps): EngineQueries => ({
   listDevices: () => deps.devices.listDevices(),
-  deviceStatus: (udid) => deviceStatus(deps, udid),
+  deviceStatus: (udid) => deviceStatus(deps, udid, false),
+  pairDevice: (udid) => deviceStatus(deps, udid, true),
   listAccounts: () => deps.apple.accounts.list(),
   listTeams: async (accountId) =>
     (await createFlowRuntime(deps).developer(accountId)).teams(),

@@ -4,7 +4,7 @@ import { createLogger, type LogRecord } from '@loadstar/kernel'
 import { createTestI18n } from '@ui/__tests__/test-i18n.ts'
 import { createI18n } from '@ui/i18n/setup/create-i18n.ts'
 
-const DEVICES = 'topBar.devicesFound'
+const DEVICES = 'devices.engine.connected'
 
 const withRecords = () => {
   const records: LogRecord[] = []
@@ -26,9 +26,9 @@ describe('createI18n', () => {
   it("formats ICU plurals with each language's plural rules", async () => {
     const en = await createTestI18n('en')
     expect([0, 1, 5].map((count) => en.t(DEVICES, { count }))).toEqual([
-      'No devices yet',
-      '1 device connected',
-      '5 devices connected'
+      'Engine connected · no devices',
+      'Engine connected · 1 device',
+      'Engine connected · 5 devices'
     ])
     const ru = await createTestI18n('ru')
     const [one, few, many] = [1, 3, 5].map((count) => ru.t(DEVICES, { count }))

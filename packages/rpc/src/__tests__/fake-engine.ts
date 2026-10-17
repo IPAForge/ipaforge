@@ -125,6 +125,7 @@ export type FakeControl = {
   readonly appInputs: InstallAppsInput[]
   readonly signIns: unknown[]
   readonly signedOut: string[]
+  readonly paired: string[]
   /** Device-watch listeners the server holds. */
   readonly watchers: Set<(event: DeviceWatchEvent) => void>
 }
@@ -137,6 +138,7 @@ export const createFakeEngine = () => {
     appInputs: [],
     signIns: [],
     signedOut: [],
+    paired: [],
     watchers: new Set()
   }
   const engine = {
@@ -148,6 +150,10 @@ export const createFakeEngine = () => {
           message: 'lockdown went away'
         })
       })
+    },
+    pairDevice: async (udid: string) => {
+      control.paired.push(udid)
+      return { info: { udid, name: 'iPhone' }, locked: false }
     },
     listAccounts: async () => [{ id: 'acct', appleId: 'someone@example.com' }],
     listTeams: async () => TEAMS,

@@ -13,12 +13,12 @@ import {
 } from '@loadstar/rpc'
 import type { Account } from '@ui/services/engine/engine-types.ts'
 import {
-  FAKE_IPHONE,
   fakeCatalogApps,
   fakeCertificates,
-  fakeIphoneCheck,
-  fakePairingApps
+  fakePairingApps,
+  showcaseDevices
 } from '@ui/services/engine/fake/fake-data.ts'
+import { createFakeDeviceStates } from '@ui/services/engine/fake/fake-device-states.ts'
 import {
   createFakeDeviceFeed,
   type FakeDeviceFeed
@@ -65,12 +65,6 @@ const teamOf = (world: FakeWorld, { accountId, teamId }: TeamQuery) => {
   if (!team)
     throw new LoadstarError(ErrorCode.TeamRequired, { data: { accountId } })
   return team
-}
-
-const deviceStatus = async (udid: string) => {
-  if (udid !== FAKE_IPHONE)
-    throw new LoadstarError(ErrorCode.DeviceNotPaired, { data: { udid } })
-  return fakeIphoneCheck
 }
 
 const installRun = (
@@ -168,15 +162,20 @@ export const createFakeEngine = ({
   appleDelayMs = DEFAULT_APPLE_DELAY_MS,
   appleAnswer = () =>
     new Promise<void>((resolve) => setTimeout(resolve, appleDelayMs)),
-  devices = createFakeDeviceFeed(scenario === 'hot-plug')
+  devices = createFakeDeviceFeed(
+    scenario === 'hot-plug',
+    scenario === 'devices' ? showcaseDevices : undefined
+  )
 }: FakeEngineOptions = {}): Engine => {
   const world = createFakeWorld(scenario, delayMs, appleAnswer)
+  const deviceStates = createFakeDeviceStates(scenario)
 
   return {
     listDevices: async () => devices.list(),
     watchDevices: (listener, options) =>
       devices.watch(listener, options?.signal),
-    deviceStatus,
+    deviceStatus: deviceStates.status,
+    pairDevice: deviceStates.pair,
     listAccounts: async () => world.accounts,
     signOut: async (accountId) => forgetAccount(world, accountId),
     listTeams: async (accountId) => {

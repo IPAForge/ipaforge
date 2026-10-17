@@ -40,12 +40,10 @@ const itemFor = (menu: HTMLElement, appleId: string) =>
     .find((item) => item.textContent?.includes(appleId))
 
 describe('TopBar', () => {
-  it('shows the app name and the Device placeholder', async () => {
+  it('shows the app name, and the device in use: the first one on USB', async () => {
     await renderApp('/install')
     expect(within(await findBanner()).getByText(t('app.name'))).toBeDefined()
-    expect(
-      await findPicker('topBar.device', t('topBar.noDevice'))
-    ).toBeDefined()
+    expect(await findPicker('topBar.device', 'iPhone')).toBeDefined()
   })
 
   it('lists the saved Apple IDs with their teams, the one in use checked', async () => {

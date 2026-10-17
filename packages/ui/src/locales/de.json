@@ -10,12 +10,13 @@
     "device": "Gerät",
     "noDevice": "Keins",
     "deviceMenu": "Geräte",
-    "devicesFound": "{count, plural, =0 {Noch keine Geräte} one {# Gerät verbunden} other {# Geräte verbunden}}",
     "account": "Apple-ID",
     "notSignedIn": "Nicht angemeldet",
     "accountMenu": "Apple-IDs",
     "addAppleId": "Apple-ID hinzufügen …",
-    "noAccounts": "Noch keine Apple-IDs."
+    "noAccounts": "Noch keine Apple-IDs.",
+    "noDevicesHint": "Verbinde ein iPhone oder iPad per Kabel und entsperre es.",
+    "openDevices": "Geräte öffnen"
   },
   "nav": {
     "group": {
@@ -56,6 +57,11 @@
     "signInNeeded": {
       "title": "Deine Apple-ID braucht eine erneute Anmeldung",
       "body": "Die gespeicherte Sitzung für {appleId} ist abgelaufen. Du kannst trotzdem installieren: Loadstar fragt dann nach dem Passwort."
+    },
+    "blocked": {
+      "title": "Apple hat {appleId} auf {device} gesperrt",
+      "body": "Mit dieser Apple-ID signierte Apps öffnen sich auf diesem Gerät nicht. Verwende eine andere Apple-ID.",
+      "use": "{appleId} verwenden"
     }
   },
   "pairing": {
@@ -471,6 +477,77 @@
       "connecting": "Verbindung zur Engine wird hergestellt …",
       "connected": "{count, plural, =0 {Engine verbunden · keine Geräte} one {Engine verbunden · # Gerät} other {Engine verbunden · # Geräte}}",
       "failed": "Die Engine ist nicht erreichbar: {reason}"
+    },
+    "description": "iPhones und iPads, die mit diesem Computer verbunden sind. Das verwendete wird in der oberen Leiste angezeigt.",
+    "unknownDevice": "Unbekanntes Gerät",
+    "line": "{model} · iOS {ios} · {link}",
+    "model": "{model} · iOS {ios}",
+    "withState": "{line} · {state}",
+    "link": {
+      "usb": "USB",
+      "network": "WLAN",
+      "both": "USB und WLAN"
+    },
+    "state": {
+      "checking": "Wird geprüft…",
+      "ready": "Bereit",
+      "locked": "Gesperrt",
+      "developerModeOff": "Entwicklermodus aus",
+      "notTrusted": "Nicht vertraut",
+      "unavailable": "Gerät nicht lesbar",
+      "notConnected": "Nicht verbunden"
+    },
+    "inUse": "In Verwendung",
+    "use": "Dieses Gerät verwenden",
+    "checkAgain": "Erneut prüfen",
+    "facts": {
+      "model": "Modell",
+      "ios": "iOS",
+      "connection": "Verbindung",
+      "udid": "UDID"
+    },
+    "empty": {
+      "title": "Noch keine Geräte",
+      "body": "Verbinde ein iPhone oder iPad per Kabel und entsperre es. Unter Windows müssen Apple-Geräte oder iTunes installiert sein."
+    },
+    "notice": {
+      "none": {
+        "title": "Kein Gerät verbunden",
+        "body": "Verbinde ein iPhone oder iPad per Kabel und entsperre es. Es erscheint hier von selbst."
+      },
+      "notConnected": {
+        "title": "{name} ist nicht verbunden",
+        "body": "Schließe es wieder an, dann wird es automatisch verwendet, oder wähle oben ein anderes Gerät."
+      },
+      "notTrusted": {
+        "title": "Vertraue diesem Computer auf {name}",
+        "body": "Entsperre es, tippe auf „Vertrauen“ und gib den Code ein.",
+        "action": "Erneut fragen",
+        "waiting": "Warte auf „Vertrauen“…",
+        "titleUnnamed": "Diesem Computer auf dem Gerät vertrauen"
+      },
+      "locked": {
+        "title": "{name} entsperren",
+        "body": "Es muss entsperrt bleiben, während Apps installiert werden."
+      },
+      "developerModeOff": {
+        "title": "Entwicklermodus auf {name} aktivieren",
+        "step1": "Einstellungen → Datenschutz & Sicherheit → Entwicklermodus",
+        "step2": "Aktivieren und bei Aufforderung neu starten",
+        "step3": "Nach dem Neustart auf „Aktivieren“ tippen und den Code eingeben"
+      },
+      "unavailable": {
+        "title": "{name} kann nicht gelesen werden",
+        "body": "Trenne es und schließe es wieder an. Wenn es weiter passiert, starte das Gerät neu.",
+        "bodyWifi": "Es ist über WLAN verbunden: Wecke und entsperre es und lass es im selben Netzwerk wie diesen Computer, dann erneut prüfen. Ein Kabel ist zuverlässiger.",
+        "reason": "Grund: {reason}",
+        "titleUnnamed": "Das Gerät kann nicht gelesen werden"
+      }
+    },
+    "notes": {
+      "connected": "{name} verbunden",
+      "disconnected": "{name} getrennt",
+      "aDevice": "Ein Gerät"
     }
   },
   "prompts": {

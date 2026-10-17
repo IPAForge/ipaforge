@@ -10,12 +10,13 @@
     "device": "Device",
     "noDevice": "None",
     "deviceMenu": "Devices",
-    "devicesFound": "{count, plural, =0 {No devices yet} one {# device connected} other {# devices connected}}",
     "account": "Apple ID",
     "notSignedIn": "Not signed in",
     "accountMenu": "Apple IDs",
     "addAppleId": "Add Apple ID…",
-    "noAccounts": "No Apple IDs yet."
+    "noAccounts": "No Apple IDs yet.",
+    "noDevicesHint": "Connect an iPhone or iPad with a cable and unlock it.",
+    "openDevices": "Open Devices"
   },
   "nav": {
     "group": {
@@ -56,6 +57,11 @@
     "signInNeeded": {
       "title": "Your Apple ID needs you to sign in again",
       "body": "The saved session for {appleId} has expired. You can still install: Loadstar asks for the password when it gets there."
+    },
+    "blocked": {
+      "title": "Apple blocked {appleId} on {device}",
+      "body": "Apps signed with this Apple ID won't open on this device. Use another Apple ID.",
+      "use": "Use {appleId}"
     }
   },
   "pairing": {
@@ -471,6 +477,77 @@
       "connecting": "Connecting to the Engine…",
       "connected": "{count, plural, =0 {Engine connected · no devices} one {Engine connected · # device} other {Engine connected · # devices}}",
       "failed": "Can't reach the Engine: {reason}"
+    },
+    "description": "iPhones and iPads connected to this computer. The one in use is shown in the top bar.",
+    "unknownDevice": "Unknown device",
+    "line": "{model} · iOS {ios} · {link}",
+    "model": "{model} · iOS {ios}",
+    "withState": "{line} · {state}",
+    "link": {
+      "usb": "USB",
+      "network": "Wi-Fi",
+      "both": "USB and Wi-Fi"
+    },
+    "state": {
+      "checking": "Checking…",
+      "ready": "Ready",
+      "locked": "Locked",
+      "developerModeOff": "Developer Mode off",
+      "notTrusted": "Not trusted",
+      "unavailable": "Can't read the device",
+      "notConnected": "Not connected"
+    },
+    "inUse": "In use",
+    "use": "Use this device",
+    "checkAgain": "Check again",
+    "facts": {
+      "model": "Model",
+      "ios": "iOS",
+      "connection": "Connection",
+      "udid": "UDID"
+    },
+    "empty": {
+      "title": "No devices yet",
+      "body": "Connect an iPhone or iPad with a cable and unlock it. On Windows, Apple Devices or iTunes must be installed."
+    },
+    "notice": {
+      "none": {
+        "title": "No device connected",
+        "body": "Connect an iPhone or iPad with a cable and unlock it. It shows up here by itself."
+      },
+      "notConnected": {
+        "title": "{name} isn't connected",
+        "body": "Plug it in again and it's used automatically, or pick another device in the top bar."
+      },
+      "notTrusted": {
+        "title": "Trust this computer on {name}",
+        "body": "Unlock it, tap Trust and enter the passcode.",
+        "action": "Ask again",
+        "waiting": "Waiting for Trust…",
+        "titleUnnamed": "Trust this computer on the device"
+      },
+      "locked": {
+        "title": "Unlock {name}",
+        "body": "It needs to stay unlocked while apps are installed."
+      },
+      "developerModeOff": {
+        "title": "Turn on Developer Mode on {name}",
+        "step1": "Settings → Privacy & Security → Developer Mode",
+        "step2": "Turn it on and restart when asked",
+        "step3": "After the restart, tap Turn On and enter the passcode"
+      },
+      "unavailable": {
+        "title": "Can't read {name}",
+        "body": "Unplug it and plug it in again. If it keeps happening, restart the device.",
+        "bodyWifi": "It's connected over Wi-Fi: wake it, unlock it and keep it on the same network as this computer, then Check again. A cable is more reliable.",
+        "reason": "Reason: {reason}",
+        "titleUnnamed": "Can't read the device"
+      }
+    },
+    "notes": {
+      "connected": "{name} connected",
+      "disconnected": "{name} disconnected",
+      "aDevice": "A device"
     }
   },
   "prompts": {

@@ -17,8 +17,11 @@ export type FakeDeviceFeed = {
 /** How often the `hot-plug` scenario plugs the iPad in or out. */
 const HOT_PLUG_INTERVAL_MS = 5000
 
-export const createFakeDeviceFeed = (hotPlug: boolean): FakeDeviceFeed => {
-  let devices = [...fakeDevices]
+export const createFakeDeviceFeed = (
+  hotPlug: boolean,
+  initial: readonly Device[] = fakeDevices
+): FakeDeviceFeed => {
+  let devices = [...initial]
   const listeners = new Set<Listener>()
   let timer: ReturnType<typeof setInterval> | undefined
 
@@ -34,10 +37,11 @@ export const createFakeDeviceFeed = (hotPlug: boolean): FakeDeviceFeed => {
   }
 
   const unplug = (udid: string) => {
-    const device = devices.find((known) => known.udid === udid)
-    if (!device) return
-    devices = devices.filter((known) => known !== device)
-    emit({ type: 'detached', deviceId: device.deviceId, udid })
+    const gone = devices.filter((known) => known.udid === udid)
+    if (gone.length === 0) return
+    devices = devices.filter((known) => known.udid !== udid)
+    for (const device of gone)
+      emit({ type: 'detached', deviceId: device.deviceId, udid })
   }
 
   const toggleIpad = () => {

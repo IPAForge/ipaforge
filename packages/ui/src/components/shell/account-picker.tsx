@@ -74,7 +74,11 @@ export const AccountPicker = () => {
         label={t('topBar.account')}
         value={active?.appleId ?? t('topBar.notSignedIn')}
         tone={view.tone}
-        status={view.state === 'signInNeeded' ? view.stateText : undefined}
+        status={
+          view.state === 'signInNeeded' || view.state === 'blocked'
+            ? view.stateText
+            : undefined
+        }
         menuLabel={t('topBar.accountMenu')}
         onAction={onAction}
       >

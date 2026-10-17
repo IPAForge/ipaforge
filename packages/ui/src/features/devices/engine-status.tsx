@@ -19,7 +19,7 @@ const statusText = (t: TFunction, devices: DevicesQuery): string => {
   return t('devices.engine.connecting')
 }
 
-/** Whether the Engine answers, and how many devices it sees: the Devices page's first line until its list lands. */
+/** Whether the Engine answers, and how many devices it sees: the Devices page's first line. */
 export const EngineStatus = () => {
   const { t } = useTranslation()
   const devices = useDevices()

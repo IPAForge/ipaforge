@@ -28,25 +28,26 @@ export type FakeWorld = {
   readonly savedPasswords: Set<string>
 }
 
+/** `studio@` as Apple blocked it on the fake iPhone. */
+const bannedOnIphone = (account: Account): Account =>
+  account.id === 'studio@example.com'
+    ? {
+        ...account,
+        health: { ...account.health, bannedOnDevices: [FAKE_IPHONE] }
+      }
+    : account
+
 /**
  * The saved Apple IDs: one with a single team and one with two (`studio@`). The `accounts` scenario adds one
- * whose session expired and has Apple block `studio@` on the fake iPhone; `no-accounts` starts with none.
+ * whose session expired and has Apple block `studio@` on the fake iPhone (`devices` blocks it too);
+ * `no-accounts` starts with none.
  */
 const accountsFor = (scenario: FakeScenarioId): Account[] => {
   if (scenario === 'no-accounts') return []
   const accounts = fakeAccounts()
+  if (scenario === 'devices') return accounts.map(bannedOnIphone)
   if (scenario !== 'accounts') return accounts
-  return [
-    ...accounts.map((account) =>
-      account.id === 'studio@example.com'
-        ? {
-            ...account,
-            health: { ...account.health, bannedOnDevices: [FAKE_IPHONE] }
-          }
-        : account
-    ),
-    EXPIRED_ACCOUNT
-  ]
+  return [...accounts.map(bannedOnIphone), EXPIRED_ACCOUNT]
 }
 
 /** Sign-out: the account and its session are forgotten, like the Engine's account store does. */
