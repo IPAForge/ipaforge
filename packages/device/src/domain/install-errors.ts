@@ -1,22 +1,8 @@
 // Classifies installation_proxy failures. installd reports a symbolic `Error` plus a description that often
 // carries an `0xe800xxxx` code; these decide which recovery the user is shown.
+
+import { INSTALLD_CODE_ERRORS } from '@device/domain/constants.ts'
 import { compact, ErrorCode } from '@loadstar/kernel'
-
-/** installd/MobileInstallation codes worth a dedicated recovery. */
-export const InstalldCode = {
-  /** A valid provisioning profile for this executable was not found (or the device registration is pending). */
-  ProfileNotFound: '0xe8008015',
-  /** The identity used to sign the executable is no longer valid (certificate revoked, team blocked, clock skew). */
-  IdentityInvalid: '0xe8008018',
-  /** The provisioning profile is banned (Apple blocked this Apple ID's team for sideloading on this device). */
-  ProfileBanned: '0xe8008024'
-} as const
-
-const CODE_TO_ERROR: Readonly<Record<string, ErrorCode>> = {
-  [InstalldCode.ProfileNotFound]: ErrorCode.ProfileNotFound,
-  [InstalldCode.IdentityInvalid]: ErrorCode.SigningIdentityInvalid,
-  [InstalldCode.ProfileBanned]: ErrorCode.ProfileBanned
-}
 
 const FREE_APP_LIMIT =
   /maximum number of installed apps using a free developer profile/i
@@ -61,7 +47,7 @@ export const classifyInstallError = (
     })
   }
   const hex = installdCodeOf(error, description)
-  const mapped = hex ? CODE_TO_ERROR[hex] : undefined
+  const mapped = hex ? INSTALLD_CODE_ERRORS[hex] : undefined
 
   return compact({ code: mapped ?? ErrorCode.InstallFailed, installdCode: hex })
 }

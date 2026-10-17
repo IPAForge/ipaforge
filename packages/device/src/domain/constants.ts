@@ -1,4 +1,5 @@
 // Protocol constants fixed by usbmuxd, lockdownd and the device services. Not configuration.
+import { ErrorCode } from '@loadstar/kernel'
 
 /** usbmux packet header: length, version, message type, tag (all u32 little-endian). */
 export const USBMUX_HEADER_SIZE = 16
@@ -44,3 +45,20 @@ export const PUBLIC_STAGING_DIR = 'PublicStaging'
 
 /** Developer Mode exists from iOS 16. */
 export const DEVELOPER_MODE_MIN_IOS = 16
+
+/** installd/MobileInstallation codes worth a dedicated recovery. */
+export const InstalldCode = {
+  /** A valid provisioning profile for this executable was not found (or the device registration is pending). */
+  ProfileNotFound: '0xe8008015',
+  /** The identity used to sign the executable is no longer valid (certificate revoked, team blocked, clock skew). */
+  IdentityInvalid: '0xe8008018',
+  /** The provisioning profile is banned (Apple blocked this Apple ID's team for sideloading on this device). */
+  ProfileBanned: '0xe8008024'
+} as const
+
+/** installd codes → catalogued error codes. */
+export const INSTALLD_CODE_ERRORS: Readonly<Record<string, ErrorCode>> = {
+  [InstalldCode.ProfileNotFound]: ErrorCode.ProfileNotFound,
+  [InstalldCode.IdentityInvalid]: ErrorCode.SigningIdentityInvalid,
+  [InstalldCode.ProfileBanned]: ErrorCode.ProfileBanned
+}

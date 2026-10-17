@@ -3,11 +3,12 @@
 import { createDesktopEngine } from '@desktop/main/engine.ts'
 import type { InstallProbeArgs } from '@desktop/probes/install/args.ts'
 import { createProbeLogger } from '@desktop/probes/shared/logger.ts'
-import { createPrompt, type Prompt } from '@desktop/probes/shared/prompt.ts'
+import { createPrompt } from '@desktop/probes/shared/prompt.ts'
 import {
   createProbeSecrets,
   PROBE_DATA_DIR
 } from '@desktop/probes/shared/secrets.ts'
+import type { Prompt } from '@desktop/probes/shared/types.ts'
 import { shortUdid } from '@loadstar/device'
 import type { Engine } from '@loadstar/installer'
 

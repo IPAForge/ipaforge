@@ -1,8 +1,5 @@
 // Test-only: an in-memory duplex connection pair.
-import type {
-  Connection,
-  TlsCredentials
-} from '@device/domain/ports/transport.ts'
+import type { Connection, TlsCredentials } from '@device/domain/ports/types.ts'
 
 type Queue = {
   push(chunk: Uint8Array | null): void

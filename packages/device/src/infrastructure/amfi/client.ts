@@ -1,3 +1,4 @@
+import { AmfiAction } from '@device/infrastructure/amfi/constants.ts'
 import type { Link } from '@device/infrastructure/framing/link.ts'
 import {
   type FrameLimits,
@@ -10,11 +11,6 @@ import {
   LoadstarError,
   type Logger
 } from '@loadstar/kernel'
-
-/** AMFI lockdown actions. Loadstar only ever reveals the toggle; enabling stays the user's decision. */
-export const AmfiAction = {
-  RevealDeveloperModeOption: 0
-} as const
 
 /** Makes Settings › Privacy & Security › Developer Mode visible (it is hidden until a developer tool asks). */
 export const revealDeveloperModeOption = async (

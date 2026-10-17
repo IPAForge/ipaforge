@@ -1,4 +1,4 @@
-import type { Connection } from '@device/domain/ports/transport.ts'
+import type { Connection } from '@device/domain/ports/types.ts'
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
 
 /** Exact-length reads over a chunked connection. */

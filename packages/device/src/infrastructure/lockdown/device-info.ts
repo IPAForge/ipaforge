@@ -2,7 +2,7 @@
 
 import { z } from 'zod'
 
-import type { DeviceInfo } from '@device/domain/device.ts'
+import type { DeviceInfo } from '@device/domain/types.ts'
 import {
   compact,
   ErrorCode,

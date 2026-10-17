@@ -17,29 +17,7 @@ import {
   forbiddenModules,
   workspaceScope
 } from './boundaries.config.ts'
-
-export type Rule =
-  | 'node-builtin'
-  | 'platform-module'
-  | 'deep-import'
-  | 'forbidden-edge'
-  | 'unknown-package'
-  | 'escape'
-  | 'relative-import'
-  | 'foreign-subpath'
-
-export type Violation = {
-  readonly file: string
-  readonly line: number
-  readonly specifier: string
-  readonly rule: Rule
-  readonly detail: string
-}
-
-export type CheckResult = {
-  readonly filesChecked: number
-  readonly violations: readonly Violation[]
-}
+import type { CheckResult, PackageFile, Violation } from './types.ts'
 
 const builtins = new Set(
   builtinModules.flatMap((name) => [name, `node:${name}`])
@@ -49,18 +27,6 @@ const SOURCE_FILE = /\.(?:ts|tsx|mts|cts)$/
 const TEST_FILE = /\.test\.tsx?$|[\\/]__tests__[\\/]/
 /** Package directories scanned; only `src` (non-test) code must be platform-free, all must use absolute imports. */
 const SCANNED_DIRS = ['src', 'test', 'scripts'] as const
-
-/** A source file being checked, with what its rules depend on. */
-type PackageFile = {
-  readonly pkg: string
-  readonly packages: readonly string[]
-  readonly pkgRoot: string
-  readonly file: string
-  /** Shipped (non-test `src`) code must also be platform-free and respect the package graph. */
-  readonly shipped: boolean
-  /** The path in reports: relative to the root, with '/' on every OS. */
-  readonly display: string
-}
 
 /** A package's source files, and whether each one ships. */
 const sourceFilesOf = (

@@ -1,9 +1,9 @@
 // Installed apps: list, look up and uninstall through installation_proxy.
 import type { DeviceContext } from '@device/application/context.ts'
 import { useInstallationProxy } from '@device/application/services.ts'
-import type { DeviceSession } from '@device/application/session.ts'
+import type { DeviceSession } from '@device/application/types.ts'
 import type { InstalledApp } from '@device/infrastructure/installation-proxy/apps.ts'
-import type { ApplicationType } from '@device/infrastructure/installation-proxy/client.ts'
+import type { ApplicationType } from '@device/infrastructure/installation-proxy/types.ts'
 import { compact } from '@loadstar/kernel'
 
 export const listApps = (

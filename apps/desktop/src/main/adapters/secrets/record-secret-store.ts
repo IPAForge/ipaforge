@@ -1,16 +1,13 @@
 // The SecretStore operations shared by the file-backed stores: every secret lives base64-encoded in one
 // `name → value` record that the store loads once and saves whole after each change. Saves run one at a time, so
 // two changes in flight never write the same temporary file at once.
+
+import type {
+  SecretRecord,
+  SecretRecordStorage
+} from '@desktop/main/adapters/secrets/types.ts'
 import type { SecretStore } from '@loadstar/kernel'
 import { fromBase64, toBase64 } from '@loadstar/kernel'
-
-export type SecretRecord = Record<string, string>
-
-export type SecretRecordStorage = {
-  /** Returns the cached record, loading it on first use. */
-  readonly load: () => Promise<SecretRecord>
-  readonly save: (values: SecretRecord) => Promise<void>
-}
 
 export const createRecordSecretStore = ({
   load,

@@ -1,3 +1,4 @@
+import type { DeviceProfile, RemoveStaleOptions } from '@device/domain/types.ts'
 import {
   compact,
   isPlistDict,
@@ -6,18 +7,6 @@ import {
   parsePlist,
   utf8Encode
 } from '@loadstar/kernel'
-
-/** A provisioning profile installed on the device, as misagent returns it (summary only; the CMS is not verified). */
-export type DeviceProfile = {
-  readonly uuid: string
-  readonly name: string
-  readonly teamId?: string
-  readonly appIdName?: string
-  /** `application-identifier` entitlement, e.g. `ABCDE12345.com.example.app` (may contain `*`). */
-  readonly applicationIdentifier?: string
-  readonly expirationDate?: Date
-  readonly raw: Uint8Array
-}
 
 const XML_START = utf8Encode('<?xml')
 const PLIST_END = utf8Encode('</plist>')
@@ -99,12 +88,6 @@ export const bundleIdOf = (applicationIdentifier: string): string => {
   const dot = applicationIdentifier.indexOf('.')
 
   return dot < 0 ? applicationIdentifier : applicationIdentifier.slice(dot + 1)
-}
-
-export type RemoveStaleOptions = {
-  readonly now: Date
-  /** Also remove this team's profiles whose app is no longer installed. */
-  readonly teamId?: string
 }
 
 const isExpired = (profile: DeviceProfile, now: Date): boolean =>

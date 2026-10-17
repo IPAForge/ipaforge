@@ -6,8 +6,8 @@
 import * as asn1js from 'asn1js'
 import * as pkijs from 'pkijs'
 
-import type { PairRecord } from '@device/domain/pairing/pair-record.ts'
 import { decodePem, pemBytes } from '@device/domain/pairing/pem.ts'
+import type { PairRecord } from '@device/domain/pairing/types.ts'
 
 const OID_RSA_ENCRYPTION = '1.2.840.113549.1.1.1'
 const OID_BASIC_CONSTRAINTS = '2.5.29.19'

@@ -1,22 +1,20 @@
 // Opens the lockdown services a session uses, each as a client that owns its connection.
 import type { DeviceContext } from '@device/application/context.ts'
-import type { DeviceSession } from '@device/application/session.ts'
+import type { DeviceSession } from '@device/application/types.ts'
 import { Service } from '@device/domain/constants.ts'
-import {
-  type AfcClient,
-  type AfcClientOptions,
-  createAfcClient
-} from '@device/infrastructure/afc/client.ts'
+import { createAfcClient } from '@device/infrastructure/afc/client.ts'
+import type {
+  AfcClient,
+  AfcClientOptions
+} from '@device/infrastructure/afc/types.ts'
 import { revealDeveloperModeOption } from '@device/infrastructure/amfi/client.ts'
 import { closeOnError, withClient } from '@device/infrastructure/closeable.ts'
 import {
   type ContainerMode,
   vendContainer
 } from '@device/infrastructure/house-arrest/client.ts'
-import {
-  createInstallationProxy,
-  type InstallationProxy
-} from '@device/infrastructure/installation-proxy/client.ts'
+import { createInstallationProxy } from '@device/infrastructure/installation-proxy/client.ts'
+import type { InstallationProxy } from '@device/infrastructure/installation-proxy/types.ts'
 import {
   createMisagent,
   type Misagent

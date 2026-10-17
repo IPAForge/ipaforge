@@ -2,7 +2,7 @@
 
 import { z } from 'zod'
 
-import type { UsbmuxDevice } from '@device/domain/device.ts'
+import type { UsbmuxDevice } from '@device/domain/types.ts'
 import { compact } from '@loadstar/kernel'
 
 const integer = z.union([z.number().int(), z.bigint().transform(Number)])

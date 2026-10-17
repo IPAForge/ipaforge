@@ -1,5 +1,7 @@
-export type ProbeCommand = () => Promise<void>
-export type ProbeCommands = Readonly<Record<string, ProbeCommand>>
+import type {
+  ProbeCommand,
+  ProbeCommands
+} from '@desktop/probes/shared/types.ts'
 
 /** The command called `name`; an unknown name lists the valid ones and exits with status 2. */
 export const selectCommand = (

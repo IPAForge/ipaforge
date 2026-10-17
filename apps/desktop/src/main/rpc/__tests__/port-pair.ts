@@ -1,6 +1,6 @@
 import { EventEmitter } from 'node:events'
 
-import type { MainMessagePort } from '@desktop/main/rpc/message-port-transport.ts'
+import type { MainMessagePort } from '@desktop/main/rpc/types.ts'
 
 /** Two linked ports that behave like Electron's: `{ data }` events, delivered asynchronously, `close` on both. */
 export const portPair = (): [MainMessagePort, MainMessagePort] => {

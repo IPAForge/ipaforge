@@ -1,29 +1,15 @@
 import type { DeviceContext } from '@device/application/context.ts'
 import { openAfc, useInstallationProxy } from '@device/application/services.ts'
-import type { DeviceSession } from '@device/application/session.ts'
+import type {
+  DeviceSession,
+  InstallIpaOptions,
+  Report
+} from '@device/application/types.ts'
 import { PUBLIC_STAGING_DIR } from '@device/domain/constants.ts'
 import { shortUdid } from '@device/domain/device.ts'
-import type { AfcClient } from '@device/infrastructure/afc/client.ts'
+import type { AfcClient } from '@device/infrastructure/afc/types.ts'
 import { withClient } from '@device/infrastructure/closeable.ts'
 import { compact, type FileSource } from '@loadstar/kernel'
-
-export type InstallStage = 'uploading' | 'installing' | 'done'
-
-export type InstallIpaProgress = {
-  readonly stage: InstallStage
-  /** 0–100 across the whole install (upload is the first half). */
-  readonly percent: number
-  readonly status?: string
-}
-
-export type InstallIpaOptions = {
-  /** Replace an existing app with the same bundle ID, keeping its data. Default true. */
-  readonly upgrade?: boolean
-  readonly onProgress?: (progress: InstallIpaProgress) => void
-  readonly signal?: AbortSignal
-}
-
-type Report = (progress: InstallIpaProgress) => void
 
 /** Share of the overall progress taken by the upload; installation_proxy's own 0–100 fills the second half. */
 const UPLOAD_SHARE = 50

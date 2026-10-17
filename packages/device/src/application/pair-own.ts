@@ -2,19 +2,15 @@
 // Loadstar's secret store only. The OS's record in usbmuxd is never written.
 import type { DeviceContext } from '@device/application/context.ts'
 import { openLockdown } from '@device/application/lockdown.ts'
-import {
-  type PairOptions,
-  reportPaired
-} from '@device/application/pair-options.ts'
+import { reportPaired } from '@device/application/pair-options.ts'
 import { saveOwnPairRecord } from '@device/application/pair-records.ts'
+import type { PairOptions } from '@device/application/types.ts'
 import { LOCKDOWN_WIFI_ADDRESS_KEY } from '@device/domain/constants.ts'
-import type { UsbmuxDevice } from '@device/domain/device.ts'
-import {
-  lockdownPairRecord,
-  type PairRecord
-} from '@device/domain/pairing/pair-record.ts'
+import { lockdownPairRecord } from '@device/domain/pairing/pair-record.ts'
+import type { PairRecord } from '@device/domain/pairing/types.ts'
+import type { UsbmuxDevice } from '@device/domain/types.ts'
 import { withClient } from '@device/infrastructure/closeable.ts'
-import type { LockdownClient } from '@device/infrastructure/lockdown/client.ts'
+import type { LockdownClient } from '@device/infrastructure/lockdown/types.ts'
 import { createPairRecord } from '@device/infrastructure/pairing/certificates.ts'
 import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
 

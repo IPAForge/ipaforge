@@ -4,57 +4,28 @@ import {
   openLockdownSession
 } from '@device/application/lockdown.ts'
 import { pairDevice } from '@device/application/pair.ts'
-import type { PairOptions } from '@device/application/pair-options.ts'
 import {
   getPairRecord,
-  notPairedError,
-  type StoredPairRecord
+  notPairedError
 } from '@device/application/pair-records.ts'
+import type {
+  DeviceSession,
+  OpenSessionOptions,
+  StartedSession,
+  StartServiceOptions,
+  StoredPairRecord
+} from '@device/application/types.ts'
 import { LockdownDomain } from '@device/domain/constants.ts'
-import {
-  type DeviceInfo,
-  shortUdid,
-  type UsbmuxDevice
-} from '@device/domain/device.ts'
-import {
-  type PairRecord,
-  tlsCredentials
-} from '@device/domain/pairing/pair-record.ts'
+import { shortUdid } from '@device/domain/device.ts'
+import { tlsCredentials } from '@device/domain/pairing/pair-record.ts'
+import type { PairRecord } from '@device/domain/pairing/types.ts'
+import type { UsbmuxDevice } from '@device/domain/types.ts'
 import { closeOnError } from '@device/infrastructure/closeable.ts'
 import type { Link } from '@device/infrastructure/framing/link.ts'
+import { LockdownErrorName } from '@device/infrastructure/lockdown/constants.ts'
 import { toDeviceInfo } from '@device/infrastructure/lockdown/device-info.ts'
-import {
-  isLockdownError,
-  LockdownErrorName
-} from '@device/infrastructure/lockdown/errors.ts'
-import { ErrorCode, LoadstarError, type PlistValue } from '@loadstar/kernel'
-
-export type OpenSessionOptions = PairOptions & {
-  /** Pair automatically (trust prompt) when there is no usable pair record. Default true. */
-  readonly autoPair?: boolean
-}
-
-export type StartServiceOptions = {
-  /** Send the pair record's escrow bag (needed by some services while the device is locked). */
-  readonly escrowBag?: boolean
-}
-
-/** An open lockdown session with one device. Close it when done. */
-export type DeviceSession = {
-  readonly device: UsbmuxDevice
-  readonly pairRecord: PairRecord
-  info(): Promise<DeviceInfo>
-  getValue(key?: string, domain?: string): Promise<PlistValue | undefined>
-  setValue(domain: string, key: string, value: PlistValue): Promise<void>
-  /** Starts `service` and returns a new connection to it (TLS when the device asks for it). */
-  startService(service: string, options?: StartServiceOptions): Promise<Link>
-  /**
-   * Lets the device be reached over Wi-Fi/VPN (SideStore and StikDebug use the pairing file this way).
-   * lockdownd answers `MissingValue` when no passcode is set → `device.passcode_required`.
-   */
-  enableWifiDebugging(): Promise<void>
-  close(): Promise<void>
-}
+import { isLockdownError } from '@device/infrastructure/lockdown/errors.ts'
+import { ErrorCode, LoadstarError } from '@loadstar/kernel'
 
 const isInvalidPairing = (error: unknown): boolean =>
   error instanceof LoadstarError && error.code === ErrorCode.InvalidPairRecord
@@ -83,8 +54,6 @@ const pairRecordFor = async (
   if (!autoPair) throw notPairedError(device.udid)
   return pairDevice(ctx, device, options)
 }
-
-type StartedSession = LockdownSession & { readonly pairRecord: PairRecord }
 
 const startWith = async (
   ctx: DeviceContext,

@@ -8,24 +8,22 @@ import {
   type DeviceHandle
 } from '@device/application/handle.ts'
 import { pairDevice } from '@device/application/pair.ts'
-import type { PairOptions } from '@device/application/pair-options.ts'
 import {
   exportPairRecord,
   getPairRecord,
   importPairRecord,
   requirePairRecord
 } from '@device/application/pair-records.ts'
-import {
-  type OpenSessionOptions,
-  openSession
-} from '@device/application/session.ts'
-import { type DeviceDepsInput, resolveDeviceDeps } from '@device/deps.ts'
-import {
-  type DeviceEvent,
-  shortUdid,
-  type UsbmuxDevice
-} from '@device/domain/device.ts'
-import type { PairRecord } from '@device/domain/pairing/pair-record.ts'
+import { openSession } from '@device/application/session.ts'
+import type {
+  OpenSessionOptions,
+  PairOptions
+} from '@device/application/types.ts'
+import { resolveDeviceDeps } from '@device/deps.ts'
+import { shortUdid } from '@device/domain/device.ts'
+import type { PairRecord } from '@device/domain/pairing/types.ts'
+import type { DeviceEvent, UsbmuxDevice } from '@device/domain/types.ts'
+import type { DeviceDepsInput } from '@device/types.ts'
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
 
 export type DeviceManager = {

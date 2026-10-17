@@ -14,7 +14,7 @@ import {
   targetsCommand
 } from '@desktop/probes/device/commands/pairing-file.ts'
 import type { DeviceProbe } from '@desktop/probes/device/context.ts'
-import type { ProbeCommands } from '@desktop/probes/shared/commands.ts'
+import type { ProbeCommands } from '@desktop/probes/shared/types.ts'
 
 export const deviceCommands = (probe: DeviceProbe): ProbeCommands => ({
   list: listCommand(probe),

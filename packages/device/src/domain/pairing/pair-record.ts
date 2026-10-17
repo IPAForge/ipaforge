@@ -1,7 +1,11 @@
 import { z } from 'zod'
 
 import { decodePem, pemText } from '@device/domain/pairing/pem.ts'
-import type { TlsCredentials } from '@device/domain/ports/transport.ts'
+import type {
+  LockdownPairRecord,
+  PairRecord
+} from '@device/domain/pairing/types.ts'
+import type { TlsCredentials } from '@device/domain/ports/types.ts'
 import {
   compact,
   createDict,
@@ -13,29 +17,6 @@ import {
   parsePlist,
   serializeXmlPlist
 } from '@loadstar/kernel'
-
-/** The pair record fields lockdownd's `Pair`/`ValidatePair` expect (certificates as PEM bytes). */
-export type LockdownPairRecord = {
-  readonly deviceCertificate: Uint8Array
-  readonly hostCertificate: Uint8Array
-  readonly rootCertificate: Uint8Array
-  readonly hostId: string
-  readonly systemBuid: string
-}
-
-/** A host↔device pairing. Certificates and keys are PEM bytes, exactly as usbmuxd and lockdownd store them. */
-export type PairRecord = {
-  readonly deviceCertificate: Uint8Array
-  readonly hostCertificate: Uint8Array
-  readonly hostPrivateKey: Uint8Array
-  readonly rootCertificate: Uint8Array
-  readonly rootPrivateKey: Uint8Array
-  readonly hostId: string
-  readonly systemBuid: string
-  readonly escrowBag?: Uint8Array
-  readonly wifiMacAddress?: string
-  readonly udid?: string
-}
 
 const bytes = z.instanceof(Uint8Array)
 

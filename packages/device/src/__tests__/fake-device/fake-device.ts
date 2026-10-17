@@ -19,7 +19,7 @@ import { encodePem } from '@device/domain/pairing/pem.ts'
 import type {
   DeviceTransport,
   TlsCredentials
-} from '@device/domain/ports/transport.ts'
+} from '@device/domain/ports/types.ts'
 import { summarizeProfile } from '@device/domain/profiles.ts'
 import { createLink, type Link } from '@device/infrastructure/framing/link.ts'
 import {

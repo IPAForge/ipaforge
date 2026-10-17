@@ -1,30 +1,17 @@
 // The pairing file on-device tools (SideStore, StikDebug, …) use to reach lockdownd: where it goes and placing it.
-import {
-  type AppFileTarget,
-  writeAppFile
-} from '@device/application/app-files.ts'
+import { writeAppFile } from '@device/application/app-files.ts'
 import { installedBundleIds } from '@device/application/apps.ts'
 import type { DeviceContext } from '@device/application/context.ts'
-import type { DeviceSession } from '@device/application/session.ts'
+import type {
+  AppFileTarget,
+  DeviceSession,
+  PairingTarget,
+  PlacePairingOptions
+} from '@device/application/types.ts'
 import { LOCKDOWN_WIFI_ADDRESS_KEY } from '@device/domain/constants.ts'
-import {
-  type PairRecord,
-  pairingFile
-} from '@device/domain/pairing/pair-record.ts'
+import { pairingFile } from '@device/domain/pairing/pair-record.ts'
+import type { PairRecord } from '@device/domain/pairing/types.ts'
 import { findPairingApps } from '@device/domain/pairing-apps.ts'
-
-/** A pairing-file location, with the app it belongs to (for the confirmation shown to the user). */
-export type PairingTarget = AppFileTarget & {
-  readonly appName: string
-}
-
-export type PlacePairingOptions = {
-  /**
-   * Turn on Wi-Fi debugging first (default true). On-device tools (SideStore, StikDebug) reach lockdownd over
-   * Wi-Fi/VPN with this file, which only works once it is enabled; it fails without a passcode.
-   */
-  readonly enableWifiDebugging?: boolean
-}
 
 /** Pairing-file locations of the known pairing apps installed on the device (sideloaded copies only from `teamIds`). */
 export const pairingTargets = async (
