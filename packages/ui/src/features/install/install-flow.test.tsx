@@ -125,9 +125,53 @@ describe('installing SideStore', () => {
     expect(await completedTitle()).toBeDefined()
   })
 
-  it('says when a question can’t be asked yet, and cancelling stops the run where it was', async () => {
+  it('asks which certificate to revoke, warns about SideStore’s, and revokes only after confirming', async () => {
     const { user } = await startInstall('certificate-limit')
-    const dialog = await findDialog('install.run.unsupportedPrompt.title')
+    const dialog = await findDialog('prompts.revoke.title')
+    const confirm = within(dialog).getByRole('button', {
+      name: t('prompts.revoke.confirm')
+    })
+    expect(confirm.hasAttribute('disabled')).toBe(true)
+    const options = within(dialog).getAllByRole('radio')
+    expect(options[0]?.closest('label')?.textContent).toContain(
+      t('prompts.suggested')
+    )
+    expect(
+      within(dialog).getByText(t('prompts.revoke.sidestoreWarning'))
+    ).toBeDefined()
+
+    await user.click(
+      within(dialog).getByRole('radio', {
+        name: new RegExp(t('prompts.revoke.sidestore'))
+      })
+    )
+    await user.click(confirm)
+    expect(await completedTitle()).toBeDefined()
+  })
+
+  it('asks which app to remove when the free-app limit is reached', async () => {
+    const { user } = await startInstall('free-app-limit')
+    const dialog = await findDialog('prompts.remove.title')
+    const [first] = within(dialog).getAllByRole('radio')
+    await user.click(first as HTMLElement)
+    await user.click(
+      within(dialog).getByRole('button', { name: t('prompts.remove.confirm') })
+    )
+    expect(await completedTitle()).toBeDefined()
+  })
+
+  it('asks which team signs, in one click', async () => {
+    const { user } = await startInstall('two-teams')
+    const dialog = await findDialog('prompts.team.title')
+    await user.click(
+      within(dialog).getByRole('button', { name: /Example Studio/ })
+    )
+    expect(await completedTitle()).toBeDefined()
+  })
+
+  it('stops the run where it was when a question is cancelled', async () => {
+    const { user } = await startInstall('certificate-limit')
+    const dialog = await findDialog('prompts.revoke.title')
     await user.click(
       within(dialog).getByRole('button', {
         name: t('install.run.cancelInstall')

@@ -141,15 +141,7 @@
       },
       "unsupportedPrompt": {
         "title": "This step needs an answer",
-        "body": "Loadstar needs you to choose: {question}. This version can't ask it yet. Cancel the install; the next version asks it here.",
-        "question": {
-          "team": "which team signs the app",
-          "revokeCertificate": "which certificate to revoke, because the team has no room for another one",
-          "removeApp": "which app to remove, because the free-app limit on the device is reached",
-          "shareCertificate": "whether to share the signing certificate with this app",
-          "pairingApps": "which apps get the pairing file",
-          "other": "an answer to a question"
-        }
+        "body": "Loadstar needs an answer to a question this version can’t show. Cancel the install and update Loadstar."
       }
     },
     "summary": {
@@ -693,6 +685,56 @@
       "wrong": "That code didn't work. Check it and enter it again.",
       "verify": "Verify",
       "checking": "Checking the code…"
+    },
+    "suggested": "Suggested",
+    "team": {
+      "title": "Which team should sign the app?",
+      "body": "This Apple ID belongs to more than one team. Loadstar remembers your choice for this Apple ID.",
+      "free": "Free: apps expire after 7 days, 3 apps per device",
+      "paid": "Paid: apps last a year, no app limit",
+      "checking": "Using this team…"
+    },
+    "revoke": {
+      "title": "Revoke a certificate?",
+      "body": "This team already has its maximum of development certificates, so Loadstar needs to revoke one to make its own. Apps signed with the revoked one stop refreshing.",
+      "loadstar": "Made by Loadstar on another computer",
+      "sidestore": "Made by SideStore",
+      "machine": "Made on “{machine}” (usually Xcode)",
+      "unknown": "Made by an unknown tool",
+      "sidestoreWarning": "SideStore on your device stops refreshing apps until it makes a new one.",
+      "machineWarning": "Xcode on that computer makes a new one the next time it signs.",
+      "expires": "Expires {date}",
+      "confirm": "Revoke and continue",
+      "revoking": "Revoking the certificate…"
+    },
+    "remove": {
+      "title": "Remove an app to make room?",
+      "body": "A free Apple ID can have {limit} apps on a device, so one has to go before this one fits. You can install it again later.",
+      "confirm": "Remove and continue",
+      "removing": "Removing the app…"
+    },
+    "share": {
+      "title": "Share your signing certificate with “{app}”?",
+      "body": "This app looks like SideStore. With your certificate it can refresh apps on the device by itself. Only share it with an app you trust.",
+      "yes": "Share the certificate",
+      "yesHint": "It refreshes your apps on the device by itself",
+      "no": "Don’t share",
+      "noHint": "It is installed without your certificate"
+    },
+    "pairing": {
+      "title": "Which apps get the pairing file?",
+      "body": "The pairing file lets an app on the device talk to it over Wi-Fi, as this computer does. Only the apps you tick get it.",
+      "available": "{count, plural, one {# app on the device can use it} other {# apps on the device can use it}}",
+      "selectAll": "Select all",
+      "clearAll": "Clear all",
+      "place": "{count, plural, =0 {Choose an app} one {Place in # app} other {Place in # apps}}",
+      "placing": "Placing the pairing file…",
+      "purpose": {
+        "sidestore": "Refreshes and installs apps over Wi-Fi",
+        "livecontainer": "Runs the apps inside it with JIT",
+        "stikdebug": "Enables JIT for other apps",
+        "stikstore": "Installs apps from its own sources"
+      }
     }
   },
   "signIn": {

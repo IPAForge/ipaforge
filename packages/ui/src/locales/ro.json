@@ -141,15 +141,7 @@
       },
       "unsupportedPrompt": {
         "title": "Acest pas are nevoie de un răspuns",
-        "body": "Loadstar are nevoie de alegerea ta: {question}. Această versiune nu o poate cere încă. Anulează instalarea; versiunea următoare o cere aici.",
-        "question": {
-          "team": "ce echipă semnează aplicația",
-          "revokeCertificate": "ce certificat să fie revocat, pentru că echipa nu mai are loc pentru altul",
-          "removeApp": "ce aplicație să fie ștearsă, pentru că s-a atins limita de aplicații gratuite pe dispozitiv",
-          "shareCertificate": "dacă certificatul de semnare se partajează cu această aplicație",
-          "pairingApps": "ce aplicații primesc fișierul de asociere",
-          "other": "un răspuns la o întrebare"
-        }
+        "body": "Loadstar are nevoie de un răspuns la o întrebare pe care această versiune nu o poate afișa. Anulează instalarea și actualizează Loadstar."
       }
     },
     "summary": {
@@ -693,6 +685,56 @@
       "wrong": "Codul nu a funcționat. Verifică-l și introdu-l din nou.",
       "verify": "Verifică",
       "checking": "Se verifică codul…"
+    },
+    "suggested": "Sugerat",
+    "team": {
+      "title": "Ce echipă semnează aplicația?",
+      "body": "Acest ID Apple aparține mai multor echipe. Loadstar ține minte alegerea ta pentru acest ID Apple.",
+      "free": "Gratuită: aplicațiile expiră după 7 zile, 3 aplicații pe dispozitiv",
+      "paid": "Plătită: aplicațiile durează un an, fără limită",
+      "checking": "Se folosește această echipă…"
+    },
+    "revoke": {
+      "title": "Revoci un certificat?",
+      "body": "Această echipă are deja numărul maxim de certificate de dezvoltare, așa că Loadstar trebuie să revoce unul pentru a-și face unul propriu. Aplicațiile semnate cu cel revocat nu se mai reîmprospătează.",
+      "loadstar": "Creat de Loadstar pe alt computer",
+      "sidestore": "Creat de SideStore",
+      "machine": "Creat pe „{machine}” (de obicei Xcode)",
+      "unknown": "Creat de un instrument necunoscut",
+      "sidestoreWarning": "SideStore de pe dispozitiv nu mai reîmprospătează aplicații până nu își face unul nou.",
+      "machineWarning": "Xcode de pe acel computer face unul nou data viitoare când semnează.",
+      "expires": "Expiră pe {date}",
+      "confirm": "Revocă și continuă",
+      "revoking": "Se revocă certificatul…"
+    },
+    "remove": {
+      "title": "Ștergi o aplicație pentru a face loc?",
+      "body": "Un ID Apple gratuit poate avea {limit} aplicații pe un dispozitiv, așa că una trebuie ștearsă ca să încapă aceasta. O poți instala din nou mai târziu.",
+      "confirm": "Șterge și continuă",
+      "removing": "Se șterge aplicația…"
+    },
+    "share": {
+      "title": "Partajezi certificatul de semnare cu „{app}”?",
+      "body": "Această aplicație arată ca SideStore. Cu certificatul tău poate reîmprospăta singură aplicațiile de pe dispozitiv. Partajează-l doar cu o aplicație în care ai încredere.",
+      "yes": "Partajează certificatul",
+      "yesHint": "Îți reîmprospătează singură aplicațiile de pe dispozitiv",
+      "no": "Nu partaja",
+      "noHint": "Se instalează fără certificatul tău"
+    },
+    "pairing": {
+      "title": "Ce aplicații primesc fișierul de asociere?",
+      "body": "Fișierul de asociere permite unei aplicații de pe dispozitiv să comunice cu el prin Wi-Fi, ca acest computer. Doar aplicațiile bifate îl primesc.",
+      "available": "{count, plural, one {# aplicație de pe dispozitiv îl poate folosi} few {# aplicații de pe dispozitiv îl pot folosi} other {# de aplicații de pe dispozitiv îl pot folosi}}",
+      "selectAll": "Selectează tot",
+      "clearAll": "Debifează tot",
+      "place": "{count, plural, =0 {Alege o aplicație} one {Pune în # aplicație} few {Pune în # aplicații} other {Pune în # de aplicații}}",
+      "placing": "Se pune fișierul de asociere…",
+      "purpose": {
+        "sidestore": "Reîmprospătează și instalează aplicații prin Wi-Fi",
+        "livecontainer": "Rulează aplicațiile din el cu JIT",
+        "stikdebug": "Activează JIT pentru alte aplicații",
+        "stikstore": "Instalează aplicații din propriile surse"
+      }
     }
   },
   "signIn": {

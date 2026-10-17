@@ -15,11 +15,13 @@ export const startingView = (previous?: RunView): RunView => ({
   fraction: previous?.fraction ?? 0
 })
 
-/** The answer went to the Engine: the step it waited on is running again. */
+/**
+ * The answer went to the Engine: the step it waited on is running again, and the question stays on screen, busy,
+ * until the Engine's next event (the step goes on, or the question comes back after a wrong answer).
+ */
 export const answeredView = (view: RunView): RunView => ({
   ...withStepsIn(view, ['waiting'], 'active'),
-  status: 'running',
-  prompt: undefined
+  status: 'answering'
 })
 
 const stoppedView = (view: RunView, checkpoint: RemoteCheckpoint): RunView => ({
@@ -72,4 +74,5 @@ export const overallPercent = (view: RunView): number =>
 export const isRunActive = (view: RunView | undefined): boolean =>
   view?.status === 'starting' ||
   view?.status === 'running' ||
-  view?.status === 'waiting'
+  view?.status === 'waiting' ||
+  view?.status === 'answering'

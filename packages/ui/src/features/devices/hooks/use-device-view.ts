@@ -4,6 +4,7 @@ import { deviceTone } from '@ui/features/devices/constants.ts'
 import type { DeviceView } from '@ui/features/devices/types.ts'
 import { deviceState } from '@ui/features/devices/utils/device-state.ts'
 import { linkKey } from '@ui/features/devices/utils/link-key.ts'
+import { modelName } from '@ui/features/devices/utils/model-name.ts'
 import { useDeviceStatus } from '@ui/hooks/queries/use-device-status.ts'
 import type { ListedDevice } from '@ui/hooks/queries/use-devices.ts'
 
@@ -37,7 +38,7 @@ export const useDeviceView = (
   const key = linkKey(device)
   const link = key ? t(key) : ''
   const model = info
-    ? { model: info.productType, ios: info.productVersion }
+    ? { model: modelName(info.productType), ios: info.productVersion }
     : undefined
   const describe = () => {
     if (!model) return link

@@ -141,15 +141,7 @@
       },
       "unsupportedPrompt": {
         "title": "Dieser Schritt braucht eine Antwort",
-        "body": "Loadstar braucht deine Wahl: {question}. Diese Version kann das noch nicht fragen. Brich die Installation ab; die nächste Version fragt hier.",
-        "question": {
-          "team": "welches Team die App signiert",
-          "revokeCertificate": "welches Zertifikat widerrufen wird, weil das Team keinen Platz für ein weiteres hat",
-          "removeApp": "welche App entfernt wird, weil das Limit für kostenlose Apps auf dem Gerät erreicht ist",
-          "shareCertificate": "ob das Signaturzertifikat mit dieser App geteilt wird",
-          "pairingApps": "welche Apps die Pairing-Datei erhalten",
-          "other": "eine Antwort auf eine Frage"
-        }
+        "body": "Loadstar braucht eine Antwort auf eine Frage, die diese Version nicht anzeigen kann. Brich die Installation ab und aktualisiere Loadstar."
       }
     },
     "summary": {
@@ -693,6 +685,56 @@
       "wrong": "Dieser Code hat nicht funktioniert. Prüfe ihn und gib ihn erneut ein.",
       "verify": "Bestätigen",
       "checking": "Der Code wird geprüft …"
+    },
+    "suggested": "Empfohlen",
+    "team": {
+      "title": "Welches Team soll die App signieren?",
+      "body": "Diese Apple-ID gehört zu mehr als einem Team. Loadstar merkt sich deine Wahl für diese Apple-ID.",
+      "free": "Kostenlos: Apps laufen nach 7 Tagen ab, 3 Apps pro Gerät",
+      "paid": "Bezahlt: Apps halten ein Jahr, kein App-Limit",
+      "checking": "Dieses Team wird verwendet…"
+    },
+    "revoke": {
+      "title": "Ein Zertifikat widerrufen?",
+      "body": "Dieses Team hat bereits die maximale Anzahl an Entwicklerzertifikaten, daher muss Loadstar eines widerrufen, um ein eigenes zu erstellen. Mit dem widerrufenen signierte Apps werden nicht mehr aktualisiert.",
+      "loadstar": "Von Loadstar auf einem anderen Computer erstellt",
+      "sidestore": "Von SideStore erstellt",
+      "machine": "Auf „{machine}“ erstellt (meist Xcode)",
+      "unknown": "Von einem unbekannten Tool erstellt",
+      "sidestoreWarning": "SideStore auf deinem Gerät aktualisiert keine Apps mehr, bis es ein neues erstellt.",
+      "machineWarning": "Xcode auf diesem Computer erstellt beim nächsten Signieren ein neues.",
+      "expires": "Läuft am {date} ab",
+      "confirm": "Widerrufen und fortfahren",
+      "revoking": "Zertifikat wird widerrufen…"
+    },
+    "remove": {
+      "title": "Eine App entfernen, um Platz zu schaffen?",
+      "body": "Eine kostenlose Apple-ID kann {limit} Apps auf einem Gerät haben, daher muss eine weichen, damit diese passt. Du kannst sie später wieder installieren.",
+      "confirm": "Entfernen und fortfahren",
+      "removing": "App wird entfernt…"
+    },
+    "share": {
+      "title": "Dein Signaturzertifikat mit „{app}“ teilen?",
+      "body": "Diese App sieht aus wie SideStore. Mit deinem Zertifikat kann sie Apps auf dem Gerät selbst aktualisieren. Teile es nur mit einer App, der du vertraust.",
+      "yes": "Zertifikat teilen",
+      "yesHint": "Sie aktualisiert deine Apps auf dem Gerät selbst",
+      "no": "Nicht teilen",
+      "noHint": "Sie wird ohne dein Zertifikat installiert"
+    },
+    "pairing": {
+      "title": "Welche Apps erhalten die Pairing-Datei?",
+      "body": "Mit der Pairing-Datei kann eine App auf dem Gerät per WLAN mit ihm sprechen, so wie dieser Computer. Nur die angehakten Apps erhalten sie.",
+      "available": "{count, plural, one {# App auf dem Gerät kann sie nutzen} other {# Apps auf dem Gerät können sie nutzen}}",
+      "selectAll": "Alle auswählen",
+      "clearAll": "Alle abwählen",
+      "place": "{count, plural, =0 {Wähle eine App} one {In # App ablegen} other {In # Apps ablegen}}",
+      "placing": "Pairing-Datei wird abgelegt…",
+      "purpose": {
+        "sidestore": "Aktualisiert und installiert Apps per WLAN",
+        "livecontainer": "Führt die Apps darin mit JIT aus",
+        "stikdebug": "Aktiviert JIT für andere Apps",
+        "stikstore": "Installiert Apps aus eigenen Quellen"
+      }
     }
   },
   "signIn": {

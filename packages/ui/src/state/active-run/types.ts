@@ -40,6 +40,8 @@ export type RunStatus =
   | 'starting'
   | 'running'
   | 'waiting'
+  /** The answer went to the Engine; its question stays on screen, busy, until the next event. */
+  | 'answering'
   | 'completed'
   | 'failed'
   | 'cancelled'

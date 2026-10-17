@@ -54,6 +54,12 @@ const runEventHandlers = {
   })
 } satisfies RunEventHandlers
 
+/** Any event after an answer means the Engine moved on: the answered question leaves the screen. */
+const settleAnswer = (view: RunView): RunView =>
+  view.status === 'answering'
+    ? { ...view, status: 'running', prompt: undefined }
+    : view
+
 /** The view after one more event, through the handler for the event's type. */
 export const reduceRunEvent = (view: RunView, event: RunEvent): RunView => {
   const handle = runEventHandlers[event.type] as (
@@ -61,5 +67,5 @@ export const reduceRunEvent = (view: RunView, event: RunEvent): RunView => {
     event: RunEvent
   ) => RunView
 
-  return handle(view, event)
+  return handle(settleAnswer(view), event)
 }

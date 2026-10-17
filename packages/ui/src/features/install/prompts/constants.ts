@@ -1,32 +1,30 @@
-import type { ReactNode } from 'react'
+import type { CertificateOrigin } from '@ui/features/install/prompts/types.ts'
+import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 
-import { PromptKind } from '@loadstar/rpc'
-import { PasswordPrompt } from '@ui/components/prompts/password-prompt.tsx'
-import type { PromptProps } from '@ui/components/prompts/prompt-props.ts'
-import { TwoFactorCodePrompt } from '@ui/components/prompts/two-factor-code-prompt.tsx'
-import { TwoFactorMethodPrompt } from '@ui/components/prompts/two-factor-method-prompt.tsx'
+/** Machine names that say which tool made a certificate; anything else named is a computer (usually Xcode). */
+export const certificateOriginPatterns = [
+  ['loadstar', /loadstar/i],
+  ['sidestore', /sidestore|altstore/i]
+] as const satisfies readonly (readonly [CertificateOrigin, RegExp])[]
 
-/** The questions this version asks, each with its dialog: the password and the second factor. */
-export const askedPrompts: Partial<
-  Record<PromptKind, (props: PromptProps<never>) => ReactNode>
-> = {
-  [PromptKind.Password]: PasswordPrompt,
-  [PromptKind.TwoFactorMethod]: TwoFactorMethodPrompt,
-  [PromptKind.TwoFactorCode]: TwoFactorCodePrompt
-}
+/** A certificate's name in the revoke list, by who made it. */
+export const certificateTitleKeys = {
+  loadstar: 'prompts.revoke.loadstar',
+  sidestore: 'prompts.revoke.sidestore',
+  machine: 'prompts.revoke.machine',
+  unknown: 'prompts.revoke.unknown'
+} as const satisfies Record<CertificateOrigin, TranslationKey>
 
-/**
- * A question this version can't ask yet (the team, a certificate to revoke, an app to remove): it says so and
- * offers to cancel, so the run never waits on a question nobody sees.
- */
-export const questionKeys = {
-  [PromptKind.ChooseTeam]: 'install.run.unsupportedPrompt.question.team',
-  [PromptKind.RevokeCertificate]:
-    'install.run.unsupportedPrompt.question.revokeCertificate',
-  [PromptKind.ChooseAppToRemove]:
-    'install.run.unsupportedPrompt.question.removeApp',
-  [PromptKind.ShareCertificate]:
-    'install.run.unsupportedPrompt.question.shareCertificate',
-  [PromptKind.ChoosePairingApps]:
-    'install.run.unsupportedPrompt.question.pairingApps'
-} as const satisfies Partial<Record<PromptKind, string>>
+/** What revoking it breaks, said before it is picked; Loadstar's own and unknown ones break nothing known. */
+export const certificateWarningKeys = {
+  sidestore: 'prompts.revoke.sidestoreWarning',
+  machine: 'prompts.revoke.machineWarning'
+} as const satisfies Partial<Record<CertificateOrigin, TranslationKey>>
+
+/** What a known app does with the pairing file, by its bundle ID; an unknown app shows its bundle ID. */
+export const pairingAppPurposeKeys = {
+  'com.SideStore.SideStore': 'prompts.pairing.purpose.sidestore',
+  'com.kdt.livecontainer': 'prompts.pairing.purpose.livecontainer',
+  'com.stik.stikdebug': 'prompts.pairing.purpose.stikdebug',
+  'app.stik.store': 'prompts.pairing.purpose.stikstore'
+} as const satisfies Record<string, TranslationKey>

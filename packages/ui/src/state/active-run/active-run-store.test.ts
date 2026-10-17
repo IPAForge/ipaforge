@@ -53,7 +53,8 @@ describe('createActiveRunStore', () => {
     expect(store.getState()?.view.prompt?.kind).toBe(PromptKind.ChooseTeam)
 
     store.answer(STUDIO_TEAM.id)
-    expect(store.getState()?.view.status).toBe('running')
+    // The question stays on screen, busy, until the Engine moves on.
+    expect(store.getState()?.view.status).toBe('answering')
     await until(store, 'completed')
     // A paid team has no free-app limit: the step is skipped.
     expect(

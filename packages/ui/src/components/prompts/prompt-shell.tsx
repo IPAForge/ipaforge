@@ -12,7 +12,15 @@ export type PromptShellProps = {
   onDecline: () => void
   /** With a submit label, the body is a form and Enter submits it. */
   submit?:
-    | { labelKey: TranslationKey; isDisabled: boolean; onSubmit: () => void }
+    | {
+        labelKey: TranslationKey
+        /** Values for the label's placeholders ("Place in {count} apps"). */
+        labelValues?: Record<string, unknown> | undefined
+        isDisabled: boolean
+        onSubmit: () => void
+        /** It can't be undone (revoking a certificate, removing an app): the button is red. */
+        isDestructive?: boolean | undefined
+      }
     | undefined
   /** Waiting for the Engine after the answer: Submit shows it is busy, nothing else can be pressed. */
   isPending?: boolean | undefined
@@ -71,10 +79,11 @@ export const PromptShell = ({
                 {submit ? (
                   <Button
                     type="submit"
+                    variant={submit.isDestructive ? 'danger' : 'primary'}
                     isDisabled={submit.isDisabled}
                     isPending={isPending}
                   >
-                    {t(submit.labelKey)}
+                    {t(submit.labelKey, submit.labelValues ?? {})}
                   </Button>
                 ) : null}
               </Modal.Footer>
