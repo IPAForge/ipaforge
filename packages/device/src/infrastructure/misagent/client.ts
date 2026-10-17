@@ -1,7 +1,5 @@
-import {
-  type DeviceProfile,
-  summarizeProfile
-} from '@device/domain/profiles.ts'
+import { summarizeProfile } from '@device/domain/profiles.ts'
+import type { DeviceProfile } from '@device/domain/types.ts'
 import type { Link } from '@device/infrastructure/framing/link.ts'
 import {
   type FrameLimits,

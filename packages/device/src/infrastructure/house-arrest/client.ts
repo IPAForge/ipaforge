@@ -1,8 +1,8 @@
-import {
-  type AfcClient,
-  type AfcClientOptions,
-  createAfcClient
-} from '@device/infrastructure/afc/client.ts'
+import { createAfcClient } from '@device/infrastructure/afc/client.ts'
+import type {
+  AfcClient,
+  AfcClientOptions
+} from '@device/infrastructure/afc/types.ts'
 import type { Link } from '@device/infrastructure/framing/link.ts'
 import {
   type FrameLimits,

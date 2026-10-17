@@ -2,8 +2,7 @@ import {
   LOCKDOWN_PROTOCOL_VERSION,
   LOCKDOWN_QUERY_TYPE
 } from '@device/domain/constants.ts'
-import type { LockdownPairRecord } from '@device/domain/pairing/pair-record.ts'
-import type { TlsCredentials } from '@device/domain/ports/transport.ts'
+import type { LockdownPairRecord } from '@device/domain/pairing/types.ts'
 import type { Link } from '@device/infrastructure/framing/link.ts'
 import {
   type FrameLimits,
@@ -11,11 +10,12 @@ import {
   sendPlist
 } from '@device/infrastructure/framing/plist-frames.ts'
 import { plistInteger } from '@device/infrastructure/framing/plist-values.ts'
+import { LockdownErrorName } from '@device/infrastructure/lockdown/constants.ts'
 import {
   isLockdownError,
-  LockdownErrorName,
   lockdownError
 } from '@device/infrastructure/lockdown/errors.ts'
+import type { LockdownClient } from '@device/infrastructure/lockdown/types.ts'
 import {
   createDict,
   ErrorCode,
@@ -24,29 +24,6 @@ import {
   type PlistDict,
   type PlistValue
 } from '@loadstar/kernel'
-
-export type StartedService = {
-  readonly port: number
-  readonly enableServiceSsl: boolean
-}
-
-export type LockdownClient = {
-  queryType(): Promise<string>
-  /** `undefined` when the key does not exist (`MissingValue`). */
-  getValue(key?: string, domain?: string): Promise<PlistValue | undefined>
-  setValue(domain: string, key: string, value: PlistValue): Promise<void>
-  /** Returns the escrow bag the device hands out on a successful pairing. */
-  pair(record: LockdownPairRecord): Promise<Uint8Array | undefined>
-  validatePair(record: LockdownPairRecord): Promise<void>
-  startSession(
-    hostId: string,
-    systemBuid: string
-  ): Promise<{ sessionId: string; enableSessionSsl: boolean }>
-  startTls(credentials: TlsCredentials): Promise<void>
-  startService(service: string, escrowBag?: Uint8Array): Promise<StartedService>
-  stopSession(sessionId: string): Promise<void>
-  close(): Promise<void>
-}
 
 const pairRecordDict = (record: LockdownPairRecord): PlistDict =>
   createDict([

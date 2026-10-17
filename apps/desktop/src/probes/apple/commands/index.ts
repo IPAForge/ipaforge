@@ -9,7 +9,7 @@ import {
   preflightCommand
 } from '@desktop/probes/apple/commands/diagnostics.ts'
 import type { AppleProbe } from '@desktop/probes/apple/context.ts'
-import type { ProbeCommands } from '@desktop/probes/shared/commands.ts'
+import type { ProbeCommands } from '@desktop/probes/shared/types.ts'
 
 export const appleCommands = (probe: AppleProbe): ProbeCommands => ({
   developer: developerCommand(probe),

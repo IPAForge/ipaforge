@@ -1,0 +1,121 @@
+import type { LockdownSession } from '@device/application/lockdown.ts'
+import type { PairRecord } from '@device/domain/pairing/types.ts'
+import type { DeviceInfo, UsbmuxDevice } from '@device/domain/types.ts'
+import type { Link } from '@device/infrastructure/framing/link.ts'
+import type { ContainerMode } from '@device/infrastructure/house-arrest/client.ts'
+import type { PlistValue } from '@loadstar/kernel'
+
+export type AppFileTarget = {
+  readonly bundleId: string
+  /** Path inside the container, e.g. `Documents/pairingFile.plist`. */
+  readonly path: string
+  /** Default `documents` (works for App Store and sideloaded apps that share Documents). */
+  readonly mode?: ContainerMode
+}
+
+export type AppFileStatus = {
+  readonly target: AppFileTarget
+  readonly exists: boolean
+  readonly size?: number
+  /** Last modification, when the device reports it. */
+  readonly modifiedAt?: Date
+}
+
+export type DeveloperModeState = 'on' | 'off' | 'not_required' | 'unknown'
+
+export type DeviceCheck = {
+  readonly info: DeviceInfo
+  /** The screen is locked right now (pairing and some services wait for an unlock). */
+  readonly locked: boolean
+  readonly developerMode: DeveloperModeState
+  readonly activated: boolean
+}
+
+export type InstallStage = 'uploading' | 'installing' | 'done'
+
+export type InstallIpaProgress = {
+  readonly stage: InstallStage
+  /** 0–100 across the whole install (upload is the first half). */
+  readonly percent: number
+  readonly status?: string
+}
+
+export type InstallIpaOptions = {
+  /** Replace an existing app with the same bundle ID, keeping its data. Default true. */
+  readonly upgrade?: boolean
+  readonly onProgress?: (progress: InstallIpaProgress) => void
+  readonly signal?: AbortSignal
+}
+
+export type Report = (progress: InstallIpaProgress) => void
+
+export type PairingProgress =
+  | { readonly stage: 'waiting_for_trust' }
+  | { readonly stage: 'waiting_for_unlock' }
+  | { readonly stage: 'paired'; readonly savedTo: PairRecordStore }
+
+/**
+ * `os`: wait for the pair record the OS creates when the user taps Trust, and pair on our own only if none
+ * appears within `osPairingTimeoutMs`. `own`: pair on our own straight away.
+ */
+export type PairMethod = 'os' | 'own'
+
+export type PairOptions = {
+  /** Default `"os"`. */
+  readonly method?: PairMethod
+  readonly onProgress?: (event: PairingProgress) => void
+  readonly signal?: AbortSignal
+}
+
+/** Where a pair record comes from: the OS's usbmuxd, or Loadstar's own secret store. */
+export type PairRecordStore = 'usbmuxd' | 'secret_store'
+
+/** A pair record and where it was found. */
+export type StoredPairRecord = {
+  readonly record: PairRecord
+  readonly source: PairRecordStore
+}
+
+/** A pairing-file location, with the app it belongs to (for the confirmation shown to the user). */
+export type PairingTarget = AppFileTarget & {
+  readonly appName: string
+}
+
+export type PlacePairingOptions = {
+  /**
+   * Turn on Wi-Fi debugging first (default true). On-device tools (SideStore, StikDebug) reach lockdownd over
+   * Wi-Fi/VPN with this file, which only works once it is enabled; it fails without a passcode.
+   */
+  readonly enableWifiDebugging?: boolean
+}
+
+export type OpenSessionOptions = PairOptions & {
+  /** Pair automatically (trust prompt) when there is no usable pair record. Default true. */
+  readonly autoPair?: boolean
+}
+
+export type StartServiceOptions = {
+  /** Send the pair record's escrow bag (needed by some services while the device is locked). */
+  readonly escrowBag?: boolean
+}
+
+/** An open lockdown session with one device. Close it when done. */
+export type DeviceSession = {
+  readonly device: UsbmuxDevice
+  readonly pairRecord: PairRecord
+  info(): Promise<DeviceInfo>
+  getValue(key?: string, domain?: string): Promise<PlistValue | undefined>
+  setValue(domain: string, key: string, value: PlistValue): Promise<void>
+  /** Starts `service` and returns a new connection to it (TLS when the device asks for it). */
+  startService(service: string, options?: StartServiceOptions): Promise<Link>
+  /**
+   * Lets the device be reached over Wi-Fi/VPN (SideStore and StikDebug use the pairing file this way).
+   * lockdownd answers `MissingValue` when no passcode is set → `device.passcode_required`.
+   */
+  enableWifiDebugging(): Promise<void>
+  close(): Promise<void>
+}
+
+export type StartedSession = LockdownSession & {
+  readonly pairRecord: PairRecord
+}

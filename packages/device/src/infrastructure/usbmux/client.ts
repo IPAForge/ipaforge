@@ -1,13 +1,12 @@
 import { USBMUX_LIB_VERSION, UsbmuxResult } from '@device/domain/constants.ts'
-import {
-  type DeviceEvent,
-  shortUdid,
-  type UsbmuxDevice
-} from '@device/domain/device.ts'
-import type { DeviceTransport } from '@device/domain/ports/transport.ts'
+import { shortUdid } from '@device/domain/device.ts'
+import type { DeviceEvent, UsbmuxDevice } from '@device/domain/types.ts'
 import { closeOnError } from '@device/infrastructure/closeable.ts'
 import { createLink, type Link } from '@device/infrastructure/framing/link.ts'
-import type { FrameLimits } from '@device/infrastructure/framing/plist-frames.ts'
+import {
+  RESULT_ERRORS,
+  RESULT_UNKNOWN
+} from '@device/infrastructure/usbmux/constants.ts'
 import {
   encodeUsbmuxPacket,
   readUsbmuxPacket,
@@ -21,47 +20,17 @@ import {
   resultSchema,
   toUsbmuxDevice
 } from '@device/infrastructure/usbmux/schemas.ts'
+import type {
+  UsbmuxClient,
+  UsbmuxClientOptions
+} from '@device/infrastructure/usbmux/types.ts'
 import {
   compact,
   createDict,
   ErrorCode,
   LoadstarError,
-  type Logger,
   type PlistDict
 } from '@loadstar/kernel'
-
-export type UsbmuxClientOptions = {
-  readonly transport: DeviceTransport
-  readonly logger: Logger
-  readonly label: string
-  readonly limits: FrameLimits
-}
-
-export type UsbmuxClient = {
-  listDevices(): Promise<UsbmuxDevice[]>
-  /** Streams attach/detach events until `signal` aborts. The current devices arrive first as `attached`. */
-  listen(
-    onEvent: (event: DeviceEvent) => void,
-    signal: AbortSignal
-  ): Promise<void>
-  /** Opens a raw stream to `port` on the device. */
-  connect(deviceId: number, port: number): Promise<Link>
-  readBuid(): Promise<string>
-  /**
-   * The raw pair record plist bytes, or `undefined` when usbmuxd has none for this device. Read only: the record
-   * belongs to the OS, so this client never saves or deletes one.
-   */
-  readPairRecord(udid: string): Promise<Uint8Array | undefined>
-}
-
-/** usbmuxd `Result` numbers with a dedicated error code; anything else is a protocol error. */
-const RESULT_ERRORS: ReadonlyMap<number, ErrorCode> = new Map([
-  [UsbmuxResult.BadDevice, ErrorCode.DeviceNotFound],
-  [UsbmuxResult.ConnectionRefused, ErrorCode.ServiceUnavailable]
-])
-
-/** Stands in for a response that is not a `Result` message, so it reads as a failure. */
-const RESULT_UNKNOWN = -1
 
 const resultError = (number: number, what: string): LoadstarError =>
   new LoadstarError(

@@ -9,10 +9,8 @@ import {
 } from '@desktop/main/adapters/secrets/aes-gcm.ts'
 import type { KeyProvider } from '@desktop/main/adapters/secrets/mac-keychain-key.ts'
 import { writePrivateFile } from '@desktop/main/adapters/secrets/private-file.ts'
-import {
-  createRecordSecretStore,
-  type SecretRecord
-} from '@desktop/main/adapters/secrets/record-secret-store.ts'
+import { createRecordSecretStore } from '@desktop/main/adapters/secrets/record-secret-store.ts'
+import type { SecretRecord } from '@desktop/main/adapters/secrets/types.ts'
 import type { SecretStore } from '@loadstar/kernel'
 import { utf8Decode, utf8Encode } from '@loadstar/kernel'
 

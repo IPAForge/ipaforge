@@ -1,4 +1,5 @@
 // AFC (Apple File Conduit) wire constants. Packets are little-endian.
+import type { AfcFileType } from '@device/infrastructure/afc/types.ts'
 
 /** "CFA6LPAA" */
 export const AFC_MAGIC = new Uint8Array([
@@ -68,3 +69,13 @@ export const AFC_STATUS_NAMES: Readonly<Record<number, string>> = {
 export const AFC_STATUS_SUCCESS = 0
 export const AFC_STATUS_OBJECT_NOT_FOUND = 8
 export const AFC_STATUS_OBJECT_EXISTS = 16
+
+/** `st_ifmt` values → file types. */
+export const FILE_TYPES: ReadonlyMap<string, AfcFileType> = new Map([
+  ['S_IFREG', 'file'],
+  ['S_IFDIR', 'directory'],
+  ['S_IFLNK', 'symlink']
+])
+
+/** Directory entries AFC lists that are not real children. */
+export const SPECIAL_ENTRIES = new Set(['', '.', '..'])

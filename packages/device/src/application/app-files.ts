@@ -1,28 +1,15 @@
 // Files inside an app's container (house_arrest + AFC): write, read and check them.
 import type { DeviceContext } from '@device/application/context.ts'
 import { openAppContainer } from '@device/application/services.ts'
-import type { DeviceSession } from '@device/application/session.ts'
+import type {
+  AppFileStatus,
+  AppFileTarget,
+  DeviceSession
+} from '@device/application/types.ts'
 import { shortUdid } from '@device/domain/device.ts'
-import type { AfcClient, AfcStat } from '@device/infrastructure/afc/client.ts'
+import type { AfcClient, AfcStat } from '@device/infrastructure/afc/types.ts'
 import { withClient } from '@device/infrastructure/closeable.ts'
-import type { ContainerMode } from '@device/infrastructure/house-arrest/client.ts'
 import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
-
-export type AppFileTarget = {
-  readonly bundleId: string
-  /** Path inside the container, e.g. `Documents/pairingFile.plist`. */
-  readonly path: string
-  /** Default `documents` (works for App Store and sideloaded apps that share Documents). */
-  readonly mode?: ContainerMode
-}
-
-export type AppFileStatus = {
-  readonly target: AppFileTarget
-  readonly exists: boolean
-  readonly size?: number
-  /** Last modification, when the device reports it. */
-  readonly modifiedAt?: Date
-}
 
 const RETRY_DELAY_MS = 500
 const NS_PER_MS = 1e6

@@ -1,20 +1,14 @@
-import type { DeviceSession } from '@device/application/session.ts'
+import type {
+  DeveloperModeState,
+  DeviceCheck,
+  DeviceSession
+} from '@device/application/types.ts'
 import {
   DEVELOPER_MODE_MIN_IOS,
   LockdownDomain
 } from '@device/domain/constants.ts'
-import { type DeviceInfo, parseVersion } from '@device/domain/device.ts'
+import { parseVersion } from '@device/domain/device.ts'
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
-
-export type DeveloperModeState = 'on' | 'off' | 'not_required' | 'unknown'
-
-export type DeviceCheck = {
-  readonly info: DeviceInfo
-  /** The screen is locked right now (pairing and some services wait for an unlock). */
-  readonly locked: boolean
-  readonly developerMode: DeveloperModeState
-  readonly activated: boolean
-}
 
 /** Classifies the AMFI `DeveloperModeStatus` value for a given iOS version. */
 export const developerModeState = (

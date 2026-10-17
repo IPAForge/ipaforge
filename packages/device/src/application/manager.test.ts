@@ -6,8 +6,8 @@ import {
   fakeProfile
 } from '@device/__tests__/fake-device/fake-device.ts'
 import { createRig, type TestRig } from '@device/__tests__/setup.ts'
-import type { PairingProgress } from '@device/application/pair-options.ts'
 import { pairRecordSecretKey } from '@device/application/pair-records.ts'
+import type { PairingProgress } from '@device/application/types.ts'
 import { parsePairRecord } from '@device/domain/pairing/pair-record.ts'
 import { decodePem } from '@device/domain/pairing/pem.ts'
 import {

@@ -1,13 +1,14 @@
 // Pairing: the OS's pair record by default (the user taps Trust), Loadstar's own pairing as the fallback.
 import type { DeviceContext } from '@device/application/context.ts'
-import {
-  type PairOptions,
-  reportPaired
-} from '@device/application/pair-options.ts'
+import { reportPaired } from '@device/application/pair-options.ts'
 import { waitForOsPairRecord } from '@device/application/pair-os.ts'
 import { pairWithOwnRecord } from '@device/application/pair-own.ts'
-import type { StoredPairRecord } from '@device/application/pair-records.ts'
-import { shortUdid, type UsbmuxDevice } from '@device/domain/device.ts'
+import type {
+  PairOptions,
+  StoredPairRecord
+} from '@device/application/types.ts'
+import { shortUdid } from '@device/domain/device.ts'
+import type { UsbmuxDevice } from '@device/domain/types.ts'
 
 const pairOwn = async (
   ctx: DeviceContext,

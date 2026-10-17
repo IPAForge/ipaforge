@@ -1,9 +1,7 @@
-import type { DeviceDeps } from '@device/deps.ts'
 import type { FrameLimits } from '@device/infrastructure/framing/plist-frames.ts'
-import {
-  createUsbmuxClient,
-  type UsbmuxClient
-} from '@device/infrastructure/usbmux/client.ts'
+import { createUsbmuxClient } from '@device/infrastructure/usbmux/client.ts'
+import type { UsbmuxClient } from '@device/infrastructure/usbmux/types.ts'
+import type { DeviceDeps } from '@device/types.ts'
 
 /** Shared state for every device operation. */
 export type DeviceContext = {

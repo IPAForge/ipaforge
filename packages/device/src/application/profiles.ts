@@ -2,12 +2,9 @@
 import { installedBundleIds } from '@device/application/apps.ts'
 import type { DeviceContext } from '@device/application/context.ts'
 import { useMisagent } from '@device/application/services.ts'
-import type { DeviceSession } from '@device/application/session.ts'
-import {
-  type DeviceProfile,
-  type RemoveStaleOptions,
-  staleProfiles
-} from '@device/domain/profiles.ts'
+import type { DeviceSession } from '@device/application/types.ts'
+import { staleProfiles } from '@device/domain/profiles.ts'
+import type { DeviceProfile, RemoveStaleOptions } from '@device/domain/types.ts'
 
 export const listProfiles = (
   ctx: DeviceContext,

@@ -1,5 +1,5 @@
 // Answers the Engine's prompts in the terminal. An empty or invalid choice declines the prompt.
-import type { Prompt } from '@desktop/probes/shared/prompt.ts'
+import type { Prompt } from '@desktop/probes/shared/types.ts'
 import type { TwoFactorMethod } from '@loadstar/apple'
 import {
   type PromptData,
