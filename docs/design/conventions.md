@@ -34,7 +34,7 @@ Biome formats and lints everything (`biome.json`). ESLint (`eslint.config.js`) d
 
   When you add an alias to `tsconfig.base.json` `paths`, add it to both lists of the `organizeImports` groups in `biome.json` (the exclusion from external packages and the "our own" group).
 - **`type`, not `interface`** (`useConsistentTypeDefinitions`): `type Props = { … }`, and `type A = B & { … }` where an interface would extend. The one exception is module augmentation (`declare module '…' { interface … }`), which TypeScript only allows on interfaces; those keep a `biome-ignore` saying so (`router.tsx`, `i18n/setup/i18next-types.ts`).
-- **Every component's props are a named type**, declared above it and called `<Component>Props` (`type FactProps = { … }`, `({ label, value }: FactProps)`), never written inline in the parameter (`({ label }: { label: string })`), even for one prop. A props type built on another is named too (`type FailedProps = OutcomeProps & { failure: RunFailure }`).
+- **Every component's props are a named type** called `<Component>Props` (`type FactProps = { … }`, `({ label, value }: FactProps)`), never written inline in the parameter (`({ label }: { label: string })`), even for one prop. A props type built on another is named too (`type FailedProps = OutcomeProps & { failure: RunFailure }`). It sits above the component, or in the folder's `types.ts` when the file would otherwise declare more than one type (see [File Structure](#file-structure)).
 - **`readonly` where mutation would be a bug.** Engine packages (`kernel`, `signer`, `device`, `apple`, `catalog`, `installer`, `rpc`) mark fields `readonly` and use `readonly T[]` / `ReadonlyMap`, because records travel through many functions. React component props in `packages/ui` don't: React already treats props as read-only, so `readonly` there only adds noise. Non-prop UI types (options, theme tokens, shared state) keep it, and `readonly T[]` stays wherever a prop must accept read-only arrays.
 - **Blank lines** (ESLint `@stylistic/padding-line-between-statements`): one after the import block, and one before a `return` that follows a `const` or `let` declaration.
 - **Unused code:** unused imports are errors; unused variables are warnings, except names starting with `_`.
@@ -57,6 +57,25 @@ Biome formats and lints everything (`biome.json`). ESLint (`eslint.config.js`) d
 - Object literals use arrow properties (`start: (controller) => { … }`), not method shorthand, unless `this` is required.
 - Classes are still allowed where state and invariants belong together (`LoadstarError`, `ByteReader`). Their methods use normal class syntax.
 - Arrow `const`s are not hoisted: define helpers before any top-level code runs them.
+
+## File Structure
+
+Every file does one job, and the lint (`@loadstar/structure` in `tooling/eslint/structure.js`) holds the parts a machine can check.
+
+- **One component per file.** A `.tsx` file holds one component, its imports and, at most, its one type (usually its props). Nothing else lives at its top level: a smaller component gets its own file next to it, a lookup table goes to `constants.ts`, logic to a hook or a utils file (`component-file`).
+- **At most one type per file.** A file that needs one type (a component's props, a function's options) declares it at the top. Two or more go into the folder's **`types.ts`**, one per folder, imported where they're used (`one-type-per-file`). Test files are exempt.
+- **No `switch`.** Branch through a mapped object typed so a missing case fails typecheck (`no-switch`):
+
+  ```ts
+  const handlers = {
+    started: onStarted,
+    progress: onProgress,
+    finished: onFinished
+  } satisfies Record<RunEvent['type'], (view: RunView, event: never) => RunView>
+  ```
+
+- **Lookup tables are constants.** Maps from a state to classes, icons or translation keys live in the folder's `constants.ts`, not in the component.
+- **Folders by job.** A UI feature folder (`features/install/run/`) holds `components/` (one per file), `hooks/` (`use-….ts`), `utils/` (pure functions), `constants.ts` and `types.ts`, each only when needed; its page component stays at the feature root. Engine packages keep `domain/`, `application/` and `infrastructure/`, with the same `types.ts` and `constants.ts` rule inside each module folder.
 
 ## Imports
 
