@@ -1,11 +1,10 @@
 // App tokens: short-lived tokens for Apple services (e.g. `com.apple.gs.xcode.auth` for developer services),
 // requested with the signed-in session and decrypted with its session key.
 
-import type { AnisetteService } from '@apple/application/anisette.ts'
 import { anisetteForSession } from '@apple/application/session-anisette.ts'
-import type { AppleDeps } from '@apple/deps.ts'
+import type { AnisetteService } from '@apple/application/types.ts'
 import { assertGsaOk } from '@apple/domain/gsa-status.ts'
-import type { AppleSession, AppToken } from '@apple/domain/session.ts'
+import type { AppleSession, AppToken } from '@apple/domain/types.ts'
 import {
   decryptAppToken,
   hmacSha256
@@ -15,6 +14,7 @@ import {
   gsaRequest
 } from '@apple/infrastructure/gsa/client.ts'
 import { plistNumber } from '@apple/infrastructure/plist-fields.ts'
+import type { AppleDeps } from '@apple/types.ts'
 import {
   createDict,
   ErrorCode,

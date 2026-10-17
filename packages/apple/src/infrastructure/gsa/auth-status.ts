@@ -2,7 +2,7 @@
 
 import { z } from 'zod'
 
-import type { AuthStatus } from '@apple/domain/two-factor.ts'
+import type { AuthStatus } from '@apple/domain/types.ts'
 import { compact, utf8Decode } from '@loadstar/kernel'
 
 const authStatusSchema = z.looseObject({

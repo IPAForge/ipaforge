@@ -3,15 +3,17 @@
 import type { DeveloperContext } from '@apple/application/developer/context.ts'
 import {
   APP_GROUPS_FEATURE,
-  type AppGroup,
-  type AppId,
-  type AppIdPlan,
-  type AppIdQuota,
   normalizeAppIdName,
-  type ProvisioningProfile,
-  planAppIds,
-  type Team
+  planAppIds
 } from '@apple/domain/developer.ts'
+import type {
+  AppGroup,
+  AppId,
+  AppIdPlan,
+  AppIdQuota,
+  ProvisioningProfile,
+  Team
+} from '@apple/domain/types.ts'
 import {
   toAppGroup,
   toAppGroups,

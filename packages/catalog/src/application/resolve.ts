@@ -1,31 +1,23 @@
 // Which release to download: the primary source first, then each mirror. A source that has gone, has no matching
 // asset, or publishes no checksum is skipped; only verifiable releases are returned.
-import type { CatalogDeps } from '@catalog/deps.ts'
+
+import type {
+  Attempt,
+  Origin,
+  Skip,
+  Source
+} from '@catalog/application/types.ts'
+import type { ResolvedRelease } from '@catalog/domain/release.ts'
 import type {
   CatalogApp,
   Channel,
   GithubLocation,
   ReleaseLocation,
   UrlLocation
-} from '@catalog/domain/manifest.ts'
-import type { ResolvedRelease } from '@catalog/domain/release.ts'
+} from '@catalog/domain/types.ts'
 import { findGithubAsset } from '@catalog/infrastructure/github.ts'
+import type { CatalogDeps } from '@catalog/types.ts'
 import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
-
-type Origin = ResolvedRelease['from']
-
-type Source = {
-  readonly location: ReleaseLocation
-  readonly from: Origin
-}
-
-/** Why a source produced no release (kept for the final error). */
-type Skip = {
-  readonly source: string
-  readonly reason: 'gone' | 'no-asset' | 'no-checksum'
-}
-
-type Attempt = { readonly release: ResolvedRelease } | { readonly skip: Skip }
 
 const sourcesOf = (app: CatalogApp, channel: Channel): Source[] => {
   const release = app.channels[channel]

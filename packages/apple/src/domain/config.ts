@@ -1,76 +1,7 @@
 // Every Apple-facing value Loadstar uses, as data. Apple changes what it accepts (client identities were blocked
 // twice in 2026), so none of this is hard-coded in logic: defaults ship here, and the app can override them from a
 // remote config without a release.
-
-export type AppleEndpoints = {
-  /** GrandSlam: SRP sign-in and app tokens. */
-  readonly gsaService: string
-  /** URL bag with the provisioning endpoints (`midStartProvisioning`, `midFinishProvisioning`). */
-  readonly gsaLookup: string
-  /** JSON view of the 2FA state (trusted phone numbers, code length). */
-  readonly authStatus: string
-  /** Triggers a push to trusted devices. */
-  readonly trustedDevice: string
-  /** Validates a trusted-device code (`security-code` header). */
-  readonly validateCode: string
-  /** Requests an SMS (`PUT`). */
-  readonly phoneVerify: string
-  /** Submits an SMS code (`POST`). */
-  readonly phoneSecurityCode: string
-  /** Legacy (`hsa`) accounts: `{deviceId}` is replaced with the trusted device's id. */
-  readonly legacyDeviceSecurityCode: string
-}
-
-export type ClientIdentity = {
-  /** `X-Mme-Client-Info`. */
-  readonly clientInfo: string
-  readonly userAgent: string
-}
-
-export type AnisetteServer = {
-  readonly name: string
-  /** Base URL, e.g. `https://ani.example.com`. */
-  readonly address: string
-  /** `v3` (provisioning + get_headers) or `v1` (headers from `GET /`). Default v3. */
-  readonly protocol?: 'v1' | 'v3'
-}
-
-/** Static headers Apple's 2FA and developer endpoints expect from an Xcode-like client. */
-export type XcodeHeaders = {
-  readonly appInfo: string
-  readonly xcodeVersion: string
-}
-
-export type AppleTimeouts = {
-  readonly requestMs: number
-  readonly provisioningMs: number
-  readonly healthCheckMs: number
-}
-
-export type AppleConfig = {
-  readonly endpoints: AppleEndpoints
-  /** Client info sent only when fetching the URL bag (another identity can yield a different bag). */
-  readonly urlBagClientInfo: string
-  /** Anisette headers copied into GrandSlam's client-provided data (`cpd`); others go nowhere. */
-  readonly cpdAnisetteHeaders: readonly string[]
-  /** Used when the anisette server does not provide a client identity. */
-  readonly defaultIdentity: ClientIdentity
-  readonly xcode: XcodeHeaders
-  /** Remote, community-maintained anisette server list (`{ servers: [{ name, address }] }`). */
-  readonly anisetteServerListUrl: string
-  /** How long a fetched list is used before it is fetched again (on the next anisette request, never polled). */
-  readonly anisetteServerListMaxAgeMs: number
-  /** After a failed fetch, how long the last known list is used before trying again. */
-  readonly anisetteServerListRetryMs: number
-  /** Used when the remote list cannot be fetched. Order = preference. */
-  readonly fallbackAnisetteServers: readonly AnisetteServer[]
-  readonly timeouts: AppleTimeouts
-  /** Warn when the computer's clock differs from Apple's by more than this. */
-  readonly maxClockSkewMs: number
-  /** Attempts for transient failures (429/503/timeouts); wrong passwords are never retried. */
-  readonly retryAttempts: number
-  readonly locale: string
-}
+import type { AppleConfig, AppleConfigOverrides } from '@apple/domain/types.ts'
 
 export const DEFAULT_APPLE_CONFIG: AppleConfig = {
   endpoints: {
@@ -110,14 +41,6 @@ export const DEFAULT_APPLE_CONFIG: AppleConfig = {
   maxClockSkewMs: 2 * 60 * 1000,
   retryAttempts: 4,
   locale: 'en_US'
-}
-
-export type AppleConfigOverrides = {
-  readonly [K in keyof AppleConfig]?: AppleConfig[K] extends readonly unknown[]
-    ? AppleConfig[K]
-    : AppleConfig[K] extends object
-      ? Partial<AppleConfig[K]>
-      : AppleConfig[K]
 }
 
 export const resolveAppleConfig = (

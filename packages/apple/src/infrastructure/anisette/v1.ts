@@ -2,11 +2,11 @@
 
 import { z } from 'zod'
 
-import type { AppleDeps } from '@apple/deps.ts'
 import { ANISETTE_SERIAL_NUMBER } from '@apple/domain/anisette.ts'
-import type { AnisetteServer, ClientIdentity } from '@apple/domain/config.ts'
+import type { AnisetteServer, ClientIdentity } from '@apple/domain/types.ts'
 import { nonEmpty } from '@apple/domain/values.ts'
 import { fetchApple } from '@apple/infrastructure/http.ts'
+import type { AppleDeps } from '@apple/types.ts'
 import { compact, utf8Decode } from '@loadstar/kernel'
 
 const v1Schema = z.looseObject({

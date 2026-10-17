@@ -11,7 +11,7 @@ import type {
   ProvisioningProfile,
   RegisteredDevice,
   Team
-} from '@apple/domain/developer.ts'
+} from '@apple/domain/types.ts'
 import { nonEmpty } from '@apple/domain/values.ts'
 import {
   compact,

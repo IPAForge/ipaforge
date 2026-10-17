@@ -3,10 +3,10 @@
 // an endpoint move on Apple's side needs no release. Fetched once per AppleDeps with a fixed macOS identity
 // (other identities can be handed a different bag); the config URLs are the fallback.
 
-import type { AppleDeps } from '@apple/deps.ts'
 import { PLIST_CONTENT_TYPE } from '@apple/infrastructure/apple-headers.ts'
 import { fetchApple } from '@apple/infrastructure/http.ts'
 import { parseApplePlist } from '@apple/infrastructure/plist-diagnostics.ts'
+import type { AppleDeps } from '@apple/types.ts'
 import { ErrorCode, isPlistDict, LoadstarError } from '@loadstar/kernel'
 
 export type UrlBag = Readonly<Record<string, string>>

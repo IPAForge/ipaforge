@@ -4,7 +4,6 @@
 
 import { z } from 'zod'
 
-import type { AppleDeps } from '@apple/deps.ts'
 import {
   ANISETTE_SERIAL_NUMBER,
   ANISETTE_TIME_ZONE,
@@ -12,14 +11,19 @@ import {
   deviceIdFor,
   localUserIdFor
 } from '@apple/domain/anisette.ts'
-import type { AnisetteServer, ClientIdentity } from '@apple/domain/config.ts'
-import type { WebSocketLike } from '@apple/domain/ports/web-socket.ts'
+import type { WebSocketLike } from '@apple/domain/ports/types.ts'
+import type { AnisetteServer, ClientIdentity } from '@apple/domain/types.ts'
+import type {
+  HeadersResult,
+  SocketMessage
+} from '@apple/infrastructure/anisette/types.ts'
 import {
   JSON_CONTENT_TYPE,
   PLIST_CONTENT_TYPE
 } from '@apple/infrastructure/apple-headers.ts'
 import { bagUrl } from '@apple/infrastructure/gsa/url-bag.ts'
 import { fetchApple } from '@apple/infrastructure/http.ts'
+import type { AppleDeps } from '@apple/types.ts'
 import {
   compact,
   createDict,
@@ -53,7 +57,7 @@ const headersSchema = z.discriminatedUnion('result', [
   })
 ])
 
-const socketMessageSchema = z.looseObject({ result: z.string() })
+export const socketMessageSchema = z.looseObject({ result: z.string() })
 
 const json = (bytes: Uint8Array): unknown => JSON.parse(utf8Decode(bytes))
 
@@ -118,8 +122,6 @@ const provisioningUrls = async (deps: AppleDeps) => ({
   start: await bagUrl(deps, 'midStartProvisioning'),
   finish: await bagUrl(deps, 'midFinishProvisioning')
 })
-
-type SocketMessage = z.infer<typeof socketMessageSchema>
 
 const anisetteError = (message: string, cause?: unknown): LoadstarError =>
   new LoadstarError(ErrorCode.AnisetteUnavailable, compact({ message, cause }))
@@ -259,10 +261,6 @@ export const provisionV3 = async (
     socket.close()
   }
 }
-
-export type HeadersResult =
-  | { readonly kind: 'headers'; readonly headers: Record<string, string> }
-  | { readonly kind: 'not_provisioned'; readonly message: string }
 
 /** One-time machine headers for this provisioned identifier. */
 export const getHeadersV3 = async (
