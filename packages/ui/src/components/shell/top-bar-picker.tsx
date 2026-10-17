@@ -3,7 +3,12 @@ import { ChevronDown } from 'lucide-react'
 import { type Key, type ReactNode, useId } from 'react'
 
 import { compact } from '@loadstar/kernel'
-import { StatusDot, type StatusTone } from '@ui/components/shell/status-dot.tsx'
+import {
+  PICKER_TRIGGER_CLASSES,
+  statusTextClasses
+} from '@ui/components/shell/constants.ts'
+import { StatusDot } from '@ui/components/shell/status-dot.tsx'
+import type { StatusTone } from '@ui/components/shell/types.ts'
 
 export type TopBarPickerProps = {
   /** What is picked ("Device"); with the value it names the button. */
@@ -21,18 +26,6 @@ export type TopBarPickerProps = {
   /** The menu: `Dropdown.Section`s of `Dropdown.Item`s. */
   children: ReactNode
 }
-
-const statusClasses = {
-  ready: 'text-success',
-  warning: 'text-warning',
-  danger: 'text-danger',
-  off: 'text-muted'
-} as const satisfies Record<StatusTone, string>
-
-const triggerClasses = [
-  'flex min-w-0 items-center gap-2 rounded-lg border border-border bg-surface-secondary px-2.5 py-1.5 text-sm outline-none',
-  'hover:bg-surface-tertiary focus-visible:ring-2 focus-visible:ring-focus'
-].join(' ')
 
 /** A menu button in the top bar: status dot, label and current value, opening a menu of choices. */
 export const TopBarPicker = ({
@@ -55,7 +48,7 @@ export const TopBarPicker = ({
         aria-labelledby={
           status ? `${labelId} ${valueId} ${statusId}` : `${labelId} ${valueId}`
         }
-        className={triggerClasses}
+        className={PICKER_TRIGGER_CLASSES}
       >
         <StatusDot tone={tone} />
         <span id={labelId} className="text-muted text-xs">
@@ -67,7 +60,7 @@ export const TopBarPicker = ({
         {status ? (
           <span
             id={statusId}
-            className={`shrink-0 text-xs ${statusClasses[tone]}`}
+            className={`shrink-0 text-xs ${statusTextClasses[tone]}`}
           >
             {status}
           </span>

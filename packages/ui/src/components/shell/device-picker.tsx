@@ -1,50 +1,16 @@
 import { Dropdown } from '@heroui/react'
 import { useNavigate } from '@tanstack/react-router'
-import { type Key, useId } from 'react'
+import type { Key } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { PickerItem } from '@ui/components/shell/picker-item.tsx'
+import { OPEN_DEVICES } from '@ui/components/shell/constants.ts'
+import { DeviceItem } from '@ui/components/shell/device-item.tsx'
+import { EmptyItem } from '@ui/components/shell/empty-item.tsx'
 import { TopBarPicker } from '@ui/components/shell/top-bar-picker.tsx'
-import { useDeviceView } from '@ui/features/devices/use-device-view.ts'
+import { useDeviceView } from '@ui/features/devices/hooks/use-device-view.ts'
 import { useRefreshDeviceStatus } from '@ui/hooks/queries/use-device-status.ts'
 import { type ListedDevice, useDevices } from '@ui/hooks/queries/use-devices.ts'
 import { useDeviceInUse, useSelection } from '@ui/hooks/use-selection.ts'
-
-const OPEN_DEVICES = 'open-devices'
-
-type DeviceItemProps = {
-  udid: string
-  device: ListedDevice | undefined
-}
-
-const DeviceItem = ({ udid, device }: DeviceItemProps) => {
-  const view = useDeviceView(udid, device)
-
-  return (
-    <PickerItem
-      id={udid}
-      title={view.name}
-      subtitle={view.subtitle}
-      tone={view.tone}
-    />
-  )
-}
-
-const EmptyItem = () => {
-  const { t } = useTranslation()
-  const id = useId()
-
-  return (
-    <Dropdown.Item id={id} isDisabled textValue={t('devices.empty.title')}>
-      <div className="flex min-w-0 flex-col">
-        <span>{t('devices.empty.title')}</span>
-        <span className="whitespace-normal text-muted text-xs">
-          {t('topBar.noDevicesHint')}
-        </span>
-      </div>
-    </Dropdown.Item>
-  )
-}
 
 /**
  * The device picker: every connected device with its state (and the picked one while it is unplugged). Opening it

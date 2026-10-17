@@ -1,9 +1,9 @@
-import { RunHeader } from '@ui/features/install/run/run-header.tsx'
-import { RunOutcome } from '@ui/features/install/run/run-outcome.tsx'
-import { RunSummary } from '@ui/features/install/run/run-summary.tsx'
-import { StepList } from '@ui/features/install/run/step-list.tsx'
-import { useRunTarget } from '@ui/features/install/run/use-run-target.ts'
-import type { ActiveRun } from '@ui/state/active-run/active-run-store.ts'
+import { RunHeader } from '@ui/features/install/run/components/run-header.tsx'
+import { RunOutcome } from '@ui/features/install/run/components/run-outcome.tsx'
+import { RunSummary } from '@ui/features/install/run/components/run-summary.tsx'
+import { StepList } from '@ui/features/install/run/components/step-list.tsx'
+import { useRunTarget } from '@ui/features/install/run/hooks/use-run-target.ts'
+import type { ActiveRun } from '@ui/state/active-run/types.ts'
 
 type RunViewProps = { run: ActiveRun }
 

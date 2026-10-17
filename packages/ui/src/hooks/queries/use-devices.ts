@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 
 import { queryKeys } from '@ui/hooks/queries/query-keys.ts'
 import { useEngine } from '@ui/hooks/use-engine.ts'
-import type { Device } from '@ui/services/engine/engine-types.ts'
+import type { Device } from '@ui/services/engine/types.ts'
 
 /** A connected device, once: with its USB link when it has one, and every way it is connected. */
 export type ListedDevice = Device & {

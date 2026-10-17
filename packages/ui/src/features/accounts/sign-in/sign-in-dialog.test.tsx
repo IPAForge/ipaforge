@@ -7,7 +7,7 @@ import { t } from '@ui/__tests__/test-i18n.ts'
 import { renderApp } from '@ui/__tests__/test-services.tsx'
 import { createFakeEngine } from '@ui/services/engine/fake/fake-engine.ts'
 import { createFakeEngineClient } from '@ui/services/engine/fake/fake-engine-client.ts'
-import type { FakeScenarioId } from '@ui/services/engine/fake/fake-scenarios.ts'
+import type { FakeScenarioId } from '@ui/services/engine/fake/types.ts'
 
 const NEW_ID = 'new@example.com'
 type User = ReturnType<typeof userEvent.setup>

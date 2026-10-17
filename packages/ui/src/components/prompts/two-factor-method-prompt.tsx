@@ -2,11 +2,10 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { ChoiceButton } from '@ui/components/prompts/choice-button.tsx'
+import { TRUSTED_DEVICE } from '@ui/components/prompts/constants.ts'
 import type { PromptProps } from '@ui/components/prompts/prompt-props.ts'
 import { PromptShell } from '@ui/components/prompts/prompt-shell.tsx'
-import type { TwoFactorMethod } from '@ui/services/engine/engine-types.ts'
-
-const TRUSTED_DEVICE = 'trusted-device'
+import type { TwoFactorMethod } from '@ui/services/engine/types.ts'
 
 /**
  * Where Apple should send the code: a trusted device, or a text message to one of the account's numbers. While

@@ -1,11 +1,9 @@
-import { Modal } from '@heroui/react'
-import type { ReactNode } from 'react'
-
-import { SignInForm } from '@ui/features/accounts/sign-in/sign-in-form.tsx'
-import { SignInPrompt } from '@ui/features/accounts/sign-in/sign-in-prompt.tsx'
-import { SignedIn } from '@ui/features/accounts/sign-in/signed-in.tsx'
-import { useSignIn } from '@ui/features/accounts/sign-in/use-sign-in.ts'
-import type { Account } from '@ui/services/engine/engine-types.ts'
+import { SignInForm } from '@ui/features/accounts/sign-in/components/sign-in-form.tsx'
+import { SignInPrompt } from '@ui/features/accounts/sign-in/components/sign-in-prompt.tsx'
+import { SignInShell } from '@ui/features/accounts/sign-in/components/sign-in-shell.tsx'
+import { SignedIn } from '@ui/features/accounts/sign-in/components/signed-in.tsx'
+import { useSignIn } from '@ui/features/accounts/sign-in/hooks/use-sign-in.ts'
+import type { Account } from '@ui/services/engine/types.ts'
 
 type SignInDialogProps = {
   /** "Sign in again" for a saved Apple ID: the form starts with it filled in. */
@@ -13,27 +11,6 @@ type SignInDialogProps = {
   onClose: () => void
   /** The account the Engine saved, e.g. to show or select it. */
   onSignedIn: (account: Account) => void
-}
-
-type ShellProps = {
-  onClose: () => void
-  children: ReactNode
-}
-
-const Shell = ({ onClose, children }: ShellProps) => {
-  const onOpenChange = (open: boolean) => {
-    if (!open) onClose()
-  }
-
-  return (
-    <Modal>
-      <Modal.Backdrop isOpen onOpenChange={onOpenChange}>
-        <Modal.Container placement="center">
-          <Modal.Dialog>{children}</Modal.Dialog>
-        </Modal.Container>
-      </Modal.Backdrop>
-    </Modal>
-  )
 }
 
 /**
@@ -59,7 +36,7 @@ export const SignInDialog = ({
     )
 
   return (
-    <Shell onClose={onClose}>
+    <SignInShell onClose={onClose}>
       {state.phase === 'signed-in' ? (
         <SignedIn appleId={state.account.appleId} onDone={onClose} />
       ) : (
@@ -71,6 +48,6 @@ export const SignInDialog = ({
           onClose={onClose}
         />
       )}
-    </Shell>
+    </SignInShell>
   )
 }

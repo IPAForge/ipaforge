@@ -1,10 +1,7 @@
 import { useContext, useSyncExternalStore } from 'react'
 
 import { ActiveRunContext } from '@ui/state/active-run/active-run-context.ts'
-import type {
-  ActiveRun,
-  ActiveRunStore
-} from '@ui/state/active-run/active-run-store.ts'
+import type { ActiveRun, ActiveRunStore } from '@ui/state/active-run/types.ts'
 
 export type UseRun = Omit<ActiveRunStore, 'getState' | 'subscribe'> & {
   /** The current or last install run; undefined before the first one and after Done. */

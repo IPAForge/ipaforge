@@ -8,10 +8,8 @@ import {
 } from '@ui/__tests__/test-services.tsx'
 import { createQueryClient } from '@ui/hooks/queries/query-client.ts'
 import { LanguageProvider } from '@ui/i18n/provider/language-provider.tsx'
-import {
-  type LanguageSetup,
-  prepareLanguage
-} from '@ui/i18n/setup/prepare-language.ts'
+import { prepareLanguage } from '@ui/i18n/setup/prepare-language.ts'
+import type { LanguageSetup } from '@ui/i18n/setup/types.ts'
 import { UiServicesContext } from '@ui/services/ui-services.ts'
 import { ActiveRunContext } from '@ui/state/active-run/active-run-context.ts'
 import { createActiveRunStore } from '@ui/state/active-run/active-run-store.ts'

@@ -4,7 +4,7 @@ import { ErrorCode, LoadstarError } from '@loadstar/kernel'
 import { QUERY_STALE_TIME_MS } from '@ui/hooks/queries/query-client.ts'
 import { queryKeys } from '@ui/hooks/queries/query-keys.ts'
 import { useEngine } from '@ui/hooks/use-engine.ts'
-import type { Team } from '@ui/services/engine/engine-types.ts'
+import type { Team } from '@ui/services/engine/types.ts'
 
 /**
  * What Apple said about an account's teams. An expired session is an answer, not a failure: it is cached like

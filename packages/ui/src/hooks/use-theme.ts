@@ -1,7 +1,7 @@
 import { useContext, useSyncExternalStore } from 'react'
 
 import { ThemeContext } from '@ui/theme/provider/theme-context.ts'
-import type { ThemeState, ThemeStore } from '@ui/theme/store/theme-store.ts'
+import type { ThemeState, ThemeStore } from '@ui/theme/store/types.ts'
 
 const useThemeStore = (): ThemeStore => {
   const store = useContext(ThemeContext)

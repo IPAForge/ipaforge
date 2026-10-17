@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest'
 
 import { t } from '@ui/__tests__/test-i18n.ts'
 import { renderApp } from '@ui/__tests__/test-services.tsx'
-import type { TranslationKey } from '@ui/i18n/setup/i18next-types.ts'
+import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 import { sections } from '@ui/sections.ts'
 
 const navigationName = { name: t('shell.navigation') }

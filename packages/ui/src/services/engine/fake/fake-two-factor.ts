@@ -1,12 +1,12 @@
 // The fake Apple sign-in: the password, then a second factor through prompts, as the Engine asks them.
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
 import { PromptKind } from '@loadstar/rpc'
+import { FAKE_TWO_FACTOR_CODE } from '@ui/services/engine/fake/fake-data.ts'
+import type { ScriptedStepContext } from '@ui/services/engine/fake/types.ts'
 import type {
   TwoFactorMethod,
   TwoFactorMethods
-} from '@ui/services/engine/engine-types.ts'
-import { FAKE_TWO_FACTOR_CODE } from '@ui/services/engine/fake/fake-data.ts'
-import type { ScriptedStepContext } from '@ui/services/engine/fake/scripted-run.ts'
+} from '@ui/services/engine/types.ts'
 
 const CODE_ATTEMPTS = 3
 

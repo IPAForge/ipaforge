@@ -4,16 +4,16 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { PageHeader } from '@ui/components/page-header.tsx'
-import { AccountRow } from '@ui/features/accounts/account-row.tsx'
+import { AccountRow } from '@ui/features/accounts/components/account-row.tsx'
+import { SignOutDialog } from '@ui/features/accounts/components/sign-out-dialog.tsx'
 import { SignInDialog } from '@ui/features/accounts/sign-in/sign-in-dialog.tsx'
-import { SignOutDialog } from '@ui/features/accounts/sign-out-dialog.tsx'
 import { useAccounts } from '@ui/hooks/queries/use-accounts.ts'
 import {
   useActiveAccount,
   useDevicesInUse,
   useSelection
 } from '@ui/hooks/use-selection.ts'
-import type { Account } from '@ui/services/engine/engine-types.ts'
+import type { Account } from '@ui/services/engine/types.ts'
 
 /** Which dialog is open: sign-in (maybe again, for a saved Apple ID) or the sign-out confirmation. */
 type OpenDialog =

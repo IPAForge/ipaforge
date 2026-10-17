@@ -1,4 +1,4 @@
-import type { Palette, PaletteId } from '@ui/theme/theme-types.ts'
+import type { Palette, PaletteId } from '@ui/theme/types.ts'
 
 // Each palette tints the neutrals with its own hue at low chroma and keeps the accent readable
 // against both the background (as a fill) and its foreground (as text on the fill).

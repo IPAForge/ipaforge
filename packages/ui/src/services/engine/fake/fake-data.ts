@@ -6,7 +6,7 @@ import type {
   Device,
   DeviceCheck,
   Team
-} from '@ui/services/engine/engine-types.ts'
+} from '@ui/services/engine/types.ts'
 
 export const FAKE_IPHONE = '00008140-0011223344556677'
 export const FAKE_IPAD = '00008103-8899AABBCCDDEEFF'
