@@ -15,9 +15,10 @@ export const installProxyError = (
   const error = String(response.Error)
   const description = stringAt(response, 'ErrorDescription') || undefined
   const classified = classifyInstallError(error, description)
+  const suffix = description ? ` (${description})` : ''
 
   return new LoadstarError(classified.code, {
-    message: `installation_proxy ${command} failed for ${subject}: ${error}${description ? ` (${description})` : ''}`,
+    message: `installation_proxy ${command} failed for ${subject}: ${error}${suffix}`,
     data: compact({
       installError: error,
       command,

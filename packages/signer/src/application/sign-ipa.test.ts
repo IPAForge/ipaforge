@@ -63,6 +63,14 @@ beforeAll(async () => {
   }
 })
 
+/** A development profile for `bundleId`, issued to the test identity. */
+const profileFor = (bundleId: string) =>
+  makeProfile(identity, {
+    teamId: TEAM,
+    bundleId,
+    certificates: [identity.certificate]
+  })
+
 const collect = async (
   stream: ReadableStream<Uint8Array>
 ): Promise<Uint8Array> => {
@@ -144,12 +152,6 @@ describe('signIpa', () => {
 
   it('prepares for sideloading: new IDs, profiles embedded, Apple-verifiable', async () => {
     const newMain = `com.loadstar.fixture.app.${TEAM}`
-    const profile = (bundleId: string) =>
-      makeProfile(identity, {
-        teamId: TEAM,
-        bundleId,
-        certificates: [identity.certificate]
-      })
     const result = await signIpa(
       bytesFileSource('Test.ipa', await fixtureIpa()),
       {
@@ -159,8 +161,8 @@ describe('signIpa', () => {
           newMainBundleId: newMain,
           certificate: identity.certificate,
           profiles: new Map([
-            [newMain, await profile(newMain)],
-            [`${newMain}.ext`, await profile(`${newMain}.ext`)]
+            [newMain, await profileFor(newMain)],
+            [`${newMain}.ext`, await profileFor(`${newMain}.ext`)]
           ])
         }
       },
@@ -233,13 +235,6 @@ describe.skipIf(!process.env.LOADSTAR_E2E)(
     it('sideload-signs the real SideStore IPA into something Apple verifies', async () => {
       const bytes = await loadSideStore()
       const newMain = `com.SideStore.SideStore.${TEAM}`
-      const profile = (bundleId: string) =>
-        makeProfile(identity, {
-          teamId: TEAM,
-          bundleId,
-          certificates: [identity.certificate]
-        })
-
       const started = performance.now()
       const result = await signIpa(
         bytesFileSource('SideStore.ipa', bytes),
@@ -250,8 +245,8 @@ describe.skipIf(!process.env.LOADSTAR_E2E)(
             newMainBundleId: newMain,
             certificate: identity.certificate,
             profiles: new Map([
-              [newMain, await profile(newMain)],
-              [`${newMain}.AltWidget`, await profile(`${newMain}.AltWidget`)]
+              [newMain, await profileFor(newMain)],
+              [`${newMain}.AltWidget`, await profileFor(`${newMain}.AltWidget`)]
             ]),
             appGroups: new Map([
               ['group.com.SideStore.SideStore', `group.${newMain}`]

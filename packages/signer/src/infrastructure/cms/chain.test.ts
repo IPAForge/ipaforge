@@ -3,11 +3,11 @@ import { beforeAll, describe, expect, it } from 'vitest'
 import {
   ErrorCode,
   fromBase64,
-  LoadstarError,
   toBase64,
   toHex,
   utf8Encode
 } from '@loadstar/kernel'
+import { rejection } from '@signer/__tests__/errors.ts'
 import {
   createCertificate,
   type TestCertificate
@@ -41,19 +41,6 @@ beforeAll(async () => {
   })
 })
 
-const expectCode = async (
-  promise: Promise<unknown>,
-  code: string
-): Promise<LoadstarError> => {
-  const error = await promise.then(
-    () => undefined,
-    (e: unknown) => e
-  )
-  expect(error).toBeInstanceOf(LoadstarError)
-  expect((error as LoadstarError).code).toBe(code)
-  return error as LoadstarError
-}
-
 describe('resolveChain — bundled intermediates', () => {
   it('returns [intermediate, root] when a known intermediate verifiably issued the leaf', async () => {
     const result = await resolveChain(leaf.der, {
@@ -73,7 +60,9 @@ describe('resolveChain — bundled intermediates', () => {
       commonName: 'Apple Development: Forged (ABCDE12345)',
       claimedIssuer: parseCertificate(fromBase64(g3?.der ?? '')).subject
     })
-    await expectCode(resolveChain(forged.der), ErrorCode.UnknownIssuer)
+    expect((await rejection(resolveChain(forged.der)))?.code).toBe(
+      ErrorCode.UnknownIssuer
+    )
   })
 })
 
@@ -121,15 +110,15 @@ describe('resolveChain — issuer download (AIA caIssuers)', () => {
       ca: true,
       issuer: root
     }) // same name, other key
-    const error = await expectCode(
+    const error = await rejection(
       resolveChain(leaf.der, {
         roots: [root.der],
         intermediates: [],
         fetchIssuer: async () => impostor.der
-      }),
-      ErrorCode.UnknownIssuer
+      })
     )
-    expect(JSON.stringify(error.data)).toContain('did not issue')
+    expect(error?.code).toBe(ErrorCode.UnknownIssuer)
+    expect(JSON.stringify(error?.data)).toContain('did not issue')
   })
 
   it('rejects a download that does not chain to a trusted root', async () => {
@@ -137,15 +126,15 @@ describe('resolveChain — issuer download (AIA caIssuers)', () => {
       commonName: 'Other Root',
       ca: true
     })
-    const error = await expectCode(
+    const error = await rejection(
       resolveChain(leaf.der, {
         roots: [otherRoot.der],
         intermediates: [],
         fetchIssuer: async () => intermediate.der
-      }),
-      ErrorCode.UnknownIssuer
+      })
     )
-    expect(JSON.stringify(error.data)).toContain('trusted Apple root')
+    expect(error?.code).toBe(ErrorCode.UnknownIssuer)
+    expect(JSON.stringify(error?.data)).toContain('trusted Apple root')
   })
 
   it('rejects a download that is not a CA', async () => {
@@ -158,32 +147,38 @@ describe('resolveChain — issuer download (AIA caIssuers)', () => {
       issuer: notCa,
       issuerUrl: URL_INTERMEDIATE
     })
-    const error = await expectCode(
+    const error = await rejection(
       resolveChain(child.der, {
         roots: [root.der],
         intermediates: [],
         fetchIssuer: async () => notCa.der
-      }),
-      ErrorCode.UnknownIssuer
+      })
     )
-    expect(JSON.stringify(error.data)).toContain('not a CA')
+    expect(error?.code).toBe(ErrorCode.UnknownIssuer)
+    expect(JSON.stringify(error?.data)).toContain('not a CA')
   })
 
   it('reports download failures and the missing fetcher clearly', async () => {
-    await expectCode(
-      resolveChain(leaf.der, {
-        roots: [root.der],
-        intermediates: [],
-        fetchIssuer: async () => {
-          throw new Error('offline')
-        }
-      }),
-      ErrorCode.UnknownIssuer
-    )
-    await expectCode(
-      resolveChain(leaf.der, { roots: [root.der], intermediates: [] }),
-      ErrorCode.UnknownIssuer
-    )
+    expect(
+      (
+        await rejection(
+          resolveChain(leaf.der, {
+            roots: [root.der],
+            intermediates: [],
+            fetchIssuer: async () => {
+              throw new Error('offline')
+            }
+          })
+        )
+      )?.code
+    ).toBe(ErrorCode.UnknownIssuer)
+    expect(
+      (
+        await rejection(
+          resolveChain(leaf.der, { roots: [root.der], intermediates: [] })
+        )
+      )?.code
+    ).toBe(ErrorCode.UnknownIssuer)
   })
 })
 
@@ -194,11 +189,13 @@ describe('bundled Apple certificate health', () => {
 
   it('warns when a bundled certificate expires within 12 months', () => {
     const soon = new Date(Date.now() + 365 * 24 * 3600 * 1000)
-    for (const cert of expiringAppleCertificates(soon)) {
+    const expiring = expiringAppleCertificates(soon)
+    for (const cert of expiring) {
       console.warn(
         `[apple-certificates] ${cert.name} expires ${cert.notAfter.toISOString()} — run update-apple-certificates`
       )
     }
-    expect(true).toBe(true)
+    // A warning, not a failure: only certificates that really expire before then are listed.
+    expect(expiring.every((cert) => cert.notAfter < soon)).toBe(true)
   })
 })

@@ -1,11 +1,28 @@
 export const REDACTED = '[redacted]'
 
+/** Masked wherever they appear in a key (`Password`, `sessionToken`, `privateKey`). */
+const SENSITIVE_WORDS = ['password', 'token', 'secret', 'private_?key']
+
+/** Masked only as the whole key (`key` but not `bundleKey`), or as its prefix where marked `.*`. */
+const SENSITIVE_KEYS = [
+  'key',
+  'serial(?:_?number)?',
+  'udid',
+  'x-apple-i-md.*',
+  'x-mme-device-id',
+  'authorization',
+  'cookie',
+  'set-cookie'
+]
+
 /**
- * Field names whose values are always masked. Matched case-insensitively against the full key.
+ * Field names whose values are always masked, matched case-insensitively.
  * Covers credentials, key material, Apple anisette/device headers and device identifiers.
  */
-export const DEFAULT_REDACT_PATTERN =
-  /^(?:.*password.*|.*token.*|.*secret.*|.*private_?key.*|key|serial(?:_?number)?|udid|x-apple-i-md.*|x-mme-device-id|authorization|cookie|set-cookie)$/i
+export const DEFAULT_REDACT_PATTERN = new RegExp(
+  `${SENSITIVE_WORDS.join('|')}|^(?:${SENSITIVE_KEYS.join('|')})$`,
+  'i'
+)
 
 const MAX_DEPTH = 6
 

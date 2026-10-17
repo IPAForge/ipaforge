@@ -115,24 +115,29 @@ const render = (entries: readonly Entry[]): string => {
   )
 }
 
-const main = async (): Promise<number> => {
+/** A certificate the trust rules refuse; the run stops with exit code 1. */
+class Refused extends Error {}
+
+/** Downloads the pinned roots; a root whose digest changed needs --allow-new-roots. */
+const fetchRoots = async (): Promise<{
+  readonly entries: Entry[]
+  readonly certificates: pkijs.Certificate[]
+}> => {
   const pinnedRoots = new Set(
     APPLE_CERTIFICATES.filter((c) => c.kind === 'root').map((c) => c.sha256)
   )
   const entries: Entry[] = []
-  const roots: pkijs.Certificate[] = []
-
+  const certificates: pkijs.Certificate[] = []
   for (const root of ROOTS) {
     const der = await download(root.url)
     const digest = await sha256(der)
     if (!pinnedRoots.has(digest) && !allowNewRoots) {
-      log(
-        `✗ ${root.name} changed (${digest}); review it and rerun with --allow-new-roots`
+      throw new Refused(
+        `${root.name} changed (${digest}); review it and rerun with --allow-new-roots`
       )
-      return 1
     }
     const cert = parseCertificate(der)
-    roots.push(cert)
+    certificates.push(cert)
     entries.push({
       name: root.name,
       kind: 'root',
@@ -141,55 +146,80 @@ const main = async (): Promise<number> => {
       der
     })
   }
+  return { entries, certificates }
+}
 
+/** The WWDR intermediate generations Apple's CA page links to, ascending. */
+const publishedGenerations = async (): Promise<number[]> => {
   const page = await (await fetch(CA_PAGE)).text()
-  const generations = [
+
+  return [
     ...new Set(
       [...page.matchAll(/AppleWWDRCAG(\d+)\.cer/g)].map((m) => Number(m[1]))
     )
   ].sort((a, b) => a - b)
-  log(
-    `Apple publishes WWDR intermediates: ${generations.map((g) => `G${g}`).join(', ')}`
-  )
+}
 
-  for (const generation of generations) {
-    const der = await download(`${CA_PAGE}AppleWWDRCAG${generation}.cer`)
-    const cert = parseCertificate(der)
-    const signedByRoot = (
-      await Promise.all(
-        roots.map((root) => cert.verify(root).catch(() => false))
-      )
-    ).some(Boolean)
-    if (!signedByRoot || !isCa(cert)) {
-      log(
-        `✗ WWDR G${generation} is ${signedByRoot ? 'not a CA' : 'not signed by a pinned root'}; refusing`
-      )
-      return 1
-    }
-    if (cert.notAfter.value.getTime() < Date.now()) {
-      log(
-        `- skipping WWDR G${generation}: expired ${cert.notAfter.value.toISOString()}`
-      )
-      continue
-    }
-    entries.push({
-      name: `Apple WWDR CA G${generation}`,
-      kind: 'intermediate',
-      sha256: await sha256(der),
-      expires: cert.notAfter.value.toISOString(),
-      der
-    })
+const isSignedByAny = async (
+  cert: pkijs.Certificate,
+  roots: readonly pkijs.Certificate[]
+): Promise<boolean> =>
+  (
+    await Promise.all(roots.map((root) => cert.verify(root).catch(() => false)))
+  ).some(Boolean)
+
+/** WWDR generation `generation`, verified against `roots`; `undefined` when it has expired. */
+const intermediateEntry = async (
+  generation: number,
+  roots: readonly pkijs.Certificate[]
+): Promise<Entry | undefined> => {
+  const der = await download(`${CA_PAGE}AppleWWDRCAG${generation}.cer`)
+  const cert = parseCertificate(der)
+  const signedByRoot = await isSignedByAny(cert, roots)
+  if (!signedByRoot)
+    throw new Refused(
+      `WWDR G${generation} is not signed by a pinned root; refusing`
+    )
+  if (!isCa(cert))
+    throw new Refused(`WWDR G${generation} is not a CA; refusing`)
+  const expires = cert.notAfter.value
+  if (expires.getTime() < Date.now()) {
+    log(`- skipping WWDR G${generation}: expired ${expires.toISOString()}`)
+    return undefined
   }
+  return {
+    name: `Apple WWDR CA G${generation}`,
+    kind: 'intermediate',
+    sha256: await sha256(der),
+    expires: expires.toISOString(),
+    der
+  }
+}
 
-  const next = render(entries)
-  const current = readFileSync(TARGET, 'utf8')
+const generationName = (generation: number): string => `G${generation}`
+
+const listOrNone = (names: readonly string[]): string =>
+  names.join(', ') || 'none'
+
+/** Names added, removed and changed between the bundled set and `entries`. */
+const diff = (entries: readonly Entry[]) => {
   const before = new Map(APPLE_CERTIFICATES.map((c) => [c.name, c.sha256]))
   const after = new Map(entries.map((e) => [e.name, e.sha256]))
-  const added = [...after.keys()].filter((name) => !before.has(name))
-  const removed = [...before.keys()].filter((name) => !after.has(name))
-  const changed = [...after.keys()].filter(
-    (name) => before.has(name) && before.get(name) !== after.get(name)
-  )
+
+  return {
+    added: [...after.keys()].filter((name) => !before.has(name)),
+    removed: [...before.keys()].filter((name) => !after.has(name)),
+    changed: [...after.keys()].filter(
+      (name) => before.has(name) && before.get(name) !== after.get(name)
+    )
+  }
+}
+
+/** Writes `entries` to the bundled file, or (with --check) only reports whether it is out of date. */
+const apply = (entries: readonly Entry[]): number => {
+  const next = render(entries)
+  const current = readFileSync(TARGET, 'utf8')
+  const { added, removed, changed } = diff(entries)
   const contentChanged = added.length + removed.length + changed.length > 0
 
   if (!contentChanged) {
@@ -198,7 +228,7 @@ const main = async (): Promise<number> => {
     return 0
   }
   log(
-    `changes — added: ${added.join(', ') || 'none'}; removed: ${removed.join(', ') || 'none'}; changed: ${changed.join(', ') || 'none'}`
+    `changes — added: ${listOrNone(added)}; removed: ${listOrNone(removed)}; changed: ${listOrNone(changed)}`
   )
   if (check) {
     log(
@@ -209,6 +239,30 @@ const main = async (): Promise<number> => {
   writeFileSync(TARGET, next)
   log(`✓ wrote ${TARGET}`)
   return 0
+}
+
+const update = async (): Promise<number> => {
+  const roots = await fetchRoots()
+  const generations = await publishedGenerations()
+  log(
+    `Apple publishes WWDR intermediates: ${generations.map(generationName).join(', ')}`
+  )
+  const entries = [...roots.entries]
+  for (const generation of generations) {
+    const entry = await intermediateEntry(generation, roots.certificates)
+    if (entry) entries.push(entry)
+  }
+  return apply(entries)
+}
+
+const main = async (): Promise<number> => {
+  try {
+    return await update()
+  } catch (error) {
+    if (!(error instanceof Refused)) throw error
+    log(`✗ ${error.message}`)
+    return 1
+  }
 }
 
 process.exitCode = await main()

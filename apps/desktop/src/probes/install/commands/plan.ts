@@ -22,9 +22,8 @@ const printInspection = ({ inspection, identity }: InstallPlan): void => {
   )
   for (const bundle of inspection.nested)
     console.log(`  ${bundle.kind}: ${bundle.name} (${bundle.identifier})`)
-  console.log(
-    `New identity: ${identity.newMainBundleId}${identity.appGroup ? `, app group ${identity.appGroup}` : ''}`
-  )
+  const group = identity.appGroup ? `, app group ${identity.appGroup}` : ''
+  console.log(`New identity: ${identity.newMainBundleId}${group}`)
   for (const bundle of identity.bundles)
     console.log(`  App ID ${bundle.identifier} ("${bundle.name}")`)
 }
@@ -67,15 +66,18 @@ const printFreeSlots = ({ freeSlots }: InstallPlan): void => {
     console.log(`  ${app.name ?? '?'} (${app.bundleId})`)
 }
 
+const storedCertificateStatus = (
+  certificate: InstallPlan['certificate']
+): string => {
+  if (certificate.reusable) return 'stored one is reused'
+  return certificate.stored ? 'stored one is gone' : 'none stored'
+}
+
 const printCertificate = ({
   certificate,
   sharesCertificate
 }: InstallPlan): void => {
-  const status = certificate.reusable
-    ? 'stored one is reused'
-    : certificate.stored
-      ? 'stored one is gone'
-      : 'none stored'
+  const status = storedCertificateStatus(certificate)
   console.log(`Certificate: ${status}; ${certificate.onTeam} on the team`)
   console.log(
     `Certificate shared into the app: ${sharesCertificate ? 'yes (SideStore inside)' : 'no'}`

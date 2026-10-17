@@ -6,10 +6,15 @@ import { resolve } from 'node:path'
 
 const ROOT = resolve(import.meta.dirname, '../..')
 
+const isLineComment = (line: string): boolean =>
+  line.trimStart().startsWith('//')
+
 const readJsonc = (path: string): unknown =>
   JSON.parse(
     readFileSync(path, 'utf8')
-      .replace(/^\s*\/\/.*$/gm, '') // line comments
+      .split('\n')
+      .filter((line) => !isLineComment(line))
+      .join('\n')
       .replace(/,(\s*[}\]])/g, '$1') // trailing commas
   )
 

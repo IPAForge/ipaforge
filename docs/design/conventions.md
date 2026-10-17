@@ -14,7 +14,7 @@
 
 ## Formatting and lint
 
-Biome formats and lints everything (`biome.json`). ESLint (`eslint.config.js`) does one thing Biome can't: blank lines between statements. `pnpm lint` runs both, and `pnpm lint:fix` fixes both. Editors format on save (see [contributing](../contributing.md#editor-setup)).
+Biome formats and lints everything (`biome.json`). ESLint (`eslint.config.js`) does two things Biome can't: blank lines between statements, and SonarSource's rules (`eslint-plugin-sonarjs`, the rules SonarQube runs). `pnpm lint` runs both, and `pnpm lint:fix` fixes both. Editors format on save (see [contributing](../contributing.md#editor-setup)).
 
 - **Style** for JS, TS and TSX: single quotes (double quotes in JSX attributes), no semicolons, no trailing commas, 80 columns, 2-space indent.
 
@@ -38,6 +38,16 @@ Biome formats and lints everything (`biome.json`). ESLint (`eslint.config.js`) d
 - **Blank lines** (ESLint `@stylistic/padding-line-between-statements`): one after the import block, and one before a `return` that follows a `const` or `let` declaration.
 - **Unused code:** unused imports are errors; unused variables are warnings, except names starting with `_`.
 - **`console`** warns everywhere except the probe CLIs, `scripts/`, the log sinks and tests (an override in `biome.json`, not inline ignores).
+- **SonarSource rules** (`sonarjs.configs.recommended`) run on every `.ts`/`.tsx` file, so CI catches what SonarQube would: regexes that backtrack (`super-linear-regex`), cognitive complexity above 15, nested ternaries and template literals, tests without assertions, hard-coded credentials and the like. Fix the code rather than silencing the rule: split complex functions into named helpers, scan strings by hand instead of using a backtracking regex on untrusted input, and make each test assert its outcome in its own body. A few rules are off, each with its reason in `eslint.config.js`:
+  - `no-redundant-optional` (S4782): with `exactOptionalPropertyTypes`, `field?: T` and `field?: T | undefined` mean different things (also off for SonarQube for IDE in `.vscode/settings.json`);
+  - `unused-import` and `no-unused-vars`: Biome's `noUnusedImports` and `noUnusedVariables` already cover them, and the latter allows the `_` prefix;
+  - `no-os-command-from-path`, only in `scripts/`, `packages/*/scripts/`, `apps/desktop/scripts/`, `fixtures/` and tests: maintainer tools run `codesign`, `openssl` and `security` from `PATH` on purpose. Production code must not.
+- **Exceptions** to a SonarSource rule are for deliberate test fixtures only (a fake password, an `http://` URL whose refusal is under test, a private test IP). Disable the one line with the reason after `--`, so a reviewer can judge it:
+
+  ```ts
+  // eslint-disable-next-line sonarjs/no-clear-text-protocols -- the downgrade under test must be refused
+  redirectTarget(from, 'http://gsa.apple.com/auth', headers)
+  ```
 
 ## Functions
 

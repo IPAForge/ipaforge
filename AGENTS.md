@@ -20,7 +20,7 @@ Loadstar is an open-source desktop tool (Windows, macOS, Linux) for installing S
 ```
 loadstar/
 ├── packages/
-│   ├── kernel/       # LoadstarError/ErrorCode, ports (Logger, HttpClient, SecretStore, FileSource), bytes utils, plist
+│   ├── kernel/       # LoadstarError/ErrorCode, ports (Logger, HttpClient, SecretStore, FileSource), bytes and text utils, plist
 │   ├── signer/       # Mach-O code signing (CodeDirectory, CodeResources, entitlements, CMS, fat, bundles, IPA)
 │   ├── device/       # usbmux, lockdown, pairing, AFC, house_arrest, installation_proxy
 │   ├── apple/        # GSA auth + 2FA, anisette provider chain, developer services API

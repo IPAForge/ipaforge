@@ -1,13 +1,20 @@
 // Test-only: an AFC server over an in-memory file system.
 
 import {
+  type AfcPacket,
   encodeAfcPacket,
   payloadOf,
   readAfcPacket
 } from '@device/infrastructure/afc/codec.ts'
 import { AfcOperation } from '@device/infrastructure/afc/constants.ts'
 import type { Link } from '@device/infrastructure/framing/link.ts'
-import { ByteWriter, utf8Decode, utf8Encode } from '@loadstar/kernel'
+import {
+  ByteWriter,
+  concatBytes,
+  trimChar,
+  utf8Decode,
+  utf8Encode
+} from '@loadstar/kernel'
 
 export type FakeFs = {
   readonly files: Map<string, Uint8Array>
@@ -19,7 +26,7 @@ export const createFakeFs = (): FakeFs => ({
   dirs: new Set([''])
 })
 
-const normalize = (path: string): string => path.replace(/^\/+|\/+$/g, '')
+const normalize = (path: string): string => trimChar(path, '/')
 const parent = (path: string): string =>
   path.includes('/') ? path.slice(0, path.lastIndexOf('/')) : ''
 
@@ -38,171 +45,212 @@ const readCString = (bytes: Uint8Array, from = 0): string => {
   return utf8Decode(bytes.subarray(from, end < 0 ? bytes.byteLength : end))
 }
 
-const STATUS = { ok: 0, notFound: 8, exists: 16 } as const
+const STATUS = { ok: 0, notFound: 8, exists: 16, notSupported: 15 } as const
+const READ_ONLY_MODE = 1n
+const MAX_PACKET_BYTES = 1 << 30
+
+type Handle = {
+  readonly path: string
+  readonly chunks: Uint8Array[]
+  position: number
+  readonly write: boolean
+}
+
+/** One connection's state, shared by the operation handlers. */
+type Session = {
+  readonly fs: FakeFs
+  readonly handles: Map<bigint, Handle>
+  nextHandle: bigint
+  readonly data: (payload: Uint8Array) => Promise<void>
+  readonly reply: (operation: number, header: Uint8Array) => Promise<void>
+  readonly status: (code: number) => Promise<void>
+}
+
+/** A request: its operation, its arguments and a view over them. */
+type Request = {
+  readonly packet: AfcPacket
+  readonly args: Uint8Array
+  readonly view: DataView
+}
+
+type Handler = (session: Session, request: Request) => Promise<void>
+
+const childrenOf = (fs: FakeFs, dir: string): Set<string> => {
+  const children = new Set<string>()
+  for (const path of [...fs.files.keys(), ...fs.dirs]) {
+    if (path !== dir && parent(path) === dir)
+      children.add(path.slice(dir ? dir.length + 1 : 0))
+  }
+  return children
+}
+
+const readDir: Handler = async (session, { args }) => {
+  const dir = normalize(readCString(args))
+  if (!session.fs.dirs.has(dir)) return session.status(STATUS.notFound)
+  await session.data(cstrings(['.', '..', ...childrenOf(session.fs, dir)]))
+}
+
+const fileInfo = (fs: FakeFs, path: string): string[] | undefined => {
+  const file = fs.files.get(path)
+  if (file) return ['st_size', String(file.byteLength), 'st_ifmt', 'S_IFREG']
+  if (fs.dirs.has(path)) return ['st_size', '0', 'st_ifmt', 'S_IFDIR']
+  return undefined
+}
+
+const getFileInfo: Handler = async (session, { args }) => {
+  const info = fileInfo(session.fs, normalize(readCString(args)))
+  if (!info) return session.status(STATUS.notFound)
+  await session.data(cstrings(info))
+}
+
+const addDirs = (fs: FakeFs, path: string): void => {
+  for (let dir = path; dir; dir = parent(dir)) fs.dirs.add(dir)
+}
+
+const makeDir: Handler = async (session, { args }) => {
+  addDirs(session.fs, normalize(readCString(args)))
+  await session.status(STATUS.ok)
+}
+
+const removeContents = (fs: FakeFs, path: string): void => {
+  const prefix = `${path}/`
+  for (const key of [...fs.files.keys()])
+    if (key.startsWith(prefix)) fs.files.delete(key)
+  for (const key of [...fs.dirs])
+    if (key.startsWith(prefix)) fs.dirs.delete(key)
+}
+
+const removePath: Handler = async (session, { packet, args }) => {
+  const { fs } = session
+  const path = normalize(readCString(args))
+  const existed = fs.files.delete(path) || fs.dirs.delete(path)
+  if (packet.operation === AfcOperation.RemovePathAndContents)
+    removeContents(fs, path)
+  await session.status(existed ? STATUS.ok : STATUS.notFound)
+}
+
+const renamePath: Handler = async (session, { args }) => {
+  const { fs } = session
+  const from = normalize(readCString(args))
+  const to = normalize(readCString(args, args.indexOf(0) + 1))
+  const file = fs.files.get(from)
+  if (!file) return session.status(STATUS.notFound)
+  fs.files.delete(from)
+  fs.files.set(to, file)
+  await session.status(STATUS.ok)
+}
+
+/** Reading needs the file; writing needs its directory. */
+const canOpen = (fs: FakeFs, path: string, write: boolean): boolean =>
+  write ? fs.dirs.has(parent(path)) : fs.files.has(path)
+
+const fileOpen: Handler = async (session, { args, view }) => {
+  const write = view.getBigUint64(0, true) !== READ_ONLY_MODE
+  const path = normalize(readCString(args, 8))
+  if (!canOpen(session.fs, path, write)) return session.status(STATUS.notFound)
+  const handle = session.nextHandle++
+  session.handles.set(handle, { path, chunks: [], position: 0, write })
+  await session.reply(AfcOperation.FileOpenResult, u64(handle))
+}
+
+const fileWrite: Handler = async (session, { packet, view }) => {
+  const handle = session.handles.get(view.getBigUint64(0, true))
+  handle?.chunks.push(packet.data.slice())
+  await session.status(handle ? STATUS.ok : STATUS.notFound)
+}
+
+const readChunk = (fs: FakeFs, handle: Handle, length: number): Uint8Array => {
+  const file = fs.files.get(handle.path) ?? new Uint8Array()
+  const chunk = file.subarray(handle.position, handle.position + length)
+  handle.position += chunk.byteLength
+  return chunk
+}
+
+const fileRead: Handler = async (session, { view }) => {
+  const handle = session.handles.get(view.getBigUint64(0, true))
+  const length = Number(view.getBigUint64(8, true))
+  await session.data(
+    handle ? readChunk(session.fs, handle, length) : new Uint8Array()
+  )
+}
+
+const fileClose: Handler = async (session, { view }) => {
+  const id = view.getBigUint64(0, true)
+  const handle = session.handles.get(id)
+  if (handle?.write)
+    session.fs.files.set(handle.path, concatBytes(handle.chunks))
+  session.handles.delete(id)
+  await session.status(STATUS.ok)
+}
+
+const getDeviceInfo: Handler = (session) =>
+  session.data(cstrings(['Model', 'iPhone99,1', 'FSTotalBytes', '64000000000']))
+
+const HANDLERS: Readonly<Record<number, Handler>> = {
+  [AfcOperation.ReadDir]: readDir,
+  [AfcOperation.GetFileInfo]: getFileInfo,
+  [AfcOperation.MakeDir]: makeDir,
+  [AfcOperation.RemovePath]: removePath,
+  [AfcOperation.RemovePathAndContents]: removePath,
+  [AfcOperation.RenamePath]: renamePath,
+  [AfcOperation.FileOpen]: fileOpen,
+  [AfcOperation.FileWrite]: fileWrite,
+  [AfcOperation.FileRead]: fileRead,
+  [AfcOperation.FileClose]: fileClose,
+  [AfcOperation.GetDeviceInfo]: getDeviceInfo
+}
+
+const createSession = (link: Link, fs: FakeFs): Session => {
+  const reply = (operation: number, header: Uint8Array, data?: Uint8Array) =>
+    link.write(
+      encodeAfcPacket({
+        operation,
+        packetNumber: 0n,
+        header,
+        data: data ?? new Uint8Array()
+      })
+    )
+
+  return {
+    fs,
+    handles: new Map(),
+    nextHandle: 1n,
+    data: (payload) => reply(AfcOperation.Data, new Uint8Array(), payload),
+    reply,
+    status: (code) => reply(AfcOperation.Status, u64(code))
+  }
+}
+
+const toRequest = (packet: AfcPacket): Request => {
+  const args = payloadOf(packet)
+
+  return {
+    packet,
+    args,
+    view: new DataView(args.buffer, args.byteOffset, args.byteLength)
+  }
+}
+
+/** The next packet, or `undefined` once the client has closed the link. */
+const nextPacket = async (link: Link): Promise<AfcPacket | undefined> => {
+  try {
+    return await readAfcPacket(link, MAX_PACKET_BYTES)
+  } catch {
+    return undefined
+  }
+}
 
 /** Serves AFC on `link` until the client closes it. Returns when the connection ends. */
 export const serveAfc = async (link: Link, fs: FakeFs): Promise<void> => {
-  const handles = new Map<
-    bigint,
-    { path: string; chunks: Uint8Array[]; position: number; write: boolean }
-  >()
-  let nextHandle = 1n
-
-  const reply = (
-    operation: number,
-    header: Uint8Array = new Uint8Array(),
-    data: Uint8Array = new Uint8Array()
-  ) =>
-    link.write(encodeAfcPacket({ operation, packetNumber: 0n, header, data }))
-  const status = (code: number) => reply(AfcOperation.Status, u64(code))
-
-  for (;;) {
-    let packet: Awaited<ReturnType<typeof readAfcPacket>>
-    try {
-      packet = await readAfcPacket(link, 1 << 30)
-    } catch {
-      return
-    }
-    const args = payloadOf(packet)
-    const view = new DataView(args.buffer, args.byteOffset, args.byteLength)
-    switch (packet.operation) {
-      case AfcOperation.ReadDir: {
-        const dir = normalize(readCString(args))
-        if (!fs.dirs.has(dir)) {
-          await status(STATUS.notFound)
-          break
-        }
-        const children = new Set<string>()
-        for (const path of [...fs.files.keys(), ...fs.dirs]) {
-          if (path !== dir && parent(path) === dir)
-            children.add(path.slice(dir ? dir.length + 1 : 0))
-        }
-        await reply(
-          AfcOperation.Data,
-          new Uint8Array(),
-          cstrings(['.', '..', ...children])
-        )
-        break
-      }
-      case AfcOperation.GetFileInfo: {
-        const path = normalize(readCString(args))
-        const file = fs.files.get(path)
-        if (file)
-          await reply(
-            AfcOperation.Data,
-            new Uint8Array(),
-            cstrings(['st_size', String(file.byteLength), 'st_ifmt', 'S_IFREG'])
-          )
-        else if (fs.dirs.has(path))
-          await reply(
-            AfcOperation.Data,
-            new Uint8Array(),
-            cstrings(['st_size', '0', 'st_ifmt', 'S_IFDIR'])
-          )
-        else await status(STATUS.notFound)
-        break
-      }
-      case AfcOperation.MakeDir: {
-        let path = normalize(readCString(args))
-        while (path) {
-          fs.dirs.add(path)
-          path = parent(path)
-        }
-        await status(STATUS.ok)
-        break
-      }
-      case AfcOperation.RemovePath:
-      case AfcOperation.RemovePathAndContents: {
-        const path = normalize(readCString(args))
-        const existed = fs.files.delete(path) || fs.dirs.delete(path)
-        if (packet.operation === AfcOperation.RemovePathAndContents) {
-          for (const key of [...fs.files.keys()])
-            if (key.startsWith(`${path}/`)) fs.files.delete(key)
-          for (const key of [...fs.dirs])
-            if (key.startsWith(`${path}/`)) fs.dirs.delete(key)
-        }
-        await status(existed ? STATUS.ok : STATUS.notFound)
-        break
-      }
-      case AfcOperation.RenamePath: {
-        const from = normalize(readCString(args))
-        const to = normalize(readCString(args, args.indexOf(0) + 1))
-        const file = fs.files.get(from)
-        if (!file) {
-          await status(STATUS.notFound)
-          break
-        }
-        fs.files.delete(from)
-        fs.files.set(to, file)
-        await status(STATUS.ok)
-        break
-      }
-      case AfcOperation.FileOpen: {
-        const mode = view.getBigUint64(0, true)
-        const path = normalize(readCString(args, 8))
-        const write = mode !== 1n
-        if (!write && !fs.files.has(path)) {
-          await status(STATUS.notFound)
-          break
-        }
-        if (write && !fs.dirs.has(parent(path))) {
-          await status(STATUS.notFound)
-          break
-        }
-        const handle = nextHandle++
-        handles.set(handle, { path, chunks: [], position: 0, write })
-        await reply(AfcOperation.FileOpenResult, u64(handle))
-        break
-      }
-      case AfcOperation.FileWrite: {
-        const handle = handles.get(view.getBigUint64(0, true))
-        handle?.chunks.push(packet.data.slice())
-        await status(handle ? STATUS.ok : STATUS.notFound)
-        break
-      }
-      case AfcOperation.FileRead: {
-        const handle = handles.get(view.getBigUint64(0, true))
-        const length = Number(view.getBigUint64(8, true))
-        const file = handle
-          ? (fs.files.get(handle.path) ?? new Uint8Array())
-          : new Uint8Array()
-        const chunk = handle
-          ? file.subarray(handle.position, handle.position + length)
-          : new Uint8Array()
-        if (handle) handle.position += chunk.byteLength
-        await reply(AfcOperation.Data, new Uint8Array(), chunk)
-        break
-      }
-      case AfcOperation.FileClose: {
-        const id = view.getBigUint64(0, true)
-        const handle = handles.get(id)
-        if (handle?.write) {
-          const total = handle.chunks.reduce(
-            (sum, chunk) => sum + chunk.byteLength,
-            0
-          )
-          const out = new Uint8Array(total)
-          let offset = 0
-          for (const chunk of handle.chunks) {
-            out.set(chunk, offset)
-            offset += chunk.byteLength
-          }
-          fs.files.set(handle.path, out)
-        }
-        handles.delete(id)
-        await status(STATUS.ok)
-        break
-      }
-      case AfcOperation.GetDeviceInfo:
-        await reply(
-          AfcOperation.Data,
-          new Uint8Array(),
-          cstrings(['Model', 'iPhone99,1', 'FSTotalBytes', '64000000000'])
-        )
-        break
-      default:
-        await status(15)
-    }
+  const session = createSession(link, fs)
+  for (
+    let packet = await nextPacket(link);
+    packet;
+    packet = await nextPacket(link)
+  ) {
+    const handler = HANDLERS[packet.operation]
+    if (handler) await handler(session, toRequest(packet))
+    else await session.status(STATUS.notSupported)
   }
 }
 
@@ -217,11 +265,7 @@ export const putFile = (
   path: string,
   content: string | Uint8Array
 ): void => {
-  let dir = parent(path)
-  while (dir) {
-    fs.dirs.add(dir)
-    dir = parent(dir)
-  }
+  addDirs(fs, parent(path))
   fs.files.set(
     path,
     typeof content === 'string' ? utf8Encode(content) : content

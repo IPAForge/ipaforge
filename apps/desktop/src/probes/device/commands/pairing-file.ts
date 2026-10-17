@@ -35,9 +35,8 @@ export const pairingStatusCommand =
         const when = status.modifiedAt
           ? ` (modified ${status.modifiedAt.toISOString()})`
           : ''
-        console.log(
-          `${status.target.bundleId} ${status.target.path}: ${status.exists ? `${status.size} bytes${when}` : 'missing'}`
-        )
+        const state = status.exists ? `${status.size} bytes${when}` : 'missing'
+        console.log(`${status.target.bundleId} ${status.target.path}: ${state}`)
       }
     })
 
@@ -64,8 +63,7 @@ export const placeCommand =
       }
       await handle.placePairingFile(targets)
       for (const status of await handle.appFileStatus(targets)) {
-        console.log(
-          `${status.target.path}: ${status.exists ? `${status.size} bytes` : 'missing'}`
-        )
+        const state = status.exists ? `${status.size} bytes` : 'missing'
+        console.log(`${status.target.path}: ${state}`)
       }
     })
