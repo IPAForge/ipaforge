@@ -52,6 +52,59 @@ import {
 
 const FIXTURES = join(import.meta.dirname, '../../../fixtures/signer')
 
+const ENTITLEMENTS_BY_KIND: ReadonlyMap<string, string> = new Map([
+  ['app', 'entitlements/app.plist'],
+  ['appex', 'entitlements/appex.plist']
+])
+
+const SIGNATURE_LABEL = 'signature:'
+const MASKED_SIGNATURE = 'signature: <sig>'
+const ENTRY_INDENT = { min: 4, max: 6 }
+const WHITESPACE = /\s/
+const WORD_CHARACTER = /\w/
+
+/**
+ * Whether the dump line after the line break at `newline` ends a signature value: an entry
+ * indented 4 to 6 columns, or `unsignedAttrs` at any depth.
+ */
+const endsSignature = (text: string, newline: number): boolean => {
+  let end = newline + 1
+  while (end < text.length && WHITESPACE.test(text.charAt(end))) end++
+  const indent = end - newline - 1
+  const isEntry =
+    indent >= ENTRY_INDENT.min &&
+    indent <= ENTRY_INDENT.max &&
+    WORD_CHARACTER.test(text.charAt(end))
+
+  return isEntry || text.startsWith('unsignedAttrs', end)
+}
+
+/** The line break that ends the signature value starting at `from`; -1 when none does. */
+const signatureEnd = (text: string, from: number): number => {
+  let newline = text.indexOf('\n', from)
+  while (newline >= 0 && !endsSignature(text, newline))
+    newline = text.indexOf('\n', newline + 1)
+  return newline
+}
+
+/** openssl's `-print` dump with every signature value replaced by `<sig>`. Linear, unlike a lazy regex. */
+const maskSignatures = (text: string): string => {
+  const parts: string[] = []
+  let from = 0
+  for (
+    let start = text.indexOf(SIGNATURE_LABEL);
+    start >= 0;
+    start = text.indexOf(SIGNATURE_LABEL, from)
+  ) {
+    const end = signatureEnd(text, start + SIGNATURE_LABEL.length)
+    if (end < 0) break
+    parts.push(text.slice(from, start), MASKED_SIGNATURE)
+    from = end
+  }
+  parts.push(text.slice(from))
+  return parts.join('')
+}
+
 /** messageDigest, cdhashes2 and the cdhashes plist must all be derived from `cd` (SHA-256 / truncated). */
 const cdAttributesConsistent = async (
   cms: Uint8Array,
@@ -157,7 +210,9 @@ const report: string[] = []
 let originalSearchList: string[] | undefined
 let failures = 0
 const check = (label: string, ok: boolean, detail = ''): void => {
-  report.push(`${ok ? '✓' : '✗'} ${label}${detail ? `  ${detail}` : ''}`)
+  const mark = ok ? '✓' : '✗'
+  const suffix = detail ? `  ${detail}` : ''
+  report.push(`${mark} ${label}${suffix}`)
   if (!ok) failures++
 }
 
@@ -193,8 +248,11 @@ try {
       new Uint8Array(await (await fetch(url)).arrayBuffer())
   })
   const chain = [...resolution.chain]
+  const fetchedFrom = resolution.fetchedFrom
+    ? ` from ${resolution.fetchedFrom}`
+    : ''
   report.push(
-    `certificate: ${info.commonName} (team ${teamId}), chain: ${chain.length} certs (${resolution.source}${resolution.fetchedFrom ? ` from ${resolution.fetchedFrom}` : ''})`
+    `certificate: ${info.commonName} (team ${teamId}), chain: ${chain.length} certs (${resolution.source}${fetchedFrom})`
   )
 
   // 2. temporary keychain with the identity and its Apple chain, for codesign
@@ -312,12 +370,7 @@ try {
     ])
   )
   const entitlementsFor = (kind: string) => {
-    const file =
-      kind === 'app'
-        ? 'entitlements/app.plist'
-        : kind === 'appex'
-          ? 'entitlements/appex.plist'
-          : undefined
+    const file = ENTITLEMENTS_BY_KIND.get(kind)
     if (!file) return undefined
     const bytes = new Uint8Array(readFileSync(join(FIXTURES, file)))
     const dict = parsePlist(bytes)
@@ -402,16 +455,12 @@ try {
         'DER',
         '-in',
         file
-      ])
-        .replace(/UTCTIME:.*|GENERALIZEDTIME:.*/g, '<time>')
-        .replace(
-          /signature:[\s\S]*?(?=\n\s{4,6}\w|\n\s*unsignedAttrs)/g,
-          'signature: <sig>'
-        )
-      if (!cdDiffersOnlyInResources) return text
+      ]).replace(/UTCTIME:.*|GENERALIZEDTIME:.*/g, '<time>')
+      const masked = maskSignatures(text)
+      if (!cdDiffersOnlyInResources) return masked
       // The CD's own hash legitimately differs, so mask the three values derived from it (checked
       // separately for self-consistency below): messageDigest, cdhashes2 and the cdhashes plist.
-      return text
+      return masked
         .replace(
           /(object: messageDigest[^\n]*\n\s*set:\n\s*OCTET STRING:\n)((?:\s+[0-9a-f]{4} - [^\n]*\n)+)/,
           '$1<cd digest>\n'

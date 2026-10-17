@@ -3,6 +3,7 @@
 import * as asn1js from 'asn1js'
 import * as pkijs from 'pkijs'
 
+import { randomSerialNumber } from '@signer/__tests__/serial.ts'
 import {
   OID_AIA_CA_ISSUERS,
   OID_AUTHORITY_INFO_ACCESS,
@@ -82,7 +83,7 @@ export const createCertificate = async (
   const cert = new pkijs.Certificate()
   cert.version = 2
   cert.serialNumber = new asn1js.Integer({
-    value: Math.floor(Math.random() * 2 ** 31) + 1
+    value: randomSerialNumber()
   })
   cert.subject = name(spec.commonName, spec.organizationalUnit)
   cert.issuer = spec.claimedIssuer ?? spec.issuer?.cert.subject ?? cert.subject

@@ -8,8 +8,8 @@ const progressPrinter = () => {
   let last = -1
 
   return ({ stage, percent, status }: InstallIpaProgress) => {
-    if (percent !== last)
-      console.log(`${stage} ${percent}%${status ? ` ${status}` : ''}`)
+    const detail = status ? ` ${status}` : ''
+    if (percent !== last) console.log(`${stage} ${percent}%${detail}`)
     last = percent
   }
 }

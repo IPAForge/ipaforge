@@ -7,7 +7,7 @@ const ENTITIES: Readonly<Record<string, string>> = {
   quot: '"',
   apos: "'"
 }
-const ENTITY_PATTERN = /&(#x[0-9a-f]+|#[0-9]+|[a-z]+);/gi
+const ENTITY_PATTERN = /&(#x[0-9a-f]+|#\d+|[a-z]+);/gi
 const MAX_CODE_POINT = 0x10ffff
 
 const CDATA_OPEN = '<![CDATA['

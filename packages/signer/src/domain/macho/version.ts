@@ -2,16 +2,11 @@
  * Mach-O packed versions: `xxxx.yy.zz` as `(major << 16) | (minor << 8) | patch`.
  * Used for minOS decisions (hash algorithm, page size).
  */
-export type PackedVersion = number
 
-export const packVersion = (
-  major: number,
-  minor = 0,
-  patch = 0
-): PackedVersion =>
+export const packVersion = (major: number, minor = 0, patch = 0): number =>
   ((major & 0xffff) << 16) | ((minor & 0xff) << 8) | (patch & 0xff)
 
-export const formatVersion = (version: PackedVersion): string => {
+export const formatVersion = (version: number): string => {
   const major = version >>> 16
   const minor = (version >>> 8) & 0xff
   const patch = version & 0xff
@@ -20,7 +15,7 @@ export const formatVersion = (version: PackedVersion): string => {
 }
 
 /** Parses "14", "14.0", "14.0.1" (as found in Info.plist MinimumOSVersion). */
-export const parseVersion = (text: string): PackedVersion => {
+export const parseVersion = (text: string): number => {
   const [major = 0, minor = 0, patch = 0] = text
     .split('.')
     .map((part) => Number.parseInt(part, 10) || 0)

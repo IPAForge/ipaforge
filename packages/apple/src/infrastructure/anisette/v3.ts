@@ -31,6 +31,7 @@ import {
   parsePlist,
   serializeXmlPlist,
   toBase64,
+  trimEndChar,
   utf8Decode
 } from '@loadstar/kernel'
 
@@ -57,7 +58,7 @@ const socketMessageSchema = z.looseObject({ result: z.string() })
 const json = (bytes: Uint8Array): unknown => JSON.parse(utf8Decode(bytes))
 
 const toWebSocketUrl = (address: string, path: string): string =>
-  `${address.replace(/^http/, 'ws').replace(/\/+$/, '')}${path}`
+  `${trimEndChar(address.replace(/^http/, 'ws'), '/')}${path}`
 
 export const fetchClientInfo = async (
   deps: AppleDeps,
@@ -190,7 +191,7 @@ const socketReader = (socket: WebSocketLike, timeoutMs: number) => {
   return { next }
 }
 
-const expect = (message: { result: string }, wanted: string): void => {
+const expectStep = (message: { result: string }, wanted: string): void => {
   if (message.result !== wanted) {
     throw new LoadstarError(ErrorCode.AnisetteUnavailable, {
       message: `anisette provisioning: expected ${wanted}, got ${message.result}`,
@@ -222,15 +223,15 @@ export const provisionV3 = async (
   )
   const reader = socketReader(socket, deps.config.timeouts.provisioningMs)
   try {
-    expect(await reader.next(), 'GiveIdentifier')
+    expectStep(await reader.next(), 'GiveIdentifier')
     socket.send(JSON.stringify({ identifier: toBase64(identifier) }))
 
-    expect(await reader.next(), 'GiveStartProvisioningData')
+    expectStep(await reader.next(), 'GiveStartProvisioningData')
     const start = await applePlist(deps, urls.start, headers, createDict())
     socket.send(JSON.stringify({ spim: stringField(start, 'spim') }))
 
     const end = await reader.next()
-    expect(end, 'GiveEndProvisioningData')
+    expectStep(end, 'GiveEndProvisioningData')
     const cpim = typeof end.cpim === 'string' ? end.cpim : ''
     const finish = await applePlist(
       deps,
@@ -246,7 +247,7 @@ export const provisionV3 = async (
     )
 
     const done = await reader.next()
-    expect(done, 'ProvisioningSuccess')
+    expectStep(done, 'ProvisioningSuccess')
     if (typeof done.adi_pb !== 'string') {
       throw new LoadstarError(ErrorCode.AnisetteUnavailable, {
         message: 'provisioning succeeded without adi_pb'

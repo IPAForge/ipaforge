@@ -43,6 +43,8 @@ const BY_EC: Readonly<Record<number, ErrorCode>> = {
 }
 
 const LOCKED_MESSAGE = /locked for security reasons/i
+const HTTP_TOO_MANY_REQUESTS = 429
+const HTTP_SERVER_ERROR = 500
 
 export type GsaStatus = {
   readonly ec: number
@@ -77,8 +79,9 @@ export const gsaErrorCode = (status: GsaStatus): ErrorCode => {
 /** Throws the catalogued error for a non-zero GSA status. */
 export const assertGsaOk = (status: GsaStatus, operation: string): void => {
   if (status.ec === 0) return
+  const suffix = status.em ? ` ${status.em}` : ''
   throw new LoadstarError(gsaErrorCode(status), {
-    message: `GSA ${operation} failed: ${status.ec}${status.em ? ` ${status.em}` : ''}`,
+    message: `GSA ${operation} failed: ${status.ec}${suffix}`,
     data: compact({
       gsaCode: status.ec,
       gsaMessage: nonEmpty(status.em),
@@ -88,9 +91,8 @@ export const assertGsaOk = (status: GsaStatus, operation: string): void => {
 }
 
 /** HTTP status from Apple's front door → error code (before any GSA status is available). */
-export const httpErrorCode = (status: number): ErrorCode =>
-  status === 429
-    ? ErrorCode.RateLimited
-    : status >= 500
-      ? ErrorCode.AppleServiceUnavailable
-      : ErrorCode.AppleProtocolError
+export const httpErrorCode = (status: number): ErrorCode => {
+  if (status === HTTP_TOO_MANY_REQUESTS) return ErrorCode.RateLimited
+  if (status >= HTTP_SERVER_ERROR) return ErrorCode.AppleServiceUnavailable
+  return ErrorCode.AppleProtocolError
+}

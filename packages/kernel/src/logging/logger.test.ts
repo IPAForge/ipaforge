@@ -128,6 +128,29 @@ describe('redact', () => {
     expect(redact(node)).toEqual({ name: 'a', self: '[circular]' })
   })
 
+  it.each([
+    'apiSecret',
+    'private_key',
+    'key',
+    'serial_number',
+    'SerialNumber',
+    'X-Apple-I-MD-M',
+    'X-Mme-Device-Id',
+    'Authorization',
+    'Set-Cookie'
+  ])('masks %s', (key) => {
+    expect(redact({ [key]: 'v' })).toEqual({ [key]: REDACTED })
+  })
+
+  it.each(['serials', 'mykey', 'x-mme-device-ids'])('keeps %s', (key) => {
+    expect(redact({ [key]: 'v' })).toEqual({ [key]: 'v' })
+  })
+
+  it('checks a long hostile key quickly', () => {
+    const key = `${'private_'.repeat(50_000)}x`
+    expect(redact({ [key]: 'v' })).toEqual({ [key]: 'v' })
+  })
+
   it('does not over-match ordinary keys', () => {
     expect(redact({ bundleKey: 'a', keychainGroups: ['x'], keys: 3 })).toEqual({
       bundleKey: 'a',

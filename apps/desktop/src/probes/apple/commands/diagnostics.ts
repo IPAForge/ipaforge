@@ -4,9 +4,8 @@ import type { AppleProbe } from '@desktop/probes/apple/context.ts'
 export const preflightCommand =
   (probe: AppleProbe) => async (): Promise<void> => {
     const report = await probe.apple.preflight()
-    console.log(
-      `Apple reachable: ${report.apple.ok}${report.apple.error ? ` (${report.apple.error})` : ''}`
-    )
+    const error = report.apple.error ? ` (${report.apple.error})` : ''
+    console.log(`Apple reachable: ${report.apple.ok}${error}`)
     const skew =
       report.clockSkewSeconds === undefined
         ? ''

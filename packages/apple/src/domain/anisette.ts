@@ -1,5 +1,5 @@
 import type { ClientIdentity } from '@apple/domain/config.ts'
-import { toHex } from '@loadstar/kernel'
+import { toHex, trimEndChar } from '@loadstar/kernel'
 
 /** What Apple needs to recognise this computer as a known machine. */
 export type AnisetteData = {
@@ -70,5 +70,5 @@ export const validateServerUrl = (
       reason: 'this is a placeholder address; enter a real anisette server'
     }
   }
-  return { ok: true, url: url.toString().replace(/\/+$/, '') }
+  return { ok: true, url: trimEndChar(url.toString(), '/') }
 }

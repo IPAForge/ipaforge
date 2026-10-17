@@ -67,12 +67,16 @@ const loadEntitlements = (path: string): EntitlementsInput => {
   return { bytes, dict }
 }
 
-const entitlementsFor = (kind: string): EntitlementsInput | undefined =>
-  kind === 'app'
-    ? loadEntitlements('entitlements/app.plist')
-    : kind === 'appex'
-      ? loadEntitlements('entitlements/appex.plist')
-      : undefined
+const ENTITLEMENTS_BY_KIND: ReadonlyMap<string, string> = new Map([
+  ['app', 'entitlements/app.plist'],
+  ['appex', 'entitlements/appex.plist']
+])
+
+const entitlementsFor = (kind: string): EntitlementsInput | undefined => {
+  const path = ENTITLEMENTS_BY_KIND.get(kind)
+
+  return path === undefined ? undefined : loadEntitlements(path)
+}
 
 const writeTree = (tree: BundleTree, root: string): void => {
   for (const [path, entry] of tree) {

@@ -4,7 +4,8 @@ import {
   lstatSync,
   readdirSync,
   readFileSync,
-  readlinkSync
+  readlinkSync,
+  type Stats
 } from 'node:fs'
 import { basename, join, relative } from 'node:path'
 
@@ -60,6 +61,50 @@ export type FixtureEntry = {
 const MACHO_MAGICS = new Set([0xfeedfacf, 0xfeedface, 0xbebafeca]) // little-endian reads (fat is BE 0xcafebabe)
 const isWindows = process.platform === 'win32'
 
+const FILE_MODE = 0o644
+const EXECUTABLE_MODE = 0o755
+const PERMISSION_BITS = 0o777
+
+/** The first four bytes, little-endian (0 when the file is shorter). */
+const magicOf = (data: Uint8Array): number =>
+  data.byteLength >= 4
+    ? new DataView(data.buffer, data.byteOffset, 4).getUint32(0, true)
+    : 0
+
+/** A file's Unix mode. Windows has none, so it follows from the content, as generate.sh set it. */
+const fileMode = (data: Uint8Array, stat: Stats): number => {
+  if (!isWindows) return stat.mode & PERMISSION_BITS
+  return MACHO_MAGICS.has(magicOf(data)) ? EXECUTABLE_MODE : FILE_MODE
+}
+
+/** '/'-separated, whatever the OS uses. */
+const toPosix = (path: string): string => path.split('\\').join('/')
+
+/** The entry for the file or symlink at `full`; `path` is its bundle-relative path. */
+const entryAt = (
+  full: string,
+  path: string,
+  stat: Stats,
+  symlinks: ReadonlySet<string>
+): FixtureEntry => {
+  if (stat.isSymbolicLink()) {
+    // Windows returns targets with '\\' separators; bundle symlink targets are always '/'
+    const target = toPosix(readlinkSync(full))
+
+    return { path, kind: 'symlink', target, mode: stat.mode & PERMISSION_BITS }
+  }
+  const data = new Uint8Array(readFileSync(full))
+  if (isWindows && symlinks.has(path)) {
+    return {
+      path,
+      kind: 'symlink',
+      target: new TextDecoder().decode(data),
+      mode: EXECUTABLE_MODE
+    }
+  }
+  return { path, kind: 'file', data, mode: fileMode(data, stat) }
+}
+
 /**
  * Every file and symlink under a fixture bundle, with '/'-separated relative paths, sorted.
  * Windows checkouts lose symlinks (they become text files holding the target) and Unix modes, so on
@@ -76,35 +121,9 @@ export const readTree = (root: string): FixtureEntry[] => {
     for (const name of readdirSync(dir).sort()) {
       const full = join(dir, name)
       const stat = lstatSync(full)
-      const path = relative(root, full).split('\\').join('/')
-      if (stat.isSymbolicLink()) {
-        // Windows returns targets with '\\' separators; bundle symlink targets are always '/'
-        const target = readlinkSync(full).split('\\').join('/')
-        out.push({ path, kind: 'symlink', target, mode: stat.mode & 0o777 })
-      } else if (stat.isDirectory()) {
-        walk(full)
-      } else {
-        const data = new Uint8Array(readFileSync(full))
-        if (isWindows && symlinks.has(path)) {
-          out.push({
-            path,
-            kind: 'symlink',
-            target: new TextDecoder().decode(data),
-            mode: 0o755
-          })
-          continue
-        }
-        const magic =
-          data.byteLength >= 4
-            ? new DataView(data.buffer, data.byteOffset, 4).getUint32(0, true)
-            : 0
-        const mode = isWindows
-          ? MACHO_MAGICS.has(magic)
-            ? 0o755
-            : 0o644
-          : stat.mode & 0o777
-        out.push({ path, kind: 'file', data, mode })
-      }
+      if (stat.isDirectory()) walk(full)
+      else
+        out.push(entryAt(full, toPosix(relative(root, full)), stat, symlinks))
     }
   }
   walk(root)
