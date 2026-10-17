@@ -4,15 +4,15 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { PageHeader } from '@ui/components/page-header.tsx'
-import { useAccountView } from '@ui/features/accounts/use-account-view.ts'
-import { useDeviceView } from '@ui/features/devices/use-device-view.ts'
-import { BlockedNotice } from '@ui/features/install/blocked-notice.tsx'
-import { DeviceInUseNotice } from '@ui/features/install/device-in-use-notice.tsx'
-import { ChannelChoice } from '@ui/features/install/home/channel-choice.tsx'
-import { installReadiness } from '@ui/features/install/home/readiness.ts'
-import { ThisInstall } from '@ui/features/install/home/this-install.tsx'
-import { VariantChoice } from '@ui/features/install/home/variant-choice.tsx'
-import { SignInNeededNotice } from '@ui/features/install/sign-in-needed-notice.tsx'
+import { useAccountView } from '@ui/features/accounts/hooks/use-account-view.ts'
+import { useDeviceView } from '@ui/features/devices/hooks/use-device-view.ts'
+import { BlockedNotice } from '@ui/features/install/home/components/blocked-notice.tsx'
+import { ChannelChoice } from '@ui/features/install/home/components/channel-choice.tsx'
+import { DeviceInUseNotice } from '@ui/features/install/home/components/device-in-use-notice.tsx'
+import { SignInNeededNotice } from '@ui/features/install/home/components/sign-in-needed-notice.tsx'
+import { ThisInstall } from '@ui/features/install/home/components/this-install.tsx'
+import { VariantChoice } from '@ui/features/install/home/components/variant-choice.tsx'
+import { installReadiness } from '@ui/features/install/home/utils/readiness.ts'
 import { usePlanInstall } from '@ui/hooks/queries/use-plan-install.ts'
 import { useRecommendedChannel } from '@ui/hooks/queries/use-recommended-channel.ts'
 import { useRun } from '@ui/hooks/use-run.ts'
@@ -21,11 +21,8 @@ import {
   useDeviceInUse,
   useDevicesInUse
 } from '@ui/hooks/use-selection.ts'
-import {
-  type Channel,
-  type SideStoreVariant,
-  variantAppId
-} from '@ui/services/engine/engine-types.ts'
+import { variantAppId } from '@ui/services/engine/constants.ts'
+import type { Channel, SideStoreVariant } from '@ui/services/engine/types.ts'
 
 /**
  * The Install page before a run: what to fix first (the device, the Apple ID), what to install and from which

@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 
+import { colorSchemes, paletteIds } from '@ui/theme/constants.ts'
 import { heroUiVariables } from '@ui/theme/palettes/apply-palette.ts'
 import { palettes } from '@ui/theme/palettes/palettes.ts'
-import { colorSchemes, paletteIds } from '@ui/theme/theme-types.ts'
 
 const OKLCH = /^oklch\(\d+(?:\.\d+)? \d+(?:\.\d+)? \d+\)$/
 const tokenNames = Object.keys(heroUiVariables).sort()

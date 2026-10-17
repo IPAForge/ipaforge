@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import { compact } from '@loadstar/kernel'
 import { PageHeader } from '@ui/components/page-header.tsx'
-import type { TranslationKey } from '@ui/i18n/setup/i18next-types.ts'
+import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 
 type PlaceholderPageProps = {
   titleKey: TranslationKey

@@ -4,18 +4,20 @@ import { render } from '@testing-library/react'
 import { compact, createLogger, type LogRecord } from '@loadstar/kernel'
 import type { EngineClient } from '@loadstar/rpc'
 import { App } from '@ui/App.tsx'
-import type { LoadBundle } from '@ui/i18n/loading/locale-bundles.ts'
+import type { LoadBundle } from '@ui/i18n/loading/types.ts'
 import { prepareLanguage } from '@ui/i18n/setup/prepare-language.ts'
-import type { FakeDeviceFeed } from '@ui/services/engine/fake/fake-devices.ts'
 import { createFakeEngineClient } from '@ui/services/engine/fake/fake-engine-client.ts'
-import type { FakeScenarioId } from '@ui/services/engine/fake/fake-scenarios.ts'
+import type {
+  FakeDeviceFeed,
+  FakeScenarioId
+} from '@ui/services/engine/fake/types.ts'
 import { createMemoryPreferencesStore } from '@ui/services/preferences/preferences-store.ts'
 import { createMemoryClipboard } from '@ui/services/system/clipboard.ts'
+import { createFixedLocaleSource } from '@ui/services/system/locale-source.ts'
 import type {
   ColorScheme,
   ColorSchemeSource
-} from '@ui/services/system/color-scheme-source.ts'
-import { createFixedLocaleSource } from '@ui/services/system/locale-source.ts'
+} from '@ui/services/system/types.ts'
 import type { UiServices } from '@ui/services/ui-services.ts'
 
 /** A colour-scheme source the test can flip, like the OS switching to dark. */

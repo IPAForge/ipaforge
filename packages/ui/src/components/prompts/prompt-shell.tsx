@@ -2,7 +2,7 @@ import { Button, Modal } from '@heroui/react'
 import type { ReactNode, SubmitEvent } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import type { TranslationKey } from '@ui/i18n/setup/i18next-types.ts'
+import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 
 export type PromptShellProps = {
   title: string

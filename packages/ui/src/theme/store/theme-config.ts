@@ -1,4 +1,4 @@
-import type { ColorMode, PaletteId } from '@ui/theme/theme-types.ts'
+import type { ColorMode, PaletteId } from '@ui/theme/types.ts'
 
 export const defaultPalette: PaletteId = 'graphite'
 export const defaultColorMode: ColorMode = 'system'

@@ -2,7 +2,7 @@ import { ToggleButton, ToggleButtonGroup } from '@heroui/react'
 import { type Key, useId } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import type { TranslationKey } from '@ui/i18n/setup/i18next-types.ts'
+import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 
 type ChoiceGroupProps<T extends string> = {
   labelKey: TranslationKey

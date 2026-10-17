@@ -1,5 +1,5 @@
-import type { ColorScheme } from '@ui/services/system/color-scheme-source.ts'
-import type { PaletteTokens } from '@ui/theme/theme-types.ts'
+import type { ColorScheme } from '@ui/services/system/types.ts'
+import type { PaletteTokens } from '@ui/theme/types.ts'
 
 /** The HeroUI v3 theme variable each palette token sets (see `@heroui/styles` themes/default/variables.css). */
 export const heroUiVariables = {

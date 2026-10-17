@@ -4,7 +4,7 @@ import { I18nextProvider } from 'react-i18next'
 
 import { applyLocale } from '@ui/i18n/languages/apply-locale.ts'
 import { LanguageContext } from '@ui/i18n/provider/language-context.ts'
-import type { LanguageSetup } from '@ui/i18n/setup/prepare-language.ts'
+import type { LanguageSetup } from '@ui/i18n/setup/types.ts'
 
 type LanguageProviderProps = {
   /** From `prepareLanguage`: the active language's messages are already loaded. */

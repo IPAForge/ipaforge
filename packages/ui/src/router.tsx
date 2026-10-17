@@ -3,12 +3,10 @@ import {
   createRoute,
   createRouter,
   Outlet,
-  type RouterHistory,
   redirect
 } from '@tanstack/react-router'
 import type { ComponentType } from 'react'
 
-import type { Logger } from '@loadstar/kernel'
 import { compact } from '@loadstar/kernel'
 import { AppShell } from '@ui/components/shell/app-shell.tsx'
 import { AccountsPage } from '@ui/features/accounts/accounts-page.tsx'
@@ -18,7 +16,8 @@ import { InstallPage } from '@ui/features/install/install-page.tsx'
 import { LogsPage } from '@ui/features/logs/logs-page.tsx'
 import { PreloadPage } from '@ui/features/preload/preload-page.tsx'
 import { SettingsPage } from '@ui/features/settings/settings-page.tsx'
-import { homePath, type SectionId, sections } from '@ui/sections.ts'
+import { homePath, sections } from '@ui/sections.ts'
+import type { AppRouter, AppRouterOptions, SectionId } from '@ui/types.ts'
 
 const sectionPages = {
   install: InstallPage,
@@ -56,12 +55,6 @@ const sectionRoutes = sections.map((section) =>
 
 const routeTree = rootRoute.addChildren([indexRoute, ...sectionRoutes])
 
-export type AppRouterOptions = {
-  readonly logger: Logger
-  /** Defaults to the browser history; tests pass a memory history. */
-  readonly history?: RouterHistory | undefined
-}
-
 /** Code-based routes: `/` redirects home, one route per sidebar section, all inside the shell. */
 export const createAppRouter = ({ logger, history }: AppRouterOptions) => {
   const router = createRouter(compact({ routeTree, history }))
@@ -74,8 +67,6 @@ export const createAppRouter = ({ logger, history }: AppRouterOptions) => {
   )
   return router
 }
-
-export type AppRouter = ReturnType<typeof createAppRouter>
 
 declare module '@tanstack/react-router' {
   // biome-ignore lint/style/useConsistentTypeDefinitions: module augmentation merges into an interface, so it must stay one

@@ -9,7 +9,7 @@ import {
 } from '@ui/__tests__/test-services.tsx'
 import { fakeAccounts } from '@ui/services/engine/fake/fake-data.ts'
 import { createFakeEngineClient } from '@ui/services/engine/fake/fake-engine-client.ts'
-import { selectionKeys } from '@ui/state/selection/selection-store.ts'
+import { selectionKeys } from '@ui/state/selection/constants.ts'
 
 const WORK = 'work@example.com'
 const STUDIO = 'studio@example.com'

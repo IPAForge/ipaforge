@@ -18,25 +18,15 @@ import {
   teamsFor
 } from '@ui/services/engine/fake/fake-world.ts'
 import type {
+  FakeInstallState,
   ScriptedStep,
-  ScriptedStepContext
-} from '@ui/services/engine/fake/scripted-run.ts'
-
-export type FakeInstallState = {
-  readonly udid: string
-  readonly accountId: string
-  readonly teamId?: string
-  readonly isFreeTeam?: boolean
-}
+  ScriptedStepContext,
+  StepBody
+} from '@ui/services/engine/fake/types.ts'
 
 const TICKS = 8
 const RETRY_DELAY_MS = 2000
 const RETRIES = 2
-
-type StepBody = (
-  state: FakeInstallState,
-  context: ScriptedStepContext
-) => Promise<Partial<FakeInstallState> | undefined>
 
 const quick: StepBody = async () => undefined
 

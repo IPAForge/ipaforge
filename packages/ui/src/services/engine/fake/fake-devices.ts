@@ -2,17 +2,12 @@
 // each attach and detach with the list after it. Tests plug devices in and out; the `hot-plug` scenario does it on
 // a timer so the dev host shows the feed.
 import type { DeviceWatchEvent } from '@loadstar/rpc'
-import type { Device } from '@ui/services/engine/engine-types.ts'
 import { FAKE_IPAD, fakeDevices } from '@ui/services/engine/fake/fake-data.ts'
-
-type Listener = (event: DeviceWatchEvent) => void
-
-export type FakeDeviceFeed = {
-  list: () => Device[]
-  watch: (listener: Listener, signal?: AbortSignal) => () => void
-  plugIn: (device: Device) => void
-  unplug: (udid: string) => void
-}
+import type {
+  DeviceFeedListener,
+  FakeDeviceFeed
+} from '@ui/services/engine/fake/types.ts'
+import type { Device } from '@ui/services/engine/types.ts'
 
 /** How often the `hot-plug` scenario plugs the iPad in or out. */
 const HOT_PLUG_INTERVAL_MS = 5000
@@ -22,7 +17,7 @@ export const createFakeDeviceFeed = (
   initial: readonly Device[] = fakeDevices
 ): FakeDeviceFeed => {
   let devices = [...initial]
-  const listeners = new Set<Listener>()
+  const listeners = new Set<DeviceFeedListener>()
   let timer: ReturnType<typeof setInterval> | undefined
 
   const emit = (event: DeviceWatchEvent) => {

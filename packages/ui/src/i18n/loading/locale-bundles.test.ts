@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest'
 
 import {
-  type LanguageId,
   PSEUDO_LOCALE,
   SOURCE_LANGUAGE,
   shippedLanguages
 } from '@ui/i18n/languages/languages.ts'
+import type { LanguageId } from '@ui/i18n/languages/types.ts'
 import { loadLocaleBundle } from '@ui/i18n/loading/locale-bundles.ts'
 import de from '@ui/locales/de.json'
 

@@ -3,7 +3,7 @@ import ICU from 'i18next-icu'
 
 import type { Logger } from '@loadstar/kernel'
 import { SOURCE_LANGUAGE } from '@ui/i18n/languages/languages.ts'
-import type {} from '@ui/i18n/setup/i18next-types.ts'
+import type {} from '@ui/i18n/setup/types.ts'
 import en from '@ui/locales/en.json'
 
 export type CreateI18nOptions = {

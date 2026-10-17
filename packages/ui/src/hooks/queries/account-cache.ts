@@ -4,7 +4,7 @@
 import type { QueryClient } from '@tanstack/react-query'
 
 import { queryKeys } from '@ui/hooks/queries/query-keys.ts'
-import type { Account } from '@ui/services/engine/engine-types.ts'
+import type { Account } from '@ui/services/engine/types.ts'
 
 /** The saved list, read again; the account-scoped queries under it are left alone (`exact`). */
 const refreshAccountList = (queryClient: QueryClient) =>

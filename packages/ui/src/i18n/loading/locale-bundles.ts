@@ -1,11 +1,9 @@
 // Every language except English is its own chunk, fetched the first time it is shown.
 
-import { type LanguageId, PSEUDO_LOCALE } from '@ui/i18n/languages/languages.ts'
+import { PSEUDO_LOCALE } from '@ui/i18n/languages/languages.ts'
+import type { LoadBundle } from '@ui/i18n/loading/types.ts'
 import type { MessageTree } from '@ui/i18n/pseudo-locale.ts'
 import en from '@ui/locales/en.json'
-
-/** Fetches a language's messages. Rejects when the language has no bundle or it can't be fetched. */
-export type LoadBundle = (language: LanguageId) => Promise<MessageTree>
 
 const JSON_EXTENSION = '.json'
 

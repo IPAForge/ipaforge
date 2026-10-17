@@ -7,7 +7,7 @@ import {
   renderApp,
   type TestServicesOptions
 } from '@ui/__tests__/test-services.tsx'
-import { selectionKeys } from '@ui/state/selection/selection-store.ts'
+import { selectionKeys } from '@ui/state/selection/constants.ts'
 
 const WORK = 'work@example.com'
 const STUDIO = 'studio@example.com'

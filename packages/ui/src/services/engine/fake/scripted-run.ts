@@ -3,47 +3,17 @@
 // and resume from a checkpoint. It stands in for the installer's pipeline in the fake Engine.
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
 import type {
-  CommandOptions,
   PipelineResult,
   PromptRequest,
   RunEvent,
   RunHandle
 } from '@loadstar/rpc'
-
-export type ScriptedStepContext = {
-  readonly signal: AbortSignal
-  /** Reports progress within the step, then waits one tick. */
-  progress(
-    fraction: number,
-    detail?: Readonly<Record<string, unknown>>
-  ): Promise<void>
-  prompt<T>(request: PromptRequest): Promise<T>
-  /** Reports an automatic retry, then waits its delay. */
-  retrying(attempt: number, delayMs: number, code: string): Promise<void>
-}
-
-export type ScriptedStep<S> = {
-  readonly stepId: string
-  readonly labelKey: string
-  readonly weight?: number
-  readonly skip?: (state: S) => boolean
-  run(state: S, context: ScriptedStepContext): Promise<Partial<S> | undefined>
-}
-
-export type ScriptedRun<S> = {
-  readonly pipelineId: string
-  readonly steps: readonly ScriptedStep<S>[]
-  readonly initial: S
-  readonly options?: CommandOptions<S> | undefined
-  /** Pause between events; 0 in tests. */
-  readonly delayMs: number
-}
-
-type Waiting = {
-  readonly request: PromptRequest
-  readonly resolve: (answer: unknown) => void
-  readonly reject: (error: unknown) => void
-}
+import type {
+  PendingPrompt,
+  ScriptedRun,
+  ScriptedStep,
+  ScriptedStepContext
+} from '@ui/services/engine/fake/types.ts'
 
 const weightOf = <S>(step: ScriptedStep<S>) => step.weight ?? 1
 
@@ -84,9 +54,9 @@ const createEvents = () => {
 }
 
 const createPrompts = (emit: (event: RunEvent) => void) => {
-  let waiting: Waiting | undefined
+  let waiting: PendingPrompt | undefined
 
-  const take = (): Waiting => {
+  const take = (): PendingPrompt => {
     const current = waiting
     if (!current)
       throw new LoadstarError(ErrorCode.Unexpected, {
