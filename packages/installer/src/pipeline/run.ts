@@ -2,35 +2,16 @@
 // cancellation or failure with a checkpoint to resume from.
 import { attemptStep } from '@installer/pipeline/attempt-step.ts'
 import { asLoadstarError, isAbort } from '@installer/pipeline/errors.ts'
-import type { PipelineEvent } from '@installer/pipeline/events.ts'
 import { createProgress } from '@installer/pipeline/progress.ts'
-import type { Checkpoint, PipelineResult } from '@installer/pipeline/result.ts'
-import {
-  type PromptRequest,
-  type Step,
-  stepWeight
-} from '@installer/pipeline/step.ts'
+import { stepWeight } from '@installer/pipeline/step.ts'
 import { createStepContext } from '@installer/pipeline/step-context.ts'
-
-export type RunOptions<S> = {
-  readonly onEvent?: (event: PipelineEvent) => void
-  readonly onPrompt?: (
-    request: PromptRequest,
-    signal: AbortSignal
-  ) => Promise<unknown>
-  readonly signal?: AbortSignal
-  /** Continue from an earlier failed or cancelled run of the same pipeline. */
-  readonly resume?: Checkpoint<S>
-  /** Attempts for idempotent steps on transient errors (default 3). */
-  readonly attempts?: number
-  readonly sleep?: (ms: number, signal?: AbortSignal) => Promise<void>
-}
-
-export type PipelineDefinition<S> = {
-  readonly id: string
-  readonly steps: readonly Step<S>[]
-  readonly totalWeight: number
-}
+import type {
+  Checkpoint,
+  PipelineDefinition,
+  PipelineResult,
+  RunOptions,
+  Step
+} from '@installer/pipeline/types.ts'
 
 const assertResumable = <S>(
   pipelineId: string,

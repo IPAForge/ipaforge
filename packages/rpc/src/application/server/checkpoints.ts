@@ -1,23 +1,7 @@
 // Checkpoints of failed or cancelled runs, kept on the Engine's side: their state holds open files, and the UI must
 // not be able to hand the Engine a state of its own making. The UI resumes by reference.
-import type { Checkpoint } from '@loadstar/installer'
+import type { CheckpointStore, Kept } from '@rpc/application/server/types.ts'
 import { unknownReference } from '@rpc/domain/errors.ts'
-import type { RemoteCheckpoint } from '@rpc/domain/protocol/messages.ts'
-import type { Command } from '@rpc/domain/protocol/requests.ts'
-
-type Kept = {
-  readonly command: Command
-  readonly checkpoint: Checkpoint<unknown>
-}
-
-export type CheckpointStore = {
-  keep(command: Command, checkpoint: Checkpoint<unknown>): RemoteCheckpoint
-  /** The checkpoint to resume `command` from. */
-  get(id: string, command: Command): Checkpoint<unknown>
-  /** Called once a resumed run has started: it makes its own checkpoint if it stops again. */
-  forget(id: string): void
-  clear(): void
-}
 
 export const createCheckpointStore = (): CheckpointStore => {
   const kept = new Map<string, Kept>()

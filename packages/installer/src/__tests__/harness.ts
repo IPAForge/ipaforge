@@ -10,8 +10,7 @@ import {
   memorySecrets
 } from '@installer/__tests__/fakes.ts'
 import { createEngine } from '@installer/engine.ts'
-import type { PromptRequest } from '@installer/pipeline/step.ts'
-import type { PromptHandler } from '@installer/pipeline/step-context.ts'
+import type { PromptHandler, PromptRequest } from '@installer/pipeline/types.ts'
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
 
 export type HarnessOptions = {

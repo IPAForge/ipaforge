@@ -14,9 +14,9 @@ import {
 import { createHarness, scripted } from '@installer/__tests__/harness.ts'
 import { certificateKey } from '@installer/application/certificate-store.ts'
 import { PromptKind } from '@installer/domain/prompts.ts'
-import type { InstallState } from '@installer/domain/state.ts'
-import type { RunEvent } from '@installer/engine/run-handle.ts'
-import type { PipelineResult } from '@installer/pipeline/result.ts'
+import type { InstallState } from '@installer/domain/types.ts'
+import type { RunEvent } from '@installer/engine/types.ts'
+import type { PipelineResult } from '@installer/pipeline/types.ts'
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
 import { exportPkcs12 } from '@loadstar/signer'
 

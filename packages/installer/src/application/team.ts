@@ -1,9 +1,9 @@
 // Choosing the developer team: preselected when the choice is clear, otherwise the user picks one.
 import { ask } from '@installer/application/ask.ts'
-import type { InstallerDeps } from '@installer/deps.ts'
 import { PromptKind } from '@installer/domain/prompts.ts'
 import { preselectTeam, requireTeam } from '@installer/domain/team.ts'
-import type { StepContext } from '@installer/pipeline/step.ts'
+import type { StepContext } from '@installer/pipeline/types.ts'
+import type { InstallerDeps } from '@installer/types.ts'
 import type { DeveloperServices, Team } from '@loadstar/apple'
 
 /** The team remembered for the saved account (the last one it installed with). */

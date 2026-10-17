@@ -8,15 +8,16 @@ import {
 } from '@installer/application/free-apps.ts'
 import type { FlowRuntime } from '@installer/application/runtime.ts'
 import { StepLabel } from '@installer/domain/labels.ts'
-import type { InstallState, SignedIpa } from '@installer/domain/state.ts'
 import { StepWeight } from '@installer/domain/step-weights.ts'
-import type { Step, StepContext } from '@installer/pipeline/step.ts'
+import type { InstallState, SignedIpa } from '@installer/domain/types.ts'
+import type { Step, StepContext } from '@installer/pipeline/types.ts'
 import {
   appStepId,
   jobAt,
   required,
   updateJob
 } from '@installer/steps/app-job.ts'
+import { PERCENT } from '@installer/steps/constants.ts'
 import { signToScratch } from '@installer/steps/sign.ts'
 import type { DeviceHandle } from '@loadstar/device'
 import {
@@ -25,8 +26,6 @@ import {
   type FileSource,
   LoadstarError
 } from '@loadstar/kernel'
-
-const PERCENT = 100
 
 const hasCode = (error: unknown, code: ErrorCode): error is LoadstarError =>
   error instanceof LoadstarError && error.code === code

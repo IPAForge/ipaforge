@@ -1,31 +1,22 @@
 // installSideStore: SideStore (or LiveContainer with SideStore inside) from the catalog, signed with the team's
 // certificate shared into it, installed, and given this computer's pairing file.
 import type { FlowRuntime } from '@installer/application/runtime.ts'
-import type { AppSource, InstallState } from '@installer/domain/state.ts'
+import type { AppSource, InstallState } from '@installer/domain/types.ts'
 import {
   accountSteps,
   installAppSteps,
   prepareAppSteps
 } from '@installer/flows/app-steps.ts'
 import type { Flow } from '@installer/flows/flow.ts'
+import type {
+  InstallSideStoreInput,
+  SideStoreVariant
+} from '@installer/flows/types.ts'
 import { pipeline } from '@installer/pipeline/pipeline.ts'
 import { devicePreflightStep } from '@installer/steps/device-preflight.ts'
 import { installedPairingStep } from '@installer/steps/installed-pairing.ts'
 import { rememberTeamStep } from '@installer/steps/remember-team.ts'
-import type { Channel } from '@loadstar/catalog'
 import { compact } from '@loadstar/kernel'
-
-export type SideStoreVariant = 'sidestore' | 'livecontainer'
-
-export type InstallSideStoreInput = {
-  readonly udid: string
-  /** A saved Apple account (`SavedAccount.id`). */
-  readonly accountId: string
-  readonly teamId?: string
-  /** Default: the channel the catalog recommends for the device's iOS version. */
-  readonly channel?: Channel
-  readonly variant: SideStoreVariant
-}
 
 /** Catalog app and pairing-app entry for each variant. */
 const VARIANTS: Readonly<

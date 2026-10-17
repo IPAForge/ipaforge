@@ -1,8 +1,8 @@
 // Step groups the install flows share: getting and checking each app, the Apple account work done once per run,
 // and putting each app on the device.
 import type { FlowRuntime } from '@installer/application/runtime.ts'
-import type { AppSource, InstallState } from '@installer/domain/state.ts'
-import type { Step } from '@installer/pipeline/step.ts'
+import type { AppSource, InstallState } from '@installer/domain/types.ts'
+import type { Step } from '@installer/pipeline/types.ts'
 import { downloadStep, resolveReleaseStep } from '@installer/steps/acquire.ts'
 import { appIdsStep } from '@installer/steps/app-ids.ts'
 import { certificateStep } from '@installer/steps/certificate.ts'

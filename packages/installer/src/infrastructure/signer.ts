@@ -1,9 +1,10 @@
 // The default IpaSigner: @loadstar/signer with an Apple development identity (key imported through WebCrypto,
 // chain from the bundled Apple certificates).
-import type {
-  IpaSigner,
-  SignRequest
-} from '@installer/domain/ports/ipa-signer.ts'
+import type { IpaSigner, SignRequest } from '@installer/domain/ports/types.ts'
+import {
+  KEY_ALGORITHM,
+  SIGN_PROGRESS
+} from '@installer/infrastructure/constants.ts'
 import { compact, type Logger } from '@loadstar/kernel'
 import {
   discoverBundles,
@@ -16,12 +17,6 @@ import {
   type SigningIdentity,
   signIpa
 } from '@loadstar/signer'
-
-/** Apple issues RSA development certificates; Loadstar's keys come from `@loadstar/apple` as PKCS#8. */
-const KEY_ALGORITHM = { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' } as const
-
-/** Share of the step each signer stage reaches; bundle signing fills the span between them. */
-const Progress = { reconciling: 0.1, signingEnd: 0.9, writing: 0.95 } as const
 
 const signingIdentity = async (
   request: SignRequest
@@ -45,12 +40,13 @@ const signingIdentity = async (
 
 const progressFraction = (event: SignerProgress): number => {
   if (event.stage === 'reading') return 0
-  if (event.stage === 'reconciling') return Progress.reconciling
-  if (event.stage === 'writing') return Progress.writing
-  const span = Progress.signingEnd - Progress.reconciling
+  if (event.stage === 'reconciling') return SIGN_PROGRESS.reconciling
+  if (event.stage === 'writing') return SIGN_PROGRESS.writing
+  const span = SIGN_PROGRESS.signingEnd - SIGN_PROGRESS.reconciling
 
   return (
-    Progress.reconciling + (span * (event.index + 1)) / Math.max(1, event.total)
+    SIGN_PROGRESS.reconciling +
+    (span * (event.index + 1)) / Math.max(1, event.total)
   )
 }
 

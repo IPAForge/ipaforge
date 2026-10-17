@@ -16,3 +16,8 @@ export const SIDESTORE_FRAMEWORK_NAME = 'SideStoreApp.framework'
 export const CERTIFICATE_FILE = 'ALTCertificate.p12'
 /** Info.plist key holding the certificate's serial number. */
 export const CERTIFICATE_ID_KEY = 'ALTCertificateID'
+
+/** `CodeBundle.path` of the main app. */
+export const MAIN_APP_PATH = ''
+
+export const FRAMEWORK_PREFIX = `${FRAMEWORKS_DIR}/`

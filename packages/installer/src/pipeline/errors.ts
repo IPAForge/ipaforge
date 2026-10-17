@@ -1,16 +1,7 @@
 // How the runner reads a step's failure: retry it, treat it as a cancellation, or report it.
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
 
-/** Errors worth retrying for an idempotent step: the network, rate limits, busy services, dropped devices.
- * (Catalog download errors join this list when the install flows use the catalog.) */
-const TRANSIENT: ReadonlySet<string> = new Set([
-  ErrorCode.Offline,
-  ErrorCode.RateLimited,
-  ErrorCode.AppleServiceUnavailable,
-  ErrorCode.DeviceDisconnected,
-  ErrorCode.DeviceTimeout,
-  ErrorCode.AnisetteUnavailable
-])
+import { TRANSIENT } from '@installer/pipeline/constants.ts'
+import { ErrorCode, LoadstarError } from '@loadstar/kernel'
 
 export const isTransient = (error: unknown): boolean =>
   error instanceof LoadstarError && TRANSIENT.has(error.code)

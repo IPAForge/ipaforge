@@ -3,12 +3,13 @@
 import { ask } from '@installer/application/ask.ts'
 import type { FlowRuntime } from '@installer/application/runtime.ts'
 import { StepLabel } from '@installer/domain/labels.ts'
-import { type PairingAppChoice, PromptKind } from '@installer/domain/prompts.ts'
-import type { AccountState } from '@installer/domain/state.ts'
+import { PromptKind } from '@installer/domain/prompts.ts'
 import { StepWeight } from '@installer/domain/step-weights.ts'
+import type { PairingAppChoice } from '@installer/domain/types.ts'
 import type { Flow } from '@installer/flows/flow.ts'
+import type { PairingState, PlacePairingInput } from '@installer/flows/types.ts'
 import { pipeline } from '@installer/pipeline/pipeline.ts'
-import type { Step, StepContext } from '@installer/pipeline/step.ts'
+import type { Step, StepContext } from '@installer/pipeline/types.ts'
 import { required } from '@installer/steps/app-job.ts'
 import { devicePreflightStep } from '@installer/steps/device-preflight.ts'
 import { signInStep } from '@installer/steps/sign-in.ts'
@@ -18,24 +19,6 @@ import type {
   PairingTarget
 } from '@loadstar/device'
 import { compact } from '@loadstar/kernel'
-
-/** `replace` rewrites every file; `keep-existing` only writes the files an app does not have yet. */
-export type PairingOverwrite = 'replace' | 'keep-existing'
-
-export type PlacePairingInput = {
-  readonly udid: string
-  readonly accountId: string
-  /** Apps to place it into; without them the user picks. */
-  readonly bundleIds?: readonly string[]
-  readonly overwrite?: PairingOverwrite
-}
-
-export type PairingState = AccountState & {
-  readonly bundleIds?: readonly string[]
-  readonly overwrite: PairingOverwrite
-  readonly targets?: readonly AppFileTarget[]
-  readonly placed?: readonly AppFileTarget[]
-}
 
 export const PLACE_PAIRING = 'placePairing'
 

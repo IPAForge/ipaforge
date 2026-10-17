@@ -4,13 +4,13 @@
 import { loadTeamCertificate } from '@installer/application/certificate.ts'
 import type { FlowRuntime } from '@installer/application/runtime.ts'
 import { StepLabel } from '@installer/domain/labels.ts'
+import { StepWeight } from '@installer/domain/step-weights.ts'
 import type {
   AppJob,
   InstallState,
   SignedIpa
-} from '@installer/domain/state.ts'
-import { StepWeight } from '@installer/domain/step-weights.ts'
-import type { Step, StepContext } from '@installer/pipeline/step.ts'
+} from '@installer/domain/types.ts'
+import type { Step, StepContext } from '@installer/pipeline/types.ts'
 import { sideStoreCertificateAdditions } from '@installer/sidestore/certificate.ts'
 import {
   appStepId,
@@ -18,11 +18,10 @@ import {
   required,
   updateJob
 } from '@installer/steps/app-job.ts'
+import { SIGNED_PREFIX } from '@installer/steps/constants.ts'
 import type { CertificateIdentity } from '@loadstar/apple'
 import { compact } from '@loadstar/kernel'
 import type { BundleAdditions } from '@loadstar/signer'
-
-const SIGNED_PREFIX = 'signed'
 
 const certificateAdditions = (
   job: AppJob,

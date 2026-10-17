@@ -77,18 +77,3 @@ export const requestSchema = z.discriminatedUnion('type', [
   }),
   request('unsubscribe', { subscriptionId: idSchema })
 ])
-
-export type QueryCall = z.infer<typeof queryCallSchema>
-export type QueryMethod = QueryCall['method']
-export type QueryCallInput = z.input<typeof queryCallSchema>
-export type CommandCall = z.infer<typeof commandCallSchema>
-export type CommandCallInput = z.input<typeof commandCallSchema>
-export type Command = CommandCall['command']
-export type Request = z.infer<typeof requestSchema>
-/** A request as the client writes it; the version and id are added when it is sent. */
-export type RequestBody =
-  z.input<typeof requestSchema> extends infer R
-    ? R extends unknown
-      ? Omit<R, 'v' | 'id'>
-      : never
-    : never

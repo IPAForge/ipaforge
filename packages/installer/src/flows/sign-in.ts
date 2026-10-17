@@ -5,20 +5,9 @@ import { signInNewAccount } from '@installer/application/sign-in.ts'
 import { StepLabel } from '@installer/domain/labels.ts'
 import { StepWeight } from '@installer/domain/step-weights.ts'
 import type { Flow } from '@installer/flows/flow.ts'
+import type { SignInFlowInput, SignInState } from '@installer/flows/types.ts'
 import { pipeline } from '@installer/pipeline/pipeline.ts'
-import type { Step } from '@installer/pipeline/step.ts'
-import type { SavedAccount } from '@loadstar/apple'
-
-export type SignInFlowInput = {
-  readonly appleId: string
-  /** Save the password (in the SecretStore) so an expired session can be renewed without asking. Default: no. */
-  readonly rememberPassword?: boolean
-}
-
-export type SignInState = {
-  readonly appleId: string
-  readonly account?: SavedAccount
-}
+import type { Step } from '@installer/pipeline/types.ts'
 
 export const SIGN_IN = 'signIn'
 

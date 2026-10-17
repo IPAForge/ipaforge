@@ -3,6 +3,11 @@
 
 import { z } from 'zod'
 
+import { STORE_VERSION } from '@installer/application/constants.ts'
+import type {
+  CertificateStore,
+  StoredCertificate
+} from '@installer/application/types.ts'
 import type {
   CertificateIdentity,
   DevelopmentCertificate
@@ -17,12 +22,10 @@ import {
   utf8Encode
 } from '@loadstar/kernel'
 
-const STORE_VERSION = 1
-
 export const certificateKey = (accountId: string, teamId: string): string =>
   `installer/certificate/${accountId}/${teamId}`
 
-const storedSchema = z.object({
+export const storedSchema = z.object({
   version: z.literal(STORE_VERSION),
   serialNumber: z.string().min(1),
   id: z.string().optional(),
@@ -34,8 +37,6 @@ const storedSchema = z.object({
   content: z.string().min(1),
   privateKey: z.string().min(1)
 })
-
-type StoredCertificate = z.infer<typeof storedSchema>
 
 const encode = ({ certificate, privateKey }: CertificateIdentity): Uint8Array =>
   utf8Encode(
@@ -79,18 +80,6 @@ const decode = (raw: Uint8Array): CertificateIdentity | undefined => {
   } catch {
     return undefined
   }
-}
-
-export type CertificateStore = {
-  load(
-    accountId: string,
-    teamId: string
-  ): Promise<CertificateIdentity | undefined>
-  save(
-    accountId: string,
-    teamId: string,
-    identity: CertificateIdentity
-  ): Promise<void>
 }
 
 export const createCertificateStore = (
