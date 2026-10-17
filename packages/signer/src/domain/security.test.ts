@@ -3,29 +3,25 @@
 
 import { describe, expect, it } from 'vitest'
 
-import {
-  ErrorCode,
-  LoadstarError,
-  parseBinaryPlist,
-  utf8Encode
-} from '@loadstar/kernel'
+import { ErrorCode, parseBinaryPlist, utf8Encode } from '@loadstar/kernel'
+import { thrownCode } from '@signer/__tests__/errors.ts'
 import { readFixture } from '@signer/__tests__/fixtures.ts'
 import { DEFAULT_SIGNER_LIMITS } from '@signer/domain/config.ts'
 import { findSegment, parseMachO } from '@signer/domain/macho/parse.ts'
 
 const MAX_FAT_ARCHES = DEFAULT_SIGNER_LIMITS.machO.maxFatArches
 
-const expectFastFailure = (run: () => unknown, code: string): void => {
+/** Hostile input must be rejected within this budget, not exhaust CPU. */
+const FAST_MS = 1000
+
+/** How `run` failed (its error code) and whether it failed fast. */
+const hostile = (
+  run: () => unknown
+): { readonly code: string | undefined; readonly fast: boolean } => {
   const started = performance.now()
-  let caught: unknown
-  try {
-    run()
-  } catch (error) {
-    caught = error
-  }
-  expect(caught).toBeInstanceOf(LoadstarError)
-  expect((caught as LoadstarError).code).toBe(code)
-  expect(performance.now() - started).toBeLessThan(1000)
+  const code = thrownCode(run)
+
+  return { code, fast: performance.now() - started < FAST_MS }
 }
 
 /** Builds a bplist00 from raw object encodings (refs are 1 byte, offsets 4 bytes). */
@@ -64,10 +60,10 @@ describe('binary plist hardening', () => {
   it('rejects a container whose declared length exceeds the file (no huge allocation)', () => {
     // array with an extended length of 2^40 elements: 0xAF, then int marker 0x13 (8 bytes)
     const hugeArray = new Uint8Array([0xaf, 0x13, 0, 0, 0x01, 0, 0, 0, 0, 0])
-    expectFastFailure(
-      () => parseBinaryPlist(bplist([hugeArray])),
-      ErrorCode.InvalidPlist
-    )
+    expect(hostile(() => parseBinaryPlist(bplist([hugeArray])))).toEqual({
+      code: ErrorCode.InvalidPlist,
+      fast: true
+    })
   })
 
   it('rejects shared-reference expansion (a few hundred bytes describing 2^40 nodes)', () => {
@@ -78,10 +74,10 @@ describe('binary plist hardening', () => {
       (_, i) => new Uint8Array([0xa2, i + 1, i + 1])
     )
     objects.push(new Uint8Array([0x51, 0x78]))
-    expectFastFailure(
-      () => parseBinaryPlist(bplist(objects)),
-      ErrorCode.InvalidPlist
-    )
+    expect(hostile(() => parseBinaryPlist(bplist(objects)))).toEqual({
+      code: ErrorCode.InvalidPlist,
+      fast: true
+    })
   })
 
   it('caps expanded BYTES, not just object visits (one big string shared 62,500 times)', () => {
@@ -96,10 +92,9 @@ describe('binary plist hardening', () => {
       0x00,
       ...new Array(4096).fill(0x61)
     ])
-    expectFastFailure(
-      () => parseBinaryPlist(bplist([level(1), level(2), longString])),
-      ErrorCode.InvalidPlist
-    )
+    expect(
+      hostile(() => parseBinaryPlist(bplist([level(1), level(2), longString])))
+    ).toEqual({ code: ErrorCode.InvalidPlist, fast: true })
   })
 
   it('parses each shared object once (linear time on large but legal DAGs)', () => {
@@ -109,10 +104,10 @@ describe('binary plist hardening', () => {
       (_, i) => new Uint8Array([0xa2, i + 1, i + 1])
     )
     objects.push(new Uint8Array([0x51, 0x78]))
-    expectFastFailure(
-      () => parseBinaryPlist(bplist(objects)),
-      ErrorCode.InvalidPlist
-    )
+    expect(hostile(() => parseBinaryPlist(bplist(objects)))).toEqual({
+      code: ErrorCode.InvalidPlist,
+      fast: true
+    })
   })
 
   it('keeps the depth limit when a cached subtree is reused deeper in the tree', () => {
@@ -128,10 +123,10 @@ describe('binary plist hardening', () => {
     objects.push(...chain(1, 40, 41)) // objects 1..40, last → 41
     objects.push(new Uint8Array([0x51, 0x78])) // 41: "x"
     objects.push(...chain(42, 40, 1)) // objects 42..81, last → chainA head (1)
-    expectFastFailure(
-      () => parseBinaryPlist(bplist(objects)),
-      ErrorCode.InvalidPlist
-    )
+    expect(hostile(() => parseBinaryPlist(bplist(objects)))).toEqual({
+      code: ErrorCode.InvalidPlist,
+      fast: true
+    })
   })
 
   it('still parses legitimately shared values', () => {
@@ -149,7 +144,10 @@ describe('Mach-O hardening', () => {
   it(`rejects fat headers with more than ${MAX_FAT_ARCHES} slices`, () => {
     const bytes = fat.slice()
     new DataView(bytes.buffer).setUint32(4, MAX_FAT_ARCHES + 1, false)
-    expectFastFailure(() => parseMachO(bytes), ErrorCode.InvalidMachO)
+    expect(hostile(() => parseMachO(bytes))).toEqual({
+      code: ErrorCode.InvalidMachO,
+      fast: true
+    })
   })
 
   it('rejects overlapping fat slices (signing amplification)', () => {
@@ -158,7 +156,10 @@ describe('Mach-O hardening', () => {
     // point the second arch at the first arch's slice
     view.setUint32(8 + 20 + 8, view.getUint32(8 + 8, false), false)
     view.setUint32(8 + 20 + 12, view.getUint32(8 + 12, false), false)
-    expectFastFailure(() => parseMachO(bytes), ErrorCode.InvalidMachO)
+    expect(hostile(() => parseMachO(bytes))).toEqual({
+      code: ErrorCode.InvalidMachO,
+      fast: true
+    })
   })
 
   it('rejects a __LINKEDIT that claims to extend far past the file', () => {
@@ -173,7 +174,10 @@ describe('Mach-O hardening', () => {
       1n << 60n,
       true
     ) // filesize
-    expectFastFailure(() => parseMachO(bytes), ErrorCode.InvalidMachO)
+    expect(hostile(() => parseMachO(bytes))).toEqual({
+      code: ErrorCode.InvalidMachO,
+      fast: true
+    })
   })
 
   it('rejects a zero-size segment placed far outside the file', () => {
@@ -186,7 +190,10 @@ describe('Mach-O hardening', () => {
     const view = new DataView(bytes.buffer)
     view.setBigUint64(linkedit.commandOffset + 40, 1n << 60n, true) // fileoff
     view.setBigUint64(linkedit.commandOffset + 48, 0n, true) // filesize
-    expectFastFailure(() => parseMachO(bytes), ErrorCode.InvalidMachO)
+    expect(hostile(() => parseMachO(bytes))).toEqual({
+      code: ErrorCode.InvalidMachO,
+      fast: true
+    })
   })
 
   it('rejects a segment declaring more sections than its command holds', () => {
@@ -201,13 +208,19 @@ describe('Mach-O hardening', () => {
       0xffffffff,
       true
     ) // nsects
-    expectFastFailure(() => parseMachO(bytes), ErrorCode.InvalidMachO)
+    expect(hostile(() => parseMachO(bytes))).toEqual({
+      code: ErrorCode.InvalidMachO,
+      fast: true
+    })
   })
 
   it('rejects ncmds that cannot fit in sizeofcmds', () => {
     const bytes = readFixture('inputs', 'thin-min14').slice()
     new DataView(bytes.buffer).setUint32(16, 0xffffffff, true)
-    expectFastFailure(() => parseMachO(bytes), ErrorCode.InvalidMachO)
+    expect(hostile(() => parseMachO(bytes))).toEqual({
+      code: ErrorCode.InvalidMachO,
+      fast: true
+    })
   })
 
   it('rejects a code signature pointing outside the file', () => {
@@ -219,7 +232,10 @@ describe('Mach-O hardening', () => {
       0x7fffffff,
       true
     ) // datasize
-    expectFastFailure(() => parseMachO(bytes), ErrorCode.InvalidMachO)
+    expect(hostile(() => parseMachO(bytes))).toEqual({
+      code: ErrorCode.InvalidMachO,
+      fast: true
+    })
   })
 })
 
@@ -227,10 +243,10 @@ describe('limits are configurable', () => {
   it('applies caller overrides for Mach-O and plists', () => {
     const fat = readFixture('inputs', 'fat')
     expect(parseMachO(fat).slices).toHaveLength(2) // default allows it
-    expectFastFailure(
-      () => parseMachO(fat, { maxFatArches: 1 }),
-      ErrorCode.InvalidMachO
-    )
+    expect(hostile(() => parseMachO(fat, { maxFatArches: 1 }))).toEqual({
+      code: ErrorCode.InvalidMachO,
+      fast: true
+    })
 
     const nested = bplist([
       new Uint8Array([0xa1, 1]),
@@ -239,17 +255,17 @@ describe('limits are configurable', () => {
     ])
     expect(parseBinaryPlist(nested)).toEqual([['x']])
     const strict = { ...DEFAULT_SIGNER_LIMITS.plist, maxDepth: 1 }
-    expectFastFailure(
-      () => parseBinaryPlist(nested, strict),
-      ErrorCode.InvalidPlist
-    )
-    expectFastFailure(
-      () =>
+    expect(hostile(() => parseBinaryPlist(nested, strict))).toEqual({
+      code: ErrorCode.InvalidPlist,
+      fast: true
+    })
+    expect(
+      hostile(() =>
         parseBinaryPlist(nested, {
           ...DEFAULT_SIGNER_LIMITS.plist,
           maxExpandedNodes: 2
-        }),
-      ErrorCode.InvalidPlist
-    )
+        })
+      )
+    ).toEqual({ code: ErrorCode.InvalidPlist, fast: true })
   })
 })

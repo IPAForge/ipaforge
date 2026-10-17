@@ -112,6 +112,7 @@ describe('installSideStore', () => {
     ] as never)
     expect(additions?.[0]?.files?.has('ALTCertificate.p12')).toBe(true)
     expect(exportPkcs12).toHaveBeenCalledWith(
+      // eslint-disable-next-line sonarjs/no-hardcoded-passwords -- the password derived from the fake machine ID
       expect.objectContaining({ password: 'machine-SERIAL1' })
     )
   })

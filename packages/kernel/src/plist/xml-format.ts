@@ -1,5 +1,7 @@
 // Text forms CoreFoundation's XML writer uses for strings, reals and dates.
 
+import { trimEndChar } from '@kernel/text/trim.ts'
+
 /** Significant digits of `%.17g`. */
 const G17_DIGITS = 17
 /** `%g` switches to exponent form below this exponent (and at or above the precision). */
@@ -9,8 +11,14 @@ const EXPONENT_MIN_DIGITS = 2
 export const escapeText = (text: string): string =>
   text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
-const stripZeros = (digits: string): string =>
-  digits.includes('.') ? digits.replace(/\.?0+$/, '') : digits
+/** Trailing fraction zeros removed, and the point with them when nothing follows it ("1.50" → "1.5", "2.00" → "2"). */
+const stripZeros = (digits: string): string => {
+  if (!digits.includes('.')) return digits
+  const trimmed = trimEndChar(digits, '0')
+  if (trimmed === digits) return digits
+
+  return trimmed.endsWith('.') ? trimmed.slice(0, -1) : trimmed
+}
 
 /**
  * C `printf("%.17g")`, which CoreFoundation uses for `<real>`: 17 significant digits, trailing

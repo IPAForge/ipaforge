@@ -1,6 +1,7 @@
-// ESLint does one thing here: blank lines between statements, which Biome can't format.
-// Biome does everything else (formatting, imports, lint). Plugins come from tooling/eslint.
-import { parser, stylistic } from '@loadstar/tooling-eslint'
+// ESLint does two things Biome can't: blank lines between statements, and
+// SonarSource's rules (eslint-plugin-sonarjs). Biome does everything else
+// (formatting, imports, lint). Plugins come from tooling/eslint.
+import { parser, sonarjs, stylistic } from '@loadstar/tooling-eslint'
 
 export default [
   {
@@ -30,5 +31,31 @@ export default [
         { blankLine: 'always', prev: ['const', 'let'], next: 'return' }
       ]
     }
+  },
+  {
+    ...sonarjs.configs.recommended,
+    files: ['**/*.{ts,tsx}'],
+    // TODO(sonar-ui): packages/ui is cleaned up separately; drop this ignore then.
+    ignores: ['packages/ui/**'],
+    rules: {
+      ...sonarjs.configs.recommended.rules,
+      // S4782: with exactOptionalPropertyTypes, `?` and `| undefined` mean different things.
+      'sonarjs/no-redundant-optional': 'off',
+      // Biome's noUnusedImports already fails on these.
+      'sonarjs/unused-import': 'off',
+      // Biome's noUnusedVariables already warns, and allows the `_` prefix the conventions use.
+      'sonarjs/no-unused-vars': 'off'
+    }
+  },
+  {
+    // Maintainer scripts and tests run `codesign`, `openssl` and `unzip` from PATH on purpose.
+    files: [
+      'scripts/**',
+      'packages/*/scripts/**',
+      'apps/desktop/scripts/**',
+      'fixtures/**',
+      '**/*.test.ts'
+    ],
+    rules: { 'sonarjs/no-os-command-from-path': 'off' }
   }
 ]

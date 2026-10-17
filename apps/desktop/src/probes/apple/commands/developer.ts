@@ -6,11 +6,13 @@ import type { DeveloperServices, Team } from '@loadstar/apple'
 /** `YYYY-MM-DD`. */
 const day = (date: Date): string => date.toISOString().slice(0, 10)
 
+/** A line of an indented list, with its leading line break. */
+const listItem = (text: string): string => `\n    - ${text}`
+
 const printDevices = async (developer: DeveloperServices, team: Team) => {
   const devices = await developer.devices(team)
-  console.log(
-    `  devices: ${devices.length}${devices.map((d) => `\n    - ${d.name ?? '?'}`).join('')}`
-  )
+  const names = devices.map((d) => listItem(d.name ?? '?')).join('')
+  console.log(`  devices: ${devices.length}${names}`)
 }
 
 const printCertificates = async (developer: DeveloperServices, team: Team) => {
@@ -18,21 +20,20 @@ const printCertificates = async (developer: DeveloperServices, team: Team) => {
   console.log(`  iOS development certificates: ${certificates.length}`)
   for (const certificate of certificates) {
     const madeBy = certificate.machineName ?? certificate.name ?? '?'
-    console.log(
-      `    - made by "${madeBy}", expires ${certificate.expiresAt ? day(certificate.expiresAt) : '?'}`
-    )
+    const expires = certificate.expiresAt ? day(certificate.expiresAt) : '?'
+    console.log(`    - made by "${madeBy}", expires ${expires}`)
   }
 }
 
 const printAppIds = async (developer: DeveloperServices, team: Team) => {
   const { appIds, quota } = await developer.appIds(team)
+  const max = quota.max ? ` of ${quota.max}` : ''
   console.log(
-    `  App IDs: ${appIds.length}, available now: ${quota.available}${quota.max ? ` of ${quota.max}` : ''}`
+    `  App IDs: ${appIds.length}, available now: ${quota.available}${max}`
   )
   for (const appId of appIds) {
-    console.log(
-      `    - ${appId.identifier}${appId.expiresAt ? ` (frees ${day(appId.expiresAt)})` : ''}`
-    )
+    const frees = appId.expiresAt ? ` (frees ${day(appId.expiresAt)})` : ''
+    console.log(`    - ${appId.identifier}${frees}`)
   }
 }
 

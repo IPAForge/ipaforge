@@ -229,7 +229,7 @@ describe('pairing and sessions', () => {
     expect(
       await codeOf(rig.manager.open(rig.device.udid, { method: 'own' }))
     ).toBe(ErrorCode.DeviceTimeout)
-    expect(rig.sleeps.length).toBe(5)
+    expect(rig.sleeps).toHaveLength(5)
   })
 
   it('does not pair when autoPair is off', async () => {

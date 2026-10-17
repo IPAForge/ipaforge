@@ -4,6 +4,7 @@ import * as asn1js from 'asn1js'
 import * as pkijs from 'pkijs'
 
 import { toBase64 } from '@loadstar/kernel'
+import { randomSerialNumber } from '@signer/__tests__/serial.ts'
 import type { SigningIdentity } from '@signer/infrastructure/cms/index.ts'
 import {
   OID_BASIC_CONSTRAINTS,
@@ -70,7 +71,7 @@ export const createTestIdentity = async (
   const certificate = new pkijs.Certificate()
   certificate.version = 2
   certificate.serialNumber = new asn1js.Integer({
-    value: Math.floor(Math.random() * 2 ** 31) + 1
+    value: randomSerialNumber()
   })
   const subject = rdn([
     [OID_COUNTRY, 'US'],

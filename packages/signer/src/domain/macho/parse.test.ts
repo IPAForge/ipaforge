@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode } from '@loadstar/kernel'
+import { thrownCode } from '@signer/__tests__/errors.ts'
 import { binaryCases, readFixture } from '@signer/__tests__/fixtures.ts'
 import {
   CPU_TYPE_ARM64,
@@ -15,16 +16,6 @@ import {
   packVersion,
   parseVersion
 } from '@signer/domain/macho/version.ts'
-
-const expectCode = (fn: () => unknown, code: string): void => {
-  try {
-    fn()
-    expect.unreachable('expected a LoadstarError')
-  } catch (error) {
-    expect(error).toBeInstanceOf(LoadstarError)
-    expect((error as LoadstarError).code).toBe(code)
-  }
-}
 
 describe('parseMachO on golden fixtures', () => {
   it.each(binaryCases().map((c) => [c.name, c] as const))(
@@ -87,37 +78,37 @@ describe('parseMachO on golden fixtures', () => {
 
 describe('parseMachO errors', () => {
   it('rejects non-Mach-O input', () => {
-    expectCode(
-      () => parseMachO(new Uint8Array([1, 2, 3])),
+    expect(thrownCode(() => parseMachO(new Uint8Array([1, 2, 3])))).toBe(
       ErrorCode.InvalidMachO
     )
-    expectCode(
-      () => parseMachO(new TextEncoder().encode('PK\u0003\u0004 not a binary')),
-      ErrorCode.InvalidMachO
-    )
+    expect(
+      thrownCode(() =>
+        parseMachO(new TextEncoder().encode('PK\u0003\u0004 not a binary'))
+      )
+    ).toBe(ErrorCode.InvalidMachO)
   })
 
   it('rejects truncated load commands', () => {
     const bytes = readFixture('inputs', 'thin-min14').slice(0, 40)
-    expectCode(() => parseMachO(bytes), ErrorCode.InvalidMachO)
+    expect(thrownCode(() => parseMachO(bytes))).toBe(ErrorCode.InvalidMachO)
   })
 
   it('rejects a load command whose size runs past sizeofcmds', () => {
     const bytes = readFixture('inputs', 'thin-min14').slice()
     new DataView(bytes.buffer).setUint32(32 + 4, 0xffff, true) // first cmdsize
-    expectCode(() => parseMachO(bytes), ErrorCode.InvalidMachO)
+    expect(thrownCode(() => parseMachO(bytes))).toBe(ErrorCode.InvalidMachO)
   })
 
   it('rejects fat slices pointing outside the file', () => {
     const bytes = readFixture('inputs', 'fat').slice()
     new DataView(bytes.buffer).setUint32(8 + 12, 0x7fffffff, false) // first arch size
-    expectCode(() => parseMachO(bytes), ErrorCode.InvalidMachO)
+    expect(thrownCode(() => parseMachO(bytes))).toBe(ErrorCode.InvalidMachO)
   })
 
   it('reports fat_arch_64 as unsupported', () => {
     const bytes = new Uint8Array(64)
     new DataView(bytes.buffer).setUint32(0, 0xcafebabf, false)
-    expectCode(() => parseMachO(bytes), ErrorCode.UnsupportedArch)
+    expect(thrownCode(() => parseMachO(bytes))).toBe(ErrorCode.UnsupportedArch)
   })
 })
 

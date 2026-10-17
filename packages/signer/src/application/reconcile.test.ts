@@ -14,13 +14,13 @@ import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 import {
   ErrorCode,
   fixedClock,
-  LoadstarError,
   type PlistDict,
   parsePlist,
   silentLogger,
   toHex,
   utf8Encode
 } from '@loadstar/kernel'
+import { rejection } from '@signer/__tests__/errors.ts'
 import { FIXTURES_DIR, readTree } from '@signer/__tests__/fixtures.ts'
 import {
   createTestIdentity,
@@ -107,19 +107,6 @@ const infoOf = (tree: BundleTree, path: string): PlistDict => {
   return parsePlist(entry.data) as PlistDict
 }
 
-const expectCode = async (
-  promise: Promise<unknown> | (() => unknown),
-  code: string
-): Promise<void> => {
-  try {
-    await (typeof promise === 'function' ? promise() : promise)
-    expect.unreachable(`expected ${code}`)
-  } catch (error) {
-    expect(error).toBeInstanceOf(LoadstarError)
-    expect((error as LoadstarError).code).toBe(code)
-  }
-}
-
 describe('provisioning profiles', () => {
   it("parses Apple's CMS envelope", async () => {
     const profile = parseProvisioningProfile(await profileFor(NEW_MAIN))
@@ -162,10 +149,13 @@ describe('provisioning profiles', () => {
   })
 
   it('rejects garbage with signer.invalid_profile', async () => {
-    await expectCode(
-      () => parseProvisioningProfile(utf8Encode('not a profile')),
-      ErrorCode.InvalidProfile
-    )
+    expect(
+      (
+        await rejection(() =>
+          parseProvisioningProfile(utf8Encode('not a profile'))
+        )
+      )?.code
+    ).toBe(ErrorCode.InvalidProfile)
   })
 })
 
@@ -248,20 +238,26 @@ describe('reconcileForSideload', () => {
     const options = await baseOptions({
       profiles: new Map([[NEW_MAIN, await profileFor(NEW_MAIN, overrides)]])
     })
-    await expectCode(
-      () => reconcileForSideload(loadTree(), options, silentLogger),
-      code
-    )
+    expect(
+      (
+        await rejection(() =>
+          reconcileForSideload(loadTree(), options, silentLogger)
+        )
+      )?.code
+    ).toBe(code)
   })
 
   it('fails when an extension has no profile, or prunes it on request', async () => {
     const onlyMain = await baseOptions({
       profiles: new Map([[NEW_MAIN, await profileFor(NEW_MAIN)]])
     })
-    await expectCode(
-      () => reconcileForSideload(loadTree(), onlyMain, silentLogger),
-      ErrorCode.ProfileMismatch
-    )
+    expect(
+      (
+        await rejection(() =>
+          reconcileForSideload(loadTree(), onlyMain, silentLogger)
+        )
+      )?.code
+    ).toBe(ErrorCode.ProfileMismatch)
 
     const tree = loadTree()
     const result = reconcileForSideload(
@@ -287,10 +283,13 @@ describe('reconcileForSideload', () => {
         info.replace('com.loadstar.fixture.app.ext', 'com.elsewhere.ext')
       )
     })
-    await expectCode(
-      async () => reconcileForSideload(tree, await baseOptions(), silentLogger),
-      ErrorCode.ExtensionPrefix
-    )
+    expect(
+      (
+        await rejection(async () =>
+          reconcileForSideload(tree, await baseOptions(), silentLogger)
+        )
+      )?.code
+    ).toBe(ErrorCode.ExtensionPrefix)
   })
 })
 

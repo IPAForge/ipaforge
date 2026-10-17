@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import {
+  compact,
   createDict,
   fromHex,
   isPlistDict,
@@ -11,6 +12,7 @@ import {
 import { type FixtureCase, readFixture } from '@signer/__tests__/fixtures.ts'
 import { signedTargets } from '@signer/__tests__/targets.ts'
 import {
+  type BlobEntry,
   blobWrapper,
   buildCodeDirectory,
   buildSuperBlob,
@@ -24,6 +26,7 @@ import {
   CSSLOT_REQUIREMENTS,
   CSSLOT_SIGNATURESLOT,
   designatedRequirementSet,
+  type ExecSegment,
   emptyRequirementSet,
   entitlementsDerBlob,
   entitlementsXmlBlob,
@@ -38,6 +41,33 @@ import { createHasher } from '@signer/infrastructure/hashing/index.ts'
 const hasher = createHasher()
 
 const targets = signedTargets()
+
+const blobHex = (blobs: readonly BlobEntry[], slot: number): string =>
+  toHex(findBlob(blobs, slot) ?? new Uint8Array())
+
+/** Slot layout: executables carry entitlements, libraries do not; the CMS wrapper is always present. */
+const expectedSlots = (
+  blobs: readonly BlobEntry[],
+  hasEntitlements: boolean
+): number[] => {
+  const slots = [CSSLOT_CODEDIRECTORY, CSSLOT_REQUIREMENTS]
+  if (hasEntitlements) slots.push(CSSLOT_ENTITLEMENTS, CSSLOT_DER_ENTITLEMENTS)
+  if (findBlob(blobs, CSSLOT_ALTERNATE_CODEDIRECTORIES))
+    slots.push(CSSLOT_ALTERNATE_CODEDIRECTORIES)
+  slots.push(CSSLOT_SIGNATURESLOT)
+  return slots
+}
+
+const expectedFixture = (
+  parts: readonly string[] | undefined
+): Uint8Array | undefined =>
+  parts ? readFixture('expected', ...parts) : undefined
+
+const execSegmentOf = (slice: Slice, flags: bigint): ExecSegment => {
+  const text = findSegment(slice, '__TEXT')
+
+  return { base: text?.fileoff ?? 0n, limit: text?.filesize ?? 0n, flags }
+}
 
 const signatureOf = (slice: Slice) => {
   const sig = slice.codeSignature
@@ -83,31 +113,24 @@ describe.each(targets.map((t) => [t.label, t] as const))(
         const xml = entitlementsBytes && entitlementsXmlBlob(entitlementsBytes)
         const der = entitlements && entitlementsDerBlob(entitlements)
 
-        // slot layout: executables carry entitlements, libraries do not; the CMS wrapper is always present
-        const expectedSlots = [CSSLOT_CODEDIRECTORY, CSSLOT_REQUIREMENTS]
-        if (xml)
-          expectedSlots.push(CSSLOT_ENTITLEMENTS, CSSLOT_DER_ENTITLEMENTS)
-        if (findBlob(blobs, CSSLOT_ALTERNATE_CODEDIRECTORIES))
-          expectedSlots.push(CSSLOT_ALTERNATE_CODEDIRECTORIES)
-        expectedSlots.push(CSSLOT_SIGNATURESLOT)
-        expect(blobs.map((b) => b.slot)).toEqual(expectedSlots)
-
-        expect(
-          toHex(findBlob(blobs, CSSLOT_REQUIREMENTS) ?? new Uint8Array())
-        ).toBe(toHex(requirements))
+        expect(blobs.map((b) => b.slot)).toEqual(
+          expectedSlots(blobs, xml !== undefined)
+        )
+        expect(blobHex(blobs, CSSLOT_REQUIREMENTS)).toBe(toHex(requirements))
         if (xml && der) {
-          expect(
-            toHex(findBlob(blobs, CSSLOT_ENTITLEMENTS) ?? new Uint8Array())
-          ).toBe(toHex(xml))
-          expect(
-            toHex(findBlob(blobs, CSSLOT_DER_ENTITLEMENTS) ?? new Uint8Array())
-          ).toBe(toHex(der))
+          expect(blobHex(blobs, CSSLOT_ENTITLEMENTS)).toBe(toHex(xml))
+          expect(blobHex(blobs, CSSLOT_DER_ENTITLEMENTS)).toBe(toHex(der))
         }
-        expect(
-          toHex(findBlob(blobs, CSSLOT_SIGNATURESLOT) ?? new Uint8Array())
-        ).toBe(toHex(blobWrapper()))
+        expect(blobHex(blobs, CSSLOT_SIGNATURESLOT)).toBe(toHex(blobWrapper()))
 
-        const text = findSegment(slice, '__TEXT')
+        const special = compact({
+          infoPlist: expectedFixture(target.infoPlist),
+          requirements,
+          codeResources: expectedFixture(target.codeResources),
+          // both entitlement slots, or neither
+          entitlements: der && xml,
+          derEntitlements: xml && der
+        })
         for (const slot of [
           CSSLOT_CODEDIRECTORY,
           CSSLOT_ALTERNATE_CODEDIRECTORIES
@@ -125,28 +148,11 @@ describe.each(targets.map((t) => [t.label, t] as const))(
               pageSize: info.pageSize,
               image: slice.bytes,
               codeLimit,
-              execSegment: {
-                base: text?.fileoff ?? 0n,
-                limit: text?.filesize ?? 0n,
-                flags: execSegFlags(target.role, entitlements)
-              },
-              special: {
-                ...(target.infoPlist
-                  ? { infoPlist: readFixture('expected', ...target.infoPlist) }
-                  : {}),
-                requirements,
-                ...(target.codeResources
-                  ? {
-                      codeResources: readFixture(
-                        'expected',
-                        ...target.codeResources
-                      )
-                    }
-                  : {}),
-                ...(xml && der
-                  ? { entitlements: xml, derEntitlements: der }
-                  : {})
-              }
+              execSegment: execSegmentOf(
+                slice,
+                execSegFlags(target.role, entitlements)
+              ),
+              special
             },
             hasher
           )

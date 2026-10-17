@@ -50,6 +50,45 @@ const TEST_FILE = /\.test\.tsx?$|[\\/]__tests__[\\/]/
 /** Package directories scanned; only `src` (non-test) code must be platform-free, all must use absolute imports. */
 const SCANNED_DIRS = ['src', 'test', 'scripts'] as const
 
+/** A source file being checked, with what its rules depend on. */
+type PackageFile = {
+  readonly pkg: string
+  readonly packages: readonly string[]
+  readonly pkgRoot: string
+  readonly file: string
+  /** Shipped (non-test `src`) code must also be platform-free and respect the package graph. */
+  readonly shipped: boolean
+  /** The path in reports: relative to the root, with '/' on every OS. */
+  readonly display: string
+}
+
+/** A package's source files, and whether each one ships. */
+const sourceFilesOf = (
+  pkgRoot: string
+): { readonly file: string; readonly shipped: boolean }[] =>
+  SCANNED_DIRS.flatMap((dir) =>
+    listFiles(join(pkgRoot, dir))
+      .filter((file) => SOURCE_FILE.test(file))
+      .map((file) => ({
+        file,
+        shipped: dir === 'src' && !TEST_FILE.test(file)
+      }))
+  )
+
+const violationsIn = (target: PackageFile): Violation[] => {
+  const { pkg, packages, pkgRoot, file, shipped, display } = target
+
+  return findImports(readFileSync(file, 'utf8')).flatMap(
+    ({ specifier, line }) => {
+      const violation =
+        classifyImportStyle(pkg, packages, pkgRoot, file, specifier) ??
+        (shipped ? classify(pkg, specifier) : undefined)
+
+      return violation ? [{ file: display, line, specifier, ...violation }] : []
+    }
+  )
+}
+
 export const checkBoundaries = (
   root: string,
   onFile: (file: string) => void = () => {}
@@ -61,22 +100,13 @@ export const checkBoundaries = (
   const packages = listDirs(packagesDir)
   for (const pkg of packages) {
     const pkgRoot = join(packagesDir, pkg)
-    for (const dir of SCANNED_DIRS) {
-      for (const file of listFiles(join(pkgRoot, dir))) {
-        if (!SOURCE_FILE.test(file)) continue
-        const shipped = dir === 'src' && !TEST_FILE.test(file)
-        filesChecked++
-        const display = relative(root, file).split(sep).join('/') // same output on every OS
-        onFile(display)
-        const source = readFileSync(file, 'utf8')
-        for (const { specifier, line } of findImports(source)) {
-          const violation =
-            classifyImportStyle(pkg, packages, pkgRoot, file, specifier) ??
-            (shipped ? classify(pkg, specifier) : undefined)
-          if (violation)
-            violations.push({ file: display, line, specifier, ...violation })
-        }
-      }
+    for (const { file, shipped } of sourceFilesOf(pkgRoot)) {
+      filesChecked++
+      const display = relative(root, file).split(sep).join('/')
+      onFile(display)
+      violations.push(
+        ...violationsIn({ pkg, packages, pkgRoot, file, shipped, display })
+      )
     }
   }
   return { filesChecked, violations }
@@ -205,35 +235,68 @@ export const findImports = (
     .map(([, value]) => value)
 }
 
+const QUOTES = new Set(['"', "'", '`'])
+
+/** Where a `//` comment starting at `i` ends: its line break, or the end of the source. */
+const lineCommentEnd = (source: string, i: number): number => {
+  const end = source.indexOf('\n', i)
+
+  return end < 0 ? source.length : end
+}
+
+/** Where a block comment starting at `i` ends: after its `*\/`, or the end of the source. */
+const blockCommentEnd = (source: string, i: number): number => {
+  const end = source.indexOf('*/', i + 2)
+
+  return end < 0 ? source.length : end + 2
+}
+
+/** The index of the quote closing the string or template opened at `i`, skipping escapes. */
+const closingQuote = (source: string, i: number): number => {
+  const quote = source[i]
+  let j = i + 1
+  while (j < source.length && source[j] !== quote)
+    j += source[j] === '\\' ? 2 : 1
+  return j
+}
+
+/** What to blank for a comment or string starting at `i`, and where scanning resumes; undefined when none starts there. */
+const maskedSpan = (
+  source: string,
+  i: number
+):
+  | { readonly from: number; readonly to: number; readonly next: number }
+  | undefined => {
+  const opening = source.slice(i, i + 2)
+  if (opening === '//') {
+    const end = lineCommentEnd(source, i)
+
+    return { from: i, to: end, next: end }
+  }
+  if (opening === '/*') {
+    const end = blockCommentEnd(source, i)
+
+    return { from: i, to: end, next: end }
+  }
+  if (!QUOTES.has(source[i] ?? '')) return undefined
+  const end = closingQuote(source, i)
+
+  // keep the quotes so import patterns can anchor on them
+  return { from: i + 1, to: end, next: end + 1 }
+}
+
 /** Replace comment text and string/template contents with spaces; keep quotes and newlines. */
 const maskCommentsAndStrings = (source: string): string => {
   const out = source.split('')
   let i = 0
-  const blank = (from: number, to: number) => {
-    for (let k = from; k < to; k++) if (out[k] !== '\n') out[k] = ' '
-  }
   while (i < source.length) {
-    const ch = source[i]
-    const next = source[i + 1]
-    if (ch === '/' && next === '/') {
-      const end = source.indexOf('\n', i)
-      const stop = end < 0 ? source.length : end
-      blank(i, stop)
-      i = stop
-    } else if (ch === '/' && next === '*') {
-      const end = source.indexOf('*/', i + 2)
-      const stop = end < 0 ? source.length : end + 2
-      blank(i, stop)
-      i = stop
-    } else if (ch === '"' || ch === "'" || ch === '`') {
-      let j = i + 1
-      while (j < source.length && source[j] !== ch)
-        j += source[j] === '\\' ? 2 : 1
-      blank(i + 1, j) // keep the quotes so import patterns can anchor on them
-      i = j + 1
-    } else {
+    const span = maskedSpan(source, i)
+    if (!span) {
       i++
+      continue
     }
+    for (let k = span.from; k < span.to; k++) if (out[k] !== '\n') out[k] = ' '
+    i = span.next
   }
   return out.join('')
 }
@@ -257,12 +320,8 @@ const listFiles = (dir: string): string[] => {
   }
   return entries.sort().flatMap((name) => {
     const path = join(dir, name)
-
-    return statSync(path).isDirectory()
-      ? name === 'node_modules'
-        ? []
-        : listFiles(path)
-      : [path]
+    if (!statSync(path).isDirectory()) return [path]
+    return name === 'node_modules' ? [] : listFiles(path)
   })
 }
 

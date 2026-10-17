@@ -276,8 +276,11 @@ export const checkLocales = (dir: string): LocaleReport => {
 const percent = ({ translated, total }: Completion): number =>
   total === 0 ? 0 : Math.floor((translated / total) * PERCENT)
 
-export const formatIssue = (issue: Issue): string =>
-  `[locales] ${issue.language}${issue.key ? ` ${issue.key}` : ''}  ${issue.problem}: ${issue.detail}`
+export const formatIssue = (issue: Issue): string => {
+  const key = issue.key ? ` ${issue.key}` : ''
+
+  return `[locales] ${issue.language}${key}  ${issue.problem}: ${issue.detail}`
+}
 
 export const formatCompletion = (entry: Completion): string =>
   `[locales] ${entry.language.padEnd(6)} ${String(percent(entry)).padStart(3)} %  ${entry.translated}/${entry.total}  ${entry.status}`

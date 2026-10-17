@@ -62,6 +62,7 @@ describe('sideStoreCertificateAdditions', () => {
     expect(exportPkcs12).toHaveBeenCalledWith({
       certificate,
       privateKey,
+      // eslint-disable-next-line sonarjs/no-hardcoded-passwords -- the password derived from the fake machine ID
       password: 'MACHINE-ID'
     })
   })

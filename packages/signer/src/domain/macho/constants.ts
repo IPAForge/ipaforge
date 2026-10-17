@@ -77,4 +77,3 @@ export const Platform = {
   TvOS: 3,
   WatchOS: 4
 } as const
-export type Platform = number

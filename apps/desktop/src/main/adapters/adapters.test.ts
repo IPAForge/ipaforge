@@ -180,12 +180,13 @@ describe('usbmuxd endpoint', () => {
       host: '127.0.0.1',
       port: 27015
     })
-    expect(resolveUsbmuxdEndpoint('linux', 'UNIX:/tmp/mux')).toEqual({
+    expect(resolveUsbmuxdEndpoint('linux', 'UNIX:/run/mux')).toEqual({
       kind: 'unix',
-      path: '/tmp/mux'
+      path: '/run/mux'
     })
     expect(resolveUsbmuxdEndpoint('darwin', '10.0.0.2:27015')).toEqual({
       kind: 'tcp',
+      // eslint-disable-next-line sonarjs/no-hardcoded-ip -- a private address, as USBMUXD_SOCKET_ADDRESS would hold it
       host: '10.0.0.2',
       port: 27015
     })
@@ -226,6 +227,7 @@ describe('HTTP redirects', () => {
       Accept: 'application/json'
     }
     expect(() =>
+      // eslint-disable-next-line sonarjs/no-clear-text-protocols -- the downgrade under test must be refused
       redirectTarget(from, 'http://gsa.apple.com/auth', headers)
     ).toThrow(LoadstarError)
     expect(redirectTarget(from, '/other', headers).headers).toEqual(headers)

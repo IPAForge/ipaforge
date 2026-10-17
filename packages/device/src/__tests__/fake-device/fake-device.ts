@@ -230,233 +230,315 @@ const deviceValues = (device: FakeDevice): PlistDict =>
     ['PasswordProtected', device.locked]
   ])
 
+type Fields = readonly (readonly [string, PlistValue])[]
+
+/** The next plist message, or `undefined` once the client has closed the link. */
+const nextPlist = (link: Link): Promise<PlistDict | undefined> =>
+  receivePlist(link, LIMITS).catch(() => undefined)
+
+const stringOf = (value: PlistValue | undefined): string | undefined =>
+  typeof value === 'string' ? value : undefined
+
+const AMFI_DOMAIN = 'com.apple.security.mac.amfi'
+const FIRST_SERVICE_PORT = 49_152
+
+/** One lockdownd request and what a handler can do with it. */
+type LockdownRequest = {
+  readonly message: PlistDict
+  readonly device: FakeDevice
+  readonly answer: (fields: Fields) => Promise<void>
+  readonly fail: (error: string) => Promise<void>
+  /** Starts listening for `service` and returns its port. */
+  readonly openPort: (service: string) => number
+}
+
+type LockdownHandler = (request: LockdownRequest) => Promise<void>
+
+/** What lockdownd reports for `domain`/`key`; `undefined` when it has no value. */
+const lockdownValue = (
+  device: FakeDevice,
+  domain: string | undefined,
+  key: string | undefined
+): PlistValue | undefined => {
+  if (key === 'DevicePublicKey') return device.devicePublicKeyPem
+  if (key === 'WiFiAddress') return 'aa:bb:cc:dd:ee:ff'
+  if (domain === AMFI_DOMAIN && key === 'DeveloperModeStatus')
+    return device.developerMode
+  if (!key) return deviceValues(device)
+  return (
+    device.values.get(`${domain ?? ''}/${key}`) ?? deviceValues(device)[key]
+  )
+}
+
+const getValue: LockdownHandler = async ({ message, device, answer, fail }) => {
+  const value = lockdownValue(
+    device,
+    stringOf(message.Domain),
+    stringOf(message.Key)
+  )
+  if (value === undefined) await fail('MissingValue')
+  else await answer([['Value', value]])
+}
+
+const setValue: LockdownHandler = async ({ message, device, answer, fail }) => {
+  if (message.Key === 'EnableWifiDebugging' && !device.hasPasscode)
+    return fail('MissingValue')
+  device.values.set(
+    `${String(message.Domain)}/${String(message.Key)}`,
+    message.Value ?? ''
+  )
+  await answer([])
+}
+
+/** Why the device refuses to pair right now (counting down the scripted polls), or `undefined`. */
+const pairRefusal = (device: FakeDevice): string | undefined => {
+  if (device.lockedPolls > 0) {
+    device.lockedPolls--
+    return 'PasswordProtected'
+  }
+  if (device.denyPairing) return 'UserDeniedPairing'
+  if (device.pendingPolls > 0) {
+    device.pendingPolls--
+    return 'PairingDialogResponsePending'
+  }
+  return undefined
+}
+
+const pair: LockdownHandler = async ({ message, device, answer, fail }) => {
+  const record = isPlistDict(message.PairRecord)
+    ? message.PairRecord
+    : createDict()
+  const refusal = pairRefusal(device)
+  if (refusal) return fail(refusal)
+  device.acceptedHostIds.add(String(record.HostID))
+  await answer([['EscrowBag', utf8Encode('escrow')]])
+}
+
+const startSession: LockdownHandler = async ({
+  message,
+  device,
+  answer,
+  fail
+}) => {
+  if (!device.acceptedHostIds.has(String(message.HostID)))
+    return fail('InvalidHostID')
+  await answer([
+    ['SessionID', 'SESSION-1'],
+    ['EnableSessionSSL', true]
+  ])
+}
+
+const isService = (service: string): boolean =>
+  Object.values(Service).includes(service as never)
+
+const startService: LockdownHandler = async ({
+  message,
+  answer,
+  fail,
+  openPort
+}) => {
+  const service = String(message.Service)
+  if (!isService(service)) return fail('InvalidService')
+  await answer([
+    ['Port', openPort(service)],
+    ['Service', service],
+    ['EnableServiceSSL', service !== Service.Afc]
+  ])
+}
+
+const LOCKDOWN_HANDLERS: ReadonlyMap<string, LockdownHandler> = new Map([
+  [
+    'QueryType',
+    ({ answer }) => answer([['Type', 'com.apple.mobile.lockdown']])
+  ],
+  ['GetValue', getValue],
+  ['SetValue', setValue],
+  ['Pair', pair],
+  ['StartSession', startSession],
+  ['StartService', startService],
+  ['StopSession', ({ answer }) => answer([])]
+])
+
+const unknownRequest: LockdownHandler = ({ fail }) => fail('UnknownRequest')
+
 const serveLockdown = async (
   link: Link,
   device: FakeDevice,
   ports: Map<number, string>
 ): Promise<void> => {
-  let nextPort = 49_152 + ports.size
-  for (;;) {
-    let message: PlistDict
-    try {
-      message = await receivePlist(link, LIMITS)
-    } catch {
-      return
-    }
+  let nextPort = FIRST_SERVICE_PORT + ports.size
+  const openPort = (service: string): number => {
+    const port = nextPort++
+    ports.set(port, service)
+    return port
+  }
+  for (
+    let message = await nextPlist(link);
+    message;
+    message = await nextPlist(link)
+  ) {
     const request = String(message.Request)
     device.requests.push(`lockdown:${request}`)
-    const answer = (fields: readonly (readonly [string, PlistValue])[]) =>
+    const answer = (fields: Fields) =>
       sendPlist(link, createDict([['Request', request], ...fields]))
-    const fail = (error: string) => answer([['Error', error]])
-
-    switch (request) {
-      case 'QueryType':
-        await answer([['Type', 'com.apple.mobile.lockdown']])
-        break
-      case 'GetValue': {
-        const key = typeof message.Key === 'string' ? message.Key : undefined
-        const domain =
-          typeof message.Domain === 'string' ? message.Domain : undefined
-        if (key === 'DevicePublicKey')
-          await answer([['Value', device.devicePublicKeyPem]])
-        else if (key === 'WiFiAddress')
-          await answer([['Value', 'aa:bb:cc:dd:ee:ff']])
-        else if (
-          domain === 'com.apple.security.mac.amfi' &&
-          key === 'DeveloperModeStatus'
-        ) {
-          if (device.developerMode === undefined) await fail('MissingValue')
-          else await answer([['Value', device.developerMode]])
-        } else if (!key) await answer([['Value', deviceValues(device)]])
-        else {
-          const value =
-            device.values.get(`${domain ?? ''}/${key}`) ??
-            deviceValues(device)[key]
-          if (value === undefined) await fail('MissingValue')
-          else await answer([['Value', value]])
-        }
-        break
-      }
-      case 'SetValue':
-        if (message.Key === 'EnableWifiDebugging' && !device.hasPasscode) {
-          await fail('MissingValue')
-          break
-        }
-        device.values.set(
-          `${String(message.Domain)}/${String(message.Key)}`,
-          message.Value ?? ''
-        )
-        await answer([])
-        break
-      case 'Pair': {
-        const record = isPlistDict(message.PairRecord)
-          ? message.PairRecord
-          : createDict()
-        if (device.lockedPolls > 0) {
-          device.lockedPolls--
-          await fail('PasswordProtected')
-        } else if (device.denyPairing) await fail('UserDeniedPairing')
-        else if (device.pendingPolls > 0) {
-          device.pendingPolls--
-          await fail('PairingDialogResponsePending')
-        } else {
-          device.acceptedHostIds.add(String(record.HostID))
-          await answer([['EscrowBag', utf8Encode('escrow')]])
-        }
-        break
-      }
-      case 'StartSession':
-        if (!device.acceptedHostIds.has(String(message.HostID)))
-          await fail('InvalidHostID')
-        else
-          await answer([
-            ['SessionID', 'SESSION-1'],
-            ['EnableSessionSSL', true]
-          ])
-        break
-      case 'StartService': {
-        const service = String(message.Service)
-        if (!Object.values(Service).includes(service as never)) {
-          await fail('InvalidService')
-          break
-        }
-        const port = nextPort++
-        ports.set(port, service)
-        await answer([
-          ['Port', port],
-          ['Service', service],
-          ['EnableServiceSSL', service !== Service.Afc]
-        ])
-        break
-      }
-      case 'StopSession':
-        await answer([])
-        break
-      default:
-        await fail('UnknownRequest')
-    }
+    const handler = LOCKDOWN_HANDLERS.get(request) ?? unknownRequest
+    await handler({
+      message,
+      device,
+      answer,
+      fail: (error) => answer([['Error', error]]),
+      openPort
+    })
   }
 }
+
+/** One installation_proxy command and a way to send its replies. */
+type ProxyCommand = {
+  readonly message: PlistDict
+  readonly device: FakeDevice
+  readonly send: (fields: Fields) => Promise<void>
+}
+
+type ProxyHandler = (command: ProxyCommand) => Promise<void>
+
+const INSTALL_PROGRESS = [
+  ['CreatingStagingDirectory', 5],
+  ['VerifyingApplication', 40],
+  ['InstallingApplication', 80]
+] as const
+
+/** The scripted install failure, consumed: it applies to the next install only. */
+const takeInstallError = (device: FakeDevice): Fields | undefined => {
+  const error = device.nextInstallError
+  if (!error) return undefined
+  const description = device.nextInstallDescription ?? `fake: ${error}`
+  device.nextInstallError = undefined
+  device.nextInstallDescription = undefined
+  return [
+    ['Error', error],
+    ['ErrorDescription', description]
+  ]
+}
+
+const install: ProxyHandler = async ({ message, device, send }) => {
+  const ipa = device.media.files.get(String(message.PackagePath))
+  const failure = takeInstallError(device)
+  if (failure) return send(failure)
+  if (!ipa) return send([['Error', 'PackageNotFound']])
+  // Fake IPAs are the text "IPA:<bundle id>".
+  const bundleId = utf8Decode(ipa).replace(/^IPA:/, '')
+  for (const [status, percent] of INSTALL_PROGRESS) {
+    await send([
+      ['Status', status],
+      ['PercentComplete', percent]
+    ])
+  }
+  addApp(device, bundleId)
+  await send([['Status', 'Complete']])
+}
+
+const uninstall: ProxyHandler = async ({ message, device, send }) => {
+  device.apps.delete(String(message.ApplicationIdentifier))
+  await send([['Status', 'Complete']])
+}
+
+const browse: ProxyHandler = async ({ device, send }) => {
+  const list = [...device.apps.values()].map((app) =>
+    createDict([
+      ['CFBundleIdentifier', app.bundleId],
+      ['CFBundleName', app.name],
+      ['CFBundleVersion', app.version]
+    ])
+  )
+  await send([
+    ['Status', 'BrowsingApplications'],
+    ['CurrentList', list],
+    ['Total', list.length]
+  ])
+  await send([['Status', 'Complete']])
+}
+
+const lookupIds = (message: PlistDict): string[] => {
+  const options = isPlistDict(message.ClientOptions)
+    ? message.ClientOptions
+    : createDict()
+
+  return Array.isArray(options.BundleIDs) ? options.BundleIDs.map(String) : []
+}
+
+const lookup: ProxyHandler = async ({ message, device, send }) => {
+  const result = createDict(
+    lookupIds(message)
+      .filter((id) => device.apps.has(id))
+      .map((id) => [id, createDict([['CFBundleIdentifier', id]])] as const)
+  )
+  await send([
+    ['LookupResult', result],
+    ['Status', 'Complete']
+  ])
+}
+
+const PROXY_HANDLERS: ReadonlyMap<string, ProxyHandler> = new Map([
+  ['Install', install],
+  ['Upgrade', install],
+  ['Uninstall', uninstall],
+  ['Browse', browse],
+  ['Lookup', lookup]
+])
+
+const unknownCommand: ProxyHandler = ({ send }) =>
+  send([['Error', 'UnknownCommand']])
 
 const serveInstallationProxy = async (
   link: Link,
   device: FakeDevice
 ): Promise<void> => {
-  for (;;) {
-    let message: PlistDict
-    try {
-      message = await receivePlist(link, LIMITS)
-    } catch {
-      return
-    }
+  const send = (fields: Fields) => sendPlist(link, createDict(fields))
+  for (
+    let message = await nextPlist(link);
+    message;
+    message = await nextPlist(link)
+  ) {
     const command = String(message.Command)
     device.requests.push(`installation_proxy:${command}`)
-    const send = (fields: readonly (readonly [string, PlistValue])[]) =>
-      sendPlist(link, createDict(fields))
-    if (command === 'Install' || command === 'Upgrade') {
-      const path = String(message.PackagePath)
-      const ipa = device.media.files.get(path)
-      if (device.nextInstallError) {
-        const error = device.nextInstallError
-        const description = device.nextInstallDescription ?? `fake: ${error}`
-        device.nextInstallError = undefined
-        device.nextInstallDescription = undefined
-        await send([
-          ['Error', error],
-          ['ErrorDescription', description]
-        ])
-        continue
-      }
-      if (!ipa) {
-        await send([['Error', 'PackageNotFound']])
-        continue
-      }
-      // Fake IPAs are the text "IPA:<bundle id>".
-      const bundleId = utf8Decode(ipa).replace(/^IPA:/, '')
-      for (const [status, percent] of [
-        ['CreatingStagingDirectory', 5],
-        ['VerifyingApplication', 40],
-        ['InstallingApplication', 80]
-      ] as const) {
-        await send([
-          ['Status', status],
-          ['PercentComplete', percent]
-        ])
-      }
-      addApp(device, bundleId)
-      await send([['Status', 'Complete']])
-    } else if (command === 'Uninstall') {
-      device.apps.delete(String(message.ApplicationIdentifier))
-      await send([['Status', 'Complete']])
-    } else if (command === 'Browse') {
-      const list = [...device.apps.values()].map((app) =>
-        createDict([
-          ['CFBundleIdentifier', app.bundleId],
-          ['CFBundleName', app.name],
-          ['CFBundleVersion', app.version]
-        ])
-      )
-      await send([
-        ['Status', 'BrowsingApplications'],
-        ['CurrentList', list],
-        ['Total', list.length]
-      ])
-      await send([['Status', 'Complete']])
-    } else if (command === 'Lookup') {
-      const options = isPlistDict(message.ClientOptions)
-        ? message.ClientOptions
-        : createDict()
-      const ids = Array.isArray(options.BundleIDs)
-        ? options.BundleIDs.map(String)
-        : []
-      const result = createDict(
-        ids
-          .filter((id) => device.apps.has(id))
-          .map((id) => [id, createDict([['CFBundleIdentifier', id]])] as const)
-      )
-      await send([
-        ['LookupResult', result],
-        ['Status', 'Complete']
-      ])
-    } else {
-      await send([['Error', 'UnknownCommand']])
-    }
+    const handler = PROXY_HANDLERS.get(command) ?? unknownCommand
+    await handler({ message, device, send })
   }
 }
 
+const PROFILE_NOT_FOUND = 0xe8008015
+
+/** misagent's reply to `message`. */
+const misagentReply = (device: FakeDevice, message: PlistDict): Fields => {
+  const type = String(message.MessageType)
+  if (type === 'CopyAll')
+    return [
+      ['Payload', [...device.profiles]],
+      ['Status', 0]
+    ]
+  if (type === 'Install' && message.Profile instanceof Uint8Array) {
+    device.profiles.push(message.Profile)
+    return [['Status', 0]]
+  }
+  if (type === 'Remove') {
+    const index = device.profiles.findIndex(
+      (raw) => summarizeProfile(raw)?.uuid === message.ProfileID
+    )
+    if (index < 0) return [['Status', PROFILE_NOT_FOUND]]
+    device.profiles.splice(index, 1)
+    return [['Status', 0]]
+  }
+  return [['Status', 1]]
+}
+
 const serveMisagent = async (link: Link, device: FakeDevice): Promise<void> => {
-  for (;;) {
-    let message: PlistDict
-    try {
-      message = await receivePlist(link, LIMITS)
-    } catch {
-      return
-    }
-    const type = String(message.MessageType)
-    device.requests.push(`misagent:${type}`)
-    if (type === 'CopyAll') {
-      await sendPlist(
-        link,
-        createDict([
-          ['Payload', [...device.profiles]],
-          ['Status', 0]
-        ])
-      )
-    } else if (type === 'Install' && message.Profile instanceof Uint8Array) {
-      device.profiles.push(message.Profile)
-      await sendPlist(link, createDict([['Status', 0]]))
-    } else if (type === 'Remove') {
-      const index = device.profiles.findIndex(
-        (raw) => summarizeProfile(raw)?.uuid === message.ProfileID
-      )
-      if (index >= 0) device.profiles.splice(index, 1)
-      await sendPlist(
-        link,
-        createDict([['Status', index >= 0 ? 0 : 0xe8008015]])
-      )
-    } else {
-      await sendPlist(link, createDict([['Status', 1]]))
-    }
+  for (
+    let message = await nextPlist(link);
+    message;
+    message = await nextPlist(link)
+  ) {
+    device.requests.push(`misagent:${String(message.MessageType)}`)
+    await sendPlist(link, createDict(misagentReply(device, message)))
   }
 }
 
@@ -464,12 +546,8 @@ const serveHouseArrest = async (
   link: Link,
   device: FakeDevice
 ): Promise<void> => {
-  let message: PlistDict
-  try {
-    message = await receivePlist(link, LIMITS)
-  } catch {
-    return
-  }
+  const message = await nextPlist(link)
+  if (!message) return
   device.requests.push(`house_arrest:${String(message.Command)}`)
   const app = device.apps.get(String(message.Identifier))
   if (!app) {
@@ -481,7 +559,7 @@ const serveHouseArrest = async (
 }
 
 const serveAmfi = async (link: Link, device: FakeDevice): Promise<void> => {
-  const message = await receivePlist(link, LIMITS).catch(() => undefined)
+  const message = await nextPlist(link)
   if (!message) return
   device.requests.push(`amfi:${String(message.action)}`)
   await sendPlist(link, createDict([['success', true]]))
@@ -507,6 +585,48 @@ const serveService = (
       return Promise.resolve()
   }
 }
+
+type OnTls = (handler: (credentials: TlsCredentials) => void) => void
+
+type ConnectTarget = { readonly device: FakeDevice; readonly service: string }
+
+/** How usbmuxd answers one tagged request. */
+type UsbmuxReply = {
+  readonly reply: (fields: Fields) => Promise<void>
+  readonly result: (number: number) => Promise<void>
+}
+
+const usbmuxReply = (link: Link, tag: number): UsbmuxReply => {
+  const reply = (fields: Fields) =>
+    link.write(encodeUsbmuxPacket(tag, createDict(fields)))
+
+  return {
+    reply,
+    result: (number) =>
+      reply([
+        ['MessageType', 'Result'],
+        ['Number', number]
+      ])
+  }
+}
+
+/** The next usbmuxd request, or `undefined` once the client has closed the link. */
+const nextUsbmuxPacket = (link: Link) =>
+  readUsbmuxPacket(link, LIMITS).catch(() => undefined)
+
+const deviceListEntry = (device: FakeDevice): PlistDict =>
+  createDict([
+    ['DeviceID', device.deviceId],
+    ['MessageType', 'Attached'],
+    [
+      'Properties',
+      createDict([
+        ['ConnectionType', device.connectionType],
+        ['DeviceID', device.deviceId],
+        ['SerialNumber', device.udid]
+      ])
+    ]
+  ])
 
 export const createFakeUsbmuxd = (
   devices: FakeDevice[] = [],
@@ -609,91 +729,90 @@ export const createFakeUsbmuxd = (
     return osPair(udid)
   }
 
-  const serve = async (
+  /** Where a `Connect` lands: the device and its service, or the usbmuxd result refusing it. */
+  const connectTarget = (message: PlistDict): ConnectTarget | number => {
+    const device = devices.find(
+      (candidate) => candidate.deviceId === message.DeviceID
+    )
+    if (!device) return UsbmuxResult.BadDevice
+    const port = toNetworkPort(Number(message.PortNumber))
+    const service =
+      port === LOCKDOWN_PORT ? 'lockdown' : portsOf(device).get(port)
+
+    return service ? { device, service } : UsbmuxResult.ConnectionRefused
+  }
+
+  /** From here on the connection belongs to the device's lockdownd or service. */
+  const handOver = async (
     link: Link,
-    onTls: (handler: (credentials: TlsCredentials) => void) => void
+    onTls: OnTls,
+    { device, service }: ConnectTarget
   ): Promise<void> => {
-    for (;;) {
-      let packet: Awaited<ReturnType<typeof readUsbmuxPacket>>
-      try {
-        packet = await readUsbmuxPacket(link, LIMITS)
-      } catch {
-        return
-      }
-      const { tag, message } = packet
-      const reply = (fields: readonly (readonly [string, PlistValue])[]) =>
-        link.write(encodeUsbmuxPacket(tag, createDict(fields)))
-      const result = (number: number) =>
-        reply([
-          ['MessageType', 'Result'],
-          ['Number', number]
-        ])
+    onTls((credentials) => {
+      if (device.tlsHandshakeFails) throw tlsHandshakeFailure()
+      device.tlsUpgrades.push(credentials)
+    })
+    if (service === 'lockdown')
+      await serveLockdown(link, device, portsOf(device))
+    else await serveService(service, link, device)
+  }
+
+  const listen = async (link: Link, result: UsbmuxReply['result']) => {
+    await result(UsbmuxResult.Ok)
+    for (const device of devices) await link.write(attachedPacket(device))
+    listeners.add((bytes) => void link.write(bytes))
+  }
+
+  const sendPairRecord = async (
+    message: PlistDict,
+    { reply, result }: UsbmuxReply
+  ) => {
+    const record = await readPairRecord(String(message.PairRecordID))
+    if (record) await reply([['PairRecordData', record]])
+    else await result(UsbmuxResult.BadDevice)
+  }
+
+  /** usbmuxd's answer to every request except `Connect`. */
+  const respond = (
+    link: Link,
+    message: PlistDict,
+    answer: UsbmuxReply
+  ): Promise<void> => {
+    switch (message.MessageType) {
+      case 'ListDevices':
+        return answer.reply([['DeviceList', devices.map(deviceListEntry)]])
+      case 'Listen':
+        return listen(link, answer.result)
+      case 'ReadBUID':
+        return answer.reply([['BUID', fake.buid]])
+      case 'ReadPairRecord':
+        return sendPairRecord(message, answer)
+      default:
+        return answer.result(UsbmuxResult.BadCommand)
+    }
+  }
+
+  const serve = async (link: Link, onTls: OnTls): Promise<void> => {
+    for (
+      let packet = await nextUsbmuxPacket(link);
+      packet;
+      packet = await nextUsbmuxPacket(link)
+    ) {
+      const { message } = packet
+      const answer = usbmuxReply(link, packet.tag)
       fake.requests.push(String(message.MessageType))
-      switch (message.MessageType) {
-        case 'ListDevices':
-          await reply([
-            [
-              'DeviceList',
-              devices.map((device) =>
-                createDict([
-                  ['DeviceID', device.deviceId],
-                  ['MessageType', 'Attached'],
-                  [
-                    'Properties',
-                    createDict([
-                      ['ConnectionType', device.connectionType],
-                      ['DeviceID', device.deviceId],
-                      ['SerialNumber', device.udid]
-                    ])
-                  ]
-                ])
-              )
-            ]
-          ])
-          break
-        case 'Listen':
-          await result(UsbmuxResult.Ok)
-          for (const device of devices) await link.write(attachedPacket(device))
-          listeners.add((bytes) => void link.write(bytes))
-          break
-        case 'Connect': {
-          const device = devices.find(
-            (candidate) => candidate.deviceId === message.DeviceID
-          )
-          const port = toNetworkPort(Number(message.PortNumber))
-          if (!device) {
-            await result(UsbmuxResult.BadDevice)
-            break
-          }
-          const service =
-            port === LOCKDOWN_PORT ? 'lockdown' : portsOf(device).get(port)
-          if (!service) {
-            await result(UsbmuxResult.ConnectionRefused)
-            break
-          }
-          await result(UsbmuxResult.Ok)
-          // From here on the connection belongs to the device.
-          onTls((credentials) => {
-            if (device.tlsHandshakeFails) throw tlsHandshakeFailure()
-            device.tlsUpgrades.push(credentials)
-          })
-          if (service === 'lockdown')
-            await serveLockdown(link, device, portsOf(device))
-          else await serveService(service, link, device)
-          return
-        }
-        case 'ReadBUID':
-          await reply([['BUID', fake.buid]])
-          break
-        case 'ReadPairRecord': {
-          const record = await readPairRecord(String(message.PairRecordID))
-          if (record) await reply([['PairRecordData', record]])
-          else await result(UsbmuxResult.BadDevice)
-          break
-        }
-        default:
-          await result(UsbmuxResult.BadCommand)
+      if (message.MessageType !== 'Connect') {
+        await respond(link, message, answer)
+        continue
       }
+      const target = connectTarget(message)
+      if (typeof target === 'number') {
+        await answer.result(target)
+        continue
+      }
+      await answer.result(UsbmuxResult.Ok)
+      await handOver(link, onTls, target)
+      return
     }
   }
 

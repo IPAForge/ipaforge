@@ -1,6 +1,3 @@
-import type { Platform } from '@signer/domain/macho/constants.ts'
-import type { PackedVersion } from '@signer/domain/macho/version.ts'
-
 export type Segment = {
   readonly name: string
   /** Offset of the LC_SEGMENT(_64) command within the slice. */
@@ -20,8 +17,10 @@ export type CodeSignatureCommand = {
 }
 
 export type BuildVersion = {
-  readonly platform: Platform
-  readonly minOS: PackedVersion
+  /** A `Platform` identifier; binaries may carry ones this table doesn't name. */
+  readonly platform: number
+  /** Packed `xxxx.yy.zz` (see `packVersion`). */
+  readonly minOS: number
 }
 
 export type Slice = {

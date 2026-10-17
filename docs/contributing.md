@@ -58,7 +58,7 @@ This project follows the [Code of Conduct](CODE_OF_CONDUCT.md). Security issues 
 The repository ships VS Code settings in `.vscode/`. Install the two recommended extensions when VS Code offers them:
 
 - **Biome** (`biomejs.biome`) formats and lints;
-- **ESLint** (`dbaeumer.vscode-eslint`) adds the blank lines between statements.
+- **ESLint** (`dbaeumer.vscode-eslint`) adds the blank lines between statements and shows SonarSource findings.
 
 Formatting happens on save: Biome formats the file and sorts its imports, and ESLint adds the blank lines. Outside VS Code (or to fix the whole repository at once), run:
 
@@ -66,7 +66,7 @@ Formatting happens on save: Biome formats the file and sorts its imports, and ES
 pnpm lint:fix
 ```
 
-`pnpm lint` (part of `pnpm verify` and CI) fails on unformatted code, unsorted imports and missing blank lines.
+`pnpm lint` (part of `pnpm verify` and CI) fails on unformatted code, unsorted imports, missing blank lines and SonarSource findings (`eslint-plugin-sonarjs`: backtracking regexes, overly complex functions, tests without assertions and similar). The rules that are off, and how to justify an exception, are in [conventions](design/conventions.md#formatting-and-lint).
 
 ## Conventions (summary)
 

@@ -76,12 +76,9 @@ const setIn = (
   const [head, ...rest] = path
   if (head === undefined || !(head in dict)) return dict
   const current = dict[head]
-  const next =
-    rest.length === 0
-      ? update(current)
-      : isPlistDict(current)
-        ? setIn(current, rest, update)
-        : current
+  let next = current
+  if (rest.length === 0) next = update(current)
+  else if (isPlistDict(current)) next = setIn(current, rest, update)
   if (next === current || next === undefined) return dict
   return createDict(
     Object.entries(dict).map(([key, value]) => [
