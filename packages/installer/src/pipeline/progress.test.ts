@@ -5,7 +5,7 @@ import {
   createProgress,
   totalWeight
 } from '@installer/pipeline/progress.ts'
-import type { Step } from '@installer/pipeline/step.ts'
+import type { Step } from '@installer/pipeline/types.ts'
 import { compact } from '@loadstar/kernel'
 
 const step = (weight?: number): Step<unknown> =>

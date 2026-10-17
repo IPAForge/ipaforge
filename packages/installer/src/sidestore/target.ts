@@ -1,24 +1,20 @@
 import {
-  FRAMEWORKS_DIR,
+  FRAMEWORK_PREFIX,
   LIVECONTAINER_BUNDLE_ID,
+  MAIN_APP_PATH,
   SIDESTORE_BUNDLE_ID,
   SIDESTORE_FRAMEWORK_NAME
 } from '@installer/sidestore/constants.ts'
 import type { CodeBundle } from '@loadstar/signer'
 
-/** `CodeBundle.path` of the main app. */
-const MAIN_APP_PATH = ''
-
-const frameworkPrefix = `${FRAMEWORKS_DIR}/`
-
 const isDirectFramework = (bundle: CodeBundle): boolean =>
   bundle.kind === 'framework' &&
-  bundle.path.startsWith(frameworkPrefix) &&
-  !bundle.path.slice(frameworkPrefix.length).includes('/')
+  bundle.path.startsWith(FRAMEWORK_PREFIX) &&
+  !bundle.path.slice(FRAMEWORK_PREFIX.length).includes('/')
 
 const isSideStoreFramework = (bundle: CodeBundle): boolean =>
   isDirectFramework(bundle) &&
-  (bundle.path === `${frameworkPrefix}${SIDESTORE_FRAMEWORK_NAME}` ||
+  (bundle.path === `${FRAMEWORK_PREFIX}${SIDESTORE_FRAMEWORK_NAME}` ||
     bundle.identifier.startsWith(SIDESTORE_BUNDLE_ID))
 
 /**

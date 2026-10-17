@@ -2,35 +2,15 @@
 // declines and cancels reach its handle. A run is forgotten when it ends.
 import type { RunHandle } from '@loadstar/installer'
 import { compact, toLoadstarError } from '@loadstar/kernel'
-import type { CheckpointStore } from '@rpc/application/server/checkpoints.ts'
-import type { StartCommand } from '@rpc/application/server/commands.ts'
+import type {
+  ActiveRun,
+  RunRegistry,
+  RunRegistryDeps,
+  StartRequest
+} from '@rpc/application/server/types.ts'
 import { wireEvent, wireResult } from '@rpc/application/server/wire-run.ts'
 import { runIdInUse, unknownReference } from '@rpc/domain/errors.ts'
-import type { MessageBody } from '@rpc/domain/protocol/messages.ts'
-import type { Command, Request } from '@rpc/domain/protocol/requests.ts'
-
-type StartRequest = Extract<Request, { type: 'start' }>
-
-type ActiveRun = {
-  readonly controller: AbortController
-  /** Set once the command has started (its inputs may take a while: an IPA download). */
-  handle?: RunHandle<unknown>
-}
-
-export type RunRegistryDeps = {
-  readonly startCommand: StartCommand
-  readonly checkpoints: CheckpointStore
-  readonly send: (message: MessageBody) => void
-}
-
-export type RunRegistry = {
-  start(request: StartRequest): Promise<void>
-  answer(runId: string, answer: unknown): void
-  decline(runId: string): void
-  cancel(runId: string): void
-  /** Cancels every run (the channel closed). */
-  cancelAll(): void
-}
+import type { Command } from '@rpc/domain/protocol/types.ts'
 
 export const createRunRegistry = ({
   startCommand,

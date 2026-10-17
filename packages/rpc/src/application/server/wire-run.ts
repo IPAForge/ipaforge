@@ -1,11 +1,11 @@
 // A run's events and outcome in wire form: errors serialized, file handles dropped, checkpoints kept server-side.
 import type { PipelineResult, RunEvent } from '@loadstar/installer'
-import type { CheckpointStore } from '@rpc/application/server/checkpoints.ts'
+import type { CheckpointStore } from '@rpc/application/server/types.ts'
 import type {
+  Command,
   WireRunEvent,
   WireRunResult
-} from '@rpc/domain/protocol/messages.ts'
-import type { Command } from '@rpc/domain/protocol/requests.ts'
+} from '@rpc/domain/protocol/types.ts'
 import { toWire } from '@rpc/domain/wire.ts'
 
 export const wireEvent = (event: RunEvent): WireRunEvent =>

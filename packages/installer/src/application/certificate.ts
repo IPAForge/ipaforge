@@ -3,12 +3,10 @@
 // a failure later in the flow never strands a certificate whose key is lost.
 import { ask } from '@installer/application/ask.ts'
 import { createCertificateStore } from '@installer/application/certificate-store.ts'
-import type { InstallerDeps } from '@installer/deps.ts'
-import {
-  type CertificateChoice,
-  PromptKind
-} from '@installer/domain/prompts.ts'
-import type { StepContext } from '@installer/pipeline/step.ts'
+import { PromptKind } from '@installer/domain/prompts.ts'
+import type { CertificateChoice } from '@installer/domain/types.ts'
+import type { StepContext } from '@installer/pipeline/types.ts'
+import type { InstallerDeps } from '@installer/types.ts'
 import type {
   CertificateIdentity,
   DeveloperServices,

@@ -1,8 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import type { PipelineEvent } from '@installer/pipeline/events.ts'
 import { pipeline } from '@installer/pipeline/pipeline.ts'
-import type { Step } from '@installer/pipeline/step.ts'
+import type { PipelineEvent, Step } from '@installer/pipeline/types.ts'
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
 
 type State = {

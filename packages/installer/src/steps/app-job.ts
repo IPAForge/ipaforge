@@ -1,5 +1,5 @@
 // Per-app steps work on one entry of `state.apps`: these read it and produce the state update for it.
-import type { AppJob, InstallState } from '@installer/domain/state.ts'
+import type { AppJob, InstallState } from '@installer/domain/types.ts'
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
 
 /** Step id for app `index`: `inspect-0`, `sign-1`, … (stable, so checkpoints resume at the right app). */

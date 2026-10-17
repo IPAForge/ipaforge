@@ -1,23 +1,10 @@
 // Requests waiting for their response: each settles once, on its response, its timeout, or the channel closing.
 import { type LoadstarError, toLoadstarError } from '@loadstar/kernel'
+import type { RequestTable, Waiting } from '@rpc/application/client/types.ts'
 import { disconnected, timedOut } from '@rpc/domain/errors.ts'
 import type { Transport } from '@rpc/domain/ports/transport.ts'
 import { PROTOCOL_VERSION } from '@rpc/domain/protocol/common.ts'
-import type { RequestBody } from '@rpc/domain/protocol/requests.ts'
-
-type Waiting = {
-  readonly resolve: (value: unknown) => void
-  readonly reject: (error: LoadstarError) => void
-  readonly timer: ReturnType<typeof setTimeout>
-}
-
-export type RequestTable = {
-  send(body: RequestBody): Promise<unknown>
-  resolve(id: string, value: unknown): void
-  reject(id: string, error: LoadstarError): void
-  /** Rejects everything waiting, and every later request, with `rpc.disconnected`. */
-  close(): void
-}
+import type { RequestBody } from '@rpc/domain/protocol/types.ts'
 
 export const createRequestTable = (
   transport: Transport,

@@ -7,35 +7,31 @@ import { classify, type DeviceWatchEvent } from '@loadstar/installer'
 import {
   compact,
   LoadstarError,
-  type Logger,
   silentLogger,
   toLoadstarError
 } from '@loadstar/kernel'
 import { createRequestTable } from '@rpc/application/client/requests.ts'
-import { type ClientRun, createClientRun } from '@rpc/application/client/run.ts'
-import { DEFAULT_RPC_CONFIG, type RpcConfig } from '@rpc/domain/config.ts'
+import { createClientRun } from '@rpc/application/client/run.ts'
+import type { ClientRun } from '@rpc/application/client/types.ts'
+import type {
+  EngineClientOptions,
+  MessageHandlers
+} from '@rpc/application/types.ts'
+import { DEFAULT_RPC_CONFIG } from '@rpc/domain/config.ts'
+import { disconnected, invalidMessage } from '@rpc/domain/errors.ts'
+import type { Transport } from '@rpc/domain/ports/transport.ts'
+import { referencedId } from '@rpc/domain/protocol/common.ts'
+import { messageSchema } from '@rpc/domain/protocol/messages.ts'
+import type {
+  CommandCallInput,
+  Message,
+  QueryCallInput
+} from '@rpc/domain/protocol/types.ts'
 import type {
   EngineClient,
   RemoteCommandOptions,
   RemoteRunHandle
-} from '@rpc/domain/engine-client.ts'
-import { disconnected, invalidMessage } from '@rpc/domain/errors.ts'
-import type { Transport } from '@rpc/domain/ports/transport.ts'
-import { referencedId } from '@rpc/domain/protocol/common.ts'
-import { type Message, messageSchema } from '@rpc/domain/protocol/messages.ts'
-import type {
-  CommandCallInput,
-  QueryCallInput
-} from '@rpc/domain/protocol/requests.ts'
-
-type MessageHandlers = {
-  readonly [M in Message as M['type']]: (message: M) => void
-}
-
-export type EngineClientOptions = {
-  readonly config?: Partial<RpcConfig>
-  readonly logger?: Logger
-}
+} from '@rpc/domain/types.ts'
 
 /** Aborting the signal cancels the run, like the Engine's `CommandOptions.signal`. */
 const cancelOnAbort = (

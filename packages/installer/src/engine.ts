@@ -1,42 +1,32 @@
 // The Engine facade: every capability the UI can call. Commands start a flow and return a run handle; queries
 // read; `classify` turns any failure into a catalogued code with its recovery actions.
-import {
-  createDeviceWatch,
-  type DeviceWatchListener
-} from '@installer/application/device-watch.ts'
-import {
-  type InstallerDepsInput,
-  resolveInstallerDeps
-} from '@installer/deps.ts'
+import { createDeviceWatch } from '@installer/application/device-watch.ts'
+import type { DeviceWatchListener } from '@installer/application/types.ts'
+import { resolveInstallerDeps } from '@installer/deps.ts'
 import { classify, type Diagnosis } from '@installer/diagnostics/classify.ts'
-import type { InstallState } from '@installer/domain/state.ts'
-import {
-  createEngineQueries,
-  type EngineQueries
-} from '@installer/engine/queries.ts'
-import {
-  type CommandOptions,
-  type RunHandle,
-  startRun
-} from '@installer/engine/run-handle.ts'
+import type { InstallState } from '@installer/domain/types.ts'
+import { createEngineQueries } from '@installer/engine/queries.ts'
+import { startRun } from '@installer/engine/run-handle.ts'
+import type {
+  CommandOptions,
+  EngineQueries,
+  RunHandle
+} from '@installer/engine/types.ts'
 import {
   type InstallAppsInput,
   installAppsFlow
 } from '@installer/flows/install-apps.ts'
-import {
-  type InstallSideStoreInput,
-  installSideStoreFlow
-} from '@installer/flows/install-sidestore.ts'
-import {
-  type PairingState,
-  type PlacePairingInput,
-  placePairingFlow
-} from '@installer/flows/place-pairing.ts'
-import {
-  type SignInFlowInput,
-  type SignInState,
-  signInFlow
-} from '@installer/flows/sign-in.ts'
+import { installSideStoreFlow } from '@installer/flows/install-sidestore.ts'
+import { placePairingFlow } from '@installer/flows/place-pairing.ts'
+import { signInFlow } from '@installer/flows/sign-in.ts'
+import type {
+  InstallSideStoreInput,
+  PairingState,
+  PlacePairingInput,
+  SignInFlowInput,
+  SignInState
+} from '@installer/flows/types.ts'
+import type { InstallerDepsInput } from '@installer/types.ts'
 
 export type Engine = EngineQueries & {
   installSideStore(

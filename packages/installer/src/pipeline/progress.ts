@@ -1,5 +1,6 @@
 // Overall progress: each step owns a share of the bar proportional to its weight.
-import { type Step, stepWeight } from '@installer/pipeline/step.ts'
+import { stepWeight } from '@installer/pipeline/step.ts'
+import type { Step } from '@installer/pipeline/types.ts'
 
 export type ProgressTracker = {
   /** Counts a finished step of `weight`; returns the overall fraction. */

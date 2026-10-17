@@ -1,9 +1,12 @@
 // The pipeline runner every install flow uses. A flow is an ordered list of steps over one shared state object;
 // the UI renders the pipeline (labels, overall progress, prompts) and never invents its own progress logic.
 import { totalWeight } from '@installer/pipeline/progress.ts'
-import type { PipelineResult } from '@installer/pipeline/result.ts'
-import { type RunOptions, runPipeline } from '@installer/pipeline/run.ts'
-import type { Step } from '@installer/pipeline/step.ts'
+import { runPipeline } from '@installer/pipeline/run.ts'
+import type {
+  PipelineResult,
+  RunOptions,
+  Step
+} from '@installer/pipeline/types.ts'
 
 export type Pipeline<S> = {
   readonly id: string

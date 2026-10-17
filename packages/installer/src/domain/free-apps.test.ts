@@ -5,9 +5,9 @@ import {
   isFreeProfile,
   needsFreeSlot,
   occupiedFreeSlots,
-  type ProfileFacts,
   profilesOf
 } from '@installer/domain/free-apps.ts'
+import type { ProfileFacts } from '@installer/domain/types.ts'
 
 const DAY = 24 * 60 * 60 * 1000
 const rules = { freeTeamIds: new Set(['FREE']), maxLifetimeMs: 8 * DAY }

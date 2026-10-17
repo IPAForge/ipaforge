@@ -9,9 +9,8 @@ import {
 } from '@rpc/__tests__/fake-engine.ts'
 import { createEngineClient } from '@rpc/application/client.ts'
 import { createRpcServer } from '@rpc/application/server.ts'
-import type { RemoteRunHandle } from '@rpc/domain/engine-client.ts'
-import type { ExternalIpa } from '@rpc/domain/protocol/inputs.ts'
-import type { Wire } from '@rpc/domain/wire.ts'
+import type { ExternalIpa } from '@rpc/domain/protocol/types.ts'
+import type { RemoteRunHandle, Wire } from '@rpc/domain/types.ts'
 import { createMemoryTransportPair } from '@rpc/infrastructure/memory-transport.ts'
 
 const IPA_BYTES = new Uint8Array([1, 2, 3, 4])

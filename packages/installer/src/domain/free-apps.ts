@@ -1,30 +1,13 @@
 // The free-team app limit (research §5): iOS runs at most a few apps signed with free-team profiles per device,
 // expired ones included. Which installed apps take a slot is worked out from the device's profiles.
+
+import type {
+  FreeProfileApp,
+  FreeProfileRules,
+  ProfileFacts
+} from '@installer/domain/types.ts'
 import { bundleIdOf } from '@loadstar/device'
 import { compact } from '@loadstar/kernel'
-
-/** What is known about one provisioning profile on the device. */
-export type ProfileFacts = {
-  readonly uuid: string
-  readonly teamId?: string
-  /** `TEAMID.bundle.id`; may be a wildcard. */
-  readonly applicationIdentifier?: string
-  readonly createdAt?: Date
-  readonly expiresAt?: Date
-}
-
-export type FreeProfileRules = {
-  /** Free teams of the signed-in account. */
-  readonly freeTeamIds: ReadonlySet<string>
-  /** Any other team's profile counts as free when it lives at most this long. */
-  readonly maxLifetimeMs: number
-}
-
-/** An installed app holding a free-profile slot. */
-export type FreeProfileApp = {
-  readonly bundleId: string
-  readonly name?: string
-}
 
 const lifetimeMs = (profile: ProfileFacts): number | undefined =>
   profile.createdAt && profile.expiresAt

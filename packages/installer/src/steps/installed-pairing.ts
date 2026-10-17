@@ -2,9 +2,9 @@
 // LiveContainer, inside the SideStore it hosts).
 import type { FlowRuntime } from '@installer/application/runtime.ts'
 import { StepLabel } from '@installer/domain/labels.ts'
-import type { InstallState } from '@installer/domain/state.ts'
 import { StepWeight } from '@installer/domain/step-weights.ts'
-import type { Step } from '@installer/pipeline/step.ts'
+import type { InstallState } from '@installer/domain/types.ts'
+import type { Step } from '@installer/pipeline/types.ts'
 import { jobAt, required } from '@installer/steps/app-job.ts'
 import { type AppFileTarget, PAIRING_APPS } from '@loadstar/device'
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'

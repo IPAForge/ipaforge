@@ -1,9 +1,6 @@
-import type {
-  PromptAnswer,
-  PromptData,
-  PromptKind
-} from '@installer/domain/prompts.ts'
-import type { StepContext } from '@installer/pipeline/step.ts'
+import type { PromptKind } from '@installer/domain/prompts.ts'
+import type { PromptAnswer, PromptData } from '@installer/domain/types.ts'
+import type { StepContext } from '@installer/pipeline/types.ts'
 
 /** Asks the user a typed question (see `Prompts`). */
 export const ask = <K extends PromptKind>(

@@ -23,6 +23,3 @@ export const deviceWatchEventSchema = z.discriminatedUnion('type', [
     udid: z.string().optional()
   })
 ])
-
-export type SubscriptionTopic = z.infer<typeof subscriptionTopicSchema>
-export type WireDeviceWatchEvent = z.infer<typeof deviceWatchEventSchema>

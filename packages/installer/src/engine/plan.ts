@@ -3,62 +3,28 @@
 // reused. Nothing is written to Apple or the device (a catalog app is downloaded into the download cache to be
 // inspected).
 import { createCertificateStore } from '@installer/application/certificate-store.ts'
-import {
-  type FreeSlots,
-  freeSlotsOnDevice
-} from '@installer/application/free-apps.ts'
+import { freeSlotsOnDevice } from '@installer/application/free-apps.ts'
 import {
   createFlowRuntime,
   type FlowRuntime
 } from '@installer/application/runtime.ts'
 import { queryTeam } from '@installer/application/team.ts'
-import type { InstallerDeps } from '@installer/deps.ts'
 import { plannedIdentifiers } from '@installer/domain/app-id-budget.ts'
-import type { AppSource } from '@installer/domain/state.ts'
+import type { AppSource } from '@installer/domain/types.ts'
+import type {
+  CertificateStatus,
+  InstallPlan,
+  PlanInstallInput
+} from '@installer/engine/types.ts'
 import { findSideStoreTarget } from '@installer/sidestore/target.ts'
-import type { AppIdPlan, DeveloperServices, Team } from '@loadstar/apple'
+import type { InstallerDeps } from '@installer/types.ts'
+import type { DeveloperServices, Team } from '@loadstar/apple'
 import { compact, type FileSource } from '@loadstar/kernel'
 import {
-  type CompatibilityProblem,
   checkCompatibility,
-  type IpaInspection,
   planSideloadIdentity,
-  type SideloadIdentityPlan,
   type TargetDevice
 } from '@loadstar/signer'
-
-export type PlanInstallInput = {
-  readonly udid: string
-  readonly accountId: string
-  readonly teamId?: string
-  readonly source: AppSource
-}
-
-export type CertificateStatus = {
-  /** A certificate and key from an earlier run are stored for this team. */
-  readonly stored: boolean
-  /** …and Apple still lists that certificate, so it would be reused. */
-  readonly reusable: boolean
-  /** iOS development certificates on the team (any tool's). */
-  readonly onTeam: number
-}
-
-export type InstallPlan = {
-  readonly team: Team
-  readonly inspection: IpaInspection
-  /** Why the device cannot run the app (the error installing would stop with); absent when it can. */
-  readonly compatibility?: CompatibilityProblem
-  readonly identity: SideloadIdentityPlan
-  readonly appIds: AppIdPlan
-  /** Free teams only: the apps holding a slot (the app itself left out) and the limit. */
-  readonly freeSlots?: {
-    readonly occupied: FreeSlots['occupied']
-    readonly limit: number
-  }
-  readonly certificate: CertificateStatus
-  /** The app holds a SideStore that would receive the signing certificate (after the user agrees, for a file). */
-  readonly sharesCertificate: boolean
-}
 
 const sourceFile = async (
   deps: InstallerDeps,

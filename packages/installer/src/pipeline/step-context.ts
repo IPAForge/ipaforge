@@ -1,28 +1,14 @@
 // The context handed to a running step: cancellation, progress reporting and prompts.
-import type { EmitEvent } from '@installer/pipeline/events.ts'
-import {
-  clampFraction,
-  type ProgressTracker
-} from '@installer/pipeline/progress.ts'
-import {
-  type PromptRequest,
-  type Step,
-  type StepContext,
-  stepWeight
-} from '@installer/pipeline/step.ts'
+
+import { clampFraction } from '@installer/pipeline/progress.ts'
+import { stepWeight } from '@installer/pipeline/step.ts'
+import type {
+  PromptRequest,
+  Step,
+  StepContext,
+  StepContextDeps
+} from '@installer/pipeline/types.ts'
 import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
-
-export type PromptHandler = (
-  request: PromptRequest,
-  signal: AbortSignal
-) => Promise<unknown>
-
-export type StepContextDeps = {
-  readonly signal: AbortSignal
-  readonly emit: EmitEvent
-  readonly progress: ProgressTracker
-  readonly onPrompt: PromptHandler | undefined
-}
 
 const reportProgress =
   <S>(

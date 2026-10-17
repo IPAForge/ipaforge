@@ -12,7 +12,7 @@ import { deviceWatchEventSchema } from '@rpc/domain/protocol/subscriptions.ts'
 
 const stepId = z.string()
 
-const pipelineEventSchema = z.discriminatedUnion('type', [
+export const pipelineEventSchema = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('run-started'),
     pipelineId: z.string(),
@@ -61,7 +61,7 @@ export const remoteCheckpointSchema = z.object({
   completed: z.array(z.string())
 })
 
-const runResultSchema = z.discriminatedUnion('status', [
+export const runResultSchema = z.discriminatedUnion('status', [
   z.object({ status: z.literal('completed'), state: z.unknown() }),
   z.object({
     status: z.literal('failed'),
@@ -92,14 +92,3 @@ export const messageSchema = z.discriminatedUnion('type', [
     event: deviceWatchEventSchema
   })
 ])
-
-export type WireRunEvent = z.infer<typeof pipelineEventSchema>
-export type WireRunResult = z.infer<typeof runResultSchema>
-export type RemoteCheckpoint = z.infer<typeof remoteCheckpointSchema>
-export type Message = z.infer<typeof messageSchema>
-/** A message as the server writes it; the version is added when it is sent. */
-export type MessageBody = Message extends infer M
-  ? M extends unknown
-    ? Omit<M, 'v'>
-    : never
-  : never

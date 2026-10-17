@@ -9,7 +9,7 @@ import {
 } from '@installer/__tests__/fakes.ts'
 import { createHarness, scripted } from '@installer/__tests__/harness.ts'
 import { PromptKind } from '@installer/domain/prompts.ts'
-import type { AppSource } from '@installer/domain/state.ts'
+import type { AppSource } from '@installer/domain/types.ts'
 import { ErrorCode } from '@loadstar/kernel'
 import { DeviceFamily } from '@loadstar/signer'
 
