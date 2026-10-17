@@ -158,6 +158,7 @@ export const createEngineClient = (
   return {
     listDevices: () => query({ method: 'listDevices', args: [] }),
     deviceStatus: (udid) => query({ method: 'deviceStatus', args: [udid] }),
+    pairDevice: (udid) => query({ method: 'pairDevice', args: [udid] }),
     listAccounts: () => query({ method: 'listAccounts', args: [] }),
     signOut: (accountId) => query({ method: 'signOut', args: [accountId] }),
     listTeams: (accountId) => query({ method: 'listTeams', args: [accountId] }),

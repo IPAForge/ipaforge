@@ -16,6 +16,8 @@ export type TopBarPickerProps = {
   menuLabel: string
   /** For action items outside a selection section ("Add Apple ID…"). */
   onAction?: ((key: Key) => void) | undefined
+  /** The menu opened or closed (the device picker reads every device's status again when it opens). */
+  onOpenChange?: ((isOpen: boolean) => void) | undefined
   /** The menu: `Dropdown.Section`s of `Dropdown.Item`s. */
   children: ReactNode
 }
@@ -40,6 +42,7 @@ export const TopBarPicker = ({
   status,
   menuLabel,
   onAction,
+  onOpenChange,
   children
 }: TopBarPickerProps) => {
   const labelId = useId()
@@ -47,7 +50,7 @@ export const TopBarPicker = ({
   const statusId = useId()
 
   return (
-    <Dropdown>
+    <Dropdown {...compact({ onOpenChange })}>
       <Dropdown.Trigger
         aria-labelledby={
           status ? `${labelId} ${valueId} ${statusId}` : `${labelId} ${valueId}`

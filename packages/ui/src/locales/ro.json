@@ -10,12 +10,13 @@
     "device": "Dispozitiv",
     "noDevice": "Niciunul",
     "deviceMenu": "Dispozitive",
-    "devicesFound": "{count, plural, =0 {Încă niciun dispozitiv} one {# dispozitiv conectat} few {# dispozitive conectate} other {# de dispozitive conectate}}",
     "account": "ID Apple",
     "notSignedIn": "Neconectat",
     "accountMenu": "ID-uri Apple",
     "addAppleId": "Adaugă un Apple ID…",
-    "noAccounts": "Niciun Apple ID încă."
+    "noAccounts": "Niciun Apple ID încă.",
+    "noDevicesHint": "Conectează un iPhone sau iPad prin cablu și deblochează-l.",
+    "openDevices": "Deschide Dispozitive"
   },
   "nav": {
     "group": {
@@ -56,6 +57,11 @@
     "signInNeeded": {
       "title": "Apple ID-ul tău are nevoie să te autentifici din nou",
       "body": "Sesiunea salvată pentru {appleId} a expirat. Poți instala în continuare: Loadstar îți cere parola când ajunge acolo."
+    },
+    "blocked": {
+      "title": "Apple a blocat {appleId} pe {device}",
+      "body": "Aplicațiile semnate cu acest ID Apple nu se vor deschide pe acest dispozitiv. Folosește alt ID Apple.",
+      "use": "Folosește {appleId}"
     }
   },
   "pairing": {
@@ -471,6 +477,77 @@
       "connecting": "Se conectează la Engine…",
       "connected": "{count, plural, =0 {Engine conectat · niciun dispozitiv} one {Engine conectat · # dispozitiv} few {Engine conectat · # dispozitive} other {Engine conectat · # de dispozitive}}",
       "failed": "Engine-ul nu poate fi accesat: {reason}"
+    },
+    "description": "iPhone-urile și iPad-urile conectate la acest computer. Cel folosit apare în bara de sus.",
+    "unknownDevice": "Dispozitiv necunoscut",
+    "line": "{model} · iOS {ios} · {link}",
+    "model": "{model} · iOS {ios}",
+    "withState": "{line} · {state}",
+    "link": {
+      "usb": "USB",
+      "network": "Wi-Fi",
+      "both": "USB și Wi-Fi"
+    },
+    "state": {
+      "checking": "Se verifică…",
+      "ready": "Pregătit",
+      "locked": "Blocat",
+      "developerModeOff": "Modul dezvoltator oprit",
+      "notTrusted": "Neautorizat",
+      "unavailable": "Dispozitivul nu poate fi citit",
+      "notConnected": "Neconectat"
+    },
+    "inUse": "În uz",
+    "use": "Folosește acest dispozitiv",
+    "checkAgain": "Verifică din nou",
+    "facts": {
+      "model": "Model",
+      "ios": "iOS",
+      "connection": "Conexiune",
+      "udid": "UDID"
+    },
+    "empty": {
+      "title": "Încă niciun dispozitiv",
+      "body": "Conectează un iPhone sau iPad prin cablu și deblochează-l. Pe Windows trebuie instalat Apple Devices sau iTunes."
+    },
+    "notice": {
+      "none": {
+        "title": "Niciun dispozitiv conectat",
+        "body": "Conectează un iPhone sau iPad prin cablu și deblochează-l. Apare aici singur."
+      },
+      "notConnected": {
+        "title": "{name} nu este conectat",
+        "body": "Conectează-l din nou și va fi folosit automat, sau alege alt dispozitiv din bara de sus."
+      },
+      "notTrusted": {
+        "title": "Autorizează acest computer pe {name}",
+        "body": "Deblochează-l, atinge „Ai încredere” și introdu codul.",
+        "action": "Cere din nou",
+        "waiting": "Se așteaptă confirmarea…",
+        "titleUnnamed": "Autorizează acest computer pe dispozitiv"
+      },
+      "locked": {
+        "title": "Deblochează {name}",
+        "body": "Trebuie să rămână deblocat cât timp se instalează aplicațiile."
+      },
+      "developerModeOff": {
+        "title": "Activează modul dezvoltator pe {name}",
+        "step1": "Configurări → Confidențialitate și securitate → Mod dezvoltator",
+        "step2": "Activează-l și repornește când ți se cere",
+        "step3": "După repornire, atinge „Activează” și introdu codul"
+      },
+      "unavailable": {
+        "title": "{name} nu poate fi citit",
+        "body": "Deconectează-l și conectează-l din nou. Dacă se repetă, repornește dispozitivul.",
+        "bodyWifi": "Este conectat prin Wi-Fi: trezește-l, deblochează-l și ține-l în aceeași rețea cu acest computer, apoi verifică din nou. Un cablu este mai sigur.",
+        "reason": "Motiv: {reason}",
+        "titleUnnamed": "Dispozitivul nu poate fi citit"
+      }
+    },
+    "notes": {
+      "connected": "{name} s-a conectat",
+      "disconnected": "{name} s-a deconectat",
+      "aDevice": "Un dispozitiv"
     }
   },
   "prompts": {

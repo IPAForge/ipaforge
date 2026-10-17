@@ -24,6 +24,8 @@ const call = <M extends string, A extends z.ZodTuple>(method: M, args: A) =>
 export const queryCallSchema = z.discriminatedUnion('method', [
   call('listDevices', z.tuple([])),
   call('deviceStatus', z.tuple([textSchema])),
+  /** Waits for the Trust tap on the device, so it can take as long as the user does. */
+  call('pairDevice', z.tuple([textSchema])),
   call('listAccounts', z.tuple([])),
   call('listTeams', z.tuple([textSchema])),
   call('catalogApps', z.tuple([])),

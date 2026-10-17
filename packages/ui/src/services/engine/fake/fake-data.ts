@@ -10,10 +10,18 @@ import type {
 
 export const FAKE_IPHONE = '00008140-0011223344556677'
 export const FAKE_IPAD = '00008103-8899AABBCCDDEEFF'
+export const FAKE_IPHONE_SE = '00008030-0019245E1A88802E'
 
 export const fakeDevices: Device[] = [
   { udid: FAKE_IPHONE, deviceId: 1, connectionType: 'usb' },
   { udid: FAKE_IPAD, deviceId: 2, connectionType: 'network' }
+]
+
+/** The `devices` scenario: the iPhone on USB and Wi-Fi, the iPad on Wi-Fi, and an iPhone SE on USB. */
+export const showcaseDevices: Device[] = [
+  ...fakeDevices,
+  { udid: FAKE_IPHONE, deviceId: 3, connectionType: 'network' },
+  { udid: FAKE_IPHONE_SE, deviceId: 4, connectionType: 'usb' }
 ]
 
 export const fakeIphoneCheck: DeviceCheck = {

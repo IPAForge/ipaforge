@@ -18,6 +18,7 @@ const queryHandlers = (
 ): QueryHandlers => ({
   listDevices: () => engine.listDevices(),
   deviceStatus: ([udid]) => engine.deviceStatus(udid),
+  pairDevice: ([udid]) => engine.pairDevice(udid),
   listAccounts: () => engine.listAccounts(),
   signOut: ([accountId]) => engine.signOut(accountId),
   listTeams: ([accountId]) => engine.listTeams(accountId),

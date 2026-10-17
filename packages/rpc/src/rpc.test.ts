@@ -118,6 +118,12 @@ describe('queries', () => {
     })
   })
 
+  it('pairs a device through the Engine and answers with its status', async () => {
+    const { client, control } = setup()
+    expect(await client.pairDevice('UDID1')).toMatchObject({ locked: false })
+    expect(control.paired).toEqual(['UDID1'])
+  })
+
   it('refuses an IPA URL that is not HTTPS', async () => {
     const { client } = setup()
     await expect(

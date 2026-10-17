@@ -125,6 +125,7 @@ export const fakeDevices = (options: FakeDeviceOptions = {}) => {
   const installErrors = [...(options.installErrors ?? [])]
   const calls = {
     opened: 0,
+    openOptions: [] as unknown[],
     closed: 0,
     installs: [] as FileSource[],
     uninstalled: [] as string[],
@@ -181,8 +182,9 @@ export const fakeDevices = (options: FakeDeviceOptions = {}) => {
     listDevices: async () => [
       { udid: UDID, deviceId: 1, connectionType: 'usb' as const }
     ],
-    open: async () => {
+    open: async (_udid: string, openOptions?: unknown) => {
       calls.opened++
+      calls.openOptions.push(openOptions)
       return handle as unknown as DeviceHandle
     }
   } as unknown as DeviceManager

@@ -1,5 +1,6 @@
 import type { Socket } from 'node:net'
 import {
+  createSecureContext,
   type PeerCertificate,
   type TLSSocket,
   connect as tlsConnect
@@ -14,6 +15,26 @@ import { compact, ErrorCode, equalBytes, LoadstarError } from '@loadstar/kernel'
  * its exact certificate (below), not by the strength of the chain.
  */
 const DEVICE_TLS_CIPHERS = 'DEFAULT:@SECLEVEL=0'
+
+/**
+ * The cipher setting this runtime accepts. Electron's Node is built on BoringSSL, which has no security levels
+ * and rejects `@SECLEVEL` (`ERR_SSL_INVALID_COMMAND`); it doesn't need it either, so its defaults are used there.
+ * Plain Node (tests, the probes) uses OpenSSL and gets level 0.
+ */
+export const deviceTlsCiphers = (
+  probe: (ciphers: string) => void = (ciphers) => {
+    createSecureContext({ ciphers })
+  }
+): { ciphers?: string } => {
+  try {
+    probe(DEVICE_TLS_CIPHERS)
+    return { ciphers: DEVICE_TLS_CIPHERS }
+  } catch {
+    return {}
+  }
+}
+
+let runtimeCiphers: { ciphers?: string } | undefined
 
 const rawCertificate = (
   certificate: PeerCertificate | undefined
@@ -69,15 +90,24 @@ export const upgradeToDeviceTls = (
   credentials: TlsCredentials
 ): Promise<TLSSocket> =>
   new Promise((resolve, reject) => {
-    const secure = tlsConnect({
-      socket,
-      cert: credentials.certificatePem,
-      key: credentials.privateKeyPem,
-      ca: [credentials.rootCertificatePem],
-      ciphers: DEVICE_TLS_CIPHERS,
-      minVersion: 'TLSv1.2',
-      rejectUnauthorized: false // replaced by the pin check below
-    })
+    runtimeCiphers ??= deviceTlsCiphers()
+    let secure: TLSSocket
+    try {
+      secure = tlsConnect({
+        socket,
+        cert: credentials.certificatePem,
+        key: credentials.privateKeyPem,
+        ca: [credentials.rootCertificatePem],
+        ...runtimeCiphers,
+        minVersion: 'TLSv1.2',
+        rejectUnauthorized: false // replaced by the pin check below
+      })
+    } catch (error) {
+      // Setting up the TLS context failed before any byte was sent (an option this TLS library refuses).
+      socket.destroy()
+      reject(handshakeFailed(error))
+      return
+    }
     const fail = (error: unknown) => {
       secure.destroy()
       reject(error instanceof LoadstarError ? error : handshakeFailed(error))

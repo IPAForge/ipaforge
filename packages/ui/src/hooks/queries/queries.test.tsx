@@ -123,5 +123,9 @@ describe('uniqueDevices', () => {
       { udid: 'B', deviceId: 3, connectionType: 'network' }
     ])
     expect(devices.map((device) => device.deviceId)).toEqual([2, 3])
+    expect(devices.map((device) => device.connections)).toEqual([
+      ['network', 'usb'],
+      ['network']
+    ])
   })
 })
