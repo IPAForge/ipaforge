@@ -5,29 +5,16 @@ import {
   LINKEDIT_DATA_COMMAND_SIZE
 } from '@signer/domain/macho/constants.ts'
 import type {
+  CodeDirectoryEstimate,
   CodeSignatureCommand,
+  PreparedImage,
   Segment,
+  SignatureEstimate,
   Slice
 } from '@signer/domain/macho/types.ts'
 
 /** CodeDirectory header size Apple uses for estimates (the v0x20500 header). */
 const CD_ESTIMATE_HEADER = 96
-
-export type CodeDirectoryEstimate = {
-  readonly identifierLength: number // UTF-8 bytes, without NUL
-  readonly teamIdLength: number // 0 when there is no team
-  readonly pageSize: number
-  readonly hashSize: number
-  readonly nSpecialSlots: number
-}
-
-export type SignatureEstimate = {
-  /** The non-CD blobs actually emitted: requirement set, XML and DER entitlements. */
-  readonly pieces: readonly Uint8Array[]
-  readonly codeDirectories: readonly CodeDirectoryEstimate[]
-  /** Bytes reserved for the CMS blob (codesign uses 18000; see SigningPolicy.cmsReservation). */
-  readonly cmsReservation: number
-}
 
 /** Bytes the signature may cover before it: the old signature's start, or the whole slice. */
 const sourceExtent = (slice: Slice): number =>
@@ -100,15 +87,6 @@ const linkeditOf = (slice: Slice): Segment => {
     })
   }
   return linkedit
-}
-
-export type PreparedImage = {
-  /** Final slice bytes: patched header + code + zero padding, sized `dataoff + datasize`. */
-  readonly image: Uint8Array
-  /** Where the SuperBlob goes; everything before it is hashed by the CodeDirectory. */
-  readonly codeLimit: number
-  readonly datasize: number
-  readonly addedLoadCommand: boolean
 }
 
 /**

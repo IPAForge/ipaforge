@@ -7,65 +7,37 @@ import {
   stringAt
 } from '@loadstar/kernel'
 import {
+  BUNDLE_SUFFIXES,
+  PROVISIONED_KINDS,
+  SIGNABLE_FILETYPES
+} from '@signer/domain/bundle/constants.ts'
+import {
   CF_BUNDLE_EXECUTABLE,
   CF_BUNDLE_IDENTIFIER
 } from '@signer/domain/bundle/info-keys.ts'
 import { CODE_SIGNATURE_DIR, INFO_PLIST } from '@signer/domain/bundle/layout.ts'
 import {
-  type BundleTree,
   isWithin,
   joinPath,
   readFile,
   relativeTo
 } from '@signer/domain/bundle/tree.ts'
+import type {
+  BundleKind,
+  BundleTree,
+  CodeBundle,
+  LooseBinary
+} from '@signer/domain/bundle/types.ts'
 import type { ResourceEntry } from '@signer/domain/code-resources/index.ts'
 import {
   DEFAULT_SIGNER_LIMITS,
-  type PlistLimits,
-  type SignerLimits
+  type PlistLimits
 } from '@signer/domain/config.ts'
-import {
-  MH_BUNDLE,
-  MH_DYLIB,
-  MH_EXECUTE
-} from '@signer/domain/macho/constants.ts'
 import { isMachO, parseMachO } from '@signer/domain/macho/parse.ts'
-
-export type BundleKind = 'app' | 'appex' | 'framework' | 'watch-app' | 'xctest'
-
-export type CodeBundle = {
-  /** Path of the bundle directory relative to the main app ("" for the main app). */
-  readonly path: string
-  readonly kind: BundleKind
-  readonly infoPlist: PlistDict
-  readonly identifier: string
-  /** Path of the executable relative to the main app. */
-  readonly executable: string
-  /** Nesting depth (0 = main app). */
-  readonly depth: number
-}
-
-export type LooseBinary = {
-  /** Path relative to the main app. */
-  readonly path: string
-  /** The innermost bundle containing it. */
-  readonly bundle: string
-}
-
-const BUNDLE_SUFFIXES: readonly [string, BundleKind][] = [
-  ['.appex', 'appex'],
-  ['.framework', 'framework'],
-  ['.app', 'watch-app'],
-  ['.xctest', 'xctest']
-]
-
-/** Bundles that need their own App ID and provisioning profile. */
-const PROVISIONED_KINDS = new Set<BundleKind>(['app', 'appex', 'watch-app'])
+import type { SignerLimits } from '@signer/domain/types.ts'
 
 export const isProvisioned = (bundle: CodeBundle): boolean =>
   PROVISIONED_KINDS.has(bundle.kind)
-
-const SIGNABLE_FILETYPES = new Set([MH_EXECUTE, MH_DYLIB, MH_BUNDLE])
 
 /** Number of path components ("" — the main app — is depth 0). */
 const pathDepth = (path: string): number =>

@@ -5,7 +5,6 @@ import {
   equalBytes,
   fromBase64,
   LoadstarError,
-  type Logger,
   silentLogger
 } from '@loadstar/kernel'
 import { APPLE_CERTIFICATES } from '@signer/infrastructure/cms/apple-certificates.ts'
@@ -18,30 +17,11 @@ import {
   OID_AUTHORITY_INFO_ACCESS,
   OID_BASIC_CONSTRAINTS
 } from '@signer/infrastructure/cms/oids.ts'
-
-/** Downloads a certificate (DER or PEM) from an AIA `caIssuers` URL. Provided by the caller (HttpClient port). */
-export type IssuerFetcher = (
-  url: string,
-  signal?: AbortSignal
-) => Promise<Uint8Array>
-
-export type ChainResolution = {
-  /** Intermediate(s) then root, as embedded in the CMS after the leaf. */
-  readonly chain: readonly Uint8Array[]
-  readonly source: 'bundled' | 'fetched'
-  readonly fetchedFrom?: string
-}
-
-export type ResolveChainOptions = {
-  /** Used only when the leaf's issuer is not bundled. Without it, unknown issuers fail. */
-  readonly fetchIssuer?: IssuerFetcher
-  /** Trust anchors (default: the bundled Apple roots). Tests inject their own. */
-  readonly roots?: readonly Uint8Array[]
-  /** Known intermediates (default: the bundled Apple WWDR CAs). */
-  readonly intermediates?: readonly Uint8Array[]
-  readonly logger?: Logger
-  readonly signal?: AbortSignal
-}
+import type {
+  ChainResolution,
+  KnownCertificate,
+  ResolveChainOptions
+} from '@signer/infrastructure/cms/types.ts'
 
 const bundled = (kind: 'root' | 'intermediate'): Uint8Array[] =>
   APPLE_CERTIFICATES.filter((c) => c.kind === kind).map((c) =>
@@ -99,12 +79,6 @@ const decodeCertificate = (bytes: Uint8Array): pkijs.Certificate => {
     )
   }
   return parseCertificate(bytes)
-}
-
-/** A certificate kept with its original DER bytes (what gets embedded). */
-type KnownCertificate = {
-  readonly der: Uint8Array
-  readonly cert: pkijs.Certificate
 }
 
 const known = (ders: readonly Uint8Array[]): KnownCertificate[] =>

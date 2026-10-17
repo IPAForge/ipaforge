@@ -14,8 +14,9 @@ import {
   PKCS12_ITERATIONS,
   PKCS12_SALT_BYTES
 } from '@signer/infrastructure/pkcs12/constants.ts'
-import { type ByteBuffer, forge } from '@signer/infrastructure/pkcs12/forge.ts'
+import { forge } from '@signer/infrastructure/pkcs12/forge.ts'
 import { deriveKey, randomSalt } from '@signer/infrastructure/pkcs12/kdf.ts'
+import type { ByteBuffer } from '@signer/infrastructure/pkcs12/types.ts'
 
 const hmacSha1 = (key: ByteBuffer, content: string): string => {
   const hmac = forge.hmac.create()

@@ -1,8 +1,5 @@
 // Names a Mach-O slice's CPU (cputype + cpusubtype) the way `lipo` does.
-import {
-  DEFAULT_SIGNER_LIMITS,
-  type MachOLimits
-} from '@signer/domain/config.ts'
+import { DEFAULT_SIGNER_LIMITS } from '@signer/domain/config.ts'
 import {
   Architecture,
   CPU_SUBTYPE_ARM_V6,
@@ -21,6 +18,7 @@ import {
   CPU_TYPE_X86_64
 } from '@signer/domain/macho/constants.ts'
 import { parseMachO } from '@signer/domain/macho/parse.ts'
+import type { MachOLimits } from '@signer/domain/types.ts'
 
 const KNOWN: readonly (readonly [
   cputype: number,

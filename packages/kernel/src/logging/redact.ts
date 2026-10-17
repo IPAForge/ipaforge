@@ -1,19 +1,6 @@
+import { SENSITIVE_KEYS, SENSITIVE_WORDS } from '@kernel/logging/constants.ts'
+
 export const REDACTED = '[redacted]'
-
-/** Masked wherever they appear in a key (`Password`, `sessionToken`, `privateKey`). */
-const SENSITIVE_WORDS = ['password', 'token', 'secret', 'private_?key']
-
-/** Masked only as the whole key (`key` but not `bundleKey`), or as its prefix where marked `.*`. */
-const SENSITIVE_KEYS = [
-  'key',
-  'serial(?:_?number)?',
-  'udid',
-  'x-apple-i-md.*',
-  'x-mme-device-id',
-  'authorization',
-  'cookie',
-  'set-cookie'
-]
 
 /**
  * Field names whose values are always masked, matched case-insensitively.

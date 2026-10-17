@@ -1,24 +1,7 @@
 // Size accounting for a binary plist's fully expanded tree, where shared objects count every time they appear.
 
 import type { PlistLimits } from '@kernel/plist/limits.ts'
-import type { PlistValue } from '@kernel/plist/model.ts'
-
-export type Parsed = {
-  readonly value: PlistValue
-  /** Nodes in the fully expanded subtree. */
-  readonly nodes: number
-  /** String/data bytes in the fully expanded subtree. */
-  readonly bytes: number
-  /** Height of the subtree (1 for scalars). Checked on every reuse, so cached subtrees can't deepen the tree. */
-  readonly height: number
-}
-
-/** Running totals of a container while its children are parsed. */
-export type Totals = {
-  nodes: number
-  bytes: number
-  height: number
-}
+import type { Parsed, PlistValue, Totals } from '@kernel/plist/types.ts'
 
 export const leaf = (value: PlistValue, bytes: number): Parsed => ({
   value,

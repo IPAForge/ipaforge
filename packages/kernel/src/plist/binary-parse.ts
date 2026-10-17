@@ -2,18 +2,14 @@ import { failBinaryPlist as fail } from '@kernel/plist/binary-error.ts'
 import {
   addChild,
   emptyContainerTotals,
-  exceedsLimits,
-  type Parsed
+  exceedsLimits
 } from '@kernel/plist/binary-expansion.ts'
 import {
   markerNibble,
   markerType,
   ObjectType
 } from '@kernel/plist/binary-format.ts'
-import {
-  type BinaryPlistReader,
-  createBinaryPlistReader
-} from '@kernel/plist/binary-reader.ts'
+import { createBinaryPlistReader } from '@kernel/plist/binary-reader.ts'
 import {
   decodeAsciiString,
   decodeData,
@@ -24,7 +20,14 @@ import {
   decodeUtf16String
 } from '@kernel/plist/binary-scalars.ts'
 import { DEFAULT_PLIST_LIMITS, type PlistLimits } from '@kernel/plist/limits.ts'
-import { createDict, type PlistValue } from '@kernel/plist/model.ts'
+import { createDict } from '@kernel/plist/model.ts'
+import type {
+  BinaryPlistReader,
+  ObjectDecoder,
+  ObjectTypeCode,
+  Parsed,
+  PlistValue
+} from '@kernel/plist/types.ts'
 
 /** Parses objects by reference, memoising each one with the totals of its expansion. */
 const createObjectParser = (reader: BinaryPlistReader, limits: PlistLimits) => {
@@ -121,6 +124,28 @@ const createObjectParser = (reader: BinaryPlistReader, limits: PlistLimits) => {
     return { value: createDict(entries), ...totals }
   }
 
+  const decoders = {
+    [ObjectType.Simple]: ({ marker, offset }) => decodeSimple(marker, offset),
+    [ObjectType.Integer]: ({ offset, nibble }) =>
+      decodeInteger(reader, offset, nibble),
+    [ObjectType.Real]: ({ offset, nibble }) =>
+      decodeReal(reader, offset, nibble),
+    [ObjectType.Date]: ({ offset, marker }) =>
+      decodeDate(reader, offset, marker),
+    [ObjectType.Data]: ({ offset, nibble }) =>
+      decodeData(reader, offset, nibble),
+    [ObjectType.AsciiString]: ({ offset, nibble }) =>
+      decodeAsciiString(reader, offset, nibble),
+    [ObjectType.Utf16String]: ({ offset, nibble }) =>
+      decodeUtf16String(reader, offset, nibble),
+    [ObjectType.Array]: ({ ref, offset, nibble, depth, stack }) =>
+      decodeArray(ref, offset, nibble, depth, stack),
+    [ObjectType.Set]: ({ ref, offset, nibble, depth, stack }) =>
+      decodeArray(ref, offset, nibble, depth, stack),
+    [ObjectType.Dict]: ({ ref, offset, nibble, depth, stack }) =>
+      decodeDict(ref, offset, nibble, depth, stack)
+  } satisfies Record<ObjectTypeCode, ObjectDecoder>
+
   const decode = (
     ref: number,
     offset: number,
@@ -128,30 +153,18 @@ const createObjectParser = (reader: BinaryPlistReader, limits: PlistLimits) => {
     stack: Set<number>
   ): Parsed => {
     const marker = reader.bytes[offset] as number
-    const nibble = markerNibble(marker)
-    switch (markerType(marker)) {
-      case ObjectType.Simple:
-        return decodeSimple(marker, offset)
-      case ObjectType.Integer:
-        return decodeInteger(reader, offset, nibble)
-      case ObjectType.Real:
-        return decodeReal(reader, offset, nibble)
-      case ObjectType.Date:
-        return decodeDate(reader, offset, marker)
-      case ObjectType.Data:
-        return decodeData(reader, offset, nibble)
-      case ObjectType.AsciiString:
-        return decodeAsciiString(reader, offset, nibble)
-      case ObjectType.Utf16String:
-        return decodeUtf16String(reader, offset, nibble)
-      case ObjectType.Array:
-      case ObjectType.Set:
-        return decodeArray(ref, offset, nibble, depth, stack)
-      case ObjectType.Dict:
-        return decodeDict(ref, offset, nibble, depth, stack)
-      default:
-        return fail('unsupported object type', { offset, marker })
-    }
+    const decoder: ObjectDecoder | undefined = (
+      decoders as Partial<Record<number, ObjectDecoder>>
+    )[markerType(marker)]
+    if (!decoder) return fail('unsupported object type', { offset, marker })
+    return decoder({
+      ref,
+      offset,
+      marker,
+      nibble: markerNibble(marker),
+      depth,
+      stack
+    })
   }
 
   return parseObject

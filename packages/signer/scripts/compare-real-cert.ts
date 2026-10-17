@@ -34,7 +34,7 @@ import {
   CSSLOT_SIGNATURESLOT,
   parseSuperBlob
 } from '@signer/domain/blobs/index.ts'
-import type { BundleTree } from '@signer/domain/bundle/tree.ts'
+import type { BundleTree } from '@signer/domain/bundle/types.ts'
 import { parseMachO } from '@signer/domain/macho/parse.ts'
 import {
   certificateInfo,

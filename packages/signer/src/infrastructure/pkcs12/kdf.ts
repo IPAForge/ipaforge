@@ -1,6 +1,7 @@
 import { toBinary } from '@signer/infrastructure/pkcs12/asn1.ts'
 import { PKCS12_ITERATIONS } from '@signer/infrastructure/pkcs12/constants.ts'
-import { type ByteBuffer, forge } from '@signer/infrastructure/pkcs12/forge.ts'
+import { forge } from '@signer/infrastructure/pkcs12/forge.ts'
+import type { ByteBuffer } from '@signer/infrastructure/pkcs12/types.ts'
 
 /** PKCS#12 password-based key derivation (RFC 7292 appendix B) with SHA-1. */
 export const deriveKey = (

@@ -16,7 +16,7 @@ import {
   utf8Encode
 } from '@loadstar/kernel'
 import { FIXTURES_DIR, readTree } from '@signer/__tests__/fixtures.ts'
-import type { BundleTree } from '@signer/domain/bundle/tree.ts'
+import type { BundleTree } from '@signer/domain/bundle/types.ts'
 import {
   assertSafePath,
   type Ipa,

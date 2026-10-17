@@ -6,16 +6,19 @@ import {
   type PlistDict,
   utf8Encode
 } from '@loadstar/kernel'
+import { NSPECIAL } from '@signer/application/constants.ts'
 import {
   carriesEntitlements,
   execSegmentFlags,
   pageSizeFor
 } from '@signer/application/policy.ts'
 import type {
+  EntitlementBlobs,
   SignatureContent,
-  SigningMode
-} from '@signer/application/signing.ts'
-import type { SigningDeps } from '@signer/deps.ts'
+  SignedSlice,
+  SigningMode,
+  SlicePlan
+} from '@signer/application/types.ts'
 import {
   type BlobEntry,
   blobWrapper,
@@ -36,55 +39,20 @@ import {
   entitlementsXmlBlob,
   type SpecialSlotData
 } from '@signer/domain/blobs/index.ts'
-import type { SigningPolicy } from '@signer/domain/config.ts'
 import {
   estimateSignatureSize,
-  type PreparedImage,
   prepareImage
 } from '@signer/domain/macho/allocate.ts'
 import { isEncryptedSlice } from '@signer/domain/macho/encryption.ts'
 import { findSegment } from '@signer/domain/macho/parse.ts'
-import type { Slice } from '@signer/domain/macho/types.ts'
-import { DIGEST_SIZE, type HashAlgorithm } from '@signer/domain/ports/hasher.ts'
+import type { PreparedImage, Slice } from '@signer/domain/macho/types.ts'
+import { DIGEST_SIZE } from '@signer/domain/ports/constants.ts'
+import type { HashAlgorithm } from '@signer/domain/ports/types.ts'
+import type { SigningPolicy } from '@signer/domain/types.ts'
 import { certificateInfo } from '@signer/infrastructure/cms/certificate.ts'
-import {
-  type SignedCodeDirectory,
-  signCodeDirectories
-} from '@signer/infrastructure/cms/sign.ts'
-
-export type SignedSlice = {
-  readonly bytes: Uint8Array
-  /** cdhash (20 bytes) of the slice's primary CodeDirectory. */
-  readonly cdhash: Uint8Array
-}
-
-type EntitlementBlobs = {
-  readonly dict: PlistDict
-  /** Slot 5: the plist bytes, verbatim. */
-  readonly xml: Uint8Array
-  /** Slot 7: the DER encoding. */
-  readonly der: Uint8Array
-}
-
-/** Everything decided about a slice's signature before any bytes are hashed. */
-type SlicePlan = {
-  readonly identifier: string
-  readonly teamId: string | undefined
-  readonly flags: number
-  readonly algorithms: readonly HashAlgorithm[]
-  readonly pageSize: number
-  readonly requirements: Uint8Array
-  readonly entitlements: EntitlementBlobs | undefined
-  readonly special: SpecialSlotData
-}
-
-const NSPECIAL = {
-  infoPlist: 1,
-  requirements: 2,
-  codeResources: 3,
-  entitlements: 5,
-  derEntitlements: 7
-} as const
+import { signCodeDirectories } from '@signer/infrastructure/cms/sign.ts'
+import type { SignedCodeDirectory } from '@signer/infrastructure/cms/types.ts'
+import type { SigningDeps } from '@signer/types.ts'
 
 const highestSpecialSlot = (special: SpecialSlotData): number =>
   Math.max(

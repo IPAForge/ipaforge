@@ -1,24 +1,12 @@
+import { ENTITIES, MISC_MARKUP } from '@kernel/plist/constants.ts'
+import type { Tag } from '@kernel/plist/types.ts'
 import { failXmlPlist as fail } from '@kernel/plist/xml-error.ts'
 
-const ENTITIES: Readonly<Record<string, string>> = {
-  amp: '&',
-  lt: '<',
-  gt: '>',
-  quot: '"',
-  apos: "'"
-}
 const ENTITY_PATTERN = /&(#x[0-9a-f]+|#\d+|[a-z]+);/gi
 const MAX_CODE_POINT = 0x10ffff
 
 const CDATA_OPEN = '<![CDATA['
 const CDATA_CLOSE = ']]>'
-
-/** Markup skipped between elements: processing instructions, comments and the DOCTYPE, with their terminators. */
-const MISC_MARKUP: readonly (readonly [open: string, close: string])[] = [
-  ['<?', '?>'],
-  ['<!--', '-->'],
-  ['<!DOCTYPE', '>']
-]
 
 const decodeCharacterReference = (entity: string, position: number): string => {
   const isHex = entity[1] === 'x' || entity[1] === 'X'
@@ -35,14 +23,6 @@ const decodeEntities = (text: string, position: number): string =>
     if (entity[0] === '#') return decodeCharacterReference(entity, position)
     return ENTITIES[entity] ?? fail(`unknown entity &${entity};`, position)
   })
-
-export type Tag = {
-  readonly name: string
-  readonly closing: boolean
-  readonly selfClosing: boolean
-  readonly start: number
-  readonly end: number
-}
 
 /** Minimal, strict XML reader for the plist DTD (no attributes are interpreted). */
 export const createXmlReader = (xml: string) => {
@@ -118,5 +98,3 @@ export const createXmlReader = (xml: string) => {
 
   return { nextTag, textUntilClose, skipMisc, position: () => pos, atEnd }
 }
-
-export type XmlReader = ReturnType<typeof createXmlReader>

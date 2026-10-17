@@ -4,13 +4,10 @@ import {
   type PlistValue,
   real
 } from '@loadstar/kernel'
-
-export type ResourceRule = {
-  readonly pattern: string
-  readonly weight: number
-  readonly omit: boolean
-  readonly optional: boolean
-}
+import type {
+  CompiledRule,
+  ResourceRule
+} from '@signer/domain/code-resources/types.ts'
 
 const rule = (
   pattern: string,
@@ -44,10 +41,6 @@ export const RULES_V2: readonly ResourceRule[] = [
   rule('^embedded\\.provisionprofile$', { weight: 20 }),
   rule('^version\\.plist$', { weight: 20 })
 ]
-
-export type CompiledRule = ResourceRule & {
-  readonly regex: RegExp
-}
 
 export const compileRules = (rules: readonly ResourceRule[]): CompiledRule[] =>
   rules.map((r) => ({ ...r, regex: new RegExp(r.pattern) }))
