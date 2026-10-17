@@ -16,6 +16,7 @@ export const runTitleKeys = {
   starting: 'install.run.title.running',
   running: 'install.run.title.running',
   waiting: 'install.run.title.running',
+  answering: 'install.run.title.running',
   completed: 'install.run.title.completed',
   failed: 'install.run.title.failed',
   cancelled: 'install.run.title.cancelled'

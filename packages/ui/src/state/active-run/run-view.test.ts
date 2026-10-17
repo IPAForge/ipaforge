@@ -117,9 +117,17 @@ describe('reduceRunEvent', () => {
     expect(states(waiting)[2]).toBe('waiting')
 
     const answered = answeredView(waiting)
-    expect(answered.status).toBe('running')
-    expect(answered.prompt).toBeUndefined()
+    expect(answered.status).toBe('answering')
+    expect(answered.prompt).toEqual(request)
     expect(states(answered)[2]).toBe('active')
+
+    const movedOn = reduceRunEvent(answered, {
+      type: 'step-progress',
+      stepId: 'team',
+      fraction: 0.5
+    })
+    expect(movedOn.status).toBe('running')
+    expect(movedOn.prompt).toBeUndefined()
   })
 
   it('marks skipped steps and keeps how finished steps ended when a run resumes', () => {

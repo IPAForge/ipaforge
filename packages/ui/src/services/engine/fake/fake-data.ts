@@ -109,6 +109,11 @@ export const fakeCatalogApps: CatalogApp[] = [
 
 export const fakeCertificates = [
   {
+    serialNumber: '5A1E00C0FFEE0003',
+    machineName: 'Loadstar',
+    expiresAt: '2027-05-10T00:00:00.000Z'
+  },
+  {
     serialNumber: '5A1E00C0FFEE0001',
     machineName: 'SideStore',
     expiresAt: '2027-06-01T00:00:00.000Z'

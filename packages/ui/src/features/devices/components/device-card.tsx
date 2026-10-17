@@ -7,6 +7,7 @@ import { DeviceFact } from '@ui/features/devices/components/device-fact.tsx'
 import { DeviceNotice } from '@ui/features/devices/components/device-notice.tsx'
 import { deviceStateClasses } from '@ui/features/devices/constants.ts'
 import { useDeviceView } from '@ui/features/devices/hooks/use-device-view.ts'
+import { modelName } from '@ui/features/devices/utils/model-name.ts'
 import type { ListedDevice } from '@ui/hooks/queries/use-devices.ts'
 
 type DeviceCardProps = {
@@ -60,7 +61,7 @@ export const DeviceCard = ({
           {info ? (
             <>
               <DeviceFact label={t('devices.facts.model')}>
-                {info.productType}
+                {modelName(info.productType)}
               </DeviceFact>
               <DeviceFact label={t('devices.facts.ios')}>
                 {info.productVersion}
