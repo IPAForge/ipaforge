@@ -2,10 +2,8 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { silentLogger } from '@loadstar/kernel'
 import { createMemoryPreferencesStore } from '@ui/services/preferences/preferences-store.ts'
-import {
-  createSelectionStore,
-  selectionKeys
-} from '@ui/state/selection/selection-store.ts'
+import { selectionKeys } from '@ui/state/selection/constants.ts'
+import { createSelectionStore } from '@ui/state/selection/selection-store.ts'
 
 describe('createSelectionStore', () => {
   it('starts with what was saved, and with nothing when nothing was', () => {

@@ -3,12 +3,9 @@ import { useContext, useMemo, useSyncExternalStore } from 'react'
 import { useAccounts } from '@ui/hooks/queries/use-accounts.ts'
 import { useDeviceStatus } from '@ui/hooks/queries/use-device-status.ts'
 import { type ListedDevice, useDevices } from '@ui/hooks/queries/use-devices.ts'
-import type { Account } from '@ui/services/engine/engine-types.ts'
+import type { Account } from '@ui/services/engine/types.ts'
 import { SelectionContext } from '@ui/state/selection/selection-context.ts'
-import type {
-  Selection,
-  SelectionStore
-} from '@ui/state/selection/selection-store.ts'
+import type { Selection, SelectionStore } from '@ui/state/selection/types.ts'
 
 const useSelectionStore = (): SelectionStore => {
   const store = useContext(SelectionContext)

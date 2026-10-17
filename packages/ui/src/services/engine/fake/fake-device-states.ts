@@ -2,21 +2,18 @@
 // scenario starts from its own states; the `devices` scenario shows every state and how each one is fixed (Check
 // again sees the iPad unlocked, Ask again pairs the iPhone SE, whose Developer Mode is still off).
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
-import type { DeviceCheck } from '@ui/services/engine/engine-types.ts'
 import {
   FAKE_IPAD,
   FAKE_IPHONE,
   FAKE_IPHONE_SE,
   fakeIphoneCheck
 } from '@ui/services/engine/fake/fake-data.ts'
-import type { FakeScenarioId } from '@ui/services/engine/fake/fake-scenarios.ts'
-
-type FakeDeviceState = {
-  readonly check: DeviceCheck
-  trusted: boolean
-  /** Status reads left before the user "unlocks" it. */
-  locksFor: number
-}
+import type {
+  FakeDeviceState,
+  FakeDeviceStates,
+  FakeScenarioId
+} from '@ui/services/engine/fake/types.ts'
+import type { DeviceCheck } from '@ui/services/engine/types.ts'
 
 const ipadCheck: DeviceCheck = {
   info: {
@@ -57,11 +54,6 @@ const initialStates = (scenario: FakeScenarioId) => {
     ],
     [FAKE_IPHONE_SE, { check: iphoneSeCheck, trusted: false, locksFor: 0 }]
   ])
-}
-
-export type FakeDeviceStates = {
-  status: (udid: string) => Promise<DeviceCheck>
-  pair: (udid: string) => Promise<DeviceCheck>
 }
 
 export const createFakeDeviceStates = (

@@ -4,8 +4,8 @@ import type { Logger } from '@loadstar/kernel'
 import type { EngineClient } from '@loadstar/rpc'
 import type { PreferencesStore } from '@ui/services/preferences/preferences-store.ts'
 import type { ClipboardWriter } from '@ui/services/system/clipboard.ts'
-import type { ColorSchemeSource } from '@ui/services/system/color-scheme-source.ts'
 import type { LocaleSource } from '@ui/services/system/locale-source.ts'
+import type { ColorSchemeSource } from '@ui/services/system/types.ts'
 
 /** Everything the UI gets from its host, swapped per environment (browser, Electron renderer, tests). */
 export type UiServices = {

@@ -1,6 +1,10 @@
 // What the fake Engine plays. Each scenario changes one thing about the happy path; a failing one fails its step
 // once with a real ErrorCode, so retrying from the checkpoint succeeds.
 import { ErrorCode } from '@loadstar/kernel'
+import type {
+  FakeFailure,
+  FakeScenarioId
+} from '@ui/services/engine/fake/types.ts'
 
 export const fakeScenarioIds = [
   'happy',
@@ -23,13 +27,6 @@ export const fakeScenarioIds = [
   'unsupported-ios',
   'anisette'
 ] as const
-
-export type FakeScenarioId = (typeof fakeScenarioIds)[number]
-
-export type FakeFailure = {
-  readonly stepId: string
-  readonly code: ErrorCode
-}
 
 /** The step each failing scenario stops at, once. */
 export const fakeFailures: Partial<Record<FakeScenarioId, FakeFailure>> = {

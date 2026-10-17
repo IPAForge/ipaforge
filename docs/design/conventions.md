@@ -33,8 +33,8 @@ Biome formats and lints everything (`biome.json`). ESLint (`eslint.config.js`) d
   4. relative paths (rare, since imports are absolute).
 
   When you add an alias to `tsconfig.base.json` `paths`, add it to both lists of the `organizeImports` groups in `biome.json` (the exclusion from external packages and the "our own" group).
-- **`type`, not `interface`** (`useConsistentTypeDefinitions`): `type Props = { … }`, and `type A = B & { … }` where an interface would extend. The one exception is module augmentation (`declare module '…' { interface … }`), which TypeScript only allows on interfaces; those keep a `biome-ignore` saying so (`router.tsx`, `i18n/setup/i18next-types.ts`).
-- **Every component's props are a named type**, declared above it and called `<Component>Props` (`type FactProps = { … }`, `({ label, value }: FactProps)`), never written inline in the parameter (`({ label }: { label: string })`), even for one prop. A props type built on another is named too (`type FailedProps = OutcomeProps & { failure: RunFailure }`).
+- **`type`, not `interface`** (`useConsistentTypeDefinitions`): `type Props = { … }`, and `type A = B & { … }` where an interface would extend. The one exception is module augmentation (`declare module '…' { interface … }`), which TypeScript only allows on interfaces; those keep a `biome-ignore` saying so (`router.tsx`, `i18n/setup/types.ts`).
+- **Every component's props are a named type** called `<Component>Props` (`type FactProps = { … }`, `({ label, value }: FactProps)`), never written inline in the parameter (`({ label }: { label: string })`), even for one prop. A props type built on another is named too (`type FailedProps = OutcomeProps & { failure: RunFailure }`). It sits above the component, or in the folder's `types.ts` when the file would otherwise declare more than one type (see [File Structure](#file-structure)).
 - **`readonly` where mutation would be a bug.** Engine packages (`kernel`, `signer`, `device`, `apple`, `catalog`, `installer`, `rpc`) mark fields `readonly` and use `readonly T[]` / `ReadonlyMap`, because records travel through many functions. React component props in `packages/ui` don't: React already treats props as read-only, so `readonly` there only adds noise. Non-prop UI types (options, theme tokens, shared state) keep it, and `readonly T[]` stays wherever a prop must accept read-only arrays.
 - **Blank lines** (ESLint `@stylistic/padding-line-between-statements`): one after the import block, and one before a `return` that follows a `const` or `let` declaration.
 - **Unused code:** unused imports are errors; unused variables are warnings, except names starting with `_`.
@@ -57,6 +57,25 @@ Biome formats and lints everything (`biome.json`). ESLint (`eslint.config.js`) d
 - Object literals use arrow properties (`start: (controller) => { … }`), not method shorthand, unless `this` is required.
 - Classes are still allowed where state and invariants belong together (`LoadstarError`, `ByteReader`). Their methods use normal class syntax.
 - Arrow `const`s are not hoisted: define helpers before any top-level code runs them.
+
+## File Structure
+
+Every file does one job, and the lint (`@loadstar/structure` in `tooling/eslint/structure.js`) holds the parts a machine can check.
+
+- **One component per file.** A `.tsx` file holds one component, its imports and, at most, its one type (usually its props). Nothing else lives at its top level: a smaller component gets its own file next to it, a lookup table goes to `constants.ts`, logic to a hook or a utils file (`component-file`).
+- **At most one type per file.** A file that needs one type (a component's props, a function's options) declares it at the top. Two or more go into the folder's **`types.ts`**, one per folder, imported where they're used (`one-type-per-file`). Test files are exempt.
+- **No `switch`.** Branch through a mapped object typed so a missing case fails typecheck (`no-switch`):
+
+  ```ts
+  const handlers = {
+    started: onStarted,
+    progress: onProgress,
+    finished: onFinished
+  } satisfies Record<RunEvent['type'], (view: RunView, event: never) => RunView>
+  ```
+
+- **Lookup tables are constants.** Maps from a state to classes, icons or translation keys live in the folder's `constants.ts`, not in the component.
+- **Folders by job.** A UI feature folder (`features/install/run/`) holds `components/` (one per file), `hooks/` (`use-….ts`), `utils/` (pure functions), `constants.ts` and `types.ts`, each only when needed; its page component stays at the feature root. Engine packages keep `domain/`, `application/` and `infrastructure/`, with the same `types.ts` and `constants.ts` rule inside each module folder.
 
 ## Imports
 
@@ -93,7 +112,7 @@ Biome formats and lints everything (`biome.json`). ESLint (`eslint.config.js`) d
 - Build UI from HeroUI components and Tailwind utilities only. No `.css` files beyond the single entry import, and no `style={{}}` for theming.
 - Every user-visible string goes through i18next (`t("…")`), so string literals don't appear in JSX. The Biome GritQL plugin `tooling/biome/no-jsx-literal-text.grit` enforces this for `packages/ui/src/**/*.tsx`: it rejects JSX text containing a letter and string or template literals in `aria-label`, `aria-description`, `title`, `placeholder`, `label` and `alt`. Props nobody sees or hears (`className`, `key`, `id`, `data-testid`, `href`, …) may hold literals.
 - Strings live in `packages/ui/src/locales/<language>.json`, nested by feature (`nav.install`, `settings.language.title`), in ICU MessageFormat (`{count, plural, one {…} other {…}}`). `en.json` is the source of truth; `status.json` lists every language as `source`, `draft` or `reviewed`.
-- Keys are typed: `t()` accepts only keys of `en.json` (react-i18next `CustomTypeOptions`, `i18n/setup/i18next-types.ts`). Every `ErrorCode` needs `errors.<code>.title` and `.body`, every recovery action `recovery.<id>`, and every step label its key; a missing one fails typecheck (`i18n/required-keys.ts`), and a test checks the same keys in every shipped language. `pnpm check:locales` fails on missing or extra keys, broken ICU or changed placeholders in any language.
+- Keys are typed: `t()` accepts only keys of `en.json` (react-i18next `CustomTypeOptions`, `i18n/setup/types.ts`). Every `ErrorCode` needs `errors.<code>.title` and `.body`, every recovery action `recovery.<id>`, and every step label its key; a missing one fails typecheck (`i18n/required-keys.ts`), and a test checks the same keys in every shipped language. `pnpm check:locales` fails on missing or extra keys, broken ICU or changed placeholders in any language.
 - Only `en.json` is bundled; other languages load on demand (`import.meta.glob`). Hosts `await prepareLanguage(services)` before rendering `<App language={…}/>`, and language changes go through `useLanguage().choose`, which loads before switching.
 - Format dates, numbers, lists and relative times with `useFormat()` (standard `Intl`, memoised per locale), never by hand. Error text comes from the code's keys, never from `LoadstarError.message`.
 - Direction-dependent icons (a "next" chevron, a "back" arrow) use `MirroredIcon`, which flips them in right-to-left languages.

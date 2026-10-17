@@ -1,5 +1,5 @@
 import type { PromptData, PromptKind } from '@loadstar/rpc'
-import type { TranslationKey } from '@ui/i18n/setup/i18next-types.ts'
+import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 
 /** What every question dialog gets: its data, and how to answer or decline it through the run handle. */
 export type PromptProps<K extends PromptKind> = {

@@ -1,5 +1,5 @@
 import { createLogger } from '@loadstar/kernel'
-import type { LanguageId } from '@ui/i18n/languages/languages.ts'
+import type { LanguageId } from '@ui/i18n/languages/types.ts'
 import { loadLocaleBundle } from '@ui/i18n/loading/locale-bundles.ts'
 import { createLocaleLoader } from '@ui/i18n/loading/locale-loader.ts'
 import { createI18n } from '@ui/i18n/setup/create-i18n.ts'

@@ -11,7 +11,6 @@ import {
   type RunHandle,
   StepLabel
 } from '@loadstar/rpc'
-import type { Account } from '@ui/services/engine/engine-types.ts'
 import {
   fakeCatalogApps,
   fakeCertificates,
@@ -19,15 +18,8 @@ import {
   showcaseDevices
 } from '@ui/services/engine/fake/fake-data.ts'
 import { createFakeDeviceStates } from '@ui/services/engine/fake/fake-device-states.ts'
-import {
-  createFakeDeviceFeed,
-  type FakeDeviceFeed
-} from '@ui/services/engine/fake/fake-devices.ts'
-import {
-  type FakeInstallState,
-  fakeInstallSteps
-} from '@ui/services/engine/fake/fake-install-steps.ts'
-import type { FakeScenarioId } from '@ui/services/engine/fake/fake-scenarios.ts'
+import { createFakeDeviceFeed } from '@ui/services/engine/fake/fake-devices.ts'
+import { fakeInstallSteps } from '@ui/services/engine/fake/fake-install-steps.ts'
 import {
   askPassword,
   completeTwoFactor
@@ -40,20 +32,13 @@ import {
   teamsFor
 } from '@ui/services/engine/fake/fake-world.ts'
 import { startScriptedRun } from '@ui/services/engine/fake/scripted-run.ts'
-
-export type FakeEngineOptions = {
-  readonly scenario?: FakeScenarioId
-  /** Connected devices; tests keep it to plug devices in and out. */
-  readonly devices?: FakeDeviceFeed
-  /** Pause between run events, so a run can be watched; 0 in tests. */
-  readonly delayMs?: number
-  /** How long Apple takes to answer a sign-in request, so the dev host shows the waiting states. */
-  readonly appleDelayMs?: number
-  /** Replaces that wait (tests hold Apple's answer until they release it). */
-  readonly appleAnswer?: () => Promise<void>
-}
-
-type TeamQuery = { readonly accountId: string; readonly teamId?: string }
+import type {
+  FakeEngineOptions,
+  FakeInstallState,
+  FakeSignInState,
+  TeamQuery
+} from '@ui/services/engine/fake/types.ts'
+import type { Account } from '@ui/services/engine/types.ts'
 
 const DEFAULT_DELAY_MS = 120
 const DEFAULT_APPLE_DELAY_MS = 600
@@ -80,8 +65,6 @@ const installRun = (
     delayMs: world.delayMs
   })
 
-type SignInState = { readonly appleId: string; readonly account?: Account }
-
 const saveAccount = (world: FakeWorld, appleId: string): Account => {
   const account = world.accounts.find((saved) => saved.id === appleId) ?? {
     id: appleId,
@@ -102,9 +85,9 @@ const signInRun = (
     appleId,
     rememberPassword
   }: { appleId: string; rememberPassword?: boolean },
-  options: CommandOptions<SignInState> | undefined
+  options: CommandOptions<FakeSignInState> | undefined
 ) =>
-  startScriptedRun<SignInState>({
+  startScriptedRun<FakeSignInState>({
     pipelineId: 'signIn',
     steps: [
       {

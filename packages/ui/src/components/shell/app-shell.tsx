@@ -1,12 +1,11 @@
 import type { ReactNode } from 'react'
 
+import { MAIN_CONTENT_ID } from '@ui/components/shell/constants.ts'
 import { Sidebar } from '@ui/components/shell/sidebar.tsx'
 import { SkipLink } from '@ui/components/shell/skip-link.tsx'
 import { TopBar } from '@ui/components/shell/top-bar.tsx'
-import { DeviceNotes } from '@ui/features/devices/device-notes.tsx'
+import { DeviceNotes } from '@ui/features/devices/components/device-notes.tsx'
 import { RunPromptHost } from '@ui/features/install/prompts/run-prompt-host.tsx'
-
-const MAIN_CONTENT_ID = 'main-content'
 
 type AppShellProps = { children: ReactNode }
 

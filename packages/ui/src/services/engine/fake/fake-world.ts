@@ -1,7 +1,6 @@
 // The fake Engine's mutable state: the scenario, the saved accounts (sign-in adds one, a ban marks one), which
 // accounts have a live session, and which scripted failures already happened.
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
-import type { Account, Team } from '@ui/services/engine/engine-types.ts'
 import {
   EXPIRED_ACCOUNT,
   FAKE_IPHONE,
@@ -9,10 +8,9 @@ import {
   PERSONAL_TEAM,
   STUDIO_TEAM
 } from '@ui/services/engine/fake/fake-data.ts'
-import {
-  type FakeScenarioId,
-  fakeFailures
-} from '@ui/services/engine/fake/fake-scenarios.ts'
+import { fakeFailures } from '@ui/services/engine/fake/fake-scenarios.ts'
+import type { FakeScenarioId } from '@ui/services/engine/fake/types.ts'
+import type { Account, Team } from '@ui/services/engine/types.ts'
 
 export type FakeWorld = {
   readonly scenario: FakeScenarioId

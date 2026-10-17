@@ -1,8 +1,8 @@
 import { useContext, useSyncExternalStore } from 'react'
 
-import type { LanguageState } from '@ui/i18n/languages/language-store.ts'
+import type { LanguageState } from '@ui/i18n/languages/types.ts'
 import { LanguageContext } from '@ui/i18n/provider/language-context.ts'
-import type { LanguageSetup } from '@ui/i18n/setup/prepare-language.ts'
+import type { LanguageSetup } from '@ui/i18n/setup/types.ts'
 
 const useLanguageSetup = (): LanguageSetup => {
   const setup = useContext(LanguageContext)

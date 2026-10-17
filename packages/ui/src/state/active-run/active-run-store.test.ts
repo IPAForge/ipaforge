@@ -4,12 +4,9 @@ import { ErrorCode, silentLogger } from '@loadstar/kernel'
 import { PromptKind } from '@loadstar/rpc'
 import { FAKE_IPHONE, STUDIO_TEAM } from '@ui/services/engine/fake/fake-data.ts'
 import { createFakeEngineClient } from '@ui/services/engine/fake/fake-engine-client.ts'
-import type { FakeScenarioId } from '@ui/services/engine/fake/fake-scenarios.ts'
-import {
-  type ActiveRunStore,
-  createActiveRunStore
-} from '@ui/state/active-run/active-run-store.ts'
-import type { RunStatus } from '@ui/state/active-run/run-view.ts'
+import type { FakeScenarioId } from '@ui/services/engine/fake/types.ts'
+import { createActiveRunStore } from '@ui/state/active-run/active-run-store.ts'
+import type { ActiveRunStore, RunStatus } from '@ui/state/active-run/types.ts'
 
 const INPUT = {
   udid: FAKE_IPHONE,

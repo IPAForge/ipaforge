@@ -1,6 +1,7 @@
 import { Dropdown, Label } from '@heroui/react'
 
-import { StatusDot, type StatusTone } from '@ui/components/shell/status-dot.tsx'
+import { StatusDot } from '@ui/components/shell/status-dot.tsx'
+import type { StatusTone } from '@ui/components/shell/types.ts'
 
 type PickerItemProps = {
   id: string

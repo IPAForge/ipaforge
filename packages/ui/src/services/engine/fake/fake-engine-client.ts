@@ -13,10 +13,8 @@ import {
   type Engine,
   type EngineClient
 } from '@loadstar/rpc'
-import {
-  createFakeEngine,
-  type FakeEngineOptions
-} from '@ui/services/engine/fake/fake-engine.ts'
+import { createFakeEngine } from '@ui/services/engine/fake/fake-engine.ts'
+import type { FakeEngineOptions } from '@ui/services/engine/fake/types.ts'
 
 export type FakeEngineClientOptions = FakeEngineOptions & {
   readonly logger?: Logger

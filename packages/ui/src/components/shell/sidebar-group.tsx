@@ -3,7 +3,8 @@ import { useId } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { SidebarLink } from '@ui/components/shell/sidebar-link.tsx'
-import { type SectionGroup, sectionsInGroup } from '@ui/sections.ts'
+import { sectionsInGroup } from '@ui/sections.ts'
+import type { SectionGroup } from '@ui/types.ts'
 
 type SidebarGroupProps = {
   group: SectionGroup

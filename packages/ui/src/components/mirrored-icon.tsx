@@ -1,7 +1,7 @@
 import type { LucideIcon, LucideProps } from 'lucide-react'
 import { useLocale } from 'react-aria-components'
 
-const MIRROR_CLASS = '-scale-x-100'
+import { MIRROR_CLASS } from '@ui/components/constants.ts'
 
 type MirroredIconProps = LucideProps & {
   icon: LucideIcon

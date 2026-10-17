@@ -5,7 +5,6 @@ import { describe, expect, it } from 'vitest'
 
 import { t } from '@ui/__tests__/test-i18n.ts'
 import { renderApp } from '@ui/__tests__/test-services.tsx'
-import type { DeviceCheck } from '@ui/services/engine/engine-types.ts'
 import {
   FAKE_IPAD,
   FAKE_IPHONE,
@@ -14,7 +13,8 @@ import {
 } from '@ui/services/engine/fake/fake-data.ts'
 import { createFakeDeviceFeed } from '@ui/services/engine/fake/fake-devices.ts'
 import { createFakeEngineClient } from '@ui/services/engine/fake/fake-engine-client.ts'
-import { selectionKeys } from '@ui/state/selection/selection-store.ts'
+import type { DeviceCheck } from '@ui/services/engine/types.ts'
+import { selectionKeys } from '@ui/state/selection/constants.ts'
 
 const card = async (name: string) => {
   const heading = await screen.findByRole('heading', { name })

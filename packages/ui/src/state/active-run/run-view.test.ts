@@ -7,10 +7,10 @@ import {
   brokenView,
   finishedView,
   overallPercent,
-  type RunView,
-  reduceRunEvent,
   startingView
 } from '@ui/state/active-run/run-view.ts'
+import type { RunView } from '@ui/state/active-run/types.ts'
+import { reduceRunEvent } from '@ui/state/active-run/utils/reduce-run-event.ts'
 
 const CHECKPOINT = { id: 'c1', pipelineId: 'installSideStore', completed: [] }
 

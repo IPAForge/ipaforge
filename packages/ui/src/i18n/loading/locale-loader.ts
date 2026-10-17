@@ -1,24 +1,10 @@
-import type { i18n } from 'i18next'
-
-import type { Logger } from '@loadstar/kernel'
-import type { LanguageId } from '@ui/i18n/languages/languages.ts'
-import type { LoadBundle } from '@ui/i18n/loading/locale-bundles.ts'
+import type { LanguageId } from '@ui/i18n/languages/types.ts'
+import type {
+  LocaleLoader,
+  LocaleLoaderOptions
+} from '@ui/i18n/loading/types.ts'
 
 const NAMESPACE = 'translation'
-
-export type LocaleLoader = {
-  /** Resolves true once `language`'s messages are in i18next (fetched at most once), false if they can't be. */
-  ensure: (language: LanguageId) => Promise<boolean>
-}
-
-export type LocaleLoaderOptions = {
-  readonly i18n: i18n
-  readonly load: LoadBundle
-  /** Scoped by the caller (`ui.i18n`). */
-  readonly logger: Logger
-  /** Milliseconds; injectable for tests. */
-  readonly now?: () => number
-}
 
 /** Adds language bundles to i18next on demand; concurrent requests share one fetch, and a failed one may be retried. */
 export const createLocaleLoader = ({

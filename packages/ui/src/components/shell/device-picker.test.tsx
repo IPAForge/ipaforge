@@ -14,7 +14,7 @@ import {
 import { createFakeDeviceFeed } from '@ui/services/engine/fake/fake-devices.ts'
 import { createFakeEngine } from '@ui/services/engine/fake/fake-engine.ts'
 import { createFakeEngineClient } from '@ui/services/engine/fake/fake-engine-client.ts'
-import { selectionKeys } from '@ui/state/selection/selection-store.ts'
+import { selectionKeys } from '@ui/state/selection/constants.ts'
 
 const IPHONE = fakeDevices.find((device) => device.udid === FAKE_IPHONE)
 if (!IPHONE) throw new Error('the fake data has an iPhone')

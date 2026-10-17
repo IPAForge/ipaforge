@@ -7,7 +7,6 @@ import { ErrorCode, LoadstarError } from '@loadstar/kernel'
 import type { EngineClient } from '@loadstar/rpc'
 import { t } from '@ui/__tests__/test-i18n.ts'
 import { renderApp } from '@ui/__tests__/test-services.tsx'
-import type { Team } from '@ui/services/engine/engine-types.ts'
 import {
   EXPIRED_ACCOUNT,
   fakeAccounts,
@@ -15,6 +14,7 @@ import {
 } from '@ui/services/engine/fake/fake-data.ts'
 import { createFakeEngine } from '@ui/services/engine/fake/fake-engine.ts'
 import { createFakeEngineClient } from '@ui/services/engine/fake/fake-engine-client.ts'
+import type { Team } from '@ui/services/engine/types.ts'
 
 const OLD = EXPIRED_ACCOUNT.appleId
 const STUDIO = 'studio@example.com'

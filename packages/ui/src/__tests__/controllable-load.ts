@@ -1,10 +1,8 @@
 import { vi } from 'vitest'
 
-import type { LanguageId } from '@ui/i18n/languages/languages.ts'
-import {
-  type LoadBundle,
-  loadLocaleBundle
-} from '@ui/i18n/loading/locale-bundles.ts'
+import type { LanguageId } from '@ui/i18n/languages/types.ts'
+import { loadLocaleBundle } from '@ui/i18n/loading/locale-bundles.ts'
+import type { LoadBundle } from '@ui/i18n/loading/types.ts'
 
 /**
  * The real bundle loader, counting calls, with chosen languages held until `release(language)`

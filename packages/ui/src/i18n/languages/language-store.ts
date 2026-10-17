@@ -1,46 +1,22 @@
-import type { Logger } from '@loadstar/kernel'
 import {
   isAvailableLanguage,
-  type LanguageId,
-  type ShippedLanguage,
   SOURCE_LANGUAGE,
   shippedLanguages
 } from '@ui/i18n/languages/languages.ts'
 import { matchLocale } from '@ui/i18n/languages/match-locale.ts'
+import type {
+  LanguageChoice,
+  LanguageId,
+  LanguageState,
+  LanguageStore,
+  LanguageStoreOptions,
+  ShippedLanguage
+} from '@ui/i18n/languages/types.ts'
 import type { PreferencesStore } from '@ui/services/preferences/preferences-store.ts'
-import type { LocaleSource } from '@ui/services/system/locale-source.ts'
 
 /** `PreferencesStore` key of the chosen language. */
 export const LANGUAGE_PREFERENCE_KEY = 'language'
 export const SYSTEM_LANGUAGE = 'system'
-
-/** What the user picked in Settings: follow the system, or one language. */
-export type LanguageChoice = typeof SYSTEM_LANGUAGE | LanguageId
-
-export type LanguageState = {
-  readonly choice: LanguageChoice
-  /** The shipped language that best matches the OS languages. */
-  readonly systemLanguage: ShippedLanguage
-  /** The language shown: the choice, or `systemLanguage` when following the system. */
-  readonly locale: LanguageId
-}
-
-export type LanguageStore = {
-  getState: () => LanguageState
-  subscribe: (listener: () => void) => () => void
-  /** The language `choice` would show. */
-  localeFor: (choice: LanguageChoice) => LanguageId
-  /** Persists `choice` and shows it; call once its messages are loaded. */
-  setChoice: (choice: LanguageChoice) => void
-  /** Shows English, following the system, without touching the saved choice: for when no other bundle loads. */
-  fallBackToSource: () => void
-}
-
-export type LanguageStoreOptions = {
-  readonly preferences: PreferencesStore
-  readonly localeSource: LocaleSource
-  readonly logger: Logger
-}
 
 const readChoice = (preferences: PreferencesStore): LanguageChoice => {
   const saved = preferences.read(LANGUAGE_PREFERENCE_KEY)

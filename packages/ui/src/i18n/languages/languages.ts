@@ -1,11 +1,12 @@
+import type {
+  Direction,
+  LanguageId,
+  ShippedLanguage
+} from '@ui/i18n/languages/types.ts'
 import status from '@ui/locales/status.json'
 
-/** Every shipped language, from `locales/status.json` (one `locales/<id>.json` each). */
-export type ShippedLanguage = keyof typeof status
 /** A pseudo-locale for spotting untranslated and truncated text; dev builds only. */
 export const PSEUDO_LOCALE = 'en-XA'
-export type LanguageId = ShippedLanguage | typeof PSEUDO_LOCALE
-export type Direction = 'ltr' | 'rtl'
 
 /** The source language: the fallback for missing translations and unmatched system languages. */
 export const SOURCE_LANGUAGE: ShippedLanguage = 'en'

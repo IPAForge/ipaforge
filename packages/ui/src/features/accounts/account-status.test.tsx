@@ -10,14 +10,14 @@ import {
   renderApp,
   type TestServicesOptions
 } from '@ui/__tests__/test-services.tsx'
-import type { Team } from '@ui/services/engine/engine-types.ts'
 import {
   EXPIRED_ACCOUNT,
   fakeAccounts,
   PERSONAL_TEAM
 } from '@ui/services/engine/fake/fake-data.ts'
 import { createFakeEngineClient } from '@ui/services/engine/fake/fake-engine-client.ts'
-import { selectionKeys } from '@ui/state/selection/selection-store.ts'
+import type { Team } from '@ui/services/engine/types.ts'
+import { selectionKeys } from '@ui/state/selection/constants.ts'
 
 const OLD = EXPIRED_ACCOUNT.appleId
 const pause = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))

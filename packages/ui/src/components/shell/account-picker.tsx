@@ -1,47 +1,21 @@
 import { Dropdown, Label } from '@heroui/react'
 import { Plus } from 'lucide-react'
-import { type Key, useCallback, useId, useState } from 'react'
+import { type Key, useCallback, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { PickerItem } from '@ui/components/shell/picker-item.tsx'
+import { AccountItem } from '@ui/components/shell/account-item.tsx'
+import { ADD_APPLE_ID } from '@ui/components/shell/constants.ts'
+import { NoAccounts } from '@ui/components/shell/no-accounts.tsx'
 import { TopBarPicker } from '@ui/components/shell/top-bar-picker.tsx'
+import { useAccountView } from '@ui/features/accounts/hooks/use-account-view.ts'
 import { SignInDialog } from '@ui/features/accounts/sign-in/sign-in-dialog.tsx'
-import { useAccountView } from '@ui/features/accounts/use-account-view.ts'
 import { useAccounts } from '@ui/hooks/queries/use-accounts.ts'
 import {
   useActiveAccount,
   useDevicesInUse,
   useSelection
 } from '@ui/hooks/use-selection.ts'
-import type { Account } from '@ui/services/engine/engine-types.ts'
-
-const ADD_APPLE_ID = 'add-apple-id'
-
-type AccountItemProps = { account: Account; udids: readonly string[] }
-
-const AccountItem = ({ account, udids }: AccountItemProps) => {
-  const view = useAccountView(account, udids)
-
-  return (
-    <PickerItem
-      id={account.id}
-      title={account.appleId}
-      subtitle={view.subtitle}
-      tone={view.tone}
-    />
-  )
-}
-
-const NoAccounts = () => {
-  const { t } = useTranslation()
-  const id = useId()
-
-  return (
-    <Dropdown.Item id={id} isDisabled textValue={t('topBar.noAccounts')}>
-      <span className="text-muted text-sm">{t('topBar.noAccounts')}</span>
-    </Dropdown.Item>
-  )
-}
+import type { Account } from '@ui/services/engine/types.ts'
 
 /** Saved Apple IDs with their teams and state, picking the one in use, and "Add Apple ID…". */
 export const AccountPicker = () => {

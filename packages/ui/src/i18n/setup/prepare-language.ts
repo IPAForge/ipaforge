@@ -1,38 +1,16 @@
-import type { i18n } from 'i18next'
-
-import {
-  createLanguageStore,
-  type LanguageChoice,
-  type LanguageStore
-} from '@ui/i18n/languages/language-store.ts'
-import {
-  type LoadBundle,
-  loadLocaleBundle
-} from '@ui/i18n/loading/locale-bundles.ts'
+import { createLanguageStore } from '@ui/i18n/languages/language-store.ts'
+import type { LanguageChoice } from '@ui/i18n/languages/types.ts'
+import { loadLocaleBundle } from '@ui/i18n/loading/locale-bundles.ts'
 import { createLocaleLoader } from '@ui/i18n/loading/locale-loader.ts'
 import { createI18n } from '@ui/i18n/setup/create-i18n.ts'
+import type {
+  LanguageSetup,
+  PrepareLanguageOptions
+} from '@ui/i18n/setup/types.ts'
 import { scopeServices } from '@ui/services/scope-services.ts'
 import type { UiServices } from '@ui/services/ui-services.ts'
 
 const I18N_LOG_SCOPE = 'i18n'
-
-/** The UI's language state and i18next instance, ready before the first render. `App` takes it as a prop. */
-export type LanguageSetup = {
-  readonly store: LanguageStore
-  readonly i18n: i18n
-  /**
-   * Loads `choice`'s language, then shows and saves it. The current language stays until the new one is
-   * ready; if it can't load, nothing changes (a warning is logged).
-   */
-  readonly choose: (choice: LanguageChoice) => Promise<void>
-}
-
-export type PrepareLanguageOptions = {
-  /** Defaults to the bundled loaders (dynamic imports); tests inject their own. */
-  readonly load?: LoadBundle
-  /** Logs missing keys; on in dev builds. */
-  readonly warnOnMissingKeys?: boolean
-}
 
 /**
  * Resolves the language (saved choice, else the best match for the OS languages) and loads its messages,
