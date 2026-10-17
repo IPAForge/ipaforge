@@ -252,7 +252,7 @@ export const authenticate = async (
     credentials.appleId,
     started.anisette
   )
-  deps.logger.debug('GSA complete status', {
+  deps.logger.info('GSA complete status', {
     ec: finished.status.ec,
     hsc: finished.status.hsc,
     au: finished.status.au

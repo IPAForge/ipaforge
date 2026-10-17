@@ -11,6 +11,8 @@ import type { SavedAccount } from '@loadstar/apple'
 
 export type SignInFlowInput = {
   readonly appleId: string
+  /** Save the password (in the SecretStore) so an expired session can be renewed without asking. Default: no. */
+  readonly rememberPassword?: boolean
 }
 
 export type SignInState = {
@@ -20,12 +22,20 @@ export type SignInState = {
 
 export const SIGN_IN = 'signIn'
 
-const signInStep = (runtime: FlowRuntime): Step<SignInState> => ({
+const signInStep = (
+  runtime: FlowRuntime,
+  rememberPassword: boolean
+): Step<SignInState> => ({
   id: 'sign-in',
   labelKey: StepLabel.signIn,
   weight: StepWeight.appleRequest,
   run: async (state, context) => ({
-    account: await signInNewAccount(runtime.deps, context, state.appleId)
+    account: await signInNewAccount(
+      runtime.deps,
+      context,
+      state.appleId,
+      rememberPassword
+    )
   })
 })
 
@@ -34,5 +44,7 @@ export const signInFlow = (
   input: SignInFlowInput
 ): Flow<SignInState> => ({
   initial: { appleId: input.appleId },
-  pipeline: pipeline<SignInState>(SIGN_IN, [signInStep(runtime)])
+  pipeline: pipeline<SignInState>(SIGN_IN, [
+    signInStep(runtime, input.rememberPassword ?? false)
+  ])
 })

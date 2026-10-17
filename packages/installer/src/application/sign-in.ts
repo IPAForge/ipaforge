@@ -52,11 +52,16 @@ export const signInAccount = async (
   )
 }
 
-/** Signs in an Apple ID that is not saved yet (the password and any second factor through prompts) and saves it. */
+/**
+ * Signs in an Apple ID that is not saved yet (the password and any second factor through prompts) and saves it.
+ * With `rememberPassword` the password is saved too (only through the SecretStore), so an expired session can
+ * be renewed without asking.
+ */
 export const signInNewAccount = async (
   deps: InstallerDeps,
   context: StepContext,
-  appleId: string
+  appleId: string,
+  rememberPassword = false
 ): Promise<SavedAccount> => {
   const password = await ask(context, PromptKind.Password, { appleId })
   const result = await deps.apple.signIn({
@@ -73,5 +78,8 @@ export const signInNewAccount = async (
           deps.config.twoFactorAttempts
         )
 
-  return deps.apple.accounts.save(session)
+  return deps.apple.accounts.save(
+    session,
+    rememberPassword ? { rememberPassword: password } : {}
+  )
 }

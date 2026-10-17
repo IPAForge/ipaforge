@@ -124,6 +124,7 @@ export type FakeControl = {
   readonly planned: unknown[]
   readonly appInputs: InstallAppsInput[]
   readonly signIns: unknown[]
+  readonly signedOut: string[]
   /** Device-watch listeners the server holds. */
   readonly watchers: Set<(event: DeviceWatchEvent) => void>
 }
@@ -135,6 +136,7 @@ export const createFakeEngine = () => {
     planned: [],
     appInputs: [],
     signIns: [],
+    signedOut: [],
     watchers: new Set()
   }
   const engine = {
@@ -182,6 +184,13 @@ export const createFakeEngine = () => {
     signIn: (input: unknown, options?: CommandOptions<FakeState>) => {
       control.signIns.push(input)
       return startRun(control, { apps: [] }, options)
+    },
+    signOut: async (accountId: string) => {
+      if (accountId !== 'acct')
+        throw new LoadstarError(ErrorCode.AccountNotFound, {
+          data: { id: accountId }
+        })
+      control.signedOut.push(accountId)
     },
     watchDevices: (listener: (event: DeviceWatchEvent) => void) => {
       control.watchers.add(listener)

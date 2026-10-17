@@ -73,6 +73,8 @@ export type EngineClient = Omit<EngineQueries, 'planInstall'> & {
    * it. Returns the function that stops listening; the channel closing stops it too.
    */
   watchDevices(listener: (event: DeviceWatchEvent) => void): () => void
+  /** Forgets a saved Apple ID (account, session, saved password); its certificates stay for the next sign-in. */
+  signOut(accountId: string): Promise<void>
   /** Runs locally: errors arrive as LoadstarErrors with their code, data and cause chain intact. */
   classify(error: unknown): Diagnosis
 }

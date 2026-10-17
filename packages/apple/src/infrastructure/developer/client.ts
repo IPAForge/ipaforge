@@ -98,9 +98,18 @@ const assertAuthorized = (response: FetchResult, action: string): void => {
 }
 
 /** Throws the catalogued error for a non-zero `resultCode`. */
-const assertResultOk = (value: PlistDict, action: string): void => {
+const assertResultOk = (
+  deps: AppleDeps,
+  value: PlistDict,
+  action: string
+): void => {
   const resultCode = plistNumber(value.resultCode) ?? 0
   if (resultCode === 0) return
+  deps.logger.info('developer request failed', {
+    request: 'developer',
+    action,
+    resultCode
+  })
   const message =
     stringAt(value, 'userString') ?? stringAt(value, 'resultString') ?? ''
   throw new LoadstarError(developerErrorCode(resultCode, message), {
@@ -132,12 +141,18 @@ export const developerRequest = async (
     body: serializeXmlPlist(body),
     acceptStatus: successOr(HTTP_UNAUTHORIZED, HTTP_FORBIDDEN)
   })
+  if (response.status === HTTP_UNAUTHORIZED)
+    deps.logger.info('developer services refused the app token', {
+      request: 'developer',
+      action,
+      httpStatus: response.status
+    })
   assertAuthorized(response, action)
   const value = parseApplePlist(response.body, `developer ${action}`)
   if (!isPlistDict(value))
     throw new LoadstarError(ErrorCode.AppleProtocolError, {
       message: `${action}: not a dict`
     })
-  assertResultOk(value, action)
+  assertResultOk(deps, value, action)
   return value
 }

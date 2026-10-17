@@ -5,6 +5,8 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { t } from '@ui/__tests__/test-i18n.ts'
 import { renderApp } from '@ui/__tests__/test-services.tsx'
+import { createFakeEngine } from '@ui/services/engine/fake/fake-engine.ts'
+import { createFakeEngineClient } from '@ui/services/engine/fake/fake-engine-client.ts'
 import type { FakeScenarioId } from '@ui/services/engine/fake/fake-scenarios.ts'
 
 const NEW_ID = 'new@example.com'
@@ -290,5 +292,63 @@ describe('Add Apple ID, while Apple answers', () => {
       screen.getByRole('dialog', { name: t('prompts.code.title') })
     ).toBeDefined()
     expect(form.wasSeen()).toBe(false)
+  })
+})
+
+describe('Add Apple ID, saving the password', () => {
+  /** The fake Engine's sign-in, recording what it was asked. */
+  const recordingSignIn = () => {
+    const fake = createFakeEngine({
+      delayMs: 0,
+      appleDelayMs: 0,
+      scenario: 'sign-in-no-2fa'
+    })
+    const signIn = vi.fn(fake.signIn)
+    const engine = createFakeEngineClient({
+      delayMs: 0,
+      appleDelayMs: 0,
+      overrides: { signIn }
+    })
+
+    return { engine, signIn }
+  }
+
+  const signInWith = async (save: boolean) => {
+    const user = userEvent.setup()
+    const { engine, signIn } = recordingSignIn()
+    await renderApp('/accounts', { engine })
+    await user.click(
+      await within(await screen.findByRole('main')).findByRole('button', {
+        name: t('topBar.addAppleId')
+      })
+    )
+    const form = await screen.findByRole('dialog', { name: t('signIn.title') })
+    const checkbox = within(form).getByRole('checkbox', {
+      name: new RegExp(t('signIn.rememberPassword'))
+    }) as HTMLInputElement
+    expect(checkbox.checked).toBe(true)
+    if (!save) await user.click(checkbox)
+    await user.type(within(form).getByLabelText(/Apple ID/), NEW_ID)
+    await user.type(within(form).getByLabelText(/Password/), 'secret')
+    await user.click(
+      within(form).getByRole('button', { name: t('signIn.submit') })
+    )
+    await screen.findByRole('dialog', { name: t('signIn.done.title') })
+
+    return signIn.mock.calls[0]?.[0]
+  }
+
+  it('is on by default, and the Engine is asked to save it', async () => {
+    expect(await signInWith(true)).toEqual({
+      appleId: NEW_ID,
+      rememberPassword: true
+    })
+  })
+
+  it('asks the Engine not to save it when unchecked', async () => {
+    expect(await signInWith(false)).toEqual({
+      appleId: NEW_ID,
+      rememberPassword: false
+    })
   })
 })

@@ -14,7 +14,8 @@
     "account": "Apple ID",
     "notSignedIn": "Вход не выполнен",
     "accountMenu": "Apple ID",
-    "addAppleId": "Добавить Apple ID…"
+    "addAppleId": "Добавить Apple ID…",
+    "noAccounts": "Пока нет Apple ID."
   },
   "nav": {
     "group": {
@@ -51,6 +52,10 @@
       "install": "Установка на устройство",
       "pairing": "Размещение файла сопряжения",
       "remember": "Сохранение сведений об установке"
+    },
+    "signInNeeded": {
+      "title": "Нужно снова войти в Apple ID",
+      "body": "Сохранённый сеанс для {appleId} истёк. Установка всё равно возможна: Loadstar спросит пароль, когда дойдёт до этого шага."
     }
   },
   "pairing": {
@@ -506,6 +511,32 @@
       "title": "Apple ID добавлен",
       "body": "Вход выполнен как {appleId}.",
       "close": "Готово"
+    },
+    "rememberPassword": "Сохранить пароль в системной связке ключей",
+    "rememberPasswordHint": "Loadstar сможет сам войти снова, когда сеанс истечёт."
+  },
+  "accounts": {
+    "description": "Apple ID, которыми Loadstar подписывает приложения. Используемый показан на верхней панели.",
+    "list": "Сохранённые Apple ID",
+    "empty": "Пока нет Apple ID. Добавьте его, чтобы установить SideStore.",
+    "freeTeam": "{name} (бесплатная)",
+    "withState": "{line} · {state}",
+    "state": {
+      "checking": "Проверка…",
+      "signInNeeded": "Нужно войти",
+      "blocked": "Заблокирован на этом устройстве",
+      "unreachable": "Не удалось связаться с Apple"
+    },
+    "inUse": "Используется",
+    "noTeams": "Команды появятся, когда Apple ответит.",
+    "use": "Использовать",
+    "signInAgain": "Войти снова",
+    "signOut": {
+      "action": "Выйти",
+      "title": "Выйти из {appleId}?",
+      "forgets": "Loadstar забудет этот Apple ID, его сеанс и сохранённый пароль.",
+      "keeps": "Его сертификаты подписи останутся на этом компьютере, и при повторном входе они будут использованы снова. Уже установленные приложения работают, пока не истечёт срок.",
+      "confirm": "Выйти"
     }
   }
 }

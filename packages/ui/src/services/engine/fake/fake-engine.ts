@@ -35,6 +35,7 @@ import {
 import {
   createFakeWorld,
   type FakeWorld,
+  forgetAccount,
   requireSession,
   teamsFor
 } from '@ui/services/engine/fake/fake-world.ts'
@@ -103,7 +104,10 @@ const saveAccount = (world: FakeWorld, appleId: string): Account => {
 
 const signInRun = (
   world: FakeWorld,
-  appleId: string,
+  {
+    appleId,
+    rememberPassword
+  }: { appleId: string; rememberPassword?: boolean },
   options: CommandOptions<SignInState> | undefined
 ) =>
   startScriptedRun<SignInState>({
@@ -121,6 +125,7 @@ const signInRun = (
           // Apple skips the second factor for a computer it already knows.
           if (world.scenario !== 'sign-in-no-2fa')
             await completeTwoFactor(context, world.appleAnswer)
+          if (rememberPassword) world.savedPasswords.add(appleId)
           return { account: saveAccount(world, appleId) }
         }
       }
@@ -173,6 +178,7 @@ export const createFakeEngine = ({
       devices.watch(listener, options?.signal),
     deviceStatus,
     listAccounts: async () => world.accounts,
+    signOut: async (accountId) => forgetAccount(world, accountId),
     listTeams: async (accountId) => {
       requireSession(world, accountId)
       return teamsFor(world, accountId)
@@ -203,7 +209,7 @@ export const createFakeEngine = ({
       asRun(installRun(world, input, options as never)),
     placePairing: () => asRun(pairingRun(world)),
     signIn: (input, options) =>
-      asRun(signInRun(world, input.appleId, options as never)),
+      asRun(signInRun(world, input, options as never)),
     classify
   }
 }

@@ -4,8 +4,8 @@
 
 import { fromV1, fromV3 } from '@apple/application/anisette/providers.ts'
 import {
-  dedupe,
-  fetchRemoteServers
+  createRemoteServerList,
+  dedupe
 } from '@apple/application/anisette/server-list.ts'
 import { createAnisetteStateStore } from '@apple/application/anisette/state-store.ts'
 import type { AppleDeps } from '@apple/deps.ts'
@@ -28,7 +28,7 @@ export type ServerHealth = {
 }
 
 export type AnisetteService = {
-  /** Remote list (cached for the session) + built-in fallback, deduplicated, in preference order. */
+  /** Custom server + built-in fallback + remote list (kept up to date), deduplicated, in preference order. */
   servers(): Promise<AnisetteServer[]>
   health(server: AnisetteServer): Promise<ServerHealth>
   /** Headers and client identity from the first server that works. */
@@ -51,16 +51,14 @@ export const createAnisetteService = (
 ): AnisetteService => {
   const { logger, config } = deps
   const states = createAnisetteStateStore(deps.secrets)
-  let cachedList: AnisetteServer[] | undefined
+  const remoteList = createRemoteServerList(deps)
 
-  const servers = async (): Promise<AnisetteServer[]> => {
-    cachedList ??= await fetchRemoteServers(deps)
-    return dedupe([
+  const servers = async (): Promise<AnisetteServer[]> =>
+    dedupe([
       ...(options.custom ? [options.custom] : []),
       ...config.fallbackAnisetteServers,
-      ...cachedList
+      ...(await remoteList.current())
     ])
-  }
 
   const health = async (server: AnisetteServer): Promise<ServerHealth> => {
     const started = deps.clock.now().getTime()

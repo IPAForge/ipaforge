@@ -2,6 +2,7 @@
 // requested with the signed-in session and decrypted with its session key.
 
 import type { AnisetteService } from '@apple/application/anisette.ts'
+import { anisetteForSession } from '@apple/application/session-anisette.ts'
 import type { AppleDeps } from '@apple/deps.ts'
 import { assertGsaOk } from '@apple/domain/gsa-status.ts'
 import type { AppleSession, AppToken } from '@apple/domain/session.ts'
@@ -21,6 +22,7 @@ import {
   LoadstarError,
   type PlistDict,
   parsePlist,
+  toLoadstarError,
   utf8Encode
 } from '@loadstar/kernel'
 
@@ -41,7 +43,7 @@ const requestEncryptedToken = async (
   session: AppleSession,
   app: string
 ): Promise<Uint8Array> => {
-  const data = await anisette.get()
+  const data = await anisetteForSession(anisette, session)
   const checksum = await hmacSha256(
     session.sessionKey,
     utf8Encode(`apptokens${session.adsid}${app}`)
@@ -59,8 +61,21 @@ const requestEncryptedToken = async (
       ['u', session.adsid]
     ])
   )
+  if (status.ec !== 0)
+    // Diagnostics for "sign-in needed": Apple's own status, never the token or the session.
+    deps.logger.info('app token request refused', {
+      request: 'apptokens',
+      app,
+      gsaCode: status.ec,
+      hsc: status.hsc,
+      anisetteServer: data.server,
+      sessionAnisetteServer: session.anisetteServer
+    })
   if (status.ec !== 0 && status.hsc === HSC_UNAUTHORIZED)
-    throw new LoadstarError(ErrorCode.SessionExpired)
+    throw new LoadstarError(ErrorCode.SessionExpired, {
+      message: 'Apple refused the session for an app token',
+      data: { request: 'apptokens', gsaCode: status.ec, hsc: status.hsc }
+    })
   assertGsaOk(status, 'apptokens')
   const et = response.et
   if (!(et instanceof Uint8Array))
@@ -99,7 +114,19 @@ export const createAppTokenService = (
       const cached = cache.get(key)
       if (cached && isFresh(cached)) return cached
 
-      const et = await requestEncryptedToken(deps, anisette, session, app)
+      const et = await requestEncryptedToken(
+        deps,
+        anisette,
+        session,
+        app
+      ).catch((error: unknown) => {
+        deps.logger.info('app token request failed', {
+          request: 'apptokens',
+          app,
+          code: toLoadstarError(error).code
+        })
+        throw error
+      })
       const entry = tokenEntry(
         parsePlist(await decryptAppToken(session.sessionKey, et)),
         app

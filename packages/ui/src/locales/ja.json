@@ -14,7 +14,8 @@
     "account": "Apple ID",
     "notSignedIn": "サインインしていません",
     "accountMenu": "Apple ID",
-    "addAppleId": "Apple IDを追加…"
+    "addAppleId": "Apple IDを追加…",
+    "noAccounts": "Apple IDはまだありません。"
   },
   "nav": {
     "group": {
@@ -51,6 +52,10 @@
       "install": "デバイスにインストール",
       "pairing": "ペアリングファイルを配置",
       "remember": "このインストールを記録"
+    },
+    "signInNeeded": {
+      "title": "Apple IDにもう一度サインインする必要があります",
+      "body": "{appleId}の保存されたセッションの有効期限が切れました。インストールはできます。その段階でLoadstarがパスワードを尋ねます。"
     }
   },
   "pairing": {
@@ -506,6 +511,32 @@
       "title": "Apple IDを追加しました",
       "body": "{appleId}としてサインインしました。",
       "close": "完了"
+    },
+    "rememberPassword": "パスワードをシステムのキーチェーンに保存する",
+    "rememberPasswordHint": "セッションの期限が切れたとき、Loadstarが自動でサインインし直せます。"
+  },
+  "accounts": {
+    "description": "Loadstarがアプリの署名に使うApple ID。使用中のものは上部のバーに表示されます。",
+    "list": "保存済みのApple ID",
+    "empty": "まだApple IDがありません。SideStoreをインストールするには追加してください。",
+    "freeTeam": "{name}(無料)",
+    "withState": "{line} · {state}",
+    "state": {
+      "checking": "確認中…",
+      "signInNeeded": "サインインが必要",
+      "blocked": "このデバイスでブロック中",
+      "unreachable": "Appleに接続できません"
+    },
+    "inUse": "使用中",
+    "noTeams": "Appleが応答するとチームが表示されます。",
+    "use": "使用する",
+    "signInAgain": "もう一度サインイン",
+    "signOut": {
+      "action": "サインアウト",
+      "title": "{appleId}からサインアウトしますか?",
+      "forgets": "LoadstarはこのApple ID、そのセッション、保存されたパスワードを削除します。",
+      "keeps": "署名証明書はこのコンピュータに残るため、再度サインインすると再利用されます。インストール済みのアプリは期限が切れるまで動作します。",
+      "confirm": "サインアウト"
     }
   }
 }

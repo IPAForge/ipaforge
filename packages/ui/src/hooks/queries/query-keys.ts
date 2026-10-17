@@ -10,6 +10,8 @@ export const queryKeys = {
   deviceStatus: (udid: string | undefined) =>
     ['devices', udid ?? null, 'status'] as const,
   accounts: ['accounts'] as const,
+  /** Every query about one account (its teams, quota, certificates). */
+  account: (accountId: string) => ['accounts', accountId] as const,
   teams: (accountId: string | undefined) =>
     ['accounts', accountId ?? null, 'teams'] as const,
   catalogApps: ['catalog', 'apps'] as const,

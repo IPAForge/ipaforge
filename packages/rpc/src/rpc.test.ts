@@ -109,6 +109,15 @@ describe('queries', () => {
     expect(client.classify(error).code).toBe(ErrorCode.DeviceLocked)
   })
 
+  it('signs out through the Engine, and brings its failure back with the code', async () => {
+    const { client, control } = setup()
+    await client.signOut('acct')
+    expect(control.signedOut).toEqual(['acct'])
+    await expect(client.signOut('someone else')).rejects.toMatchObject({
+      code: ErrorCode.AccountNotFound
+    })
+  })
+
   it('refuses an IPA URL that is not HTTPS', async () => {
     const { client } = setup()
     await expect(

@@ -64,7 +64,10 @@ export const placePairingInputSchema = z.object({
 })
 
 /** The password and any second factor come later, as prompt answers, so they never sit in the run's input. */
-export const signInInputSchema = z.object({ appleId: textSchema })
+export const signInInputSchema = z.object({
+  appleId: textSchema,
+  rememberPassword: z.boolean().optional()
+})
 
 export type ExternalIpa = z.infer<typeof externalIpaSchema>
 export type IpaSource = z.input<typeof ipaSourceSchema>

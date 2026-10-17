@@ -58,6 +58,10 @@ export type AppleConfig = {
   readonly xcode: XcodeHeaders
   /** Remote, community-maintained anisette server list (`{ servers: [{ name, address }] }`). */
   readonly anisetteServerListUrl: string
+  /** How long a fetched list is used before it is fetched again (on the next anisette request, never polled). */
+  readonly anisetteServerListMaxAgeMs: number
+  /** After a failed fetch, how long the last known list is used before trying again. */
+  readonly anisetteServerListRetryMs: number
   /** Used when the remote list cannot be fetched. Order = preference. */
   readonly fallbackAnisetteServers: readonly AnisetteServer[]
   readonly timeouts: AppleTimeouts
@@ -93,6 +97,8 @@ export const DEFAULT_APPLE_CONFIG: AppleConfig = {
     xcodeVersion: '27.0 (27A5218g)'
   },
   anisetteServerListUrl: 'https://servers.sidestore.io/servers.json',
+  anisetteServerListMaxAgeMs: 60 * 60 * 1000,
+  anisetteServerListRetryMs: 60 * 1000,
   fallbackAnisetteServers: [
     { name: 'jkcoxson', address: 'https://ani.jkcoxson.com' },
     { name: 'StikStore', address: 'https://ani2.stikstore.app' },

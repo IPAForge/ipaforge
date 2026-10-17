@@ -14,7 +14,8 @@
     "account": "معرّف Apple",
     "notSignedIn": "لم يتم تسجيل الدخول",
     "accountMenu": "معرّفات Apple",
-    "addAppleId": "إضافة Apple ID…"
+    "addAppleId": "إضافة Apple ID…",
+    "noAccounts": "لا توجد معرّفات Apple بعد."
   },
   "nav": {
     "group": {
@@ -51,6 +52,10 @@
       "install": "التثبيت على الجهاز",
       "pairing": "وضع ملف الإقران",
       "remember": "حفظ عملية التثبيت هذه"
+    },
+    "signInNeeded": {
+      "title": "يحتاج Apple ID الخاص بك إلى تسجيل الدخول مجددًا",
+      "body": "انتهت الجلسة المحفوظة لـ {appleId}. لا يزال بإمكانك التثبيت: سيطلب Loadstar كلمة السر عند الوصول إلى تلك الخطوة."
     }
   },
   "pairing": {
@@ -506,6 +511,32 @@
       "title": "تمت إضافة Apple ID",
       "body": "تم تسجيل الدخول باسم {appleId}.",
       "close": "تم"
+    },
+    "rememberPassword": "احفظ كلمة السر في سلسلة مفاتيح النظام",
+    "rememberPasswordHint": "يتيح لـ Loadstar تسجيل الدخول مجددًا بنفسه عند انتهاء الجلسة."
+  },
+  "accounts": {
+    "description": "معرّفات Apple التي يوقّع بها Loadstar التطبيقات. المعرّف المستخدم يظهر في الشريط العلوي.",
+    "list": "معرّفات Apple المحفوظة",
+    "empty": "لا توجد معرّفات Apple بعد. أضف واحدًا لتثبيت SideStore.",
+    "freeTeam": "{name} (مجاني)",
+    "withState": "{line} · {state}",
+    "state": {
+      "checking": "جارٍ التحقق…",
+      "signInNeeded": "يلزم تسجيل الدخول",
+      "blocked": "محظور على هذا الجهاز",
+      "unreachable": "تعذّر الوصول إلى Apple"
+    },
+    "inUse": "قيد الاستخدام",
+    "noTeams": "تظهر الفرق بعد أن تجيب Apple.",
+    "use": "استخدام",
+    "signInAgain": "سجّل الدخول مجددًا",
+    "signOut": {
+      "action": "تسجيل الخروج",
+      "title": "تسجيل الخروج من {appleId}؟",
+      "forgets": "ينسى Loadstar هذا الـ Apple ID وجلسته وكلمة السر المحفوظة.",
+      "keeps": "تبقى شهادات التوقيع الخاصة به على هذا الكمبيوتر، فيعاد استخدامها عند تسجيل الدخول مجددًا. تظل التطبيقات المثبتة تعمل حتى تنتهي صلاحيتها.",
+      "confirm": "تسجيل الخروج"
     }
   }
 }

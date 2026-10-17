@@ -30,22 +30,31 @@ export const createEncryptedFileSecretStore = (
   keyProvider: KeyProvider
 ): SecretStore => {
   let key: Promise<CryptoKey> | undefined
-  let cache: SecretRecord | undefined
+  let loading: Promise<SecretRecord> | undefined
 
   const cryptoKey = (): Promise<CryptoKey> => {
     key ??= keyProvider().then(importAesKey)
     return key
   }
 
-  const load = async (): Promise<SecretRecord> => {
-    if (cache) return cache
+  const read = async (): Promise<SecretRecord> => {
     const sealed = await readSealed(path)
-    cache = sealed
+
+    return sealed
       ? (JSON.parse(
           utf8Decode(await unseal(await cryptoKey(), sealed))
         ) as SecretRecord)
       : {}
-    return cache
+  }
+  // One load for every caller: concurrent first uses share the same record instead of each reading its own, so
+  // no change is lost to a record that was replaced.
+  const load = (): Promise<SecretRecord> => {
+    loading ??= read().catch((error: unknown) => {
+      // A failed load (the keychain said no) is tried again next time.
+      loading = undefined
+      throw error
+    })
+    return loading
   }
 
   const save = async (values: SecretRecord) =>

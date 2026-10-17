@@ -263,7 +263,9 @@ export const fakeApple = (options: FakeAppleOptions = {}) => {
     registered: [] as string[],
     provisioned: [] as ProvisionRequest[],
     banned: [] as string[],
-    saved: 0
+    saved: 0,
+    savedOptions: [] as unknown[],
+    removed: [] as string[]
   }
   let serial = 0
 
@@ -354,8 +356,12 @@ export const fakeApple = (options: FakeAppleOptions = {}) => {
     },
     accounts: {
       list: async () => [account],
-      save: async () => {
+      remove: async (id: string) => {
+        calls.removed.push(id)
+      },
+      save: async (_session: unknown, options?: unknown) => {
         calls.saved++
+        calls.savedOptions.push(options)
         return account
       },
       update: async (_id: string, patch: { teamId?: string }) => {

@@ -64,6 +64,11 @@ export type Engine = EngineQueries & {
     listener: DeviceWatchListener,
     options?: { readonly signal?: AbortSignal }
   ): () => void
+  /**
+   * Forgets a saved Apple ID: the account, its session and its saved password. Its signing certificates stay in
+   * the secret store, so signing in again reuses them instead of using up the team's certificate slots.
+   */
+  signOut(accountId: string): Promise<void>
   classify(error: unknown): Diagnosis
 }
 
@@ -85,6 +90,10 @@ export const createEngine = (input: InstallerDepsInput): Engine => {
       startRun(deps, (runtime) => placePairingFlow(runtime, command), options),
     signIn: (command, options) =>
       startRun(deps, (runtime) => signInFlow(runtime, command), options),
+    signOut: async (accountId) => {
+      await deps.apple.accounts.remove(accountId)
+      deps.logger.info('signed out', { account: accountId })
+    },
     watchDevices: (listener, options) =>
       deviceWatch.subscribe(listener, options?.signal),
     classify

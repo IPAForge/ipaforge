@@ -101,3 +101,30 @@ describe('createDesktopSecrets', () => {
     ).toBeUndefined()
   })
 })
+
+describe('the secret stores under concurrent use', () => {
+  const keys = ['apple/account-index', 'apple/session/a', 'apple/session/b']
+
+  it('keeps every change made at once on a fresh store, and reads them back', async () => {
+    const dataDir = await tempDir()
+    const options = {
+      dataDir,
+      safeStorage: fakeSafeStorage(),
+      platform: 'darwin' as const,
+      logger: silentLogger
+    }
+    const secrets = createDesktopSecrets(options)
+    await Promise.all([
+      ...keys.map((key) => secrets.set(key, utf8Encode(key))),
+      secrets.set('anisette/last-good', utf8Encode('a')),
+      secrets.set('anisette/state/a', utf8Encode('b'))
+    ])
+
+    const reopened = createDesktopSecrets(options)
+    for (const key of [...keys, 'anisette/last-good', 'anisette/state/a'])
+      expect(await reopened.get(key)).toBeDefined()
+    expect(
+      utf8Decode((await reopened.get(keys[1] ?? '')) ?? new Uint8Array())
+    ).toBe(keys[1])
+  })
+})

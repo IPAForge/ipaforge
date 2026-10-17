@@ -3,6 +3,7 @@
 
 import type { AnisetteService } from '@apple/application/anisette.ts'
 import type { AppTokenService } from '@apple/application/app-token.ts'
+import { anisetteForSession } from '@apple/application/session-anisette.ts'
 import type { AppleDeps } from '@apple/deps.ts'
 import type { Team } from '@apple/domain/developer.ts'
 import type { AppleSession } from '@apple/domain/session.ts'
@@ -38,7 +39,7 @@ export const createDeveloperContext = (
   session: AppleSession
 ): DeveloperContext => {
   const options: DeveloperRequestOptions = {
-    anisette: () => anisette.get(),
+    anisette: () => anisetteForSession(anisette, session),
     auth: async () => ({
       token: (await tokens.appToken(session)).token,
       adsid: session.adsid

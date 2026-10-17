@@ -5,6 +5,8 @@ import { ErrorCode } from '@loadstar/kernel'
 export const fakeScenarioIds = [
   'happy',
   'hot-plug',
+  'accounts',
+  'no-accounts',
   'sign-in-no-2fa',
   'wrong-password',
   'two-factor',

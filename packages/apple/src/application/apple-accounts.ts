@@ -69,10 +69,10 @@ const findSaved = async (
 ): Promise<SavedAccount | undefined> =>
   (await accounts.list()).find((candidate) => candidate.id === id)
 
-const isSessionExpired = (error: unknown): boolean =>
+const isSessionExpired = (error: unknown): error is LoadstarError =>
   error instanceof LoadstarError && error.code === ErrorCode.SessionExpired
 
-type ResumeServices = {
+export type ResumeServices = {
   readonly deps: AppleDeps
   readonly accounts: AccountStore
   readonly tokens: AppTokenService
@@ -85,7 +85,10 @@ const reuseSession = async (
   id: string
 ): Promise<AppleSession | undefined> => {
   const session = await services.accounts.session(id)
-  if (!session) return undefined
+  if (!session) {
+    services.deps.logger.info('no saved session', { account: id })
+    return undefined
+  }
   try {
     await services.tokens.appToken(session, XCODE_APP)
     await services.accounts.update(id, {
@@ -94,12 +97,20 @@ const reuseSession = async (
     return session
   } catch (error) {
     if (!isSessionExpired(error)) throw error
-    services.deps.logger.info('saved session expired', { account: id })
+    // Why Apple refused it (its status, the request), never the session itself.
+    services.deps.logger.info('saved session not accepted', {
+      account: id,
+      code: error.code,
+      request: error.data?.request,
+      gsaCode: error.data?.gsaCode,
+      hsc: error.data?.hsc
+    })
     return undefined
   }
 }
 
-const resumeAccount = async (
+/** Opens a saved account: its session, else a sign-in with its saved password, else "needs the password". */
+export const resumeAccount = async (
   services: ResumeServices,
   id: string
 ): Promise<ResumeResult> => {
@@ -109,7 +120,15 @@ const resumeAccount = async (
   const session = await reuseSession(services, id)
   if (session) return { kind: 'signed_in', session }
   const password = await services.accounts.password(id)
-  if (!password) return { kind: 'needs_password', appleId: account.appleId }
+  if (!password) {
+    services.deps.logger.debug('no saved password; the password is needed', {
+      account: id
+    })
+    return { kind: 'needs_password', appleId: account.appleId }
+  }
+  services.deps.logger.debug('signing in again with the saved password', {
+    account: id
+  })
   const result = await services.signIn.signIn({
     appleId: account.appleId,
     password

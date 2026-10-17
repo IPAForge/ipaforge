@@ -10,15 +10,18 @@ import {
 import type { SecretStore } from '@loadstar/kernel'
 
 export const createFileSecretStore = (path: string): SecretStore => {
-  let cache: SecretRecord | undefined
-  const load = async (): Promise<SecretRecord> => {
-    if (cache) return cache
+  const read = async (): Promise<SecretRecord> => {
     try {
-      cache = JSON.parse(await readFile(path, 'utf8')) as SecretRecord
+      return JSON.parse(await readFile(path, 'utf8')) as SecretRecord
     } catch {
-      cache = {}
+      return {}
     }
-    return cache
+  }
+  // One load for every caller: concurrent first uses share the same record instead of each reading its own.
+  let loading: Promise<SecretRecord> | undefined
+  const load = (): Promise<SecretRecord> => {
+    loading ??= read()
+    return loading
   }
   const save = (values: SecretRecord) =>
     writePrivateFile(path, JSON.stringify(values))

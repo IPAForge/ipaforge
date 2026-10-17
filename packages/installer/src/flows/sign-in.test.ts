@@ -23,6 +23,23 @@ describe('signIn', () => {
     expect(h.apple.calls.saved).toBe(1)
   })
 
+  it('saves the password only when asked to', async () => {
+    const remembering = createHarness()
+    await remembering.engine.signIn(
+      { ...input, rememberPassword: true },
+      { onPrompt: scripted({ [PromptKind.Password]: () => 'secret' }) }
+    ).result
+    expect(remembering.apple.calls.savedOptions).toEqual([
+      { rememberPassword: 'secret' }
+    ])
+
+    const forgetting = createHarness()
+    await forgetting.engine.signIn(input, {
+      onPrompt: scripted({ [PromptKind.Password]: () => 'secret' })
+    }).result
+    expect(forgetting.apple.calls.savedOptions).toEqual([{}])
+  })
+
   it('completes a second factor, asking again after a wrong code', async () => {
     const challenge = twoFactorChallenge('123456')
     const h = createHarness({
