@@ -1,4 +1,9 @@
-import { Label, Radio, RadioGroup } from 'react-aria-components'
+import {
+  Label,
+  RadioButton,
+  RadioField,
+  RadioGroup
+} from 'react-aria-components'
 import { useTranslation } from 'react-i18next'
 
 import { segmentClass } from '@ui/features/install/home/utils/choice-classes.ts'
@@ -34,13 +39,15 @@ export const ChannelChoice = ({
       <Label className="font-medium text-sm">{t('install.home.channel')}</Label>
       <div className="flex rounded-full bg-surface-secondary p-1">
         {channels.map((channel) => (
-          <Radio key={channel} value={channel} className={segmentClass}>
-            {t(
-              channel === recommended
-                ? `install.channel.${channel}Recommended`
-                : `install.channel.${channel}`
-            )}
-          </Radio>
+          <RadioField key={channel} value={channel}>
+            <RadioButton className={segmentClass}>
+              {t(
+                channel === recommended
+                  ? `install.channel.${channel}Recommended`
+                  : `install.channel.${channel}`
+              )}
+            </RadioButton>
+          </RadioField>
         ))}
       </div>
     </RadioGroup>
