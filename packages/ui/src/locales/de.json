@@ -14,7 +14,8 @@
     "account": "Apple-ID",
     "notSignedIn": "Nicht angemeldet",
     "accountMenu": "Apple-IDs",
-    "addAppleId": "Apple-ID hinzufügen …"
+    "addAppleId": "Apple-ID hinzufügen …",
+    "noAccounts": "Noch keine Apple-IDs."
   },
   "nav": {
     "group": {
@@ -51,6 +52,10 @@
       "install": "Auf dem Gerät installieren",
       "pairing": "Kopplungsdatei ablegen",
       "remember": "Installation merken"
+    },
+    "signInNeeded": {
+      "title": "Deine Apple-ID braucht eine erneute Anmeldung",
+      "body": "Die gespeicherte Sitzung für {appleId} ist abgelaufen. Du kannst trotzdem installieren: Loadstar fragt dann nach dem Passwort."
     }
   },
   "pairing": {
@@ -506,6 +511,32 @@
       "title": "Apple-ID hinzugefügt",
       "body": "Angemeldet als {appleId}.",
       "close": "Fertig"
+    },
+    "rememberPassword": "Mein Passwort im Schlüsselbund des Systems sichern",
+    "rememberPasswordHint": "Damit kann sich Loadstar selbst erneut anmelden, wenn die Sitzung abläuft."
+  },
+  "accounts": {
+    "description": "Die Apple-IDs, mit denen Loadstar Apps signiert. Die verwendete steht in der oberen Leiste.",
+    "list": "Gespeicherte Apple-IDs",
+    "empty": "Noch keine Apple-IDs. Füge eine hinzu, um SideStore zu installieren.",
+    "freeTeam": "{name} (kostenlos)",
+    "withState": "{line} · {state}",
+    "state": {
+      "checking": "Wird geprüft …",
+      "signInNeeded": "Anmeldung nötig",
+      "blocked": "Auf diesem Gerät gesperrt",
+      "unreachable": "Apple nicht erreichbar"
+    },
+    "inUse": "In Verwendung",
+    "noTeams": "Teams erscheinen, sobald Apple geantwortet hat.",
+    "use": "Verwenden",
+    "signInAgain": "Erneut anmelden",
+    "signOut": {
+      "action": "Abmelden",
+      "title": "Von {appleId} abmelden?",
+      "forgets": "Loadstar vergisst diese Apple-ID, ihre Sitzung und ihr gespeichertes Passwort.",
+      "keeps": "Ihre Signaturzertifikate bleiben auf diesem Computer, sodass eine erneute Anmeldung sie wiederverwendet. Bereits installierte Apps laufen weiter, bis sie ablaufen.",
+      "confirm": "Abmelden"
     }
   }
 }

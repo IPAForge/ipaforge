@@ -1,12 +1,14 @@
 // Which anisette servers to try, in which order: a custom server first, then the built-in fallback, then the
-// remote community list.
+// remote community list. The remote list is kept up to date: fetched again once it is older than its maximum age
+// (on the next anisette request, never polled), and the last list fetched is kept in the secret store, so a failed
+// fetch or an offline start uses it instead of the built-in servers alone.
 
 import { z } from 'zod'
 
 import type { AppleDeps } from '@apple/deps.ts'
 import type { AnisetteServer } from '@apple/domain/config.ts'
 import { fetchApple } from '@apple/infrastructure/http.ts'
-import { utf8Decode } from '@loadstar/kernel'
+import { compact, utf8Decode, utf8Encode } from '@loadstar/kernel'
 
 const serverListSchema = z.looseObject({
   servers: z.array(z.looseObject({ name: z.string().min(1), address: z.url() }))
@@ -56,10 +58,10 @@ const httpsOnly = (
     return secure
   })
 
-/** The remote list's HTTPS servers, or none when it cannot be fetched. */
-export const fetchRemoteServers = async (
+/** The remote list's HTTPS servers, or undefined when it cannot be fetched. */
+const fetchRemoteServers = async (
   deps: AppleDeps
-): Promise<AnisetteServer[]> => {
+): Promise<AnisetteServer[] | undefined> => {
   const { config } = deps
   try {
     const response = await fetchApple(deps, config.anisetteServerListUrl, {
@@ -72,9 +74,99 @@ export const fetchRemoteServers = async (
     )
   } catch (error) {
     deps.logger.warn(
-      'anisette server list unavailable; using the built-in list',
+      'anisette server list unavailable; using the last known list',
       { cause: error }
     )
-    return []
+    return undefined
+  }
+}
+
+const STORED_LIST_KEY = 'anisette/server-list'
+
+const storedListSchema = z.object({
+  fetchedAt: z.number(),
+  servers: z.array(
+    z.object({
+      name: z.string(),
+      address: z.string(),
+      protocol: z.enum(['v1', 'v3']).optional()
+    })
+  )
+})
+
+type FetchedList = {
+  readonly servers: AnisetteServer[]
+  readonly fetchedAt: number
+}
+
+const loadStoredList = async (
+  deps: AppleDeps
+): Promise<FetchedList | undefined> => {
+  try {
+    const raw = await deps.secrets.get(STORED_LIST_KEY)
+    if (!raw) return undefined
+    const parsed = storedListSchema.safeParse(JSON.parse(utf8Decode(raw)))
+
+    if (!parsed.success) return undefined
+
+    return {
+      fetchedAt: parsed.data.fetchedAt,
+      servers: parsed.data.servers.map((server) => compact(server))
+    }
+  } catch (error) {
+    deps.logger.warn('saved anisette server list unreadable', { cause: error })
+    return undefined
+  }
+}
+
+export type RemoteServerList = {
+  /** The remote list, fetched again when older than `anisetteServerListMaxAgeMs`; the last known one otherwise. */
+  current(): Promise<AnisetteServer[]>
+}
+
+export const createRemoteServerList = (deps: AppleDeps): RemoteServerList => {
+  const { config, clock } = deps
+  let known: FetchedList | undefined
+  let loaded = false
+  let failedAt: number | undefined
+  let inFlight: Promise<AnisetteServer[]> | undefined
+
+  const isFresh = (now: number): boolean =>
+    known !== undefined &&
+    now - known.fetchedAt < config.anisetteServerListMaxAgeMs
+
+  const isRetryDue = (now: number): boolean =>
+    failedAt === undefined || now - failedAt >= config.anisetteServerListRetryMs
+
+  const refresh = async (): Promise<AnisetteServer[]> => {
+    if (!loaded) {
+      known = await loadStoredList(deps)
+      loaded = true
+    }
+    const now = clock.now().getTime()
+    if (isFresh(now) || !isRetryDue(now)) return known?.servers ?? []
+    const servers = await fetchRemoteServers(deps)
+    if (!servers) {
+      failedAt = now
+      return known?.servers ?? []
+    }
+    failedAt = undefined
+    known = { servers, fetchedAt: now }
+    await deps.secrets.set(STORED_LIST_KEY, utf8Encode(JSON.stringify(known)))
+    deps.logger.debug('anisette server list updated', {
+      servers: servers.length
+    })
+
+    return servers
+  }
+
+  return {
+    current: () => {
+      inFlight ??= refresh().finally(() => {
+        inFlight = undefined
+      })
+
+      return inFlight
+    }
   }
 }

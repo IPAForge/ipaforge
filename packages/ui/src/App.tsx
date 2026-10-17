@@ -10,6 +10,8 @@ import type { LanguageSetup } from '@ui/i18n/setup/prepare-language.ts'
 import { createAppRouter } from '@ui/router.tsx'
 import { scopeServices } from '@ui/services/scope-services.ts'
 import { type UiServices, UiServicesContext } from '@ui/services/ui-services.ts'
+import { SelectionContext } from '@ui/state/selection/selection-context.ts'
+import { createSelectionStore } from '@ui/state/selection/selection-store.ts'
 import { ThemeProvider } from '@ui/theme/provider/theme-provider.tsx'
 
 export type AppProps = {
@@ -23,8 +25,7 @@ export type AppProps = {
 
 /**
  * The whole UI: host services (the Engine client among them), the query cache for Engine queries kept in step
- * with the device feed, the language,
- * the theme, then the router (whose root route is the shell). Touches no browser global at import time, so any
+ * with the device feed, what the user picked in the top bar, the language, the theme, then the router (whose root route is the shell). Touches no browser global at import time, so any
  * host can mount it. HeroUI v3 itself needs no provider.
  */
 export const App = ({ services, language, history }: AppProps) => {
@@ -33,16 +34,21 @@ export const App = ({ services, language, history }: AppProps) => {
     createAppRouter({ logger: scoped.logger, history })
   )
   const [queryClient] = useState(createQueryClient)
+  const [selection] = useState(() =>
+    createSelectionStore(scoped.preferences, scoped.logger)
+  )
 
   return (
     <UiServicesContext value={scoped}>
       <QueryClientProvider client={queryClient}>
         <DeviceFeed />
-        <LanguageProvider setup={language}>
-          <ThemeProvider>
-            <RouterProvider router={router} />
-          </ThemeProvider>
-        </LanguageProvider>
+        <SelectionContext value={selection}>
+          <LanguageProvider setup={language}>
+            <ThemeProvider>
+              <RouterProvider router={router} />
+            </ThemeProvider>
+          </LanguageProvider>
+        </SelectionContext>
       </QueryClientProvider>
     </UiServicesContext>
   )

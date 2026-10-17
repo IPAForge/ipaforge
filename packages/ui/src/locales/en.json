@@ -14,7 +14,8 @@
     "account": "Apple ID",
     "notSignedIn": "Not signed in",
     "accountMenu": "Apple IDs",
-    "addAppleId": "Add Apple ID…"
+    "addAppleId": "Add Apple ID…",
+    "noAccounts": "No Apple IDs yet."
   },
   "nav": {
     "group": {
@@ -51,6 +52,10 @@
       "install": "Install on the device",
       "pairing": "Place the pairing file",
       "remember": "Remember this install"
+    },
+    "signInNeeded": {
+      "title": "Your Apple ID needs you to sign in again",
+      "body": "The saved session for {appleId} has expired. You can still install: Loadstar asks for the password when it gets there."
     }
   },
   "pairing": {
@@ -506,6 +511,32 @@
       "title": "Apple ID added",
       "body": "Signed in as {appleId}.",
       "close": "Done"
+    },
+    "rememberPassword": "Save my password in the system keychain",
+    "rememberPasswordHint": "Lets Loadstar sign in again on its own when the session expires."
+  },
+  "accounts": {
+    "description": "The Apple IDs Loadstar signs apps with. The one in use is shown in the top bar.",
+    "list": "Saved Apple IDs",
+    "empty": "No Apple IDs yet. Add one to install SideStore.",
+    "freeTeam": "{name} (free)",
+    "withState": "{line} · {state}",
+    "state": {
+      "checking": "Checking…",
+      "signInNeeded": "Sign-in needed",
+      "blocked": "Blocked on this device",
+      "unreachable": "Couldn't reach Apple"
+    },
+    "inUse": "In use",
+    "noTeams": "Teams appear once Apple has answered.",
+    "use": "Use",
+    "signInAgain": "Sign in again",
+    "signOut": {
+      "action": "Sign out",
+      "title": "Sign out of {appleId}?",
+      "forgets": "Loadstar forgets this Apple ID, its session and its saved password.",
+      "keeps": "Its signing certificates stay on this computer, so signing in again reuses them. Apps already installed keep working until they expire.",
+      "confirm": "Sign out"
     }
   }
 }

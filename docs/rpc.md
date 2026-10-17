@@ -44,7 +44,7 @@ UI to Engine, each with an `id` that its response echoes:
 
 | `type` | Fields | Engine call |
 |---|---|---|
-| `query` | `call: { method, args }` | `listDevices`, `deviceStatus`, `listAccounts`, `listTeams`, `catalogApps`, `recommendedChannel`, `appIdQuota`, `listCertificates`, `planInstall` |
+| `query` | `call: { method, args }` | `listDevices`, `deviceStatus`, `listAccounts`, `listTeams`, `catalogApps`, `recommendedChannel`, `appIdQuota`, `listCertificates`, `planInstall`, and `signOut` (a one-shot call answered the same way) |
 | `start` | `runId`, `call: { command, input }`, `resume?` | `installSideStore`, `installApps`, `placePairing`, `signIn` |
 | `answer` | `runId`, `answer` | `handle.answer()` |
 | `decline` | `runId` | `handle.decline()` |

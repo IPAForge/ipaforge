@@ -57,6 +57,13 @@ export const fakeAccounts = (): Account[] => [
   }
 ]
 
+/** An Apple ID whose saved session expired (the `accounts` scenario). */
+export const EXPIRED_ACCOUNT: Account = {
+  id: 'old@example.com',
+  appleId: 'old@example.com',
+  health: { bannedOnDevices: [] }
+}
+
 export const fakeCatalogApps: CatalogApp[] = [
   {
     id: 'sidestore',

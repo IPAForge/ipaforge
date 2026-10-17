@@ -159,6 +159,7 @@ export const createEngineClient = (
     listDevices: () => query({ method: 'listDevices', args: [] }),
     deviceStatus: (udid) => query({ method: 'deviceStatus', args: [udid] }),
     listAccounts: () => query({ method: 'listAccounts', args: [] }),
+    signOut: (accountId) => query({ method: 'signOut', args: [accountId] }),
     listTeams: (accountId) => query({ method: 'listTeams', args: [accountId] }),
     catalogApps: () => query({ method: 'catalogApps', args: [] }),
     recommendedChannel: (appId, iosVersion) =>

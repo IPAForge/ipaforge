@@ -14,7 +14,8 @@
     "account": "ID Apple",
     "notSignedIn": "Neconectat",
     "accountMenu": "ID-uri Apple",
-    "addAppleId": "Adaugă un Apple ID…"
+    "addAppleId": "Adaugă un Apple ID…",
+    "noAccounts": "Niciun Apple ID încă."
   },
   "nav": {
     "group": {
@@ -51,6 +52,10 @@
       "install": "Instalează pe dispozitiv",
       "pairing": "Plasează fișierul de asociere",
       "remember": "Memorează această instalare"
+    },
+    "signInNeeded": {
+      "title": "Apple ID-ul tău are nevoie să te autentifici din nou",
+      "body": "Sesiunea salvată pentru {appleId} a expirat. Poți instala în continuare: Loadstar îți cere parola când ajunge acolo."
     }
   },
   "pairing": {
@@ -506,6 +511,32 @@
       "title": "Apple ID adăugat",
       "body": "Autentificat ca {appleId}.",
       "close": "Gata"
+    },
+    "rememberPassword": "Salvează parola în portchei-ul sistemului",
+    "rememberPasswordHint": "Permite Loadstar să se autentifice singur din nou când expiră sesiunea."
+  },
+  "accounts": {
+    "description": "Apple ID-urile cu care Loadstar semnează aplicații. Cel folosit apare în bara de sus.",
+    "list": "Apple ID-uri salvate",
+    "empty": "Niciun Apple ID încă. Adaugă unul pentru a instala SideStore.",
+    "freeTeam": "{name} (gratuit)",
+    "withState": "{line} · {state}",
+    "state": {
+      "checking": "Se verifică…",
+      "signInNeeded": "Trebuie să te autentifici",
+      "blocked": "Blocat pe acest dispozitiv",
+      "unreachable": "Apple nu poate fi contactat"
+    },
+    "inUse": "În uz",
+    "noTeams": "Echipele apar după ce răspunde Apple.",
+    "use": "Folosește",
+    "signInAgain": "Autentifică-te din nou",
+    "signOut": {
+      "action": "Deconectează",
+      "title": "Te deconectezi de la {appleId}?",
+      "forgets": "Loadstar uită acest Apple ID, sesiunea lui și parola salvată.",
+      "keeps": "Certificatele lui de semnare rămân pe acest computer, așa că o nouă autentificare le refolosește. Aplicațiile deja instalate funcționează până expiră.",
+      "confirm": "Deconectează"
     }
   }
 }

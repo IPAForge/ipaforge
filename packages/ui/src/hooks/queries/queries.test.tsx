@@ -67,7 +67,10 @@ describe('query hooks over the fake Engine', () => {
   })
 
   it("reads an account's teams, quota and certificates, and the recommended channel", async () => {
-    expect((await settled(() => useTeams(WORK))).data).toEqual([PERSONAL_TEAM])
+    expect((await settled(() => useTeams(WORK))).data).toEqual({
+      kind: 'teams',
+      teams: [PERSONAL_TEAM]
+    })
     expect(
       (await settled(() => useAppIdQuota({ accountId: WORK }))).data?.quota
     ).toEqual({ max: 10, available: 8 })
@@ -91,15 +94,14 @@ describe('query hooks over the fake Engine', () => {
     ).toEqual(PERSONAL_TEAM)
   })
 
-  it('says when an account must sign in again', async () => {
+  it('answers "sign-in needed" for an expired session, as data rather than a failure', async () => {
     const rendered = renderAppHook(() => useTeams(WORK), {
       scenario: 'two-factor'
     })
     await waitFor(() =>
-      expect((rendered.result.current.error as LoadstarError)?.code).toBe(
-        ErrorCode.SessionExpired
-      )
+      expect(rendered.result.current.data).toEqual({ kind: 'sign-in-needed' })
     )
+    expect(rendered.result.current.error).toBeNull()
   })
 
   it('keys every account query under the account, so one invalidation refreshes them all', () => {

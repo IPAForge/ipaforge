@@ -30,7 +30,9 @@ export const queryCallSchema = z.discriminatedUnion('method', [
   call('recommendedChannel', z.tuple([textSchema, textSchema.optional()])),
   call('appIdQuota', z.tuple([teamQuerySchema])),
   call('listCertificates', z.tuple([teamQuerySchema])),
-  call('planInstall', z.tuple([planInstallInputSchema]))
+  call('planInstall', z.tuple([planInstallInputSchema])),
+  /** Not a read, but a one-shot call answered like one. */
+  call('signOut', z.tuple([textSchema]))
 ])
 
 export const commandCallSchema = z.discriminatedUnion('command', [

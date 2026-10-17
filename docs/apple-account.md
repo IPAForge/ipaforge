@@ -10,6 +10,7 @@
    - The server never sees your Apple ID or password.
    - Loadstar keeps one identity per server and reuses it. Apple distrusts a new machine on every attempt.
    - If a server is down, the next one is used automatically.
+   - The servers are a custom one (if set), the built-in ones, then the community list (`servers.sidestore.io/servers.json`, HTTPS servers only). The list is fetched when anisette is first needed and again once it is an hour old (on the next request, never polled); after a failed fetch it is tried again a minute later. The last list fetched is kept in the secret store, so an offline start or a failed fetch still uses it (`anisetteServerListMaxAgeMs`, `anisetteServerListRetryMs` in the config).
 2. **Password check (SRP).** Apple checks a proof of your password and returns encrypted session data.
 3. **Second factor.** If your account has trusted devices, Apple shows a code on them, and you type it into Loadstar.
 4. **Developer token.** Loadstar requests the token Xcode uses for developer services. It is valid for about a year.
@@ -32,7 +33,23 @@ Apple adds steps from time to time. Loadstar handles the ones known today:
 
 Several Apple IDs can be saved and switched with one click. This is also the fix when Apple blocks one ID's team for sideloading on a device (`device.profile_banned`): Loadstar marks that account and suggests another.
 - Sessions are reused while Apple accepts them.
-- Passwords are kept only if you choose, and only in the OS keychain.
+- Passwords are kept unless you choose otherwise ("Save my password in the system keychain" when signing in, ticked by default; `signIn({ appleId, rememberPassword: true })`), and only in the encrypted secret store whose key the OS keychain protects. With a saved password, an expired session is renewed without asking.
+- Requests made with a session (app tokens, developer services) ask the anisette server the session was created with first, since Apple ties the session to that machine identity.
+- **Signing out** (`engine.signOut(accountId)`, from Manage → Accounts) forgets the Apple ID, its session and its saved password. Its signing certificates stay in the secret store, so signing in again reuses them instead of using up the team's certificate slots.
+
+## Why an Apple ID needs signing in again
+
+When a saved session is not accepted, the main process logs why at info level under `desktop.apple` (run with `LOG_LEVEL=debug` to see the debug lines too). No token, key or password is ever logged.
+
+| Line | Meaning |
+|---|---|
+| `GSA complete status` with `ec`, `hsc`, `au` | How Apple finished the sign-in (`au` is a second-factor or `repair` step) |
+| `app token request refused` with `gsaCode`, `hsc`, `anisetteServer`, `sessionAnisetteServer` | Apple refused the app token for the saved session; `hsc: 401` is reported as `apple.session_expired` |
+| `app token request failed` with `code` | The app token request failed for another reason (network, anisette) |
+| `developer services refused the app token` with `action`, `httpStatus: 401` | The token was issued but developer services refused it; reported as `apple.session_expired` |
+| `developer request failed` with `action`, `resultCode` | Developer services answered with an error (`1100` is reported as `apple.session_expired`) |
+| `no saved session` / `saved session not accepted` with `code`, `request`, `gsaCode`, `hsc` | What `resume` found |
+| `signing in again with the saved password` / `no saved password; the password is needed` (debug) | What `resume` does next |
 
 ## Developer services
 

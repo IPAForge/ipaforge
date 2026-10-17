@@ -13,6 +13,8 @@ import {
   prepareLanguage
 } from '@ui/i18n/setup/prepare-language.ts'
 import { UiServicesContext } from '@ui/services/ui-services.ts'
+import { SelectionContext } from '@ui/state/selection/selection-context.ts'
+import { createSelectionStore } from '@ui/state/selection/selection-store.ts'
 
 /** The providers `App` gives everything below it: the host's services, the query cache and, if given, the language. */
 const createAppWrapper = (
@@ -21,6 +23,10 @@ const createAppWrapper = (
 ) => {
   const test = createTestServices(options)
   const queryClient = createQueryClient()
+  const selection = createSelectionStore(
+    test.services.preferences,
+    test.services.logger
+  )
   const withLanguage = (children: ReactNode) =>
     language ? (
       <LanguageProvider setup={language}>{children}</LanguageProvider>
@@ -30,12 +36,14 @@ const createAppWrapper = (
   const wrapper = ({ children }: { children: ReactNode }) => (
     <UiServicesContext value={test.services}>
       <QueryClientProvider client={queryClient}>
-        {withLanguage(children)}
+        <SelectionContext value={selection}>
+          {withLanguage(children)}
+        </SelectionContext>
       </QueryClientProvider>
     </UiServicesContext>
   )
 
-  return { ...test, queryClient, wrapper }
+  return { ...test, queryClient, selection, wrapper }
 }
 
 /** Renders a hook inside the providers `App` gives it, without the UI. */

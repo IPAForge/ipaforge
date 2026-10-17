@@ -19,6 +19,7 @@ const queryHandlers = (
   listDevices: () => engine.listDevices(),
   deviceStatus: ([udid]) => engine.deviceStatus(udid),
   listAccounts: () => engine.listAccounts(),
+  signOut: ([accountId]) => engine.signOut(accountId),
   listTeams: ([accountId]) => engine.listTeams(accountId),
   catalogApps: () => engine.catalogApps(),
   recommendedChannel: ([appId, iosVersion]) =>

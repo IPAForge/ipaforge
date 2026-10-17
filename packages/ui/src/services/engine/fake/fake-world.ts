@@ -3,6 +3,8 @@
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
 import type { Account, Team } from '@ui/services/engine/engine-types.ts'
 import {
+  EXPIRED_ACCOUNT,
+  FAKE_IPHONE,
   fakeAccounts,
   PERSONAL_TEAM,
   STUDIO_TEAM
@@ -22,6 +24,40 @@ export type FakeWorld = {
   readonly signedIn: Set<string>
   /** Failures already played (each plays once, so resuming succeeds). */
   readonly failed: Set<string>
+  /** Accounts whose password was saved at sign-in: an expired session is renewed with it, without asking. */
+  readonly savedPasswords: Set<string>
+}
+
+/**
+ * The saved Apple IDs: one with a single team and one with two (`studio@`). The `accounts` scenario adds one
+ * whose session expired and has Apple block `studio@` on the fake iPhone; `no-accounts` starts with none.
+ */
+const accountsFor = (scenario: FakeScenarioId): Account[] => {
+  if (scenario === 'no-accounts') return []
+  const accounts = fakeAccounts()
+  if (scenario !== 'accounts') return accounts
+  return [
+    ...accounts.map((account) =>
+      account.id === 'studio@example.com'
+        ? {
+            ...account,
+            health: { ...account.health, bannedOnDevices: [FAKE_IPHONE] }
+          }
+        : account
+    ),
+    EXPIRED_ACCOUNT
+  ]
+}
+
+/** Sign-out: the account and its session are forgotten, like the Engine's account store does. */
+export const forgetAccount = (world: FakeWorld, accountId: string): void => {
+  if (!world.accounts.some((account) => account.id === accountId))
+    throw new LoadstarError(ErrorCode.AccountNotFound, {
+      data: { id: accountId }
+    })
+  world.accounts = world.accounts.filter((account) => account.id !== accountId)
+  world.signedIn.delete(accountId)
+  world.savedPasswords.delete(accountId)
 }
 
 export const createFakeWorld = (
@@ -29,7 +65,7 @@ export const createFakeWorld = (
   delayMs: number,
   appleAnswer: () => Promise<void>
 ): FakeWorld => {
-  const accounts = fakeAccounts()
+  const accounts = accountsFor(scenario)
   const expired = scenario === 'two-factor'
 
   return {
@@ -37,8 +73,15 @@ export const createFakeWorld = (
     delayMs,
     appleAnswer,
     accounts,
-    signedIn: new Set(expired ? [] : accounts.map((account) => account.id)),
-    failed: new Set()
+    signedIn: new Set(
+      expired
+        ? []
+        : accounts
+            .filter((account) => account.id !== EXPIRED_ACCOUNT.id)
+            .map((account) => account.id)
+    ),
+    failed: new Set(),
+    savedPasswords: new Set()
   }
 }
 
@@ -53,8 +96,12 @@ export const requireSession = (world: FakeWorld, accountId: string): void => {
     throw new LoadstarError(ErrorCode.AccountNotFound, {
       data: { id: accountId }
     })
-  if (!world.signedIn.has(accountId))
-    throw new LoadstarError(ErrorCode.SessionExpired)
+  if (world.signedIn.has(accountId)) return
+  if (world.savedPasswords.has(accountId)) {
+    world.signedIn.add(accountId)
+    return
+  }
+  throw new LoadstarError(ErrorCode.SessionExpired)
 }
 
 const markBanned = (world: FakeWorld, accountId: string, udid: string) => {

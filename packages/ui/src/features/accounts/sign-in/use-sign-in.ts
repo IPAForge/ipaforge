@@ -7,7 +7,7 @@ import {
   toLoadstarError
 } from '@loadstar/kernel'
 import { PromptKind, type PromptRequest } from '@loadstar/rpc'
-import { queryKeys } from '@ui/hooks/queries/query-keys.ts'
+import { resetSignedInAccount } from '@ui/hooks/queries/account-cache.ts'
 import { useEngine } from '@ui/hooks/use-engine.ts'
 import type { Account, SignInRun } from '@ui/services/engine/engine-types.ts'
 
@@ -33,7 +33,8 @@ export type SignInState =
 
 export type UseSignIn = {
   readonly state: SignInState
-  start: (appleId: string, password: string) => void
+  /** `rememberPassword`: save the password in the system keychain, to renew an expired session without asking. */
+  start: (appleId: string, password: string, rememberPassword: boolean) => void
   answer: (answer: unknown) => void
   decline: () => void
 }
@@ -57,7 +58,8 @@ const afterRun = (result: Result): SignInState => {
 /**
  * Adds an Apple ID through the Engine's `signIn` run. The password typed in the form answers the run's password
  * question, so it is never part of the run's input; a second factor is asked through the prompt dialogs. Once the
- * Engine has saved the account, the accounts query is invalidated (sign-in is on demand; nothing polls).
+ * Engine has saved the account, its cached answers are reset and the saved list read again (on demand; nothing
+ * polls), so a "sign-in needed" from before shows as "Checking…" until Apple answers.
  */
 export const useSignIn = (
   onSignedIn: (account: Account) => void
@@ -100,7 +102,7 @@ export const useSignIn = (
         const next = afterRun(result)
         setState(next)
         if (next.phase !== 'signed-in') return
-        void queryClient.invalidateQueries({ queryKey: queryKeys.accounts })
+        void resetSignedInAccount(queryClient, next.account.id)
         done.current(next.account)
       },
       (error: unknown) =>
@@ -124,8 +126,11 @@ export const useSignIn = (
 
   return {
     state,
-    start: (appleId, password) => {
-      const handle = engine.signIn({ appleId: appleId.trim() })
+    start: (appleId, password, rememberPassword) => {
+      const handle = engine.signIn({
+        appleId: appleId.trim(),
+        rememberPassword
+      })
       run.current = handle
       setState({ phase: 'form', isPending: true })
       follow(handle, password)

@@ -1,7 +1,18 @@
-/** A small coloured dot: green when the thing it marks is connected or signed in, muted otherwise. Decorative. */
-export const StatusDot = ({ isOn }: { isOn: boolean }) => (
+/** How a device or Apple ID is doing: ready, needs attention, blocked, or nothing there. */
+export type StatusTone = 'ready' | 'warning' | 'danger' | 'off'
+
+const toneClasses = {
+  ready: 'bg-success',
+  warning: 'bg-warning',
+  danger: 'bg-danger',
+  off: 'bg-muted'
+} as const satisfies Record<StatusTone, string>
+
+/** A small coloured dot for a status. Decorative: the status is also said in words next to it. */
+export const StatusDot = ({ tone }: { tone: StatusTone }) => (
   <span
     aria-hidden="true"
-    className={`size-2 shrink-0 rounded-full ${isOn ? 'bg-success' : 'bg-muted'}`}
+    data-tone={tone}
+    className={`size-2 shrink-0 rounded-full ${toneClasses[tone]}`}
   />
 )
