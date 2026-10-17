@@ -99,10 +99,12 @@ export const DEFAULT_APPLE_CONFIG: AppleConfig = {
   anisetteServerListUrl: 'https://servers.sidestore.io/servers.json',
   anisetteServerListMaxAgeMs: 60 * 60 * 1000,
   anisetteServerListRetryMs: 60 * 1000,
+  // Mac-backed servers first, then Windows-backed ones; older Android-backed servers come only from the remote list.
   fallbackAnisetteServers: [
-    { name: 'jkcoxson', address: 'https://ani.jkcoxson.com' },
-    { name: 'StikStore', address: 'https://ani2.stikstore.app' },
-    { name: 'SideStore', address: 'https://ani.sidestore.io' }
+    { name: 'StikStore', address: 'https://ani3.stikstore.app' },
+    { name: 'jkcoxson', address: 'https://mac-ani.jkcoxson.com' },
+    { name: 'jkcoxson (Windows)', address: 'https://ani.jkcoxson.com' },
+    { name: 'StikStore (Windows)', address: 'https://ani2.stikstore.app' }
   ],
   timeouts: { requestMs: 20_000, provisioningMs: 60_000, healthCheckMs: 5_000 },
   maxClockSkewMs: 2 * 60 * 1000,

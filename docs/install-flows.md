@@ -18,7 +18,7 @@ Installs SideStore, or LiveContainer with SideStore inside, from the catalog. Th
 | 4 | `inspect-0` | Reads the IPA (structure, extensions, encryption) and checks the device can run it (minimum iOS, iPhone/iPad family, 64-bit slice) before anything is sent to Apple |
 | 5 | `sign-in` | Opens the saved Apple account; asks for the password or a 2FA code only when Apple wants them |
 | 6 | `team` | Uses the requested team, the one remembered for the account, or the only one; otherwise asks |
-| 7 | `register-device` | Registers the device with the team if it is not registered yet |
+| 7 | `register-device` | Registers the device with the team if it is not registered yet; Apple answering `addDevice` with resultCode 35 (already on the team, though not listed) counts as registered |
 | 8 | `certificate` | Reuses the stored certificate; otherwise creates one. When the team has no room, asks which certificate to revoke |
 | 9 | `app-ids` | Plans the new bundle IDs and checks the App ID budget. If it does not fit, the flow stops with the date the next slot frees up |
 | 10 | `free-apps-0` | Free teams only: makes room under the free-app limit (see below) |
