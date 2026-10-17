@@ -1,7 +1,7 @@
 import { Card } from '@heroui/react'
 import { useTranslation } from 'react-i18next'
 
-import { ChoiceGroup } from '@ui/features/settings/choice-group.tsx'
+import { ChoiceGroup } from '@ui/components/choice-group.tsx'
 import { PaletteSwatches } from '@ui/features/settings/palette-swatches.tsx'
 import { useTheme } from '@ui/hooks/use-theme.ts'
 import type { TranslationKey } from '@ui/i18n/setup/i18next-types.ts'

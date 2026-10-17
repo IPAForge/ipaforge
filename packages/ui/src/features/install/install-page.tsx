@@ -1,16 +1,10 @@
-import { PlaceholderPage } from '@ui/components/placeholder-page.tsx'
-import { BlockedNotice } from '@ui/features/install/blocked-notice.tsx'
-import { DeviceInUseNotice } from '@ui/features/install/device-in-use-notice.tsx'
-import { SignInNeededNotice } from '@ui/features/install/sign-in-needed-notice.tsx'
+import { InstallHome } from '@ui/features/install/home/install-home.tsx'
+import { RunView } from '@ui/features/install/run/run-view.tsx'
+import { useRun } from '@ui/hooks/use-run.ts'
 
-/** The home page. The install flow itself lands with the install run; until then, what to fix before installing. */
-export const InstallPage = () => (
-  <PlaceholderPage
-    titleKey="install.title"
-    descriptionKey="install.description"
-  >
-    <DeviceInUseNotice />
-    <BlockedNotice />
-    <SignInNeededNotice />
-  </PlaceholderPage>
-)
+/** The home page: what to install and whether it can start, or the run in progress (or just ended). */
+export const InstallPage = () => {
+  const { run } = useRun()
+
+  return run ? <RunView run={run} /> : <InstallHome />
+}

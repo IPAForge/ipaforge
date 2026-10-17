@@ -28,7 +28,8 @@
     "accounts": "アカウント",
     "certificates": "証明書",
     "logs": "ログ",
-    "settings": "設定"
+    "settings": "設定",
+    "installRunning": "インストール中"
   },
   "placeholder": {
     "body": "このセクションは準備中です。"
@@ -62,6 +63,123 @@
       "title": "Apple が {device} で {appleId} をブロックしました",
       "body": "この Apple ID で署名した App はこのデバイスで開けません。別の Apple ID を使用してください。",
       "use": "{appleId} を使用"
+    },
+    "home": {
+      "what": "インストールするもの",
+      "channel": "チャンネル",
+      "install": "{app} をインストール"
+    },
+    "variant": {
+      "sidestore": {
+        "title": "SideStore",
+        "description": "デバイス上で App の更新とインストールを自動で行います。App ID を 2 つ使います。"
+      },
+      "livecontainer": {
+        "title": "LiveContainer + SideStore",
+        "description": "1 つの App の中で多数の App を動かし、3 App の上限を超えられます。App ID を 5 つ使います。"
+      }
+    },
+    "channel": {
+      "stable": "安定版",
+      "nightly": "ナイトリー",
+      "stableRecommended": "安定版（推奨）",
+      "nightlyRecommended": "ナイトリー（推奨）"
+    },
+    "plan": {
+      "title": "このインストール",
+      "waiting": "デバイスと Apple ID の準備ができると表示されます。",
+      "checking": "{app} をダウンロードして Apple に確認中… ダウンロードは保存され、インストールで再利用されます。",
+      "unavailable": "Apple に確認できませんでした。インストールはできます。各ステップで再確認します。",
+      "appIds": "App ID",
+      "appIdsValue": "{uses} 個使用 · {left, plural, other {今週の残り # 個}}",
+      "nextSlot": "次の空きは {date}",
+      "freeApps": "デバイス上の無料 App",
+      "freeAppsValue": "{limit} 個中 {used} 個使用",
+      "freeAppsRoom": "この App の空きがあります",
+      "freeAppsFull": "削除する App を選びます",
+      "noLimit": "上限なし（有料チーム）",
+      "certificate": "証明書",
+      "certificateReused": "再利用",
+      "certificateNew": "新しく作成",
+      "certificatesOnTeam": "{count, plural, =0 {チームにはまだありません} other {チームに # 個}}",
+      "team": "チーム",
+      "certificateNewWhy": "このチームには Loadstar 自身の証明書がまだありません。{count, plural, =0 {} other {既存の # 個は他のツールのもので、秘密鍵はそのツールが保持しています。}}"
+    },
+    "readiness": {
+      "noDevice": "先にデバイスを接続してください。",
+      "checking": "デバイスを確認中…",
+      "device": "デバイスの準備ができると使えます。",
+      "noAccount": "先に Apple ID を追加してください。",
+      "blocked": "先に別の Apple ID を使ってください。",
+      "appIds": "今週の App ID が足りません。",
+      "ready": "準備完了です。"
+    },
+    "run": {
+      "title": {
+        "running": "{app} をインストール中",
+        "completed": "{app} をインストールしました",
+        "failed": "{app} をインストールできませんでした",
+        "cancelled": "インストールを中止しました"
+      },
+      "subtitle": "{channel} · {device} · {appleId}",
+      "percent": "{fraction, number, percent}",
+      "progress": "全体の進捗",
+      "steps": "ステップ",
+      "cancel": "キャンセル",
+      "cancelInstall": "インストールを中止",
+      "runningHint": "実行中も他のセクションを使えます。",
+      "waitingHint": "回答を待っています。",
+      "stepState": {
+        "waiting": "操作が必要",
+        "skipped": "スキップ",
+        "failed": "失敗"
+      },
+      "detail": {
+        "bytes": "{total} 中 {received}",
+        "received": "{received}",
+        "retrying": "接続が切れました。{seconds, plural, other {# 秒後}}に再試行します（{attempt} 回目）"
+      },
+      "unsupportedPrompt": {
+        "title": "このステップには回答が必要です",
+        "body": "Loadstar はあなたの選択を必要としています：{question}。このバージョンではまだ質問できません。インストールを中止してください。次のバージョンではここで質問します。",
+        "question": {
+          "team": "App に署名するチーム",
+          "revokeCertificate": "チームに空きがないため、取り消す証明書",
+          "removeApp": "デバイスの無料 App の上限に達したため、削除する App",
+          "shareCertificate": "この App と署名証明書を共有するかどうか",
+          "pairingApps": "ペアリングファイルを受け取る App",
+          "other": "質問への回答"
+        }
+      }
+    },
+    "summary": {
+      "title": "このインストール",
+      "app": "App",
+      "channel": "チャンネル",
+      "device": "デバイス",
+      "deviceValue": "{name} · iOS {ios}",
+      "account": "Apple ID",
+      "appIds": "App ID",
+      "appIdsValue": "{count, plural, other {今週の残り # 個}}"
+    },
+    "done": {
+      "title": "{app} を {device} にインストールしました。",
+      "trust": "デバイスで：設定 › 一般 › VPN とデバイス管理 › {appleId} を信頼します。",
+      "open": "SideStore を開いてください。ペアリングファイルと証明書はすでに入っています。",
+      "done": "完了"
+    },
+    "cancelled": {
+      "title": "「{step}」で停止しました。",
+      "body": "再開しても完了済みの作業は繰り返されません。",
+      "resume": "再開",
+      "close": "閉じる"
+    },
+    "failed": {
+      "tryAgain": "再試行",
+      "continues": "完了したステップは保持され、「{step}」から再開します。",
+      "copy": "診断情報をコピー",
+      "copied": "コピーしました",
+      "copyFailed": "コピーできませんでした"
     }
   },
   "pairing": {

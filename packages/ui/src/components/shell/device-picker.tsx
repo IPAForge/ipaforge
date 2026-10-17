@@ -12,13 +12,12 @@ import { useDeviceInUse, useSelection } from '@ui/hooks/use-selection.ts'
 
 const OPEN_DEVICES = 'open-devices'
 
-const DeviceItem = ({
-  udid,
-  device
-}: {
+type DeviceItemProps = {
   udid: string
   device: ListedDevice | undefined
-}) => {
+}
+
+const DeviceItem = ({ udid, device }: DeviceItemProps) => {
   const view = useDeviceView(udid, device)
 
   return (

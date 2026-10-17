@@ -20,6 +20,7 @@ export type CatalogApp = Resolved<'catalogApps'>[number]
 export type Channel = Resolved<'recommendedChannel'>
 export type AppIdUsage = Resolved<'appIdQuota'>
 export type TeamCertificates = Resolved<'listCertificates'>
+export type InstallPlan = Resolved<'planInstall'>
 export type SideStoreVariant = RemoteInstallSideStoreInput['variant']
 export type InstallSideStoreInput = RemoteInstallSideStoreInput
 export type InstallRun = ReturnType<EngineClient['installSideStore']>

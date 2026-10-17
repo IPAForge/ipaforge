@@ -6,6 +6,8 @@ export type Formatters = {
   readonly dateTime: (value: Date | number) => string
   /** "1,234.5" */
   readonly number: (value: number) => string
+  /** "28 MB", from a size in bytes */
+  readonly fileSize: (bytes: number) => string
   /** "A, B and C" */
   readonly list: (items: readonly string[]) => string
   /** "3 minutes ago", "in 2 days", "yesterday" */
@@ -21,12 +23,19 @@ const DATE_TIME: Intl.DateTimeFormatOptions = {
   timeStyle: 'short'
 }
 const LIST: Intl.ListFormatOptions = { style: 'long', type: 'conjunction' }
+const FILE_SIZE: Intl.NumberFormatOptions = {
+  style: 'unit',
+  unit: 'megabyte',
+  maximumFractionDigits: 1
+}
+const BYTES_PER_MEGABYTE = 1_000_000
 const RELATIVE_TIME: Intl.RelativeTimeFormatOptions = { numeric: 'auto' }
 
 const createFormatters = (locale: string): Formatters => {
   const date = new Intl.DateTimeFormat(locale, DATE)
   const dateTime = new Intl.DateTimeFormat(locale, DATE_TIME)
   const number = new Intl.NumberFormat(locale)
+  const fileSize = new Intl.NumberFormat(locale, FILE_SIZE)
   const list = new Intl.ListFormat(locale, LIST)
   const relativeTime = new Intl.RelativeTimeFormat(locale, RELATIVE_TIME)
 
@@ -34,6 +43,7 @@ const createFormatters = (locale: string): Formatters => {
     date: (value) => date.format(value),
     dateTime: (value) => dateTime.format(value),
     number: (value) => number.format(value),
+    fileSize: (bytes) => fileSize.format(bytes / BYTES_PER_MEGABYTE),
     list: (items) => list.format(items),
     relativeTime: (value, unit) => relativeTime.format(value, unit)
   }

@@ -24,8 +24,10 @@ const PREVIEW_TOKENS = [
 const isPaletteId = (value: string): value is PaletteId =>
   paletteIds.some((id) => id === value)
 
+type PaletteChipsProps = { tokens: PaletteTokens }
+
 /** Small colour chips of one palette. Their colours are palette data shown as a preview, not app theming. */
-const PaletteChips = ({ tokens }: { tokens: PaletteTokens }) => (
+const PaletteChips = ({ tokens }: PaletteChipsProps) => (
   <span aria-hidden="true" className="flex gap-1">
     {PREVIEW_TOKENS.map((token) => (
       <span
@@ -37,13 +39,15 @@ const PaletteChips = ({ tokens }: { tokens: PaletteTokens }) => (
   </span>
 )
 
+type SwatchClassOptions = {
+  isSelected: boolean
+  isFocusVisible: boolean
+}
+
 const swatchClass = ({
   isSelected,
   isFocusVisible
-}: {
-  isSelected: boolean
-  isFocusVisible: boolean
-}): string =>
+}: SwatchClassOptions): string =>
   [
     'flex cursor-pointer flex-col gap-2 rounded-xl border bg-surface p-3 text-start transition-colors',
     isSelected

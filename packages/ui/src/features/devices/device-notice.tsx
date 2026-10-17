@@ -15,8 +15,10 @@ type NoticeProps = {
   view: DeviceView
 }
 
+type CheckAgainProps = { udid: string }
+
 /** Reads the device's status again. */
-export const CheckAgain = ({ udid }: { udid: string }) => {
+export const CheckAgain = ({ udid }: CheckAgainProps) => {
   const { t } = useTranslation()
   const queryClient = useQueryClient()
   const onCheckAgain = () =>
@@ -31,7 +33,9 @@ export const CheckAgain = ({ udid }: { udid: string }) => {
   )
 }
 
-const AskAgain = ({ udid }: { udid: string }) => {
+type AskAgainProps = { udid: string }
+
+const AskAgain = ({ udid }: AskAgainProps) => {
   const { t } = useTranslation()
   const pair = usePairDevice(udid)
   const onAskAgain = () => pair.mutate()
@@ -45,8 +49,10 @@ const AskAgain = ({ udid }: { udid: string }) => {
   )
 }
 
+type UnavailableBodyProps = { view: DeviceView }
+
 /** What to try for a device that can't be read, and the reason in the words for its error code. */
-const UnavailableBody = ({ view }: { view: DeviceView }) => {
+const UnavailableBody = ({ view }: UnavailableBodyProps) => {
   const { t } = useTranslation()
   const reason = view.error
     ? t(errorTitleKey(toLoadstarError(view.error).code))
@@ -151,18 +157,15 @@ const toneClasses = {
   danger: { box: 'bg-danger-soft', title: 'text-danger' }
 } as const
 
-/** A tinted box: the title in the tone's colour, what to do, and its buttons under the text. */
-const NoticeBox = ({
-  status,
-  title,
-  body,
-  action
-}: {
+type NoticeBoxProps = {
   status: Notice['status']
   title: string
   body: ReactNode
   action?: ReactNode
-}) => (
+}
+
+/** A tinted box: the title in the tone's colour, what to do, and its buttons under the text. */
+const NoticeBox = ({ status, title, body, action }: NoticeBoxProps) => (
   <div
     role="status"
     className={`flex flex-col gap-1 rounded-xl px-4 py-3 text-sm ${toneClasses[status].box}`}

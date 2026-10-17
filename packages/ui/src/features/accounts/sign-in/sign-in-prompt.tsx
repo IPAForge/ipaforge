@@ -12,8 +12,10 @@ type SignInPromptProps = {
   isPending: boolean
 }
 
+type DeclineProps = { onDecline: () => void }
+
 /** Declines a question sign-in does not ask, so the run ends instead of waiting forever. */
-const Decline = ({ onDecline }: { onDecline: () => void }) => {
+const Decline = ({ onDecline }: DeclineProps) => {
   useEffect(() => onDecline(), [onDecline])
   return null
 }

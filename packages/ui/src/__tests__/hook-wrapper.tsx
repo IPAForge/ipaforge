@@ -13,10 +13,14 @@ import {
   prepareLanguage
 } from '@ui/i18n/setup/prepare-language.ts'
 import { UiServicesContext } from '@ui/services/ui-services.ts'
+import { ActiveRunContext } from '@ui/state/active-run/active-run-context.ts'
+import { createActiveRunStore } from '@ui/state/active-run/active-run-store.ts'
 import { SelectionContext } from '@ui/state/selection/selection-context.ts'
 import { createSelectionStore } from '@ui/state/selection/selection-store.ts'
 
-/** The providers `App` gives everything below it: the host's services, the query cache and, if given, the language. */
+type WrapperProps = { children: ReactNode }
+
+/** The providers `App` gives everything below it: services, query cache, selection, install run and, if given, the language. */
 const createAppWrapper = (
   options: TestServicesOptions,
   language?: LanguageSetup
@@ -27,23 +31,29 @@ const createAppWrapper = (
     test.services.preferences,
     test.services.logger
   )
+  const run = createActiveRunStore({
+    engine: test.services.engine,
+    logger: test.services.logger
+  })
   const withLanguage = (children: ReactNode) =>
     language ? (
       <LanguageProvider setup={language}>{children}</LanguageProvider>
     ) : (
       children
     )
-  const wrapper = ({ children }: { children: ReactNode }) => (
+  const wrapper = ({ children }: WrapperProps) => (
     <UiServicesContext value={test.services}>
       <QueryClientProvider client={queryClient}>
         <SelectionContext value={selection}>
-          {withLanguage(children)}
+          <ActiveRunContext value={run}>
+            {withLanguage(children)}
+          </ActiveRunContext>
         </SelectionContext>
       </QueryClientProvider>
     </UiServicesContext>
   )
 
-  return { ...test, queryClient, selection, wrapper }
+  return { ...test, queryClient, selection, run, wrapper }
 }
 
 /** Renders a hook inside the providers `App` gives it, without the UI. */

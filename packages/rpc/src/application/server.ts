@@ -5,6 +5,7 @@ import type { z } from 'zod'
 
 import type { Engine } from '@loadstar/installer'
 import {
+  ErrorCode,
   type LoadstarError,
   type Logger,
   silentLogger,
@@ -82,7 +83,14 @@ export const createRpcServer = ({
   }
 
   const sendError = (id: string, error: LoadstarError): void => {
-    log.debug('RPC request failed', { id, code: error.code })
+    // A catalogued failure is an answer the UI shows; an unexpected one is a bug worth seeing in the log.
+    if (error.code === ErrorCode.Unexpected)
+      log.warn('RPC request failed unexpectedly', {
+        id,
+        message: error.message,
+        cause: error.cause
+      })
+    else log.debug('RPC request failed', { id, code: error.code })
     send({ type: 'error', id, error: error.toJSON() })
   }
 
