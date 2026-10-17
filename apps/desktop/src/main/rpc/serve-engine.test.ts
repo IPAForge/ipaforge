@@ -3,12 +3,12 @@ import { EventEmitter } from 'node:events'
 import { describe, expect, it, vi } from 'vitest'
 
 import { portPair } from '@desktop/main/rpc/__tests__/port-pair.ts'
-import type { MainMessagePort } from '@desktop/main/rpc/message-port-transport.ts'
 import { messagePortTransport } from '@desktop/main/rpc/message-port-transport.ts'
-import {
-  type RendererContents,
-  serveEngine
-} from '@desktop/main/rpc/serve-engine.ts'
+import { serveEngine } from '@desktop/main/rpc/serve-engine.ts'
+import type {
+  MainMessagePort,
+  RendererContents
+} from '@desktop/main/rpc/types.ts'
 import { RPC_PORT_CHANNEL } from '@desktop/shared/rpc-channel.ts'
 import type { Engine } from '@loadstar/installer'
 import { ErrorCode, silentLogger } from '@loadstar/kernel'

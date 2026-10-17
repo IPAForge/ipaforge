@@ -1,21 +1,13 @@
 // Where pair records live: usbmuxd (the OS's own record, read only) first, Loadstar's secret store as the fallback.
 import type { DeviceContext } from '@device/application/context.ts'
+import type { StoredPairRecord } from '@device/application/types.ts'
 import { shortUdid } from '@device/domain/device.ts'
 import {
-  type PairRecord,
   parsePairRecord,
   serializePairRecord
 } from '@device/domain/pairing/pair-record.ts'
+import type { PairRecord } from '@device/domain/pairing/types.ts'
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
-
-/** Where a pair record comes from: the OS's usbmuxd, or Loadstar's own secret store. */
-export type PairRecordStore = 'usbmuxd' | 'secret_store'
-
-/** A pair record and where it was found. */
-export type StoredPairRecord = {
-  readonly record: PairRecord
-  readonly source: PairRecordStore
-}
 
 /** Key under which Loadstar keeps a pair record of its own. */
 export const pairRecordSecretKey = (udid: string): string =>

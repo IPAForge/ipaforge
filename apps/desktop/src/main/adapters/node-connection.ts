@@ -4,9 +4,9 @@ import type { Socket } from 'node:net'
 import { upgradeToDeviceTls } from '@desktop/main/adapters/connection/device-tls.ts'
 import {
   attachReader,
-  type Stream,
   writeTo
 } from '@desktop/main/adapters/connection/stream-reader.ts'
+import type { Stream } from '@desktop/main/adapters/connection/types.ts'
 import type { Connection } from '@loadstar/device'
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
 

@@ -17,43 +17,13 @@ import {
   TYPE
 } from '@formatjs/icu-messageformat-parser'
 
+import type { Completion, Issue, LocaleReport, Messages } from './types.ts'
+
 const DEFAULT_DIR = 'packages/ui/src/locales'
 const STATUS_FILE = 'status.json'
 const SOURCE = 'en'
 const STATUSES = ['source', 'draft', 'reviewed'] as const
 const PERCENT = 100
-
-export type Problem =
-  | 'status'
-  | 'missing-file'
-  | 'unlisted-file'
-  | 'invalid-json'
-  | 'missing-key'
-  | 'extra-key'
-  | 'not-a-string'
-  | 'invalid-icu'
-  | 'placeholder-mismatch'
-
-export type Issue = {
-  readonly language: string
-  readonly key?: string
-  readonly problem: Problem
-  readonly detail: string
-}
-
-export type Completion = {
-  readonly language: string
-  readonly status: string
-  readonly translated: number
-  readonly total: number
-}
-
-export type LocaleReport = {
-  readonly issues: readonly Issue[]
-  readonly completion: readonly Completion[]
-}
-
-type Messages = ReadonlyMap<string, unknown>
 
 /** Flattens nested JSON into dotted keys: `{ a: { b: "x" } }` → `a.b` → "x". Non-object leaves are kept as is. */
 export const flatten = (tree: unknown, prefix = ''): Map<string, unknown> => {

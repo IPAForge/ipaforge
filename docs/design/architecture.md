@@ -139,7 +139,7 @@ kernel  ←  signer, device, apple, catalog  ←  installer  ←  rpc  ←  ui
 ### A port in a context, an adapter in a shell
 
 ```ts
-// packages/device/src/domain/ports/transport.ts: the context only knows the interface
+// packages/device/src/domain/ports/types.ts: the context only knows the interface
 export type Connection = {
   read(): Promise<Uint8Array | null>
   write(bytes: Uint8Array): Promise<void>

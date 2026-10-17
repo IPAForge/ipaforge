@@ -1,4 +1,4 @@
-import type { Prompt } from '@desktop/probes/shared/prompt.ts'
+import type { Prompt } from '@desktop/probes/shared/types.ts'
 import type {
   AppleSession,
   TwoFactorChallenge,

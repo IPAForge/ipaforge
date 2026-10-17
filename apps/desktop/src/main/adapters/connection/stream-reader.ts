@@ -1,21 +1,11 @@
 import type { Buffer } from 'node:buffer'
-import type { Socket } from 'node:net'
-import type { TLSSocket } from 'node:tls'
 
+import type {
+  Stream,
+  StreamReader,
+  Waiter
+} from '@desktop/main/adapters/connection/types.ts'
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
-
-export type Stream = Socket | TLSSocket
-
-export type StreamReader = {
-  readonly read: () => Promise<Uint8Array | null>
-  /** Stops listening (and pauses the stream) so another reader can take over, e.g. after a TLS upgrade. */
-  readonly detach: () => void
-}
-
-type Waiter = {
-  readonly resolve: (chunk: Uint8Array | null) => void
-  readonly reject: (error: unknown) => void
-}
 
 /** Turns 'data'/'end'/'error' events into pull-based reads, with backpressure via pause/resume. */
 export const attachReader = (stream: Stream): StreamReader => {

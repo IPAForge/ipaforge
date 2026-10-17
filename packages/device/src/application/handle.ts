@@ -1,21 +1,14 @@
 // A device session with every capability the installer needs, each delegating to its use-case module.
 import {
-  type AppFileStatus,
-  type AppFileTarget,
   appFileStatus,
   readAppFile,
   writeAppFile
 } from '@device/application/app-files.ts'
 import { listApps, lookupApps, uninstallApp } from '@device/application/apps.ts'
-import { checkDevice, type DeviceCheck } from '@device/application/checks.ts'
+import { checkDevice } from '@device/application/checks.ts'
 import type { DeviceContext } from '@device/application/context.ts'
+import { installIpa } from '@device/application/install.ts'
 import {
-  type InstallIpaOptions,
-  installIpa
-} from '@device/application/install.ts'
-import {
-  type PairingTarget,
-  type PlacePairingOptions,
   pairingTargets,
   placePairingFile
 } from '@device/application/pairing-file.ts'
@@ -26,16 +19,24 @@ import {
   removeStaleProfiles
 } from '@device/application/profiles.ts'
 import { openAfc, revealDeveloperMode } from '@device/application/services.ts'
-import type { DeviceSession } from '@device/application/session.ts'
-import type { UsbmuxDevice } from '@device/domain/device.ts'
-import type { PairRecord } from '@device/domain/pairing/pair-record.ts'
+import type {
+  AppFileStatus,
+  AppFileTarget,
+  DeviceCheck,
+  DeviceSession,
+  InstallIpaOptions,
+  PairingTarget,
+  PlacePairingOptions
+} from '@device/application/types.ts'
+import type { PairRecord } from '@device/domain/pairing/types.ts'
 import type {
   DeviceProfile,
-  RemoveStaleOptions
-} from '@device/domain/profiles.ts'
-import type { AfcClient } from '@device/infrastructure/afc/client.ts'
+  RemoveStaleOptions,
+  UsbmuxDevice
+} from '@device/domain/types.ts'
+import type { AfcClient } from '@device/infrastructure/afc/types.ts'
 import type { InstalledApp } from '@device/infrastructure/installation-proxy/apps.ts'
-import type { ApplicationType } from '@device/infrastructure/installation-proxy/client.ts'
+import type { ApplicationType } from '@device/infrastructure/installation-proxy/types.ts'
 import type { FileSource } from '@loadstar/kernel'
 
 /** A device session with every capability the installer needs. */

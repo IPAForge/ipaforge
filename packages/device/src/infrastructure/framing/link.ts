@@ -1,7 +1,4 @@
-import type {
-  Connection,
-  TlsCredentials
-} from '@device/domain/ports/transport.ts'
+import type { Connection, TlsCredentials } from '@device/domain/ports/types.ts'
 import {
   createStreamReader,
   type StreamReader

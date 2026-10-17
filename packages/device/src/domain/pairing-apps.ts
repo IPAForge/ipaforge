@@ -4,15 +4,11 @@
 // A pairing file carries a host private key: whoever holds it can drive the device's lockdown services. So an
 // installed app only matches as itself (the original bundle ID, which no other team can register) or as a copy
 // sideloaded by one of the user's own teams (`<original>.<TEAMID>`). Callers still confirm targets with the user.
-
-export type PairingApp = {
-  readonly id: string
-  readonly name: string
-  /** Original bundle ID (before sideloading appends `.<TEAMID>`). */
-  readonly bundleId: string
-  /** Paths inside the app container. Every name the app (current or legacy builds) reads is written. */
-  readonly files: readonly string[]
-}
+import type {
+  FindPairingAppsOptions,
+  PairingApp,
+  PairingAppMatch
+} from '@device/domain/types.ts'
 
 export const PAIRING_APPS: readonly PairingApp[] = [
   {
@@ -58,18 +54,6 @@ export const matchesBundleId = (
   installed === original ||
   (installed.startsWith(`${original}.`) &&
     teamIds.has(installed.slice(original.length + 1)))
-
-export type PairingAppMatch = {
-  readonly app: PairingApp
-  /** The bundle ID as installed on the device. */
-  readonly bundleId: string
-}
-
-export type FindPairingAppsOptions = {
-  /** Team IDs of the user's own Apple IDs; sideloaded copies from any other team never match. */
-  readonly teamIds: Iterable<string>
-  readonly apps?: readonly PairingApp[]
-}
 
 /** The pairing apps among `installedBundleIds`. */
 export const findPairingApps = (

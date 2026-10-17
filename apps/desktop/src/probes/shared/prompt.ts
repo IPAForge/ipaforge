@@ -1,15 +1,6 @@
 import { createInterface } from 'node:readline/promises'
 
-export type Prompt = {
-  readonly ask: (question: string) => Promise<string>
-  /** Reads a line without echoing it. */
-  readonly askHidden: (question: string) => Promise<string>
-  /** A yes/no question that defaults to no: true only for "y". */
-  readonly confirm: (question: string) => Promise<boolean>
-  readonly close: () => void
-}
-
-type MutableStdout = NodeJS.WriteStream & { _mute?: boolean }
+import type { MutableStdout, Prompt } from '@desktop/probes/shared/types.ts'
 
 export const createPrompt = (): Prompt => {
   const rl = createInterface({ input: process.stdin, output: process.stdout })

@@ -2,8 +2,9 @@
 import { createNodeHttpClient } from '@desktop/main/adapters/http-client.ts'
 import { createWebSocketFactory } from '@desktop/main/adapters/web-socket.ts'
 import { createProbeLogger } from '@desktop/probes/shared/logger.ts'
-import { createPrompt, type Prompt } from '@desktop/probes/shared/prompt.ts'
+import { createPrompt } from '@desktop/probes/shared/prompt.ts'
 import { createProbeSecrets } from '@desktop/probes/shared/secrets.ts'
+import type { Prompt } from '@desktop/probes/shared/types.ts'
 import { type AppleAccounts, createAppleAccounts } from '@loadstar/apple'
 
 export type AppleProbe = {
