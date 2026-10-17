@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { createRemoteServerList } from '@apple/application/anisette/server-list.ts'
 import { resolveAppleDeps } from '@apple/deps.ts'
-import type { AnisetteServer } from '@apple/domain/config.ts'
+import type { AnisetteServer } from '@apple/domain/types.ts'
 import type { HttpClient, SecretStore } from '@loadstar/kernel'
 
 const HOUR = 60 * 60 * 1000

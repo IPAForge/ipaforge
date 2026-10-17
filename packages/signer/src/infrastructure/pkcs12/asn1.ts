@@ -1,5 +1,6 @@
 // Small DER builders over node-forge's ASN.1 model. Byte strings are node-forge "binary strings".
-import { type Asn1, forge } from '@signer/infrastructure/pkcs12/forge.ts'
+import { forge } from '@signer/infrastructure/pkcs12/forge.ts'
+import type { Asn1 } from '@signer/infrastructure/pkcs12/types.ts'
 
 export type { Asn1 }
 

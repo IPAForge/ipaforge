@@ -12,7 +12,8 @@ import {
 } from '@loadstar/kernel'
 import { FIXTURES_DIR, readTree } from '@signer/__tests__/fixtures.ts'
 import { signBinary } from '@signer/application/sign-binary.ts'
-import { type BundleTree, joinPath } from '@signer/domain/bundle/tree.ts'
+import { joinPath } from '@signer/domain/bundle/tree.ts'
+import type { BundleTree } from '@signer/domain/bundle/types.ts'
 import { parseMachO } from '@signer/domain/macho/parse.ts'
 import { createHasher } from '@signer/infrastructure/hashing/index.ts'
 

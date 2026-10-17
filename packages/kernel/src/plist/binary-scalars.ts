@@ -1,7 +1,7 @@
 // Decoders for the binary plist object types that hold no references.
 
 import { failBinaryPlist as fail } from '@kernel/plist/binary-error.ts'
-import { leaf, type Parsed } from '@kernel/plist/binary-expansion.ts'
+import { leaf } from '@kernel/plist/binary-expansion.ts'
 import {
   CF_EPOCH_OFFSET,
   MAX_INTEGER_SIZE,
@@ -9,8 +9,12 @@ import {
   MIN_SIGNED_INTEGER_SIZE,
   SCALAR_SIZE
 } from '@kernel/plist/binary-format.ts'
-import type { BinaryPlistReader } from '@kernel/plist/binary-reader.ts'
-import { type PlistValue, real } from '@kernel/plist/model.ts'
+import { real } from '@kernel/plist/model.ts'
+import type {
+  BinaryPlistReader,
+  Parsed,
+  PlistValue
+} from '@kernel/plist/types.ts'
 
 const MS_PER_SECOND = 1000
 const UTF16_UNIT_SIZE = 2

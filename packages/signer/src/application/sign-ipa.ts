@@ -1,107 +1,28 @@
-import {
-  type Clock,
-  compact,
-  type FileSource,
-  type Logger,
-  toLoadstarError
-} from '@loadstar/kernel'
-import {
-  applyBundleAdditions,
-  type BundleAdditions
-} from '@signer/application/bundle-additions.ts'
+import { compact, type FileSource, toLoadstarError } from '@loadstar/kernel'
+import { applyBundleAdditions } from '@signer/application/bundle-additions.ts'
 import { embeddedEntitlements } from '@signer/application/embedded-entitlements.ts'
-import {
-  type ReconcileOptions,
-  type ReconcileResult,
-  reconcileForSideload
-} from '@signer/application/reconcile.ts'
-import {
-  type BundleSigningConfig,
-  type SignBundleProgress,
-  signBundle
-} from '@signer/application/sign-bundle.ts'
+import { reconcileForSideload } from '@signer/application/reconcile.ts'
+import { signBundle } from '@signer/application/sign-bundle.ts'
 import type {
+  BundleSigningConfig,
   EntitlementsInput,
+  ReconcileResult,
+  SignBundleProgress,
+  SignedIpa,
+  SignIpaDeps,
+  SignIpaOptions,
+  SignIpaSummary,
   SigningMode
-} from '@signer/application/signing.ts'
-import { resolveDeps, type SigningDeps } from '@signer/deps.ts'
-import {
-  type CodeBundle,
-  discoverBundles
-} from '@signer/domain/bundle/discover.ts'
-import { type BundleTree, readFile } from '@signer/domain/bundle/tree.ts'
-import {
-  type Overrides,
-  resolveLimits,
-  type SignerLimits,
-  type SigningPolicy
-} from '@signer/domain/config.ts'
-import type { Hasher } from '@signer/domain/ports/hasher.ts'
+} from '@signer/application/types.ts'
+import { resolveDeps } from '@signer/deps.ts'
+import { discoverBundles } from '@signer/domain/bundle/discover.ts'
+import { readFile } from '@signer/domain/bundle/tree.ts'
+import type { BundleTree, CodeBundle } from '@signer/domain/bundle/types.ts'
+import { resolveLimits } from '@signer/domain/config.ts'
+import type { SignerLimits } from '@signer/domain/types.ts'
 import { createHasher } from '@signer/infrastructure/hashing/index.ts'
-import {
-  type Ipa,
-  readIpa,
-  writeIpa
-} from '@signer/infrastructure/ipa/index.ts'
-
-export type SignerProgress =
-  | { readonly stage: 'reading' }
-  | { readonly stage: 'reconciling' }
-  | ({ readonly stage: 'signing' } & SignBundleProgress)
-  | { readonly stage: 'writing' }
-
-export type SignIpaOptions = {
-  readonly signing: SigningMode
-  /**
-   * Prepare for sideloading (new bundle IDs, profiles, profile entitlements). Without it the app is
-   * re-signed in place, keeping each executable's existing entitlements.
-   */
-  readonly sideload?: Omit<ReconcileOptions, 'now'>
-  /** Files and Info.plist keys to put into bundles after reconciliation and before signing, so they are sealed. */
-  readonly additions?: BundleAdditions
-  readonly onProgress?: (progress: SignerProgress) => void
-  readonly signal?: AbortSignal
-  /** Page size, hash algorithms and CMS reservation (defaults follow Apple codesign 26). */
-  readonly policy?: Partial<SigningPolicy>
-  /** Hostile-input limits for plists, Mach-O and the archive (defaults: DEFAULT_SIGNER_LIMITS). */
-  readonly limits?: Overrides<SignerLimits>
-  /** Archive handling (defaults: store-only output, DEFAULT_DROPPED_MEMBERS, DEFAULT_STORED_EXTENSIONS). */
-  readonly archive?: ArchiveOptions
-}
-
-export type ArchiveOptions = {
-  /** Deflate level for the output, 0–9 (default 0 = store; fastest, fine for device installs). */
-  readonly compressionLevel?: number
-  readonly storedExtensions?: RegExp
-  readonly droppedMembers?: readonly RegExp[]
-  readonly entryDate?: Date
-}
-
-export type SignIpaDeps = {
-  readonly logger?: Logger
-  readonly clock?: Clock
-  readonly hasher?: Hasher
-}
-
-export type SignIpaSummary = {
-  readonly appName: string
-  readonly bundles: readonly {
-    readonly path: string
-    readonly identifier: string
-    readonly cdhash: Uint8Array
-  }[]
-  readonly looseBinaries: number
-  readonly reconciled: ReconcileResult | undefined
-  readonly ms: number
-}
-
-export type SignedIpa = {
-  /** The signed .ipa; consume it once (e.g. pipe to a file or upload). */
-  readonly ipa: ReadableStream<Uint8Array>
-  /** The signed app tree, for callers that install unpacked (no re-zip needed). */
-  readonly app: Ipa
-  readonly summary: SignIpaSummary
-}
+import { readIpa, writeIpa } from '@signer/infrastructure/ipa/index.ts'
+import type { SigningDeps } from '@signer/types.ts'
 
 /** Store-only output unless the caller asks for compression. */
 const DEFAULT_COMPRESSION_LEVEL = 0

@@ -10,94 +10,83 @@ export {
   real,
   serializeXmlPlist
 } from '@loadstar/kernel'
-export type {
-  BundleAddition,
-  BundleAdditions
-} from '@signer/application/bundle-additions.ts'
 export { embeddedEntitlements } from '@signer/application/embedded-entitlements.ts'
 export {
   type InspectIpaOptions,
   inspectIpa
 } from '@signer/application/inspect-ipa.ts'
+export { reconcileForSideload } from '@signer/application/reconcile.ts'
+export { signBinary } from '@signer/application/sign-binary.ts'
 export {
-  type BundleProvisioning,
-  type ReconcileOptions,
-  type ReconcileResult,
-  reconcileForSideload
-} from '@signer/application/reconcile.ts'
-export {
-  type SignBinaryOptions,
-  type SignedBinary,
-  signBinary
-} from '@signer/application/sign-binary.ts'
-export {
-  type BundleSigningConfig,
   canonicalIdentifier,
-  type SignBundleOptions,
-  type SignBundleProgress,
-  type SignedBundleSummary,
   signBundle
 } from '@signer/application/sign-bundle.ts'
-export {
-  type ArchiveOptions,
-  type SignedIpa,
-  type SignerProgress,
-  type SignIpaDeps,
-  type SignIpaOptions,
-  type SignIpaSummary,
-  signIpa
-} from '@signer/application/sign-ipa.ts'
+export { signIpa } from '@signer/application/sign-ipa.ts'
 export type {
+  ArchiveOptions,
+  BundleAddition,
+  BundleAdditions,
+  BundleProvisioning,
+  BundleSigningConfig,
   EntitlementsInput,
+  ReconcileOptions,
+  ReconcileResult,
+  SignBinaryOptions,
+  SignBundleOptions,
+  SignBundleProgress,
+  SignedBinary,
+  SignedBundleSummary,
+  SignedIpa,
+  SignerProgress,
+  SignIpaDeps,
+  SignIpaOptions,
+  SignIpaSummary,
   SigningMode
-} from '@signer/application/signing.ts'
-export {
-  defaultSignerDeps,
-  resolveDeps,
-  type SignerDeps
-} from '@signer/deps.ts'
+} from '@signer/application/types.ts'
+export { defaultSignerDeps, resolveDeps } from '@signer/deps.ts'
 export type { DesignatedRequirement } from '@signer/domain/blobs/index.ts'
+export { discoverBundles } from '@signer/domain/bundle/discover.ts'
+export type {
+  BundleTree,
+  CodeBundle,
+  TreeEntry
+} from '@signer/domain/bundle/types.ts'
 export {
-  type CodeBundle,
-  discoverBundles
-} from '@signer/domain/bundle/discover.ts'
-export type { BundleTree, TreeEntry } from '@signer/domain/bundle/tree.ts'
-export {
-  type ArchiveLimits,
   DEFAULT_SIGNER_LIMITS,
   DEFAULT_SIGNING_POLICY,
-  type HashPolicy,
-  type MachOLimits,
-  type Overrides,
-  type PageSizePolicy,
   type PlistLimits,
   resolveLimits,
-  resolvePolicy,
-  type SignerLimits,
-  type SigningPolicy
+  resolvePolicy
 } from '@signer/domain/config.ts'
-export type { HashAlgorithm, Hasher } from '@signer/domain/ports/hasher.ts'
+export type { HashAlgorithm, Hasher } from '@signer/domain/ports/types.ts'
 export {
   assertCompatible,
-  type CompatibilityProblem,
-  checkCompatibility,
-  type TargetDevice
+  checkCompatibility
 } from '@signer/domain/sideload/compatibility.ts'
 export {
   DeviceClass,
   DeviceFamily
 } from '@signer/domain/sideload/compatibility-constants.ts'
-export {
-  type BundleIdentity,
-  planSideloadIdentity,
-  type SideloadIdentityPlan
-} from '@signer/domain/sideload/identity-plan.ts'
+export { planSideloadIdentity } from '@signer/domain/sideload/identity-plan.ts'
 export type {
+  BundleIdentity,
+  CompatibilityProblem,
   InspectedApp,
   InspectedBundle,
   IpaInspection,
-  NestedBundleKind
-} from '@signer/domain/sideload/inspection.ts'
+  NestedBundleKind,
+  SideloadIdentityPlan,
+  TargetDevice
+} from '@signer/domain/sideload/types.ts'
+export type {
+  ArchiveLimits,
+  HashPolicy,
+  MachOLimits,
+  Overrides,
+  PageSizePolicy,
+  SignerLimits,
+  SigningPolicy
+} from '@signer/domain/types.ts'
 export {
   APPLE_CERTIFICATES,
   type CertificateInfo,
@@ -131,3 +120,4 @@ export {
   type ProvisioningProfile,
   parseProvisioningProfile
 } from '@signer/infrastructure/profile/profile.ts'
+export type { SignerDeps } from '@signer/types.ts'

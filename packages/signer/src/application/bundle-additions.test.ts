@@ -15,13 +15,11 @@ import {
 import { createTestIdentity } from '@signer/__tests__/identity.ts'
 import { fixtureIpaSource } from '@signer/__tests__/ipa.ts'
 import { makeProfile } from '@signer/__tests__/profile.ts'
-import {
-  applyBundleAdditions,
-  type BundleAdditions
-} from '@signer/application/bundle-additions.ts'
+import { applyBundleAdditions } from '@signer/application/bundle-additions.ts'
 import { signIpa } from '@signer/application/sign-ipa.ts'
-import type { CodeBundle } from '@signer/domain/bundle/discover.ts'
-import { type BundleTree, readFile } from '@signer/domain/bundle/tree.ts'
+import type { BundleAdditions } from '@signer/application/types.ts'
+import { readFile } from '@signer/domain/bundle/tree.ts'
+import type { BundleTree, CodeBundle } from '@signer/domain/bundle/types.ts'
 import { DEFAULT_SIGNER_LIMITS } from '@signer/domain/config.ts'
 import { createHasher } from '@signer/infrastructure/hashing/index.ts'
 

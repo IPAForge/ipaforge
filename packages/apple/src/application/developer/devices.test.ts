@@ -2,8 +2,8 @@ import { describe, expect, it, vi } from 'vitest'
 
 import type { DeveloperContext } from '@apple/application/developer/context.ts'
 import { registerDevice } from '@apple/application/developer/devices.ts'
-import type { AppleDeps } from '@apple/deps.ts'
-import type { Team } from '@apple/domain/developer.ts'
+import type { Team } from '@apple/domain/types.ts'
+import type { AppleDeps } from '@apple/types.ts'
 import {
   createDict,
   ErrorCode,

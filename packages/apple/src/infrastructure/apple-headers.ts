@@ -1,7 +1,6 @@
+import type { AnisetteData } from '@apple/domain/types.ts'
+import type { AppleDeps } from '@apple/types.ts'
 // Header building shared by every request made to Apple on this client's behalf.
-
-import type { AppleDeps } from '@apple/deps.ts'
-import type { AnisetteData } from '@apple/domain/anisette.ts'
 
 export const PLIST_CONTENT_TYPE = 'text/x-xml-plist'
 export const JSON_CONTENT_TYPE = 'application/json'

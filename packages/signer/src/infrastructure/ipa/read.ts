@@ -16,11 +16,9 @@ import {
   S_IFMT,
   SYMLINK_MODE
 } from '@signer/domain/bundle/layout.ts'
-import type { BundleTree, TreeEntry } from '@signer/domain/bundle/tree.ts'
-import {
-  type ArchiveLimits,
-  DEFAULT_SIGNER_LIMITS
-} from '@signer/domain/config.ts'
+import type { BundleTree, TreeEntry } from '@signer/domain/bundle/types.ts'
+import { DEFAULT_SIGNER_LIMITS } from '@signer/domain/config.ts'
+import type { ArchiveLimits } from '@signer/domain/types.ts'
 import {
   DEFAULT_DROPPED_MEMBERS,
   type Ipa

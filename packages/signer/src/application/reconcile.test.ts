@@ -30,12 +30,10 @@ import {
   makeProfile,
   type TestProfileOptions
 } from '@signer/__tests__/profile.ts'
-import {
-  type ReconcileOptions,
-  reconcileForSideload
-} from '@signer/application/reconcile.ts'
+import { reconcileForSideload } from '@signer/application/reconcile.ts'
 import { signBundle } from '@signer/application/sign-bundle.ts'
-import type { BundleTree } from '@signer/domain/bundle/tree.ts'
+import type { ReconcileOptions } from '@signer/application/types.ts'
+import type { BundleTree } from '@signer/domain/bundle/types.ts'
 import { createHasher } from '@signer/infrastructure/hashing/index.ts'
 import {
   parseProvisioningProfile,

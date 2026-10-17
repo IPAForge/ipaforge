@@ -1,10 +1,12 @@
 export { ErrorCode, isErrorCode } from '@kernel/errors/codes.ts'
 export {
-  type ErrorData,
   isAbortError,
   isLoadstarError,
   LoadstarError,
-  type LoadstarErrorOptions,
-  type SerializedError,
   toLoadstarError
 } from '@kernel/errors/loadstar-error.ts'
+export type {
+  ErrorData,
+  LoadstarErrorOptions,
+  SerializedError
+} from '@kernel/errors/types.ts'

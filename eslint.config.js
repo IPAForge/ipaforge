@@ -35,7 +35,7 @@ export default [
   {
     // File structure (docs/design/conventions.md): no switch, one component per
     // .tsx file, at most one type per file outside types.ts.
-    files: ['packages/ui/**/*.{ts,tsx}'],
+    files: ['packages/{ui,signer,kernel,apple,catalog}/**/*.{ts,tsx}'],
     ignores: ['**/*.test.{ts,tsx}', '**/__tests__/**', '**/*.d.ts'],
     plugins: { '@loadstar/structure': structure },
     rules: {

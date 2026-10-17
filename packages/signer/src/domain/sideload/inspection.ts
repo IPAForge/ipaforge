@@ -1,6 +1,5 @@
 // What an IPA declares about its identity, read before any Apple call.
 import { compact, type PlistDict, stringAt } from '@loadstar/kernel'
-import type { BundleKind, CodeBundle } from '@signer/domain/bundle/discover.ts'
 import {
   CF_BUNDLE_DISPLAY_NAME,
   CF_BUNDLE_NAME,
@@ -9,51 +8,19 @@ import {
 } from '@signer/domain/bundle/info-keys.ts'
 import { altAppGroupsOf } from '@signer/domain/bundle/info-plist.ts'
 import { baseName } from '@signer/domain/bundle/tree.ts'
+import type { CodeBundle } from '@signer/domain/bundle/types.ts'
 import { stringsOf } from '@signer/domain/dict.ts'
 import {
   APPLICATION_GROUPS,
   KEYCHAIN_ACCESS_GROUPS
 } from '@signer/domain/entitlements/names.ts'
 import { deviceFamiliesOf } from '@signer/domain/sideload/device-families.ts'
-
-export type NestedBundleKind = Extract<BundleKind, 'appex' | 'watch-app'>
-
-export type InspectedApp = {
-  /** Archive path of the app, e.g. `Payload/SideStore.app`. */
-  readonly path: string
-  /** The original bundle identifier. */
-  readonly identifier: string
-  readonly name: string
-  /** `CFBundleShortVersionString`. */
-  readonly version?: string
-  readonly minimumOSVersion?: string
-  /** `UIDeviceFamily` (1 iPhone and iPod touch, 2 iPad); Apple's default, iPhone only, when absent. */
-  readonly deviceFamilies: readonly number[]
-  /** The main executable's slices, as `lipo` names them (`arm64`, `arm64e`, `armv7`, …); none if unreadable. */
-  readonly architectures: readonly string[]
-}
-
-/** An extension or watch app: it needs its own App ID and profile. */
-export type InspectedBundle = {
-  /** Path relative to the main app (the key `ReconcileResult.provisioning` uses). */
-  readonly path: string
-  readonly kind: NestedBundleKind
-  /** The original bundle identifier. */
-  readonly identifier: string
-  readonly name: string
-}
-
-export type IpaInspection = {
-  readonly app: InspectedApp
-  /** Every provisioned nested bundle, by path. */
-  readonly nested: readonly InspectedBundle[]
-  /** App groups the main executable's entitlements declare. */
-  readonly appGroups: readonly string[]
-  /** Keychain access groups the main executable's entitlements declare. */
-  readonly keychainAccessGroups: readonly string[]
-  /** `ALTAppGroups` in the main app's Info.plist. */
-  readonly altAppGroups: readonly string[]
-}
+import type {
+  InspectedApp,
+  InspectedBundle,
+  IpaInspection,
+  NestedBundleKind
+} from '@signer/domain/sideload/types.ts'
 
 /** What the user sees: display name, else bundle name, else the executable's name. */
 const bundleName = (bundle: CodeBundle): string =>

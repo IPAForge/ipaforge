@@ -20,11 +20,9 @@ import {
   type TestIdentity
 } from '@signer/__tests__/identity.ts'
 import { makeProfile } from '@signer/__tests__/profile.ts'
-import {
-  type ReconcileOptions,
-  reconcileForSideload
-} from '@signer/application/reconcile.ts'
-import type { BundleTree } from '@signer/domain/bundle/tree.ts'
+import { reconcileForSideload } from '@signer/application/reconcile.ts'
+import type { ReconcileOptions } from '@signer/application/types.ts'
+import type { BundleTree } from '@signer/domain/bundle/types.ts'
 
 const now = new Date('2026-10-13T12:00:00Z')
 const TEAM = 'ABCDE12345'

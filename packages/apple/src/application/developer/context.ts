@@ -1,18 +1,17 @@
 // What every developer-services use case shares: authenticated requests for one session, and logging of
 // malformed list entries.
 
-import type { AnisetteService } from '@apple/application/anisette.ts'
 import type { AppTokenService } from '@apple/application/app-token.ts'
 import { anisetteForSession } from '@apple/application/session-anisette.ts'
-import type { AppleDeps } from '@apple/deps.ts'
-import type { Team } from '@apple/domain/developer.ts'
-import type { AppleSession } from '@apple/domain/session.ts'
-import {
-  type DeveloperFields,
-  type DeveloperPlatform,
-  type DeveloperRequestOptions,
-  developerRequest
-} from '@apple/infrastructure/developer/client.ts'
+import type { AnisetteService } from '@apple/application/types.ts'
+import type { AppleSession, Team } from '@apple/domain/types.ts'
+import { developerRequest } from '@apple/infrastructure/developer/client.ts'
+import type {
+  DeveloperFields,
+  DeveloperPlatform,
+  DeveloperRequestOptions
+} from '@apple/infrastructure/developer/types.ts'
+import type { AppleDeps } from '@apple/types.ts'
 import type { PlistDict } from '@loadstar/kernel'
 
 export type DeveloperContext = {

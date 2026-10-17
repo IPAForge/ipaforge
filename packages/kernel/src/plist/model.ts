@@ -1,26 +1,6 @@
-/**
- * Property-list values with full type fidelity.
- *
- *  - `number`  → `<integer>` (safe integers)      - `bigint`   → `<integer>` beyond 2^53
- *  - `PlistReal` → `<real>` (kept distinct so `1.0` never silently becomes an integer)
- *  - `Uint8Array` → `<data>`, `Date` → `<date>`, arrays and dicts as usual.
- */
-export type PlistValue =
-  | string
-  | boolean
-  | number
-  | bigint
-  | PlistReal
-  | Uint8Array
-  | Date
-  | readonly PlistValue[]
-  | PlistDict
-
-export type PlistDict = {
-  readonly [key: string]: PlistValue
-}
-
 /** A floating-point plist value. */
+import type { PlistDict, PlistValue } from '@kernel/plist/types.ts'
+
 export class PlistReal {
   readonly value: number
 

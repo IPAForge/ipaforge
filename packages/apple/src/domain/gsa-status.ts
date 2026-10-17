@@ -1,46 +1,7 @@
 // GrandSlam status codes → catalogued errors (see docs/design/failure-catalogue.md §2).
+import { GSA_ERROR_BY_EC, GsaCode, GsaHsc } from '@apple/domain/constants.ts'
 import { nonEmpty } from '@apple/domain/values.ts'
 import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
-
-/** GSA error codes (`Status.ec`) with a dedicated meaning. */
-export const GsaCode = {
-  ClientRejected: -80045,
-  /** Same message as -80045 ("This action cannot be completed at this time"), seen at `init` in Oct 2026. */
-  ClientRejectedAlt: -90010,
-  /** "This action could not be completed. Try again." (seen for unknown accounts). */
-  ActionNotCompleted: -22421,
-  AccountRefused: -22411,
-  WrongPassword: -22406,
-  AccountLocked: -20209,
-  IncorrectVerificationCode: -21669,
-  SmsUnavailable: -28248,
-  SmsAlreadySent1: -22979,
-  SmsAlreadySent2: -22981,
-  AnisetteNotProvisioned: -45061,
-  IncorrectCredentials: -20101,
-  /** "Your account information was entered incorrectly." (unknown Apple ID) */
-  AccountInfoIncorrect: -20970
-} as const
-
-/** HTTP-ish status (`Status.hsc`) values GSA uses. */
-export const GsaHsc = {
-  CodeAlreadySent: 409,
-  ResyncAnisette: 434
-} as const
-
-const BY_EC: Readonly<Record<number, ErrorCode>> = {
-  [GsaCode.ClientRejected]: ErrorCode.ClientRejected,
-  [GsaCode.ClientRejectedAlt]: ErrorCode.ClientRejected,
-  [GsaCode.ActionNotCompleted]: ErrorCode.AccountRefused,
-  [GsaCode.AccountRefused]: ErrorCode.AccountRefused,
-  [GsaCode.WrongPassword]: ErrorCode.InvalidCredentials,
-  [GsaCode.IncorrectCredentials]: ErrorCode.InvalidCredentials,
-  [GsaCode.AccountInfoIncorrect]: ErrorCode.InvalidCredentials,
-  [GsaCode.AccountLocked]: ErrorCode.AccountLocked,
-  [GsaCode.IncorrectVerificationCode]: ErrorCode.TwoFactorInvalidCode,
-  [GsaCode.SmsUnavailable]: ErrorCode.SmsUnavailable,
-  [GsaCode.AnisetteNotProvisioned]: ErrorCode.AnisetteNotProvisioned
-}
 
 const LOCKED_MESSAGE = /locked for security reasons/i
 const HTTP_TOO_MANY_REQUESTS = 429
@@ -73,7 +34,7 @@ export const isCodeAlreadySent = (status: GsaStatus): boolean =>
 export const gsaErrorCode = (status: GsaStatus): ErrorCode => {
   if (status.em && LOCKED_MESSAGE.test(status.em))
     return ErrorCode.AccountLocked
-  return BY_EC[status.ec] ?? ErrorCode.AppleProtocolError
+  return GSA_ERROR_BY_EC[status.ec] ?? ErrorCode.AppleProtocolError
 }
 
 /** Throws the catalogued error for a non-zero GSA status. */

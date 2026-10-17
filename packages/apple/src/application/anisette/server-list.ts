@@ -5,9 +5,13 @@
 
 import { z } from 'zod'
 
-import type { AppleDeps } from '@apple/deps.ts'
-import type { AnisetteServer } from '@apple/domain/config.ts'
+import type {
+  FetchedList,
+  RemoteServerList
+} from '@apple/application/anisette/types.ts'
+import type { AnisetteServer } from '@apple/domain/types.ts'
 import { fetchApple } from '@apple/infrastructure/http.ts'
+import type { AppleDeps } from '@apple/types.ts'
 import { compact, utf8Decode, utf8Encode } from '@loadstar/kernel'
 
 const serverListSchema = z.looseObject({
@@ -94,11 +98,6 @@ const storedListSchema = z.object({
   )
 })
 
-type FetchedList = {
-  readonly servers: AnisetteServer[]
-  readonly fetchedAt: number
-}
-
 const loadStoredList = async (
   deps: AppleDeps
 ): Promise<FetchedList | undefined> => {
@@ -117,11 +116,6 @@ const loadStoredList = async (
     deps.logger.warn('saved anisette server list unreadable', { cause: error })
     return undefined
   }
-}
-
-export type RemoteServerList = {
-  /** The remote list, fetched again when older than `anisetteServerListMaxAgeMs`; the last known one otherwise. */
-  current(): Promise<AnisetteServer[]>
 }
 
 export const createRemoteServerList = (deps: AppleDeps): RemoteServerList => {

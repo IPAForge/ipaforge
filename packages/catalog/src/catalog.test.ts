@@ -7,12 +7,12 @@ import { describe, expect, it } from 'vitest'
 import { createCatalog } from '@catalog/application/catalog.ts'
 import { DEFAULT_MANIFEST } from '@catalog/domain/default-manifest.ts'
 import {
-  type CatalogApp,
   manifestSchema,
   recommendedChannel,
   supportsIos
 } from '@catalog/domain/manifest.ts'
 import type { DownloadStore } from '@catalog/domain/ports/download-store.ts'
+import type { CatalogApp } from '@catalog/domain/types.ts'
 import {
   bytesFileSource,
   ErrorCode,

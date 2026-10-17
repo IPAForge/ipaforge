@@ -1,7 +1,8 @@
 // The manifest: the remote copy on `main` when reachable (reused for `manifestTtlMs`), otherwise the built-in one.
-import type { CatalogDeps } from '@catalog/deps.ts'
 import { DEFAULT_MANIFEST } from '@catalog/domain/default-manifest.ts'
-import { type Manifest, manifestSchema } from '@catalog/domain/manifest.ts'
+import { manifestSchema } from '@catalog/domain/manifest.ts'
+import type { Manifest } from '@catalog/domain/types.ts'
+import type { CatalogDeps } from '@catalog/types.ts'
 import { readBody, utf8Decode } from '@loadstar/kernel'
 
 const MAX_MANIFEST_BYTES = 1024 * 1024

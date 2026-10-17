@@ -7,33 +7,37 @@ import {
 } from '@loadstar/kernel'
 import { embeddedEntitlements } from '@signer/application/embedded-entitlements.ts'
 import { sideloadEntitlements } from '@signer/application/sideload-entitlements.ts'
-import type { EntitlementsInput } from '@signer/application/signing.ts'
+import type {
+  BundleProvisioning,
+  ReconcileContext,
+  ReconcileOptions,
+  ReconcileResult,
+  ReconcileTarget
+} from '@signer/application/types.ts'
 import {
-  type CodeBundle,
   discoverBundles,
   isProvisioned
 } from '@signer/domain/bundle/discover.ts'
 import {
   altAppGroupsOf,
-  type IdentityRewrite,
   rewriteInfoPlist,
   rewriteNestedId,
   withAltAppGroups
 } from '@signer/domain/bundle/info-plist.ts'
 import { INFO_PLIST } from '@signer/domain/bundle/layout.ts'
 import {
-  type BundleTree,
   isWithin,
   joinPath,
   readFile,
   removePath,
   writeFile
 } from '@signer/domain/bundle/tree.ts'
-import {
-  type Overrides,
-  resolveLimits,
-  type SignerLimits
-} from '@signer/domain/config.ts'
+import type {
+  BundleTree,
+  CodeBundle,
+  IdentityRewrite
+} from '@signer/domain/bundle/types.ts'
+import { resolveLimits } from '@signer/domain/config.ts'
 import {
   describeProfile,
   type ProvisioningProfile,
@@ -41,53 +45,6 @@ import {
   profileContainsCertificate,
   profileCoversBundle
 } from '@signer/infrastructure/profile/profile.ts'
-
-export type ReconcileOptions = {
-  readonly teamId: string
-  /** New bundle ID for the main app (e.g. `com.SideStore.SideStore.TEAMID`). */
-  readonly newMainBundleId: string
-  /** Leaf certificate the app will be signed with; must be listed in every profile. */
-  readonly certificate: Uint8Array
-  /** Raw provisioning profiles keyed by the **new** bundle ID they provision. */
-  readonly profiles: ReadonlyMap<string, Uint8Array>
-  /** Old app group → new app group. */
-  readonly appGroups?: ReadonlyMap<string, string>
-  /** Target device; checked against each profile's ProvisionedDevices. */
-  readonly deviceUdid?: string
-  readonly now: Date
-  /** Remove extensions/watch apps without a profile instead of failing. */
-  readonly pruneUnprovisioned?: boolean
-  /** Parser limits (defaults: DEFAULT_SIGNER_LIMITS). */
-  readonly limits?: Overrides<SignerLimits>
-}
-
-export type BundleProvisioning = {
-  readonly entitlements: EntitlementsInput
-  readonly provisioningProfile: Uint8Array
-  readonly profile: ProvisioningProfile
-}
-
-export type ReconcileResult = {
-  /** Keyed by bundle path relative to the main app ("" = main app). */
-  readonly provisioning: ReadonlyMap<string, BundleProvisioning>
-  /** Old bundle ID → new bundle ID. */
-  readonly bundleIds: ReadonlyMap<string, string>
-  readonly pruned: readonly string[]
-}
-
-type ReconcileTarget = {
-  readonly bundleId: string
-  readonly rawProfile: Uint8Array
-  readonly rewrite: IdentityRewrite
-  /** The main app's rewritten `ALTAppGroups`, listed in every nested bundle too. */
-  readonly altAppGroups: readonly string[]
-}
-
-type ReconcileContext = {
-  readonly options: ReconcileOptions
-  readonly limits: SignerLimits
-  readonly logger: Logger
-}
 
 const fail = (
   code: ErrorCode,

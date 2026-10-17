@@ -3,13 +3,16 @@ import { utf8Decode } from '@kernel/bytes/bytes.ts'
 import { ErrorCode } from '@kernel/errors/codes.ts'
 import { LoadstarError } from '@kernel/errors/loadstar-error.ts'
 import { DEFAULT_PLIST_LIMITS, type PlistLimits } from '@kernel/plist/limits.ts'
-import { createDict, type PlistValue, real } from '@kernel/plist/model.ts'
+import { createDict, real } from '@kernel/plist/model.ts'
+import type {
+  ElementParser,
+  PlistElement,
+  PlistValue,
+  Tag,
+  XmlReader
+} from '@kernel/plist/types.ts'
 import { failXmlPlist as fail } from '@kernel/plist/xml-error.ts'
-import {
-  createXmlReader,
-  type Tag,
-  type XmlReader
-} from '@kernel/plist/xml-reader.ts'
+import { createXmlReader } from '@kernel/plist/xml-reader.ts'
 import {
   parseDate,
   parseInteger,
@@ -66,6 +69,19 @@ const parseBoolean = (reader: XmlReader, tag: Tag): boolean => {
   return tag.name === 'true'
 }
 
+/** How each plist element parses; any other element is an error. */
+const ELEMENT_PARSERS = {
+  dict: parseDict,
+  array: parseArray,
+  string: (reader, tag) => textOf(reader, tag),
+  integer: (reader, tag) => parseInteger(textOf(reader, tag), tag.start),
+  real: (reader, tag) => real(parseReal(textOf(reader, tag), tag.start)),
+  true: parseBoolean,
+  false: parseBoolean,
+  data: (reader, tag) => fromBase64(textOf(reader, tag)),
+  date: (reader, tag) => parseDate(textOf(reader, tag), tag.start)
+} satisfies Record<PlistElement, ElementParser>
+
 const parseValue = (
   reader: XmlReader,
   tag: Tag,
@@ -75,27 +91,11 @@ const parseValue = (
   if (depth > maxDepth) fail('nesting too deep', tag.start)
   if (tag.closing) fail(`unexpected </${tag.name}>`, tag.start)
 
-  switch (tag.name) {
-    case 'dict':
-      return parseDict(reader, tag, depth, maxDepth)
-    case 'array':
-      return parseArray(reader, tag, depth, maxDepth)
-    case 'string':
-      return textOf(reader, tag)
-    case 'integer':
-      return parseInteger(textOf(reader, tag), tag.start)
-    case 'real':
-      return real(parseReal(textOf(reader, tag), tag.start))
-    case 'true':
-    case 'false':
-      return parseBoolean(reader, tag)
-    case 'data':
-      return fromBase64(textOf(reader, tag))
-    case 'date':
-      return parseDate(textOf(reader, tag), tag.start)
-    default:
-      return fail(`unknown element <${tag.name}>`, tag.start)
-  }
+  const parse = Object.hasOwn(ELEMENT_PARSERS, tag.name)
+    ? ELEMENT_PARSERS[tag.name as PlistElement]
+    : undefined
+  if (!parse) return fail(`unknown element <${tag.name}>`, tag.start)
+  return parse(reader, tag, depth, maxDepth)
 }
 
 const decodeInput = (input: Uint8Array | string): string => {

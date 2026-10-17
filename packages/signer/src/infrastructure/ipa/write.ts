@@ -10,7 +10,7 @@ import {
   S_IFREG,
   SYMLINK_ARCHIVE_PERMISSIONS
 } from '@signer/domain/bundle/layout.ts'
-import type { TreeEntry } from '@signer/domain/bundle/tree.ts'
+import type { TreeEntry } from '@signer/domain/bundle/types.ts'
 import {
   DEFAULT_DEFLATE_LEVEL,
   DEFAULT_ENTRY_DATE,

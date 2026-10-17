@@ -1,13 +1,13 @@
 // Anisette data from one server: v3 (provisioned on demand, state kept per server) or v1 (headers as served).
 
 import type { AnisetteStateStore } from '@apple/application/anisette/state-store.ts'
-import type { AppleDeps } from '@apple/deps.ts'
-import {
-  ANISETTE_IDENTIFIER_BYTES,
-  type AnisetteData,
-  type AnisetteState
-} from '@apple/domain/anisette.ts'
-import type { AnisetteServer, ClientIdentity } from '@apple/domain/config.ts'
+import { ANISETTE_IDENTIFIER_BYTES } from '@apple/domain/anisette.ts'
+import type {
+  AnisetteData,
+  AnisetteServer,
+  AnisetteState,
+  ClientIdentity
+} from '@apple/domain/types.ts'
 import { fetchV1, identityFromV1 } from '@apple/infrastructure/anisette/v1.ts'
 import {
   completeHeaders,
@@ -15,6 +15,7 @@ import {
   getHeadersV3,
   provisionV3
 } from '@apple/infrastructure/anisette/v3.ts'
+import type { AppleDeps } from '@apple/types.ts'
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
 
 /** A rejected state is provisioned again once; a second rejection fails this server. */

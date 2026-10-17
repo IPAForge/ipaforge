@@ -3,51 +3,21 @@ import {
   ErrorCode,
   isPlistDict,
   LoadstarError,
-  type Logger,
   type PlistDict,
   parsePlist,
   serializeXmlPlist
 } from '@loadstar/kernel'
-import {
-  type CodeBundle,
-  discoverBundles
-} from '@signer/domain/bundle/discover.ts'
+import { UNSAFE_SEGMENTS } from '@signer/application/constants.ts'
+import type {
+  BundleAddition,
+  BundleAdditions,
+  BundleAdditionsContext
+} from '@signer/application/types.ts'
+import { discoverBundles } from '@signer/domain/bundle/discover.ts'
 import { INFO_PLIST } from '@signer/domain/bundle/layout.ts'
-import {
-  type BundleTree,
-  joinPath,
-  readFile,
-  writeFile
-} from '@signer/domain/bundle/tree.ts'
-import type { SignerLimits } from '@signer/domain/config.ts'
-
-/** Content to put into one bundle before it is signed, so the signature seals it. */
-export type BundleAddition = {
-  /** Bundle directory relative to the main app ("" = main app), as in `CodeBundle.path`. */
-  readonly bundlePath: string
-  /** Files to write, keyed by '/'-separated path relative to the bundle. Existing files are replaced. */
-  readonly files?: ReadonlyMap<string, Uint8Array>
-  /** Info.plist keys to set; existing values for these keys are replaced. */
-  readonly infoPlist?: PlistDict
-}
-
-/**
- * Decides what to add, given the app's code bundles. Each bundle carries its **original** identifier
- * (before any sideload rewrite), so callers can recognise apps by the IDs they ship with.
- */
-export type BundleAdditions = (
-  bundles: readonly CodeBundle[]
-) => readonly BundleAddition[]
-
-export type BundleAdditionsContext = {
-  readonly limits: SignerLimits
-  readonly logger: Logger
-  /** Original bundle ID → new bundle ID, when the app was prepared for sideloading. */
-  readonly renamed?: ReadonlyMap<string, string>
-}
-
-/** Path segments that would leave the bundle or name it ambiguously. */
-const UNSAFE_SEGMENTS = new Set(['', '.', '..'])
+import { joinPath, readFile, writeFile } from '@signer/domain/bundle/tree.ts'
+import type { BundleTree, CodeBundle } from '@signer/domain/bundle/types.ts'
+import type { SignerLimits } from '@signer/domain/types.ts'
 
 const isContainedPath = (path: string): boolean =>
   !path.includes('\\') &&

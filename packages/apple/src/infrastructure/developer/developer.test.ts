@@ -2,7 +2,7 @@ import * as pkijs from 'pkijs'
 import { describe, expect, it } from 'vitest'
 
 import { resolveAppleDeps } from '@apple/deps.ts'
-import type { AnisetteData } from '@apple/domain/anisette.ts'
+import type { AnisetteData } from '@apple/domain/types.ts'
 import {
   developerRequest,
   developerUrl

@@ -1,3 +1,4 @@
+import { LEVEL_ORDER } from '@kernel/logging/constants.ts'
 import { DEFAULT_REDACT_PATTERN, redact } from '@kernel/logging/redact.ts'
 import { compact } from '@kernel/objects/compact.ts'
 import type { Clock } from '@kernel/ports/clock.ts'
@@ -8,14 +9,8 @@ import type {
   LogLevel,
   LogRecord,
   LogSink
-} from '@kernel/ports/logger.ts'
+} from '@kernel/ports/types.ts'
 
-const LEVEL_ORDER: Readonly<Record<LogLevel, number>> = {
-  debug: 10,
-  info: 20,
-  warn: 30,
-  error: 40
-}
 const DEFAULT_LOG_LEVEL: LogLevel = 'info'
 const SCOPE_SEPARATOR = '.'
 

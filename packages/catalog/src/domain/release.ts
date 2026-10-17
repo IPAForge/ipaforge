@@ -1,4 +1,4 @@
-import type { Channel } from '@catalog/domain/manifest.ts'
+import type { Channel } from '@catalog/domain/types.ts'
 
 /** A concrete, downloadable release of a catalog app. */
 export type ResolvedRelease = {

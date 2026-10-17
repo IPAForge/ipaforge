@@ -5,7 +5,7 @@ import { createLogger, parseLogLevel } from '@kernel/logging/create-logger.ts'
 import { REDACTED, redact } from '@kernel/logging/redact.ts'
 import { compact } from '@kernel/objects/compact.ts'
 import { fixedClock } from '@kernel/ports/clock.ts'
-import type { LogRecord } from '@kernel/ports/logger.ts'
+import type { LogRecord } from '@kernel/ports/types.ts'
 
 const collect = (level?: 'debug' | 'info' | 'warn' | 'error') => {
   const records: LogRecord[] = []

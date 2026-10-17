@@ -1,58 +1,22 @@
 import { ByteReader, ByteWriter, utf8Encode } from '@loadstar/kernel'
 import {
   CS_CDHASH_LEN,
-  CS_HASHTYPE_SHA1,
-  CS_HASHTYPE_SHA256,
   CS_SUPPORTSCODELIMIT64,
   CS_SUPPORTSEXECSEG,
   CS_SUPPORTSSCATTER,
   CS_SUPPORTSTEAMID,
-  CSMAGIC_CODEDIRECTORY
+  CSMAGIC_CODEDIRECTORY,
+  FIXED_HEADER_SIZE,
+  HASH_TYPE
 } from '@signer/domain/blobs/constants.ts'
-import {
-  DIGEST_SIZE,
-  type HashAlgorithm,
-  type Hasher
-} from '@signer/domain/ports/hasher.ts'
+import type {
+  CodeDirectoryInfo,
+  CodeDirectoryInput,
+  SpecialSlotData
+} from '@signer/domain/blobs/types.ts'
+import { DIGEST_SIZE } from '@signer/domain/ports/constants.ts'
+import type { HashAlgorithm, Hasher } from '@signer/domain/ports/types.ts'
 
-/** Raw data hashed into the special slots (each CD hashes it with its own algorithm). */
-export type SpecialSlotData = {
-  /** Slot −1: the bundle's Info.plist bytes as on disk. */
-  readonly infoPlist?: Uint8Array
-  /** Slot −2: the complete requirement-set blob. Always present in practice. */
-  readonly requirements?: Uint8Array
-  /** Slot −3: `_CodeSignature/CodeResources` bytes. */
-  readonly codeResources?: Uint8Array
-  /** Slot −5: the complete XML entitlements blob. */
-  readonly entitlements?: Uint8Array
-  /** Slot −7: the complete DER entitlements blob. */
-  readonly derEntitlements?: Uint8Array
-}
-
-export type ExecSegment = {
-  readonly base: bigint
-  readonly limit: bigint
-  readonly flags: bigint
-}
-
-export type CodeDirectoryInput = {
-  readonly identifier: string
-  readonly teamId?: string
-  readonly flags: number
-  readonly hashType: HashAlgorithm
-  readonly pageSize: number
-  /** Final image of the slice; bytes `[0, codeLimit)` are hashed (header already patched). */
-  readonly image: Uint8Array
-  readonly codeLimit: number
-  /** Absent when the slice has no platform load command (then the fields are 0). */
-  readonly execSegment?: ExecSegment
-  readonly special: SpecialSlotData
-}
-
-const HASH_TYPE: Readonly<Record<HashAlgorithm, number>> = {
-  sha1: CS_HASHTYPE_SHA1,
-  sha256: CS_HASHTYPE_SHA256
-}
 const UINT32_MAX = 0xffffffff
 
 /** Special slots in index order −1 … −7; `undefined` marks unused slots (written as zero hashes). */
@@ -96,13 +60,6 @@ export const codeDirectoryVersion = (
   if (input.codeLimit > UINT32_MAX) return CS_SUPPORTSCODELIMIT64
   if (input.teamId) return CS_SUPPORTSTEAMID
   return CS_SUPPORTSSCATTER
-}
-
-const FIXED_HEADER_SIZE: Readonly<Record<number, number>> = {
-  [CS_SUPPORTSSCATTER]: 48,
-  [CS_SUPPORTSTEAMID]: 52,
-  [CS_SUPPORTSCODELIMIT64]: 64,
-  [CS_SUPPORTSEXECSEG]: 88
 }
 
 /** Builds a CodeDirectory blob (byte-identical to Apple `codesign` for the same inputs). */
@@ -166,20 +123,6 @@ export const buildCodeDirectory = async (
     w.bytes(specialHashes[i] as Uint8Array)
   for (const hash of codeHashes) w.bytes(hash)
   return w.toBytes()
-}
-
-export type CodeDirectoryInfo = {
-  readonly version: number
-  readonly flags: number
-  readonly hashType: number
-  readonly hashSize: number
-  readonly pageSize: number
-  readonly identifier: string
-  readonly teamId: string | undefined
-  readonly nSpecialSlots: number
-  readonly nCodeSlots: number
-  readonly codeLimit: number
-  readonly execSegFlags: bigint
 }
 
 /** Reads the header fields of a CodeDirectory (used in tests and diagnostics). */
