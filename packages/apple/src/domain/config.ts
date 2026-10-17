@@ -101,8 +101,8 @@ export const DEFAULT_APPLE_CONFIG: AppleConfig = {
   anisetteServerListRetryMs: 60 * 1000,
   // Mac-backed servers first, then Windows-backed ones; older Android-backed servers come only from the remote list.
   fallbackAnisetteServers: [
-    { name: 'jkcoxson', address: 'https://mac-ani.jkcoxson.com' },
     { name: 'StikStore', address: 'https://ani3.stikstore.app' },
+    { name: 'jkcoxson', address: 'https://mac-ani.jkcoxson.com' },
     { name: 'jkcoxson (Windows)', address: 'https://ani.jkcoxson.com' },
     { name: 'StikStore (Windows)', address: 'https://ani2.stikstore.app' }
   ],
