@@ -1,5 +1,5 @@
+import type { Manifest } from '@catalog/domain/types.ts'
 // Built-in fallback for when the remote manifest cannot be fetched. Must equal catalog/sources.json (a test checks).
-import type { Manifest } from '@catalog/domain/manifest.ts'
 
 export const DEFAULT_MANIFEST: Manifest = {
   version: 1,

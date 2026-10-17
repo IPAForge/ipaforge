@@ -1,9 +1,9 @@
 // Apple ties a session to the machine identity it was created with (the anisette server's provisioning). Requests
 // made with the session (app tokens, developer services) therefore ask for that server first, not whichever server
 // happened to answer last; another server is used only when that one is down.
-import type { AnisetteService } from '@apple/application/anisette.ts'
-import type { AnisetteData } from '@apple/domain/anisette.ts'
-import type { AppleSession } from '@apple/domain/session.ts'
+
+import type { AnisetteService } from '@apple/application/types.ts'
+import type { AnisetteData, AppleSession } from '@apple/domain/types.ts'
 import { compact } from '@loadstar/kernel'
 
 export const anisetteForSession = async (

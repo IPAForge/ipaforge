@@ -1,20 +1,25 @@
 // The second factor, as a small state machine the UI drives: pick a method, request a code (again if needed),
 // submit it. Every "a code was already sent" answer goes straight to code entry; a wrong code re-prompts.
 
-import type { AppleDeps } from '@apple/deps.ts'
-import type { AnisetteData } from '@apple/domain/anisette.ts'
-import {
-  GsaCode,
-  gsaErrorCode,
-  isCodeAlreadySent
-} from '@apple/domain/gsa-status.ts'
-import type { AppleSession, SecondFactorKind } from '@apple/domain/session.ts'
+import { TWO_FACTOR_ANISETTE_HEADERS } from '@apple/application/constants.ts'
+import type {
+  BodyFormat,
+  TwoFactorChallenge,
+  TwoFactorContext
+} from '@apple/application/types.ts'
+import { GsaCode } from '@apple/domain/constants.ts'
+import { gsaErrorCode, isCodeAlreadySent } from '@apple/domain/gsa-status.ts'
 import {
   TRUSTED_DEVICE_ONLY,
-  type TwoFactorMethod,
-  type TwoFactorMethods,
   twoFactorMethods
 } from '@apple/domain/two-factor.ts'
+import type {
+  AnisetteData,
+  AppleSession,
+  SecondFactorKind,
+  TwoFactorMethod,
+  TwoFactorMethods
+} from '@apple/domain/types.ts'
 import {
   appleHeaders,
   JSON_CONTENT_TYPE,
@@ -28,6 +33,7 @@ import {
 import { statusOf } from '@apple/infrastructure/gsa/client.ts'
 import { bagUrl } from '@apple/infrastructure/gsa/url-bag.ts'
 import { fetchApple, successOr } from '@apple/infrastructure/http.ts'
+import type { AppleDeps } from '@apple/types.ts'
 import {
   compact,
   createDict,
@@ -43,42 +49,13 @@ export type {
   TrustedPhone,
   TwoFactorMethod,
   TwoFactorMethods
-} from '@apple/domain/two-factor.ts'
-
-export type TwoFactorChallenge = {
-  /** What Apple asked for first. */
-  readonly requested: SecondFactorKind
-  methods(): Promise<TwoFactorMethods>
-  /** Sends (or re-sends) a code. "Already sent" answers count as success. */
-  requestCode(method: TwoFactorMethod): Promise<void>
-  /**
-   * Submits the code and finishes signing in. A wrong code throws `apple.two_factor_invalid_code` and the
-   * challenge stays usable, so the UI simply asks again.
-   */
-  submitCode(method: TwoFactorMethod, code: string): Promise<AppleSession>
-}
-
-/** Anisette headers a 2FA request carries (the one-time values must be fresh for every request). */
-const TWO_FACTOR_ANISETTE_HEADERS = [
-  'X-Mme-Device-Id',
-  'X-Apple-I-MD',
-  'X-Apple-I-MD-M',
-  'X-Apple-I-MD-RINFO'
-]
+} from '@apple/domain/types.ts'
 
 const HTTP_FORBIDDEN = 403
 const HTTP_CONFLICT = 409
 const HTTP_PRECONDITION_FAILED = 412
 const HTTP_LOCKED = 423
 const HTTP_BAD_REQUEST = 400
-
-type BodyFormat = 'plist' | 'json'
-
-/** What every 2FA request needs: the deps and headers with fresh one-time anisette values. */
-type TwoFactorContext = {
-  readonly deps: AppleDeps
-  readonly headers: (format: BodyFormat) => Promise<Record<string, string>>
-}
 
 const twoFactorHeaders =
   (

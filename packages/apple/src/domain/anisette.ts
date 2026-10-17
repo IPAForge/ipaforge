@@ -1,24 +1,4 @@
-import type { ClientIdentity } from '@apple/domain/config.ts'
 import { toHex, trimEndChar } from '@loadstar/kernel'
-
-/** What Apple needs to recognise this computer as a known machine. */
-export type AnisetteData = {
-  /** `X-Apple-I-MD*`, `X-Mme-Device-Id`, `X-Apple-I-SRL-NO` and the time/locale headers. */
-  readonly headers: Readonly<Record<string, string>>
-  readonly identity: ClientIdentity
-  /** Which server produced it (for health tracking and error messages). */
-  readonly server: string
-  /** That server's base URL (a resync must go back to the same server). */
-  readonly serverAddress: string
-}
-
-/** Per-server provisioning state. Secret: it identifies this machine to Apple. */
-export type AnisetteState = {
-  /** 16 random bytes, generated once per server. */
-  readonly identifier: Uint8Array
-  /** Provisioning blob returned by a v3 server after the Apple handshake. */
-  readonly adiPb?: Uint8Array
-}
 
 export const ANISETTE_IDENTIFIER_BYTES = 16
 

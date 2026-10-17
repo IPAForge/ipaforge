@@ -2,7 +2,6 @@
 // provisioning profiles, plus `provisionApp`, which gets everything the signer needs while staying inside the
 // free-account limits (App IDs are budgeted before any write; certificates are reused before one is created).
 
-import type { AnisetteService } from '@apple/application/anisette.ts'
 import type { AppTokenService } from '@apple/application/app-token.ts'
 import {
   assignAppGroup,
@@ -15,9 +14,7 @@ import {
   planTeamAppIds
 } from '@apple/application/developer/app-ids.ts'
 import {
-  type CertificateIdentity,
   createCertificate,
-  type EnsureCertificateOptions,
   ensureCertificate,
   listCertificates,
   revokeCertificate
@@ -28,33 +25,34 @@ import {
   listTeams,
   registerDevice
 } from '@apple/application/developer/devices.ts'
-import {
-  type ProvisionRequest,
-  type ProvisionResult,
-  provisionApp
-} from '@apple/application/developer/provision.ts'
-import type { AppleDeps } from '@apple/deps.ts'
+import { provisionApp } from '@apple/application/developer/provision.ts'
+import type {
+  CertificateIdentity,
+  EnsureCertificateOptions,
+  ProvisionRequest,
+  ProvisionResult
+} from '@apple/application/developer/types.ts'
+import type { AnisetteService } from '@apple/application/types.ts'
 import type {
   AppGroup,
   AppId,
   AppIdPlan,
   AppIdQuota,
+  AppleSession,
   DevelopmentCertificate,
   ProvisioningProfile,
   RegisteredDevice,
   Team
-} from '@apple/domain/developer.ts'
-import type { AppleSession } from '@apple/domain/session.ts'
+} from '@apple/domain/types.ts'
+import type { AppleDeps } from '@apple/types.ts'
 
 export type {
-  CertificateIdentity,
-  EnsureCertificateOptions
-} from '@apple/application/developer/certificates.ts'
-export type {
   BundleRequest,
+  CertificateIdentity,
+  EnsureCertificateOptions,
   ProvisionRequest,
   ProvisionResult
-} from '@apple/application/developer/provision.ts'
+} from '@apple/application/developer/types.ts'
 
 export type DeveloperServices = {
   teams(): Promise<Team[]>

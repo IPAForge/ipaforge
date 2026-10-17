@@ -3,32 +3,17 @@
 
 import type {
   AnisetteService,
-  ServerHealth
-} from '@apple/application/anisette.ts'
-import type { AppleDeps } from '@apple/deps.ts'
+  AppleProbe,
+  PreflightReport
+} from '@apple/application/types.ts'
 import { errorMessage, nonEmpty } from '@apple/domain/values.ts'
 import { fetchApple } from '@apple/infrastructure/http.ts'
+import type { AppleDeps } from '@apple/types.ts'
 import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
-
-export type PreflightReport = {
-  readonly apple: { readonly ok: boolean; readonly error?: string }
-  /** Server clock minus local clock, when Apple answered with a `Date` header. */
-  readonly clockSkewSeconds?: number
-  readonly clockOk: boolean
-  readonly anisette: readonly ServerHealth[]
-  /** The first blocking problem, as a catalogued error code. */
-  readonly problem?: ErrorCode
-}
 
 /** How many anisette servers to probe (they are probed in parallel). */
 const ANISETTE_PROBES = 3
 const HTTP_SERVER_ERROR = 500
-
-type AppleProbe = {
-  readonly ok: boolean
-  readonly skewMs?: number | undefined
-  readonly error?: string | undefined
-}
 
 /** Whether Apple answers at all (any status below 500), and how far its clock is from ours. */
 const probeApple = (deps: AppleDeps): Promise<AppleProbe> =>

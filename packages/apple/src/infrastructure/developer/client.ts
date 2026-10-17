@@ -1,22 +1,25 @@
 // Apple's developer services (the API Xcode uses for free and paid accounts): XML-plist requests authenticated
 // with the Xcode app token, fresh anisette values on every request, `resultCode` 0 for success.
 
-import type { AppleDeps } from '@apple/deps.ts'
-import type { AnisetteData } from '@apple/domain/anisette.ts'
 import { developerErrorCode } from '@apple/domain/developer.ts'
+import type { AnisetteData } from '@apple/domain/types.ts'
 import { nonEmpty } from '@apple/domain/values.ts'
 import {
   appleHeaders,
   PLIST_HEADERS,
   pickHeaders
 } from '@apple/infrastructure/apple-headers.ts'
-import {
-  type FetchResult,
-  fetchApple,
-  successOr
-} from '@apple/infrastructure/http.ts'
+import type {
+  DeveloperAuth,
+  DeveloperFields,
+  DeveloperPlatform,
+  DeveloperRequestOptions
+} from '@apple/infrastructure/developer/types.ts'
+import { fetchApple, successOr } from '@apple/infrastructure/http.ts'
 import { parseApplePlist } from '@apple/infrastructure/plist-diagnostics.ts'
 import { plistNumber } from '@apple/infrastructure/plist-fields.ts'
+import type { FetchResult } from '@apple/infrastructure/types.ts'
+import type { AppleDeps } from '@apple/types.ts'
 import {
   compact,
   createDict,
@@ -24,7 +27,6 @@ import {
   isPlistDict,
   LoadstarError,
   type PlistDict,
-  type PlistValue,
   serializeXmlPlist,
   stringAt
 } from '@loadstar/kernel'
@@ -36,23 +38,6 @@ export const DEVELOPER_PROTOCOL = 'QH65B2'
 
 const HTTP_UNAUTHORIZED = 401
 const HTTP_FORBIDDEN = 403
-
-/** `ios/` resources (devices, certificates, App IDs, …) or team-level actions (`listTeams`). */
-export type DeveloperPlatform = 'ios' | 'any'
-
-/** Request fields, in the order they are sent. */
-export type DeveloperFields = readonly (readonly [string, PlistValue])[]
-
-export type DeveloperAuth = {
-  /** `com.apple.gs.xcode.auth` app token. */
-  readonly token: string
-  readonly adsid: string
-}
-
-export type DeveloperRequestOptions = {
-  readonly anisette: () => Promise<AnisetteData>
-  readonly auth: () => Promise<DeveloperAuth>
-}
 
 export const developerUrl = (
   action: string,

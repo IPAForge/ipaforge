@@ -11,7 +11,9 @@ import {
   decodeSession,
   encodeSession
 } from '@apple/application/accounts/session-codec.ts'
-import { type AppleSession, normalizeAppleId } from '@apple/domain/session.ts'
+import type { AccountStore, SavedAccount } from '@apple/application/types.ts'
+import { normalizeAppleId } from '@apple/domain/session.ts'
+import type { AppleSession } from '@apple/domain/types.ts'
 import { nonEmpty } from '@apple/domain/values.ts'
 import {
   compact,
@@ -24,45 +26,6 @@ import {
 
 const sessionKey = (id: string) => `apple/session/${id}`
 const passwordKey = (id: string) => `apple/password/${id}`
-
-export type AccountHealth = {
-  readonly lastSuccessAt?: string | undefined
-  /** Device UDIDs where Apple rejected this ID's profiles (0xe8008024). */
-  readonly bannedOnDevices: string[]
-  /** Last catalogued error code, for the account switcher. */
-  readonly lastError?: string | undefined
-}
-
-export type SavedAccount = {
-  readonly id: string
-  readonly appleId: string
-  readonly displayName?: string | undefined
-  /** The team chosen for this account (Phase 4 team picker). */
-  readonly teamId?: string | undefined
-  readonly health: AccountHealth
-}
-
-export type SaveOptions = {
-  /** Keep the password (in the OS-backed secret store) so the session can be renewed without asking. */
-  readonly rememberPassword?: string
-}
-
-export type AccountStore = {
-  list(): Promise<SavedAccount[]>
-  active(): Promise<SavedAccount | undefined>
-  save(session: AppleSession, options?: SaveOptions): Promise<SavedAccount>
-  switchTo(id: string): Promise<SavedAccount>
-  /** Forgets the account, its session and its password. Removing an unknown account is not an error. */
-  remove(id: string): Promise<void>
-  session(id: string): Promise<AppleSession | undefined>
-  password(id: string): Promise<string | undefined>
-  update(
-    id: string,
-    patch: { teamId?: string; health?: Partial<AccountHealth> }
-  ): Promise<SavedAccount>
-  /** Accounts not banned on `udid`, most recently successful first (for one-click switching). */
-  usableOn(udid: string): Promise<SavedAccount[]>
-}
 
 const displayNameOf = (session: AppleSession): string | undefined =>
   [session.firstName, session.lastName].filter(Boolean).join(' ') || undefined

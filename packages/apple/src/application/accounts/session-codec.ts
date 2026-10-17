@@ -2,7 +2,7 @@
 
 import { z } from 'zod'
 
-import type { AppleSession } from '@apple/domain/session.ts'
+import type { AppleSession } from '@apple/domain/types.ts'
 import { nonEmpty } from '@apple/domain/values.ts'
 import {
   compact,

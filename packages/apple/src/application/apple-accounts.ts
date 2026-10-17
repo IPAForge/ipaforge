@@ -1,67 +1,26 @@
 // The public facade of @loadstar/apple: anisette, sign-in with 2FA, app tokens, saved accounts and preflight.
 
+import { createAccountStore } from '@apple/application/accounts.ts'
+import { createAnisetteService } from '@apple/application/anisette.ts'
 import {
-  type AccountStore,
-  createAccountStore,
-  type SavedAccount
-} from '@apple/application/accounts.ts'
-import {
-  type AnisetteService,
-  createAnisetteService
-} from '@apple/application/anisette.ts'
-import {
-  type AppTokenService,
   createAppTokenService,
   XCODE_APP
 } from '@apple/application/app-token.ts'
-import {
-  createDeveloperServices,
-  type DeveloperServices
-} from '@apple/application/developer.ts'
-import {
-  type PreflightReport,
-  runPreflight
-} from '@apple/application/preflight.ts'
-import {
-  createSignInService,
-  type SignInInput,
-  type SignInResult,
-  type SignInService
-} from '@apple/application/sign-in.ts'
-import {
-  type AppleDeps,
-  type AppleDepsInput,
-  resolveAppleDeps
-} from '@apple/deps.ts'
-import type { AnisetteServer } from '@apple/domain/config.ts'
-import type { AppleSession, AppToken } from '@apple/domain/session.ts'
+import { createDeveloperServices } from '@apple/application/developer.ts'
+import { runPreflight } from '@apple/application/preflight.ts'
+import { createSignInService } from '@apple/application/sign-in.ts'
+import type {
+  AccountStore,
+  AppleAccounts,
+  AppleAccountsOptions,
+  ResumeResult,
+  ResumeServices,
+  SavedAccount
+} from '@apple/application/types.ts'
+import { resolveAppleDeps } from '@apple/deps.ts'
+import type { AppleSession } from '@apple/domain/types.ts'
+import type { AppleDepsInput } from '@apple/types.ts'
 import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
-
-export type ResumeResult =
-  | SignInResult
-  | { readonly kind: 'needs_password'; readonly appleId: string }
-
-export type AppleAccounts = {
-  readonly anisette: AnisetteService
-  readonly accounts: AccountStore
-  preflight(): Promise<PreflightReport>
-  signIn(input: SignInInput): Promise<SignInResult>
-  appToken(session: AppleSession, app?: string): Promise<AppToken>
-  /**
-   * Re-opens a saved account: reuses its session while Apple accepts it, otherwise signs in again with the
-   * saved password (usually without 2FA, since this machine is already known), otherwise asks for the password.
-   */
-  resume(id: string): Promise<ResumeResult>
-  /** Developer services (teams, certificates, App IDs, profiles) for a signed-in session. */
-  developer(session: AppleSession): DeveloperServices
-  /** Records that Apple blocked this account's profiles on a device, so the UI can offer another account. */
-  markBanned(id: string, udid: string): Promise<void>
-}
-
-export type AppleAccountsOptions = {
-  /** A user-configured anisette server, tried first. */
-  readonly customAnisetteServer?: AnisetteServer
-}
 
 const findSaved = async (
   accounts: AccountStore,
@@ -71,13 +30,6 @@ const findSaved = async (
 
 const isSessionExpired = (error: unknown): error is LoadstarError =>
   error instanceof LoadstarError && error.code === ErrorCode.SessionExpired
-
-export type ResumeServices = {
-  readonly deps: AppleDeps
-  readonly accounts: AccountStore
-  readonly tokens: AppTokenService
-  readonly signIn: SignInService
-}
 
 /** The saved session when Apple still accepts it (checked with an app token request). */
 const reuseSession = async (

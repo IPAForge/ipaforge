@@ -10,35 +10,14 @@ import {
 } from '@apple/application/developer/app-ids.ts'
 import type { DeveloperContext } from '@apple/application/developer/context.ts'
 import { registerDevice } from '@apple/application/developer/devices.ts'
-import {
-  type AppId,
-  type AppIdPlan,
-  planAppIds,
-  type Team
-} from '@apple/domain/developer.ts'
+import type {
+  BundleRequest,
+  ProvisionRequest,
+  ProvisionResult
+} from '@apple/application/developer/types.ts'
+import { planAppIds } from '@apple/domain/developer.ts'
+import type { AppId, AppIdPlan, Team } from '@apple/domain/types.ts'
 import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
-
-export type BundleRequest = {
-  /** Bundle identifier after sideload renaming, e.g. `com.SideStore.SideStore.ABCDE12345`. */
-  readonly identifier: string
-  readonly name: string
-}
-
-export type ProvisionRequest = {
-  readonly team: Team
-  readonly device: { readonly udid: string; readonly name: string }
-  /** Main app first, then its extensions. */
-  readonly bundles: readonly BundleRequest[]
-  /** App group to register and assign to every bundle (e.g. `group.com.SideStore.SideStore.ABCDE12345`). */
-  readonly appGroup?: string
-}
-
-export type ProvisionResult = {
-  readonly appIds: ReadonlyMap<string, AppId>
-  /** Raw `.mobileprovision` bytes per bundle identifier, for the signer. */
-  readonly profiles: ReadonlyMap<string, Uint8Array>
-  readonly plan: AppIdPlan
-}
 
 const assertEnoughAppIds = (plan: AppIdPlan): void => {
   if (plan.enough) return

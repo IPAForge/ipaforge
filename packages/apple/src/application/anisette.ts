@@ -8,9 +8,8 @@ import {
   dedupe
 } from '@apple/application/anisette/server-list.ts'
 import { createAnisetteStateStore } from '@apple/application/anisette/state-store.ts'
-import type { AppleDeps } from '@apple/deps.ts'
-import type { AnisetteData } from '@apple/domain/anisette.ts'
-import type { AnisetteServer } from '@apple/domain/config.ts'
+import type { AnisetteService, ServerHealth } from '@apple/application/types.ts'
+import type { AnisetteData, AnisetteServer } from '@apple/domain/types.ts'
 import { errorMessage } from '@apple/domain/values.ts'
 import { fetchV1 } from '@apple/infrastructure/anisette/v1.ts'
 import {
@@ -18,32 +17,8 @@ import {
   fetchClientInfo,
   getHeadersV3
 } from '@apple/infrastructure/anisette/v3.ts'
+import type { AppleDeps } from '@apple/types.ts'
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
-
-export type ServerHealth = {
-  readonly server: AnisetteServer
-  readonly ok: boolean
-  readonly latencyMs?: number
-  readonly error?: string
-}
-
-export type AnisetteService = {
-  /** Custom server + built-in fallback + remote list (kept up to date), deduplicated, in preference order. */
-  servers(): Promise<AnisetteServer[]>
-  health(server: AnisetteServer): Promise<ServerHealth>
-  /** Headers and client identity from the first server that works. */
-  get(options?: {
-    readonly preferred?: AnisetteServer
-    readonly signal?: AbortSignal
-  }): Promise<AnisetteData>
-  /**
-   * Resyncs this machine with the same server after GSA answered hsc 434, returning corrected headers.
-   * `resyncData` is the base64 `X-Apple-I-MD-DATA` from that answer.
-   */
-  resync(data: AnisetteData, resyncData: string): Promise<AnisetteData>
-  /** Forgets provisioning state (all servers when omitted). Missing state is not an error. */
-  reset(server?: AnisetteServer): Promise<void>
-}
 
 export const createAnisetteService = (
   deps: AppleDeps,
