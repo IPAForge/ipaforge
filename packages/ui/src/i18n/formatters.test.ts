@@ -10,6 +10,8 @@ describe('formattersFor', () => {
     const de = formattersFor('de')
     expect(en.number(1234.5)).toBe('1,234.5')
     expect(de.number(1234.5)).toBe('1.234,5')
+    expect(en.fileSize(28_040_000)).toBe('28 MB')
+    expect(de.fileSize(12_340_000)).toBe('12,3 MB')
     expect(en.list(['A', 'B', 'C'])).toBe('A, B, and C')
     expect(de.list(['A', 'B', 'C'])).toBe('A, B und C')
     expect(en.relativeTime(-1, 'day')).toBe('yesterday')

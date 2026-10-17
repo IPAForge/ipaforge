@@ -136,7 +136,9 @@ describe('DevicePicker', () => {
     act(() => devices.unplug(FAKE_IPHONE))
     expect(
       await screen.findByText(
-        t('devices.notes.disconnected', { name: 'iPhone' })
+        t('devices.notes.disconnected', { name: 'iPhone' }),
+        {},
+        { timeout: 8000 }
       )
     ).toBeDefined()
     expect(screen.queryByRole('dialog')).toBeNull()

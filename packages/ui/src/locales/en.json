@@ -28,7 +28,8 @@
     "accounts": "Accounts",
     "certificates": "Certificates",
     "logs": "Logs",
-    "settings": "Settings"
+    "settings": "Settings",
+    "installRunning": "An install is running"
   },
   "placeholder": {
     "body": "This section is under construction."
@@ -62,6 +63,123 @@
       "title": "Apple blocked {appleId} on {device}",
       "body": "Apps signed with this Apple ID won't open on this device. Use another Apple ID.",
       "use": "Use {appleId}"
+    },
+    "home": {
+      "what": "What to install",
+      "channel": "Channel",
+      "install": "Install {app}"
+    },
+    "variant": {
+      "sidestore": {
+        "title": "SideStore",
+        "description": "Refreshes and installs apps on the device by itself. Uses 2 App IDs."
+      },
+      "livecontainer": {
+        "title": "LiveContainer + SideStore",
+        "description": "Runs many apps inside one, past the 3-app limit. Uses 5 App IDs."
+      }
+    },
+    "channel": {
+      "stable": "Stable",
+      "nightly": "Nightly",
+      "stableRecommended": "Stable (recommended)",
+      "nightlyRecommended": "Nightly (recommended)"
+    },
+    "plan": {
+      "title": "This install",
+      "waiting": "Shown once the device and the Apple ID are ready.",
+      "checking": "Downloading {app} and checking with Apple… The download is kept, so the install reuses it.",
+      "unavailable": "Couldn't check with Apple. You can still install: each step checks again.",
+      "appIds": "App IDs",
+      "appIdsValue": "uses {uses} · {left, plural, one {# left this week} other {# left this week}}",
+      "nextSlot": "Next one frees on {date}",
+      "freeApps": "Free apps on the device",
+      "freeAppsValue": "{used} of {limit} used",
+      "freeAppsRoom": "Room for this one",
+      "freeAppsFull": "You'll pick one to remove",
+      "noLimit": "No limit (paid team)",
+      "certificate": "Certificate",
+      "certificateReused": "Reused",
+      "certificateNew": "A new one is made",
+      "certificatesOnTeam": "{count, plural, =0 {None on the team yet} one {# on the team} other {# on the team}}",
+      "team": "Team",
+      "certificateNewWhy": "Loadstar has no certificate of its own on this team yet. {count, plural, =0 {} one {The one already there belongs to another tool, which keeps its private key.} other {The # already there belong to other tools, which keep their private keys.}}"
+    },
+    "readiness": {
+      "noDevice": "Connect a device first.",
+      "checking": "Checking the device…",
+      "device": "Available once the device is ready.",
+      "noAccount": "Add an Apple ID first.",
+      "blocked": "Use another Apple ID first.",
+      "appIds": "Not enough App IDs left this week.",
+      "ready": "Everything is ready."
+    },
+    "run": {
+      "title": {
+        "running": "Installing {app}",
+        "completed": "{app} is installed",
+        "failed": "Couldn't install {app}",
+        "cancelled": "Install cancelled"
+      },
+      "subtitle": "{channel} · {device} · {appleId}",
+      "percent": "{fraction, number, percent}",
+      "progress": "Overall progress",
+      "steps": "Steps",
+      "cancel": "Cancel",
+      "cancelInstall": "Cancel install",
+      "runningHint": "You can use other sections while this runs.",
+      "waitingHint": "Waiting for your answer.",
+      "stepState": {
+        "waiting": "needs you",
+        "skipped": "skipped",
+        "failed": "failed"
+      },
+      "detail": {
+        "bytes": "{received} of {total}",
+        "received": "{received}",
+        "retrying": "Connection dropped. Trying again in {seconds, plural, one {# second} other {# seconds}} (attempt {attempt})"
+      },
+      "unsupportedPrompt": {
+        "title": "This step needs an answer",
+        "body": "Loadstar needs you to choose: {question}. This version can't ask it yet. Cancel the install; the next version asks it here.",
+        "question": {
+          "team": "which team signs the app",
+          "revokeCertificate": "which certificate to revoke, because the team has no room for another one",
+          "removeApp": "which app to remove, because the free-app limit on the device is reached",
+          "shareCertificate": "whether to share the signing certificate with this app",
+          "pairingApps": "which apps get the pairing file",
+          "other": "an answer to a question"
+        }
+      }
+    },
+    "summary": {
+      "title": "This install",
+      "app": "App",
+      "channel": "Channel",
+      "device": "Device",
+      "deviceValue": "{name} · iOS {ios}",
+      "account": "Apple ID",
+      "appIds": "App IDs",
+      "appIdsValue": "{count, plural, one {# left this week} other {# left this week}}"
+    },
+    "done": {
+      "title": "{app} is on {device}.",
+      "trust": "On the device: Settings › General › VPN & Device Management › trust {appleId}.",
+      "open": "Open SideStore: the pairing file and your certificate are already inside.",
+      "done": "Done"
+    },
+    "cancelled": {
+      "title": "Stopped at “{step}”.",
+      "body": "Nothing already done is repeated when you resume.",
+      "resume": "Resume",
+      "close": "Close"
+    },
+    "failed": {
+      "tryAgain": "Try again",
+      "continues": "Finished steps are kept: trying again continues from “{step}”.",
+      "copy": "Copy diagnostics",
+      "copied": "Copied",
+      "copyFailed": "Couldn't copy"
     }
   },
   "pairing": {

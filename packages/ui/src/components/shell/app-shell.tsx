@@ -4,10 +4,11 @@ import { Sidebar } from '@ui/components/shell/sidebar.tsx'
 import { SkipLink } from '@ui/components/shell/skip-link.tsx'
 import { TopBar } from '@ui/components/shell/top-bar.tsx'
 import { DeviceNotes } from '@ui/features/devices/device-notes.tsx'
+import { RunPromptHost } from '@ui/features/install/prompts/run-prompt-host.tsx'
 
 const MAIN_CONTENT_ID = 'main-content'
 
-/** Top bar across the window, sidebar on the start edge, the current page in `main`. */
+/** Top bar across the window, sidebar on the start edge, the current page in `main`, and the run's questions. */
 export const AppShell = ({ children }: { children: ReactNode }) => (
   <div className="flex h-dvh flex-col bg-background text-foreground">
     <SkipLink targetId={MAIN_CONTENT_ID} />
@@ -23,5 +24,6 @@ export const AppShell = ({ children }: { children: ReactNode }) => (
       </main>
     </div>
     <DeviceNotes />
+    <RunPromptHost />
   </div>
 )

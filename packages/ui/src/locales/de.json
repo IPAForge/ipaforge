@@ -28,7 +28,8 @@
     "accounts": "Accounts",
     "certificates": "Zertifikate",
     "logs": "Protokolle",
-    "settings": "Einstellungen"
+    "settings": "Einstellungen",
+    "installRunning": "Eine Installation läuft"
   },
   "placeholder": {
     "body": "Dieser Bereich ist noch in Arbeit."
@@ -62,6 +63,123 @@
       "title": "Apple hat {appleId} auf {device} gesperrt",
       "body": "Mit dieser Apple-ID signierte Apps öffnen sich auf diesem Gerät nicht. Verwende eine andere Apple-ID.",
       "use": "{appleId} verwenden"
+    },
+    "home": {
+      "what": "Was installiert wird",
+      "channel": "Kanal",
+      "install": "{app} installieren"
+    },
+    "variant": {
+      "sidestore": {
+        "title": "SideStore",
+        "description": "Aktualisiert und installiert Apps selbst auf dem Gerät. Nutzt 2 App-IDs."
+      },
+      "livecontainer": {
+        "title": "LiveContainer + SideStore",
+        "description": "Führt viele Apps in einer aus, über das 3-App-Limit hinaus. Nutzt 5 App-IDs."
+      }
+    },
+    "channel": {
+      "stable": "Stabil",
+      "nightly": "Nightly",
+      "stableRecommended": "Stabil (empfohlen)",
+      "nightlyRecommended": "Nightly (empfohlen)"
+    },
+    "plan": {
+      "title": "Diese Installation",
+      "waiting": "Wird angezeigt, sobald Gerät und Apple-ID bereit sind.",
+      "checking": "{app} wird geladen und bei Apple geprüft… Der Download bleibt erhalten, die Installation nutzt ihn wieder.",
+      "unavailable": "Konnte nicht bei Apple prüfen. Du kannst trotzdem installieren: Jeder Schritt prüft erneut.",
+      "appIds": "App-IDs",
+      "appIdsValue": "nutzt {uses} · {left, plural, one {# übrig diese Woche} other {# übrig diese Woche}}",
+      "nextSlot": "Die nächste wird am {date} frei",
+      "freeApps": "Kostenlose Apps auf dem Gerät",
+      "freeAppsValue": "{used} von {limit} belegt",
+      "freeAppsRoom": "Platz für diese",
+      "freeAppsFull": "Du wählst eine zum Entfernen",
+      "noLimit": "Kein Limit (bezahltes Team)",
+      "certificate": "Zertifikat",
+      "certificateReused": "Wiederverwendet",
+      "certificateNew": "Ein neues wird erstellt",
+      "certificatesOnTeam": "{count, plural, =0 {Noch keines im Team} one {# im Team} other {# im Team}}",
+      "team": "Team",
+      "certificateNewWhy": "Loadstar hat noch kein eigenes Zertifikat in diesem Team. {count, plural, =0 {} one {Das vorhandene gehört einem anderen Tool, das seinen privaten Schlüssel behält.} other {Die # vorhandenen gehören anderen Tools, die ihre privaten Schlüssel behalten.}}"
+    },
+    "readiness": {
+      "noDevice": "Verbinde zuerst ein Gerät.",
+      "checking": "Gerät wird geprüft…",
+      "device": "Verfügbar, sobald das Gerät bereit ist.",
+      "noAccount": "Füge zuerst eine Apple-ID hinzu.",
+      "blocked": "Verwende zuerst eine andere Apple-ID.",
+      "appIds": "Diese Woche sind nicht genug App-IDs übrig.",
+      "ready": "Alles ist bereit."
+    },
+    "run": {
+      "title": {
+        "running": "{app} wird installiert",
+        "completed": "{app} ist installiert",
+        "failed": "{app} konnte nicht installiert werden",
+        "cancelled": "Installation abgebrochen"
+      },
+      "subtitle": "{channel} · {device} · {appleId}",
+      "percent": "{fraction, number, percent}",
+      "progress": "Gesamtfortschritt",
+      "steps": "Schritte",
+      "cancel": "Abbrechen",
+      "cancelInstall": "Installation abbrechen",
+      "runningHint": "Du kannst andere Bereiche nutzen, während das läuft.",
+      "waitingHint": "Wartet auf deine Antwort.",
+      "stepState": {
+        "waiting": "braucht dich",
+        "skipped": "übersprungen",
+        "failed": "fehlgeschlagen"
+      },
+      "detail": {
+        "bytes": "{received} von {total}",
+        "received": "{received}",
+        "retrying": "Verbindung unterbrochen. Neuer Versuch in {seconds, plural, one {# Sekunde} other {# Sekunden}} (Versuch {attempt})"
+      },
+      "unsupportedPrompt": {
+        "title": "Dieser Schritt braucht eine Antwort",
+        "body": "Loadstar braucht deine Wahl: {question}. Diese Version kann das noch nicht fragen. Brich die Installation ab; die nächste Version fragt hier.",
+        "question": {
+          "team": "welches Team die App signiert",
+          "revokeCertificate": "welches Zertifikat widerrufen wird, weil das Team keinen Platz für ein weiteres hat",
+          "removeApp": "welche App entfernt wird, weil das Limit für kostenlose Apps auf dem Gerät erreicht ist",
+          "shareCertificate": "ob das Signaturzertifikat mit dieser App geteilt wird",
+          "pairingApps": "welche Apps die Pairing-Datei erhalten",
+          "other": "eine Antwort auf eine Frage"
+        }
+      }
+    },
+    "summary": {
+      "title": "Diese Installation",
+      "app": "App",
+      "channel": "Kanal",
+      "device": "Gerät",
+      "deviceValue": "{name} · iOS {ios}",
+      "account": "Apple-ID",
+      "appIds": "App-IDs",
+      "appIdsValue": "{count, plural, one {# übrig diese Woche} other {# übrig diese Woche}}"
+    },
+    "done": {
+      "title": "{app} ist auf {device}.",
+      "trust": "Auf dem Gerät: Einstellungen › Allgemein › VPN und Geräteverwaltung › {appleId} vertrauen.",
+      "open": "Öffne SideStore: Die Pairing-Datei und dein Zertifikat sind schon drin.",
+      "done": "Fertig"
+    },
+    "cancelled": {
+      "title": "Angehalten bei „{step}“.",
+      "body": "Bereits Erledigtes wird beim Fortsetzen nicht wiederholt.",
+      "resume": "Fortsetzen",
+      "close": "Schließen"
+    },
+    "failed": {
+      "tryAgain": "Erneut versuchen",
+      "continues": "Erledigte Schritte bleiben: Ein neuer Versuch macht bei „{step}“ weiter.",
+      "copy": "Diagnose kopieren",
+      "copied": "Kopiert",
+      "copyFailed": "Konnte nicht kopieren"
     }
   },
   "pairing": {

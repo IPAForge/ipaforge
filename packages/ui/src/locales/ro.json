@@ -28,7 +28,8 @@
     "accounts": "Conturi",
     "certificates": "Certificate",
     "logs": "Jurnale",
-    "settings": "Configurări"
+    "settings": "Configurări",
+    "installRunning": "O instalare este în curs"
   },
   "placeholder": {
     "body": "Această secțiune este în lucru."
@@ -62,6 +63,123 @@
       "title": "Apple a blocat {appleId} pe {device}",
       "body": "Aplicațiile semnate cu acest ID Apple nu se vor deschide pe acest dispozitiv. Folosește alt ID Apple.",
       "use": "Folosește {appleId}"
+    },
+    "home": {
+      "what": "Ce instalezi",
+      "channel": "Canal",
+      "install": "Instalează {app}"
+    },
+    "variant": {
+      "sidestore": {
+        "title": "SideStore",
+        "description": "Reîmprospătează și instalează singur aplicații pe dispozitiv. Folosește 2 ID-uri de aplicație."
+      },
+      "livecontainer": {
+        "title": "LiveContainer + SideStore",
+        "description": "Rulează multe aplicații într-una, peste limita de 3 aplicații. Folosește 5 ID-uri de aplicație."
+      }
+    },
+    "channel": {
+      "stable": "Stabil",
+      "nightly": "Nightly",
+      "stableRecommended": "Stabil (recomandat)",
+      "nightlyRecommended": "Nightly (recomandat)"
+    },
+    "plan": {
+      "title": "Această instalare",
+      "waiting": "Apare după ce dispozitivul și ID-ul Apple sunt pregătite.",
+      "checking": "Se descarcă {app} și se verifică la Apple… Descărcarea se păstrează, iar instalarea o refolosește.",
+      "unavailable": "Nu s-a putut verifica la Apple. Poți instala oricum: fiecare pas verifică din nou.",
+      "appIds": "ID-uri de aplicație",
+      "appIdsValue": "folosește {uses} · {left, plural, one {# rămas săptămâna asta} few {# rămase săptămâna asta} other {# rămase săptămâna asta}}",
+      "nextSlot": "Următorul se eliberează pe {date}",
+      "freeApps": "Aplicații gratuite pe dispozitiv",
+      "freeAppsValue": "{used} din {limit} folosite",
+      "freeAppsRoom": "Este loc pentru aceasta",
+      "freeAppsFull": "Vei alege una de șters",
+      "noLimit": "Fără limită (echipă plătită)",
+      "certificate": "Certificat",
+      "certificateReused": "Refolosit",
+      "certificateNew": "Se creează unul nou",
+      "certificatesOnTeam": "{count, plural, =0 {Niciunul în echipă încă} one {# în echipă} few {# în echipă} other {# în echipă}}",
+      "team": "Echipă",
+      "certificateNewWhy": "Loadstar nu are încă un certificat propriu în această echipă. {count, plural, =0 {} one {Cel existent aparține altui instrument, care își păstrează cheia privată.} few {Cele # existente aparțin altor instrumente, care își păstrează cheile private.} other {Cele # existente aparțin altor instrumente, care își păstrează cheile private.}}"
+    },
+    "readiness": {
+      "noDevice": "Conectează întâi un dispozitiv.",
+      "checking": "Se verifică dispozitivul…",
+      "device": "Disponibil când dispozitivul este pregătit.",
+      "noAccount": "Adaugă întâi un ID Apple.",
+      "blocked": "Folosește întâi alt ID Apple.",
+      "appIds": "Nu au rămas destule ID-uri de aplicație săptămâna asta.",
+      "ready": "Totul este pregătit."
+    },
+    "run": {
+      "title": {
+        "running": "Se instalează {app}",
+        "completed": "{app} este instalat",
+        "failed": "{app} nu a putut fi instalat",
+        "cancelled": "Instalare anulată"
+      },
+      "subtitle": "{channel} · {device} · {appleId}",
+      "percent": "{fraction, number, percent}",
+      "progress": "Progres total",
+      "steps": "Pași",
+      "cancel": "Anulează",
+      "cancelInstall": "Anulează instalarea",
+      "runningHint": "Poți folosi alte secțiuni cât timp rulează.",
+      "waitingHint": "Se așteaptă răspunsul tău.",
+      "stepState": {
+        "waiting": "are nevoie de tine",
+        "skipped": "omis",
+        "failed": "eșuat"
+      },
+      "detail": {
+        "bytes": "{received} din {total}",
+        "received": "{received}",
+        "retrying": "Conexiunea s-a întrerupt. Se reîncearcă în {seconds, plural, one {# secundă} few {# secunde} other {# de secunde}} (încercarea {attempt})"
+      },
+      "unsupportedPrompt": {
+        "title": "Acest pas are nevoie de un răspuns",
+        "body": "Loadstar are nevoie de alegerea ta: {question}. Această versiune nu o poate cere încă. Anulează instalarea; versiunea următoare o cere aici.",
+        "question": {
+          "team": "ce echipă semnează aplicația",
+          "revokeCertificate": "ce certificat să fie revocat, pentru că echipa nu mai are loc pentru altul",
+          "removeApp": "ce aplicație să fie ștearsă, pentru că s-a atins limita de aplicații gratuite pe dispozitiv",
+          "shareCertificate": "dacă certificatul de semnare se partajează cu această aplicație",
+          "pairingApps": "ce aplicații primesc fișierul de asociere",
+          "other": "un răspuns la o întrebare"
+        }
+      }
+    },
+    "summary": {
+      "title": "Această instalare",
+      "app": "Aplicație",
+      "channel": "Canal",
+      "device": "Dispozitiv",
+      "deviceValue": "{name} · iOS {ios}",
+      "account": "ID Apple",
+      "appIds": "ID-uri de aplicație",
+      "appIdsValue": "{count, plural, one {# rămas săptămâna asta} few {# rămase săptămâna asta} other {# rămase săptămâna asta}}"
+    },
+    "done": {
+      "title": "{app} este pe {device}.",
+      "trust": "Pe dispozitiv: Configurări › General › VPN și administrare dispozitiv › ai încredere în {appleId}.",
+      "open": "Deschide SideStore: fișierul de asociere și certificatul tău sunt deja înăuntru.",
+      "done": "Gata"
+    },
+    "cancelled": {
+      "title": "Oprit la „{step}”.",
+      "body": "Nimic din ce s-a făcut deja nu se repetă când reiei.",
+      "resume": "Reia",
+      "close": "Închide"
+    },
+    "failed": {
+      "tryAgain": "Încearcă din nou",
+      "continues": "Pașii terminați se păstrează: o nouă încercare continuă de la „{step}”.",
+      "copy": "Copiază diagnosticul",
+      "copied": "Copiat",
+      "copyFailed": "Nu s-a putut copia"
     }
   },
   "pairing": {

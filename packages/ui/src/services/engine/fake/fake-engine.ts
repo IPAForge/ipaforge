@@ -199,6 +199,14 @@ export const createFakeEngine = ({
     planInstall: async (input) =>
       ({
         team: teamOf(world, input),
+        appIds: {
+          reuse: [],
+          create: ['com.example.app', 'com.example.app.widget'],
+          available: 8,
+          enough: true,
+          nextSlotAt: new Date('2026-10-19T00:00:00Z')
+        },
+        freeSlots: { occupied: [{ bundleId: 'com.example.other' }], limit: 3 },
         certificate: { stored: true, reusable: true, onTeam: 1 },
         sharesCertificate: true
       }) as unknown as InstallPlan,
