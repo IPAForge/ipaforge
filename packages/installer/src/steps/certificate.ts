@@ -1,9 +1,9 @@
 import { ensureTeamCertificate } from '@installer/application/certificate.ts'
 import type { FlowRuntime } from '@installer/application/runtime.ts'
 import { StepLabel } from '@installer/domain/labels.ts'
-import type { InstallState } from '@installer/domain/state.ts'
 import { StepWeight } from '@installer/domain/step-weights.ts'
-import type { Step } from '@installer/pipeline/step.ts'
+import type { InstallState } from '@installer/domain/types.ts'
+import type { Step } from '@installer/pipeline/types.ts'
 import { required } from '@installer/steps/app-job.ts'
 
 /** Reuses or creates the team's certificate (revoke prompt at the limit); the key goes to the SecretStore. */

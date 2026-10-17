@@ -1,32 +1,26 @@
 // Makes room under the free-team app limit before an install: counts the apps holding a slot, asks which one to
 // remove when there is no room, then uninstalls it and removes its profiles.
 import { ask } from '@installer/application/ask.ts'
+import type {
+  FreeSlotRequest,
+  FreeSlots
+} from '@installer/application/types.ts'
 import {
-  type FreeProfileApp,
-  type FreeProfileRules,
   freeProfileBundleIds,
   needsFreeSlot,
   occupiedFreeSlots,
-  type ProfileFacts,
   profilesOf
 } from '@installer/domain/free-apps.ts'
 import { PromptKind } from '@installer/domain/prompts.ts'
-import type { StepContext } from '@installer/pipeline/step.ts'
+import type {
+  FreeProfileApp,
+  FreeProfileRules,
+  ProfileFacts
+} from '@installer/domain/types.ts'
+import type { StepContext } from '@installer/pipeline/types.ts'
 import type { DeviceHandle, DeviceProfile } from '@loadstar/device'
 import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
 import { parseProvisioningProfile } from '@loadstar/signer'
-
-export type FreeSlotRequest = {
-  readonly rules: FreeProfileRules
-  readonly limit: number
-  /** New main bundle ID of the app about to be installed. */
-  readonly installing: string
-}
-
-export type FreeSlots = {
-  readonly profiles: readonly ProfileFacts[]
-  readonly occupied: readonly FreeProfileApp[]
-}
 
 /** misagent's summary has no creation date; the profile itself does. Unreadable profiles just lack it. */
 const creationDate = (raw: Uint8Array): Date | undefined => {

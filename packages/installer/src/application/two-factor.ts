@@ -2,7 +2,7 @@
 // until Apple accepts one (a wrong code asks again, up to the configured number of attempts).
 import { ask } from '@installer/application/ask.ts'
 import { PromptKind } from '@installer/domain/prompts.ts'
-import type { StepContext } from '@installer/pipeline/step.ts'
+import type { StepContext } from '@installer/pipeline/types.ts'
 import type {
   AppleSession,
   TwoFactorChallenge,

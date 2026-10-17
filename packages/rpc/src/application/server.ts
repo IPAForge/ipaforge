@@ -3,11 +3,9 @@
 
 import type { z } from 'zod'
 
-import type { Engine } from '@loadstar/installer'
 import {
   ErrorCode,
   type LoadstarError,
-  type Logger,
   silentLogger,
   toLoadstarError
 } from '@loadstar/kernel'
@@ -16,29 +14,16 @@ import { createCommandStarter } from '@rpc/application/server/commands.ts'
 import { createQueryRunner } from '@rpc/application/server/queries.ts'
 import { createRunRegistry } from '@rpc/application/server/runs.ts'
 import { createSubscriptionRegistry } from '@rpc/application/server/subscriptions.ts'
+import type {
+  RequestHandlers,
+  RpcServer,
+  RpcServerOptions
+} from '@rpc/application/types.ts'
 import { invalidMessage } from '@rpc/domain/errors.ts'
-import type { ResolveIpa } from '@rpc/domain/ports/resolve-ipa.ts'
-import type { Transport } from '@rpc/domain/ports/transport.ts'
 import { PROTOCOL_VERSION, referencedId } from '@rpc/domain/protocol/common.ts'
-import type { MessageBody } from '@rpc/domain/protocol/messages.ts'
-import { type Request, requestSchema } from '@rpc/domain/protocol/requests.ts'
+import { requestSchema } from '@rpc/domain/protocol/requests.ts'
+import type { MessageBody, Request } from '@rpc/domain/protocol/types.ts'
 import { toWire } from '@rpc/domain/wire.ts'
-
-export type RpcServerOptions = {
-  readonly engine: Engine
-  readonly transport: Transport
-  readonly resolveIpa: ResolveIpa
-  readonly logger?: Logger
-}
-
-export type RpcServer = {
-  /** Cancels every run and closes the channel. */
-  close(): void
-}
-
-type RequestHandlers = {
-  readonly [R in Request as R['type']]: (request: R) => unknown
-}
 
 export const createRpcServer = ({
   engine,

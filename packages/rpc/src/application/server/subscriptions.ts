@@ -2,11 +2,11 @@
 // until the UI unsubscribes or the channel closes.
 import type { Engine } from '@loadstar/installer'
 import { subscriptionIdInUse } from '@rpc/domain/errors.ts'
-import type { MessageBody } from '@rpc/domain/protocol/messages.ts'
 import type {
+  MessageBody,
   SubscriptionTopic,
   WireDeviceWatchEvent
-} from '@rpc/domain/protocol/subscriptions.ts'
+} from '@rpc/domain/protocol/types.ts'
 import { toWire } from '@rpc/domain/wire.ts'
 
 export type SubscriptionRegistry = {

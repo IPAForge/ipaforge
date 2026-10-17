@@ -2,15 +2,9 @@
 import type { Engine } from '@loadstar/installer'
 import { compact } from '@loadstar/kernel'
 import { toPlanInstallInput } from '@rpc/application/server/inputs.ts'
+import type { QueryHandlers, RunQuery } from '@rpc/application/server/types.ts'
 import type { ResolveIpa } from '@rpc/domain/ports/resolve-ipa.ts'
-import type { QueryCall } from '@rpc/domain/protocol/requests.ts'
-
-type QueryHandlers = {
-  readonly [C in QueryCall as C['method']]: (
-    args: C['args'],
-    signal: AbortSignal
-  ) => Promise<unknown>
-}
+import type { QueryCall } from '@rpc/domain/protocol/types.ts'
 
 const queryHandlers = (
   engine: Engine,
@@ -30,11 +24,6 @@ const queryHandlers = (
   planInstall: async ([input], signal) =>
     engine.planInstall(await toPlanInstallInput(input, resolveIpa, signal))
 })
-
-export type RunQuery = (
-  call: QueryCall,
-  signal: AbortSignal
-) => Promise<unknown>
 
 export const createQueryRunner = (
   engine: Engine,

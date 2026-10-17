@@ -2,58 +2,11 @@
 // with `apple.session_expired`, an open team choice with `installer.team_required`.
 import { createFlowRuntime } from '@installer/application/runtime.ts'
 import { queryTeam } from '@installer/application/team.ts'
-import type { InstallerDeps } from '@installer/deps.ts'
-import {
-  type InstallPlan,
-  type PlanInstallInput,
-  planInstall
-} from '@installer/engine/plan.ts'
-import type {
-  AppId,
-  AppIdQuota,
-  DeveloperServices,
-  DevelopmentCertificate,
-  SavedAccount,
-  Team
-} from '@loadstar/apple'
-import type { CatalogApp, Channel } from '@loadstar/catalog'
-import type { DeviceCheck, UsbmuxDevice } from '@loadstar/device'
-
-export type TeamQuery = {
-  readonly accountId: string
-  /** Default: the team remembered for the account, or its only team. */
-  readonly teamId?: string
-}
-
-export type AppIdUsage = {
-  readonly team: Team
-  readonly appIds: readonly AppId[]
-  readonly quota: AppIdQuota
-}
-
-export type TeamCertificates = {
-  readonly team: Team
-  readonly certificates: readonly DevelopmentCertificate[]
-}
-
-export type EngineQueries = {
-  listDevices(): Promise<UsbmuxDevice[]>
-  /** Lock state, Developer Mode and iOS version of a paired device. */
-  deviceStatus(udid: string): Promise<DeviceCheck>
-  /**
-   * Pairs with the device when it doesn't trust this computer yet (the Trust prompt shows on the device and this
-   * waits for the tap), then reads its status like `deviceStatus`.
-   */
-  pairDevice(udid: string): Promise<DeviceCheck>
-  listAccounts(): Promise<SavedAccount[]>
-  listTeams(accountId: string): Promise<Team[]>
-  catalogApps(): Promise<readonly CatalogApp[]>
-  recommendedChannel(appId: string, iosVersion?: string): Promise<Channel>
-  appIdQuota(query: TeamQuery): Promise<AppIdUsage>
-  listCertificates(query: TeamQuery): Promise<TeamCertificates>
-  /** Read-only preview of installing one app (identity, App ID budget, free-app slots, certificate). */
-  planInstall(input: PlanInstallInput): Promise<InstallPlan>
-}
+import { planInstall } from '@installer/engine/plan.ts'
+import type { EngineQueries, TeamQuery } from '@installer/engine/types.ts'
+import type { InstallerDeps } from '@installer/types.ts'
+import type { DeveloperServices, Team } from '@loadstar/apple'
+import type { DeviceCheck } from '@loadstar/device'
 
 /** Runs `use` with the account's developer services and the queried team. */
 const withTeam = async <T>(

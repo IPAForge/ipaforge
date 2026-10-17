@@ -1,5 +1,3 @@
-// The Engine as the UI sees it across the channel: the same queries and run handles, with IPAs named instead of
-// opened, run states without their file handles, and checkpoints held by the server and resumed by reference.
 import type {
   DeviceWatchEvent,
   Diagnosis,
@@ -13,14 +11,16 @@ import type {
 } from '@loadstar/installer'
 import type { LoadstarError } from '@loadstar/kernel'
 import type {
+  RemoteCheckpoint,
   RemoteInstallAppsInput,
   RemoteInstallSideStoreInput,
   RemotePlacePairingInput,
   RemotePlanInstallInput,
   RemoteSignInInput
-} from '@rpc/domain/protocol/inputs.ts'
-import type { RemoteCheckpoint } from '@rpc/domain/protocol/messages.ts'
-import type { Wire } from '@rpc/domain/wire.ts'
+} from '@rpc/domain/protocol/types.ts'
+
+// The Engine as the UI sees it across the channel: the same queries and run handles, with IPAs named instead of
+// opened, run states without their file handles, and checkpoints held by the server and resumed by reference.
 
 export type RemoteResult<S> =
   | { readonly status: 'completed'; readonly state: S }
@@ -78,3 +78,31 @@ export type EngineClient = Omit<EngineQueries, 'planInstall'> & {
   /** Runs locally: errors arrive as LoadstarErrors with their code, data and cause chain intact. */
   classify(error: unknown): Diagnosis
 }
+
+// What a value looks like after crossing the channel. Structured clone keeps data (Maps, Dates, bytes) but refuses
+// functions, so they are dropped first: a FileSource in a run's state arrives as `{ name, size }`.
+
+export type Primitive =
+  | string
+  | number
+  | boolean
+  | bigint
+  | symbol
+  | null
+  | undefined
+
+export type AnyFunction = (...args: never[]) => unknown
+
+export type Wire<T> = T extends Primitive | Date | Uint8Array
+  ? T
+  : T extends AnyFunction
+    ? never
+    : T extends ReadonlyMap<infer K, infer V>
+      ? ReadonlyMap<K, Wire<V>>
+      : T extends readonly (infer U)[]
+        ? readonly Wire<U>[]
+        : {
+            readonly [K in keyof T as T[K] extends AnyFunction
+              ? never
+              : K]: Wire<T[K]>
+          }

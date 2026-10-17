@@ -2,9 +2,9 @@
 // password, else the password from the user. A second factor is completed through prompts.
 import { ask } from '@installer/application/ask.ts'
 import { completeTwoFactor } from '@installer/application/two-factor.ts'
-import type { InstallerDeps } from '@installer/deps.ts'
 import { PromptKind } from '@installer/domain/prompts.ts'
-import type { StepContext } from '@installer/pipeline/step.ts'
+import type { StepContext } from '@installer/pipeline/types.ts'
+import type { InstallerDeps } from '@installer/types.ts'
 import type { AppleSession, SavedAccount, SignInResult } from '@loadstar/apple'
 
 const finish = async (

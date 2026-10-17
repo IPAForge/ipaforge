@@ -1,9 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import {
-  createDeviceWatch,
-  type DeviceWatchEvent
-} from '@installer/application/device-watch.ts'
+import { createDeviceWatch } from '@installer/application/device-watch.ts'
+import type { DeviceWatchEvent } from '@installer/application/types.ts'
 import type { DeviceEvent, DeviceManager, UsbmuxDevice } from '@loadstar/device'
 import { ErrorCode, LoadstarError, silentLogger } from '@loadstar/kernel'
 

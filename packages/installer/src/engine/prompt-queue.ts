@@ -1,23 +1,8 @@
 // Prompts answered through the run handle: a question waits until `answer` or `decline`, or the run is cancelled.
-import type { PromptRequest } from '@installer/pipeline/step.ts'
+
+import type { Pending, PromptQueue } from '@installer/engine/types.ts'
+import type { PromptRequest } from '@installer/pipeline/types.ts'
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
-
-type Pending = {
-  readonly request: PromptRequest
-  readonly resolve: (answer: unknown) => void
-  readonly reject: (error: unknown) => void
-}
-
-export type PromptQueue = {
-  /** The prompt handler for the pipeline; `onAsked` announces each question. */
-  readonly ask: (
-    request: PromptRequest,
-    signal: AbortSignal
-  ) => Promise<unknown>
-  readonly pending: () => PromptRequest | undefined
-  readonly answer: (answer: unknown) => void
-  readonly decline: () => void
-}
 
 const noPrompt = (): LoadstarError =>
   new LoadstarError(ErrorCode.Unexpected, { message: 'no prompt is waiting' })

@@ -5,7 +5,7 @@ import type {
   AppJob,
   AppSource,
   InstallState
-} from '@installer/domain/state.ts'
+} from '@installer/domain/types.ts'
 import {
   accountSteps,
   installAppSteps,

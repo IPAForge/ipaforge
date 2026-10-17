@@ -1,36 +1,16 @@
 // The UI's handle on a run in the Engine: events replayed to late subscribers, the waiting prompt, and the result.
 // Answers, declines and cancels go to the server; the server's events and outcome come back through `deliver`.
 import type { PromptRequest, RunEvent } from '@loadstar/installer'
-import {
-  compact,
-  LoadstarError,
-  type Logger,
-  toLoadstarError
-} from '@loadstar/kernel'
+import { compact, LoadstarError, toLoadstarError } from '@loadstar/kernel'
+import type { ClientRun, ClientRunDeps } from '@rpc/application/client/types.ts'
 import { createEventLog } from '@rpc/application/event-log.ts'
-import type {
-  RemoteResult,
-  RemoteRunHandle
-} from '@rpc/domain/engine-client.ts'
 import { noPrompt } from '@rpc/domain/errors.ts'
 import type {
+  RequestBody,
   WireRunEvent,
   WireRunResult
-} from '@rpc/domain/protocol/messages.ts'
-import type { RequestBody } from '@rpc/domain/protocol/requests.ts'
-
-export type ClientRun<S> = {
-  readonly handle: RemoteRunHandle<S>
-  event(event: WireRunEvent): void
-  finish(result: WireRunResult): void
-  fail(error: LoadstarError): void
-}
-
-type ClientRunDeps = {
-  readonly runId: string
-  readonly request: (body: RequestBody) => Promise<unknown>
-  readonly logger: Logger
-}
+} from '@rpc/domain/protocol/types.ts'
+import type { RemoteResult } from '@rpc/domain/types.ts'
 
 const toRunEvent = (event: WireRunEvent): RunEvent => {
   if (event.type === 'step-failed')

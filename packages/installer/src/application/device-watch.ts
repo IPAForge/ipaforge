@@ -1,41 +1,15 @@
 // Connected devices as a live feed, from usbmuxd's `Listen` instead of polling. One connection serves every
 // listener. When it drops (the usbmuxd service restarted, the computer slept), it reconnects with backoff and sends
 // one full list again; only when usbmuxd refuses `Listen` outright does it fall back to reading the list slowly.
-import type { InstallerConfig } from '@installer/domain/config.ts'
-import type { DeviceEvent, DeviceManager, UsbmuxDevice } from '@loadstar/device'
-import {
-  ErrorCode,
-  LoadstarError,
-  type Logger,
-  toLoadstarError
-} from '@loadstar/kernel'
 
-export type DeviceWatchEvent =
-  /** Every connected device (one entry per device, its USB link preferred): first, after a reconnect, after a change. */
-  | { readonly type: 'devices'; readonly devices: readonly UsbmuxDevice[] }
-  | { readonly type: 'attached'; readonly device: UsbmuxDevice }
-  | {
-      readonly type: 'detached'
-      readonly deviceId: number
-      readonly udid?: string
-    }
-
-export type DeviceWatchListener = (event: DeviceWatchEvent) => void
-
-export type DeviceWatch = {
-  /** Starts watching with the first listener; a late listener gets the current list at once. Returns unsubscribe. */
-  subscribe(listener: DeviceWatchListener, signal?: AbortSignal): () => void
-}
-
-export type DeviceWatchDeps = {
-  readonly devices: DeviceManager
-  readonly config: Pick<
-    InstallerConfig,
-    'deviceReconnectBaseMs' | 'deviceReconnectMaxMs' | 'devicePollIntervalMs'
-  >
-  readonly logger: Logger
-  readonly sleep?: (ms: number, signal: AbortSignal) => Promise<void>
-}
+import type {
+  DeviceWatch,
+  DeviceWatchDeps,
+  DeviceWatchEvent,
+  DeviceWatchListener
+} from '@installer/application/types.ts'
+import type { DeviceEvent, UsbmuxDevice } from '@loadstar/device'
+import { ErrorCode, LoadstarError, toLoadstarError } from '@loadstar/kernel'
 
 const abortableSleep = (ms: number, signal: AbortSignal): Promise<void> =>
   new Promise((resolve, reject) => {

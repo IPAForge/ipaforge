@@ -2,9 +2,9 @@
 // wrong device family, no 64-bit slice), fails without using up App IDs. The device step runs first.
 import type { FlowRuntime } from '@installer/application/runtime.ts'
 import { StepLabel } from '@installer/domain/labels.ts'
-import type { InstallState } from '@installer/domain/state.ts'
 import { StepWeight } from '@installer/domain/step-weights.ts'
-import type { Step } from '@installer/pipeline/step.ts'
+import type { InstallState } from '@installer/domain/types.ts'
+import type { Step } from '@installer/pipeline/types.ts'
 import {
   appStepId,
   jobAt,

@@ -2,9 +2,9 @@
 // off, or a computer the device does not trust (`device.not_paired` from opening it).
 import type { FlowRuntime } from '@installer/application/runtime.ts'
 import { StepLabel } from '@installer/domain/labels.ts'
-import type { AccountState } from '@installer/domain/state.ts'
 import { StepWeight } from '@installer/domain/step-weights.ts'
-import type { Step } from '@installer/pipeline/step.ts'
+import type { AccountState } from '@installer/domain/types.ts'
+import type { Step } from '@installer/pipeline/types.ts'
 import {
   assertCanRunSideloadedApps,
   type DeviceCheck,

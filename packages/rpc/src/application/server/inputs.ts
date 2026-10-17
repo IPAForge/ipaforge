@@ -6,12 +6,12 @@ import type {
   PlanInstallInput
 } from '@loadstar/installer'
 import { compact } from '@loadstar/kernel'
+import type {
+  InstallAppsCall,
+  PlanInstallCall
+} from '@rpc/application/server/types.ts'
 import type { ResolveIpa } from '@rpc/domain/ports/resolve-ipa.ts'
-import type { IpaSource } from '@rpc/domain/protocol/inputs.ts'
-import type { CommandCall, QueryCall } from '@rpc/domain/protocol/requests.ts'
-
-type PlanInstallCall = Extract<QueryCall, { method: 'planInstall' }>['args'][0]
-type InstallAppsCall = Extract<CommandCall, { command: 'installApps' }>['input']
+import type { IpaSource } from '@rpc/domain/protocol/types.ts'
 
 export const toAppSource = async (
   source: IpaSource,

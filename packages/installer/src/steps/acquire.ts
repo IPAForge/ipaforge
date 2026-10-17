@@ -2,9 +2,9 @@
 // iOS version), then download it. The download is checksum-verified, which is what makes it trusted.
 import type { FlowRuntime } from '@installer/application/runtime.ts'
 import { StepLabel } from '@installer/domain/labels.ts'
-import type { AppSource, InstallState } from '@installer/domain/state.ts'
 import { StepWeight } from '@installer/domain/step-weights.ts'
-import type { Step } from '@installer/pipeline/step.ts'
+import type { AppSource, InstallState } from '@installer/domain/types.ts'
+import type { Step } from '@installer/pipeline/types.ts'
 import {
   appStepId,
   jobAt,

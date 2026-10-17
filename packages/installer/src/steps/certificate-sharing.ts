@@ -5,13 +5,9 @@ import { ask } from '@installer/application/ask.ts'
 import type { FlowRuntime } from '@installer/application/runtime.ts'
 import { StepLabel } from '@installer/domain/labels.ts'
 import { PromptKind } from '@installer/domain/prompts.ts'
-import type { InstallState } from '@installer/domain/state.ts'
 import { StepWeight } from '@installer/domain/step-weights.ts'
-import type { Step } from '@installer/pipeline/step.ts'
-import {
-  LIVECONTAINER_BUNDLE_ID,
-  SIDESTORE_BUNDLE_ID
-} from '@installer/sidestore/constants.ts'
+import type { InstallState } from '@installer/domain/types.ts'
+import type { Step } from '@installer/pipeline/types.ts'
 import { findSideStoreTarget } from '@installer/sidestore/target.ts'
 import {
   appStepId,
@@ -19,12 +15,7 @@ import {
   required,
   updateJob
 } from '@installer/steps/app-job.ts'
-
-/** Main apps that can hold a SideStore target; any other app is never read a second time. */
-const CANDIDATES: ReadonlySet<string> = new Set([
-  SIDESTORE_BUNDLE_ID,
-  LIVECONTAINER_BUNDLE_ID
-])
+import { CANDIDATES } from '@installer/steps/constants.ts'
 
 export const certificateSharingStep = (
   runtime: FlowRuntime,

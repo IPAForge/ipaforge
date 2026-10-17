@@ -1,23 +1,7 @@
 // What a value looks like after crossing the channel. Structured clone keeps data (Maps, Dates, bytes) but refuses
 // functions, so they are dropped first: a FileSource in a run's state arrives as `{ name, size }`.
 
-type Primitive = string | number | boolean | bigint | symbol | null | undefined
-
-type AnyFunction = (...args: never[]) => unknown
-
-export type Wire<T> = T extends Primitive | Date | Uint8Array
-  ? T
-  : T extends AnyFunction
-    ? never
-    : T extends ReadonlyMap<infer K, infer V>
-      ? ReadonlyMap<K, Wire<V>>
-      : T extends readonly (infer U)[]
-        ? readonly Wire<U>[]
-        : {
-            readonly [K in keyof T as T[K] extends AnyFunction
-              ? never
-              : K]: Wire<T[K]>
-          }
+import type { Wire } from '@rpc/domain/types.ts'
 
 const isPlainObject = (value: unknown): value is Record<string, unknown> => {
   if (typeof value !== 'object' || value === null) return false

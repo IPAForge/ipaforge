@@ -1,11 +1,9 @@
 // Runs one step, retrying an idempotent step on transient errors.
-import { isTransient } from '@installer/pipeline/errors.ts'
-import type { EmitEvent } from '@installer/pipeline/events.ts'
-import type { Step, StepContext } from '@installer/pipeline/step.ts'
-import { compact, LoadstarError, retry } from '@loadstar/kernel'
 
-/** Attempts for an idempotent step when the caller doesn't say. */
-const DEFAULT_ATTEMPTS = 3
+import { DEFAULT_ATTEMPTS } from '@installer/pipeline/constants.ts'
+import { isTransient } from '@installer/pipeline/errors.ts'
+import type { EmitEvent, Step, StepContext } from '@installer/pipeline/types.ts'
+import { compact, LoadstarError, retry } from '@loadstar/kernel'
 
 export type AttemptOptions = {
   readonly emit: EmitEvent

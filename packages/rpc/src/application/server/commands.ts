@@ -2,18 +2,13 @@
 import type { CommandOptions, Engine, RunHandle } from '@loadstar/installer'
 import { compact } from '@loadstar/kernel'
 import { toInstallAppsInput } from '@rpc/application/server/inputs.ts'
+import type {
+  CommandStarters,
+  Options,
+  StartCommand
+} from '@rpc/application/server/types.ts'
 import type { ResolveIpa } from '@rpc/domain/ports/resolve-ipa.ts'
-import type { CommandCall } from '@rpc/domain/protocol/requests.ts'
-
-type Options = CommandOptions<unknown>
-
-type CommandStarters = {
-  readonly [C in CommandCall as C['command']]: (
-    input: C['input'],
-    options: Options,
-    signal: AbortSignal
-  ) => Promise<RunHandle<unknown>>
-}
+import type { CommandCall } from '@rpc/domain/protocol/types.ts'
 
 /** The checkpoint store pairs every checkpoint with the command that made it, so its state has that command's type. */
 const typed = <S>(options: Options): CommandOptions<S> =>
@@ -35,12 +30,6 @@ const commandStarters = (
   signIn: async (input, options) =>
     engine.signIn(compact(input), typed(options))
 })
-
-export type StartCommand = (
-  call: CommandCall,
-  options: Options,
-  signal: AbortSignal
-) => Promise<RunHandle<unknown>>
 
 export const createCommandStarter = (
   engine: Engine,

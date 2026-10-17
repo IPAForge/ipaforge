@@ -1,5 +1,4 @@
 // What the flows ask the user, and the answer each question expects. The UI (or a terminal) answers by `kind`.
-import type { Team, TwoFactorMethod, TwoFactorMethods } from '@loadstar/apple'
 
 export const PromptKind = {
   /** The saved session expired and no password is stored. Answer: the password. */
@@ -21,55 +20,3 @@ export const PromptKind = {
 } as const
 
 export type PromptKind = (typeof PromptKind)[keyof typeof PromptKind]
-
-export type CertificateChoice = {
-  readonly serialNumber: string
-  readonly machineName: string
-  readonly expiresAt?: string
-}
-
-export type RemovableApp = {
-  readonly bundleId: string
-  readonly name?: string
-}
-
-export type PairingAppChoice = {
-  readonly bundleId: string
-  readonly appName: string
-}
-
-/** Each prompt's data and answer. */
-export type Prompts = {
-  readonly [PromptKind.Password]: { data: { appleId: string }; answer: string }
-  readonly [PromptKind.TwoFactorMethod]: {
-    data: { methods: TwoFactorMethods }
-    answer: TwoFactorMethod
-  }
-  readonly [PromptKind.TwoFactorCode]: {
-    data: { method: TwoFactorMethod; codeLength: number; retry: boolean }
-    answer: string
-  }
-  readonly [PromptKind.ChooseTeam]: {
-    data: { teams: readonly Team[] }
-    answer: string
-  }
-  readonly [PromptKind.RevokeCertificate]: {
-    data: { certificates: readonly CertificateChoice[] }
-    answer: string
-  }
-  readonly [PromptKind.ChooseAppToRemove]: {
-    data: { limit: number; apps: readonly RemovableApp[]; installing: string }
-    answer: string
-  }
-  readonly [PromptKind.ShareCertificate]: {
-    data: { appName: string; bundleId: string }
-    answer: boolean
-  }
-  readonly [PromptKind.ChoosePairingApps]: {
-    data: { apps: readonly PairingAppChoice[] }
-    answer: readonly string[]
-  }
-}
-
-export type PromptData<K extends PromptKind> = Prompts[K]['data']
-export type PromptAnswer<K extends PromptKind> = Prompts[K]['answer']

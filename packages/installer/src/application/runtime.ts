@@ -1,6 +1,6 @@
 // What one run of a flow holds besides its state: the open device and the Apple session. Both are opened on first
 // use, so a run resumed from a checkpoint reopens them without repeating the steps that produced them.
-import type { InstallerDeps } from '@installer/deps.ts'
+import type { InstallerDeps } from '@installer/types.ts'
 import type { AppleSession, DeveloperServices } from '@loadstar/apple'
 import type { DeviceHandle } from '@loadstar/device'
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'

@@ -1,9 +1,7 @@
 // In-memory stand-ins for the contexts the installer orchestrates, at the level of their public interfaces.
-import type {
-  IpaSigner,
-  SignRequest
-} from '@installer/domain/ports/ipa-signer.ts'
+
 import type { ScratchStore } from '@installer/domain/ports/scratch-store.ts'
+import type { IpaSigner, SignRequest } from '@installer/domain/ports/types.ts'
 import type {
   AppIdPlan,
   AppleAccounts,

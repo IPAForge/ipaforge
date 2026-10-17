@@ -1,5 +1,6 @@
 // Turns whatever a flow threw into a catalogued code and its recovery actions. Presentation is the UI's job.
 import { RECOVERY_CATALOGUE } from '@installer/diagnostics/catalogue.ts'
+import { MAX_DEPTH, WRAPPERS } from '@installer/diagnostics/constants.ts'
 import type { RecoveryAction } from '@installer/diagnostics/recovery.ts'
 import {
   ErrorCode,
@@ -12,14 +13,6 @@ export type Diagnosis = {
   readonly code: ErrorCode
   readonly recovery: readonly RecoveryAction[]
 }
-
-/** Errors that only say "this step failed": the cause, when it carries a code, is the real diagnosis. */
-const WRAPPERS: ReadonlySet<ErrorCode> = new Set([
-  ErrorCode.StepFailed,
-  ErrorCode.Unexpected
-])
-
-const MAX_DEPTH = 8
 
 /** A catalogued code on a foreign error (`{ code: "net.offline" }`), if any. */
 const foreignCode = (error: unknown): ErrorCode | undefined => {
