@@ -1,7 +1,7 @@
 // ESLint does two things Biome can't: blank lines between statements, and
 // SonarSource's rules (eslint-plugin-sonarjs). Biome does everything else
 // (formatting, imports, lint). Plugins come from tooling/eslint.
-import { parser, sonarjs, stylistic } from '@loadstar/tooling-eslint'
+import { parser, sonarjs, structure, stylistic } from '@loadstar/tooling-eslint'
 
 export default [
   {
@@ -30,6 +30,18 @@ export default [
         // a blank line before `return` when a declaration precedes it
         { blankLine: 'always', prev: ['const', 'let'], next: 'return' }
       ]
+    }
+  },
+  {
+    // File structure (docs/design/conventions.md): no switch, one component per
+    // .tsx file, at most one type per file outside types.ts.
+    files: ['**/*.{ts,tsx}'],
+    ignores: ['**/*.test.{ts,tsx}', '**/__tests__/**', '**/*.d.ts'],
+    plugins: { '@loadstar/structure': structure },
+    rules: {
+      '@loadstar/structure/no-switch': 'error',
+      '@loadstar/structure/component-file': 'error',
+      '@loadstar/structure/one-type-per-file': 'error'
     }
   },
   {

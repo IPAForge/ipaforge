@@ -6,3 +6,5 @@
 export { default as stylistic } from '@stylistic/eslint-plugin'
 export { default as sonarjs } from 'eslint-plugin-sonarjs'
 export { parser } from 'typescript-eslint'
+
+export { structure } from './structure.js'
