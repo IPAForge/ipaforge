@@ -10,36 +10,7 @@ import {
   TrailerField,
   VALID_INT_SIZES
 } from '@kernel/plist/binary-format.ts'
-
-type Trailer = {
-  readonly offsetIntSize: number
-  readonly objectRefSize: number
-  readonly numObjects: number
-  readonly topObject: number
-  readonly offsetTableOffset: number
-}
-
-/** Bounds-checked access to the objects of a `bplist00` file. */
-export type BinaryPlistReader = {
-  readonly bytes: Uint8Array
-  readonly view: DataView
-  readonly topObject: number
-  /** File offset of object `ref`, via the offset table. */
-  readonly objectOffset: (ref: number) => number
-  /** Length of an object: low nibble, or a following int object when the nibble is 0xF. */
-  readonly readLength: (
-    offset: number,
-    nibble: number
-  ) => { length: number; dataStart: number }
-  /** Reference number `index` of a container whose references start at `dataStart`. */
-  readonly readRef: (dataStart: number, index: number) => number
-  /** A container's references must lie inside the object area, which also bounds `length`. */
-  readonly assertRefsInBounds: (
-    dataStart: number,
-    count: number,
-    offset: number
-  ) => void
-}
+import type { BinaryPlistReader, Trailer } from '@kernel/plist/types.ts'
 
 const readTrailer = (bytes: Uint8Array, view: DataView): Trailer => {
   const start = bytes.byteLength - BPLIST_TRAILER_SIZE

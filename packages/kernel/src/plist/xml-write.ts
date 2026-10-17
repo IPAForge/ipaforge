@@ -1,11 +1,7 @@
 import { toBase64 } from '@kernel/bytes/base64.ts'
 import { utf8Encode } from '@kernel/bytes/bytes.ts'
-import {
-  isPlistDict,
-  type PlistDict,
-  PlistReal,
-  type PlistValue
-} from '@kernel/plist/model.ts'
+import { isPlistDict, PlistReal } from '@kernel/plist/model.ts'
+import type { PlistDict, PlistValue } from '@kernel/plist/types.ts'
 import { escapeText, formatDate, formatReal } from '@kernel/plist/xml-format.ts'
 
 const HEADER =

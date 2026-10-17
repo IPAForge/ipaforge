@@ -2,15 +2,17 @@ import { compact, type Logger } from '@loadstar/kernel'
 import { hashAlgorithmsFor } from '@signer/application/policy.ts'
 import { signBinary } from '@signer/application/sign-binary.ts'
 import type {
-  EntitlementsInput,
-  SigningMode
-} from '@signer/application/signing.ts'
-import type { SigningDeps } from '@signer/deps.ts'
+  BundleRun,
+  BundleSigningConfig,
+  SignBundleOptions,
+  SignBundleProgress,
+  SignedBundle,
+  SignedBundleSummary,
+  WorkItem
+} from '@signer/application/types.ts'
 import {
-  type CodeBundle,
   discoverBundles,
   discoverLooseBinaries,
-  type LooseBinary,
   resourceEntriesOf
 } from '@signer/domain/bundle/discover.ts'
 import {
@@ -22,93 +24,24 @@ import {
   SC_INFO_DIR
 } from '@signer/domain/bundle/layout.ts'
 import {
-  type BundleTree,
   baseName,
   joinPath,
   readFile,
   removePath,
   writeFile
 } from '@signer/domain/bundle/tree.ts'
+import type {
+  BundleTree,
+  CodeBundle,
+  LooseBinary
+} from '@signer/domain/bundle/types.ts'
 import {
   buildCodeResources,
   type CodeResourcesResult
 } from '@signer/domain/code-resources/index.ts'
-import {
-  type Overrides,
-  resolveLimits,
-  resolvePolicy,
-  type SignerLimits,
-  type SigningPolicy
-} from '@signer/domain/config.ts'
+import { resolveLimits, resolvePolicy } from '@signer/domain/config.ts'
 import { parseMachO } from '@signer/domain/macho/parse.ts'
-
-/** Per-bundle signing configuration, decided by the caller (e.g. from provisioning profiles). */
-export type BundleSigningConfig = {
-  readonly signing: SigningMode
-  /** Entitlements for the bundle's executable (apps and appexes; ignored for frameworks). */
-  readonly entitlements?: EntitlementsInput
-  /** Raw provisioning profile written as `embedded.mobileprovision` before sealing. */
-  readonly provisioningProfile?: Uint8Array
-}
-
-export type SignBundleProgress =
-  | {
-      readonly type: 'binary'
-      readonly path: string
-      readonly index: number
-      readonly total: number
-    }
-  | {
-      readonly type: 'bundle'
-      readonly path: string
-      readonly identifier: string
-      readonly index: number
-      readonly total: number
-    }
-
-export type SignBundleOptions = {
-  readonly configFor: (bundle: CodeBundle) => BundleSigningConfig
-  /** Identifier for loose Mach-O files (default: codesign's canonical file name, e.g. `libFoo`). */
-  readonly looseIdentifier?: (path: string) => string
-  readonly onProgress?: (event: SignBundleProgress) => void
-  /** Page size, hash algorithms and CMS reservation (defaults follow Apple codesign 26). */
-  readonly policy?: Partial<SigningPolicy>
-  /** Parser limits (defaults: DEFAULT_SIGNER_LIMITS). */
-  readonly limits?: Overrides<SignerLimits>
-  readonly signal?: AbortSignal
-}
-
-type SignedBundle = {
-  readonly path: string
-  readonly identifier: string
-  readonly cdhash: Uint8Array
-}
-
-export type SignedBundleSummary = {
-  readonly bundles: readonly SignedBundle[]
-  readonly looseBinaries: number
-}
-
-type WorkItem =
-  | ({ readonly type: 'binary' } & LooseBinary)
-  | { readonly type: 'bundle'; readonly bundle: CodeBundle }
-
-/** Everything one signBundle call shares across its work items. */
-type BundleRun = {
-  readonly tree: BundleTree
-  readonly configs: ReadonlyMap<string, BundleSigningConfig>
-  readonly looseIdentifier: (path: string) => string
-  readonly limits: SignerLimits
-  readonly policy: SigningPolicy
-  /** Options passed through to every signBinary call. */
-  readonly shared: {
-    readonly policy: SigningPolicy
-    readonly limits: SignerLimits
-    readonly signal?: AbortSignal
-  }
-  readonly deps: SigningDeps
-  readonly logger: Logger
-}
+import type { SigningDeps } from '@signer/types.ts'
 
 /**
  * codesign's canonical identifier for a file: drop the directory and the last extension unless

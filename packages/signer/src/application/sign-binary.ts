@@ -1,30 +1,14 @@
 import { hashAlgorithmsFor } from '@signer/application/policy.ts'
-import { type SignedSlice, signSlice } from '@signer/application/sign-slice.ts'
-import type { SignatureContent } from '@signer/application/signing.ts'
-import type { SigningDeps } from '@signer/deps.ts'
-import {
-  type Overrides,
-  resolveLimits,
-  resolvePolicy,
-  type SignerLimits,
-  type SigningPolicy
-} from '@signer/domain/config.ts'
+import { signSlice } from '@signer/application/sign-slice.ts'
+import type {
+  SignBinaryOptions,
+  SignedBinary,
+  SignedSlice
+} from '@signer/application/types.ts'
+import { resolveLimits, resolvePolicy } from '@signer/domain/config.ts'
 import { assembleFat } from '@signer/domain/macho/fat.ts'
 import { parseMachO } from '@signer/domain/macho/parse.ts'
-
-export type SignBinaryOptions = SignatureContent & {
-  /** Page size, hash algorithms and CMS reservation (defaults follow Apple codesign 26). */
-  readonly policy?: Partial<SigningPolicy>
-  /** Parser limits for hostile-input protection (defaults: DEFAULT_SIGNER_LIMITS). */
-  readonly limits?: Overrides<SignerLimits>
-  readonly signal?: AbortSignal
-}
-
-export type SignedBinary = {
-  readonly bytes: Uint8Array
-  /** cdhash (20 bytes) of each slice's primary CodeDirectory. */
-  readonly cdhashes: readonly Uint8Array[]
-}
+import type { SigningDeps } from '@signer/types.ts'
 
 /** Signs a thin or universal Mach-O binary; output matches Apple codesign for the same inputs. */
 export const signBinary = async (

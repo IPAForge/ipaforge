@@ -1,17 +1,13 @@
-import type { Hasher } from '@signer/domain/ports/hasher.ts'
+import type { Hasher } from '@signer/domain/ports/types.ts'
 import { createNobleHasher } from '@signer/infrastructure/hashing/noble.ts'
 import {
   createWebCryptoHasher,
   type WebCryptoHasherOptions
 } from '@signer/infrastructure/hashing/webcrypto.ts'
 
-export {
-  DIGEST_SIZE,
-  type HashAlgorithm,
-  type Hasher,
-  pageAt,
-  pageCount
-} from '@signer/domain/ports/hasher.ts'
+export { DIGEST_SIZE } from '@signer/domain/ports/constants.ts'
+export { pageAt, pageCount } from '@signer/domain/ports/hasher.ts'
+export type { HashAlgorithm, Hasher } from '@signer/domain/ports/types.ts'
 export { createNobleHasher } from '@signer/infrastructure/hashing/noble.ts'
 export {
   createWebCryptoHasher,

@@ -1,13 +1,11 @@
 // Retry with exponential backoff and jitter. Callers decide which failures are worth retrying.
 
+import { TRANSIENT_HTTP_STATUSES } from '@kernel/retry/constants.ts'
+
 const DEFAULT_ATTEMPTS = 4
 const DEFAULT_BASE_MS = 500
 const DEFAULT_MAX_MS = 10_000
 const DEFAULT_JITTER = 0.5
-
-const TRANSIENT_HTTP_STATUSES: ReadonlySet<number> = new Set([
-  429, 502, 503, 504
-])
 
 export type RetryOptions = {
   /** Total attempts, including the first (default 4). */

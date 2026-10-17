@@ -3,13 +3,13 @@ import { describe, expect, it } from 'vitest'
 import { ErrorCode, LoadstarError } from '@loadstar/kernel'
 import {
   assertCompatible,
-  checkCompatibility,
-  type TargetDevice
+  checkCompatibility
 } from '@signer/domain/sideload/compatibility.ts'
 import type {
   InspectedApp,
-  IpaInspection
-} from '@signer/domain/sideload/inspection.ts'
+  IpaInspection,
+  TargetDevice
+} from '@signer/domain/sideload/types.ts'
 
 const IPHONE: TargetDevice = { iosVersion: '18.0', deviceClass: 'iPhone' }
 

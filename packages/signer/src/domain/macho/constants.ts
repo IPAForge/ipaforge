@@ -77,3 +77,18 @@ export const Platform = {
   TvOS: 3,
   WatchOS: 4
 } as const
+
+/** The platform each legacy LC_VERSION_MIN_* command implies. */
+export const MIN_VERSION_PLATFORM: Readonly<Record<number, number>> = {
+  [LC_VERSION_MIN_MACOSX]: Platform.MacOS,
+  [LC_VERSION_MIN_IPHONEOS]: Platform.IOS,
+  [LC_VERSION_MIN_TVOS]: Platform.TvOS,
+  [LC_VERSION_MIN_WATCHOS]: Platform.WatchOS
+}
+
+/** Section types with no file data. */
+export const ZEROFILL_TYPES = new Set([
+  S_ZEROFILL,
+  S_GB_ZEROFILL,
+  S_THREAD_LOCAL_ZEROFILL
+])

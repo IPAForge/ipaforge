@@ -22,7 +22,7 @@ import {
 } from '@signer/__tests__/app-tree.ts'
 import { readFixture } from '@signer/__tests__/fixtures.ts'
 import { inspectIpa } from '@signer/application/inspect-ipa.ts'
-import type { BundleTree } from '@signer/domain/bundle/tree.ts'
+import type { BundleTree } from '@signer/domain/bundle/types.ts'
 import {
   CPU_SUBTYPE_ARM_V7,
   CPU_TYPE_ARM

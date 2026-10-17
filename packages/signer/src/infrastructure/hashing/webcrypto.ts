@@ -1,14 +1,6 @@
-import {
-  type HashAlgorithm,
-  type Hasher,
-  pageAt,
-  pageCount
-} from '@signer/domain/ports/hasher.ts'
-
-const WEBCRYPTO_NAME: Readonly<Record<HashAlgorithm, string>> = {
-  sha1: 'SHA-1',
-  sha256: 'SHA-256'
-}
+import { pageAt, pageCount } from '@signer/domain/ports/hasher.ts'
+import type { HashAlgorithm, Hasher } from '@signer/domain/ports/types.ts'
+import { WEBCRYPTO_NAME } from '@signer/infrastructure/hashing/constants.ts'
 
 export type WebCryptoHasherOptions = {
   /** Pages hashed concurrently per batch; bounds the number of in-flight promises (default 256). */

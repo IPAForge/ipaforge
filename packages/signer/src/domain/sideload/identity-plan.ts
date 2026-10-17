@@ -1,28 +1,13 @@
 // The identities a sideloaded app takes under a team (signer-spec §8.1–8.2), planned from an inspection.
 import { compact } from '@loadstar/kernel'
-import {
-  type IdentityRewrite,
-  rewriteNestedId
-} from '@signer/domain/bundle/info-plist.ts'
+import { rewriteNestedId } from '@signer/domain/bundle/info-plist.ts'
+import type { IdentityRewrite } from '@signer/domain/bundle/types.ts'
 import { APP_GROUP_PREFIX } from '@signer/domain/entitlements/names.ts'
-import type { IpaInspection } from '@signer/domain/sideload/inspection.ts'
-
-/** One App ID to register: the new bundle identifier and a display name. */
-export type BundleIdentity = {
-  readonly identifier: string
-  readonly name: string
-}
-
-export type SideloadIdentityPlan = {
-  /** `<original main ID>.<TEAMID>`. */
-  readonly newMainBundleId: string
-  /** Main app first, then every provisioned nested bundle. */
-  readonly bundles: readonly BundleIdentity[]
-  /** `group.<newMainBundleId>`, when the app declares any app group. */
-  readonly appGroup?: string
-  /** Every declared app group → `appGroup` (for `ReconcileOptions.appGroups`). */
-  readonly appGroups: ReadonlyMap<string, string>
-}
+import type {
+  BundleIdentity,
+  IpaInspection,
+  SideloadIdentityPlan
+} from '@signer/domain/sideload/types.ts'
 
 const declaredAppGroups = (inspection: IpaInspection): string[] => [
   ...new Set([...inspection.appGroups, ...inspection.altAppGroups])

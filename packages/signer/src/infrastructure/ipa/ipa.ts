@@ -1,5 +1,5 @@
 // The unpacked .ipa and the archive defaults shared by reading and writing.
-import type { BundleTree } from '@signer/domain/bundle/tree.ts'
+import type { BundleTree } from '@signer/domain/bundle/types.ts'
 
 export type Ipa = {
   /** e.g. `SideStore.app` */

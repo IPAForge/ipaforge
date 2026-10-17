@@ -7,34 +7,26 @@ import {
   toLoadstarError
 } from '@loadstar/kernel'
 import { embeddedEntitlements } from '@signer/application/embedded-entitlements.ts'
-import { resolveDeps, type SignerDeps } from '@signer/deps.ts'
-import {
-  type CodeBundle,
-  discoverBundles
-} from '@signer/domain/bundle/discover.ts'
+import { resolveDeps } from '@signer/deps.ts'
+import { discoverBundles } from '@signer/domain/bundle/discover.ts'
 import { assertNestedId } from '@signer/domain/bundle/info-plist.ts'
 import { IPA_PAYLOAD_DIR } from '@signer/domain/bundle/layout.ts'
-import {
-  type BundleTree,
-  joinPath,
-  readFile
-} from '@signer/domain/bundle/tree.ts'
-import {
-  type Overrides,
-  resolveLimits,
-  type SignerLimits
-} from '@signer/domain/config.ts'
+import { joinPath, readFile } from '@signer/domain/bundle/tree.ts'
+import type { BundleTree, CodeBundle } from '@signer/domain/bundle/types.ts'
+import { resolveLimits } from '@signer/domain/config.ts'
 import { architecturesOf } from '@signer/domain/macho/architecture.ts'
 import { isEncryptedSlice } from '@signer/domain/macho/encryption.ts'
 import { isMachO, parseMachO } from '@signer/domain/macho/parse.ts'
 import {
   declaredGroups,
-  type IpaInspection,
   inspectedApp,
   inspectedBundle,
   isNestedProvisioned
 } from '@signer/domain/sideload/inspection.ts'
+import type { IpaInspection } from '@signer/domain/sideload/types.ts'
+import type { Overrides, SignerLimits } from '@signer/domain/types.ts'
 import { readIpa } from '@signer/infrastructure/ipa/index.ts'
+import type { SignerDeps } from '@signer/types.ts'
 
 export type InspectIpaOptions = {
   readonly signal?: AbortSignal

@@ -1,12 +1,8 @@
 export {
   buildCodeDirectory,
-  type CodeDirectoryInfo,
-  type CodeDirectoryInput,
   cdHash,
   codeDirectoryVersion,
-  type ExecSegment,
-  parseCodeDirectory,
-  type SpecialSlotData
+  parseCodeDirectory
 } from '@signer/domain/blobs/code-directory.ts'
 export * from '@signer/domain/blobs/constants.ts'
 export {
@@ -27,3 +23,9 @@ export {
   parseSuperBlob,
   wrapBlob
 } from '@signer/domain/blobs/super-blob.ts'
+export type {
+  CodeDirectoryInfo,
+  CodeDirectoryInput,
+  ExecSegment,
+  SpecialSlotData
+} from '@signer/domain/blobs/types.ts'

@@ -1,8 +1,5 @@
 import { ByteReader, compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
-import {
-  DEFAULT_SIGNER_LIMITS,
-  type MachOLimits
-} from '@signer/domain/config.ts'
+import { DEFAULT_SIGNER_LIMITS } from '@signer/domain/config.ts'
 import {
   FAT_ARCH_SIZE,
   FAT_HEADER_SIZE,
@@ -23,43 +20,31 @@ import {
   MH_HEADER_SIZE_64,
   MH_MAGIC,
   MH_MAGIC_64,
+  MIN_VERSION_PLATFORM,
   Platform,
-  S_GB_ZEROFILL,
-  S_THREAD_LOCAL_ZEROFILL,
-  S_ZEROFILL,
   SECTION_64_SIZE,
   SECTION_SIZE,
   SECTION_TYPE_MASK,
   SEGMENT_COMMAND_64_SIZE,
-  SEGMENT_COMMAND_SIZE
+  SEGMENT_COMMAND_SIZE,
+  ZEROFILL_TYPES
 } from '@signer/domain/macho/constants.ts'
 import type {
-  BuildVersion,
-  CodeSignatureCommand,
   FatArch,
+  LoadCommandReader,
+  LoadCommandScan,
+  MachHeader,
   MachOFile,
   Segment,
   Slice
 } from '@signer/domain/macho/types.ts'
+import type { MachOLimits } from '@signer/domain/types.ts'
 
 const invalid = (
   message: string,
   data?: Record<string, unknown>
 ): LoadstarError =>
   new LoadstarError(ErrorCode.InvalidMachO, compact({ message, data }))
-
-const MIN_VERSION_PLATFORM: Readonly<Record<number, number>> = {
-  [LC_VERSION_MIN_MACOSX]: Platform.MacOS,
-  [LC_VERSION_MIN_IPHONEOS]: Platform.IOS,
-  [LC_VERSION_MIN_TVOS]: Platform.TvOS,
-  [LC_VERSION_MIN_WATCHOS]: Platform.WatchOS
-}
-
-const ZEROFILL_TYPES = new Set([
-  S_ZEROFILL,
-  S_GB_ZEROFILL,
-  S_THREAD_LOCAL_ZEROFILL
-])
 
 /** True when `bytes` starts with a thin or fat Mach-O magic (used to discover nested code). */
 export const isMachO = (bytes: Uint8Array): boolean => {
@@ -133,16 +118,6 @@ const parseFatHeader = (bytes: Uint8Array, maxArches: number): FatArch[] => {
 }
 
 // ---- thin slice (little-endian) --------------------------------------------------------------
-
-type MachHeader = {
-  readonly is64: boolean
-  readonly headerSize: number
-  readonly cputype: number
-  readonly cpusubtype: number
-  readonly filetype: number
-  readonly ncmds: number
-  readonly sizeofcmds: number
-}
 
 const readMachHeader = (bytes: Uint8Array, fileOffset: number): MachHeader => {
   const header = new ByteReader(bytes)
@@ -246,77 +221,81 @@ const readSegment = (
   }
 }
 
-/** What the signer needs from the load commands, filled in as they are read. */
-type LoadCommandScan = {
-  readonly segments: Segment[]
-  codeSignature: CodeSignatureCommand | undefined
-  buildVersion: BuildVersion | undefined
-  uuid: Uint8Array | undefined
-  cryptid: number
-  firstSectionOffset: number
+const readSegmentCommand: LoadCommandReader = (scan, bytes, load) => {
+  const segment = readSegment(
+    bytes,
+    load.offset,
+    load.cmdsize,
+    load.cmd === LC_SEGMENT_64
+  )
+  scan.segments.push(segment.segment)
+  scan.firstSectionOffset = Math.min(
+    scan.firstSectionOffset,
+    segment.firstSectionOffset
+  )
+}
+
+const readCodeSignature: LoadCommandReader = (scan, bytes, load, command) => {
+  const signature = {
+    commandOffset: load.offset,
+    dataoff: command.u32le(),
+    datasize: command.u32le()
+  }
+  if (signature.dataoff + signature.datasize > bytes.byteLength) {
+    throw invalid('code signature lies outside the file', {
+      ...signature,
+      size: bytes.byteLength
+    })
+  }
+  scan.codeSignature = signature
+}
+
+const readBuildVersion: LoadCommandReader = (scan, _bytes, _load, command) => {
+  scan.buildVersion = { platform: command.u32le(), minOS: command.u32le() }
+}
+
+const readVersionMin: LoadCommandReader = (scan, _bytes, load, command) => {
+  // LC_BUILD_VERSION wins when both exist (it is the modern form).
+  scan.buildVersion ??= {
+    platform: MIN_VERSION_PLATFORM[load.cmd] ?? Platform.Unknown,
+    minOS: command.u32le()
+  }
+}
+
+const readUuid: LoadCommandReader = (scan, _bytes, _load, command) => {
+  scan.uuid = command.bytes(16).slice()
+}
+
+const readEncryptionInfo: LoadCommandReader = (
+  scan,
+  _bytes,
+  _load,
+  command
+) => {
+  command.skip(8) // cryptoff, cryptsize
+  scan.cryptid = command.u32le()
+}
+
+/** The load commands the signer reads; any other command is skipped. */
+const LOAD_COMMAND_READERS: Readonly<
+  Partial<Record<number, LoadCommandReader>>
+> = {
+  [LC_SEGMENT_64]: readSegmentCommand,
+  [LC_SEGMENT]: readSegmentCommand,
+  [LC_CODE_SIGNATURE]: readCodeSignature,
+  [LC_BUILD_VERSION]: readBuildVersion,
+  [LC_VERSION_MIN_MACOSX]: readVersionMin,
+  [LC_VERSION_MIN_IPHONEOS]: readVersionMin,
+  [LC_VERSION_MIN_TVOS]: readVersionMin,
+  [LC_VERSION_MIN_WATCHOS]: readVersionMin,
+  [LC_UUID]: readUuid,
+  [LC_ENCRYPTION_INFO]: readEncryptionInfo,
+  [LC_ENCRYPTION_INFO_64]: readEncryptionInfo
 }
 
 /** Records one load command; `command` is positioned just after its `cmd`/`cmdsize` fields. */
-const readLoadCommand = (
-  scan: LoadCommandScan,
-  bytes: Uint8Array,
-  load: {
-    readonly offset: number
-    readonly cmd: number
-    readonly cmdsize: number
-  },
-  command: ByteReader
-): void => {
-  const { offset, cmd, cmdsize } = load
-  switch (cmd) {
-    case LC_SEGMENT_64:
-    case LC_SEGMENT: {
-      const segment = readSegment(bytes, offset, cmdsize, cmd === LC_SEGMENT_64)
-      scan.segments.push(segment.segment)
-      scan.firstSectionOffset = Math.min(
-        scan.firstSectionOffset,
-        segment.firstSectionOffset
-      )
-      return
-    }
-    case LC_CODE_SIGNATURE: {
-      const signature = {
-        commandOffset: offset,
-        dataoff: command.u32le(),
-        datasize: command.u32le()
-      }
-      if (signature.dataoff + signature.datasize > bytes.byteLength) {
-        throw invalid('code signature lies outside the file', {
-          ...signature,
-          size: bytes.byteLength
-        })
-      }
-      scan.codeSignature = signature
-      return
-    }
-    case LC_BUILD_VERSION:
-      scan.buildVersion = { platform: command.u32le(), minOS: command.u32le() }
-      return
-    case LC_VERSION_MIN_MACOSX:
-    case LC_VERSION_MIN_IPHONEOS:
-    case LC_VERSION_MIN_TVOS:
-    case LC_VERSION_MIN_WATCHOS:
-      // LC_BUILD_VERSION wins when both exist (it is the modern form).
-      scan.buildVersion ??= {
-        platform: MIN_VERSION_PLATFORM[cmd] ?? Platform.Unknown,
-        minOS: command.u32le()
-      }
-      return
-    case LC_UUID:
-      scan.uuid = command.bytes(16).slice()
-      return
-    case LC_ENCRYPTION_INFO:
-    case LC_ENCRYPTION_INFO_64:
-      command.skip(8) // cryptoff, cryptsize
-      scan.cryptid = command.u32le()
-      return
-  }
-}
+const readLoadCommand: LoadCommandReader = (scan, bytes, load, command) =>
+  LOAD_COMMAND_READERS[load.cmd]?.(scan, bytes, load, command)
 
 const scanLoadCommands = (
   bytes: Uint8Array,

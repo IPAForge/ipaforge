@@ -1,12 +1,8 @@
 import { sha1 } from '@noble/hashes/legacy.js'
 import { sha256 } from '@noble/hashes/sha2.js'
 
-import {
-  type HashAlgorithm,
-  type Hasher,
-  pageAt,
-  pageCount
-} from '@signer/domain/ports/hasher.ts'
+import { pageAt, pageCount } from '@signer/domain/ports/hasher.ts'
+import type { HashAlgorithm, Hasher } from '@signer/domain/ports/types.ts'
 
 const HASH: Readonly<Record<HashAlgorithm, (data: Uint8Array) => Uint8Array>> =
   { sha1, sha256 }

@@ -24,7 +24,7 @@ import { signBinary } from '@signer/application/sign-binary.ts'
 import type {
   EntitlementsInput,
   SigningMode
-} from '@signer/application/signing.ts'
+} from '@signer/application/types.ts'
 import { parseMachO } from '@signer/domain/macho/parse.ts'
 import { createHasher } from '@signer/infrastructure/hashing/index.ts'
 

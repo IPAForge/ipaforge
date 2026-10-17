@@ -9,42 +9,26 @@ import {
   serializeXmlPlist
 } from '@loadstar/kernel'
 import { CS_CDHASH_LEN } from '@signer/domain/blobs/constants.ts'
-import type { HashAlgorithm, Hasher } from '@signer/domain/ports/hasher.ts'
+import type { Hasher } from '@signer/domain/ports/types.ts'
 import {
   parseCertificate,
   toArrayBuffer
 } from '@signer/infrastructure/cms/certificate.ts'
 import {
+  DIGEST_OID,
   OID_APPLE_CDHASHES,
   OID_APPLE_CDHASHES2,
   OID_CONTENT_TYPE,
   OID_DATA,
   OID_MESSAGE_DIGEST,
-  OID_SHA1,
-  OID_SHA256,
   OID_SHA256_WITH_RSA,
   OID_SIGNED_DATA,
   OID_SIGNING_TIME
 } from '@signer/infrastructure/cms/oids.ts'
-
-const DIGEST_OID: Readonly<Record<HashAlgorithm, string>> = {
-  sha1: OID_SHA1,
-  sha256: OID_SHA256
-}
-
-export type SigningIdentity = {
-  /** Leaf certificate (DER). */
-  readonly certificate: Uint8Array
-  /** Intermediate(s) + root to embed, issuer-first after the leaf. */
-  readonly chain: readonly Uint8Array[]
-  /** RSASSA-PKCS1-v1_5/SHA-256 or ECDSA/SHA-256 signing key. */
-  readonly privateKey: CryptoKey
-}
-
-export type SignedCodeDirectory = {
-  readonly bytes: Uint8Array
-  readonly algorithm: HashAlgorithm
-}
+import type {
+  SignedCodeDirectory,
+  SigningIdentity
+} from '@signer/infrastructure/cms/types.ts'
 
 /** UTCTime for 1950–2049, GeneralizedTime otherwise (RFC 5652 §11.3). */
 const signingTimeValue = (

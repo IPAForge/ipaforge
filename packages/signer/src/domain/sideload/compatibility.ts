@@ -7,45 +7,11 @@ import {
   RUNNABLE_ARCHITECTURES
 } from '@signer/domain/sideload/compatibility-constants.ts'
 import type {
-  InspectedApp,
-  IpaInspection
-} from '@signer/domain/sideload/inspection.ts'
-
-/** The device facts the check needs (lockdownd's `ProductVersion` and `DeviceClass`). */
-export type TargetDevice = {
-  readonly iosVersion: string
-  /** `iPhone`, `iPad`, `iPod`; any other class is not checked. */
-  readonly deviceClass?: string
-}
-
-/** Why the app cannot run on the device: what the app needs and what the device has. */
-export type CompatibilityProblem =
-  | {
-      readonly code: typeof ErrorCode.UnsupportedIos
-      readonly data: {
-        readonly minimumOSVersion: string
-        readonly iosVersion: string
-      }
-    }
-  | {
-      readonly code: typeof ErrorCode.UnsupportedDevice
-      readonly data: {
-        readonly deviceFamilies: readonly number[]
-        readonly deviceClass: string
-      }
-    }
-  | {
-      readonly code: typeof ErrorCode.NoArm64Build
-      readonly data: {
-        readonly architectures: readonly string[]
-        readonly supported: readonly string[]
-      }
-    }
-
-type Rule = (
-  app: InspectedApp,
-  device: TargetDevice
-) => CompatibilityProblem | undefined
+  CompatibilityProblem,
+  IpaInspection,
+  Rule,
+  TargetDevice
+} from '@signer/domain/sideload/types.ts'
 
 const iosRule: Rule = (app, device) => {
   const minimum = app.minimumOSVersion

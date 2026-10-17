@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { ErrorCode } from '@loadstar/kernel'
 import { planSideloadIdentity } from '@signer/domain/sideload/identity-plan.ts'
-import type { IpaInspection } from '@signer/domain/sideload/inspection.ts'
+import type { IpaInspection } from '@signer/domain/sideload/types.ts'
 
 const TEAM = 'ABCDE12345'
 const MAIN = 'com.example.app'

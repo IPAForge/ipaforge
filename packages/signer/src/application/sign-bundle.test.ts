@@ -26,14 +26,14 @@ import {
 import { createTestIdentity } from '@signer/__tests__/identity.ts'
 import {
   canonicalIdentifier,
-  type SignBundleProgress,
   signBundle
 } from '@signer/application/sign-bundle.ts'
 import type {
   EntitlementsInput,
+  SignBundleProgress,
   SigningMode
-} from '@signer/application/signing.ts'
-import type { BundleTree } from '@signer/domain/bundle/tree.ts'
+} from '@signer/application/types.ts'
+import type { BundleTree } from '@signer/domain/bundle/types.ts'
 import { createHasher } from '@signer/infrastructure/hashing/index.ts'
 
 const hasher = createHasher()

@@ -13,8 +13,9 @@ import {
   OID_SHROUDED_KEY_BAG,
   PKCS12_ITERATIONS
 } from '@signer/infrastructure/pkcs12/constants.ts'
-import { type Asn1, forge } from '@signer/infrastructure/pkcs12/forge.ts'
+import { forge } from '@signer/infrastructure/pkcs12/forge.ts'
 import { exportPkcs12 } from '@signer/infrastructure/pkcs12/index.ts'
+import type { Asn1 } from '@signer/infrastructure/pkcs12/types.ts'
 
 const PASSWORD = '00000000-1111-2222-3333-444444444444'
 

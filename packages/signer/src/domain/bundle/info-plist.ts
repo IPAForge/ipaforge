@@ -16,14 +16,11 @@ import {
   WK_APP_BUNDLE_IDENTIFIER,
   WK_COMPANION_APP_BUNDLE_IDENTIFIER
 } from '@signer/domain/bundle/info-keys.ts'
+import type {
+  IdentityRewrite,
+  ValueUpdate
+} from '@signer/domain/bundle/types.ts'
 import { assignKey, stringsOf } from '@signer/domain/dict.ts'
-
-export type IdentityRewrite = {
-  readonly oldMainId: string
-  readonly newMainId: string
-  /** Old app group → new app group (e.g. `group.com.x` → `group.com.x.TEAMID`). */
-  readonly appGroups: ReadonlyMap<string, string>
-}
 
 /** The main app's ID itself, or an ID nested under it (`<main>.suffix`). */
 const isUnderId = (value: string, mainId: string): boolean =>
@@ -65,8 +62,6 @@ const mapStrings = (
     ]
   return value
 }
-
-type ValueUpdate = (value: PlistValue | undefined) => PlistValue | undefined
 
 const setIn = (
   dict: PlistDict,

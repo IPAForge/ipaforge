@@ -1,3 +1,27 @@
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD'
+
+export type HttpRequest = {
+  readonly method: HttpMethod
+  readonly url: string
+  readonly headers?: Readonly<Record<string, string>>
+  readonly body?: Uint8Array | string
+  readonly signal?: AbortSignal
+}
+
+export type HttpResponse = {
+  readonly status: number
+  readonly headers: Readonly<Record<string, string>>
+  /** The body as a stream; use the `readBody` helper to buffer it when small. */
+  readonly body: ReadableStream<Uint8Array>
+}
+
+/**
+ * Outbound HTTP, straight to the internet (Apple, GitHub, anisette servers). Implementations reject with `LoadstarError("net.offline")` when there is no network.
+ */
+export type HttpClient = {
+  request(request: HttpRequest): Promise<HttpResponse>
+}
+
 export type LogLevel = 'debug' | 'info' | 'warn' | 'error'
 
 export type LogFields = Readonly<Record<string, unknown>>

@@ -1,5 +1,7 @@
 // Code-signing blob constants (names match xnu osfmk/kern/cs_blobs.h). All blobs are big-endian.
 
+import type { HashAlgorithm } from '@signer/domain/ports/types.ts'
+
 export const CSMAGIC_REQUIREMENT = 0xfade0c00
 export const CSMAGIC_REQUIREMENTS = 0xfade0c01
 export const CSMAGIC_CODEDIRECTORY = 0xfade0c02
@@ -45,3 +47,17 @@ export const CS_SUPPORTSSCATTER = 0x20100
 export const CS_SUPPORTSTEAMID = 0x20200
 export const CS_SUPPORTSCODELIMIT64 = 0x20300
 export const CS_SUPPORTSEXECSEG = 0x20400
+
+/** CodeDirectory `hashType` of each hash algorithm. */
+export const HASH_TYPE: Readonly<Record<HashAlgorithm, number>> = {
+  sha1: CS_HASHTYPE_SHA1,
+  sha256: CS_HASHTYPE_SHA256
+}
+
+/** CodeDirectory fixed-header size for each version. */
+export const FIXED_HEADER_SIZE: Readonly<Record<number, number>> = {
+  [CS_SUPPORTSSCATTER]: 48,
+  [CS_SUPPORTSTEAMID]: 52,
+  [CS_SUPPORTSCODELIMIT64]: 64,
+  [CS_SUPPORTSEXECSEG]: 88
+}

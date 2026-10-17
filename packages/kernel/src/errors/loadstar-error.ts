@@ -1,23 +1,11 @@
 import { ErrorCode, isErrorCode } from '@kernel/errors/codes.ts'
+import { ABORT_ERROR_NAMES } from '@kernel/errors/constants.ts'
+import type {
+  ErrorData,
+  LoadstarErrorOptions,
+  SerializedError
+} from '@kernel/errors/types.ts'
 import { compact } from '@kernel/objects/compact.ts'
-
-export type ErrorData = Readonly<Record<string, unknown>>
-
-/** Plain-object form of an error, safe to send over RPC (structured clone / JSON). */
-export type SerializedError = {
-  readonly name: string
-  readonly message: string
-  readonly code?: ErrorCode
-  readonly data?: ErrorData
-  readonly cause?: SerializedError
-}
-
-export type LoadstarErrorOptions = {
-  readonly cause?: unknown
-  readonly data?: ErrorData
-  /** Developer-facing detail. User-facing text comes from the code via i18n, never from here. */
-  readonly message?: string
-}
 
 /** The only error type that crosses package boundaries. */
 export class LoadstarError extends Error {
@@ -67,11 +55,6 @@ export const toLoadstarError = (
     message: describe(error)
   })
 }
-
-const ABORT_ERROR_NAMES: ReadonlySet<unknown> = new Set([
-  'AbortError',
-  'TimeoutError'
-])
 
 export const isAbortError = (error: unknown): boolean =>
   typeof error === 'object' &&

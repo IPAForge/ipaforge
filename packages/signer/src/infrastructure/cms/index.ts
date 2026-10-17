@@ -8,15 +8,15 @@ export {
   parseCertificate
 } from '@signer/infrastructure/cms/certificate.ts'
 export {
-  type ChainResolution,
   caIssuerUrls,
   expiringAppleCertificates,
-  type IssuerFetcher,
-  type ResolveChainOptions,
   resolveChain
 } from '@signer/infrastructure/cms/chain.ts'
-export {
-  type SignedCodeDirectory,
-  type SigningIdentity,
-  signCodeDirectories
-} from '@signer/infrastructure/cms/sign.ts'
+export { signCodeDirectories } from '@signer/infrastructure/cms/sign.ts'
+export type {
+  ChainResolution,
+  IssuerFetcher,
+  ResolveChainOptions,
+  SignedCodeDirectory,
+  SigningIdentity
+} from '@signer/infrastructure/cms/types.ts'

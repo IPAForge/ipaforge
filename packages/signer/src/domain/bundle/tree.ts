@@ -1,14 +1,5 @@
 import { DEFAULT_FILE_MODE } from '@signer/domain/bundle/layout.ts'
-
-/**
- * In-memory view of an app bundle: files and symlinks keyed by '/'-separated paths relative to
- * the `.app` root. Directories are implicit. Unix modes are kept (executable bits matter on iOS).
- */
-export type TreeEntry =
-  | { readonly kind: 'file'; readonly data: Uint8Array; readonly mode: number }
-  | { readonly kind: 'symlink'; readonly target: string; readonly mode: number }
-
-export type BundleTree = Map<string, TreeEntry>
+import type { BundleTree } from '@signer/domain/bundle/types.ts'
 
 export const joinPath = (...parts: readonly string[]): string =>
   parts.filter((part) => part.length > 0).join('/')

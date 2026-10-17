@@ -1,19 +1,13 @@
 // Text forms of the XML plist scalars `<integer>`, `<real>` and `<date>`.
 
+import {
+  NEGATIVE_INFINITY_TEXTS,
+  POSITIVE_INFINITY_TEXTS
+} from '@kernel/plist/constants.ts'
 import { failXmlPlist as fail } from '@kernel/plist/xml-error.ts'
 
 const INTEGER_PATTERN = /^[+-]?(?:\d+|0x[0-9a-f]+)$/i
 const NAN_TEXT = 'nan'
-const POSITIVE_INFINITY_TEXTS: ReadonlySet<string> = new Set([
-  'inf',
-  '+inf',
-  'infinity',
-  '+infinity'
-])
-const NEGATIVE_INFINITY_TEXTS: ReadonlySet<string> = new Set([
-  '-inf',
-  '-infinity'
-])
 
 const isSafe = (value: bigint): boolean =>
   value >= BigInt(Number.MIN_SAFE_INTEGER) &&
