@@ -35,8 +35,6 @@ export default [
   {
     ...sonarjs.configs.recommended,
     files: ['**/*.{ts,tsx}'],
-    // TODO(sonar-ui): packages/ui is cleaned up separately; drop this ignore then.
-    ignores: ['packages/ui/**'],
     rules: {
       ...sonarjs.configs.recommended.rules,
       // S4782: with exactOptionalPropertyTypes, `?` and `| undefined` mean different things.
