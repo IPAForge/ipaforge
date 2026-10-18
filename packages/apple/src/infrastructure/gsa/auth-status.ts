@@ -3,7 +3,7 @@
 import { z } from 'zod'
 
 import type { AuthStatus } from '@apple/domain/types.ts'
-import { compact, utf8Decode } from '@loadstar/kernel'
+import { compact, utf8Decode } from '@ipaforge/kernel'
 
 const authStatusSchema = z.looseObject({
   trustedPhoneNumbers: z

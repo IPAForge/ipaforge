@@ -10,8 +10,8 @@ import {
 import { createHarness, scripted } from '@installer/__tests__/harness.ts'
 import { PromptKind } from '@installer/domain/prompts.ts'
 import type { AppSource } from '@installer/domain/types.ts'
-import { ErrorCode } from '@loadstar/kernel'
-import { DeviceFamily } from '@loadstar/signer'
+import { ErrorCode } from '@ipaforge/kernel'
+import { DeviceFamily } from '@ipaforge/signer'
 
 const file = (name: string): AppSource => ({
   kind: 'file',

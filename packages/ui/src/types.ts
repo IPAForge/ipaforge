@@ -1,7 +1,7 @@
 import type { RouterHistory } from '@tanstack/react-router'
 import type { LucideIcon } from 'lucide-react'
 
-import type { Logger } from '@loadstar/kernel'
+import type { Logger } from '@ipaforge/kernel'
 import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 import type { createAppRouter } from '@ui/router.tsx'
 import type { sectionGroups, sections } from '@ui/sections.ts'

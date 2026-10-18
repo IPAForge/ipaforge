@@ -1,5 +1,5 @@
 // What a device's status query says about it, as the device picker, the Devices page and the Install page show it.
-import { toLoadstarError } from '@loadstar/kernel'
+import { toIPAForgeError } from '@ipaforge/kernel'
 import { UNTRUSTED } from '@ui/features/devices/constants.ts'
 import type { DeviceState, StatusQuery } from '@ui/features/devices/types.ts'
 
@@ -11,7 +11,7 @@ export const deviceState = (
   if (!isConnected) return 'notConnected'
   if (isFetching || (!data && !error)) return 'checking'
   if (error)
-    return UNTRUSTED.has(toLoadstarError(error).code)
+    return UNTRUSTED.has(toIPAForgeError(error).code)
       ? 'notTrusted'
       : 'unavailable'
   if (!data) return 'checking'

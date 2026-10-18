@@ -5,7 +5,7 @@ import type {
   MainMessagePort,
   MessageListener
 } from '@desktop/main/rpc/types.ts'
-import type { Transport } from '@loadstar/rpc'
+import type { Transport } from '@ipaforge/rpc'
 
 export const messagePortTransport = (port: MainMessagePort): Transport => {
   port.start()

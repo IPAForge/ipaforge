@@ -11,7 +11,7 @@ import {
   serializeXmlPlist,
   silentLogger,
   toHex
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import { createTestIdentity } from '@signer/__tests__/identity.ts'
 import { fixtureIpaSource } from '@signer/__tests__/ipa.ts'
 import { makeProfile } from '@signer/__tests__/profile.ts'
@@ -179,7 +179,7 @@ describe('signIpa with additions', () => {
   it('sees original identifiers when the app is prepared for sideloading', async () => {
     const team = 'ABCDE12345'
     const identity = await createTestIdentity({ teamId: team })
-    const newMain = `com.loadstar.fixture.app.${team}`
+    const newMain = `com.ipaforge.fixture.app.${team}`
     const profile = (bundleId: string) =>
       makeProfile(identity, {
         teamId: team,
@@ -208,7 +208,7 @@ describe('signIpa with additions', () => {
       },
       deps
     )
-    expect(seen).toContain('com.loadstar.fixture.app')
-    expect(seen).toContain('com.loadstar.fixture.app.ext')
+    expect(seen).toContain('com.ipaforge.fixture.app')
+    expect(seen).toContain('com.ipaforge.fixture.app.ext')
   })
 })

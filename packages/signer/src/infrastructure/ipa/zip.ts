@@ -6,8 +6,8 @@ import {
   compact,
   ErrorCode,
   type FileSource,
-  LoadstarError
-} from '@loadstar/kernel'
+  IPAForgeError
+} from '@ipaforge/kernel'
 
 let configured = false
 export const ensureConfigured = (): void => {
@@ -40,8 +40,8 @@ export class FileSourceReader extends Reader<FileSource> {
   }
 }
 
-const zipSlip = (name: string): LoadstarError =>
-  new LoadstarError(ErrorCode.ZipSlip, {
+const zipSlip = (name: string): IPAForgeError =>
+  new IPAForgeError(ErrorCode.ZipSlip, {
     message: 'archive entry escapes its directory',
     data: { entry: name }
   })
@@ -62,20 +62,20 @@ export const assertSafePath = (name: string): void => {
 export const invalidArchive = (
   message: string,
   data?: Record<string, unknown>
-): LoadstarError =>
-  new LoadstarError(ErrorCode.InvalidBundle, compact({ message, data }))
+): IPAForgeError =>
+  new IPAForgeError(ErrorCode.InvalidBundle, compact({ message, data }))
 
 /** zip.js throws plain Errors; map them onto our codes (it also refuses unsafe names itself). */
-export const zipError = (error: unknown, entry?: string): LoadstarError => {
-  if (error instanceof LoadstarError) return error
+export const zipError = (error: unknown, entry?: string): IPAForgeError => {
+  if (error instanceof IPAForgeError) return error
   const message = error instanceof Error ? error.message : String(error)
   if (/unsafe filename/i.test(message)) {
-    return new LoadstarError(ErrorCode.ZipSlip, {
+    return new IPAForgeError(ErrorCode.ZipSlip, {
       message: 'archive entry escapes its directory',
       cause: error
     })
   }
-  return new LoadstarError(ErrorCode.InvalidBundle, {
+  return new IPAForgeError(ErrorCode.InvalidBundle, {
     ...compact({
       message: `unreadable archive: ${message}`,
       data: entry ? { entry } : undefined

@@ -1,6 +1,6 @@
 import type { TFunction } from 'i18next'
 
-import { toLoadstarError } from '@loadstar/kernel'
+import { toIPAForgeError } from '@ipaforge/kernel'
 import type { DevicesQuery } from '@ui/features/devices/types.ts'
 import { errorTitleKey } from '@ui/i18n/required-keys.ts'
 
@@ -11,7 +11,7 @@ export const engineStatusText = (
 ): string => {
   if (devices.error)
     return t('devices.engine.failed', {
-      reason: t(errorTitleKey(toLoadstarError(devices.error).code))
+      reason: t(errorTitleKey(toIPAForgeError(devices.error).code))
     })
   if (devices.data)
     return t('devices.engine.connected', { count: devices.data.length })

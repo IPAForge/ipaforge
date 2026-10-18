@@ -1,4 +1,4 @@
-import { silentLogger, systemClock } from '@loadstar/kernel'
+import { silentLogger, systemClock } from '@ipaforge/kernel'
 import type { SignerDeps } from '@signer/types.ts'
 
 export const defaultSignerDeps: SignerDeps = {

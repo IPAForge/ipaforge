@@ -9,9 +9,9 @@ import {
   concatBytes,
   ErrorCode,
   equalBytes,
-  LoadstarError,
+  IPAForgeError,
   utf8Decode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 export type AfcPacket = {
   readonly operation: number
@@ -43,7 +43,7 @@ export const readAfcPacket = async (
 ): Promise<AfcPacket> => {
   const fixed = await link.reader.readExact(AFC_HEADER_SIZE)
   if (!equalBytes(fixed.subarray(0, AFC_MAGIC.byteLength), AFC_MAGIC)) {
-    throw new LoadstarError(ErrorCode.AfcError, { message: 'bad AFC magic' })
+    throw new IPAForgeError(ErrorCode.AfcError, { message: 'bad AFC magic' })
   }
   const view = new DataView(fixed.buffer, fixed.byteOffset, fixed.byteLength)
   const entireLength = view.getBigUint64(8, true)
@@ -55,7 +55,7 @@ export const readAfcPacket = async (
     entireLength < thisLength ||
     entireLength > BigInt(maxBytes)
   ) {
-    throw new LoadstarError(ErrorCode.AfcError, {
+    throw new IPAForgeError(ErrorCode.AfcError, {
       message: `invalid AFC lengths (entire ${entireLength}, this ${thisLength})`
     })
   }

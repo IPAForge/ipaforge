@@ -16,10 +16,10 @@ import { GsaCode } from '@apple/domain/constants.ts'
 import { normalizeAppleId } from '@apple/domain/session.ts'
 import type { AppleSession, SecondFactorRequest } from '@apple/domain/types.ts'
 import type { AppleDeps } from '@apple/types.ts'
-import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 const isAnisetteNotProvisioned = (error: unknown): boolean =>
-  error instanceof LoadstarError &&
+  error instanceof IPAForgeError &&
   error.data?.gsaCode === GsaCode.AnisetteNotProvisioned
 
 export const createSignInService = (
@@ -63,7 +63,7 @@ export const createSignInService = (
       () =>
         signIn(input).then((retry) => {
           if (retry.kind === 'signed_in') return retry.session
-          throw new LoadstarError(ErrorCode.TwoFactorRequired, {
+          throw new IPAForgeError(ErrorCode.TwoFactorRequired, {
             message: 'Apple still asks for a second factor'
           })
         }),

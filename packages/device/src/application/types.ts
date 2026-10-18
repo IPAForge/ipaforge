@@ -3,7 +3,7 @@ import type { PairRecord } from '@device/domain/pairing/types.ts'
 import type { DeviceInfo, UsbmuxDevice } from '@device/domain/types.ts'
 import type { Link } from '@device/infrastructure/framing/link.ts'
 import type { ContainerMode } from '@device/infrastructure/house-arrest/client.ts'
-import type { PlistValue } from '@loadstar/kernel'
+import type { PlistValue } from '@ipaforge/kernel'
 
 export type AppFileTarget = {
   readonly bundleId: string
@@ -67,7 +67,7 @@ export type PairOptions = {
   readonly signal?: AbortSignal
 }
 
-/** Where a pair record comes from: the OS's usbmuxd, or Loadstar's own secret store. */
+/** Where a pair record comes from: the OS's usbmuxd, or IPAForge's own secret store. */
 export type PairRecordStore = 'usbmuxd' | 'secret_store'
 
 /** A pair record and where it was found. */

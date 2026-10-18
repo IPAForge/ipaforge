@@ -5,7 +5,7 @@ import { readFile } from 'node:fs/promises'
 import { writePrivateFile } from '@desktop/main/adapters/secrets/private-file.ts'
 import { createRecordSecretStore } from '@desktop/main/adapters/secrets/record-secret-store.ts'
 import type { SecretRecord } from '@desktop/main/adapters/secrets/types.ts'
-import type { SecretStore } from '@loadstar/kernel'
+import type { SecretStore } from '@ipaforge/kernel'
 
 export const createFileSecretStore = (path: string): SecretStore => {
   const read = async (): Promise<SecretRecord> => {

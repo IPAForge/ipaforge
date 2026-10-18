@@ -1,4 +1,4 @@
-import type { Logger } from '@loadstar/kernel'
+import type { Logger } from '@ipaforge/kernel'
 import type { PreferencesStore } from '@ui/services/preferences/preferences-store.ts'
 import type {
   ColorScheme,

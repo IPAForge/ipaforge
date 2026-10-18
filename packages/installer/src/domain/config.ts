@@ -10,7 +10,7 @@ export type InstallerConfig = {
    * free one when its team is not one of the account's own teams.
    */
   readonly freeProfileMaxLifetimeMs: number
-  /** Name Apple shows for certificates Loadstar creates (the revoke picker tells tools apart by it). */
+  /** Name Apple shows for certificates IPAForge creates (the revoke picker tells tools apart by it). */
   readonly machineName: string
   /** Wrong second-factor codes accepted before the sign-in step gives up. */
   readonly twoFactorAttempts: number
@@ -25,7 +25,7 @@ export type InstallerConfig = {
 export const DEFAULT_INSTALLER_CONFIG: InstallerConfig = {
   freeAppLimit: 3,
   freeProfileMaxLifetimeMs: 8 * DAY_MS,
-  machineName: 'Loadstar',
+  machineName: 'IPAForge',
   twoFactorAttempts: 5,
   deviceReconnectBaseMs: 1000,
   deviceReconnectMaxMs: 30_000,

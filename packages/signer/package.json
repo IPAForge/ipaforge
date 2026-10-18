@@ -1,5 +1,5 @@
 {
-  "name": "@loadstar/signer",
+  "name": "@ipaforge/signer",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
@@ -14,7 +14,7 @@
     "update-apple-certificates": "tsx scripts/update-apple-certificates.ts"
   },
   "dependencies": {
-    "@loadstar/kernel": "workspace:*",
+    "@ipaforge/kernel": "workspace:*",
     "@noble/hashes": "2.4.0",
     "@zip.js/zip.js": "2.23.0",
     "asn1js": "3.0.10",

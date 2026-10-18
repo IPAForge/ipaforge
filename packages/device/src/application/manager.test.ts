@@ -13,10 +13,10 @@ import { decodePem } from '@device/domain/pairing/pem.ts'
 import {
   bytesFileSource,
   ErrorCode,
-  LoadstarError,
+  IPAForgeError,
   parsePlist,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const codeOf = async (
   promise: Promise<unknown>
@@ -24,7 +24,7 @@ const codeOf = async (
   try {
     await promise
   } catch (error) {
-    if (error instanceof LoadstarError) return error.code
+    if (error instanceof IPAForgeError) return error.code
     throw error
   }
   return undefined
@@ -88,7 +88,7 @@ const OS_NEVER_PAIRS = {}
 const pairRequests = (rig: TestRig): number =>
   rig.device.requests.filter((r) => r === 'lockdown:Pair').length
 
-/** The OS's record stays the OS's: Loadstar never sends `SavePairRecord` (or anything else that writes). */
+/** The OS's record stays the OS's: IPAForge never sends `SavePairRecord` (or anything else that writes). */
 const expectUsbmuxdUntouched = (rig: TestRig): void => {
   expect(rig.fake.requests).not.toContain('SavePairRecord')
   expect(rig.fake.requests).not.toContain('DeletePairRecord')
@@ -96,13 +96,13 @@ const expectUsbmuxdUntouched = (rig: TestRig): void => {
 
 const rejectionOf = async (
   promise: Promise<unknown>
-): Promise<LoadstarError> => {
+): Promise<IPAForgeError> => {
   const error = await promise.then(
     () => undefined,
     (e: unknown) => e
   )
-  if (!(error instanceof LoadstarError))
-    throw new Error(`expected a LoadstarError, got ${String(error)}`)
+  if (!(error instanceof IPAForgeError))
+    throw new Error(`expected an IPAForgeError, got ${String(error)}`)
   return error
 }
 
@@ -255,7 +255,7 @@ describe('pairing and sessions', () => {
     expectUsbmuxdUntouched(rig)
   })
 
-  it("pairs again once when the device rejects Loadstar's own record", async () => {
+  it("pairs again once when the device rejects IPAForge's own record", async () => {
     const rig = await createRig({}, {}, OS_NEVER_PAIRS)
     await (await rig.manager.open(rig.device.udid, { method: 'own' })).close()
     const first = parsePairRecord(
@@ -357,9 +357,9 @@ describe('installing apps', () => {
     const error = await handle
       .installIpa(bytesFileSource('App.ipa', utf8Encode('IPA:x')))
       .catch((e: unknown) => e)
-    expect(error).toBeInstanceOf(LoadstarError)
-    expect((error as LoadstarError).code).toBe(ErrorCode.InstallFailed)
-    expect((error as LoadstarError).data?.installError).toBe(
+    expect(error).toBeInstanceOf(IPAForgeError)
+    expect((error as IPAForgeError).code).toBe(ErrorCode.InstallFailed)
+    expect((error as IPAForgeError).data?.installError).toBe(
       'ApplicationVerificationFailed'
     )
     expect([...rig.device.media.files.keys()]).toEqual([])
@@ -595,8 +595,8 @@ describe('install failure classification', () => {
     const error = await handle
       .installIpa(bytesFileSource('a.ipa', utf8Encode('IPA:a')))
       .catch((e: unknown) => e)
-    expect((error as LoadstarError).code).toBe(ErrorCode.FreeAppLimit)
-    expect((error as LoadstarError).data?.freeProfileApps).toEqual([
+    expect((error as IPAForgeError).code).toBe(ErrorCode.FreeAppLimit)
+    expect((error as IPAForgeError).data?.freeProfileApps).toEqual([
       'T.com.a.T',
       'T.com.b.T',
       'T.com.c.T'

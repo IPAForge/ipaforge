@@ -1,5 +1,5 @@
 // The identities a sideloaded app takes under a team (signer-spec §8.1–8.2), planned from an inspection.
-import { compact } from '@loadstar/kernel'
+import { compact } from '@ipaforge/kernel'
 import { rewriteNestedId } from '@signer/domain/bundle/info-plist.ts'
 import type { IdentityRewrite } from '@signer/domain/bundle/types.ts'
 import { APP_GROUP_PREFIX } from '@signer/domain/entitlements/names.ts'

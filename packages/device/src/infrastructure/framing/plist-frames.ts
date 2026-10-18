@@ -3,13 +3,13 @@ import type { Link } from '@device/infrastructure/framing/link.ts'
 import {
   ByteWriter,
   ErrorCode,
+  IPAForgeError,
   isPlistDict,
-  LoadstarError,
   type PlistDict,
   type PlistLimits,
   parsePlist,
   serializeXmlPlist
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 export type FrameLimits = {
   readonly maxMessageBytes: number
@@ -24,7 +24,7 @@ export const decodeDict = (
 ): PlistDict => {
   const value = parsePlist(payload, limits)
   if (!isPlistDict(value)) {
-    throw new LoadstarError(ErrorCode.DeviceProtocolError, {
+    throw new IPAForgeError(ErrorCode.DeviceProtocolError, {
       message: `${what}: expected a dict`
     })
   }
@@ -37,7 +37,7 @@ export const checkLength = (
   what: string
 ): void => {
   if (length > limits.maxMessageBytes) {
-    throw new LoadstarError(ErrorCode.DeviceProtocolError, {
+    throw new IPAForgeError(ErrorCode.DeviceProtocolError, {
       message: `${what}: ${length}-byte message exceeds the ${limits.maxMessageBytes}-byte limit`
     })
   }

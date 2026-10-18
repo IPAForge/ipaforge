@@ -2,10 +2,10 @@
 import { nodeFileSource } from '@desktop/main/adapters/file-source.ts'
 import type { InstallProbe } from '@desktop/probes/install/context.ts'
 import { runCommand } from '@desktop/probes/install/run.ts'
-import type { Channel } from '@loadstar/catalog'
-import type { AppFileTarget } from '@loadstar/device'
-import type { InstallState, PairingState } from '@loadstar/installer'
-import { compact } from '@loadstar/kernel'
+import type { Channel } from '@ipaforge/catalog'
+import type { AppFileTarget } from '@ipaforge/device'
+import type { InstallState, PairingState } from '@ipaforge/installer'
+import { compact } from '@ipaforge/kernel'
 
 const CHANNELS: ReadonlySet<string> = new Set(['stable', 'nightly'])
 

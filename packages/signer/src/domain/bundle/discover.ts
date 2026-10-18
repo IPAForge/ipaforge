@@ -1,11 +1,11 @@
 import {
   ErrorCode,
+  IPAForgeError,
   isPlistDict,
-  LoadstarError,
   type PlistDict,
   parsePlist,
   stringAt
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import {
   BUNDLE_SUFFIXES,
   PROVISIONED_KINDS,
@@ -107,7 +107,7 @@ export const discoverBundles = (
 ): CodeBundle[] => {
   const main = describeBundle(tree, '', 'app', limits.plist)
   if (!main) {
-    throw new LoadstarError(ErrorCode.InvalidBundle, {
+    throw new IPAForgeError(ErrorCode.InvalidBundle, {
       message:
         'app bundle has no Info.plist with CFBundleExecutable/CFBundleIdentifier, or its executable is missing'
     })

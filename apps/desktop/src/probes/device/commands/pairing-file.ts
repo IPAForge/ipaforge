@@ -1,6 +1,6 @@
 // device-probe commands for the pairing file inside pairing apps: targets, pairing-status, place.
 import type { DeviceProbe } from '@desktop/probes/device/context.ts'
-import type { DeviceHandle, PairingTarget } from '@loadstar/device'
+import type { DeviceHandle, PairingTarget } from '@ipaforge/device'
 
 const printTargets = (targets: readonly PairingTarget[]) => {
   for (const t of targets)

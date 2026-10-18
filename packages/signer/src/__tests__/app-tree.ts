@@ -9,7 +9,7 @@ import {
   parsePlist,
   serializeXmlPlist,
   silentLogger
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import { FIXTURES_DIR, readTree } from '@signer/__tests__/fixtures.ts'
 import { signBinary } from '@signer/application/sign-binary.ts'
 import { joinPath } from '@signer/domain/bundle/tree.ts'

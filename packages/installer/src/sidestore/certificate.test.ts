@@ -1,13 +1,13 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { sideStoreCertificateAdditions } from '@installer/sidestore/certificate.ts'
-import { createDict, ErrorCode } from '@loadstar/kernel'
-import { type CodeBundle, exportPkcs12 } from '@loadstar/signer'
+import { createDict, ErrorCode } from '@ipaforge/kernel'
+import { type CodeBundle, exportPkcs12 } from '@ipaforge/signer'
 
 const P12 = new Uint8Array([0x30, 0x82])
 
-vi.mock('@loadstar/signer', async (importOriginal) => ({
-  ...(await importOriginal<typeof import('@loadstar/signer')>()),
+vi.mock('@ipaforge/signer', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@ipaforge/signer')>()),
   exportPkcs12: vi.fn(() => P12)
 }))
 

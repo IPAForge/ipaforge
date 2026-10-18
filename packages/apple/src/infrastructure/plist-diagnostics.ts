@@ -2,11 +2,11 @@
 // only the first tag name and the byte length, never content (these documents carry tokens).
 import {
   ErrorCode,
-  LoadstarError,
+  IPAForgeError,
   type PlistValue,
   parsePlist,
   utf8DecodeLenient
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const firstMarkup = (bytes: Uint8Array): string => {
   if (
@@ -30,7 +30,7 @@ export const parseApplePlist = (
   try {
     return parsePlist(bytes)
   } catch (error) {
-    throw new LoadstarError(ErrorCode.AppleProtocolError, {
+    throw new IPAForgeError(ErrorCode.AppleProtocolError, {
       message: `${step}: Apple's response is not a readable plist`,
       cause: error,
       data: { step, startsWith: firstMarkup(bytes), bytes: bytes.byteLength }

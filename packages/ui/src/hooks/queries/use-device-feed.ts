@@ -1,7 +1,7 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
-import type { DeviceWatchEvent } from '@loadstar/rpc'
+import type { DeviceWatchEvent } from '@ipaforge/rpc'
 import { queryKeys } from '@ui/hooks/queries/query-keys.ts'
 import { uniqueDevices } from '@ui/hooks/queries/use-devices.ts'
 import { useEngine } from '@ui/hooks/use-engine.ts'

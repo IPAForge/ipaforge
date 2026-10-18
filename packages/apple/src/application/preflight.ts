@@ -9,7 +9,7 @@ import type {
 import { errorMessage, nonEmpty } from '@apple/domain/values.ts'
 import { fetchApple } from '@apple/infrastructure/http.ts'
 import type { AppleDeps } from '@apple/types.ts'
-import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 /** How many anisette servers to probe (they are probed in parallel). */
 const ANISETTE_PROBES = 3
@@ -70,7 +70,7 @@ export const runPreflight = async (
 /** Throws the report's problem, if any. */
 export const assertPreflight = (report: PreflightReport): void => {
   if (!report.problem) return
-  throw new LoadstarError(report.problem, {
+  throw new IPAForgeError(report.problem, {
     data: compact({
       skewSeconds: report.clockSkewSeconds,
       anisette: report.anisette.map((server) => ({

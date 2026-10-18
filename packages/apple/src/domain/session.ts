@@ -2,7 +2,7 @@ import type {
   SecondFactorAu,
   SecondFactorRequest
 } from '@apple/domain/types.ts'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 /** Normalises what the user typed as an Apple ID: emails are trimmed and lowercased; phone numbers keep `+`. */
 export const normalizeAppleId = (input: string): string => {
@@ -47,7 +47,7 @@ export const secondFactorFromStatus = (status: {
       ? { kind: 'trusted_device', codeAlreadySent: true }
       : undefined
   if (isKnownAu(status.au)) return SECOND_FACTOR_BY_AU[status.au](status.hsc)
-  throw new LoadstarError(ErrorCode.TwoFactorUnsupported, {
+  throw new IPAForgeError(ErrorCode.TwoFactorUnsupported, {
     message: `Apple asked for an unknown sign-in step: ${status.au}`,
     data: { au: status.au }
   })

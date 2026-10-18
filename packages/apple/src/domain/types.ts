@@ -1,4 +1,4 @@
-import type { PlistDict } from '@loadstar/kernel'
+import type { PlistDict } from '@ipaforge/kernel'
 
 export type AppleEndpoints = {
   /** GrandSlam: SRP sign-in and app tokens. */
@@ -99,7 +99,7 @@ export type DevelopmentCertificate = {
   readonly id?: string
   readonly serialNumber: string
   readonly name?: string
-  /** Which computer/tool created it (Loadstar, Xcode, SideStore, …): shown in the revoke picker. */
+  /** Which computer/tool created it (IPAForge, Xcode, SideStore, …): shown in the revoke picker. */
   readonly machineName?: string
   readonly machineId?: string
   /** DER. */
@@ -180,7 +180,7 @@ export type AppToken = {
 /** Second factor requested by GSA (`Status.au`). */
 export type SecondFactorKind = 'trusted_device' | 'sms'
 
-/** GSA `Status.au` values Loadstar knows how to handle. */
+/** GSA `Status.au` values IPAForge knows how to handle. */
 export type SecondFactorAu =
   | 'trustedDeviceSecondaryAuth'
   | 'secondaryAuth'
@@ -205,7 +205,7 @@ export type TwoFactorMethods = {
   readonly codeLength: number
   /** Legacy two-step (`hsa`) account: codes go to a trusted device id. */
   readonly legacy: boolean
-  /** The account only has security keys, which Loadstar cannot use. */
+  /** The account only has security keys, which IPAForge cannot use. */
   readonly securityKeysOnly: boolean
 }
 

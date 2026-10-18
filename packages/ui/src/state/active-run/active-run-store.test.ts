@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import { ErrorCode, silentLogger } from '@loadstar/kernel'
-import { PromptKind } from '@loadstar/rpc'
+import { ErrorCode, silentLogger } from '@ipaforge/kernel'
+import { PromptKind } from '@ipaforge/rpc'
 import { FAKE_IPHONE, STUDIO_TEAM } from '@ui/services/engine/fake/fake-data.ts'
 import { createFakeEngineClient } from '@ui/services/engine/fake/fake-engine-client.ts'
 import type { FakeScenarioId } from '@ui/services/engine/fake/types.ts'

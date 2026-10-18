@@ -1,4 +1,4 @@
-import type { LogBuffer, LogLevelControl } from '@loadstar/kernel'
+import type { LogBuffer, LogLevelControl } from '@ipaforge/kernel'
 
 /** The host's log buffer and the level its loggers record at, served to the log viewer. */
 export type LogSource = {

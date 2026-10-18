@@ -1,7 +1,7 @@
 import type { AppleProbe } from '@desktop/probes/apple/context.ts'
 import { completeTwoFactor } from '@desktop/probes/apple/two-factor.ts'
-import type { AppleSession, SavedAccount } from '@loadstar/apple'
-import { compact } from '@loadstar/kernel'
+import type { AppleSession, SavedAccount } from '@ipaforge/apple'
+import { compact } from '@ipaforge/kernel'
 
 /** Shows only the first and last two characters. */
 const mask = (value: string) =>

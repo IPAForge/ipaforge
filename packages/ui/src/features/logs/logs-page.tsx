@@ -1,6 +1,6 @@
 import { Card } from '@heroui/react'
 
-import type { LogEntry } from '@loadstar/kernel'
+import type { LogEntry } from '@ipaforge/kernel'
 import { ExportDialog } from '@ui/features/logs/components/export-dialog.tsx'
 import { LogAreaSelect } from '@ui/features/logs/components/log-area-select.tsx'
 import { LogFilterChips } from '@ui/features/logs/components/log-filter-chips.tsx'

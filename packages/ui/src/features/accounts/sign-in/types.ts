@@ -1,5 +1,5 @@
-import type { LoadstarError } from '@loadstar/kernel'
-import type { PromptRequest } from '@loadstar/rpc'
+import type { IPAForgeError } from '@ipaforge/kernel'
+import type { PromptRequest } from '@ipaforge/rpc'
 import type { Account, SignInRun } from '@ui/services/engine/types.ts'
 
 /**
@@ -11,7 +11,7 @@ export type SignInState =
   | {
       readonly phase: 'form'
       readonly isPending: boolean
-      readonly error?: LoadstarError | undefined
+      readonly error?: IPAForgeError | undefined
     }
   | {
       readonly phase: 'prompt'

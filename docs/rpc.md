@@ -2,7 +2,7 @@
 
 # Engine RPC
 
-The Engine runs in Electron's main process; the UI runs in the renderer. `@loadstar/rpc` connects them over one message channel. The server side wraps the Engine, and the UI gets an `EngineClient` with the same queries and run handles as the Engine. Both sides validate every message with zod, so a malformed message gets an error back and never crashes either side.
+The Engine runs in Electron's main process; the UI runs in the renderer. `@ipaforge/rpc` connects them over one message channel. The server side wraps the Engine, and the UI gets an `EngineClient` with the same queries and run handles as the Engine. Both sides validate every message with zod, so a malformed message gets an error back and never crashes either side.
 
 ```ts
 // Engine side (apps/desktop, main process)
@@ -69,7 +69,7 @@ Engine to UI:
 ## How a run streams
 
 1. The client picks the `runId` and returns a handle at once, so events are collected even before the server acknowledges the start. A late `subscribe` gets every earlier event replayed, as with the Engine.
-2. The server resolves the inputs and starts the command. Events and prompts flow back as `run-event`s. The first is always `run-started`: every step of the run (id and label key), the steps a resumed run already finished, and the progress so far, so the UI can list all steps up front. A step reports what it did with a `step-detail` event (`{ stepId, detail }`, a `StepDetail` from `@loadstar/installer`, validated by kind: the release found, the session used, the team, the certificate, the App IDs, and so on). The handle's `pending()` shows the waiting prompt, and `answer`, `decline` and `cancel` go back by `runId`. An `AbortSignal` in the options cancels the run as well.
+2. The server resolves the inputs and starts the command. Events and prompts flow back as `run-event`s. The first is always `run-started`: every step of the run (id and label key), the steps a resumed run already finished, and the progress so far, so the UI can list all steps up front. A step reports what it did with a `step-detail` event (`{ stepId, detail }`, a `StepDetail` from `@ipaforge/installer`, validated by kind: the release found, the session used, the team, the certificate, the App IDs, and so on). The handle's `pending()` shows the waiting prompt, and `answer`, `decline` and `cancel` go back by `runId`. An `AbortSignal` in the options cancels the run as well.
 3. The run ends with one `run-result`. A completed state arrives without file handles: a `FileSource` becomes `{ name, size }` (the `Wire<T>` type).
 4. A failed or cancelled run's checkpoint stays on the Engine side, because its state holds open files and the UI must not be able to hand the Engine a state of its own. The UI gets `{ id, pipelineId, completed }` and resumes by passing it back as `resume`. A checkpoint resumes only the command that made it, and only once.
 
@@ -95,7 +95,7 @@ A `FileSource` cannot cross the channel, so the UI names an IPA instead:
 
 ## Errors
 
-Errors cross as serialized `LoadstarError`s (`toJSON()`) and come back through `LoadstarError.fromJSON()` with the same code, data and cause chain. `engine.classify(error)` therefore works on the UI side too. The RPC layer adds three codes of its own:
+Errors cross as serialized `IPAForgeError`s (`toJSON()`) and come back through `IPAForgeError.fromJSON()` with the same code, data and cause chain. `engine.classify(error)` therefore works on the UI side too. The RPC layer adds three codes of its own:
 
 | Code | When |
 |---|---|

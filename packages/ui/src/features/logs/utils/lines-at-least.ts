@@ -1,4 +1,4 @@
-import { isLevelAtLeast, type LogLevel } from '@loadstar/kernel'
+import { isLevelAtLeast, type LogLevel } from '@ipaforge/kernel'
 import { LOG_LEVELS } from '@ui/features/logs/constants.ts'
 
 /** How many lines a minimum level shows, from the count per level. */

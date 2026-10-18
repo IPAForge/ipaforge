@@ -1,4 +1,4 @@
-import type { LogSink } from '@loadstar/kernel'
+import type { LogSink } from '@ipaforge/kernel'
 
 /** The browser's log destination: the devtools console, one console method per level. */
 export const consoleLogSink: LogSink = (record) =>

@@ -8,15 +8,15 @@ import type {
   PromptRequest,
   RunEvent,
   SignInState
-} from '@loadstar/installer'
+} from '@ipaforge/installer'
 import type {
-  LoadstarError,
+  IPAForgeError,
   LogEntry,
   LogLevel,
   LogPage,
   LogPageQuery,
   LogRecord
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import type {
   RemoteCheckpoint,
   RemoteInstallAppsInput,
@@ -33,7 +33,7 @@ export type RemoteResult<S> =
   | { readonly status: 'completed'; readonly state: S }
   | {
       readonly status: 'failed'
-      readonly error: LoadstarError
+      readonly error: IPAForgeError
       readonly failedStep: string
       readonly checkpoint: RemoteCheckpoint
     }
@@ -95,7 +95,7 @@ export type EngineClient = Omit<EngineQueries, 'planInstall'> & {
   watchDevices(listener: (event: DeviceWatchEvent) => void): () => void
   /** Forgets a saved Apple ID (account, session, saved password); its certificates stay for the next sign-in. */
   signOut(accountId: string): Promise<void>
-  /** Runs locally: errors arrive as LoadstarErrors with their code, data and cause chain intact. */
+  /** Runs locally: errors arrive as IPAForgeErrors with their code, data and cause chain intact. */
   classify(error: unknown): Diagnosis
   readonly logs: EngineLogs
 }

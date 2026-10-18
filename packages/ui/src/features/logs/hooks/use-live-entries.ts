@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { LOG_BUFFER_CAPACITY, type LogEntry } from '@loadstar/kernel'
+import { LOG_BUFFER_CAPACITY, type LogEntry } from '@ipaforge/kernel'
 import { useEngine } from '@ui/hooks/use-engine.ts'
 
 /**

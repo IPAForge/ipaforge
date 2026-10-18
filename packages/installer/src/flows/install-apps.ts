@@ -15,7 +15,7 @@ import type { Flow } from '@installer/flows/flow.ts'
 import { pipeline } from '@installer/pipeline/pipeline.ts'
 import { devicePreflightStep } from '@installer/steps/device-preflight.ts'
 import { rememberTeamStep } from '@installer/steps/remember-team.ts'
-import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 export type InstallAppsInput = {
   readonly udid: string
@@ -32,7 +32,7 @@ const jobFor = (source: AppSource): AppJob =>
 
 const assertSomethingToInstall = (input: InstallAppsInput): void => {
   if (input.apps.length > 0) return
-  throw new LoadstarError(ErrorCode.Unexpected, {
+  throw new IPAForgeError(ErrorCode.Unexpected, {
     message: 'installApps needs at least one app'
   })
 }

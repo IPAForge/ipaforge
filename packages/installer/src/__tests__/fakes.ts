@@ -13,8 +13,8 @@ import type {
   SavedAccount,
   Team,
   TwoFactorChallenge
-} from '@loadstar/apple'
-import type { Catalog, ResolvedRelease } from '@loadstar/catalog'
+} from '@ipaforge/apple'
+import type { Catalog, ResolvedRelease } from '@ipaforge/catalog'
 import type {
   AppFileTarget,
   DeviceCheck,
@@ -24,17 +24,17 @@ import type {
   InstalledApp,
   InstallIpaOptions,
   PairingTarget
-} from '@loadstar/device'
+} from '@ipaforge/device'
 import {
   bytesFileSource,
   createDict,
   ErrorCode,
   type FileSource,
-  LoadstarError,
+  IPAForgeError,
   readBody,
   type SecretStore
-} from '@loadstar/kernel'
-import type { CodeBundle, IpaInspection } from '@loadstar/signer'
+} from '@ipaforge/kernel'
+import type { CodeBundle, IpaInspection } from '@ipaforge/signer'
 
 export const UDID = '00008110-000A1B2C3D4E5F60'
 export const ACCOUNT = 'someone@example.com'
@@ -95,7 +95,7 @@ export type FakeDeviceOptions = {
   profiles?: DeviceProfile[]
   installed?: Map<string, InstalledApp>
   /** Errors thrown by successive installs (undefined = success). */
-  installErrors?: (LoadstarError | undefined)[]
+  installErrors?: (IPAForgeError | undefined)[]
   pairingTargets?: PairingTarget[]
   productVersion?: string
   deviceClass?: string
@@ -225,7 +225,7 @@ export const certificateFor = (
   serialNumber: string
 ): DevelopmentCertificate => ({
   serialNumber,
-  machineName: 'Loadstar',
+  machineName: 'IPAForge',
   machineId: `machine-${serialNumber}`,
   content: new Uint8Array([0x30, serialNumber.length])
 })
@@ -249,7 +249,7 @@ export const twoFactorChallenge = (
     submitCode: async (_method, code) => {
       codes.push(code)
       if (code !== acceptedCode)
-        throw new LoadstarError(ErrorCode.TwoFactorInvalidCode)
+        throw new IPAForgeError(ErrorCode.TwoFactorInvalidCode)
       return session
     }
   }
@@ -290,7 +290,7 @@ export const fakeApple = (options: FakeAppleOptions = {}) => {
     if (stored && reused)
       return { certificate: reused, privateKey: stored.privateKey }
     if (certificates.length >= (options.maxCertificates ?? 2)) {
-      throw new LoadstarError(ErrorCode.CertificateLimit, {
+      throw new IPAForgeError(ErrorCode.CertificateLimit, {
         data: {
           certificates: certificates.map((c) => ({
             serialNumber: c.serialNumber,

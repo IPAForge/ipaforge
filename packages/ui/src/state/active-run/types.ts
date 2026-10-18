@@ -1,11 +1,11 @@
-import type { LoadstarError, Logger } from '@loadstar/kernel'
+import type { IPAForgeError, Logger } from '@ipaforge/kernel'
 import type {
   EngineClient,
   PromptRequest,
   RemoteCheckpoint,
   RunEvent,
   StepDetail as StepReport
-} from '@loadstar/rpc'
+} from '@ipaforge/rpc'
 import type { InstallSideStoreInput } from '@ui/services/engine/types.ts'
 
 export type StepState =
@@ -50,7 +50,7 @@ export type RunStatus =
   | 'cancelled'
 
 export type RunFailure = {
-  readonly error: LoadstarError
+  readonly error: IPAForgeError
   readonly stepId: string
 }
 

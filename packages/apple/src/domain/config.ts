@@ -1,4 +1,4 @@
-// Every Apple-facing value Loadstar uses, as data. Apple changes what it accepts (client identities were blocked
+// Every Apple-facing value IPAForge uses, as data. Apple changes what it accepts (client identities were blocked
 // twice in 2026), so none of this is hard-coded in logic: defaults ship here, and the app can override them from a
 // remote config without a release.
 import type { AppleConfig, AppleConfigOverrides } from '@apple/domain/types.ts'

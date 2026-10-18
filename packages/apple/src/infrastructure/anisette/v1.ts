@@ -7,7 +7,7 @@ import type { AnisetteServer, ClientIdentity } from '@apple/domain/types.ts'
 import { nonEmpty } from '@apple/domain/values.ts'
 import { fetchApple } from '@apple/infrastructure/http.ts'
 import type { AppleDeps } from '@apple/types.ts'
-import { compact, utf8Decode } from '@loadstar/kernel'
+import { compact, utf8Decode } from '@ipaforge/kernel'
 
 const v1Schema = z.looseObject({
   'X-Apple-I-MD': z.string(),

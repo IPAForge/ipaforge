@@ -1,7 +1,7 @@
 // The runs the UI started, by the id it chose: each run's events and outcome go back over the channel, and answers,
 // declines and cancels reach its handle. A run is forgotten when it ends.
-import type { RunHandle } from '@loadstar/installer'
-import { compact, toLoadstarError } from '@loadstar/kernel'
+import type { RunHandle } from '@ipaforge/installer'
+import { compact, toIPAForgeError } from '@ipaforge/kernel'
 import type {
   ActiveRun,
   RunRegistry,
@@ -51,7 +51,7 @@ export const createRunRegistry = ({
           send({
             type: 'run-error',
             runId,
-            error: toLoadstarError(error).toJSON()
+            error: toIPAForgeError(error).toJSON()
           })
       )
       .finally(() => {

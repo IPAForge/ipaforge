@@ -1,4 +1,4 @@
-import { ErrorCode } from '@loadstar/kernel'
+import { ErrorCode } from '@ipaforge/kernel'
 import type { StatusTone } from '@ui/components/shell/types.ts'
 import type { DeviceState } from '@ui/features/devices/types.ts'
 

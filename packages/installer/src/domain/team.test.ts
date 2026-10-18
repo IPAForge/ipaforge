@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { FREE_TEAM, OTHER_TEAM } from '@installer/__tests__/fakes.ts'
 import { preselectTeam, requireTeam } from '@installer/domain/team.ts'
-import { ErrorCode } from '@loadstar/kernel'
+import { ErrorCode } from '@ipaforge/kernel'
 
 const teams = [FREE_TEAM, OTHER_TEAM]
 

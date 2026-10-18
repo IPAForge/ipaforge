@@ -21,10 +21,10 @@ const PAIRING_APPS = [
 ]
 
 describe('certificateOrigin', () => {
-  it('tells Loadstar’s, SideStore’s and AltStore’s from a named computer and an unnamed one', () => {
+  it('tells IPAForge’s, SideStore’s and AltStore’s from a named computer and an unnamed one', () => {
     const origin = (machineName: string) =>
       certificateOrigin({ serialNumber: '1', machineName })
-    expect(origin('Loadstar')).toBe('loadstar')
+    expect(origin('IPAForge')).toBe('ipaforge')
     expect(origin('SideStore')).toBe('sidestore')
     expect(origin('AltStore')).toBe('sidestore')
     expect(origin('MacBook Pro')).toBe('machine')

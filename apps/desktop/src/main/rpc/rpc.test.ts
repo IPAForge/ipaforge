@@ -8,13 +8,13 @@ import { createFileDownloadStore } from '@desktop/main/adapters/file-download-st
 import { portPair } from '@desktop/main/rpc/__tests__/port-pair.ts'
 import { messagePortTransport } from '@desktop/main/rpc/message-port-transport.ts'
 import { createIpaResolver } from '@desktop/main/rpc/resolve-ipa.ts'
-import type { Engine } from '@loadstar/installer'
-import { ErrorCode, type HttpClient } from '@loadstar/kernel'
-import { createEngineClient, createRpcServer } from '@loadstar/rpc'
+import type { Engine } from '@ipaforge/installer'
+import { ErrorCode, type HttpClient } from '@ipaforge/kernel'
+import { createEngineClient, createRpcServer } from '@ipaforge/rpc'
 
 const dirs: string[] = []
 const tempDir = async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'loadstar-rpc-'))
+  const dir = await mkdtemp(join(tmpdir(), 'ipaforge-rpc-'))
   dirs.push(dir)
   return dir
 }

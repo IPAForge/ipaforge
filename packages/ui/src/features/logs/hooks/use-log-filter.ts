@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 
-import type { LogFilter } from '@loadstar/kernel'
+import type { LogFilter } from '@ipaforge/kernel'
 import { SEARCH_DELAY_MS } from '@ui/features/logs/constants.ts'
 import { useDebounced } from '@ui/features/logs/hooks/use-debounced.ts'
 import { logFilterOf } from '@ui/features/logs/utils/log-filter-of.ts'

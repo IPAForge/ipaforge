@@ -2,7 +2,7 @@ import { Dropdown } from '@heroui/react'
 import { ChevronDown } from 'lucide-react'
 import { type Key, type ReactNode, useId } from 'react'
 
-import { compact } from '@loadstar/kernel'
+import { compact } from '@ipaforge/kernel'
 import {
   PICKER_TRIGGER_CLASSES,
   statusTextClasses

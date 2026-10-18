@@ -1,13 +1,13 @@
 // A run handle like the Engine's, over a scripted list of steps: the same events in the same order (run-started,
 // step-started, progress, prompts, completed/skipped/failed), prompts answered through the handle, cancellation
 // and resume from a checkpoint. It stands in for the installer's pipeline in the fake Engine.
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 import type {
   PipelineResult,
   PromptRequest,
   RunEvent,
   RunHandle
-} from '@loadstar/rpc'
+} from '@ipaforge/rpc'
 import type {
   PendingPrompt,
   ScriptedRun,
@@ -59,7 +59,7 @@ const createPrompts = (emit: (event: RunEvent) => void) => {
   const take = (): PendingPrompt => {
     const current = waiting
     if (!current)
-      throw new LoadstarError(ErrorCode.Unexpected, {
+      throw new IPAForgeError(ErrorCode.Unexpected, {
         message: 'no prompt is waiting'
       })
     waiting = undefined
@@ -77,14 +77,14 @@ const createPrompts = (emit: (event: RunEvent) => void) => {
       }),
     pending: () => waiting?.request,
     answer: (answer: unknown) => take().resolve(answer),
-    decline: () => take().reject(new LoadstarError(ErrorCode.PromptCancelled))
+    decline: () => take().reject(new IPAForgeError(ErrorCode.PromptCancelled))
   }
 }
 
-const asError = (error: unknown): LoadstarError =>
-  error instanceof LoadstarError
+const asError = (error: unknown): IPAForgeError =>
+  error instanceof IPAForgeError
     ? error
-    : new LoadstarError(ErrorCode.Unexpected, { cause: error })
+    : new IPAForgeError(ErrorCode.Unexpected, { cause: error })
 
 export const startScriptedRun = <S>({
   pipelineId,

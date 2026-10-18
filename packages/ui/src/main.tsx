@@ -1,4 +1,4 @@
-// Browser entry (`pnpm --filter @loadstar/ui dev` and `build`): browser services with the fake Engine over the
+// Browser entry (`pnpm --filter @ipaforge/ui dev` and `build`): browser services with the fake Engine over the
 // rpc memory transport, then the language, then <App/>. In development `?scenario=<id>` picks what the fake
 // Engine plays (fake-scenarios.ts); a production build always plays the happy path.
 import '@ui/styles.css'
@@ -6,7 +6,7 @@ import '@ui/styles.css'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
-import type { LogLevel } from '@loadstar/kernel'
+import type { LogLevel } from '@ipaforge/kernel'
 import { App } from '@ui/App.tsx'
 import { prepareLanguage } from '@ui/i18n/setup/prepare-language.ts'
 import { createBrowserServices } from '@ui/services/browser-services.ts'

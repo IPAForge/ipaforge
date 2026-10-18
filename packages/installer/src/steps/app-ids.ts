@@ -10,7 +10,7 @@ import { StepWeight } from '@installer/domain/step-weights.ts'
 import type { InstallState } from '@installer/domain/types.ts'
 import type { Step } from '@installer/pipeline/types.ts'
 import { required } from '@installer/steps/app-job.ts'
-import { planSideloadIdentity } from '@loadstar/signer'
+import { planSideloadIdentity } from '@ipaforge/signer'
 
 export const appIdsStep = (runtime: FlowRuntime): Step<InstallState> => ({
   id: 'app-ids',

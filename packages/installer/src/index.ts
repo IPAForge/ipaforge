@@ -1,4 +1,4 @@
-// Public API of @loadstar/installer: the Engine facade, its flows, prompts and diagnostics, and the pipeline runner.
+// Public API of @ipaforge/installer: the Engine facade, its flows, prompts and diagnostics, and the pipeline runner.
 
 export { createDeviceWatch } from '@installer/application/device-watch.ts'
 export type {

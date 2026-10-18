@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>application-identifier</key>
-	<string>ZZZZZ99999.com.loadstar.fixture.resign</string>
+	<string>ZZZZZ99999.com.ipaforge.fixture.resign</string>
 	<key>com.apple.developer.team-identifier</key>
 	<string>ZZZZZ99999</string>
 	<key>get-task-allow</key>

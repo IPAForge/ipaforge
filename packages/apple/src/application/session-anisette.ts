@@ -4,7 +4,7 @@
 
 import type { AnisetteService } from '@apple/application/types.ts'
 import type { AnisetteData, AppleSession } from '@apple/domain/types.ts'
-import { compact } from '@loadstar/kernel'
+import { compact } from '@ipaforge/kernel'
 
 export const anisetteForSession = async (
   anisette: AnisetteService,

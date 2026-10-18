@@ -1,4 +1,4 @@
-import { compact, type FileSource, toLoadstarError } from '@loadstar/kernel'
+import { compact, type FileSource, toIPAForgeError } from '@ipaforge/kernel'
 import { applyBundleAdditions } from '@signer/application/bundle-additions.ts'
 import { embeddedEntitlements } from '@signer/application/embedded-entitlements.ts'
 import { reconcileForSideload } from '@signer/application/reconcile.ts'
@@ -150,7 +150,7 @@ export const signIpa = async (
     })
     return { ipa: stream, app: ipa, summary }
   } catch (error) {
-    const failure = toLoadstarError(error)
+    const failure = toIPAForgeError(error)
     logger.error('signing failed', { code: failure.code, error: failure })
     throw failure
   }

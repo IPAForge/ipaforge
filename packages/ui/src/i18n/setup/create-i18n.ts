@@ -1,7 +1,7 @@
 import i18next, { type i18n } from 'i18next'
 import ICU from 'i18next-icu'
 
-import type { Logger } from '@loadstar/kernel'
+import type { Logger } from '@ipaforge/kernel'
 import { SOURCE_LANGUAGE } from '@ui/i18n/languages/languages.ts'
 import type {} from '@ui/i18n/setup/types.ts'
 import en from '@ui/locales/en.json'

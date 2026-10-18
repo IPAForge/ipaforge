@@ -11,7 +11,7 @@ export type SerializedError = {
   readonly cause?: SerializedError
 }
 
-export type LoadstarErrorOptions = {
+export type IPAForgeErrorOptions = {
   readonly cause?: unknown
   readonly data?: ErrorData
   /** Developer-facing detail. User-facing text comes from the code via i18n, never from here. */

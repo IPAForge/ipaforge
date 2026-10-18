@@ -6,8 +6,8 @@ import type {
   FreeProfileRules,
   ProfileFacts
 } from '@installer/domain/types.ts'
-import { bundleIdOf } from '@loadstar/device'
-import { compact } from '@loadstar/kernel'
+import { bundleIdOf } from '@ipaforge/device'
+import { compact } from '@ipaforge/kernel'
 
 const lifetimeMs = (profile: ProfileFacts): number | undefined =>
   profile.createdAt && profile.expiresAt

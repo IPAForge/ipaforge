@@ -10,14 +10,14 @@ import {
 import { type SubmitEvent, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import type { LoadstarError } from '@loadstar/kernel'
+import type { IPAForgeError } from '@ipaforge/kernel'
 import { SignInError } from '@ui/features/accounts/sign-in/components/sign-in-error.tsx'
 
 type SignInFormProps = {
   /** Filled in already (signing in again with a saved Apple ID). */
   initialAppleId?: string | undefined
   isBusy: boolean
-  error: LoadstarError | undefined
+  error: IPAForgeError | undefined
   onSubmit: (
     appleId: string,
     password: string,

@@ -1,7 +1,7 @@
 // Every Engine query's cache key, in one place: invalidating `accounts` refreshes an account's teams, quota and
 // certificates too, because their keys start with it.
-import type { LogFilter } from '@loadstar/kernel'
-import type { RemotePlanInstallInput, TeamQuery } from '@loadstar/rpc'
+import type { LogFilter } from '@ipaforge/kernel'
+import type { RemotePlanInstallInput, TeamQuery } from '@ipaforge/rpc'
 
 const teamKey = ({ accountId, teamId }: TeamQuery) =>
   ['accounts', accountId, 'team', teamId ?? null] as const

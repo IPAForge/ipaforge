@@ -16,7 +16,7 @@ import {
   toCertificates,
   toSubmittedCertificate
 } from '@apple/infrastructure/developer/parse.ts'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 const isIosCertificate = (certificate: DevelopmentCertificate): boolean =>
   certificate.platform === undefined ||
@@ -52,7 +52,7 @@ export const createCertificate = async (
       (submitted.id && certificate.id === submitted.id)
   )
   if (!listed?.content) {
-    throw new LoadstarError(ErrorCode.AppleProtocolError, {
+    throw new IPAForgeError(ErrorCode.AppleProtocolError, {
       message: 'new certificate not found in the list'
     })
   }
@@ -91,10 +91,10 @@ const reusable = (
 
 /** At the limit: lists who made each certificate and when it expires, so the user can choose what to revoke. */
 const certificateLimitError = (
-  cause: LoadstarError,
+  cause: IPAForgeError,
   listed: readonly DevelopmentCertificate[]
-): LoadstarError =>
-  new LoadstarError(ErrorCode.CertificateLimit, {
+): IPAForgeError =>
+  new IPAForgeError(ErrorCode.CertificateLimit, {
     cause,
     data: {
       certificates: listed.map((certificate) => ({
@@ -121,7 +121,7 @@ export const ensureCertificate = async (
     return await createCertificate(ctx, team, options.machineName)
   } catch (error) {
     if (
-      error instanceof LoadstarError &&
+      error instanceof IPAForgeError &&
       error.code === ErrorCode.CertificateLimit
     ) {
       throw certificateLimitError(error, listed)

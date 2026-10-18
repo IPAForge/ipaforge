@@ -1,4 +1,4 @@
-import { ErrorCode } from '@loadstar/kernel'
+import { ErrorCode } from '@ipaforge/kernel'
 import type {
   SignInResult,
   SignInState

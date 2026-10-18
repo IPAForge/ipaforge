@@ -9,8 +9,8 @@ import {
   PROBE_DATA_DIR
 } from '@desktop/probes/shared/secrets.ts'
 import type { Prompt } from '@desktop/probes/shared/types.ts'
-import { shortUdid } from '@loadstar/device'
-import type { Engine } from '@loadstar/installer'
+import { shortUdid } from '@ipaforge/device'
+import type { Engine } from '@ipaforge/installer'
 
 export type InstallProbe = {
   readonly engine: Engine

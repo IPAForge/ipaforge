@@ -3,14 +3,14 @@ import { describe, expect, it } from 'vitest'
 import { RECOVERY_CATALOGUE } from '@installer/diagnostics/catalogue.ts'
 import { classify } from '@installer/diagnostics/classify.ts'
 import { RecoveryAction } from '@installer/diagnostics/recovery.ts'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 const known = new Set<string>(Object.values(RecoveryAction))
 
 describe('classify', () => {
   it('gives every ErrorCode at least one known recovery action', () => {
     for (const code of Object.values(ErrorCode)) {
-      const { recovery } = classify(new LoadstarError(code))
+      const { recovery } = classify(new IPAForgeError(code))
       expect(recovery.length, code).toBeGreaterThan(0)
       for (const action of recovery)
         expect(known.has(action), `${code}: ${action}`).toBe(true)
@@ -32,15 +32,15 @@ describe('classify', () => {
     ],
     [ErrorCode.AppIdQuotaExceeded, ['wait-for-app-id-slot', 'switch-account']]
   ])('maps %s to its recovery', (code, recovery) => {
-    expect(classify(new LoadstarError(code))).toEqual({ code, recovery })
+    expect(classify(new IPAForgeError(code))).toEqual({ code, recovery })
   })
 
   it('looks through a step-failed wrapper to the catalogued cause', () => {
-    const wrapped = new LoadstarError(ErrorCode.StepFailed, {
-      cause: new LoadstarError(ErrorCode.DeviceTimeout)
+    const wrapped = new IPAForgeError(ErrorCode.StepFailed, {
+      cause: new IPAForgeError(ErrorCode.DeviceTimeout)
     })
     expect(classify(wrapped).code).toBe(ErrorCode.DeviceTimeout)
-    const foreign = new LoadstarError(ErrorCode.StepFailed, {
+    const foreign = new IPAForgeError(ErrorCode.StepFailed, {
       cause: new TypeError('x is undefined')
     })
     expect(classify(foreign).code).toBe(ErrorCode.StepFailed)

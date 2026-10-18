@@ -4,7 +4,7 @@ import type { Session, WebContents } from 'electron'
 
 import { allowedPermissions } from '@desktop/main/constants.ts'
 import { isAllowedExternalLink } from '@desktop/main/external-links.ts'
-import type { Logger } from '@loadstar/kernel'
+import type { Logger } from '@ipaforge/kernel'
 
 /**
  * No pop-ups and no navigation away from the UI. A page the UI asks to open (`window.open`) goes to the default

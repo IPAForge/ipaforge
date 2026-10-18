@@ -14,7 +14,7 @@ import {
   type DeviceManager
 } from '@device/application/manager.ts'
 import type { DeviceConfig } from '@device/domain/config.ts'
-import type { Clock } from '@loadstar/kernel'
+import type { Clock } from '@ipaforge/kernel'
 
 export type TestRig = {
   readonly fake: FakeUsbmuxd

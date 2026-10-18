@@ -1,4 +1,4 @@
-import { ByteReader, compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ByteReader, compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 import { DEFAULT_SIGNER_LIMITS } from '@signer/domain/config.ts'
 import {
   FAT_ARCH_SIZE,
@@ -43,8 +43,8 @@ import type { MachOLimits } from '@signer/domain/types.ts'
 const invalid = (
   message: string,
   data?: Record<string, unknown>
-): LoadstarError =>
-  new LoadstarError(ErrorCode.InvalidMachO, compact({ message, data }))
+): IPAForgeError =>
+  new IPAForgeError(ErrorCode.InvalidMachO, compact({ message, data }))
 
 /** True when `bytes` starts with a thin or fat Mach-O magic (used to discover nested code). */
 export const isMachO = (bytes: Uint8Array): boolean => {
@@ -344,7 +344,7 @@ export const parseMachO = (
   )
 
   if (magicBE === FAT_MAGIC_64) {
-    throw new LoadstarError(ErrorCode.UnsupportedArch, {
+    throw new IPAForgeError(ErrorCode.UnsupportedArch, {
       message: 'fat_arch_64 files are not used on iOS'
     })
   }

@@ -2,7 +2,7 @@
 // it, and each new entry as a subscription event. Search and filters run in the Engine, next to the buffer.
 import { z } from 'zod'
 
-import { LOG_PAGE_MAX } from '@loadstar/kernel'
+import { LOG_PAGE_MAX } from '@ipaforge/kernel'
 import { recordSchema } from '@rpc/domain/protocol/common.ts'
 
 const MAX_SEARCH_LENGTH = 200

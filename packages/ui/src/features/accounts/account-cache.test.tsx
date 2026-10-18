@@ -3,8 +3,8 @@ import { screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it } from 'vitest'
 
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
-import type { EngineClient } from '@loadstar/rpc'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
+import type { EngineClient } from '@ipaforge/rpc'
 import { t } from '@ui/__tests__/test-i18n.ts'
 import { renderApp } from '@ui/__tests__/test-services.tsx'
 import {
@@ -46,7 +46,7 @@ const reSignIn = () => {
       listAccounts: async () => [...fakeAccounts(), EXPIRED_ACCOUNT],
       listTeams: async (accountId): Promise<Team[]> => {
         if (accountId !== OLD) return [PERSONAL_TEAM]
-        if (expired) throw new LoadstarError(ErrorCode.SessionExpired)
+        if (expired) throw new IPAForgeError(ErrorCode.SessionExpired)
         await held
         return [PERSONAL_TEAM]
       },

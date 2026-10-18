@@ -9,10 +9,10 @@ import { createFileSecretStore } from '@desktop/main/adapters/file-secret-store.
 import { createMemorySecretStore } from '@desktop/main/adapters/memory-secret-store.ts'
 import { createRoutedSecretStore } from '@desktop/main/adapters/routed-secret-store.ts'
 import { macKeychainKey } from '@desktop/main/adapters/secrets/mac-keychain-key.ts'
-import type { SecretStore } from '@loadstar/kernel'
+import type { SecretStore } from '@ipaforge/kernel'
 
-export const PROBE_DATA_DIR = join(homedir(), '.loadstar', 'dev')
-const KEYCHAIN_SERVICE = 'dev.loadstar.probe'
+export const PROBE_DATA_DIR = join(homedir(), '.ipaforge', 'dev')
+const KEYCHAIN_SERVICE = 'dev.ipaforge.probe'
 
 export type ProbeSecrets = {
   readonly secrets: SecretStore

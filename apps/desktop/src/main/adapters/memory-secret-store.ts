@@ -1,6 +1,6 @@
 // In-memory SecretStore for the device probe and tests. Phase 9 replaces it with a keychain-backed store
 // (Electron safeStorage master key + encrypted file store, see references/failure-catalogue.md).
-import type { SecretStore } from '@loadstar/kernel'
+import type { SecretStore } from '@ipaforge/kernel'
 
 export const createMemorySecretStore = (): SecretStore => {
   const values = new Map<string, Uint8Array>()

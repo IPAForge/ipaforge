@@ -1,4 +1,4 @@
-import type { Checkpoint, CommandOptions, RunHandle } from '@loadstar/installer'
+import type { Checkpoint, CommandOptions, RunHandle } from '@ipaforge/installer'
 import type {
   Command,
   CommandCall,

@@ -1,7 +1,7 @@
 // A stand-in Engine for the browser dev host and the UI's tests: scripted devices and accounts, and runs that play
 // a scenario (see fake-scenarios.ts). It is served over the rpc memory transport, so the UI talks to it exactly
 // as it talks to the real Engine over the Electron MessagePort.
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 import {
   type CommandOptions,
   classify,
@@ -10,7 +10,7 @@ import {
   PromptKind,
   type RunHandle,
   StepLabel
-} from '@loadstar/rpc'
+} from '@ipaforge/rpc'
 import {
   fakeCatalogApps,
   fakeCertificates,
@@ -48,7 +48,7 @@ const teamOf = (world: FakeWorld, { accountId, teamId }: TeamQuery) => {
   const teams = teamsFor(world, accountId)
   const team = teams.find((candidate) => candidate.id === teamId) ?? teams[0]
   if (!team)
-    throw new LoadstarError(ErrorCode.TeamRequired, { data: { accountId } })
+    throw new IPAForgeError(ErrorCode.TeamRequired, { data: { accountId } })
   return team
 }
 
@@ -98,7 +98,7 @@ const signInRun = (
           // Apple checks the password.
           await world.appleAnswer()
           if (password.length === 0 || world.scenario === 'wrong-password')
-            throw new LoadstarError(ErrorCode.InvalidCredentials)
+            throw new IPAForgeError(ErrorCode.InvalidCredentials)
           // Apple skips the second factor for a computer it already knows.
           if (world.scenario !== 'sign-in-no-2fa')
             await completeTwoFactor(context, world.appleAnswer)

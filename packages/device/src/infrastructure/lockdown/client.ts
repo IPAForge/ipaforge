@@ -19,11 +19,11 @@ import type { LockdownClient } from '@device/infrastructure/lockdown/types.ts'
 import {
   createDict,
   ErrorCode,
-  LoadstarError,
+  IPAForgeError,
   type Logger,
   type PlistDict,
   type PlistValue
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const pairRecordDict = (record: LockdownPairRecord): PlistDict =>
   createDict([
@@ -65,7 +65,7 @@ export const createLockdownClient = (
       const response = await request('QueryType')
       const type = response.Type
       if (type !== LOCKDOWN_QUERY_TYPE) {
-        throw new LoadstarError(ErrorCode.DeviceProtocolError, {
+        throw new IPAForgeError(ErrorCode.DeviceProtocolError, {
           message: `unexpected lockdown type ${String(type)}`
         })
       }
@@ -121,7 +121,7 @@ export const createLockdownClient = (
       ])
       const sessionId = response.SessionID
       if (typeof sessionId !== 'string') {
-        throw new LoadstarError(ErrorCode.DeviceProtocolError, {
+        throw new IPAForgeError(ErrorCode.DeviceProtocolError, {
           message: 'StartSession returned no SessionID'
         })
       }
@@ -137,7 +137,7 @@ export const createLockdownClient = (
       ])
       const port = plistInteger(response.Port)
       if (!isValidPort(port)) {
-        throw new LoadstarError(ErrorCode.ServiceUnavailable, {
+        throw new IPAForgeError(ErrorCode.ServiceUnavailable, {
           message: `${service}: no port`,
           data: { service }
         })

@@ -1,6 +1,6 @@
 // How each of the Engine's run events changes the run view. All progress comes from these events; nothing here
 // invents it.
-import type { RunEvent } from '@loadstar/rpc'
+import type { RunEvent } from '@ipaforge/rpc'
 import type { RunEventHandlers, RunView } from '@ui/state/active-run/types.ts'
 import {
   bytesDetail,

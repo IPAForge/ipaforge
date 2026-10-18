@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import type { DeviceWatchEvent, RunEvent } from '@loadstar/installer'
-import { bytesFileSource, ErrorCode, LoadstarError } from '@loadstar/kernel'
+import type { DeviceWatchEvent, RunEvent } from '@ipaforge/installer'
+import { bytesFileSource, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 import {
   createFakeEngine,
   type FakeState,
@@ -92,18 +92,18 @@ describe('queries', () => {
     expect(catalog?.source).toEqual({ kind: 'catalog', appId: 'sidestore' })
   })
 
-  it('brings errors back as LoadstarErrors with code, data and cause', async () => {
+  it('brings errors back as IPAForgeErrors with code, data and cause', async () => {
     const { client } = setup()
     const error = await client
       .deviceStatus('UDID1')
       .catch((caught: unknown) => caught)
 
-    expect(error).toBeInstanceOf(LoadstarError)
+    expect(error).toBeInstanceOf(IPAForgeError)
     expect(error).toMatchObject({
       code: ErrorCode.DeviceLocked,
       data: { udid: 'UDID1' }
     })
-    expect((error as LoadstarError).cause).toMatchObject({
+    expect((error as IPAForgeError).cause).toMatchObject({
       code: ErrorCode.Offline,
       message: 'lockdown went away'
     })
@@ -322,7 +322,7 @@ describe('runs', () => {
       code: ErrorCode.InstallFailed,
       data: { bundleId: 'com.example.app' }
     })
-    expect(failures[0]).toBeInstanceOf(LoadstarError)
+    expect(failures[0]).toBeInstanceOf(IPAForgeError)
     expect(failed.checkpoint).toMatchObject({
       pipelineId: 'fake.install',
       completed: ['prepare', 'choose-team']

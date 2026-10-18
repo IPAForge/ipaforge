@@ -1,7 +1,7 @@
 // Maintainer tool: checks the catalog against the real manifest and GitHub (no account needed).
 //
-//   pnpm --filter @loadstar/desktop catalog-probe              # resolve every app and channel
-//   pnpm --filter @loadstar/desktop catalog-probe download sidestore stable   # also download (to a temp cache)
+//   pnpm --filter @ipaforge/desktop catalog-probe              # resolve every app and channel
+//   pnpm --filter @ipaforge/desktop catalog-probe download sidestore stable   # also download (to a temp cache)
 import { mkdtemp } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
@@ -13,13 +13,13 @@ import {
   type Channel,
   createCatalog,
   type DownloadProgress
-} from '@loadstar/catalog'
-import { LoadstarError } from '@loadstar/kernel'
+} from '@ipaforge/catalog'
+import { IPAForgeError } from '@ipaforge/kernel'
 
 const CHANNELS = ['stable', 'nightly'] as const
 
 const describe = (error: unknown) =>
-  error instanceof LoadstarError
+  error instanceof IPAForgeError
     ? `${error.code} ${JSON.stringify(error.data ?? {})}`
     : String(error)
 
@@ -76,7 +76,7 @@ const download = async (
 }
 
 const [command = 'resolve', appId, channel] = process.argv.slice(2)
-const cacheDir = await mkdtemp(join(tmpdir(), 'loadstar-catalog-'))
+const cacheDir = await mkdtemp(join(tmpdir(), 'ipaforge-catalog-'))
 const catalog = createCatalog({
   http: createNodeHttpClient(),
   store: createFileDownloadStore(cacheDir)

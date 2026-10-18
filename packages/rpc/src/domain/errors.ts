@@ -2,7 +2,7 @@
 
 import type { z } from 'zod'
 
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 /** Validation issues, without the rejected values (they may hold secrets such as a password answer). */
 const issuesOf = (error: z.ZodError): string[] =>
@@ -10,8 +10,8 @@ const issuesOf = (error: z.ZodError): string[] =>
     (issue) => `${issue.path.join('.') || '(root)'}: ${issue.message}`
   )
 
-export const invalidMessage = (error: z.ZodError): LoadstarError =>
-  new LoadstarError(ErrorCode.InvalidRpcMessage, {
+export const invalidMessage = (error: z.ZodError): IPAForgeError =>
+  new IPAForgeError(ErrorCode.InvalidRpcMessage, {
     message: 'invalid RPC message',
     data: { issues: issuesOf(error) }
   })
@@ -19,35 +19,35 @@ export const invalidMessage = (error: z.ZodError): LoadstarError =>
 export const unknownReference = (
   kind: 'run' | 'checkpoint',
   id: string
-): LoadstarError =>
-  new LoadstarError(ErrorCode.InvalidRpcMessage, {
+): IPAForgeError =>
+  new IPAForgeError(ErrorCode.InvalidRpcMessage, {
     message: `unknown ${kind}`,
     data: { [kind]: id }
   })
 
-export const runIdInUse = (id: string): LoadstarError =>
-  new LoadstarError(ErrorCode.InvalidRpcMessage, {
+export const runIdInUse = (id: string): IPAForgeError =>
+  new IPAForgeError(ErrorCode.InvalidRpcMessage, {
     message: 'run id already in use',
     data: { run: id }
   })
 
-export const subscriptionIdInUse = (id: string): LoadstarError =>
-  new LoadstarError(ErrorCode.InvalidRpcMessage, {
+export const subscriptionIdInUse = (id: string): IPAForgeError =>
+  new IPAForgeError(ErrorCode.InvalidRpcMessage, {
     message: 'subscription id already in use',
     data: { subscription: id }
   })
 
-export const disconnected = (): LoadstarError =>
-  new LoadstarError(ErrorCode.RpcDisconnected, {
+export const disconnected = (): IPAForgeError =>
+  new IPAForgeError(ErrorCode.RpcDisconnected, {
     message: 'the RPC channel closed'
   })
 
-export const timedOut = (timeoutMs: number): LoadstarError =>
-  new LoadstarError(ErrorCode.RpcTimeout, {
+export const timedOut = (timeoutMs: number): IPAForgeError =>
+  new IPAForgeError(ErrorCode.RpcTimeout, {
     message: 'no answer to the RPC request',
     data: { timeoutMs }
   })
 
 /** Mirrors the Engine's run handle: answering or declining with no question waiting is a programming error. */
-export const noPrompt = (): LoadstarError =>
-  new LoadstarError(ErrorCode.Unexpected, { message: 'no prompt is waiting' })
+export const noPrompt = (): IPAForgeError =>
+  new IPAForgeError(ErrorCode.Unexpected, { message: 'no prompt is waiting' })

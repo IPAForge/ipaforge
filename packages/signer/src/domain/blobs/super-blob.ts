@@ -2,8 +2,8 @@ import {
   ByteReader,
   ByteWriter,
   ErrorCode,
-  LoadstarError
-} from '@loadstar/kernel'
+  IPAForgeError
+} from '@ipaforge/kernel'
 import {
   CSMAGIC_BLOBWRAPPER,
   CSMAGIC_EMBEDDED_SIGNATURE
@@ -50,14 +50,14 @@ export const buildSuperBlob = (entries: readonly BlobEntry[]): Uint8Array => {
 export const parseSuperBlob = (bytes: Uint8Array): BlobEntry[] => {
   const reader = new ByteReader(bytes)
   if (reader.u32be() !== CSMAGIC_EMBEDDED_SIGNATURE) {
-    throw new LoadstarError(ErrorCode.InvalidMachO, {
+    throw new IPAForgeError(ErrorCode.InvalidMachO, {
       message: 'not an embedded signature SuperBlob'
     })
   }
   const length = reader.u32be()
   const count = reader.u32be()
   if (length > bytes.byteLength || 12 + 8 * count > length) {
-    throw new LoadstarError(ErrorCode.InvalidMachO, {
+    throw new IPAForgeError(ErrorCode.InvalidMachO, {
       message: 'SuperBlob header out of range'
     })
   }
@@ -66,7 +66,7 @@ export const parseSuperBlob = (bytes: Uint8Array): BlobEntry[] => {
     const offset = reader.u32be()
     const blobLength = new ByteReader(bytes, offset + 4).u32be()
     if (offset + blobLength > length) {
-      throw new LoadstarError(ErrorCode.InvalidMachO, {
+      throw new IPAForgeError(ErrorCode.InvalidMachO, {
         message: 'SuperBlob entry out of range',
         data: { slot }
       })

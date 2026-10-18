@@ -28,7 +28,7 @@ import {
   restrictPermissions
 } from '@desktop/main/security.ts'
 import { createMainWindow } from '@desktop/main/window.ts'
-import type { Logger } from '@loadstar/kernel'
+import type { Logger } from '@ipaforge/kernel'
 
 /** Wires the Engine (needs the app to be ready: safeStorage) and returns how a window connects to it. */
 const createEngineConnector = ({ logger, logs }: MainLogging) => {

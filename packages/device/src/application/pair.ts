@@ -1,4 +1,4 @@
-// Pairing: the OS's pair record by default (the user taps Trust), Loadstar's own pairing as the fallback.
+// Pairing: the OS's pair record by default (the user taps Trust), IPAForge's own pairing as the fallback.
 import type { DeviceContext } from '@device/application/context.ts'
 import { reportPaired } from '@device/application/pair-options.ts'
 import { waitForOsPairRecord } from '@device/application/pair-os.ts'

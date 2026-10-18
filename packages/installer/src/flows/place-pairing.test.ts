@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 import { ACCOUNT, UDID } from '@installer/__tests__/fakes.ts'
 import { createHarness, scripted } from '@installer/__tests__/harness.ts'
 import { PromptKind } from '@installer/domain/prompts.ts'
-import type { PairingTarget } from '@loadstar/device'
+import type { PairingTarget } from '@ipaforge/device'
 
 const target = (
   bundleId: string,

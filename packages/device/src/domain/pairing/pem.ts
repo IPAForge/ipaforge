@@ -1,11 +1,11 @@
 import {
   ErrorCode,
   fromBase64,
-  LoadstarError,
+  IPAForgeError,
   toBase64,
   utf8Decode,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const PEM_BLOCK = /-----BEGIN ([A-Z0-9 ]+)-----([\s\S]*?)-----END \1-----/
 const PEM_LINE_WIDTH = 64
@@ -20,7 +20,7 @@ export const decodePem = (pem: string | Uint8Array): PemBlock => {
   const text = typeof pem === 'string' ? pem : utf8Decode(pem)
   const match = PEM_BLOCK.exec(text)
   if (!match?.[1] || match[2] === undefined) {
-    throw new LoadstarError(ErrorCode.InvalidPairRecord, {
+    throw new IPAForgeError(ErrorCode.InvalidPairRecord, {
       message: 'expected a PEM block'
     })
   }

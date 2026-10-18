@@ -1,4 +1,4 @@
-import type { HttpMethod } from '@loadstar/kernel'
+import type { HttpMethod } from '@ipaforge/kernel'
 
 export type FetchOptions = {
   readonly method?: HttpMethod

@@ -3,7 +3,7 @@ import {
   type PlistDict,
   type PlistValue,
   real
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import type {
   CompiledRule,
   ResourceRule

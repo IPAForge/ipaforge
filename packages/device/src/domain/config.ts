@@ -1,5 +1,5 @@
 // Every tunable of the device layer, with the defaults the engine ships with. Callers override any subset.
-import { DEFAULT_PLIST_LIMITS, type PlistLimits } from '@loadstar/kernel'
+import { DEFAULT_PLIST_LIMITS, type PlistLimits } from '@ipaforge/kernel'
 
 export type DeviceConfig = {
   /** Name sent as `Label`/`ProgName` to usbmuxd and lockdownd. */
@@ -20,7 +20,7 @@ export type DeviceConfig = {
 }
 
 export const DEFAULT_DEVICE_CONFIG: DeviceConfig = {
-  label: 'loadstar',
+  label: 'ipaforge',
   maxMessageBytes: 64 * 1024 * 1024,
   plist: DEFAULT_PLIST_LIMITS,
   pairingPollIntervalMs: 1000,

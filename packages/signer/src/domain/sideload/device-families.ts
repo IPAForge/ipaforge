@@ -1,5 +1,5 @@
 // Reads `UIDeviceFamily` from an Info.plist: a single integer or an array of them.
-import type { PlistDict, PlistValue } from '@loadstar/kernel'
+import type { PlistDict, PlistValue } from '@ipaforge/kernel'
 import { UI_DEVICE_FAMILY } from '@signer/domain/bundle/info-keys.ts'
 import { DEFAULT_DEVICE_FAMILIES } from '@signer/domain/sideload/compatibility-constants.ts'
 

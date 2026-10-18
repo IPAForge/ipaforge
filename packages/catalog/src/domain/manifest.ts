@@ -1,4 +1,4 @@
-// What Loadstar can install, as data. Release locations change (repositories move or disappear), so they live in a
+// What IPAForge can install, as data. Release locations change (repositories move or disappear), so they live in a
 // manifest that is updated remotely without an app release; the built-in copy is the fallback.
 import { z } from 'zod'
 

@@ -16,7 +16,7 @@ import { pipeline } from '@installer/pipeline/pipeline.ts'
 import { devicePreflightStep } from '@installer/steps/device-preflight.ts'
 import { installedPairingStep } from '@installer/steps/installed-pairing.ts'
 import { rememberTeamStep } from '@installer/steps/remember-team.ts'
-import { compact } from '@loadstar/kernel'
+import { compact } from '@ipaforge/kernel'
 
 /** Catalog app and pairing-app entry for each variant. */
 const VARIANTS: Readonly<

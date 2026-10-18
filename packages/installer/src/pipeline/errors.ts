@@ -1,23 +1,23 @@
 // How the runner reads a step's failure: retry it, treat it as a cancellation, or report it.
 
 import { TRANSIENT } from '@installer/pipeline/constants.ts'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 export const isTransient = (error: unknown): boolean =>
-  error instanceof LoadstarError && TRANSIENT.has(error.code)
+  error instanceof IPAForgeError && TRANSIENT.has(error.code)
 
 export const isAbort = (error: unknown, signal: AbortSignal): boolean =>
   signal.aborted ||
-  (error instanceof LoadstarError && error.code === ErrorCode.Aborted)
+  (error instanceof IPAForgeError && error.code === ErrorCode.Aborted)
 
-/** Keeps a `LoadstarError` as is; wraps anything else as `installer.step_failed` for `stepId`. */
-export const asLoadstarError = (
+/** Keeps a `IPAForgeError` as is; wraps anything else as `installer.step_failed` for `stepId`. */
+export const asIPAForgeError = (
   error: unknown,
   stepId: string
-): LoadstarError =>
-  error instanceof LoadstarError
+): IPAForgeError =>
+  error instanceof IPAForgeError
     ? error
-    : new LoadstarError(ErrorCode.StepFailed, {
+    : new IPAForgeError(ErrorCode.StepFailed, {
         cause: error,
         data: { step: stepId }
       })

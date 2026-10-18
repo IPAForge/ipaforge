@@ -1,4 +1,4 @@
-import type { PlistDict, PlistValue } from '@loadstar/kernel'
+import type { PlistDict, PlistValue } from '@ipaforge/kernel'
 
 export type BundleKind = 'app' | 'appex' | 'framework' | 'watch-app' | 'xctest'
 

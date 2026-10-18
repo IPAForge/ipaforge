@@ -1,5 +1,5 @@
 {
-  "name": "@loadstar/desktop",
+  "name": "@ipaforge/desktop",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
@@ -17,14 +17,14 @@
     "install-probe": "tsx scripts/install-probe.ts"
   },
   "dependencies": {
-    "@loadstar/apple": "workspace:*",
-    "@loadstar/catalog": "workspace:*",
-    "@loadstar/device": "workspace:*",
-    "@loadstar/installer": "workspace:*",
-    "@loadstar/kernel": "workspace:*",
-    "@loadstar/rpc": "workspace:*",
-    "@loadstar/signer": "workspace:*",
-    "@loadstar/ui": "workspace:*",
+    "@ipaforge/apple": "workspace:*",
+    "@ipaforge/catalog": "workspace:*",
+    "@ipaforge/device": "workspace:*",
+    "@ipaforge/installer": "workspace:*",
+    "@ipaforge/kernel": "workspace:*",
+    "@ipaforge/rpc": "workspace:*",
+    "@ipaforge/signer": "workspace:*",
+    "@ipaforge/ui": "workspace:*",
     "@tanstack/react-router": "1.170.44",
     "react": "19.3.0",
     "react-dom": "19.3.0"

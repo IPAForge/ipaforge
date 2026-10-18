@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { ErrorCode } from '@loadstar/kernel'
+import { ErrorCode } from '@ipaforge/kernel'
 import { planSideloadIdentity } from '@signer/domain/sideload/identity-plan.ts'
 import type { IpaInspection } from '@signer/domain/sideload/types.ts'
 

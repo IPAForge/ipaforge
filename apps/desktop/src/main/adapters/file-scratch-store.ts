@@ -7,7 +7,7 @@ import { dirname, join } from 'node:path'
 import { Writable } from 'node:stream'
 
 import { nodeFileSource } from '@desktop/main/adapters/file-source.ts'
-import type { ScratchStore } from '@loadstar/installer'
+import type { ScratchStore } from '@ipaforge/installer'
 
 const PRIVATE_DIR_MODE = 0o700
 const PRIVATE_FILE_MODE = 0o600

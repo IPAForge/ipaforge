@@ -11,7 +11,7 @@ import {
   type PairingProgress,
   shortUdid,
   type UsbmuxDevice
-} from '@loadstar/device'
+} from '@ipaforge/device'
 
 export type DeviceProbe = {
   readonly manager: DeviceManager

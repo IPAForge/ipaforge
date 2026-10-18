@@ -1,4 +1,4 @@
-import type { PlistValue } from '@loadstar/kernel'
+import type { PlistValue } from '@ipaforge/kernel'
 
 /** A plist integer (decoded as `number`, or `bigint` past 2^53) as a number; `undefined` for anything else. */
 export const plistInteger = (

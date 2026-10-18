@@ -5,8 +5,8 @@ import { describe, expect, it } from 'vitest'
 import {
   createDict,
   ErrorCode,
+  IPAForgeError,
   isBinaryPlist,
-  LoadstarError,
   type PlistDict,
   PlistReal,
   parseBinaryPlist,
@@ -16,7 +16,7 @@ import {
   serializeXmlPlist,
   utf8Decode,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import { readFixture } from '@signer/__tests__/fixtures.ts'
 
 const isMac = process.platform === 'darwin'
@@ -82,11 +82,11 @@ describe('XML round-trip with CoreFoundation formatting', () => {
     ['trailing content', '<plist><true/></plist><plist/>'],
     ['unknown entity', '<plist><string>&nope;</string></plist>']
   ])('rejects %s', (_label, xml) => {
-    expect(() => parseXmlPlist(xml)).toThrow(LoadstarError)
+    expect(() => parseXmlPlist(xml)).toThrow(IPAForgeError)
     try {
       parseXmlPlist(xml)
     } catch (error) {
-      expect((error as LoadstarError).code).toBe(ErrorCode.InvalidPlist)
+      expect((error as IPAForgeError).code).toBe(ErrorCode.InvalidPlist)
     }
   })
 })
@@ -147,9 +147,9 @@ describe('binary plists', () => {
   it('rejects corrupt binary plists', () => {
     const corrupt = binaryInfo.slice()
     corrupt.fill(0xff, corrupt.length - 8) // offset table offset → nonsense
-    expect(() => parseBinaryPlist(corrupt)).toThrow(LoadstarError)
+    expect(() => parseBinaryPlist(corrupt)).toThrow(IPAForgeError)
     expect(() => parseBinaryPlist(utf8Encode('bplist00'))).toThrow(
-      LoadstarError
+      IPAForgeError
     )
   })
 })

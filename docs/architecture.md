@@ -2,11 +2,11 @@
 
 # Architecture
 
-Loadstar uses **Explicit Architecture (ports & adapters)** with one package per bounded context. The authoritative version is `docs/design/architecture.md`; this page is the summary.
+IPAForge uses **Explicit Architecture (ports & adapters)** with one package per bounded context. The authoritative version is `docs/design/architecture.md`; this page is the summary.
 
 ## Why ports & adapters
 
-Loadstar is a desktop app (Electron) for Windows, macOS and Linux. The engine logic is the same everywhere; only the I/O is platform-specific:
+IPAForge is a desktop app (Electron) for Windows, macOS and Linux. The engine logic is the same everywhere; only the I/O is platform-specific:
 
 | Concern | Desktop (Electron main / utility process) |
 |---|---|
@@ -22,7 +22,7 @@ Core packages define **ports**, which are interfaces. `apps/desktop` provides th
 
 | Package | Responsibility |
 |---|---|
-| `kernel` | `LoadstarError` + `ErrorCode`, ports (Logger, HttpClient, SecretStore, FileSource, Clock, Cache), byte utilities |
+| `kernel` | `IPAForgeError` + `ErrorCode`, ports (Logger, HttpClient, SecretStore, FileSource, Clock, Cache), byte utilities |
 | `signer` | Mach-O code signing, CodeResources, entitlements, CMS, IPA streaming |
 | `device` | usbmux, lockdown, pairing, AFC, house_arrest, installation_proxy |
 | `apple` | Apple ID login (GSA SRP + 2FA), anisette, developer services |
@@ -50,7 +50,7 @@ Every long operation, such as installing SideStore, is an ordered list of typed 
 
 ## Errors are codes
 
-Failures become `LoadstarError` with a stable code, for example `device.developer_mode_off`, `apple.app_id_quota` or `catalog.source_gone`. The UI maps each code to a recovery screen.
+Failures become `IPAForgeError` with a stable code, for example `device.developer_mode_off`, `apple.app_id_quota` or `catalog.source_gone`. The UI maps each code to a recovery screen.
 
 ## Styling
 

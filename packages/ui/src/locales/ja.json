@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Loadstar"
+    "name": "IPAForge"
   },
   "shell": {
     "skipToContent": "コンテンツへスキップ",
@@ -57,7 +57,7 @@
     },
     "signInNeeded": {
       "title": "Apple IDにもう一度サインインする必要があります",
-      "body": "{appleId}の保存されたセッションの有効期限が切れました。インストールはできます。その段階でLoadstarがパスワードを尋ねます。"
+      "body": "{appleId}の保存されたセッションの有効期限が切れました。インストールはできます。その段階でIPAForgeがパスワードを尋ねます。"
     },
     "blocked": {
       "title": "Apple が {device} で {appleId} をブロックしました",
@@ -103,7 +103,7 @@
       "certificateNew": "新しく作成",
       "certificatesOnTeam": "{count, plural, =0 {チームにはまだありません} other {チームに # 個}}",
       "team": "チーム",
-      "certificateNewWhy": "このチームには Loadstar 自身の証明書がまだありません。{count, plural, =0 {} other {既存の # 個は他のツールのもので、秘密鍵はそのツールが保持しています。}}"
+      "certificateNewWhy": "このチームには IPAForge 自身の証明書がまだありません。{count, plural, =0 {} other {既存の # 個は他のツールのもので、秘密鍵はそのツールが保持しています。}}"
     },
     "readiness": {
       "noDevice": "先にデバイスを接続してください。",
@@ -141,7 +141,7 @@
       },
       "unsupportedPrompt": {
         "title": "このステップには回答が必要です",
-        "body": "このバージョンでは表示できない質問への回答が必要です。インストールを中止して Loadstar をアップデートしてください。"
+        "body": "このバージョンでは表示できない質問への回答が必要です。インストールを中止して IPAForge をアップデートしてください。"
       },
       "backToInstall": "インストールに戻る",
       "report": {
@@ -217,7 +217,7 @@
     "language": {
       "title": "言語",
       "system": "システム（{language}）",
-      "hint": "ここで言語を選ばない限り、Loadstarはシステムの言語に従います。",
+      "hint": "ここで言語を選ばない限り、IPAForgeはシステムの言語に従います。",
       "draft": "下書き"
     }
   },
@@ -240,7 +240,7 @@
     "device": {
       "locked": {
         "title": "デバイスのロックを解除してください",
-        "body": "デバイスがロックされているため、Loadstarが通信できません。ロックを解除し、インストールが終わるまでロックしないでください。"
+        "body": "デバイスがロックされているため、IPAForgeが通信できません。ロックを解除し、インストールが終わるまでロックしないでください。"
       },
       "developer_mode_off": {
         "title": "デベロッパモードがオフです",
@@ -252,7 +252,7 @@
       },
       "usbmuxd_unavailable": {
         "title": "デバイスサポートが動作していません",
-        "body": "LoadstarがiPhoneやiPadと通信するシステムサービスに接続できません。インストールまたは起動してから、もう一度お試しください。"
+        "body": "IPAForgeがiPhoneやiPadと通信するシステムサービスに接続できません。インストールまたは起動してから、もう一度お試しください。"
       },
       "not_found": {
         "title": "デバイスが見つかりません",
@@ -276,11 +276,11 @@
       },
       "service_unavailable": {
         "title": "デバイスのサービスが起動しませんでした",
-        "body": "Loadstarに必要なサービスの起動をデバイスが拒否しました。ロックを解除して接続し直し、もう一度お試しください。"
+        "body": "IPAForgeに必要なサービスの起動をデバイスが拒否しました。ロックを解除して接続し直し、もう一度お試しください。"
       },
       "protocol_error": {
         "title": "デバイスから予期しない応答がありました",
-        "body": "デバイスからLoadstarが理解できないデータが送られてきました。接続し直してください。再発する場合は、Loadstarをアップデートするか問題を報告してください。"
+        "body": "デバイスからIPAForgeが理解できないデータが送られてきました。接続し直してください。再発する場合は、IPAForgeをアップデートするか問題を報告してください。"
       },
       "install_failed": {
         "title": "インストールに失敗しました",
@@ -366,7 +366,7 @@
       },
       "two_factor_unsupported": {
         "title": "このサインイン方法には対応していません",
-        "body": "このApple IDは、セキュリティキーなど、Loadstarがまだ対応していない2ファクタ認証の方法を使用しています。別のApple IDを使用してください。"
+        "body": "このApple IDは、セキュリティキーなど、IPAForgeがまだ対応していない2ファクタ認証の方法を使用しています。別のApple IDを使用してください。"
       },
       "sms_unavailable": {
         "title": "SMSでのコード送信は利用できません",
@@ -378,7 +378,7 @@
       },
       "protocol_error": {
         "title": "Appleから予期しない応答がありました",
-        "body": "AppleからLoadstarが理解できないデータが送られてきました。Loadstarをアップデートするか、再発する場合は問題を報告してください。"
+        "body": "AppleからIPAForgeが理解できないデータが送られてきました。IPAForgeをアップデートするか、再発する場合は問題を報告してください。"
       },
       "session_expired": {
         "title": "セッションの有効期限が切れました",
@@ -386,7 +386,7 @@
       },
       "account_not_found": {
         "title": "Apple IDが見つかりません",
-        "body": "LoadstarにはこのApple IDの保存済みセッションがありません。もう一度サインインしてください。"
+        "body": "IPAForgeにはこのApple IDの保存済みセッションがありません。もう一度サインインしてください。"
       },
       "not_eligible": {
         "title": "このApple IDは開発に使用できません",
@@ -414,7 +414,7 @@
       },
       "invalid_app_id_name": {
         "title": "AppleがApp IDの名前を拒否しました",
-        "body": "LoadstarがApp IDに付けた名前をAppleが受け付けませんでした。Loadstarをアップデートするか、問題を報告してください。"
+        "body": "IPAForgeがApp IDに付けた名前をAppleが受け付けませんでした。IPAForgeをアップデートするか、問題を報告してください。"
       },
       "certificate_not_revocable": {
         "title": "この証明書はここでは失効できません",
@@ -432,11 +432,11 @@
     "catalog": {
       "source_gone": {
         "title": "このリリースは利用できなくなりました",
-        "body": "このAppのダウンロード元がなくなりました。別のチャンネルを選ぶか、IPAを読み込むか、Loadstarをアップデートしてください。"
+        "body": "このAppのダウンロード元がなくなりました。別のチャンネルを選ぶか、IPAを読み込むか、IPAForgeをアップデートしてください。"
       },
       "unavailable": {
         "title": "Appの一覧を読み込めませんでした",
-        "body": "LoadstarがAppの一覧を取得できませんでした。ネットワークを確認して、もう一度お試しください。"
+        "body": "IPAForgeがAppの一覧を取得できませんでした。ネットワークを確認して、もう一度お試しください。"
       },
       "download_failed": {
         "title": "ダウンロードに失敗しました",
@@ -448,7 +448,7 @@
       },
       "checksum_missing": {
         "title": "ダウンロードを検証できません",
-        "body": "このリリースにはチェックサムがないため、Loadstarで検証できません。別のチャンネルを選ぶか、IPAをご自身で読み込んでください。"
+        "body": "このリリースにはチェックサムがないため、IPAForgeで検証できません。別のチャンネルを選ぶか、IPAをご自身で読み込んでください。"
       },
       "rate_limited": {
         "title": "GitHubへのリクエストが多すぎます",
@@ -464,7 +464,7 @@
     "net": {
       "offline": {
         "title": "オフラインです",
-        "body": "Loadstarがインターネットに接続できません。ネットワーク接続を確認して、もう一度お試しください。"
+        "body": "IPAForgeがインターネットに接続できません。ネットワーク接続を確認して、もう一度お試しください。"
       }
     },
     "signer": {
@@ -498,15 +498,15 @@
       },
       "zip_slip": {
         "title": "このIPAは安全ではありません",
-        "body": "このIPAは自身のフォルダの外にファイルを書き込もうとするため、Loadstarが拒否しました。別のIPAを選んでください。"
+        "body": "このIPAは自身のフォルダの外にファイルを書き込もうとするため、IPAForgeが拒否しました。別のIPAを選んでください。"
       },
       "invalid_certificate": {
         "title": "証明書が無効です",
-        "body": "署名用証明書を使用できませんでした。Loadstarが新しい証明書を作成できるよう失効させてから、もう一度お試しください。"
+        "body": "署名用証明書を使用できませんでした。IPAForgeが新しい証明書を作成できるよう失効させてから、もう一度お試しください。"
       },
       "unknown_issuer": {
         "title": "証明書の発行元が不明です",
-        "body": "Loadstarは証明書の発行元を認識できません。Loadstarをアップデートし、ネットワークを確認してください。"
+        "body": "IPAForgeは証明書の発行元を認識できません。IPAForgeをアップデートし、ネットワークを確認してください。"
       },
       "invalid_bundle": {
         "title": "Appバンドルが無効です",
@@ -548,7 +548,7 @@
       },
       "certificate_machine_id_missing": {
         "title": "証明書を共有できません",
-        "body": "この証明書には、SideStoreが開くのに必要なデータがありません。Loadstarが新しい証明書を作成できるよう失効させてから、もう一度お試しください。"
+        "body": "この証明書には、SideStoreが開くのに必要なデータがありません。IPAForgeが新しい証明書を作成できるよう失効させてから、もう一度お試しください。"
       },
       "team_required": {
         "title": "チームを選択してください",
@@ -558,15 +558,15 @@
     "rpc": {
       "invalid_message": {
         "title": "内部通信エラー",
-        "body": "Loadstarの内部で通信が噛み合いませんでした。Loadstarをアップデートするか、問題を報告してください。"
+        "body": "IPAForgeの内部で通信が噛み合いませんでした。IPAForgeをアップデートするか、問題を報告してください。"
       },
       "disconnected": {
         "title": "エンジンとの接続が切れました",
-        "body": "Loadstarのエンジンが応答しなくなりました。もう一度試し、続く場合は問題を報告してください。"
+        "body": "IPAForgeのエンジンが応答しなくなりました。もう一度試し、続く場合は問題を報告してください。"
       },
       "timeout": {
         "title": "エンジンが応答しませんでした",
-        "body": "Loadstarのエンジンの応答に時間がかかりすぎました。もう一度試し、続く場合は問題を報告してください。"
+        "body": "IPAForgeのエンジンの応答に時間がかかりすぎました。もう一度試し、続く場合は問題を報告してください。"
       }
     },
     "internal": {
@@ -609,7 +609,7 @@
     "choose-another-ipa": "別のIPAを選択",
     "choose-another-channel": "別のチャンネルを選択",
     "import-ipa": "IPAを読み込む",
-    "update-loadstar": "Loadstarをアップデート",
+    "update-ipaforge": "IPAForgeをアップデート",
     "report-issue": "問題を報告",
     "or": "または",
     "switchAccount": {
@@ -682,7 +682,7 @@
         "how": "デバイスの 設定 › Face ID とパスコード でパスコードを設定してから再試行してください。"
       },
       "installDeviceSupport": {
-        "how": "Windows では Microsoft Store から Apple Devices（または iTunes）をインストールし、Loadstar を再起動してください。"
+        "how": "Windows では Microsoft Store から Apple Devices（または iTunes）をインストールし、IPAForge を再起動してください。"
       },
       "reinstallApp": {
         "how": "デバイスから App を削除してから再試行してください。"
@@ -809,8 +809,8 @@
     },
     "revoke": {
       "title": "証明書を取り消しますか？",
-      "body": "このチームは開発用証明書の上限に達しているため、Loadstar が自分の証明書を作るには 1 つ取り消す必要があります。取り消した証明書で署名した App は更新されなくなります。",
-      "loadstar": "別のコンピュータの Loadstar が作成",
+      "body": "このチームは開発用証明書の上限に達しているため、IPAForge が自分の証明書を作るには 1 つ取り消す必要があります。取り消した証明書で署名した App は更新されなくなります。",
+      "ipaforge": "別のコンピュータの IPAForge が作成",
       "sidestore": "SideStore が作成",
       "machine": "「{machine}」で作成（通常は Xcode）",
       "unknown": "不明なツールが作成",
@@ -852,7 +852,7 @@
   },
   "signIn": {
     "title": "Apple IDを追加",
-    "body": "Loadstarはこれでアプリに署名します。パスワードはAppleにのみ送られます。",
+    "body": "IPAForgeはこれでアプリに署名します。パスワードはAppleにのみ送られます。",
     "appleId": "Apple ID",
     "password": "パスワード",
     "submit": "サインイン",
@@ -863,10 +863,10 @@
       "close": "完了"
     },
     "rememberPassword": "パスワードをシステムのキーチェーンに保存する",
-    "rememberPasswordHint": "セッションの期限が切れたとき、Loadstarが自動でサインインし直せます。"
+    "rememberPasswordHint": "セッションの期限が切れたとき、IPAForgeが自動でサインインし直せます。"
   },
   "accounts": {
-    "description": "Loadstarがアプリの署名に使うApple ID。使用中のものは上部のバーに表示されます。",
+    "description": "IPAForgeがアプリの署名に使うApple ID。使用中のものは上部のバーに表示されます。",
     "list": "保存済みのApple ID",
     "empty": "まだApple IDがありません。SideStoreをインストールするには追加してください。",
     "freeTeam": "{name}(無料)",
@@ -884,14 +884,14 @@
     "signOut": {
       "action": "サインアウト",
       "title": "{appleId}からサインアウトしますか?",
-      "forgets": "LoadstarはこのApple ID、そのセッション、保存されたパスワードを削除します。",
+      "forgets": "IPAForgeはこのApple ID、そのセッション、保存されたパスワードを削除します。",
       "keeps": "署名証明書はこのコンピュータに残るため、再度サインインすると再利用されます。インストール済みのアプリは期限が切れるまで動作します。",
       "confirm": "サインアウト"
     }
   },
   "logs": {
     "title": "ログ",
-    "lede": "Loadstar が行ったことを 1 行ずつ。どこからでも次のキーで開けます:",
+    "lede": "IPAForge が行ったことを 1 行ずつ。どこからでも次のキーで開けます:",
     "shortcut": {
       "control": "Ctrl+",
       "command": "⌘",
@@ -960,7 +960,7 @@
     "empty": {
       "none": {
         "title": "まだログはありません",
-        "body": "Loadstar の動作に合わせてここに行が表示されます(デバイスの接続、サインイン、インストールなど)。"
+        "body": "IPAForge の動作に合わせてここに行が表示されます(デバイスの接続、サインイン、インストールなど)。"
       },
       "noMatch": {
         "title": "一致する行はありません",

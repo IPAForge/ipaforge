@@ -1,5 +1,5 @@
 {
-  "name": "@loadstar/rpc",
+  "name": "@ipaforge/rpc",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
@@ -12,8 +12,8 @@
     "typecheck": "tsc -p tsconfig.src.json && tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@loadstar/installer": "workspace:*",
-    "@loadstar/kernel": "workspace:*",
+    "@ipaforge/installer": "workspace:*",
+    "@ipaforge/kernel": "workspace:*",
     "zod": "4.6.6"
   }
 }

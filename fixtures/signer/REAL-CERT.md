@@ -1,6 +1,6 @@
 # Verifying the signer against a real Apple Development certificate
 
-Golden fixtures prove byte parity with Apple `codesign` for **ad-hoc** signatures, and CI checks that certificate-signed output passes `codesign --verify`. One thing needs a real Apple-issued certificate, which CI can't have: whether Loadstar's **CMS** matches Apple's structurally (certificate chain and order, algorithm identifiers, signed attributes) for an Apple Development identity. That was signer-spec open uncertainty #2.
+Golden fixtures prove byte parity with Apple `codesign` for **ad-hoc** signatures, and CI checks that certificate-signed output passes `codesign --verify`. One thing needs a real Apple-issued certificate, which CI can't have: whether IPAForge's **CMS** matches Apple's structurally (certificate chain and order, algorithm identifiers, signed attributes) for an Apple Development identity. That was signer-spec open uncertainty #2.
 
 ## Run it (macOS, about 1 minute)
 
@@ -12,16 +12,16 @@ Golden fixtures prove byte parity with Apple `codesign` for **ad-hoc** signature
 2. Run:
 
    ```bash
-   LOADSTAR_P12_PASSWORD='…' pnpm --filter @loadstar/signer compare-real-cert -- --p12 ~/Downloads/identity.p12
+   IPAFORGE_P12_PASSWORD='…' pnpm --filter @ipaforge/signer compare-real-cert -- --p12 ~/Downloads/identity.p12
    ```
 
 The script:
 
 - imports the `.p12` into a **temporary keychain** and deletes it at the end; your login keychain is never touched;
-- signs the fixture `Test.app` bottom-up with Apple `codesign` (`--timestamp=none`), and with Loadstar using the same certificate and key;
+- signs the fixture `Test.app` bottom-up with Apple `codesign` (`--timestamp=none`), and with IPAForge using the same certificate and key;
 - compares every SuperBlob blob of every executable byte for byte, except the CMS: CodeDirectories (flags 0, team ID), the requirements set (Apple's designated-requirement form) and the entitlements;
 - compares the CMS structurally with `openssl cms -cmsout -print`, masking only the signing time and signature value;
-- runs `codesign --verify --deep --strict` on Loadstar's output.
+- runs `codesign --verify --deep --strict` on IPAForge's output.
 
 ## Results log
 

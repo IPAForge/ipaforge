@@ -11,14 +11,14 @@ import {
   required,
   updateJob
 } from '@installer/steps/app-job.ts'
-import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 type CatalogSource = Extract<AppSource, { kind: 'catalog' }>
 
 const catalogSource = (state: InstallState, index: number): CatalogSource => {
   const { source } = jobAt(state, index)
   if (source.kind === 'catalog') return source
-  throw new LoadstarError(ErrorCode.Unexpected, {
+  throw new IPAForgeError(ErrorCode.Unexpected, {
     message: 'only catalog apps are downloaded'
   })
 }

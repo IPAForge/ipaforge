@@ -9,7 +9,7 @@ import {
   decodeDict,
   type FrameLimits
 } from '@device/infrastructure/framing/plist-frames.ts'
-import { ByteWriter, type PlistDict, serializeXmlPlist } from '@loadstar/kernel'
+import { ByteWriter, type PlistDict, serializeXmlPlist } from '@ipaforge/kernel'
 
 /** usbmux plist packet: a 16-byte little-endian header (length incl. header, version, type, tag), then XML. */
 export const encodeUsbmuxPacket = (

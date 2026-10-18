@@ -24,7 +24,7 @@ import { shortUdid } from '@device/domain/device.ts'
 import type { PairRecord } from '@device/domain/pairing/types.ts'
 import type { DeviceEvent, UsbmuxDevice } from '@device/domain/types.ts'
 import type { DeviceDepsInput } from '@device/types.ts'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 export type DeviceManager = {
   listDevices(): Promise<UsbmuxDevice[]>
@@ -48,7 +48,7 @@ const findDevice = async (
     (candidate) => candidate.udid === udid
   )
   if (!device)
-    throw new LoadstarError(ErrorCode.DeviceNotFound, {
+    throw new IPAForgeError(ErrorCode.DeviceNotFound, {
       data: { device: shortUdid(udid) }
     })
   return device

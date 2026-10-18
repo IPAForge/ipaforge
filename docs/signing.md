@@ -2,7 +2,7 @@
 
 # Code Signing
 
-An iPhone only runs code that carries a valid signature from a certificate Apple trusts, tied to a provisioning profile that lists the device. `@loadstar/signer` re-signs apps with **your** free development certificate. It is pure TypeScript and runs in Node and Electron. The byte-level reference is `docs/design/signer-spec.md`.
+An iPhone only runs code that carries a valid signature from a certificate Apple trusts, tied to a provisioning profile that lists the device. `@ipaforge/signer` re-signs apps with **your** free development certificate. It is pure TypeScript and runs in Node and Electron. The byte-level reference is `docs/design/signer-spec.md`.
 
 ## How it works
 
@@ -44,7 +44,7 @@ import {
   checkCompatibility,
   inspectIpa,
   planSideloadIdentity
-} from '@loadstar/signer'
+} from '@ipaforge/signer'
 
 const inspection = await inspectIpa(source, { signal })
 // inspection.app: { path, identifier, name, version?, minimumOSVersion?, deviceFamilies, architectures }
@@ -65,8 +65,8 @@ const plan = planSideloadIdentity(inspection, 'ABCDE12345')
 ### Signing
 
 ```ts
-import { bytesFileSource } from '@loadstar/kernel'
-import { resolveChain, signIpa } from '@loadstar/signer'
+import { bytesFileSource } from '@ipaforge/kernel'
+import { resolveChain, signIpa } from '@ipaforge/signer'
 
 // Bundled Apple intermediates first; unknown ones are downloaded from the certificate's issuer
 // link and accepted only if they verifiably chain to a pinned Apple root.
@@ -188,7 +188,7 @@ Lower-level building blocks are also exported: `signBundle`, `signBinary`, `reco
 | PKCS#12 export round-trips (key matches certificate, wrong password fails) and uses 3DES bags + HMAC-SHA1 at 2048 iterations | `infrastructure/pkcs12/pkcs12.test.ts` |
 | Added files are sealed in their bundle's and their parent's `CodeResources` | `application/bundle-additions.test.ts` |
 | Plist writer matches `plutil` byte for byte (including `%.17g` reals) | `domain/plist.test.ts` |
-| Real SideStore 0.7.0-alpha is sideload-signed in ~0.5 s and verifies | `application/sign-ipa.test.ts` (`LOADSTAR_E2E=1`) |
+| Real SideStore 0.7.0-alpha is sideload-signed in ~0.5 s and verifies | `application/sign-ipa.test.ts` (`IPAFORGE_E2E=1`) |
 
 The golden inputs and Apple outputs live in `fixtures/signer/` ([README](../fixtures/signer/README.md)). Regenerate them on macOS with `fixtures/signer/generate.sh`; `--check` fails when an Xcode update changes Apple's behaviour. Checking the CMS against a **real** Apple Development certificate is a one-command maintainer step: [`fixtures/signer/REAL-CERT.md`](../fixtures/signer/REAL-CERT.md).
 

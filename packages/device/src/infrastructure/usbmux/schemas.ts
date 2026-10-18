@@ -3,7 +3,7 @@
 import { z } from 'zod'
 
 import type { UsbmuxDevice } from '@device/domain/types.ts'
-import { compact } from '@loadstar/kernel'
+import { compact } from '@ipaforge/kernel'
 
 const integer = z.union([z.number().int(), z.bigint().transform(Number)])
 

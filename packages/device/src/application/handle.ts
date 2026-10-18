@@ -37,7 +37,7 @@ import type {
 import type { AfcClient } from '@device/infrastructure/afc/types.ts'
 import type { InstalledApp } from '@device/infrastructure/installation-proxy/apps.ts'
 import type { ApplicationType } from '@device/infrastructure/installation-proxy/types.ts'
-import type { FileSource } from '@loadstar/kernel'
+import type { FileSource } from '@ipaforge/kernel'
 
 /** A device session with every capability the installer needs. */
 export type DeviceHandle = {

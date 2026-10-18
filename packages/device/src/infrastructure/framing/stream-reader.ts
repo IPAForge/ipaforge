@@ -1,5 +1,5 @@
 import type { Connection } from '@device/domain/ports/types.ts'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 /** Exact-length reads over a chunked connection. */
 export type StreamReader = {
@@ -16,7 +16,7 @@ export const createStreamReader = (connection: Connection): StreamReader => {
     while (buffered < length) {
       const chunk = await connection.read()
       if (chunk === null) {
-        throw new LoadstarError(ErrorCode.DeviceDisconnected, {
+        throw new IPAForgeError(ErrorCode.DeviceDisconnected, {
           message: `connection closed with ${buffered} of ${length} bytes received`
         })
       }

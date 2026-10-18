@@ -1,6 +1,6 @@
 // Real-hardware suite. Needs a trusted iPhone/iPad visible to usbmuxd (USB or Wi-Fi sync):
-//   LOADSTAR_DEVICE=1 pnpm vitest run apps/desktop/src/main/adapters/device.hardware.test.ts
-// Read-only by default. LOADSTAR_DEVICE_WRITE=1 also writes and removes a small file in PublicStaging.
+//   IPAFORGE_DEVICE=1 pnpm vitest run apps/desktop/src/main/adapters/device.hardware.test.ts
+// Read-only by default. IPAFORGE_DEVICE_WRITE=1 also writes and removes a small file in PublicStaging.
 
 import { afterAll, beforeAll, describe, expect, it } from 'vitest'
 
@@ -10,11 +10,11 @@ import {
   createDeviceManager,
   type DeviceHandle,
   PAIRING_APPS
-} from '@loadstar/device'
-import { utf8Decode, utf8Encode } from '@loadstar/kernel'
+} from '@ipaforge/device'
+import { utf8Decode, utf8Encode } from '@ipaforge/kernel'
 
-describe.skipIf(!process.env.LOADSTAR_DEVICE)(
-  'real device (LOADSTAR_DEVICE=1)',
+describe.skipIf(!process.env.IPAFORGE_DEVICE)(
+  'real device (IPAFORGE_DEVICE=1)',
   { timeout: 60_000 },
   () => {
     const manager = createDeviceManager({
@@ -60,16 +60,16 @@ describe.skipIf(!process.env.LOADSTAR_DEVICE)(
       expect(status).toHaveLength(targets.length)
     })
 
-    it.skipIf(!process.env.LOADSTAR_DEVICE_WRITE)(
+    it.skipIf(!process.env.IPAFORGE_DEVICE_WRITE)(
       'round-trips a file through AFC in PublicStaging',
       async () => {
         const afc = await handle.openMedia()
         try {
-          const path = `PublicStaging/loadstar-${Date.now()}.txt`
+          const path = `PublicStaging/ipaforge-${Date.now()}.txt`
           if (!(await afc.exists('PublicStaging')))
             await afc.mkdir('PublicStaging')
-          await afc.writeFile(path, utf8Encode('loadstar'))
-          expect(utf8Decode(await afc.readFile(path))).toBe('loadstar')
+          await afc.writeFile(path, utf8Encode('ipaforge'))
+          expect(utf8Decode(await afc.readFile(path))).toBe('ipaforge')
           await afc.remove(path)
           expect(await afc.exists(path)).toBe(false)
         } finally {

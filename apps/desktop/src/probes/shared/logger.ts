@@ -1,4 +1,4 @@
-import { createLogger, type Logger, parseLogLevel } from '@loadstar/kernel'
+import { createLogger, type Logger, parseLogLevel } from '@ipaforge/kernel'
 
 /** The probes' logger: warnings and up by default (LOG_LEVEL overrides), written to stderr after `indent`. */
 export const createProbeLogger = (indent = ''): Logger =>

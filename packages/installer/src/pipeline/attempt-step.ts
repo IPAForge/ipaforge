@@ -3,7 +3,7 @@
 import { DEFAULT_ATTEMPTS } from '@installer/pipeline/constants.ts'
 import { isTransient } from '@installer/pipeline/errors.ts'
 import type { EmitEvent, Step, StepContext } from '@installer/pipeline/types.ts'
-import { compact, LoadstarError, retry } from '@loadstar/kernel'
+import { compact, IPAForgeError, retry } from '@ipaforge/kernel'
 
 export type AttemptOptions = {
   readonly emit: EmitEvent
@@ -22,7 +22,7 @@ const reportRetry =
         stepId: step.id,
         attempt,
         delayMs,
-        code: error instanceof LoadstarError ? error.code : undefined
+        code: error instanceof IPAForgeError ? error.code : undefined
       })
     )
 

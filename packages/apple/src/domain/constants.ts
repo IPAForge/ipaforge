@@ -1,5 +1,5 @@
 // Apple's result codes and how they map to catalogued errors (see docs/design/failure-catalogue.md §2).
-import { ErrorCode } from '@loadstar/kernel'
+import { ErrorCode } from '@ipaforge/kernel'
 
 /** Developer-API `resultCode` values with a dedicated meaning (failure catalogue §2). */
 export const DeveloperCode = {

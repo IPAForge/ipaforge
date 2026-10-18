@@ -1,8 +1,8 @@
 import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
 
-import { toLoadstarError } from '@loadstar/kernel'
-import { PromptKind } from '@loadstar/rpc'
+import { toIPAForgeError } from '@ipaforge/kernel'
+import { PromptKind } from '@ipaforge/rpc'
 import type {
   SignInState,
   UseSignIn
@@ -66,7 +66,7 @@ export const useSignIn = (
         setState({
           phase: 'form',
           isPending: false,
-          error: toLoadstarError(error)
+          error: toIPAForgeError(error)
         })
     )
   }

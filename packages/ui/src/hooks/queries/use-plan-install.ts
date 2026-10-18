@@ -1,6 +1,6 @@
 import { skipToken, useQuery } from '@tanstack/react-query'
 
-import type { RemotePlanInstallInput } from '@loadstar/rpc'
+import type { RemotePlanInstallInput } from '@ipaforge/rpc'
 import { queryKeys } from '@ui/hooks/queries/query-keys.ts'
 import { useEngine } from '@ui/hooks/use-engine.ts'
 

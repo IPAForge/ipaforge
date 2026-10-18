@@ -1,8 +1,8 @@
-import { RecoveryAction as R } from '@loadstar/rpc'
+import { RecoveryAction as R } from '@ipaforge/rpc'
 import type { Fix } from '@ui/features/install/recovery/types.ts'
 
 /** Where problems are reported: Report the problem opens a new issue here, filled in. */
-export const ISSUES_URL = 'https://github.com/SirReaDy/loadstar/issues'
+export const ISSUES_URL = 'https://github.com/SirReaDy/ipaforge/issues'
 
 const APPLE_ACCOUNT_URL = 'https://account.apple.com'
 const APPLE_DEVELOPER_URL = 'https://developer.apple.com/account'
@@ -141,7 +141,7 @@ export const fixes = {
     buttonKey: 'recovery.fix.chooseAnotherChannel.button'
   },
   [R.ImportIpa]: { kind: 'later' },
-  [R.UpdateLoadstar]: { kind: 'later' },
+  [R.UpdateIPAForge]: { kind: 'later' },
   // Always offered under every failure, next to Copy diagnostics.
   [R.ReportIssue]: { kind: 'later' }
 } satisfies Record<R, Fix>

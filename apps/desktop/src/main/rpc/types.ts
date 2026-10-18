@@ -1,6 +1,6 @@
-import type { Engine } from '@loadstar/installer'
-import type { Logger } from '@loadstar/kernel'
-import type { LogSource, ResolveIpa } from '@loadstar/rpc'
+import type { Engine } from '@ipaforge/installer'
+import type { Logger } from '@ipaforge/kernel'
+import type { LogSource, ResolveIpa } from '@ipaforge/rpc'
 
 export type MessageListener = (event: { readonly data: unknown }) => void
 

@@ -17,8 +17,8 @@ import type {
   AppFileTarget,
   DeviceHandle,
   PairingTarget
-} from '@loadstar/device'
-import { compact } from '@loadstar/kernel'
+} from '@ipaforge/device'
+import { compact } from '@ipaforge/kernel'
 
 export const PLACE_PAIRING = 'placePairing'
 

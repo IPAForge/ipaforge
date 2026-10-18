@@ -1,7 +1,7 @@
 import { Button } from '@heroui/react'
 import { useTranslation } from 'react-i18next'
 
-import type { RecoveryAction } from '@loadstar/rpc'
+import type { RecoveryAction } from '@ipaforge/rpc'
 import { fixes } from '@ui/features/install/recovery/constants.ts'
 import type {
   FixHandlers,

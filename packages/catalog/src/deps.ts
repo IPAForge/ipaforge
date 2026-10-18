@@ -1,6 +1,6 @@
 import { DEFAULT_CATALOG_CONFIG } from '@catalog/domain/config.ts'
 import type { CatalogDeps, CatalogDepsInput } from '@catalog/types.ts'
-import { silentLogger, systemClock } from '@loadstar/kernel'
+import { silentLogger, systemClock } from '@ipaforge/kernel'
 
 export const resolveCatalogDeps = (input: CatalogDepsInput): CatalogDeps => ({
   http: input.http,

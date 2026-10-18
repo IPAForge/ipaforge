@@ -1,4 +1,4 @@
-/** Apple issues RSA development certificates; Loadstar's keys come from `@loadstar/apple` as PKCS#8. */
+/** Apple issues RSA development certificates; IPAForge's keys come from `@ipaforge/apple` as PKCS#8. */
 export const KEY_ALGORITHM = {
   name: 'RSASSA-PKCS1-v1_5',
   hash: 'SHA-256'

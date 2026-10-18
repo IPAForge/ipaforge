@@ -1,8 +1,8 @@
-# Loadstar
+# IPAForge
 
 ## Overview
 
-Loadstar is an open-source desktop app for Windows, macOS and Linux that installs **SideStore** (and other apps) onto an iPhone or iPad. It signs into the user's Apple ID, obtains a free development certificate and provisioning profiles, re-signs the apps, installs them over USB (or Wi-Fi), places the pairing file SideStore needs to refresh itself, and optionally **preloads** extra apps and sources in the same session.
+IPAForge is an open-source desktop app for Windows, macOS and Linux that installs **SideStore** (and other apps) onto an iPhone or iPad. It signs into the user's Apple ID, obtains a free development certificate and provisioning profiles, re-signs the apps, installs them over USB (or Wi-Fi), places the pairing file SideStore needs to refresh itself, and optionally **preloads** extra apps and sources in the same session.
 
 It is designed around the failure modes that most often break sideloading installers:
 
@@ -55,7 +55,7 @@ See `docs/design/architecture.md` for the full architecture guidelines.
   - Apple passwords are never persisted in plain text. Credentials go in the OS keychain.
   - Private keys never leave the device except through an explicit user export.
 - **Logging:** structured logger port with levels (`LOG_LEVEL`), redaction of tokens, passwords and serials, and an in-app log viewer.
-- **Error handling:** typed `LoadstarError` with a stable `code`, a user message key and a recovery action. No raw stack traces in the UI.
+- **Error handling:** typed `IPAForgeError` with a stable `code`, a user message key and a recovery action. No raw stack traces in the UI.
 - **Accessibility:** WCAG 2.2 AA through React Aria primitives, with full keyboard navigation.
 - **Licensing:** MIT. No code copied from other sideloading tools, ldid (AGPL) or ipa-resign (proprietary). zsign and rcodesign are used as references only.
 

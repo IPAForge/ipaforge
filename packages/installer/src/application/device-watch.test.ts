@@ -2,8 +2,8 @@ import { describe, expect, it, vi } from 'vitest'
 
 import { createDeviceWatch } from '@installer/application/device-watch.ts'
 import type { DeviceWatchEvent } from '@installer/application/types.ts'
-import type { DeviceEvent, DeviceManager, UsbmuxDevice } from '@loadstar/device'
-import { ErrorCode, LoadstarError, silentLogger } from '@loadstar/kernel'
+import type { DeviceEvent, DeviceManager, UsbmuxDevice } from '@ipaforge/device'
+import { ErrorCode, IPAForgeError, silentLogger } from '@ipaforge/kernel'
 
 const usb = (udid: string, deviceId: number): UsbmuxDevice => ({
   udid,
@@ -125,7 +125,7 @@ describe('createDeviceWatch', () => {
     await vi.waitFor(() => expect(sessions).toHaveLength(1))
 
     listed = [IPHONE, IPAD]
-    sessions[0]?.drop(new LoadstarError(ErrorCode.DeviceDisconnected))
+    sessions[0]?.drop(new IPAForgeError(ErrorCode.DeviceDisconnected))
     await vi.waitFor(() => expect(sessions).toHaveLength(2))
 
     expect(sleeps).toEqual([1000])
@@ -136,7 +136,7 @@ describe('createDeviceWatch', () => {
   it('backs off longer while usbmuxd stays away, then starts over once it is back', async () => {
     let available = false
     const { watch, sessions, sleeps } = setup(() => {
-      if (!available) throw new LoadstarError(ErrorCode.UsbmuxdUnavailable)
+      if (!available) throw new IPAForgeError(ErrorCode.UsbmuxdUnavailable)
       return [IPHONE]
     })
     watch.subscribe(() => {})
@@ -152,7 +152,7 @@ describe('createDeviceWatch', () => {
     const unsubscribe = watch.subscribe(() => {})
     await vi.waitFor(() => expect(sessions).toHaveLength(1))
     sessions[0]?.drop(
-      new LoadstarError(ErrorCode.DeviceProtocolError, {
+      new IPAForgeError(ErrorCode.DeviceProtocolError, {
         message: 'usbmuxd Listen failed'
       })
     )

@@ -14,7 +14,7 @@ import {
   type SafeStorageLike,
   safeStorageKey
 } from '@desktop/main/adapters/secrets/safe-storage-key.ts'
-import type { Logger, SecretStore } from '@loadstar/kernel'
+import type { Logger, SecretStore } from '@ipaforge/kernel'
 
 const ANISETTE_PREFIX = 'anisette/'
 

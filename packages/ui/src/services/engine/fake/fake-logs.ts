@@ -6,8 +6,8 @@ import {
   createLogLevel,
   type Logger,
   type LogLevel
-} from '@loadstar/kernel'
-import type { LogSource } from '@loadstar/rpc'
+} from '@ipaforge/kernel'
+import type { LogSource } from '@ipaforge/rpc'
 import type { FakeScenarioId } from '@ui/services/engine/fake/types.ts'
 
 const FILLED_LINES = 3000

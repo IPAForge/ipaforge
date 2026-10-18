@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import type { CertificateChoice } from '@loadstar/rpc'
+import type { CertificateChoice } from '@ipaforge/rpc'
 import {
   certificateTitleKeys,
   certificateWarningKeys
@@ -11,7 +11,7 @@ import { useFormat } from '@ui/hooks/use-format.ts'
 
 /**
  * The certificates as revoke choices: who made each, when it expires and what revoking it breaks. One made by
- * Loadstar elsewhere is suggested and listed first: revoking it breaks no other tool.
+ * IPAForge elsewhere is suggested and listed first: revoking it breaks no other tool.
  */
 export const useCertificateOptions = (
   certificates: readonly CertificateChoice[]
@@ -35,7 +35,7 @@ export const useCertificateOptions = (
           })
         : undefined,
       warning: warningKey ? t(warningKey) : undefined,
-      isSuggested: origin === 'loadstar'
+      isSuggested: origin === 'ipaforge'
     }
   })
 

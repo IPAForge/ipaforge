@@ -1,6 +1,6 @@
 import type { TFunction } from 'i18next'
 
-import type { StepDetail as StepReport } from '@loadstar/rpc'
+import type { StepDetail as StepReport } from '@ipaforge/rpc'
 import type { outcomeToneClasses } from '@ui/features/install/run/constants.ts'
 import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 import type { DeviceCheck } from '@ui/services/engine/types.ts'

@@ -1,6 +1,6 @@
 import { Uint8ArrayReader, ZipWriter } from '@zip.js/zip.js'
 
-import { type Logger, utf8Encode } from '@loadstar/kernel'
+import { type Logger, utf8Encode } from '@ipaforge/kernel'
 import {
   DIRECTORY_MODE,
   IPA_PAYLOAD_DIR,

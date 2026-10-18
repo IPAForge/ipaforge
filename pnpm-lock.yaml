@@ -172,7 +172,7 @@ importers:
       '@formatjs/icu-messageformat-parser':
         specifier: 3.5.18
         version: 3.5.18
-      '@loadstar/tooling-eslint':
+      '@ipaforge/tooling-eslint':
         specifier: workspace:*
         version: link:tooling/eslint
       '@types/node':
@@ -199,28 +199,28 @@ importers:
 
   apps/desktop:
     dependencies:
-      '@loadstar/apple':
+      '@ipaforge/apple':
         specifier: workspace:*
         version: link:../../packages/apple
-      '@loadstar/catalog':
+      '@ipaforge/catalog':
         specifier: workspace:*
         version: link:../../packages/catalog
-      '@loadstar/device':
+      '@ipaforge/device':
         specifier: workspace:*
         version: link:../../packages/device
-      '@loadstar/installer':
+      '@ipaforge/installer':
         specifier: workspace:*
         version: link:../../packages/installer
-      '@loadstar/kernel':
+      '@ipaforge/kernel':
         specifier: workspace:*
         version: link:../../packages/kernel
-      '@loadstar/rpc':
+      '@ipaforge/rpc':
         specifier: workspace:*
         version: link:../../packages/rpc
-      '@loadstar/signer':
+      '@ipaforge/signer':
         specifier: workspace:*
         version: link:../../packages/signer
-      '@loadstar/ui':
+      '@ipaforge/ui':
         specifier: workspace:*
         version: link:../../packages/ui
       '@tanstack/react-router':
@@ -257,7 +257,7 @@ importers:
 
   packages/apple:
     dependencies:
-      '@loadstar/kernel':
+      '@ipaforge/kernel':
         specifier: workspace:*
         version: link:../kernel
       asn1js:
@@ -272,7 +272,7 @@ importers:
 
   packages/catalog:
     dependencies:
-      '@loadstar/kernel':
+      '@ipaforge/kernel':
         specifier: workspace:*
         version: link:../kernel
       '@noble/hashes':
@@ -284,7 +284,7 @@ importers:
 
   packages/device:
     dependencies:
-      '@loadstar/kernel':
+      '@ipaforge/kernel':
         specifier: workspace:*
         version: link:../kernel
       asn1js:
@@ -299,19 +299,19 @@ importers:
 
   packages/installer:
     dependencies:
-      '@loadstar/apple':
+      '@ipaforge/apple':
         specifier: workspace:*
         version: link:../apple
-      '@loadstar/catalog':
+      '@ipaforge/catalog':
         specifier: workspace:*
         version: link:../catalog
-      '@loadstar/device':
+      '@ipaforge/device':
         specifier: workspace:*
         version: link:../device
-      '@loadstar/kernel':
+      '@ipaforge/kernel':
         specifier: workspace:*
         version: link:../kernel
-      '@loadstar/signer':
+      '@ipaforge/signer':
         specifier: workspace:*
         version: link:../signer
       zod:
@@ -322,10 +322,10 @@ importers:
 
   packages/rpc:
     dependencies:
-      '@loadstar/installer':
+      '@ipaforge/installer':
         specifier: workspace:*
         version: link:../installer
-      '@loadstar/kernel':
+      '@ipaforge/kernel':
         specifier: workspace:*
         version: link:../kernel
       zod:
@@ -334,7 +334,7 @@ importers:
 
   packages/signer:
     dependencies:
-      '@loadstar/kernel':
+      '@ipaforge/kernel':
         specifier: workspace:*
         version: link:../kernel
       '@noble/hashes':
@@ -370,10 +370,10 @@ importers:
       '@internationalized/date':
         specifier: 3.12.4
         version: 3.12.4
-      '@loadstar/kernel':
+      '@ipaforge/kernel':
         specifier: workspace:*
         version: link:../kernel
-      '@loadstar/rpc':
+      '@ipaforge/rpc':
         specifier: workspace:*
         version: link:../rpc
       '@react-aria/ssr':

@@ -1,6 +1,6 @@
 // What the fake Engine plays. Each scenario changes one thing about the happy path; a failing one fails its step
 // once with a real ErrorCode, so retrying from the checkpoint succeeds.
-import { ErrorCode } from '@loadstar/kernel'
+import { ErrorCode } from '@ipaforge/kernel'
 import type {
   FakeFailure,
   FakeScenarioId

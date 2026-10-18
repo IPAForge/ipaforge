@@ -1,8 +1,8 @@
 // A run's events reduced into what the run view shows: every step with its label key, state, progress and detail,
 // the overall progress, the question waiting for an answer, and how the run ended. The events themselves are
 // reduced in `utils/reduce-run-event.ts`; these are the changes the store makes around them.
-import { ErrorCode, type LoadstarError } from '@loadstar/kernel'
-import type { RemoteCheckpoint, RemoteResult } from '@loadstar/rpc'
+import { ErrorCode, type IPAForgeError } from '@ipaforge/kernel'
+import type { RemoteCheckpoint, RemoteResult } from '@ipaforge/rpc'
 import type { RunView } from '@ui/state/active-run/types.ts'
 import { withStepsIn } from '@ui/state/active-run/utils/steps.ts'
 
@@ -53,7 +53,7 @@ export const finishedView = (
 }
 
 /** The run could not start or finish (the channel closed): it fails where it was, without a checkpoint. */
-export const brokenView = (view: RunView, error: LoadstarError): RunView => {
+export const brokenView = (view: RunView, error: IPAForgeError): RunView => {
   const current =
     view.steps.find((step) => step.state === 'active') ??
     view.steps.find((step) => step.state === 'waiting')

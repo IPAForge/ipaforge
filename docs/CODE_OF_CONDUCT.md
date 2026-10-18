@@ -1,6 +1,6 @@
 # Code of Conduct
 
-Loadstar adopts the **[Contributor Covenant, version 2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/)** as its code of conduct. Everyone who takes part in issues, pull requests, discussions and any other project space is expected to follow it.
+IPAForge adopts the **[Contributor Covenant, version 2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/)** as its code of conduct. Everyone who takes part in issues, pull requests, discussions and any other project space is expected to follow it.
 
 In short:
 

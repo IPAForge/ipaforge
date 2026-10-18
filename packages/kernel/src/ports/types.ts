@@ -16,7 +16,7 @@ export type HttpResponse = {
 }
 
 /**
- * Outbound HTTP, straight to the internet (Apple, GitHub, anisette servers). Implementations reject with `LoadstarError("net.offline")` when there is no network.
+ * Outbound HTTP, straight to the internet (Apple, GitHub, anisette servers). Implementations reject with `IPAForgeError("net.offline")` when there is no network.
  */
 export type HttpClient = {
   request(request: HttpRequest): Promise<HttpResponse>

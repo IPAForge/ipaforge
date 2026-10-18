@@ -17,4 +17,4 @@ export const allowedEdges: Readonly<Record<string, readonly string[]>> = {
 /** Modules that are platform-specific even though they are not Node built-ins. */
 export const forbiddenModules: readonly string[] = ['electron']
 
-export const workspaceScope = '@loadstar/'
+export const workspaceScope = '@ipaforge/'

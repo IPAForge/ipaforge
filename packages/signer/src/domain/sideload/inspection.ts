@@ -1,5 +1,5 @@
 // What an IPA declares about its identity, read before any Apple call.
-import { compact, type PlistDict, stringAt } from '@loadstar/kernel'
+import { compact, type PlistDict, stringAt } from '@ipaforge/kernel'
 import {
   CF_BUNDLE_DISPLAY_NAME,
   CF_BUNDLE_NAME,

@@ -1,7 +1,7 @@
 import { RadioButton, RadioField, RadioGroup } from 'react-aria-components'
 import { useTranslation } from 'react-i18next'
 
-import type { LogLevel } from '@loadstar/kernel'
+import type { LogLevel } from '@ipaforge/kernel'
 import { segmentClass } from '@ui/features/install/home/utils/choice-classes.ts'
 import { LEVEL_FILTER_KEYS, LOG_LEVELS } from '@ui/features/logs/constants.ts'
 import { linesAtLeast } from '@ui/features/logs/utils/lines-at-least.ts'

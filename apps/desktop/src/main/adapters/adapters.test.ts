@@ -15,13 +15,13 @@ import {
   decodePem,
   type PairRecord,
   tlsCredentials
-} from '@loadstar/device'
+} from '@ipaforge/device'
 import {
   ErrorCode,
-  LoadstarError,
+  IPAForgeError,
   utf8Decode,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const servers: Server[] = []
 afterEach(() => {
@@ -123,8 +123,8 @@ describe('Node connection', () => {
     const error = await connection
       .startTls(credentials)
       .catch((e: unknown) => e)
-    expect(error).toBeInstanceOf(LoadstarError)
-    expect((error as LoadstarError).code).toBe(ErrorCode.InvalidPairRecord)
+    expect(error).toBeInstanceOf(IPAForgeError)
+    expect((error as IPAForgeError).code).toBe(ErrorCode.InvalidPairRecord)
     await connection.close()
   })
 
@@ -143,9 +143,9 @@ describe('Node connection', () => {
     const error = await connection
       .startTls(tlsCredentials(record))
       .catch((e: unknown) => e)
-    expect(error).toBeInstanceOf(LoadstarError)
-    expect((error as LoadstarError).code).toBe(ErrorCode.DeviceProtocolError)
-    expect((error as LoadstarError).message).toContain(
+    expect(error).toBeInstanceOf(IPAForgeError)
+    expect((error as IPAForgeError).code).toBe(ErrorCode.DeviceProtocolError)
+    expect((error as IPAForgeError).message).toContain(
       'TLS handshake with the device failed'
     )
     await connection.close()
@@ -191,14 +191,14 @@ describe('usbmuxd endpoint', () => {
       port: 27015
     })
     expect(() => resolveUsbmuxdEndpoint('darwin', 'nonsense')).toThrow(
-      LoadstarError
+      IPAForgeError
     )
   })
 })
 
 describe('file source', () => {
   it('streams and slices a file on disk', async () => {
-    const dir = await mkdtemp(join(tmpdir(), 'loadstar-'))
+    const dir = await mkdtemp(join(tmpdir(), 'ipaforge-'))
     try {
       const path = join(dir, 'App.ipa')
       await writeFile(path, '0123456789')
@@ -229,7 +229,7 @@ describe('HTTP redirects', () => {
     expect(() =>
       // eslint-disable-next-line sonarjs/no-clear-text-protocols -- the downgrade under test must be refused
       redirectTarget(from, 'http://gsa.apple.com/auth', headers)
-    ).toThrow(LoadstarError)
+    ).toThrow(IPAForgeError)
     expect(redirectTarget(from, '/other', headers).headers).toEqual(headers)
     expect(
       redirectTarget(from, 'https://elsewhere.example/x', headers).headers
@@ -251,7 +251,7 @@ describe('file secret store', () => {
       '@desktop/main/adapters/memory-secret-store.ts'
     )
     const { stat } = await import('node:fs/promises')
-    const dir = await mkdtemp(join(tmpdir(), 'loadstar-secrets-'))
+    const dir = await mkdtemp(join(tmpdir(), 'ipaforge-secrets-'))
     try {
       const path = join(dir, 'nested', 'store.json')
       const store = createRoutedSecretStore(
@@ -315,7 +315,7 @@ describe('encrypted file secret store', () => {
       '@desktop/main/adapters/encrypted-file-secret-store.ts'
     )
     const { readFile } = await import('node:fs/promises')
-    const dir = await mkdtemp(join(tmpdir(), 'loadstar-enc-'))
+    const dir = await mkdtemp(join(tmpdir(), 'ipaforge-enc-'))
     try {
       const key = crypto.getRandomValues(new Uint8Array(32))
       const path = join(dir, 'secrets.enc')
@@ -344,7 +344,7 @@ describe('file download store', () => {
       '@desktop/main/adapters/file-download-store.ts'
     )
     const { readdir } = await import('node:fs/promises')
-    const dir = await mkdtemp(join(tmpdir(), 'loadstar-dl-'))
+    const dir = await mkdtemp(join(tmpdir(), 'ipaforge-dl-'))
     const stream = (text: string) =>
       new ReadableStream<Uint8Array>({
         start: (controller) => {

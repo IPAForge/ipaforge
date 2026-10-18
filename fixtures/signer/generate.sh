@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Signer golden fixtures. macOS only (needs Xcode's iOS SDK and Apple `codesign`).
 #
-#   inputs/        unsigned (or previously signed) binaries and bundles we feed to @loadstar/signer
+#   inputs/        unsigned (or previously signed) binaries and bundles we feed to @ipaforge/signer
 #   expected/      the same inputs ad-hoc signed by Apple `codesign`, the byte-exact oracle
 #   manifest.json  one entry per case + toolchain versions
 #
@@ -50,7 +50,7 @@ build_inputs() { # build_inputs <dir>
   cc "$IN/nosig.dylib" 14.0 arm64 -- -dynamiclib -install_name @rpath/nosig.dylib "$SRC/lib.c"
   # re-sign case: the input already carries an Apple ad-hoc signature (different entitlements)
   cp "$IN/thin-min14" "$IN/resign"
-  sign "$IN/resign" "com.loadstar.fixture.thin-min14" "$ENT/app.plist"
+  sign "$IN/resign" "com.ipaforge.fixture.thin-min14" "$ENT/app.plist"
 
   local APP="$IN/Test.app"
   mkdir -p "$APP/Frameworks/Lib.framework" "$APP/PlugIns/Ext.appex" "$APP/en.lproj" "$APP/Base.lproj" "$APP/Assets/nested"
@@ -77,12 +77,12 @@ sign_expected() { # sign_expected <inputs dir> <expected dir>
   rm -rf "$EXP" && mkdir -p "$EXP"
   for name in thin-min10 thin-min14 thin-min16 fat; do
     cp "$IN/$name" "$EXP/$name"
-    sign "$EXP/$name" "com.loadstar.fixture.$name" "$ENT/app.plist"
+    sign "$EXP/$name" "com.ipaforge.fixture.$name" "$ENT/app.plist"
   done
   cp "$IN/nosig.dylib" "$EXP/nosig.dylib"
-  sign "$EXP/nosig.dylib" "com.loadstar.fixture.nosig" -
+  sign "$EXP/nosig.dylib" "com.ipaforge.fixture.nosig" -
   cp "$IN/resign" "$EXP/resign"
-  sign "$EXP/resign" "com.loadstar.fixture.resign" "$ENT/resign.plist"
+  sign "$EXP/resign" "com.ipaforge.fixture.resign" "$ENT/resign.plist"
 
   cp -R "$IN/Test.app" "$EXP/Test.app"
   # bottom-up, exactly as the signer must do it
@@ -103,13 +103,13 @@ write_manifest() {
   "iphoneosSdk": "$sdk",
   "clang": "$clang",
   "cases": [
-    {"name":"thin-min10","kind":"binary","role":"main","identifier":"com.loadstar.fixture.thin-min10","entitlements":"entitlements/app.plist","minOS":"10.0"},
-    {"name":"thin-min14","kind":"binary","role":"main","identifier":"com.loadstar.fixture.thin-min14","entitlements":"entitlements/app.plist","minOS":"14.0"},
-    {"name":"thin-min16","kind":"binary","role":"main","identifier":"com.loadstar.fixture.thin-min16","entitlements":"entitlements/app.plist","minOS":"16.0"},
-    {"name":"fat","kind":"binary","role":"main","identifier":"com.loadstar.fixture.fat","entitlements":"entitlements/app.plist","minOS":"14.0"},
-    {"name":"nosig.dylib","kind":"binary","role":"dylib","identifier":"com.loadstar.fixture.nosig","entitlements":null,"minOS":"14.0"},
-    {"name":"resign","kind":"binary","role":"main","identifier":"com.loadstar.fixture.resign","entitlements":"entitlements/resign.plist","minOS":"14.0"},
-    {"name":"Test.app","kind":"bundle","role":"main","identifier":"com.loadstar.fixture.app","entitlements":"entitlements/app.plist","minOS":"14.0","symlinks":["Strings-link"],"nested":[{"path":"Frameworks/Lib.framework","role":"framework","identifier":"com.loadstar.fixture.lib","entitlements":null},{"path":"Frameworks/libloose.dylib","role":"dylib","identifier":"libloose","entitlements":null},{"path":"PlugIns/Ext.appex","role":"appex","identifier":"com.loadstar.fixture.app.ext","entitlements":"entitlements/appex.plist"}]}
+    {"name":"thin-min10","kind":"binary","role":"main","identifier":"com.ipaforge.fixture.thin-min10","entitlements":"entitlements/app.plist","minOS":"10.0"},
+    {"name":"thin-min14","kind":"binary","role":"main","identifier":"com.ipaforge.fixture.thin-min14","entitlements":"entitlements/app.plist","minOS":"14.0"},
+    {"name":"thin-min16","kind":"binary","role":"main","identifier":"com.ipaforge.fixture.thin-min16","entitlements":"entitlements/app.plist","minOS":"16.0"},
+    {"name":"fat","kind":"binary","role":"main","identifier":"com.ipaforge.fixture.fat","entitlements":"entitlements/app.plist","minOS":"14.0"},
+    {"name":"nosig.dylib","kind":"binary","role":"dylib","identifier":"com.ipaforge.fixture.nosig","entitlements":null,"minOS":"14.0"},
+    {"name":"resign","kind":"binary","role":"main","identifier":"com.ipaforge.fixture.resign","entitlements":"entitlements/resign.plist","minOS":"14.0"},
+    {"name":"Test.app","kind":"bundle","role":"main","identifier":"com.ipaforge.fixture.app","entitlements":"entitlements/app.plist","minOS":"14.0","symlinks":["Strings-link"],"nested":[{"path":"Frameworks/Lib.framework","role":"framework","identifier":"com.ipaforge.fixture.lib","entitlements":null},{"path":"Frameworks/libloose.dylib","role":"dylib","identifier":"libloose","entitlements":null},{"path":"PlugIns/Ext.appex","role":"appex","identifier":"com.ipaforge.fixture.app.ext","entitlements":"entitlements/appex.plist"}]}
   ]
 }
 JSON

@@ -25,9 +25,9 @@ import { toNetworkPort } from '@device/infrastructure/usbmux/protocol.ts'
 import {
   createDict,
   ErrorCode,
-  LoadstarError,
+  IPAForgeError,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const LIMITS = {
   maxMessageBytes: DEFAULT_DEVICE_CONFIG.maxMessageBytes,
@@ -40,7 +40,7 @@ const errorCode = async (
   promise.then(
     () => undefined,
     (error: unknown) =>
-      error instanceof LoadstarError ? error.code : String(error)
+      error instanceof IPAForgeError ? error.code : String(error)
   )
 
 describe('framing', () => {

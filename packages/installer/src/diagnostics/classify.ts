@@ -4,10 +4,10 @@ import { MAX_DEPTH, WRAPPERS } from '@installer/diagnostics/constants.ts'
 import type { RecoveryAction } from '@installer/diagnostics/recovery.ts'
 import {
   ErrorCode,
+  IPAForgeError,
   isAbortError,
-  isErrorCode,
-  LoadstarError
-} from '@loadstar/kernel'
+  isErrorCode
+} from '@ipaforge/kernel'
 
 export type Diagnosis = {
   readonly code: ErrorCode
@@ -26,7 +26,7 @@ const foreignCode = (error: unknown): ErrorCode | undefined => {
 }
 
 const codeOf = (error: unknown, depth = 0): ErrorCode => {
-  if (!(error instanceof LoadstarError))
+  if (!(error instanceof IPAForgeError))
     return foreignCode(error) ?? ErrorCode.Unexpected
   if (
     !WRAPPERS.has(error.code) ||

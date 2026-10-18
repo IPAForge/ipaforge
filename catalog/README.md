@@ -1,6 +1,6 @@
 # Catalog
 
-`sources.json` lists what Loadstar can install and where each release comes from. The app downloads this file from `main`, so a change merged here reaches every user **without an app release**. That's how Loadstar keeps working when a project moves or a repository disappears. A built-in copy (`packages/catalog/src/domain/default-manifest.ts`, which must stay identical; a test checks this) is used when the file cannot be fetched.
+`sources.json` lists what IPAForge can install and where each release comes from. The app downloads this file from `main`, so a change merged here reaches every user **without an app release**. That's how IPAForge keeps working when a project moves or a repository disappears. A built-in copy (`packages/catalog/src/domain/default-manifest.ts`, which must stay identical; a test checks this) is used when the file cannot be fetched.
 
 ## Format
 
@@ -40,6 +40,6 @@
 Open a pull request that edits **both** `sources.json` and the built-in copy. CI validates the schema and checks that the two match. Check a change locally with:
 
 ```bash
-pnpm --filter @loadstar/desktop catalog-probe                      # resolve every app and channel
-pnpm --filter @loadstar/desktop catalog-probe download sidestore stable
+pnpm --filter @ipaforge/desktop catalog-probe                      # resolve every app and channel
+pnpm --filter @ipaforge/desktop catalog-probe download sidestore stable
 ```

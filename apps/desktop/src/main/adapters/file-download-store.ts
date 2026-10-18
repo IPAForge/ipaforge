@@ -6,7 +6,7 @@ import { dirname, join } from 'node:path'
 import { Writable } from 'node:stream'
 
 import { nodeFileSource } from '@desktop/main/adapters/file-source.ts'
-import type { DownloadStore } from '@loadstar/catalog'
+import type { DownloadStore } from '@ipaforge/catalog'
 
 /** Cache keys become nested paths; anything outside a safe character set is replaced. */
 const safePath = (key: string): string =>

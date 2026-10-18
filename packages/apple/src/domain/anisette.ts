@@ -1,4 +1,4 @@
-import { toHex, trimEndChar } from '@loadstar/kernel'
+import { toHex, trimEndChar } from '@ipaforge/kernel'
 
 export const ANISETTE_IDENTIFIER_BYTES = 16
 

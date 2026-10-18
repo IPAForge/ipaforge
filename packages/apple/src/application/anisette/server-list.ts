@@ -12,7 +12,7 @@ import type {
 import type { AnisetteServer } from '@apple/domain/types.ts'
 import { fetchApple } from '@apple/infrastructure/http.ts'
 import type { AppleDeps } from '@apple/types.ts'
-import { compact, utf8Decode, utf8Encode } from '@loadstar/kernel'
+import { compact, utf8Decode, utf8Encode } from '@ipaforge/kernel'
 
 const serverListSchema = z.looseObject({
   servers: z.array(z.looseObject({ name: z.string().min(1), address: z.url() }))

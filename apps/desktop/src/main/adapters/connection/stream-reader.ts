@@ -5,7 +5,7 @@ import type {
   StreamReader,
   Waiter
 } from '@desktop/main/adapters/connection/types.ts'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 /** Turns 'data'/'end'/'error' events into pull-based reads, with backpressure via pause/resume. */
 export const attachReader = (stream: Stream): StreamReader => {
@@ -29,7 +29,7 @@ export const attachReader = (stream: Stream): StreamReader => {
     for (const waiter of waiters.splice(0)) waiter.resolve(null)
   }
   const onError = (error: Error) => {
-    failure = new LoadstarError(ErrorCode.DeviceDisconnected, { cause: error })
+    failure = new IPAForgeError(ErrorCode.DeviceDisconnected, { cause: error })
     for (const waiter of waiters.splice(0)) waiter.reject(failure)
   }
   stream.on('data', onData)
@@ -64,7 +64,7 @@ export const writeTo = (stream: Stream, bytes: Uint8Array): Promise<void> =>
     stream.write(bytes, (error) =>
       error
         ? reject(
-            new LoadstarError(ErrorCode.DeviceDisconnected, { cause: error })
+            new IPAForgeError(ErrorCode.DeviceDisconnected, { cause: error })
           )
         : resolve()
     )

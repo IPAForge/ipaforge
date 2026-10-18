@@ -17,11 +17,11 @@ import type {
 } from '@apple/application/developer/types.ts'
 import { planAppIds } from '@apple/domain/developer.ts'
 import type { AppId, AppIdPlan, Team } from '@apple/domain/types.ts'
-import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 const assertEnoughAppIds = (plan: AppIdPlan): void => {
   if (plan.enough) return
-  throw new LoadstarError(ErrorCode.AppIdQuotaExceeded, {
+  throw new IPAForgeError(ErrorCode.AppIdQuotaExceeded, {
     data: compact({
       needed: plan.create.length,
       available: plan.available,

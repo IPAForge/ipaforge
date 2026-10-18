@@ -115,7 +115,7 @@ const classifyImportStyle = (
   if (alias && alias !== pkg) {
     return {
       rule: 'foreign-subpath',
-      detail: `'${specifier}' is another package's internal alias; import @loadstar/${alias}`
+      detail: `'${specifier}' is another package's internal alias; import @ipaforge/${alias}`
     }
   }
   return undefined

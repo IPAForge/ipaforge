@@ -141,7 +141,7 @@ describe('the Logs page', () => {
     )
     await waitFor(() => expect(files.saved).toHaveLength(1))
     expect(files.saved[0]?.name).toMatch(
-      /^loadstar-logs-\d{4}-\d\d-\d\d-\d{4}\.log$/
+      /^ipaforge-logs-\d{4}-\d\d-\d\d-\d{4}\.log$/
     )
   })
 

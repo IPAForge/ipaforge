@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { gsaErrorCode, needsAnisetteResync } from '@apple/domain/gsa-status.ts'
 import { statusOf } from '@apple/infrastructure/gsa/client.ts'
-import { createDict, ErrorCode } from '@loadstar/kernel'
+import { createDict, ErrorCode } from '@ipaforge/kernel'
 
 describe('GSA status classification', () => {
   it.each([

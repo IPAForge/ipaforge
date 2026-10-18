@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Loadstar"
+    "name": "IPAForge"
   },
   "shell": {
     "skipToContent": "Zum Inhalt springen",
@@ -57,7 +57,7 @@
     },
     "signInNeeded": {
       "title": "Deine Apple-ID braucht eine erneute Anmeldung",
-      "body": "Die gespeicherte Sitzung für {appleId} ist abgelaufen. Du kannst trotzdem installieren: Loadstar fragt dann nach dem Passwort."
+      "body": "Die gespeicherte Sitzung für {appleId} ist abgelaufen. Du kannst trotzdem installieren: IPAForge fragt dann nach dem Passwort."
     },
     "blocked": {
       "title": "Apple hat {appleId} auf {device} gesperrt",
@@ -103,7 +103,7 @@
       "certificateNew": "Ein neues wird erstellt",
       "certificatesOnTeam": "{count, plural, =0 {Noch keines im Team} one {# im Team} other {# im Team}}",
       "team": "Team",
-      "certificateNewWhy": "Loadstar hat noch kein eigenes Zertifikat in diesem Team. {count, plural, =0 {} one {Das vorhandene gehört einem anderen Tool, das seinen privaten Schlüssel behält.} other {Die # vorhandenen gehören anderen Tools, die ihre privaten Schlüssel behalten.}}"
+      "certificateNewWhy": "IPAForge hat noch kein eigenes Zertifikat in diesem Team. {count, plural, =0 {} one {Das vorhandene gehört einem anderen Tool, das seinen privaten Schlüssel behält.} other {Die # vorhandenen gehören anderen Tools, die ihre privaten Schlüssel behalten.}}"
     },
     "readiness": {
       "noDevice": "Verbinde zuerst ein Gerät.",
@@ -141,7 +141,7 @@
       },
       "unsupportedPrompt": {
         "title": "Dieser Schritt braucht eine Antwort",
-        "body": "Loadstar braucht eine Antwort auf eine Frage, die diese Version nicht anzeigen kann. Brich die Installation ab und aktualisiere Loadstar."
+        "body": "IPAForge braucht eine Antwort auf eine Frage, die diese Version nicht anzeigen kann. Brich die Installation ab und aktualisiere IPAForge."
       },
       "backToInstall": "Zurück zur Installation",
       "report": {
@@ -217,7 +217,7 @@
     "language": {
       "title": "Sprache",
       "system": "System ({language})",
-      "hint": "Loadstar verwendet die Systemsprache, solange du hier keine andere auswählst.",
+      "hint": "IPAForge verwendet die Systemsprache, solange du hier keine andere auswählst.",
       "draft": "Entwurf"
     }
   },
@@ -240,7 +240,7 @@
     "device": {
       "locked": {
         "title": "Entsperre dein Gerät",
-        "body": "Das Gerät ist gesperrt, daher kann Loadstar nicht mit ihm kommunizieren. Entsperre es und lass es entsperrt, bis die Installation abgeschlossen ist."
+        "body": "Das Gerät ist gesperrt, daher kann IPAForge nicht mit ihm kommunizieren. Entsperre es und lass es entsperrt, bis die Installation abgeschlossen ist."
       },
       "developer_mode_off": {
         "title": "Der Entwicklermodus ist aus",
@@ -252,7 +252,7 @@
       },
       "usbmuxd_unavailable": {
         "title": "Die Geräteunterstützung läuft nicht",
-        "body": "Loadstar erreicht den Systemdienst nicht, der mit iPhone und iPad kommuniziert. Installiere oder starte ihn und versuche es dann erneut."
+        "body": "IPAForge erreicht den Systemdienst nicht, der mit iPhone und iPad kommuniziert. Installiere oder starte ihn und versuche es dann erneut."
       },
       "not_found": {
         "title": "Kein Gerät gefunden",
@@ -276,11 +276,11 @@
       },
       "service_unavailable": {
         "title": "Ein Gerätedienst ist nicht gestartet",
-        "body": "Das Gerät hat einen Dienst, den Loadstar braucht, nicht gestartet. Entsperre es, verbinde es erneut und versuche es noch einmal."
+        "body": "Das Gerät hat einen Dienst, den IPAForge braucht, nicht gestartet. Entsperre es, verbinde es erneut und versuche es noch einmal."
       },
       "protocol_error": {
         "title": "Unerwartete Antwort vom Gerät",
-        "body": "Das Gerät hat etwas gesendet, das Loadstar nicht versteht. Verbinde es erneut. Wenn es wieder passiert, aktualisiere Loadstar oder melde das Problem."
+        "body": "Das Gerät hat etwas gesendet, das IPAForge nicht versteht. Verbinde es erneut. Wenn es wieder passiert, aktualisiere IPAForge oder melde das Problem."
       },
       "install_failed": {
         "title": "Die Installation ist fehlgeschlagen",
@@ -366,7 +366,7 @@
       },
       "two_factor_unsupported": {
         "title": "Diese Anmeldemethode wird nicht unterstützt",
-        "body": "Diese Apple-ID verwendet eine Zwei-Faktor-Methode, die Loadstar noch nicht beherrscht, etwa einen Sicherheitsschlüssel. Verwende eine andere Apple-ID."
+        "body": "Diese Apple-ID verwendet eine Zwei-Faktor-Methode, die IPAForge noch nicht beherrscht, etwa einen Sicherheitsschlüssel. Verwende eine andere Apple-ID."
       },
       "sms_unavailable": {
         "title": "Codes per SMS sind nicht verfügbar",
@@ -378,7 +378,7 @@
       },
       "protocol_error": {
         "title": "Unerwartete Antwort von Apple",
-        "body": "Apple hat etwas gesendet, das Loadstar nicht versteht. Aktualisiere Loadstar oder melde das Problem, wenn es weiter auftritt."
+        "body": "Apple hat etwas gesendet, das IPAForge nicht versteht. Aktualisiere IPAForge oder melde das Problem, wenn es weiter auftritt."
       },
       "session_expired": {
         "title": "Deine Sitzung ist abgelaufen",
@@ -386,7 +386,7 @@
       },
       "account_not_found": {
         "title": "Apple-ID nicht gefunden",
-        "body": "Loadstar hat keine gespeicherte Sitzung für diese Apple-ID. Melde dich erneut an."
+        "body": "IPAForge hat keine gespeicherte Sitzung für diese Apple-ID. Melde dich erneut an."
       },
       "not_eligible": {
         "title": "Diese Apple-ID kann nicht für die Entwicklung verwendet werden",
@@ -414,7 +414,7 @@
       },
       "invalid_app_id_name": {
         "title": "Apple hat den Namen der App-ID abgelehnt",
-        "body": "Apple hat den Namen, den Loadstar für die App-ID gewählt hat, nicht akzeptiert. Aktualisiere Loadstar oder melde das Problem."
+        "body": "Apple hat den Namen, den IPAForge für die App-ID gewählt hat, nicht akzeptiert. Aktualisiere IPAForge oder melde das Problem."
       },
       "certificate_not_revocable": {
         "title": "Dieses Zertifikat kann hier nicht widerrufen werden",
@@ -432,11 +432,11 @@
     "catalog": {
       "source_gone": {
         "title": "Die Version ist nicht mehr verfügbar",
-        "body": "Die Quelle, aus der diese App geladen wurde, existiert nicht mehr. Wähle einen anderen Kanal, importiere eine IPA oder aktualisiere Loadstar."
+        "body": "Die Quelle, aus der diese App geladen wurde, existiert nicht mehr. Wähle einen anderen Kanal, importiere eine IPA oder aktualisiere IPAForge."
       },
       "unavailable": {
         "title": "Die App-Liste konnte nicht geladen werden",
-        "body": "Loadstar konnte die Liste der Apps nicht abrufen. Prüfe dein Netzwerk und versuche es erneut."
+        "body": "IPAForge konnte die Liste der Apps nicht abrufen. Prüfe dein Netzwerk und versuche es erneut."
       },
       "download_failed": {
         "title": "Der Download ist fehlgeschlagen",
@@ -448,7 +448,7 @@
       },
       "checksum_missing": {
         "title": "Der Download kann nicht überprüft werden",
-        "body": "Diese Version hat keine Prüfsumme, daher kann Loadstar sie nicht überprüfen. Wähle einen anderen Kanal oder importiere die IPA selbst."
+        "body": "Diese Version hat keine Prüfsumme, daher kann IPAForge sie nicht überprüfen. Wähle einen anderen Kanal oder importiere die IPA selbst."
       },
       "rate_limited": {
         "title": "Zu viele Anfragen an GitHub",
@@ -464,7 +464,7 @@
     "net": {
       "offline": {
         "title": "Du bist offline",
-        "body": "Loadstar erreicht das Internet nicht. Prüfe deine Netzwerkverbindung und versuche es erneut."
+        "body": "IPAForge erreicht das Internet nicht. Prüfe deine Netzwerkverbindung und versuche es erneut."
       }
     },
     "signer": {
@@ -498,15 +498,15 @@
       },
       "zip_slip": {
         "title": "Die IPA ist unsicher",
-        "body": "Die IPA versucht, Dateien außerhalb ihres eigenen Ordners zu schreiben, daher hat Loadstar sie abgelehnt. Wähle eine andere IPA."
+        "body": "Die IPA versucht, Dateien außerhalb ihres eigenen Ordners zu schreiben, daher hat IPAForge sie abgelehnt. Wähle eine andere IPA."
       },
       "invalid_certificate": {
         "title": "Das Zertifikat ist ungültig",
-        "body": "Das Signaturzertifikat konnte nicht verwendet werden. Widerrufe es, damit Loadstar ein neues erstellen kann, und versuche es dann erneut."
+        "body": "Das Signaturzertifikat konnte nicht verwendet werden. Widerrufe es, damit IPAForge ein neues erstellen kann, und versuche es dann erneut."
       },
       "unknown_issuer": {
         "title": "Unbekannter Zertifikatsaussteller",
-        "body": "Loadstar erkennt nicht, wer das Zertifikat ausgestellt hat. Aktualisiere Loadstar und prüfe dein Netzwerk."
+        "body": "IPAForge erkennt nicht, wer das Zertifikat ausgestellt hat. Aktualisiere IPAForge und prüfe dein Netzwerk."
       },
       "invalid_bundle": {
         "title": "Das App-Bundle ist ungültig",
@@ -548,7 +548,7 @@
       },
       "certificate_machine_id_missing": {
         "title": "Das Zertifikat kann nicht freigegeben werden",
-        "body": "Diesem Zertifikat fehlen Daten, die SideStore zum Öffnen braucht. Widerrufe es, damit Loadstar ein neues erstellen kann, und versuche es dann erneut."
+        "body": "Diesem Zertifikat fehlen Daten, die SideStore zum Öffnen braucht. Widerrufe es, damit IPAForge ein neues erstellen kann, und versuche es dann erneut."
       },
       "team_required": {
         "title": "Team auswählen",
@@ -558,15 +558,15 @@
     "rpc": {
       "invalid_message": {
         "title": "Interner Kommunikationsfehler",
-        "body": "Teile von Loadstar konnten sich nicht verständigen. Aktualisiere Loadstar oder melde das Problem."
+        "body": "Teile von IPAForge konnten sich nicht verständigen. Aktualisiere IPAForge oder melde das Problem."
       },
       "disconnected": {
         "title": "Verbindung zur Engine verloren",
-        "body": "Die Engine von Loadstar reagiert nicht mehr. Versuche es erneut und melde das Problem, wenn es weiter auftritt."
+        "body": "Die Engine von IPAForge reagiert nicht mehr. Versuche es erneut und melde das Problem, wenn es weiter auftritt."
       },
       "timeout": {
         "title": "Die Engine hat nicht geantwortet",
-        "body": "Die Engine von Loadstar hat zu lange gebraucht. Versuche es erneut und melde das Problem, wenn es weiter auftritt."
+        "body": "Die Engine von IPAForge hat zu lange gebraucht. Versuche es erneut und melde das Problem, wenn es weiter auftritt."
       }
     },
     "internal": {
@@ -609,7 +609,7 @@
     "choose-another-ipa": "Andere IPA wählen",
     "choose-another-channel": "Anderen Kanal wählen",
     "import-ipa": "IPA importieren",
-    "update-loadstar": "Loadstar aktualisieren",
+    "update-ipaforge": "IPAForge aktualisieren",
     "report-issue": "Problem melden",
     "or": "Oder",
     "switchAccount": {
@@ -682,7 +682,7 @@
         "how": "Lege auf dem Gerät unter Einstellungen › Face ID & Code einen Code fest und versuche es dann erneut."
       },
       "installDeviceSupport": {
-        "how": "Installiere unter Windows Apple-Geräte (oder iTunes) aus dem Microsoft Store und starte Loadstar neu."
+        "how": "Installiere unter Windows Apple-Geräte (oder iTunes) aus dem Microsoft Store und starte IPAForge neu."
       },
       "reinstallApp": {
         "how": "Lösche die App vom Gerät und versuche es dann erneut."
@@ -802,15 +802,15 @@
     "suggested": "Empfohlen",
     "team": {
       "title": "Welches Team soll die App signieren?",
-      "body": "Diese Apple-ID gehört zu mehr als einem Team. Loadstar merkt sich deine Wahl für diese Apple-ID.",
+      "body": "Diese Apple-ID gehört zu mehr als einem Team. IPAForge merkt sich deine Wahl für diese Apple-ID.",
       "free": "Kostenlos: Apps laufen nach 7 Tagen ab, 3 Apps pro Gerät",
       "paid": "Bezahlt: Apps halten ein Jahr, kein App-Limit",
       "checking": "Dieses Team wird verwendet…"
     },
     "revoke": {
       "title": "Ein Zertifikat widerrufen?",
-      "body": "Dieses Team hat bereits die maximale Anzahl an Entwicklerzertifikaten, daher muss Loadstar eines widerrufen, um ein eigenes zu erstellen. Mit dem widerrufenen signierte Apps werden nicht mehr aktualisiert.",
-      "loadstar": "Von Loadstar auf einem anderen Computer erstellt",
+      "body": "Dieses Team hat bereits die maximale Anzahl an Entwicklerzertifikaten, daher muss IPAForge eines widerrufen, um ein eigenes zu erstellen. Mit dem widerrufenen signierte Apps werden nicht mehr aktualisiert.",
+      "ipaforge": "Von IPAForge auf einem anderen Computer erstellt",
       "sidestore": "Von SideStore erstellt",
       "machine": "Auf „{machine}“ erstellt (meist Xcode)",
       "unknown": "Von einem unbekannten Tool erstellt",
@@ -852,7 +852,7 @@
   },
   "signIn": {
     "title": "Apple-ID hinzufügen",
-    "body": "Loadstar signiert Apps damit. Dein Passwort geht nur an Apple.",
+    "body": "IPAForge signiert Apps damit. Dein Passwort geht nur an Apple.",
     "appleId": "Apple-ID",
     "password": "Passwort",
     "submit": "Anmelden",
@@ -863,10 +863,10 @@
       "close": "Fertig"
     },
     "rememberPassword": "Mein Passwort im Schlüsselbund des Systems sichern",
-    "rememberPasswordHint": "Damit kann sich Loadstar selbst erneut anmelden, wenn die Sitzung abläuft."
+    "rememberPasswordHint": "Damit kann sich IPAForge selbst erneut anmelden, wenn die Sitzung abläuft."
   },
   "accounts": {
-    "description": "Die Apple-IDs, mit denen Loadstar Apps signiert. Die verwendete steht in der oberen Leiste.",
+    "description": "Die Apple-IDs, mit denen IPAForge Apps signiert. Die verwendete steht in der oberen Leiste.",
     "list": "Gespeicherte Apple-IDs",
     "empty": "Noch keine Apple-IDs. Füge eine hinzu, um SideStore zu installieren.",
     "freeTeam": "{name} (kostenlos)",
@@ -884,14 +884,14 @@
     "signOut": {
       "action": "Abmelden",
       "title": "Von {appleId} abmelden?",
-      "forgets": "Loadstar vergisst diese Apple-ID, ihre Sitzung und ihr gespeichertes Passwort.",
+      "forgets": "IPAForge vergisst diese Apple-ID, ihre Sitzung und ihr gespeichertes Passwort.",
       "keeps": "Ihre Signaturzertifikate bleiben auf diesem Computer, sodass eine erneute Anmeldung sie wiederverwendet. Bereits installierte Apps laufen weiter, bis sie ablaufen.",
       "confirm": "Abmelden"
     }
   },
   "logs": {
     "title": "Protokoll",
-    "lede": "Was Loadstar getan hat, Zeile für Zeile. Von überall aus zu öffnen mit",
+    "lede": "Was IPAForge getan hat, Zeile für Zeile. Von überall aus zu öffnen mit",
     "shortcut": {
       "control": "Strg+",
       "command": "⌘",
@@ -960,7 +960,7 @@
     "empty": {
       "none": {
         "title": "Noch nichts protokolliert",
-        "body": "Zeilen erscheinen hier, während Loadstar arbeitet: Gerät verbinden, anmelden, installieren."
+        "body": "Zeilen erscheinen hier, während IPAForge arbeitet: Gerät verbinden, anmelden, installieren."
       },
       "noMatch": {
         "title": "Keine passenden Zeilen",

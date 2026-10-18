@@ -4,7 +4,7 @@
 import * as asn1js from 'asn1js'
 import * as pkijs from 'pkijs'
 
-import { toBase64 } from '@loadstar/kernel'
+import { toBase64 } from '@ipaforge/kernel'
 
 const OID_COMMON_NAME = '2.5.4.3'
 const OID_COUNTRY = '2.5.4.6'

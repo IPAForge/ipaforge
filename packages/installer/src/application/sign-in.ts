@@ -6,7 +6,7 @@ import type { OpenedAccount } from '@installer/application/types.ts'
 import { PromptKind } from '@installer/domain/prompts.ts'
 import type { StepContext } from '@installer/pipeline/types.ts'
 import type { InstallerDeps } from '@installer/types.ts'
-import type { AppleSession, SavedAccount, SignInResult } from '@loadstar/apple'
+import type { AppleSession, SavedAccount, SignInResult } from '@ipaforge/apple'
 
 const finish = async (
   deps: InstallerDeps,

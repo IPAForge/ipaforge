@@ -1,5 +1,5 @@
 import type { AnisetteData } from '@apple/domain/types.ts'
-import type { PlistValue } from '@loadstar/kernel'
+import type { PlistValue } from '@ipaforge/kernel'
 
 /** `ios/` resources (devices, certificates, App IDs, …) or team-level actions (`listTeams`). */
 export type DeveloperPlatform = 'ios' | 'any'

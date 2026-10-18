@@ -1,4 +1,4 @@
-import type { StepLabel } from '@loadstar/rpc'
+import type { StepLabel } from '@ipaforge/rpc'
 import type {
   errorBodyKey,
   errorTitleKey,

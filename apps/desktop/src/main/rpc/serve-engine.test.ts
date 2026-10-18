@@ -10,9 +10,9 @@ import type {
   RendererContents
 } from '@desktop/main/rpc/types.ts'
 import { RPC_PORT_CHANNEL } from '@desktop/shared/rpc-channel.ts'
-import type { Engine } from '@loadstar/installer'
-import { ErrorCode, silentLogger } from '@loadstar/kernel'
-import { createEngineClient } from '@loadstar/rpc'
+import type { Engine } from '@ipaforge/installer'
+import { ErrorCode, silentLogger } from '@ipaforge/kernel'
+import { createEngineClient } from '@ipaforge/rpc'
 
 /** A window's web contents: page loads to emit, and the ports it was posted. */
 const fakeContents = () => {

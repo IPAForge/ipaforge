@@ -1,5 +1,5 @@
 // The entitlements a sideloaded executable is signed with: its own profile's, made concrete (signer-spec §8.2).
-import { createDict, type Logger, type PlistDict } from '@loadstar/kernel'
+import { createDict, type Logger, type PlistDict } from '@ipaforge/kernel'
 import { assignKey } from '@signer/domain/dict.ts'
 import { concreteKeychainGroups } from '@signer/domain/entitlements/keychain-groups.ts'
 import {

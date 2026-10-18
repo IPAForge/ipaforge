@@ -5,8 +5,8 @@ import { queryTeam } from '@installer/application/team.ts'
 import { planInstall } from '@installer/engine/plan.ts'
 import type { EngineQueries, TeamQuery } from '@installer/engine/types.ts'
 import type { InstallerDeps } from '@installer/types.ts'
-import type { DeveloperServices, Team } from '@loadstar/apple'
-import type { DeviceCheck } from '@loadstar/device'
+import type { DeveloperServices, Team } from '@ipaforge/apple'
+import type { DeviceCheck } from '@ipaforge/device'
 
 /** Runs `use` with the account's developer services and the queried team. */
 const withTeam = async <T>(

@@ -5,7 +5,7 @@ import {
   ErrorCode,
   type PlistValue,
   silentLogger
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import {
   addBundle,
   fileAt,
@@ -27,10 +27,10 @@ import type { BundleTree } from '@signer/domain/bundle/types.ts'
 const now = new Date('2026-10-13T12:00:00Z')
 const TEAM = 'ABCDE12345'
 const OLD_TEAM = 'OLDTEAM456'
-const OLD = 'com.loadstar.fixture.app'
+const OLD = 'com.ipaforge.fixture.app'
 const NEW = `${OLD}.${TEAM}`
 const GROUP = `group.${NEW}`
-const SHARED = 'com.loadstar.fixture.shared'
+const SHARED = 'com.ipaforge.fixture.shared'
 
 const KIT = 'Extensions/Kit.appex'
 const WATCH = 'Watch/W.app'

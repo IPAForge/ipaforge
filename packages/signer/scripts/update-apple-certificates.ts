@@ -1,8 +1,8 @@
 /**
  * Regenerates src/infrastructure/cms/apple-certificates.ts from https://www.apple.com/certificateauthority/.
  *
- *   pnpm --filter @loadstar/signer update-apple-certificates            # rewrite the file
- *   pnpm --filter @loadstar/signer update-apple-certificates -- --check # exit 1 if Apple's set changed (CI, monthly)
+ *   pnpm --filter @ipaforge/signer update-apple-certificates            # rewrite the file
+ *   pnpm --filter @ipaforge/signer update-apple-certificates -- --check # exit 1 if Apple's set changed (CI, monthly)
  *
  * Trust rules: roots are trust anchors and are never accepted automatically. A root whose SHA-256
  * differs from the currently pinned set requires --allow-new-roots (and a human review of the diff).
@@ -14,7 +14,7 @@ import { join } from 'node:path'
 
 import * as pkijs from 'pkijs'
 
-import { toBase64, toHex } from '@loadstar/kernel'
+import { toBase64, toHex } from '@ipaforge/kernel'
 import { APPLE_CERTIFICATES } from '@signer/infrastructure/cms/apple-certificates.ts'
 import { parseCertificate } from '@signer/infrastructure/cms/certificate.ts'
 import { OID_BASIC_CONSTRAINTS } from '@signer/infrastructure/cms/oids.ts'
@@ -232,7 +232,7 @@ const apply = (entries: readonly Entry[]): number => {
   )
   if (check) {
     log(
-      '✗ out of date: run `pnpm --filter @loadstar/signer update-apple-certificates`, review, and commit'
+      '✗ out of date: run `pnpm --filter @ipaforge/signer update-apple-certificates`, review, and commit'
     )
     return 1
   }

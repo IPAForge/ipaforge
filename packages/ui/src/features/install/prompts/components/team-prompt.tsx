@@ -5,7 +5,7 @@ import type { PromptProps } from '@ui/components/prompts/prompt-props.ts'
 import { PromptShell } from '@ui/components/prompts/prompt-shell.tsx'
 import { useChosenAnswer } from '@ui/features/install/prompts/hooks/use-chosen-answer.ts'
 
-/** The Apple ID has several teams: which one signs. One click; Loadstar remembers it for this Apple ID. */
+/** The Apple ID has several teams: which one signs. One click; IPAForge remembers it for this Apple ID. */
 export const TeamPrompt = ({
   data,
   onAnswer,

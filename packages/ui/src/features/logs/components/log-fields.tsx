@@ -1,7 +1,7 @@
 import { Button } from '@heroui/react'
 import { useTranslation } from 'react-i18next'
 
-import { type LogEntry, REDACTED } from '@loadstar/kernel'
+import { type LogEntry, REDACTED } from '@ipaforge/kernel'
 import { Highlighted } from '@ui/features/logs/components/highlighted.tsx'
 import { fieldText } from '@ui/features/logs/utils/field-text.ts'
 

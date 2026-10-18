@@ -1,4 +1,4 @@
-import type { Logger } from "@loadstar/kernel";
-export * from "@loadstar/signer";
-export const load = () => import("@loadstar/kernel");
+import type { Logger } from "@ipaforge/kernel";
+export * from "@ipaforge/signer";
+export const load = () => import("@ipaforge/kernel");
 export type { Logger };

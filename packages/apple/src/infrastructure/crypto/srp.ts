@@ -10,10 +10,10 @@ import {
   concatBytes,
   ErrorCode,
   fromHex,
-  LoadstarError,
+  IPAForgeError,
   toHex,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 /** RFC 5054 Appendix A, 2048-bit group. */
 export const SRP_N = BigInt(
@@ -138,12 +138,12 @@ export const clientProof = async (input: {
   const { a, A } = input.ephemeral
   const B = input.B
   if (B % SRP_N === 0n)
-    throw new LoadstarError(ErrorCode.AppleProtocolError, {
+    throw new IPAForgeError(ErrorCode.AppleProtocolError, {
       message: 'SRP: invalid server value B'
     })
   const u = await scrambler(A, B)
   if (u === 0n)
-    throw new LoadstarError(ErrorCode.AppleProtocolError, {
+    throw new IPAForgeError(ErrorCode.AppleProtocolError, {
       message: 'SRP: invalid scrambler'
     })
   const k = await multiplier()

@@ -12,8 +12,8 @@ import {
   shouldFollow
 } from '@desktop/main/adapters/http/redirects.ts'
 import { send, toHeaders } from '@desktop/main/adapters/http/send.ts'
-import type { HttpClient, HttpRequest, HttpResponse } from '@loadstar/kernel'
-import { compact } from '@loadstar/kernel'
+import type { HttpClient, HttpRequest, HttpResponse } from '@ipaforge/kernel'
+import { compact } from '@ipaforge/kernel'
 
 type Hop = {
   readonly url: URL

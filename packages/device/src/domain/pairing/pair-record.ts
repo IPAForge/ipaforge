@@ -10,13 +10,13 @@ import {
   compact,
   createDict,
   ErrorCode,
+  IPAForgeError,
   isPlistDict,
-  LoadstarError,
   type PlistDict,
   type PlistLimits,
   parsePlist,
   serializeXmlPlist
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const bytes = z.instanceof(Uint8Array)
 
@@ -42,7 +42,7 @@ export const parsePairRecord = (
     isPlistDict(value) ? value : undefined
   )
   if (!parsed.success) {
-    throw new LoadstarError(ErrorCode.InvalidPairRecord, {
+    throw new IPAForgeError(ErrorCode.InvalidPairRecord, {
       message: 'malformed pair record',
       cause: parsed.error
     })

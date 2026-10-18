@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import { ErrorCode } from '@loadstar/kernel'
-import { RecoveryAction, StepLabel } from '@loadstar/rpc'
+import { ErrorCode } from '@ipaforge/kernel'
+import { RecoveryAction, StepLabel } from '@ipaforge/rpc'
 import { createTestI18n } from '@ui/__tests__/test-i18n.ts'
 import { shippedLanguages } from '@ui/i18n/languages/languages.ts'
 import {

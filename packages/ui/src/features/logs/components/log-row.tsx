@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import type { LogEntry } from '@loadstar/kernel'
+import type { LogEntry } from '@ipaforge/kernel'
 import { Highlighted } from '@ui/features/logs/components/highlighted.tsx'
 import { LogFields } from '@ui/features/logs/components/log-fields.tsx'
 import {

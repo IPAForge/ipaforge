@@ -1,4 +1,4 @@
-import type { LogEntry, LogLevel } from '@loadstar/kernel'
+import type { LogEntry, LogLevel } from '@ipaforge/kernel'
 
 /** The lines loaded so far for the current filters, oldest first, and how to get more. */
 export type LogLines = {

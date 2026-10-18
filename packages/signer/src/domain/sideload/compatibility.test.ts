@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 import {
   assertCompatible,
   checkCompatibility
@@ -142,7 +142,7 @@ describe('checkCompatibility', () => {
 })
 
 describe('assertCompatible', () => {
-  it('throws the problem as a LoadstarError with its data', () => {
+  it('throws the problem as an IPAForgeError with its data', () => {
     const thrown = (() => {
       try {
         assertCompatible(inspection({ minimumOSVersion: '26.1' }), IPHONE)
@@ -151,7 +151,7 @@ describe('assertCompatible', () => {
       }
       return undefined
     })()
-    expect(thrown).toBeInstanceOf(LoadstarError)
+    expect(thrown).toBeInstanceOf(IPAForgeError)
     expect(thrown).toMatchObject({
       code: ErrorCode.UnsupportedIos,
       data: { minimumOSVersion: '26.1', iosVersion: '18.0' }

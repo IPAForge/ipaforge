@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
 import { secondFactorFromStatus } from '@apple/domain/session.ts'
-import { ErrorCode } from '@loadstar/kernel'
+import { ErrorCode } from '@ipaforge/kernel'
 
 describe('second factor from the GSA status', () => {
   it.each([

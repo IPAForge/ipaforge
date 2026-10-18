@@ -25,17 +25,17 @@ import type { Link } from '@device/infrastructure/framing/link.ts'
 import { LockdownErrorName } from '@device/infrastructure/lockdown/constants.ts'
 import { toDeviceInfo } from '@device/infrastructure/lockdown/device-info.ts'
 import { isLockdownError } from '@device/infrastructure/lockdown/errors.ts'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 const isInvalidPairing = (error: unknown): boolean =>
-  error instanceof LoadstarError && error.code === ErrorCode.InvalidPairRecord
+  error instanceof IPAForgeError && error.code === ErrorCode.InvalidPairRecord
 
 /** The device rejected the OS's own pairing: only the user can renew it, and we must not pair over it. */
 const osPairingRejected = (
   device: UsbmuxDevice,
   cause: unknown
-): LoadstarError =>
-  new LoadstarError(ErrorCode.InvalidPairRecord, {
+): IPAForgeError =>
+  new IPAForgeError(ErrorCode.InvalidPairRecord, {
     message:
       "the device rejected this computer's pairing; unplug the device, plug it back in, unlock it and tap Trust",
     cause,
@@ -66,7 +66,7 @@ const startWith = async (
 
 /**
  * Starts a lockdown session. When the device rejects the record, the OS's record is reported and left alone,
- * while Loadstar's own record is replaced by pairing again once (if `autoPair`).
+ * while IPAForge's own record is replaced by pairing again once (if `autoPair`).
  */
 const startSession = async (
   ctx: DeviceContext,
@@ -129,7 +129,7 @@ const sessionFor = (
       )
     } catch (error) {
       if (isLockdownError(error, LockdownErrorName.MissingValue)) {
-        throw new LoadstarError(ErrorCode.PasscodeRequired, { cause: error })
+        throw new IPAForgeError(ErrorCode.PasscodeRequired, { cause: error })
       }
       throw error
     }
@@ -161,7 +161,7 @@ const sessionFor = (
 }
 
 /**
- * Opens a lockdown session. A missing pair record, or a rejected one of Loadstar's own, triggers pairing (once)
+ * Opens a lockdown session. A missing pair record, or a rejected one of IPAForge's own, triggers pairing (once)
  * unless `autoPair` is false, in which case `device.not_paired` / `device.invalid_pair_record` is thrown.
  * A rejected OS record always throws `device.invalid_pair_record` with `data.source: "usbmuxd"`.
  */

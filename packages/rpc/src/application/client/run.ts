@@ -1,7 +1,7 @@
 // The UI's handle on a run in the Engine: events replayed to late subscribers, the waiting prompt, and the result.
 // Answers, declines and cancels go to the server; the server's events and outcome come back through `deliver`.
-import type { PromptRequest, RunEvent } from '@loadstar/installer'
-import { compact, LoadstarError, toLoadstarError } from '@loadstar/kernel'
+import type { PromptRequest, RunEvent } from '@ipaforge/installer'
+import { compact, IPAForgeError, toIPAForgeError } from '@ipaforge/kernel'
 import type { ClientRun, ClientRunDeps } from '@rpc/application/client/types.ts'
 import { createEventLog } from '@rpc/application/event-log.ts'
 import { noPrompt } from '@rpc/domain/errors.ts'
@@ -14,7 +14,7 @@ import type { RemoteResult } from '@rpc/domain/types.ts'
 
 const toRunEvent = (event: WireRunEvent): RunEvent => {
   if (event.type === 'step-failed')
-    return { ...event, error: LoadstarError.fromJSON(event.error) }
+    return { ...event, error: IPAForgeError.fromJSON(event.error) }
   if (event.type === 'prompt')
     return { type: event.type, request: compact(event.request) }
   return compact(event) as RunEvent
@@ -25,7 +25,7 @@ const toResult = <S>(result: WireRunResult): RemoteResult<S> => {
   if (result.status === 'completed')
     return { status: result.status, state: result.state as S }
   if (result.status === 'cancelled') return result
-  return { ...result, error: LoadstarError.fromJSON(result.error) }
+  return { ...result, error: IPAForgeError.fromJSON(result.error) }
 }
 
 export const createClientRun = <S>({
@@ -38,7 +38,7 @@ export const createClientRun = <S>({
   let ended = false
   let settle: {
     resolve: (result: RemoteResult<S>) => void
-    reject: (error: LoadstarError) => void
+    reject: (error: IPAForgeError) => void
   }
   const result = new Promise<RemoteResult<S>>((resolve, reject) => {
     settle = { resolve, reject }
@@ -52,7 +52,7 @@ export const createClientRun = <S>({
       logger.debug('RPC run request failed', {
         runId,
         type: body.type,
-        code: toLoadstarError(error).code
+        code: toIPAForgeError(error).code
       })
     )
   }

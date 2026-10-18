@@ -1,4 +1,4 @@
-import type { SecretStore } from '@loadstar/kernel'
+import type { SecretStore } from '@ipaforge/kernel'
 
 /** Routes keys by prefix: matching keys go to `persistent`, everything else to `volatile`. */
 export const createRoutedSecretStore = (

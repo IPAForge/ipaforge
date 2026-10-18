@@ -14,7 +14,7 @@ import {
   trimChar,
   utf8Decode,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 export type FakeFs = {
   readonly files: Map<string, Uint8Array>

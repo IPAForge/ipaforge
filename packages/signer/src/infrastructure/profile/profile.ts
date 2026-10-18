@@ -5,11 +5,11 @@ import { z } from 'zod'
 import {
   ErrorCode,
   equalBytes,
+  IPAForgeError,
   isPlistDict,
-  LoadstarError,
   type PlistDict,
   parseXmlPlist
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import {
   DEFAULT_SIGNER_LIMITS,
   type PlistLimits
@@ -55,8 +55,8 @@ const ProfileSchema = z.object({
   ProvisionsAllDevices: z.boolean().optional()
 })
 
-const invalid = (message: string, cause?: unknown): LoadstarError =>
-  new LoadstarError(ErrorCode.InvalidProfile, {
+const invalid = (message: string, cause?: unknown): IPAForgeError =>
+  new IPAForgeError(ErrorCode.InvalidProfile, {
     message,
     ...(cause ? { cause } : {})
   })

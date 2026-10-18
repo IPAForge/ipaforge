@@ -1,7 +1,7 @@
 // The renderer's end of the rpc channel: waits for the MessagePort the preload forwards, and wraps it in a
 // Transport for `createEngineClient`.
 import { RPC_PORT_CHANNEL } from '@desktop/shared/rpc-channel.ts'
-import type { Transport } from '@loadstar/rpc'
+import type { Transport } from '@ipaforge/rpc'
 
 /** The part of `window` this uses. */
 export type PortSource = {

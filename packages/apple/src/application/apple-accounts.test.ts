@@ -7,9 +7,9 @@ import type { AppleDeps } from '@apple/types.ts'
 import {
   createLogger,
   ErrorCode,
-  LoadstarError,
+  IPAForgeError,
   type LogRecord
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const ID = 'someone@example.com'
 const PASSWORD = 'test-password'
@@ -23,7 +23,7 @@ const session: AppleSession = {
   anisetteServer: 'Example'
 }
 
-const expired = new LoadstarError(ErrorCode.SessionExpired, {
+const expired = new IPAForgeError(ErrorCode.SessionExpired, {
   data: { request: 'apptokens', gsaCode: -22406, hsc: 401 }
 })
 
@@ -131,7 +131,7 @@ describe('resumeAccount', () => {
 
   it('passes on a failure that is not an expired session', async () => {
     const { services } = setup({
-      tokenError: new LoadstarError(ErrorCode.AnisetteUnavailable)
+      tokenError: new IPAForgeError(ErrorCode.AnisetteUnavailable)
     })
     await expect(resumeAccount(services, ID)).rejects.toMatchObject({
       code: ErrorCode.AnisetteUnavailable

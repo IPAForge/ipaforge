@@ -1,6 +1,6 @@
 import type * as pkijs from 'pkijs'
 
-import type { Logger } from '@loadstar/kernel'
+import type { Logger } from '@ipaforge/kernel'
 import type { HashAlgorithm } from '@signer/domain/ports/types.ts'
 
 /** Downloads a certificate (DER or PEM) from an AIA `caIssuers` URL. Provided by the caller (HttpClient port). */

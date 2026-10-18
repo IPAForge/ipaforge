@@ -7,7 +7,7 @@ import * as asn1js from 'asn1js'
 import * as pkijs from 'pkijs'
 import { afterAll, describe, expect, it } from 'vitest'
 
-import { compareBytes, fromBase64, toHex, utf8Decode } from '@loadstar/kernel'
+import { compareBytes, fromBase64, toHex, utf8Decode } from '@ipaforge/kernel'
 import { readFixture } from '@signer/__tests__/fixtures.ts'
 import { createTestIdentity } from '@signer/__tests__/identity.ts'
 import {
@@ -73,7 +73,7 @@ const signerInfoOf = (cms: Uint8Array): pkijs.SignerInfo => {
   return info
 }
 
-const temp = mkdtempSync(join(tmpdir(), 'loadstar-cms-'))
+const temp = mkdtempSync(join(tmpdir(), 'ipaforge-cms-'))
 afterAll(() => rmSync(temp, { recursive: true, force: true }))
 
 describe('Apple certificate bundle', () => {
@@ -109,7 +109,7 @@ describe('Apple certificate bundle', () => {
     )
     expect(info.organizationalUnit).toBe('XYZ9876543')
     expect(info.commonName).toBe(
-      'Apple Development: Loadstar Test (XYZ9876543)'
+      'Apple Development: IPAForge Test (XYZ9876543)'
     )
   })
 })

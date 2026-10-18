@@ -1,4 +1,4 @@
-import type { PromptKind } from '@loadstar/rpc'
+import type { PromptKind } from '@ipaforge/rpc'
 import { askedPrompts } from '@ui/features/install/prompts/asked-prompts.ts'
 
 /** The dialog for a question; undefined for one this version doesn't know (from a newer Engine). */

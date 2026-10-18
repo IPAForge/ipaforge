@@ -1,6 +1,6 @@
 import type { PreferencesStore } from '@ui/services/preferences/preferences-store.ts'
 
-const KEY_PREFIX = 'loadstar.'
+const KEY_PREFIX = 'ipaforge.'
 
 /**
  * `PreferencesStore` over the browser's localStorage. Storage can throw (blocked site data, quota);

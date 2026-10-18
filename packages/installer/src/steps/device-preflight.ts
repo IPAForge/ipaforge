@@ -9,12 +9,12 @@ import {
   assertCanRunSideloadedApps,
   type DeviceCheck,
   shortUdid
-} from '@loadstar/device'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+} from '@ipaforge/device'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 const assertUnlocked = (check: DeviceCheck): void => {
   if (!check.locked) return
-  throw new LoadstarError(ErrorCode.DeviceLocked, {
+  throw new IPAForgeError(ErrorCode.DeviceLocked, {
     data: { device: shortUdid(check.info.udid) }
   })
 }

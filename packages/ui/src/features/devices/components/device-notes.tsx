@@ -3,7 +3,7 @@ import { useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import type { DeviceWatchEvent } from '@loadstar/rpc'
+import type { DeviceWatchEvent } from '@ipaforge/rpc'
 import { NOTE_TIMEOUT_MS, SETTLE_MS } from '@ui/features/devices/constants.ts'
 import { queryKeys } from '@ui/hooks/queries/query-keys.ts'
 import { useEngine } from '@ui/hooks/use-engine.ts'

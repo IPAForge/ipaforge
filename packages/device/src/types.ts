@@ -1,6 +1,6 @@
 import type { DeviceConfig } from '@device/domain/config.ts'
 import type { DeviceTransport } from '@device/domain/ports/types.ts'
-import type { Clock, Logger, SecretStore } from '@loadstar/kernel'
+import type { Clock, Logger, SecretStore } from '@ipaforge/kernel'
 
 export type Sleep = (ms: number, signal?: AbortSignal) => Promise<void>
 

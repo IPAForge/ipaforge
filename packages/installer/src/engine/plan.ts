@@ -18,13 +18,13 @@ import type {
 } from '@installer/engine/types.ts'
 import { findSideStoreTarget } from '@installer/sidestore/target.ts'
 import type { InstallerDeps } from '@installer/types.ts'
-import type { DeveloperServices, Team } from '@loadstar/apple'
-import { compact, type FileSource } from '@loadstar/kernel'
+import type { DeveloperServices, Team } from '@ipaforge/apple'
+import { compact, type FileSource } from '@ipaforge/kernel'
 import {
   checkCompatibility,
   planSideloadIdentity,
   type TargetDevice
-} from '@loadstar/signer'
+} from '@ipaforge/signer'
 
 const sourceFile = async (
   deps: InstallerDeps,

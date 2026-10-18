@@ -1,8 +1,8 @@
 // The install run, kept outside any component so it goes on while the user visits other sections. It follows
 // the run handle's events into a RunView, forwards answers, and starts the next run: resumed from the last
 // checkpoint, or anew with a changed input (another Apple ID or channel).
-import { compact, toLoadstarError } from '@loadstar/kernel'
-import type { RemoteResult } from '@loadstar/rpc'
+import { compact, toIPAForgeError } from '@ipaforge/kernel'
+import type { RemoteResult } from '@ipaforge/rpc'
 import type {
   InstallRun,
   InstallSideStoreInput
@@ -56,7 +56,7 @@ export const createActiveRunStore = ({
   }
 
   const fail = (run: InstallRun, error: unknown) => {
-    const failure = toLoadstarError(error)
+    const failure = toIPAForgeError(error)
     log.warn('install run broke off', { code: failure.code })
     setView(run, (view) => brokenView(view, failure), now())
     onSettled?.()

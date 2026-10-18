@@ -3,16 +3,16 @@
 
 import type { z } from 'zod'
 
-import { classify, type DeviceWatchEvent } from '@loadstar/installer'
+import { classify, type DeviceWatchEvent } from '@ipaforge/installer'
 import {
   compact,
-  LoadstarError,
+  IPAForgeError,
   type LogEntry,
   type LogLevel,
   type LogPage,
   silentLogger,
-  toLoadstarError
-} from '@loadstar/kernel'
+  toIPAForgeError
+} from '@ipaforge/kernel'
 import { createRequestTable } from '@rpc/application/client/requests.ts'
 import { createClientRun } from '@rpc/application/client/run.ts'
 import type { ClientRun } from '@rpc/application/client/types.ts'
@@ -102,7 +102,7 @@ export const createEngineClient = (
       logger.debug('RPC subscription request failed', {
         subscriptionId,
         type,
-        code: toLoadstarError(error).code
+        code: toIPAForgeError(error).code
       })
     subscriptions.set(subscriptionId, onEvent)
     requests
@@ -149,11 +149,11 @@ export const createEngineClient = (
   const handlers: MessageHandlers = {
     response: (message) => requests.resolve(message.id, message.value),
     error: (message) =>
-      requests.reject(message.id, LoadstarError.fromJSON(message.error)),
+      requests.reject(message.id, IPAForgeError.fromJSON(message.error)),
     'run-event': (message) => runs.get(message.runId)?.event(message.event),
     'run-result': (message) => endRun(message.runId)?.finish(message.result),
     'run-error': (message) =>
-      endRun(message.runId)?.fail(LoadstarError.fromJSON(message.error)),
+      endRun(message.runId)?.fail(IPAForgeError.fromJSON(message.error)),
     'subscription-event': (message) =>
       subscriptions.get(message.subscriptionId)?.(message.event)
   }

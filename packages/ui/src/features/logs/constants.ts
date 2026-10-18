@@ -1,4 +1,4 @@
-import type { LogLevel } from '@loadstar/kernel'
+import type { LogLevel } from '@ipaforge/kernel'
 import type { LogsEmptyKind } from '@ui/features/logs/types.ts'
 import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 import type { LogArea } from '@ui/state/log-view/types.ts'
@@ -83,7 +83,7 @@ export const AT_BOTTOM_PX = 8
 /** How long "Copied" and similar notes stay. */
 export const NOTE_TIMEOUT_MS = 3000
 
-export const LOG_FILE_PREFIX = 'loadstar-logs'
+export const LOG_FILE_PREFIX = 'ipaforge-logs'
 
 export const EMPTY_TEXT_KEYS = {
   none: ['logs.empty.none.title', 'logs.empty.none.body'],

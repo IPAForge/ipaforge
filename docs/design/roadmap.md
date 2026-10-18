@@ -22,18 +22,18 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
 
 ## Milestones
 
-- [x] **0. Foundation**: pnpm + Turborepo monorepo, TS 7 strict config, Biome, Vitest, the `kernel` package (Result, `LoadstarError`/`ErrorCode`, ports, bytes utils), a boundary checker (no `node:*`/DOM in `packages/`), and GitHub Actions CI on Linux, Windows and macOS (macOS also runs `codesign`)
-- [x] **1. Signer**: production `@loadstar/signer` built from the spike and the format spec:
+- [x] **0. Foundation**: pnpm + Turborepo monorepo, TS 7 strict config, Biome, Vitest, the `kernel` package (Result, `IPAForgeError`/`ErrorCode`, ports, bytes utils), a boundary checker (no `node:*`/DOM in `packages/`), and GitHub Actions CI on Linux, Windows and macOS (macOS also runs `codesign`)
+- [x] **1. Signer**: production `@ipaforge/signer` built from the spike and the format spec:
   - binaries: thin and fat, adding `LC_CODE_SIGNATURE` when missing, 4K/16K pages, SHA-1 + SHA-256 dual CDs for minimum iOS below 11;
   - bundles: frameworks, dylibs and appexes signed inner-first, plus streaming IPA read and write;
   - bundle ID, entitlement and profile reconciliation;
   - golden Apple fixtures and checking the CMS against a real Apple Development certificate
-- [x] **2. Device layer**: `@loadstar/device`:
+- [x] **2. Device layer**: `@ipaforge/device`:
   - usbmux client and lockdown;
   - pairing: read existing pair records and create new ones with a trust prompt;
   - services: TLS sessions, AFC, house_arrest, installation_proxy (install with progress, list apps), misagent (profiles on the device);
   - checks: Developer Mode and locked device. Node adapters are tested on real hardware
-- [x] **3. Apple account**: `@loadstar/apple`:
+- [x] **3. Apple account**: `@ipaforge/apple`:
   - anisette v3 client with a health-checked server chain and automatic fallback (native anisette on macOS), plus an opt-in **local anisette** provider: a Provision `anisette-server` sidecar that downloads Apple's libraries itself, so no third-party server is needed (reviewed Dadoum/Provision for ideas only: it can't be pure TypeScript and Apple's libraries can't be redistributed; v1 protocol client done, sidecar process management moves to Phase 9);
   - GSA SRP-6a login, 2FA (trusted device and SMS, with non-fatal phone lookup), token refresh;
   - multiple Apple IDs: `SecretStore`-backed saved accounts with switch, sign-out and per-account team/certificate state;
@@ -43,12 +43,12 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
 - [x] **4. Developer services**: teams (team picker remembered per Apple ID), certificate lifecycle (reuse by machine name and key, a revoke picker showing which tool created each certificate, per-type revoke, `.p12` export/import with the `machineId` password), App IDs with budgeting before any write (clamped quota, next free slot, normalised names, conserve mode), app groups, devices, provisioning profiles, defensive parsing of every response, and `provisionApp()`, which yields everything the signer needs for an IPA and its extensions
 - [x] **5. Installer engine and catalog**:
   - the pipeline runner (progress, cancel, resume, idempotent retry);
-  - `@loadstar/catalog`: a release source catalog resolved through the GitHub API, streamed downloads, cache and checksum, and handling for sources that have gone;
+  - `@ipaforge/catalog`: a release source catalog resolved through the GitHub API, streamed downloads, cache and checksum, and handling for sources that have gone;
   - IPA validation before any Apple call (structure, encryption, extension IDs, and against the device: minimum OS, device family, architecture) and signer reconciliation additions: `Extensions/` and `Watch/` bundles, Watch companion and BGTask identifiers, app and keychain groups, `ALTAppGroups` on every extension;
   - a remote source manifest (SideStore and LiveContainer stable/nightly, mirrors, SHA-256, iOS compatibility table);
   - flows: `installSideStore` (SideStore or LiveContainer + SideStore, including certificate injection: `ALTCertificate.p12` + `ALTCertificateID`, into the SideStore framework for LiveContainer), free-app-limit resolution, `installApps` (any IPA, preload), `placePairing` (several apps from a data-driven list of known apps and their pairing-file locations);
-  - a diagnostics error catalog, the Engine facade, and `@loadstar/rpc`
-- [ ] **6. UI foundation**: `@loadstar/ui` with HeroUI v3 and Tailwind v4 (no CSS files):
+  - a diagnostics error catalog, the Engine facade, and `@ipaforge/rpc`
+- [ ] **6. UI foundation**: `@ipaforge/ui` with HeroUI v3 and Tailwind v4 (no CSS files):
   - palette themes as TS data (Graphite, Ocean, Aurora, Sunset, Forest, Rose), each with light and dark variants;
   - i18n, TanStack Router and Query, `EngineClient`, a layout shell, and the log viewer;
   - translation foundation:
@@ -70,7 +70,7 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
     - [x] 6c-4: device picker and Devices page (#45)
     - [x] 6c-5: install home and install run (#46)
     - [x] 6c-6: the run's questions (#53)
-    - [x] quality: SonarJS lint (#41, #44); file structure rules across the project (#48–#52)
+    - [x] quality: SonarJS lint (#41, #44); file structure rules across the project (#48–#52); renamed from Loadstar to IPAForge (#57)
     - [x] 6c-7: recovery: a fix per error, Report the problem as a pre-filled GitHub issue, Apple pages opened in the browser (#54)
     - [x] 6c-8: step details: what each step did (release version, session reused, team, certificate, App IDs, free apps) (#55)
     - [x] 6d: log buffer, log stream and log viewer: paged and searched in the Engine, a virtual list, live lines, Copy and Save, debug details, Show logs for a failed run, Ctrl+L (#56)
@@ -91,7 +91,7 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
   - later: AltStore as an install target (`ALTDeviceId` in `Info.plist` and an encrypted `ALTPairingFile.dat` at the bundle root)
   - when Apple reports a negative number of App IDs left, explain it and offer to try anyway instead of stopping
 - [ ] **9. Desktop app**: Electron 44 shell with Node adapters, a hardened preload (`contextIsolation`, typed RPC only), electron-builder packages (Windows NSIS, macOS DMG signed and notarized, Linux AppImage, deb and rpm), and auto-update
-  - status: a minimal shell exists early (one window with `contextIsolation`, `sandbox`, a strict CSP and blocked navigation, rendering `@loadstar/ui`), and CI builds it with electron-vite on Linux, Windows and macOS. Packaging, signing and notarisation, auto-update, the Engine wiring and the hardened RPC preload remain
+  - status: a minimal shell exists early (one window with `contextIsolation`, `sandbox`, a strict CSP and blocked navigation, rendering `@ipaforge/ui`), and CI builds it with electron-vite on Linux, Windows and macOS. Packaging, signing and notarisation, auto-update, the Engine wiring and the hardened RPC preload remain
   - trust certificates installed in the OS (company proxies, self-hosted anisette servers with their own CA) for anisette and Apple requests, alongside Node's bundled roots and Apple's (`tls.getCACertificates('system')`)
 - [ ] **10. Management tools**: certificate and app-ID management, pairing files per app (place, export, version), certificate and account import/export (`.p12`), and developer portal tools
   - later: signing in with a security key (today detected and explained, not completed)
@@ -111,8 +111,8 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
     - drafts may be machine-assisted, but are marked for review until a native speaker approves them;
   - CI fails on missing or extra keys and broken placeholders, and reports each language's completion; languages below 90 % are labelled "beta" in the picker
   - publishing reusable packages to npm, from this monorepo (no separate repositories):
-    - candidates: `@loadstar/signer` first (pure-TypeScript iOS code signing), then `@loadstar/device` (usbmux, lockdown, AFC, installation_proxy and the other device services), and the generic plist codec and byte helpers from `kernel` as a small package of their own;
-    - kept private: `catalog`, `installer`, `rpc` and `ui` (Loadstar's product), and `apple` unless we decide otherwise, because it automates Apple's private endpoints;
+    - candidates: `@ipaforge/signer` first (pure-TypeScript iOS code signing), then `@ipaforge/device` (usbmux, lockdown, AFC, installation_proxy and the other device services), and the generic plist codec and byte helpers from `kernel` as a small package of their own;
+    - kept private: `catalog`, `installer`, `rpc` and `ui` (IPAForge's product), and `apple` unless we decide otherwise, because it automates Apple's private endpoints;
     - prerequisites: a build step (compiled JavaScript plus `.d.ts`, internal `@…` aliases resolved), per-package error codes instead of the app-wide catalogue, a semver-stable API with a README per package, and release tooling (e.g. Changesets) that versions and publishes from the monorepo
 
 ## Completed

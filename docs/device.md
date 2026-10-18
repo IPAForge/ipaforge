@@ -2,9 +2,9 @@
 
 # Talking to the Device
 
-`@loadstar/device` installs apps, manages provisioning profiles and places pairing files on an iPhone or iPad. It never drives USB itself: it talks to the operating system's **usbmuxd**, which already owns the device, so it works next to Finder, Apple Devices and iTunes.
+`@ipaforge/device` installs apps, manages provisioning profiles and places pairing files on an iPhone or iPad. It never drives USB itself: it talks to the operating system's **usbmuxd**, which already owns the device, so it works next to Finder, Apple Devices and iTunes.
 
-| OS | How Loadstar reaches the device | If it's missing |
+| OS | How IPAForge reaches the device | If it's missing |
 |---|---|---|
 | macOS | `/var/run/usbmuxd` (part of macOS) | Reconnect the device |
 | Windows | `127.0.0.1:27015` (Apple Mobile Device Service) | Install **Apple Devices** from the Microsoft Store, or iTunes from Apple |
@@ -14,13 +14,13 @@
 
 ## Pairing and trust
 
-Loadstar uses the pairing the operating system already made. When the user taps **Trust This Computer?**, the OS creates a pair record and keeps it in usbmuxd: macOS always does, Windows does with Apple Devices or iTunes installed, and on Linux `usbmuxd` pairs when the device is plugged in.
+IPAForge uses the pairing the operating system already made. When the user taps **Trust This Computer?**, the OS creates a pair record and keeps it in usbmuxd: macOS always does, Windows does with Apple Devices or iTunes installed, and on Linux `usbmuxd` pairs when the device is plugged in.
 
-- If the computer already trusts the device (it shows up in Finder or Apple Devices), Loadstar reads that pair record from usbmuxd and uses it.
-- Otherwise Loadstar waits for it. The user unlocks the device and taps Trust, and Loadstar checks usbmuxd every second until the OS's record appears (up to 1 minute by default, `osPairingTimeoutMs`).
-- Only if no record appears in that time does Loadstar pair on its own: it sends lockdown `Pair` with certificates it generates, the device asks for Trust again, and Loadstar waits up to 2 minutes (`pairingTimeoutMs`). That record is kept in Loadstar's secret store only. Callers can also ask for this directly (`method: "own"`).
-- **Loadstar never writes to usbmuxd.** It does not save, replace or delete the OS's pair record, so Finder, Apple Devices and other tools keep working.
-- If the device rejects the OS's record (for example after **Reset Location & Privacy** or **Clear Trusted Computers**), Loadstar does not pair over it. It fails with `device.invalid_pair_record`: unplug the device, plug it back in, unlock it and tap Trust, so the OS pairs again. If the device rejects a record Loadstar made itself, Loadstar pairs again once.
+- If the computer already trusts the device (it shows up in Finder or Apple Devices), IPAForge reads that pair record from usbmuxd and uses it.
+- Otherwise IPAForge waits for it. The user unlocks the device and taps Trust, and IPAForge checks usbmuxd every second until the OS's record appears (up to 1 minute by default, `osPairingTimeoutMs`).
+- Only if no record appears in that time does IPAForge pair on its own: it sends lockdown `Pair` with certificates it generates, the device asks for Trust again, and IPAForge waits up to 2 minutes (`pairingTimeoutMs`). That record is kept in IPAForge's secret store only. Callers can also ask for this directly (`method: "own"`).
+- **IPAForge never writes to usbmuxd.** It does not save, replace or delete the OS's pair record, so Finder, Apple Devices and other tools keep working.
+- If the device rejects the OS's record (for example after **Reset Location & Privacy** or **Clear Trusted Computers**), IPAForge does not pair over it. It fails with `device.invalid_pair_record`: unplug the device, plug it back in, unlock it and tap Trust, so the OS pairs again. If the device rejects a record IPAForge made itself, IPAForge pairs again once.
 - Every session is TLS-encrypted. The device is authenticated by **pinning**: it must present exactly the device certificate from the pair record. A failed TLS handshake is reported as `device.protocol_error` with the TLS details; it does not mean the pairing is wrong, so it never triggers pairing. The certificates in a pair record are SHA-1 with empty subject and issuer names, which OpenSSL refuses at its default security level, so device connections (and only those) run at `@SECLEVEL=0`; the pinning is what authenticates the device.
 
 ## What it can do
@@ -36,7 +36,7 @@ Loadstar uses the pairing the operating system already made. When the user taps 
 
 ### Pairing files
 
-On-device tools such as SideStore and StikDebug use a copy of this computer's pairing to talk to the device over Wi-Fi/VPN. Loadstar:
+On-device tools such as SideStore and StikDebug use a copy of this computer's pairing to talk to the device over Wi-Fi/VPN. IPAForge:
 1. turns on Wi-Fi debugging (this needs a **passcode** on the device);
 2. finds the pairing apps installed by **your own** Apple IDs. App names and file locations are data in `packages/device/src/domain/pairing-apps.ts`;
 3. shows the targets for confirmation. The file grants access to the device, so it is never written anywhere implicitly;
@@ -66,12 +66,12 @@ The pairing file is the whole pair record plus the device UDID, including the ro
 ## For contributors
 
 ```bash
-pnpm --filter @loadstar/desktop device-probe list              # devices visible to usbmuxd
-pnpm --filter @loadstar/desktop device-probe info              # identity and checks (read-only)
-pnpm --filter @loadstar/desktop device-probe pair [--own]      # wait for the OS pairing (tap Trust); --own pairs with Loadstar's own record
-pnpm --filter @loadstar/desktop device-probe apps | profiles   # read-only
-pnpm --filter @loadstar/desktop device-probe pairing-status <TEAMID...>
-LOADSTAR_DEVICE=1 pnpm vitest run apps/desktop/src/main/adapters/device.hardware.test.ts
+pnpm --filter @ipaforge/desktop device-probe list              # devices visible to usbmuxd
+pnpm --filter @ipaforge/desktop device-probe info              # identity and checks (read-only)
+pnpm --filter @ipaforge/desktop device-probe pair [--own]      # wait for the OS pairing (tap Trust); --own pairs with IPAForge's own record
+pnpm --filter @ipaforge/desktop device-probe apps | profiles   # read-only
+pnpm --filter @ipaforge/desktop device-probe pairing-status <TEAMID...>
+IPAFORGE_DEVICE=1 pnpm vitest run apps/desktop/src/main/adapters/device.hardware.test.ts
 ```
 
 Unit tests run against an in-memory fake device (`packages/device/src/__tests__/fake-device/`), which simulates usbmuxd, lockdownd and every service, so CI needs no hardware.

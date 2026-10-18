@@ -1,7 +1,7 @@
 // `device-probe install <signed.ipa>`: installs an already-signed IPA.
 import { nodeFileSource } from '@desktop/main/adapters/file-source.ts'
 import type { DeviceProbe } from '@desktop/probes/device/context.ts'
-import type { InstallIpaProgress } from '@loadstar/device'
+import type { InstallIpaProgress } from '@ipaforge/device'
 
 /** Prints each progress step once, when the percentage changes. */
 const progressPrinter = () => {

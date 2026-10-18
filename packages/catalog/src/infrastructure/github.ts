@@ -13,10 +13,10 @@ import {
   compact,
   ErrorCode,
   type HttpResponse,
-  LoadstarError,
+  IPAForgeError,
   readBody,
   utf8Decode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const MAX_API_BYTES = 8 * 1024 * 1024
 const SHA256_PREFIX = 'sha256:'
@@ -63,18 +63,18 @@ const fetchRelease = async (
     headers: {
       Accept: 'application/vnd.github+json',
       'X-GitHub-Api-Version': '2022-11-28',
-      'User-Agent': 'Loadstar'
+      'User-Agent': 'IPAForge'
     },
     signal: signal ? AbortSignal.any([signal, timeout]) : timeout
   })
   const body = await readBody(response, MAX_API_BYTES)
   if (response.status === 404) return undefined
   if (isRateLimited(response))
-    throw new LoadstarError(ErrorCode.GithubRateLimited, {
+    throw new IPAForgeError(ErrorCode.GithubRateLimited, {
       data: { repo: query.repo }
     })
   if (response.status !== 200) {
-    throw new LoadstarError(ErrorCode.CatalogUnavailable, {
+    throw new IPAForgeError(ErrorCode.CatalogUnavailable, {
       message: `GitHub answered HTTP ${response.status} for ${query.repo}`,
       data: { repo: query.repo, status: response.status }
     })

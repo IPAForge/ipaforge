@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { ErrorCode } from '@loadstar/kernel'
+import { ErrorCode } from '@ipaforge/kernel'
 import { thrownCode } from '@signer/__tests__/errors.ts'
 import { binaryCases, readFixture } from '@signer/__tests__/fixtures.ts'
 import {

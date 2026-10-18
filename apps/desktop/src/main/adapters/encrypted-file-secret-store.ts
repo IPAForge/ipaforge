@@ -11,8 +11,8 @@ import type { KeyProvider } from '@desktop/main/adapters/secrets/mac-keychain-ke
 import { writePrivateFile } from '@desktop/main/adapters/secrets/private-file.ts'
 import { createRecordSecretStore } from '@desktop/main/adapters/secrets/record-secret-store.ts'
 import type { SecretRecord } from '@desktop/main/adapters/secrets/types.ts'
-import type { SecretStore } from '@loadstar/kernel'
-import { utf8Decode, utf8Encode } from '@loadstar/kernel'
+import type { SecretStore } from '@ipaforge/kernel'
+import { utf8Decode, utf8Encode } from '@ipaforge/kernel'
 
 /** The sealed file, or undefined when there is none yet. */
 const readSealed = async (path: string): Promise<Uint8Array | undefined> => {

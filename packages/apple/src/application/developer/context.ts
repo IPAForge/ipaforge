@@ -12,7 +12,7 @@ import type {
   DeveloperRequestOptions
 } from '@apple/infrastructure/developer/types.ts'
 import type { AppleDeps } from '@apple/types.ts'
-import type { PlistDict } from '@loadstar/kernel'
+import type { PlistDict } from '@ipaforge/kernel'
 
 export type DeveloperContext = {
   readonly deps: AppleDeps

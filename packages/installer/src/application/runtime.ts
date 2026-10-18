@@ -1,9 +1,9 @@
 // What one run of a flow holds besides its state: the open device and the Apple session. Both are opened on first
 // use, so a run resumed from a checkpoint reopens them without repeating the steps that produced them.
 import type { InstallerDeps } from '@installer/types.ts'
-import type { AppleSession, DeveloperServices } from '@loadstar/apple'
-import type { DeviceHandle } from '@loadstar/device'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import type { AppleSession, DeveloperServices } from '@ipaforge/apple'
+import type { DeviceHandle } from '@ipaforge/device'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 export type FlowRuntime = {
   readonly deps: InstallerDeps
@@ -21,7 +21,7 @@ const savedSession = async (
 ): Promise<AppleSession> => {
   const resumed = await deps.apple.resume(accountId)
   if (resumed.kind === 'signed_in') return resumed.session
-  throw new LoadstarError(ErrorCode.SessionExpired, {
+  throw new IPAForgeError(ErrorCode.SessionExpired, {
     message: 'sign in again',
     data: { account: accountId }
   })

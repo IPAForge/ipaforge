@@ -12,7 +12,7 @@ export type PickOption = {
   description?: string | undefined
   /** What picking it breaks, in the warning colour. */
   warning?: string | undefined
-  /** The answer Loadstar would pick: listed first and marked. */
+  /** The answer IPAForge would pick: listed first and marked. */
   isSuggested?: boolean | undefined
 }
 
@@ -37,7 +37,7 @@ export type PairingChoice = {
 }
 
 /** Who made a development certificate, from the machine name Apple keeps with it. */
-export type CertificateOrigin = 'loadstar' | 'sidestore' | 'machine' | 'unknown'
+export type CertificateOrigin = 'ipaforge' | 'sidestore' | 'machine' | 'unknown'
 
 /** The state react-aria hands a pick-list row's class function. */
 export type PickRenderState = {

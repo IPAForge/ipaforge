@@ -12,7 +12,7 @@ export const diagnosticsText = ({
   device
 }: DiagnosticsFacts): string =>
   [
-    'Loadstar diagnostics',
+    'IPAForge diagnostics',
     `version: ${appVersion}`,
     `code: ${code}`,
     `step: ${step}`,

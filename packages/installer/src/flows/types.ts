@@ -1,7 +1,7 @@
 import type { AccountState } from '@installer/domain/types.ts'
-import type { SavedAccount } from '@loadstar/apple'
-import type { Channel } from '@loadstar/catalog'
-import type { AppFileTarget, PairingTarget } from '@loadstar/device'
+import type { SavedAccount } from '@ipaforge/apple'
+import type { Channel } from '@ipaforge/catalog'
+import type { AppFileTarget, PairingTarget } from '@ipaforge/device'
 
 export type SideStoreVariant = 'sidestore' | 'livecontainer'
 

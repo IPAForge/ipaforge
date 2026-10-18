@@ -8,7 +8,7 @@ import {
   ErrorCode,
   type LogEntry,
   type LogRecord
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import { createFakeEngine } from '@rpc/__tests__/fake-engine.ts'
 import { createEngineClient } from '@rpc/application/client.ts'
 import { createRpcServer } from '@rpc/application/server.ts'

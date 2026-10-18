@@ -4,9 +4,9 @@ import {
   ErrorCode,
   equalBytes,
   fromBase64,
-  LoadstarError,
+  IPAForgeError,
   silentLogger
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import { APPLE_CERTIFICATES } from '@signer/infrastructure/cms/apple-certificates.ts'
 import {
   nameDer,
@@ -31,8 +31,8 @@ const bundled = (kind: 'root' | 'intermediate'): Uint8Array[] =>
 const unknownIssuer = (
   message: string,
   data: Record<string, unknown> = {}
-): LoadstarError =>
-  new LoadstarError(ErrorCode.UnknownIssuer, { message, data })
+): IPAForgeError =>
+  new IPAForgeError(ErrorCode.UnknownIssuer, { message, data })
 
 /** `caIssuers` URLs from the leaf's Authority Information Access extension. */
 export const caIssuerUrls = (certificate: pkijs.Certificate): string[] => {

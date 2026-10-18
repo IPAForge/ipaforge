@@ -3,7 +3,7 @@ import { DEFAULT_MANIFEST } from '@catalog/domain/default-manifest.ts'
 import { manifestSchema } from '@catalog/domain/manifest.ts'
 import type { Manifest } from '@catalog/domain/types.ts'
 import type { CatalogDeps } from '@catalog/types.ts'
-import { readBody, utf8Decode } from '@loadstar/kernel'
+import { readBody, utf8Decode } from '@ipaforge/kernel'
 
 const MAX_MANIFEST_BYTES = 1024 * 1024
 
@@ -17,7 +17,7 @@ const fetchManifest = async (
   const response = await deps.http.request({
     method: 'GET',
     url: deps.config.manifestUrl,
-    headers: { Accept: 'application/json', 'User-Agent': 'Loadstar' },
+    headers: { Accept: 'application/json', 'User-Agent': 'IPAForge' },
     signal: signal ? AbortSignal.any([signal, timeout]) : timeout
   })
   const body = await readBody(response, MAX_MANIFEST_BYTES)

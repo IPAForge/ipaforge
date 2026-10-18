@@ -1,10 +1,10 @@
 import type { PromptKind } from '@installer/domain/prompts.ts'
 import type { CertificateTrust } from '@installer/sidestore/trust.ts'
-import type { Team, TwoFactorMethod, TwoFactorMethods } from '@loadstar/apple'
-import type { Channel, ResolvedRelease } from '@loadstar/catalog'
-import type { AppFileTarget } from '@loadstar/device'
-import type { FileSource } from '@loadstar/kernel'
-import type { IpaInspection, SideloadIdentityPlan } from '@loadstar/signer'
+import type { Team, TwoFactorMethod, TwoFactorMethods } from '@ipaforge/apple'
+import type { Channel, ResolvedRelease } from '@ipaforge/catalog'
+import type { AppFileTarget } from '@ipaforge/device'
+import type { FileSource } from '@ipaforge/kernel'
+import type { IpaInspection, SideloadIdentityPlan } from '@ipaforge/signer'
 
 /** What is known about one provisioning profile on the device. */
 export type ProfileFacts = {

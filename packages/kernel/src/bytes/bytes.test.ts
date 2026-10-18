@@ -11,7 +11,7 @@ import {
 import { fromHex, toHex } from '@kernel/bytes/hex.ts'
 import { ByteReader } from '@kernel/bytes/reader.ts'
 import { ByteWriter } from '@kernel/bytes/writer.ts'
-import { ErrorCode, LoadstarError } from '@kernel/errors/index.ts'
+import { ErrorCode, IPAForgeError } from '@kernel/errors/index.ts'
 
 const bytes = (...values: number[]) => new Uint8Array(values)
 
@@ -47,8 +47,8 @@ describe('hex', () => {
 
 describe('base64', () => {
   it('matches known vectors and accepts wrapped input', () => {
-    expect(toBase64(utf8Encode('Loadstar'))).toBe('TG9hZHN0YXI=')
-    expect(fromBase64('TG9h\n\tZHN0YXI=')).toEqual(utf8Encode('Loadstar'))
+    expect(toBase64(utf8Encode('IPAForge'))).toBe('SVBBRm9yZ2U=')
+    expect(fromBase64('SVBB\n\tRm9yZ2U=')).toEqual(utf8Encode('IPAForge'))
   })
 
   it('handles 64 MiB without exhausting the stack', () => {
@@ -108,20 +108,20 @@ describe('ByteReader / ByteWriter', () => {
     expect(reader.u32be()).toBe(99)
   })
 
-  it('throws a LoadstarError on out-of-range reads', () => {
+  it('throws an IPAForgeError on out-of-range reads', () => {
     const reader = new ByteReader(bytes(1, 2, 3))
-    expect(() => reader.u32le()).toThrow(LoadstarError)
+    expect(() => reader.u32le()).toThrow(IPAForgeError)
     try {
       reader.u32le()
     } catch (error) {
-      expect((error as LoadstarError).code).toBe(ErrorCode.Unexpected)
-      expect((error as LoadstarError).data).toEqual({
+      expect((error as IPAForgeError).code).toBe(ErrorCode.Unexpected)
+      expect((error as IPAForgeError).data).toEqual({
         offset: 0,
         length: 4,
         size: 3
       })
     }
-    expect(() => reader.seek(4)).toThrow(LoadstarError)
+    expect(() => reader.seek(4)).toThrow(IPAForgeError)
   })
 
   it('returns views from bytes() without copying', () => {

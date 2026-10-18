@@ -6,10 +6,10 @@ import type { DeviceInfo } from '@device/domain/types.ts'
 import {
   compact,
   ErrorCode,
+  IPAForgeError,
   isPlistDict,
-  LoadstarError,
   type PlistValue
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const deviceInfoSchema = z.looseObject({
   UniqueDeviceID: z.string(),
@@ -28,7 +28,7 @@ export const toDeviceInfo = (values: PlistValue | undefined): DeviceInfo => {
     isPlistDict(values) ? values : undefined
   )
   if (!parsed.success) {
-    throw new LoadstarError(ErrorCode.DeviceProtocolError, {
+    throw new IPAForgeError(ErrorCode.DeviceProtocolError, {
       message: 'unexpected device values',
       cause: parsed.error
     })

@@ -1,10 +1,10 @@
 import type { InstallerConfig } from '@installer/domain/config.ts'
 import type { ScratchStore } from '@installer/domain/ports/scratch-store.ts'
 import type { IpaSigner } from '@installer/domain/ports/types.ts'
-import type { AppleAccounts } from '@loadstar/apple'
-import type { Catalog } from '@loadstar/catalog'
-import type { DeviceManager } from '@loadstar/device'
-import type { Clock, Logger, SecretStore } from '@loadstar/kernel'
+import type { AppleAccounts } from '@ipaforge/apple'
+import type { Catalog } from '@ipaforge/catalog'
+import type { DeviceManager } from '@ipaforge/device'
+import type { Clock, Logger, SecretStore } from '@ipaforge/kernel'
 
 /** The contexts the installer orchestrates, and what it needs from its host. */
 export type InstallerDeps = {

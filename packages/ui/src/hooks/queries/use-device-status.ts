@@ -1,7 +1,7 @@
 import { skipToken, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useCallback } from 'react'
 
-import { ErrorCode, toLoadstarError } from '@loadstar/kernel'
+import { ErrorCode, toIPAForgeError } from '@ipaforge/kernel'
 import { queryKeys } from '@ui/hooks/queries/query-keys.ts'
 import { useEngine } from '@ui/hooks/use-engine.ts'
 
@@ -18,7 +18,7 @@ const SETTLED: ReadonlySet<string> = new Set([
 const RETRY_DELAY_MS = 1500
 
 const retryOnce = (failures: number, error: unknown): boolean =>
-  failures < 1 && !SETTLED.has(toLoadstarError(error).code)
+  failures < 1 && !SETTLED.has(toIPAForgeError(error).code)
 
 /**
  * Name, model, iOS, lock state and Developer Mode of a device; fails with `device.not_paired` and the like. Never

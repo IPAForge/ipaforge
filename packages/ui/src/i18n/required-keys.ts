@@ -1,7 +1,7 @@
 // Keys the Engine's data needs: every ErrorCode, recovery action and step label must have English text.
 // The assertions at the bottom make a missing one a type error that names the key.
-import type { ErrorCode } from '@loadstar/kernel'
-import type { RecoveryAction } from '@loadstar/rpc'
+import type { ErrorCode } from '@ipaforge/kernel'
+import type { RecoveryAction } from '@ipaforge/rpc'
 import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 import type { MissingKeys } from '@ui/i18n/types.ts'
 

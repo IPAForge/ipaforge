@@ -1,6 +1,6 @@
 # Security Policy
 
-Loadstar handles sensitive material: Apple ID credentials and sessions, development certificates and their private keys, provisioning profiles, and device pairing records (which grant access to an iPhone or iPad). Security reports are welcome and taken seriously.
+IPAForge handles sensitive material: Apple ID credentials and sessions, development certificates and their private keys, provisioning profiles, and device pairing records (which grant access to an iPhone or iPad). Security reports are welcome and taken seriously.
 
 ## Reporting a vulnerability
 
@@ -28,9 +28,9 @@ What to expect:
 ## Out of scope
 
 - Apple's own services and their policies (for example Apple refusing a sign-in method).
-- Third-party anisette servers, except where Loadstar trusts them more than documented.
+- Third-party anisette servers, except where IPAForge trusts them more than documented.
 - Attacks that need full control of the user's computer or an unlocked, trusting device.
 
 ## Supported versions
 
-Loadstar is pre-1.0. Fixes go into `main` and the next release; older pre-releases are not patched.
+IPAForge is pre-1.0. Fixes go into `main` and the next release; older pre-releases are not patched.

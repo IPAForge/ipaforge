@@ -1,5 +1,5 @@
 // Where the system usbmuxd listens: a Unix socket on macOS/Linux, TCP 27015 on Windows.
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 export type UsbmuxdEndpoint =
   | { readonly kind: 'unix'; readonly path: string }
@@ -26,7 +26,7 @@ const parseEndpoint = (address: string): UsbmuxdEndpoint => {
   const port = Number(address.slice(colon + 1))
   if (colon > 0 && isPort(port))
     return { kind: 'tcp', host: address.slice(0, colon), port }
-  throw new LoadstarError(ErrorCode.UsbmuxdUnavailable, {
+  throw new IPAForgeError(ErrorCode.UsbmuxdUnavailable, {
     message: `USBMUXD_SOCKET_ADDRESS must be UNIX:/path or host:port, got "${address}"`
   })
 }

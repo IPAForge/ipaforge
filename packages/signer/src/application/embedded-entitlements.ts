@@ -1,4 +1,4 @@
-import { isPlistDict, parseXmlPlist } from '@loadstar/kernel'
+import { isPlistDict, parseXmlPlist } from '@ipaforge/kernel'
 import type { EntitlementsInput } from '@signer/application/types.ts'
 import {
   CSSLOT_ENTITLEMENTS,

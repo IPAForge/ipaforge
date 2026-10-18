@@ -1,6 +1,6 @@
 import type { LockdownPairRecord } from '@device/domain/pairing/types.ts'
 import type { TlsCredentials } from '@device/domain/ports/types.ts'
-import type { PlistValue } from '@loadstar/kernel'
+import type { PlistValue } from '@ipaforge/kernel'
 
 export type StartedService = {
   readonly port: number

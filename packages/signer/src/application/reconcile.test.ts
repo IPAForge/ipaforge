@@ -19,7 +19,7 @@ import {
   silentLogger,
   toHex,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import { rejection } from '@signer/__tests__/errors.ts'
 import { FIXTURES_DIR, readTree } from '@signer/__tests__/fixtures.ts'
 import {
@@ -45,9 +45,9 @@ const now = new Date('2026-10-13T12:00:00Z')
 const deps = { hasher, logger: silentLogger, clock: fixedClock(now) }
 const isMac = process.platform === 'darwin'
 const TEAM = 'ABCDE12345'
-const NEW_MAIN = `com.loadstar.fixture.app.${TEAM}`
+const NEW_MAIN = `com.ipaforge.fixture.app.${TEAM}`
 const DEVICE = '00008110-000A1B2C3D4E5F60'
-const temp = mkdtempSync(join(tmpdir(), 'loadstar-reconcile-'))
+const temp = mkdtempSync(join(tmpdir(), 'ipaforge-reconcile-'))
 afterAll(() => rmSync(temp, { recursive: true, force: true }))
 
 let identity: TestIdentity
@@ -90,7 +90,7 @@ const baseOptions = async (
   deviceUdid: DEVICE,
   now,
   appGroups: new Map([
-    ['group.com.loadstar.fixture.app', `group.com.loadstar.fixture.app.${TEAM}`]
+    ['group.com.ipaforge.fixture.app', `group.com.ipaforge.fixture.app.${TEAM}`]
   ]),
   profiles: new Map([
     [NEW_MAIN, await profileFor(NEW_MAIN)],
@@ -165,7 +165,7 @@ describe('reconcileForSideload', () => {
 
     const app = infoOf(tree, 'Info.plist')
     expect(app.CFBundleIdentifier).toBe(NEW_MAIN)
-    expect(app.ALTAppGroups).toEqual([`group.com.loadstar.fixture.app.${TEAM}`])
+    expect(app.ALTAppGroups).toEqual([`group.com.ipaforge.fixture.app.${TEAM}`])
     expect(app.BGTaskSchedulerPermittedIdentifiers).toEqual([
       `${NEW_MAIN}.refresh`
     ])
@@ -178,8 +178,8 @@ describe('reconcileForSideload', () => {
     ) // frameworks keep theirs
 
     expect([...result.bundleIds]).toEqual([
-      ['com.loadstar.fixture.app', NEW_MAIN],
-      ['com.loadstar.fixture.app.ext', `${NEW_MAIN}.ext`]
+      ['com.ipaforge.fixture.app', NEW_MAIN],
+      ['com.ipaforge.fixture.app.ext', `${NEW_MAIN}.ext`]
     ])
     expect(
       result.provisioning.get('')?.entitlements.dict['application-identifier']
@@ -278,7 +278,7 @@ describe('reconcileForSideload', () => {
       kind: 'file',
       mode: 0o644,
       data: utf8Encode(
-        info.replace('com.loadstar.fixture.app.ext', 'com.elsewhere.ext')
+        info.replace('com.ipaforge.fixture.app.ext', 'com.elsewhere.ext')
       )
     })
     expect(

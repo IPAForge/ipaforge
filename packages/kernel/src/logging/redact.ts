@@ -22,7 +22,7 @@ const errorShape = (error: Error): Record<string, unknown> => {
   return shape
 }
 
-/** An error's own `toJSON()` (LoadstarError has one), or its name, message and cause. */
+/** An error's own `toJSON()` (IPAForgeError has one), or its name, message and cause. */
 const errorToJson = (error: Error): unknown =>
   'toJSON' in error && typeof error.toJSON === 'function'
     ? error.toJSON()

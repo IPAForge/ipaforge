@@ -8,9 +8,9 @@ import type {
   ProfileFacts
 } from '@installer/domain/types.ts'
 import type { StepDetail } from '@installer/pipeline/types.ts'
-import type { AppleSession, CertificateIdentity } from '@loadstar/apple'
-import type { DeviceManager, UsbmuxDevice } from '@loadstar/device'
-import type { Logger } from '@loadstar/kernel'
+import type { AppleSession, CertificateIdentity } from '@ipaforge/apple'
+import type { DeviceManager, UsbmuxDevice } from '@ipaforge/device'
+import type { Logger } from '@ipaforge/kernel'
 
 export type StoredCertificate = z.infer<typeof storedSchema>
 

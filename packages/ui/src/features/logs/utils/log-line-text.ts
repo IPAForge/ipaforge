@@ -1,4 +1,4 @@
-import type { LogEntry } from '@loadstar/kernel'
+import type { LogEntry } from '@ipaforge/kernel'
 
 const LEVEL_WIDTH = 5
 

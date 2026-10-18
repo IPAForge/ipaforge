@@ -1,12 +1,12 @@
 # Failure catalogue
 
-> What breaks sideloading installers in practice, and what Loadstar does about each failure. Built on 2026-10-15 from about 800 public user reports against a widely used SideStore installer, plus the SideStore source and docs. The reports and their text were used as data only. No code was taken from any tool.
+> What breaks sideloading installers in practice, and what IPAForge does about each failure. Built on 2026-10-15 from about 800 public user reports against a widely used SideStore installer, plus the SideStore source and docs. The reports and their text were used as data only. No code was taken from any tool.
 >
-> Counts are approximate. Each entry gives what the user saw, the cause, and Loadstar's handling, with the phase that delivers it.
+> Counts are approximate. Each entry gives what the user saw, the cause, and IPAForge's handling, with the phase that delivers it.
 
 ## 1. Clusters
 
-| Cluster | Share of reports | Cause | Loadstar handling | Phase |
+| Cluster | Share of reports | Cause | IPAForge handling | Phase |
 |---|---|---|---|---|
 | Anisette server failures (502/400, EOF, TLS errors, timeouts, placeholder custom URLs) | ~22 % | Third-party servers down, misconfigured or rate-limited; CA path, clock skew | Remote server list + health check + automatic failover; validate custom URLs; OS trust store; clock-skew check; per-server state with reset | 3 |
 | GSA `-80045`, HTTP 503/429 at the first login request | ~10 % | Apple rejects the client identity (`X-Mme-Client-Info`) or rate-limits | Apple-facing headers come from the anisette server's `/v3/client_info` or a signed remote config, never constants; backoff with jitter, fresh connections; status banner during Apple-wide incidents | 3 |
@@ -22,7 +22,7 @@
 | Profile/extension/Info.plist rewrite (`0xe8008015`, extension placeholders, Watch companion, BGTask IDs) | ~2 % | Signer gaps | Walk `PlugIns/`, `Extensions/`, `Watch/`; rewrite every bundle-ID-derived key; profile per appex; IPA validation before Apple calls | 5 |
 | Signer and filesystem (non-BMP names in certificate/P12, Windows locks and symlink privileges, truncated zips) | ~2 % | Engine and OS | Sanitised Unicode in subjects/friendly names; per-job temp dirs; no symlinks on Windows; verify downloads | 1 ✓, 5 |
 | Developer-services network errors (DNS, hotspot, filtered networks) | ~1.5 % | Network | Connectivity preflight (GSA lookup, developerservices2, anisette); hotspot detection; retries for idempotent calls | 3, 7 |
-| Pairing / lockdown / house_arrest | ~12 % | No passcode, locked device, trust not accepted, network instead of USB, old Apple Mobile Device Support, cleared trusted computers, a tool's own pair record replacing the OS's in usbmuxd | Device preflight (passcode, lock, trust, Developer Mode, iOS version, USB); USB preferred; use the OS's pair record and never write to usbmuxd (own pairing only as a fallback, kept in Loadstar's secret store); Wi-Fi debugging enabled with passcode detection; per-app pairing files from a data table, verified after writing; retry once on AFC drops | 2 ✓, 7 |
+| Pairing / lockdown / house_arrest | ~12 % | No passcode, locked device, trust not accepted, network instead of USB, old Apple Mobile Device Support, cleared trusted computers, a tool's own pair record replacing the OS's in usbmuxd | Device preflight (passcode, lock, trust, Developer Mode, iOS version, USB); USB preferred; use the OS's pair record and never write to usbmuxd (own pairing only as a fallback, kept in IPAForge's secret store); Wi-Fi debugging enabled with passcode detection; per-app pairing files from a data table, verified after writing; retry once on AFC drops | 2 ✓, 7 |
 | usbmuxd / device not detected (Windows driver, Linux socket activation) | ~3 % | Host OS | Per-OS checks with copyable fixes (Apple Devices app / Apple Mobile Device Service on Windows; `systemctl`/udev on Linux); one bad device never hides others | 2 ✓, 7 |
 | App won't start (WebView, Wayland/EGL) | ~2 % | Shell runtime | Electron bundles Chromium; no bundled system graphics libraries; GPU fallbacks | 9 |
 | Packaging (antivirus false positives, Gatekeeper) | ~2 % | Distribution | Signed + notarised builds, signed auto-update | 9, 12 |
@@ -66,7 +66,7 @@
 | 9401 | App ID taken by another team |
 | HTTP 403 listTeams | Account not eligible |
 
-### Device / installd / lockdown (handled in `@loadstar/device`)
+### Device / installd / lockdown (handled in `@ipaforge/device`)
 | Code | ErrorCode |
 |---|---|
 | `0xe8008015` profile not found | `device.profile_not_found` |
@@ -77,7 +77,7 @@
 | lockdown `PairingDialogResponsePending` | `device.pairing_pending` (polled until Trust) |
 | lockdown `UserDeniedPairing` | `device.pairing_denied` |
 | lockdown `InvalidHostID` / `InvalidPairRecord` with the OS's record (usbmuxd) | `device.invalid_pair_record`, `data.source: "usbmuxd"`; never re-paired over: unplug, replug, unlock, tap Trust |
-| lockdown `InvalidHostID` / `InvalidPairRecord` with Loadstar's own record | `device.invalid_pair_record` (re-pair once) |
+| lockdown `InvalidHostID` / `InvalidPairRecord` with IPAForge's own record | `device.invalid_pair_record` (re-pair once) |
 | TLS handshake with lockdownd fails | `device.protocol_error` with the TLS error code and reason; not a pairing problem, never re-paired |
 | `MissingValue` on `EnableWifiDebugging` | `device.passcode_required` |
 | usbmuxd unreachable | `device.usbmuxd_unavailable` |
@@ -95,8 +95,8 @@
 - **Certificate injection:** `ALTCertificate.p12` (certificate + key, password = the certificate's `machineId`) at the SideStore bundle root plus Info.plist `ALTCertificateID` = serial. For LiveContainer + SideStore, into the SideStore framework bundle inside `LiveContainer.app/Frameworks` (believed to be `SideStoreApp.framework`, not yet confirmed on a device, so it is also matched by a bundle ID starting with `com.SideStore.SideStore`). The `.p12` must use the legacy PKCS#12 profile (3DES key and certificate bags, HMAC-SHA1 MAC, 2048 iterations) or iOS refuses it. Without a `machineId` there is no password, so the injection fails rather than writing an unopenable file. Implemented as a signer `additions` hook (`packages/installer/src/sidestore/`). The bundle ID alone never justifies sharing the private key, since any IPA can claim it: the caller passes a `CertificateTrust`, either a catalog release whose SHA-256 matched or the user's explicit approval for a manually imported IPA. StikStore: `Certificate.p12` + `MachineID`.
 - **Pairing files:** see `packages/device/src/domain/pairing-apps.ts` (SideStore `PairingFile_Lockdown.plist` + legacy `ALTPairingFile.mobiledevicepairing`; LiveContainer `SideStore/Documents/…`; StikDebug/StikStore `pairingFile.plist`). The file must be the complete pair record: current SideStore rejects one without `RootPrivateKey` or `WiFiMACAddress` and its device connection never starts. Remote pairing (`PairingFile_RemoteRP.plist`, iOS 17.4+) in Phase 11.
 - **Special-app detection** by original bundle ID: `com.SideStore.SideStore`, `com.kdt.livecontainer` (with the SideStore framework → LiveContainer + SideStore), `app.stik.store`, `com.rileytestut.AltStore`. Manually imported IPAs get the same handling, except that certificate injection needs the user's explicit approval.
-- **Sources and deep links:** SideStore keeps its sources in its own database, which isn't reachable over USB, so Loadstar offers them as deep links and a QR code (`sidestore://source?url=…`; also `install?url=`, `pairing?urlname=`, `certificate?callback_template=`). An upstream "preload manifest" is the long-term fix (Phase 12). SideStore's default anisette server comes from its `ALTAnisetteURL` Info.plist key, its server list from `https://servers.sidestore.io/servers.json`.
-- **LocalDevVPN** cannot be sideloaded (App Store entitlements); Loadstar links to the App Store. Default SideStore device IP `10.7.0.1`.
+- **Sources and deep links:** SideStore keeps its sources in its own database, which isn't reachable over USB, so IPAForge offers them as deep links and a QR code (`sidestore://source?url=…`; also `install?url=`, `pairing?urlname=`, `certificate?callback_template=`). An upstream "preload manifest" is the long-term fix (Phase 12). SideStore's default anisette server comes from its `ALTAnisetteURL` Info.plist key, its server list from `https://servers.sidestore.io/servers.json`.
+- **LocalDevVPN** cannot be sideloaded (App Store entitlements); IPAForge links to the App Store. Default SideStore device IP `10.7.0.1`.
 - **Repair SideStore** wizard: reset pairing in SideStore → re-pair → place in all apps → refresh → device IP `10.7.0.1` → change anisette server → reboot.
 
 ## 5. Top requirements by phase

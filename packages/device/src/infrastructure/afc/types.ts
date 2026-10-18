@@ -1,4 +1,4 @@
-import type { Logger } from '@loadstar/kernel'
+import type { Logger } from '@ipaforge/kernel'
 
 export type AfcFileType = 'file' | 'directory' | 'symlink' | 'other'
 

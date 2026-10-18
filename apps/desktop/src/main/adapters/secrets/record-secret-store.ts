@@ -6,8 +6,8 @@ import type {
   SecretRecord,
   SecretRecordStorage
 } from '@desktop/main/adapters/secrets/types.ts'
-import type { SecretStore } from '@loadstar/kernel'
-import { fromBase64, toBase64 } from '@loadstar/kernel'
+import type { SecretStore } from '@ipaforge/kernel'
+import { fromBase64, toBase64 } from '@ipaforge/kernel'
 
 export const createRecordSecretStore = ({
   load,

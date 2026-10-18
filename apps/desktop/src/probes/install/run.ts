@@ -8,7 +8,7 @@ import type {
   PipelineResult,
   RunEvent,
   RunHandle
-} from '@loadstar/installer'
+} from '@ipaforge/installer'
 
 const PERCENT = 100
 /** Within-step progress is printed in steps of this many percent. */

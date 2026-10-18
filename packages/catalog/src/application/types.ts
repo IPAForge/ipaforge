@@ -1,6 +1,6 @@
 import type { ResolvedRelease } from '@catalog/domain/release.ts'
 import type { ReleaseLocation } from '@catalog/domain/types.ts'
-import type { FileSource } from '@loadstar/kernel'
+import type { FileSource } from '@ipaforge/kernel'
 
 export type DownloadProgress = {
   readonly received: number

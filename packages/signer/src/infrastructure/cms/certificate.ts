@@ -1,6 +1,6 @@
 import * as pkijs from 'pkijs'
 
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 import {
   OID_COMMON_NAME,
   OID_ORGANIZATIONAL_UNIT
@@ -16,7 +16,7 @@ export const parseCertificate = (der: Uint8Array): pkijs.Certificate => {
   try {
     return pkijs.Certificate.fromBER(toArrayBuffer(der))
   } catch (error) {
-    throw new LoadstarError(ErrorCode.InvalidCertificate, {
+    throw new IPAForgeError(ErrorCode.InvalidCertificate, {
       message: 'not a DER X.509 certificate',
       cause: error
     })

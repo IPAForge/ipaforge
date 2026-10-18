@@ -1,4 +1,4 @@
-// Loadstar's file-structure rules (docs/design/conventions.md, "File structure"):
+// IPAForge's file-structure rules (docs/design/conventions.md, "File structure"):
 // - no `switch`: branch through a mapped object instead;
 // - a `.tsx` file holds one component and nothing else at the top level but
 //   its imports and, at most, its one type;
@@ -134,7 +134,7 @@ const oneTypePerFile = {
 }
 
 export const structure = {
-  meta: { name: '@loadstar/structure' },
+  meta: { name: '@ipaforge/structure' },
   rules: {
     'no-switch': noSwitch,
     'component-file': componentFile,

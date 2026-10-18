@@ -2,7 +2,7 @@ import type { DeviceTransport } from '@device/domain/ports/types.ts'
 import type { DeviceEvent, UsbmuxDevice } from '@device/domain/types.ts'
 import type { Link } from '@device/infrastructure/framing/link.ts'
 import type { FrameLimits } from '@device/infrastructure/framing/plist-frames.ts'
-import type { Logger } from '@loadstar/kernel'
+import type { Logger } from '@ipaforge/kernel'
 
 export type UsbmuxClientOptions = {
   readonly transport: DeviceTransport

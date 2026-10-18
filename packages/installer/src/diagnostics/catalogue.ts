@@ -1,7 +1,7 @@
 // Every ErrorCode and what the user can do about it, first choice first (docs/design/failure-catalogue.md). The
 // `satisfies` clause makes a new ErrorCode without an entry a type error.
 import { RecoveryAction as R } from '@installer/diagnostics/recovery.ts'
-import type { ErrorCode } from '@loadstar/kernel'
+import type { ErrorCode } from '@ipaforge/kernel'
 
 const REPORT = [R.Retry, R.ReportIssue] as const
 const DEVICE_LINK = [R.ReconnectDevice, R.Retry] as const
@@ -18,7 +18,7 @@ export const RECOVERY_CATALOGUE = {
   'device.pairing_denied': [R.PairAgain, R.TrustComputer],
   'device.invalid_pair_record': [R.PairAgain, R.Retry],
   'device.service_unavailable': [R.UnlockDevice, R.ReconnectDevice, R.Retry],
-  'device.protocol_error': [R.ReconnectDevice, R.UpdateLoadstar, R.ReportIssue],
+  'device.protocol_error': [R.ReconnectDevice, R.UpdateIPAForge, R.ReportIssue],
   'device.install_failed': [R.Retry, R.ReinstallApp, R.ReportIssue],
   'device.afc_error': [R.UnlockDevice, R.Retry],
   'device.timeout': [R.UnlockDevice, R.ReconnectDevice, R.Retry],
@@ -57,7 +57,7 @@ export const RECOVERY_CATALOGUE = {
   'apple.two_factor_unsupported': [R.SwitchAccount],
   'apple.sms_unavailable': [R.UseTrustedDevice, R.SwitchAccount],
   'apple.clock_skew': [R.CheckClock, R.Retry],
-  'apple.protocol_error': [R.UpdateLoadstar, R.ReportIssue],
+  'apple.protocol_error': [R.UpdateIPAForge, R.ReportIssue],
   'apple.session_expired': [R.SignInAgain, R.CheckClock],
   'apple.account_not_found': [R.SignInAgain],
   'apple.not_eligible': [R.SwitchAccount],
@@ -66,7 +66,7 @@ export const RECOVERY_CATALOGUE = {
   'apple.no_teams': [R.AcceptAgreement, R.SwitchAccount],
   'apple.device_limit': [R.ChooseTeam, R.SwitchAccount],
   'apple.app_id_unavailable': [R.ChooseTeam, R.SwitchAccount],
-  'apple.invalid_app_id_name': [R.UpdateLoadstar, R.ReportIssue],
+  'apple.invalid_app_id_name': [R.UpdateIPAForge, R.ReportIssue],
   'apple.certificate_not_revocable': [R.RevokeCertificate],
   'apple.no_devices_for_profile': [R.WaitAndRetry],
   'apple.developer_request_failed': REPORT,
@@ -75,7 +75,7 @@ export const RECOVERY_CATALOGUE = {
   'catalog.source_gone': [
     R.ChooseAnotherChannel,
     R.ImportIpa,
-    R.UpdateLoadstar
+    R.UpdateIPAForge
   ],
   'catalog.unavailable': [R.CheckNetwork, R.Retry],
   'catalog.download_failed': [R.CheckNetwork, R.Retry],
@@ -97,7 +97,7 @@ export const RECOVERY_CATALOGUE = {
   'signer.no_header_space': [R.ChooseAnotherIpa, R.ReportIssue],
   'signer.zip_slip': [R.ChooseAnotherIpa],
   'signer.invalid_certificate': [R.RevokeCertificate, R.Retry],
-  'signer.unknown_issuer': [R.UpdateLoadstar, R.CheckNetwork],
+  'signer.unknown_issuer': [R.UpdateIPAForge, R.CheckNetwork],
   'signer.invalid_bundle': [R.ChooseAnotherIpa],
   'signer.invalid_profile': REPORT,
   'signer.extension_prefix': [R.ChooseAnotherIpa],
@@ -113,7 +113,7 @@ export const RECOVERY_CATALOGUE = {
   'installer.team_required': [R.ChooseTeam],
 
   // rpc: the UI and the Engine disagree (a version mismatch or a bug), or the Engine went away
-  'rpc.invalid_message': [R.UpdateLoadstar, R.ReportIssue],
+  'rpc.invalid_message': [R.UpdateIPAForge, R.ReportIssue],
   'rpc.disconnected': [R.Retry, R.ReportIssue],
   'rpc.timeout': [R.Retry, R.ReportIssue],
 

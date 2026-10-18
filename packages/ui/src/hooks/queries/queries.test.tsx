@@ -1,7 +1,7 @@
 import { waitFor } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 import { renderAppHook } from '@ui/__tests__/hook-wrapper.tsx'
 import { queryKeys } from '@ui/hooks/queries/query-keys.ts'
 import { useAccounts } from '@ui/hooks/queries/use-accounts.ts'
@@ -43,13 +43,13 @@ describe('query hooks over the fake Engine', () => {
     ])
   })
 
-  it('reads a device status, and surfaces a failure as a LoadstarError with its code', async () => {
+  it('reads a device status, and surfaces a failure as an IPAForgeError with its code', async () => {
     const ready = await settled(() => useDeviceStatus(FAKE_IPHONE))
     expect(ready.data?.info.productVersion).toBe('26.1')
 
     const untrusted = await settled(() => useDeviceStatus(FAKE_IPAD))
-    expect(untrusted.error).toBeInstanceOf(LoadstarError)
-    expect((untrusted.error as LoadstarError).code).toBe(
+    expect(untrusted.error).toBeInstanceOf(IPAForgeError)
+    expect((untrusted.error as IPAForgeError).code).toBe(
       ErrorCode.DeviceNotPaired
     )
   })

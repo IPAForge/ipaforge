@@ -2,10 +2,10 @@
 
 import type { Pending, PromptQueue } from '@installer/engine/types.ts'
 import type { PromptRequest } from '@installer/pipeline/types.ts'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
-const noPrompt = (): LoadstarError =>
-  new LoadstarError(ErrorCode.Unexpected, { message: 'no prompt is waiting' })
+const noPrompt = (): IPAForgeError =>
+  new IPAForgeError(ErrorCode.Unexpected, { message: 'no prompt is waiting' })
 
 export const createPromptQueue = (
   onAsked: (request: PromptRequest) => void
@@ -33,6 +33,6 @@ export const createPromptQueue = (
     ask,
     pending: () => current?.request,
     answer: (answer) => settle().resolve(answer),
-    decline: () => settle().reject(new LoadstarError(ErrorCode.PromptCancelled))
+    decline: () => settle().reject(new IPAForgeError(ErrorCode.PromptCancelled))
   }
 }

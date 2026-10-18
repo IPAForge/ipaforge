@@ -2,7 +2,7 @@
 // dialogs, and they import the feature's constants.
 import type { ReactNode } from 'react'
 
-import { PromptKind } from '@loadstar/rpc'
+import { PromptKind } from '@ipaforge/rpc'
 import { PasswordPrompt } from '@ui/components/prompts/password-prompt.tsx'
 import type { PromptProps } from '@ui/components/prompts/prompt-props.ts'
 import { TwoFactorCodePrompt } from '@ui/components/prompts/two-factor-code-prompt.tsx'

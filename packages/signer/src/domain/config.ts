@@ -1,7 +1,7 @@
 // Every tunable of the signer in one place, with the defaults the engine ships with. Callers override any
 // subset (e.g. `signIpa(source, { limits: { plist: { maxDepth: 32 } } })`); nothing here is a format
 // constant (those live in the *constants.ts / oids.ts / layout.ts modules and must not change).
-import { DEFAULT_PLIST_LIMITS, type PlistLimits } from '@loadstar/kernel'
+import { DEFAULT_PLIST_LIMITS, type PlistLimits } from '@ipaforge/kernel'
 import type {
   Overrides,
   SignerLimits,

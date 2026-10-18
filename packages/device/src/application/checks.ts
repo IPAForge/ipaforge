@@ -8,7 +8,7 @@ import {
   LockdownDomain
 } from '@device/domain/constants.ts'
 import { parseVersion } from '@device/domain/device.ts'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 /** Classifies the AMFI `DeveloperModeStatus` value for a given iOS version. */
 export const developerModeState = (
@@ -42,7 +42,7 @@ export const checkDevice = async (
 /** Throws the catalogued error that blocks running sideloaded apps, if any. */
 export const assertCanRunSideloadedApps = (check: DeviceCheck): void => {
   if (check.developerMode === 'off') {
-    throw new LoadstarError(ErrorCode.DeveloperModeOff, {
+    throw new IPAForgeError(ErrorCode.DeveloperModeOff, {
       data: { iosVersion: check.info.productVersion }
     })
   }
