@@ -105,7 +105,7 @@ loadstar/
 │           └── renderer/           # wraps the port in a Transport, createEngineClient, mounts @loadstar/ui
 │
 ├── fixtures/                       # golden inputs + Apple codesign outputs (generated on macOS CI)
-└── docs/                           # user and contributor docs; design/ holds architecture, roadmap, research
+└── docs/                           # user and contributor docs; design/ holds architecture, roadmap, conventions and references
 ```
 
 ## Dependency Rules
