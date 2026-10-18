@@ -799,7 +799,16 @@
       "label": "確認コード",
       "wrong": "このコードは使えませんでした。確認してもう一度入力してください。",
       "verify": "確認",
-      "checking": "コードを確認しています…"
+      "checking": "コードを確認しています…",
+      "deviceBody": "{length, plural, other {iPhone、iPad、または Mac に表示された # 桁のコードを入力してください。}}",
+      "smsBody": "{length, plural, other {{number} に送信された # 桁のコードを入力してください。}}",
+      "allowHint": "ロックを解除したまま、サインインについて尋ねられたら「許可」をタップしてください。",
+      "noCode": "コードが届きませんか?",
+      "resend": "新しいコードを送信",
+      "textTo": "{number} に SMS",
+      "sending": "新しいコードを送信中…",
+      "sent": "新しいコードを送信しました。",
+      "notSent": "Apple が新しいコードを送信しませんでした。数分待ってからもう一度お試しください。"
     },
     "suggested": "おすすめ",
     "team": {

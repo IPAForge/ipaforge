@@ -61,6 +61,67 @@ describe('signIn', () => {
     expect(h.apple.calls.saved).toBe(1)
   })
 
+  it('goes straight to the code for trusted devices, and sends a new one when asked', async () => {
+    const challenge = twoFactorChallenge('123456')
+    const h = createHarness({
+      apple: { signIn: async () => ({ kind: 'two_factor', challenge }) }
+    })
+    const answers: unknown[] = [{ resend: true }, '123456']
+    const prompts = scripted({
+      [PromptKind.Password]: () => 'secret',
+      [PromptKind.TwoFactorCode]: () => answers.shift()
+    })
+    const result = await h.engine.signIn(input, { onPrompt: prompts }).result
+
+    expect(result.status).toBe('completed')
+    expect(prompts.asked.map((p) => p.kind)).not.toContain(
+      PromptKind.TwoFactorMethod
+    )
+    expect(challenge.sent).toEqual([{ type: 'trusted_device' }])
+    expect(prompts.asked.at(-1)?.data).toMatchObject({
+      resent: true,
+      retry: false,
+      phones: [{ id: 7 }]
+    })
+  })
+
+  it('texts the code to a number instead, and takes that code', async () => {
+    const challenge = twoFactorChallenge('654321')
+    const h = createHarness({
+      apple: { signIn: async () => ({ kind: 'two_factor', challenge }) }
+    })
+    const answers: unknown[] = [{ textTo: 7 }, '654321']
+    const prompts = scripted({
+      [PromptKind.Password]: () => 'secret',
+      [PromptKind.TwoFactorCode]: () => answers.shift()
+    })
+    const result = await h.engine.signIn(input, { onPrompt: prompts }).result
+
+    expect(result.status).toBe('completed')
+    expect(challenge.sent).toEqual([{ type: 'sms', phoneId: 7 }])
+    expect(challenge.submittedWith).toEqual([{ type: 'sms', phoneId: 7 }])
+    expect(prompts.asked.at(-1)?.data).toMatchObject({
+      method: { type: 'sms', phoneId: 7 },
+      resent: true
+    })
+  })
+
+  it('says so when Apple refuses to send a new code, and keeps asking', async () => {
+    const challenge = twoFactorChallenge('123456', { refuseRequests: true })
+    const h = createHarness({
+      apple: { signIn: async () => ({ kind: 'two_factor', challenge }) }
+    })
+    const answers: unknown[] = [{ resend: true }, '123456']
+    const prompts = scripted({
+      [PromptKind.Password]: () => 'secret',
+      [PromptKind.TwoFactorCode]: () => answers.shift()
+    })
+    const result = await h.engine.signIn(input, { onPrompt: prompts }).result
+
+    expect(result.status).toBe('completed')
+    expect(prompts.asked.at(-1)?.data).toMatchObject({ resent: false })
+  })
+
   it('keeps the password out of the state, and stops when it is declined', async () => {
     const h = createHarness()
     const events: RunEvent[] = []

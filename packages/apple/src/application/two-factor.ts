@@ -119,7 +119,7 @@ const assertUsable = (methods: TwoFactorMethods): void => {
 /** Asks Apple to push a code to the trusted devices. */
 const requestDeviceCode = async (ctx: TwoFactorContext): Promise<void> => {
   const { endpoints } = ctx.deps.config
-  await fetchApple(
+  const response = await fetchApple(
     ctx.deps,
     await bagUrl(
       ctx.deps,
@@ -131,6 +131,9 @@ const requestDeviceCode = async (ctx: TwoFactorContext): Promise<void> => {
       acceptStatus: successOr(HTTP_CONFLICT)
     }
   )
+  ctx.deps.logger.info('asked Apple to send a code to trusted devices', {
+    status: response.status
+  })
 }
 
 const requestSmsCode = async (
@@ -153,6 +156,9 @@ const requestSmsCode = async (
       )
     }
   )
+  ctx.deps.logger.info('asked Apple to text a code', {
+    status: response.status
+  })
   if (response.status === HTTP_FORBIDDEN)
     throw smsRefused('Apple refused to send an SMS code for this sign-in')
   const code = serviceErrorCode(response.body)

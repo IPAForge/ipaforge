@@ -38,7 +38,8 @@ export type {
   PromptAnswer,
   PromptData,
   Prompts,
-  RemovableApp
+  RemovableApp,
+  TwoFactorCodeAnswer
 } from '@installer/domain/types.ts'
 export { logRunEvent, logRunResult } from '@installer/engine/run-log.ts'
 export type {

@@ -45,13 +45,6 @@ const submitForm = async (user: User, password = 'secret') => {
   )
 }
 
-const chooseMethod = async (user: User, name: RegExp) => {
-  const dialog = await screen.findByRole('dialog', {
-    name: t('prompts.method.title')
-  })
-  await user.click(within(dialog).getByRole('button', { name }))
-}
-
 const enterCode = async (user: User, code: string) => {
   const dialog = await screen.findByRole('dialog', {
     name: t('prompts.code.title')
@@ -78,22 +71,36 @@ const closeSignedIn = async (user: User): Promise<string | null> => {
   return (await accountButton(NEW_ID)).textContent
 }
 
-const TRUSTED_DEVICE = new RegExp(t('prompts.method.trustedDevice'))
-const SMS = /••42/
+const TEXT_INSTEAD = /••42/
+
+/** Asks for the code by text message instead, from the code step. */
+const textInstead = async (user: User) => {
+  const dialog = await screen.findByRole('dialog', {
+    name: t('prompts.code.title')
+  })
+  await user.click(within(dialog).getByRole('button', { name: TEXT_INSTEAD }))
+}
 
 describe('Add Apple ID', () => {
   it('signs in with a trusted-device code, says who is signed in, and shows it in the top bar', async () => {
     const user = await openSignIn()
     await submitForm(user)
-    await chooseMethod(user, TRUSTED_DEVICE)
+    const code = await screen.findByRole('dialog', {
+      name: t('prompts.code.title')
+    })
+    expect(code.textContent).toContain(
+      t('prompts.code.deviceBody', { length: 6 })
+    )
     await enterCode(user, '123456')
     expect(await closeSignedIn(user)).toContain(NEW_ID)
   })
 
-  it('signs in with a code sent by text message', async () => {
+  it('signs in with a code sent by text message instead', async () => {
     const user = await openSignIn()
     await submitForm(user)
-    await chooseMethod(user, SMS)
+    await textInstead(user)
+    const sent = await screen.findByRole('status')
+    expect(sent.textContent).toBe(t('prompts.code.sent'))
     await enterCode(user, '123456')
     expect(await closeSignedIn(user)).toContain(NEW_ID)
   })
@@ -101,7 +108,6 @@ describe('Add Apple ID', () => {
   it('asks for the code again after a wrong one, saying so', async () => {
     const user = await openSignIn()
     await submitForm(user)
-    await chooseMethod(user, TRUSTED_DEVICE)
     await enterCode(user, '000000')
     const again = await screen.findByRole('dialog', {
       name: t('prompts.code.title')
@@ -144,11 +150,11 @@ describe('Add Apple ID', () => {
   it('goes back to the form when the second factor is cancelled, and closes on Cancel', async () => {
     const user = await openSignIn()
     await submitForm(user)
-    const method = await screen.findByRole('dialog', {
-      name: t('prompts.method.title')
+    const code = await screen.findByRole('dialog', {
+      name: t('prompts.code.title')
     })
     await user.click(
-      within(method).getByRole('button', { name: t('prompts.cancel') })
+      within(code).getByRole('button', { name: t('prompts.cancel') })
     )
     const form = await screen.findByRole('dialog', { name: t('signIn.title') })
     expect(within(form).queryByRole('alert')).toBeNull()
@@ -213,37 +219,39 @@ describe('Add Apple ID, while Apple answers', () => {
     ).toBe(true)
     expect(within(form).getByText(t('signIn.signingIn'))).toBeDefined()
 
+    // Apple checks the password, then sends the code.
     await apple.release()
-    expect(
-      await screen.findByRole('dialog', { name: t('prompts.method.title') })
-    ).toBeDefined()
-  })
-
-  it('keeps the method choice, with the chosen option busy, until the code is sent', async () => {
-    const apple = holdApple()
-    const user = await openSignIn('happy', apple.appleAnswer)
-    await submitForm(user)
-    await apple.release()
-    const form = watchForForm()
-    await chooseMethod(user, SMS)
-
-    const method = screen.getByRole('dialog', {
-      name: t('prompts.method.title')
-    })
-    expect(isPending(within(method).getByRole('button', { name: SMS }))).toBe(
-      true
-    )
-    expect(
-      within(method)
-        .getByRole('button', { name: TRUSTED_DEVICE })
-        .hasAttribute('disabled')
-    ).toBe(true)
-    expect(within(method).getByText(t('prompts.method.sending'))).toBeDefined()
-
     await apple.release()
     expect(
       await screen.findByRole('dialog', { name: t('prompts.code.title') })
     ).toBeDefined()
+  })
+
+  it('keeps the code step busy while a new code is sent, then says it was', async () => {
+    const apple = holdApple()
+    const user = await openSignIn('happy', apple.appleAnswer)
+    await submitForm(user)
+    await apple.release()
+    await apple.release()
+    const form = watchForForm()
+    const code = await screen.findByRole('dialog', {
+      name: t('prompts.code.title')
+    })
+    await user.click(
+      within(code).getByRole('button', { name: t('prompts.code.resend') })
+    )
+
+    expect(within(code).getByText(t('prompts.code.sending'))).toBeDefined()
+    expect(
+      within(code)
+        .getByRole('button', { name: t('prompts.code.resend') })
+        .hasAttribute('disabled')
+    ).toBe(true)
+
+    await apple.release()
+    expect((await screen.findByRole('status')).textContent).toBe(
+      t('prompts.code.sent')
+    )
     expect(form.wasSeen()).toBe(false)
   })
 
@@ -252,7 +260,6 @@ describe('Add Apple ID, while Apple answers', () => {
     const user = await openSignIn('happy', apple.appleAnswer)
     await submitForm(user)
     await apple.release()
-    await chooseMethod(user, TRUSTED_DEVICE)
     await apple.release()
     const form = watchForForm()
     await enterCode(user, '123456')
@@ -280,7 +287,6 @@ describe('Add Apple ID, while Apple answers', () => {
     const user = await openSignIn('happy', apple.appleAnswer)
     await submitForm(user)
     await apple.release()
-    await chooseMethod(user, TRUSTED_DEVICE)
     await apple.release()
     const form = watchForForm()
     await enterCode(user, '000000')

@@ -89,12 +89,6 @@ describe('installing SideStore', () => {
     await user.click(
       within(password).getByRole('button', { name: t('prompts.continue') })
     )
-    const method = await findDialog('prompts.method.title')
-    await user.click(
-      within(method).getByRole('button', {
-        name: new RegExp(t('prompts.method.trustedDevice'))
-      })
-    )
     const code = await findDialog('prompts.code.title')
     await user.type(within(code).getByRole('textbox'), '123456')
     await user.click(

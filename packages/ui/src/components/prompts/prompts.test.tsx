@@ -88,7 +88,8 @@ describe('prompt dialogs', () => {
         data={{
           method: { type: 'trusted_device' },
           codeLength: 6,
-          retry: false
+          retry: false,
+          phones: []
         }}
         declineLabelKey="prompts.cancel"
         {...actions}
@@ -103,13 +104,86 @@ describe('prompt dialogs', () => {
     expect(onAnswer).toHaveBeenCalledWith('123456')
   })
 
+  it('two-factor code: sends a new code, or texts one to a number instead', async () => {
+    const { dialog, user, onAnswer } = await show((actions) => (
+      <TwoFactorCodePrompt
+        data={{
+          method: { type: 'trusted_device' },
+          codeLength: 6,
+          retry: false,
+          phones: [{ id: 7, number: '+40 ••• ••• •12' }]
+        }}
+        declineLabelKey="prompts.cancel"
+        {...actions}
+      />
+    ))
+    expect(dialog.textContent).toContain(
+      t('prompts.code.deviceBody', { length: 6 })
+    )
+    expect(dialog.textContent).toContain(t('prompts.code.allowHint'))
+    await user.click(button(dialog, t('prompts.code.resend')))
+    expect(onAnswer).toHaveBeenLastCalledWith({ resend: true })
+    await user.click(
+      button(dialog, t('prompts.code.textTo', { number: '+40 ••• ••• •12' }))
+    )
+    expect(onAnswer).toHaveBeenLastCalledWith({ textTo: 7 })
+  })
+
+  it('two-factor code: says where a texted code went, and whether a new one was sent', async () => {
+    const phone = { id: 7, number: '+40 ••• ••• •12' }
+    const sent = await show((actions) => (
+      <TwoFactorCodePrompt
+        data={{
+          method: { type: 'sms', phoneId: 7 },
+          codeLength: 6,
+          retry: false,
+          resent: true,
+          phones: [phone]
+        }}
+        declineLabelKey="prompts.cancel"
+        {...actions}
+      />
+    ))
+    expect(sent.dialog.textContent).toContain(
+      t('prompts.code.smsBody', { length: 6, number: phone.number })
+    )
+    expect(within(sent.dialog).getByRole('status').textContent).toBe(
+      t('prompts.code.sent')
+    )
+    expect(
+      within(sent.dialog).queryByRole('button', {
+        name: t('prompts.code.textTo', { number: phone.number })
+      })
+    ).toBeNull()
+  })
+
+  it('two-factor code: says when Apple sent no new code', async () => {
+    const { dialog } = await show((actions) => (
+      <TwoFactorCodePrompt
+        data={{
+          method: { type: 'trusted_device' },
+          codeLength: 6,
+          retry: false,
+          resent: false,
+          phones: []
+        }}
+        declineLabelKey="prompts.cancel"
+        {...actions}
+      />
+    ))
+    expect(within(dialog).getByRole('alert').textContent).toBe(
+      t('prompts.code.notSent')
+    )
+  })
+
   it('two-factor code: says the last code was wrong', async () => {
     const { dialog } = await show((actions) => (
       <TwoFactorCodePrompt
         data={{
           method: { type: 'sms', phoneId: 7 },
           codeLength: 6,
-          retry: true
+          retry: true,
+          phones: []
         }}
         declineLabelKey="prompts.cancel"
         {...actions}

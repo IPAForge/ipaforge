@@ -123,14 +123,6 @@ describe('an Apple ID whose session expired', () => {
     await user.click(
       within(form).getByRole('button', { name: t('signIn.submit') })
     )
-    const method = await screen.findByRole('dialog', {
-      name: t('prompts.method.title')
-    })
-    await user.click(
-      within(method).getByRole('button', {
-        name: new RegExp(t('prompts.method.trustedDevice'))
-      })
-    )
     const code = await screen.findByRole('dialog', {
       name: t('prompts.code.title')
     })

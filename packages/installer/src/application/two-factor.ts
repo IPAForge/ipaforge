@@ -1,7 +1,9 @@
-// Completes a second-factor challenge through prompts: pick a method when there is a choice, then ask for the code
-// until Apple accepts one (a wrong code asks again, up to the configured number of attempts).
+// Completes a second-factor challenge through prompts. With trusted devices, the code question comes straight away
+// (Apple has pushed a code); otherwise the method is picked first. The code question can also ask for a new code,
+// by the same way or by text message; a wrong code asks again, up to the configured number of attempts.
 import { ask } from '@installer/application/ask.ts'
 import { PromptKind } from '@installer/domain/prompts.ts'
+import type { TwoFactorCodeAnswer } from '@installer/domain/types.ts'
 import type { StepContext } from '@installer/pipeline/types.ts'
 import type {
   AppleSession,
@@ -37,23 +39,64 @@ const isInvalidCode = (error: unknown): boolean =>
   error instanceof IPAForgeError &&
   error.code === ErrorCode.TwoFactorInvalidCode
 
-const submitUntilAccepted = async (
+/** Trusted devices first (their code is already on the way); otherwise the method the user picks. */
+const firstMethod = async (
+  context: StepContext,
+  methods: TwoFactorMethods
+): Promise<TwoFactorMethod> =>
+  methods.trustedDevice
+    ? { type: 'trusted_device' }
+    : chooseMethod(context, methods)
+
+/** Asks Apple for another code, by the method given; says whether Apple sent it. */
+const requestAnother = async (
+  challenge: TwoFactorChallenge,
+  method: TwoFactorMethod
+): Promise<boolean> => {
+  try {
+    await challenge.requestCode(method)
+    return true
+  } catch {
+    return false
+  }
+}
+
+const methodFor = (
+  answer: Exclude<TwoFactorCodeAnswer, string>,
+  current: TwoFactorMethod
+): TwoFactorMethod =>
+  'textTo' in answer ? { type: 'sms', phoneId: answer.textTo } : current
+
+/** Asks for the code until Apple accepts one, sending a new one whenever the user asks for it. */
+const answerUntilAccepted = async (
   context: StepContext,
   challenge: TwoFactorChallenge,
-  method: TwoFactorMethod,
-  codeLength: number,
+  methods: TwoFactorMethods,
+  first: TwoFactorMethod,
   attempts: number
 ): Promise<AppleSession> => {
-  for (let attempt = 1; ; attempt++) {
-    const code = await ask(context, PromptKind.TwoFactorCode, {
+  let method = first
+  let wrong = 0
+  let resent: boolean | undefined
+  for (;;) {
+    const answer = await ask(context, PromptKind.TwoFactorCode, {
       method,
-      codeLength,
-      retry: attempt > 1
+      codeLength: methods.codeLength,
+      retry: wrong > 0 && resent === undefined,
+      phones: methods.phones,
+      ...(resent === undefined ? {} : { resent })
     })
+    if (typeof answer !== 'string') {
+      method = methodFor(answer, method)
+      resent = await requestAnother(challenge, method)
+      continue
+    }
+    resent = undefined
     try {
-      return await challenge.submitCode(method, code)
+      return await challenge.submitCode(method, answer)
     } catch (error) {
-      if (!isInvalidCode(error) || attempt >= attempts) throw error
+      wrong++
+      if (!isInvalidCode(error) || wrong >= attempts) throw error
     }
   }
 }
@@ -64,14 +107,8 @@ export const completeTwoFactor = async (
   attempts: number
 ): Promise<AppleSession> => {
   const methods = await challenge.methods()
-  const method = await chooseMethod(context, methods)
+  const method = await firstMethod(context, methods)
   // Apple already pushed a code to trusted devices when it asked for the second factor.
   if (method.type !== 'trusted_device') await challenge.requestCode(method)
-  return submitUntilAccepted(
-    context,
-    challenge,
-    method,
-    methods.codeLength,
-    attempts
-  )
+  return answerUntilAccepted(context, challenge, methods, method, attempts)
 }
