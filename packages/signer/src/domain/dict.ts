@@ -1,5 +1,5 @@
 // Small immutable helpers over plist dictionaries.
-import { createDict, type PlistDict, type PlistValue } from '@loadstar/kernel'
+import { createDict, type PlistDict, type PlistValue } from '@ipaforge/kernel'
 
 /** The string items of an array value (anything else yields none). */
 export const stringsOf = (value: PlistValue | undefined): string[] =>

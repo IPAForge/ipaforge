@@ -1,4 +1,4 @@
-// Public API of @loadstar/signer. Everything else is internal.
+// Public API of @ipaforge/signer. Everything else is internal.
 
 export {
   createDict,
@@ -9,7 +9,7 @@ export {
   parsePlist,
   real,
   serializeXmlPlist
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 export { embeddedEntitlements } from '@signer/application/embedded-entitlements.ts'
 export {
   type InspectIpaOptions,

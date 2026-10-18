@@ -5,7 +5,7 @@
 	<key>CFBundleExecutable</key>
 	<string>Lib</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.loadstar.fixture.lib</string>
+	<string>com.ipaforge.fixture.lib</string>
 	<key>CFBundlePackageType</key>
 	<string>FMWK</string>
 	<key>CFBundleShortVersionString</key>

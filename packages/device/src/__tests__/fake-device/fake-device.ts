@@ -1,4 +1,4 @@
-// Test-only: a scriptable iPhone behind a fake usbmuxd (usbmux, lockdownd and the services Loadstar uses).
+// Test-only: a scriptable iPhone behind a fake usbmuxd (usbmux, lockdownd and the services IPAForge uses).
 
 import * as pkijs from 'pkijs'
 
@@ -36,14 +36,14 @@ import {
 import {
   createDict,
   ErrorCode,
+  IPAForgeError,
   isPlistDict,
-  LoadstarError,
   type PlistDict,
   type PlistValue,
   type SecretStore,
   utf8Decode,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const LIMITS: FrameLimits = {
   maxMessageBytes: DEFAULT_DEVICE_CONFIG.maxMessageBytes,
@@ -76,8 +76,8 @@ export type FakeDeviceOptions = {
 }
 
 /** What the host's TLS adapter throws when the handshake fails (`tlsHandshakeFails`). */
-const tlsHandshakeFailure = (): LoadstarError =>
-  new LoadstarError(ErrorCode.DeviceProtocolError, {
+const tlsHandshakeFailure = (): IPAForgeError =>
+  new IPAForgeError(ErrorCode.DeviceProtocolError, {
     message: 'TLS handshake with the device failed: fake'
   })
 

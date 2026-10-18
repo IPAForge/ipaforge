@@ -19,9 +19,9 @@ import type {
   ProfileFacts
 } from '@installer/domain/types.ts'
 import type { StepContext } from '@installer/pipeline/types.ts'
-import type { DeviceHandle, DeviceProfile } from '@loadstar/device'
-import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
-import { parseProvisioningProfile } from '@loadstar/signer'
+import type { DeviceHandle, DeviceProfile } from '@ipaforge/device'
+import { compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
+import { parseProvisioningProfile } from '@ipaforge/signer'
 
 /** misagent's summary has no creation date; the profile itself does. Unreadable profiles just lack it. */
 const creationDate = (raw: Uint8Array): Date | undefined => {
@@ -78,7 +78,7 @@ export const chooseAppToRemove = async (
     apps
   })
   if (apps.some((app) => app.bundleId === chosen)) return chosen
-  throw new LoadstarError(ErrorCode.FreeAppLimit, {
+  throw new IPAForgeError(ErrorCode.FreeAppLimit, {
     message: 'no app was chosen to make room',
     data: { limit: request.limit, apps: apps.map((app) => app.bundleId) }
   })

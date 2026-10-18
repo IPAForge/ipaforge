@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { createDict, type PlistValue } from '@loadstar/kernel'
+import { createDict, type PlistValue } from '@ipaforge/kernel'
 import { deviceFamiliesOf } from '@signer/domain/sideload/device-families.ts'
 
 const plistWith = (value: PlistValue | undefined) =>

@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { createDict, type PlistValue } from '@loadstar/kernel'
+import { createDict, type PlistValue } from '@ipaforge/kernel'
 import { concreteKeychainGroups } from '@signer/domain/entitlements/keychain-groups.ts'
 
 const NEW_TEAM = 'NEWTEAM123'

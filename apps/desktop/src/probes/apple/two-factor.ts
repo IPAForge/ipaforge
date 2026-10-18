@@ -4,8 +4,8 @@ import type {
   TwoFactorChallenge,
   TwoFactorMethod,
   TwoFactorMethods
-} from '@loadstar/apple'
-import { LoadstarError } from '@loadstar/kernel'
+} from '@ipaforge/apple'
+import { IPAForgeError } from '@ipaforge/kernel'
 
 type MethodOption = {
   readonly label: string
@@ -44,7 +44,7 @@ const chooseMethod = async (
 }
 
 const isInvalidCode = (error: unknown): boolean =>
-  error instanceof LoadstarError &&
+  error instanceof IPAForgeError &&
   error.code === 'apple.two_factor_invalid_code'
 
 /** Asks for the code until Apple accepts one; "resend" requests a new code. */

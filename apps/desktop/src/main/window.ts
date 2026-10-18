@@ -2,13 +2,13 @@ import { join } from 'node:path'
 
 import { app, BrowserWindow, type WebContents } from 'electron'
 
-import type { Logger } from '@loadstar/kernel'
+import type { Logger } from '@ipaforge/kernel'
 
 const WINDOW_WIDTH = 1200
 const WINDOW_HEIGHT = 800
 const WINDOW_MIN_WIDTH = 900
 const WINDOW_MIN_HEIGHT = 600
-const WINDOW_TITLE = 'Loadstar'
+const WINDOW_TITLE = 'IPAForge'
 
 /** Built by electron-vite next to `out/main`: the CommonJS preload and the renderer's index.html. */
 const PRELOAD_PATH = join(import.meta.dirname, '../preload/index.cjs')

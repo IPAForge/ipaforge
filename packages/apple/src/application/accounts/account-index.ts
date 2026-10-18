@@ -2,7 +2,7 @@
 
 import { z } from 'zod'
 
-import { type SecretStore, utf8Decode, utf8Encode } from '@loadstar/kernel'
+import { type SecretStore, utf8Decode, utf8Encode } from '@ipaforge/kernel'
 
 const INDEX_KEY = 'apple/accounts'
 const INDEX_VERSION = 1

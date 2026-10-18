@@ -1,4 +1,4 @@
-import { ByteWriter } from '@loadstar/kernel'
+import { ByteWriter } from '@ipaforge/kernel'
 import { alignUp } from '@signer/domain/macho/align.ts'
 import {
   FAT_ARCH_SIZE,

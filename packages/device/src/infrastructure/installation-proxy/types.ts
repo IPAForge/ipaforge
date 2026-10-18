@@ -1,5 +1,5 @@
 import type { InstalledApp } from '@device/infrastructure/installation-proxy/apps.ts'
-import type { PlistValue } from '@loadstar/kernel'
+import type { PlistValue } from '@ipaforge/kernel'
 
 export type ApplicationType = 'User' | 'System' | 'Any'
 

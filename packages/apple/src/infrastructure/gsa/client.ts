@@ -17,14 +17,14 @@ import {
   compact,
   createDict,
   ErrorCode,
+  IPAForgeError,
   isPlistDict,
-  LoadstarError,
   type PlistDict,
   type PlistValue,
   serializeXmlPlist,
   stringAt,
   toBase64
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 /** `Header.Version` of every GsService2 request. */
 const GSA_PROTOCOL_VERSION = '1.0.1'
@@ -126,7 +126,7 @@ export const gsaRequest = async (
       ? value.Response
       : undefined
   if (!response)
-    throw new LoadstarError(ErrorCode.AppleProtocolError, {
+    throw new IPAForgeError(ErrorCode.AppleProtocolError, {
       message: 'GSA answered without a Response'
     })
   return compact({

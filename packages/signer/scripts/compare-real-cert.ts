@@ -1,11 +1,11 @@
 /**
- * Maintainer tool (macOS): compare Loadstar's signature with Apple codesign's for a REAL Apple
+ * Maintainer tool (macOS): compare IPAForge's signature with Apple codesign's for a REAL Apple
  * Development certificate. See fixtures/signer/REAL-CERT.md.
  *
- *   pnpm --filter @loadstar/signer compare-real-cert -- --p12 identity.p12 [--password …]   (or LOADSTAR_P12_PASSWORD)
+ *   pnpm --filter @ipaforge/signer compare-real-cert -- --p12 identity.p12 [--password …]   (or IPAFORGE_P12_PASSWORD)
  *
  * The .p12 is imported into a temporary keychain that is deleted afterwards; nothing is written
- * to your login keychain. The private key is passed to Loadstar in memory only.
+ * to your login keychain. The private key is passed to IPAForge in memory only.
  */
 import { execFileSync, spawnSync } from 'node:child_process'
 import {
@@ -28,7 +28,7 @@ import {
   silentLogger,
   systemClock,
   toHex
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import { readTree } from '@signer/__tests__/fixtures.ts'
 import {
   CSSLOT_SIGNATURESLOT,
@@ -198,13 +198,13 @@ const pemBody = (pem: string, label: string): Uint8Array =>
   )
 
 const p12 = arg('--p12')
-const password = arg('--password') ?? process.env.LOADSTAR_P12_PASSWORD ?? ''
+const password = arg('--password') ?? process.env.IPAFORGE_P12_PASSWORD ?? ''
 if (!p12) {
   console.error('usage: compare-real-cert.ts --p12 <file> [--password <pw>]')
   process.exit(2)
 }
 
-const work = mkdtempSync(join(tmpdir(), 'loadstar-realcert-'))
+const work = mkdtempSync(join(tmpdir(), 'ipaforge-realcert-'))
 const keychain = join(work, 'compare.keychain-db')
 const report: string[] = []
 let originalSearchList: string[] | undefined
@@ -256,8 +256,8 @@ try {
   )
 
   // 2. temporary keychain with the identity and its Apple chain, for codesign
-  run('security', ['create-keychain', '-p', 'loadstar', keychain])
-  run('security', ['unlock-keychain', '-p', 'loadstar', keychain])
+  run('security', ['create-keychain', '-p', 'ipaforge', keychain])
+  run('security', ['unlock-keychain', '-p', 'ipaforge', keychain])
   run('security', ['set-keychain-settings', keychain]) // no auto-lock while the comparison runs
   run('security', [
     'import',
@@ -281,7 +281,7 @@ try {
     'apple-tool:,apple:',
     '-s',
     '-k',
-    'loadstar',
+    'ipaforge',
     keychain
   ])
   // macOS builds the trust chain from the user keychain search list, so add the temporary keychain to it
@@ -349,7 +349,7 @@ try {
   sign(join(appleApp, 'PlugIns/Ext.appex'), 'entitlements/appex.plist')
   sign(appleApp, 'entitlements/app.plist')
 
-  // 4. Loadstar, same certificate/key
+  // 4. IPAForge, same certificate/key
   const privateKey = await crypto.subtle.importKey(
     'pkcs8',
     pemBody(pkcs8Pem, 'PRIVATE KEY') as Uint8Array<ArrayBuffer>,
@@ -516,7 +516,7 @@ try {
     { encoding: 'utf8' }
   )
   check(
-    "codesign --verify --deep --strict on Loadstar's output",
+    "codesign --verify --deep --strict on IPAForge's output",
     verify.status === 0,
     verify.stderr.trim().split('\n').at(-1)
   )

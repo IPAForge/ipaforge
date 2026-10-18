@@ -5,8 +5,8 @@ import {
   createLogBuffer,
   createLogger,
   ErrorCode,
-  LoadstarError
-} from '@loadstar/kernel'
+  IPAForgeError
+} from '@ipaforge/kernel'
 
 const logged = () => {
   const buffer = createLogBuffer()
@@ -52,7 +52,7 @@ describe('logRunEvent', () => {
     logRunEvent(logger, {
       type: 'step-failed',
       stepId: 'install',
-      error: new LoadstarError(ErrorCode.DeviceLocked, { message: 'locked' })
+      error: new IPAForgeError(ErrorCode.DeviceLocked, { message: 'locked' })
     })
 
     expect(lines().map(([level, msg]) => `${level} ${msg}`)).toEqual([
@@ -75,7 +75,7 @@ describe('logRunResult', () => {
     const { logger, lines } = logged()
     logRunResult(logger, {
       status: 'failed',
-      error: new LoadstarError(ErrorCode.DeviceLocked, { message: 'locked' }),
+      error: new IPAForgeError(ErrorCode.DeviceLocked, { message: 'locked' }),
       failedStep: 'install',
       checkpoint: { pipelineId: 'p', completed: [], state: {} }
     })

@@ -1,4 +1,4 @@
-import type { PlistLimits } from '@loadstar/kernel'
+import type { PlistLimits } from '@ipaforge/kernel'
 import type { HashAlgorithm } from '@signer/domain/ports/types.ts'
 
 export type MachOLimits = {

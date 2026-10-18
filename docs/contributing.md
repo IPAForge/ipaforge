@@ -2,7 +2,7 @@
 
 # Contributing
 
-Thanks for helping. Loadstar is an open-source desktop app (Windows, macOS, Linux) that installs SideStore and other apps on iPhone and iPad.
+Thanks for helping. IPAForge is an open-source desktop app (Windows, macOS, Linux) that installs SideStore and other apps on iPhone and iPad.
 
 ## How changes get in
 
@@ -32,7 +32,7 @@ Thanks for helping. Loadstar is an open-source desktop app (Windows, macOS, Linu
 
 ## Scope
 
-Loadstar helps people install apps they already have, on their own devices, within Apple's free and paid developer account rules. Changes that decrypt App Store apps, circumvent Apple's limits or security measures, or target other people's devices are out of scope and will be closed.
+IPAForge helps people install apps they already have, on their own devices, within Apple's free and paid developer account rules. Changes that decrypt App Store apps, circumvent Apple's limits or security measures, or target other people's devices are out of scope and will be closed.
 
 ## Licence
 
@@ -66,16 +66,16 @@ Formatting happens on save: Biome formats the file and sorts its imports, and ES
 pnpm lint:fix
 ```
 
-`pnpm lint` (part of `pnpm verify` and CI) fails on unformatted code, unsorted imports, missing blank lines, SonarSource findings (`eslint-plugin-sonarjs`: backtracking regexes, overly complex functions, tests without assertions and similar) and the file-structure rules (`@loadstar/structure`: no `switch`, one component per `.tsx` file with nothing else at top level, at most one type per file outside the folder's `types.ts`). The rules that are off, and how to justify an exception, are in [conventions](design/conventions.md#formatting-and-lint).
+`pnpm lint` (part of `pnpm verify` and CI) fails on unformatted code, unsorted imports, missing blank lines, SonarSource findings (`eslint-plugin-sonarjs`: backtracking regexes, overly complex functions, tests without assertions and similar) and the file-structure rules (`@ipaforge/structure`: no `switch`, one component per `.tsx` file with nothing else at top level, at most one type per file outside the folder's `types.ts`). The rules that are off, and how to justify an exception, are in [conventions](design/conventions.md#formatting-and-lint).
 
 ## Conventions (summary)
 
 - TypeScript strict, ESM only. Files are `kebab-case.ts`.
 - Single quotes, no semicolons, no trailing commas, 80 columns, 2-space indent; `type` rather than `interface`. Biome and ESLint enforce it (see [conventions](design/conventions.md#formatting-and-lint)).
 - Arrow functions only (`const name = () => …`). `function` declarations fail lint through a Biome GritQL plugin.
-- Absolute imports only: `@signer/domain/…` inside a package, `@loadstar/kernel` across packages. Relative imports fail `pnpm check:boundaries`.
+- Absolute imports only: `@signer/domain/…` inside a package, `@ipaforge/kernel` across packages. Relative imports fail `pnpm check:boundaries`.
 - `packages/*` are platform-free: no `node:*`, `electron` or DOM-only APIs. `pnpm check:boundaries` enforces this.
-- Errors are `LoadstarError` with an `ErrorCode`. External input is validated with zod.
+- Errors are `IPAForgeError` with an `ErrorCode`. External input is validated with zod.
 - No magic values: format constants go in named constants modules, and tunables go in `domain/config.ts` with overridable defaults.
 - Binary code always states its endianness: Mach-O is little-endian, signature blobs are big-endian.
 - UI uses HeroUI components and Tailwind utilities only. No CSS files, and every string goes through i18next (a Biome plugin rejects text in JSX).
@@ -101,19 +101,19 @@ The UI's strings live in `packages/ui/src/locales/`: one JSON file per language,
 |---|---|---|
 | `node-builtin` | `import { readFile } from "node:fs"` | Use a port (`FileSource`), implement it in `apps/*` |
 | `platform-module` | `import { app } from "electron"` | Move it to `apps/desktop` |
-| `deep-import` | `@loadstar/kernel/src/bytes` | Import `@loadstar/kernel` |
-| `forbidden-edge` | `signer` importing `@loadstar/device` | Orchestrate in `installer` |
+| `deep-import` | `@ipaforge/kernel/src/bytes` | Import `@ipaforge/kernel` |
+| `forbidden-edge` | `signer` importing `@ipaforge/device` | Orchestrate in `installer` |
 | `unknown-package` | a new package missing from the edge table | Add it to `scripts/boundaries.config.ts` |
 | `escape` | `../../other-package/src/x.ts` | Import the package by name |
 | `relative-import` | `./sibling.ts` | Use the package alias: `@signer/domain/sibling.ts` |
-| `foreign-subpath` | `@kernel/bytes/index.ts` inside `signer` | Import `@loadstar/kernel` |
+| `foreign-subpath` | `@kernel/bytes/index.ts` inside `signer` | Import `@ipaforge/kernel` |
 
 Biome's `noRestrictedImports` also flags Node built-ins inside `packages/**` while you edit.
 
 ## Adding a package
 
 1. Create `packages/<name>/` with:
-   - `package.json`: `"name": "@loadstar/<name>"`, `"type": "module"`, `"exports": { ".": "./src/index.ts" }`, and a `typecheck` script;
+   - `package.json`: `"name": "@ipaforge/<name>"`, `"type": "module"`, `"exports": { ".": "./src/index.ts" }`, and a `typecheck` script;
    - `tsconfig.src.json`: extends `../../tsconfig.base.json` with `"lib": ["ES2023", "WebWorker"]` and `"types": []` (the platform-free baseline), and excludes the tests;
    - `tsconfig.json`: extends `tsconfig.src.json` with `"types": ["node"]` and includes the tests (the editor's project);
    - the `typecheck` script runs `tsc -p tsconfig.src.json && tsc -p tsconfig.json`, so the source is checked without Node types.

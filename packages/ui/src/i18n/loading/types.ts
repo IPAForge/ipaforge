@@ -1,6 +1,6 @@
 import type { i18n } from 'i18next'
 
-import type { Logger } from '@loadstar/kernel'
+import type { Logger } from '@ipaforge/kernel'
 import type { LanguageId } from '@ui/i18n/languages/types.ts'
 import type { MessageTree } from '@ui/i18n/pseudo-locale.ts'
 

@@ -1,11 +1,11 @@
 import {
   createDict,
   ErrorCode,
+  IPAForgeError,
   isPlistDict,
-  LoadstarError,
   type PlistDict,
   type PlistValue
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import {
   ALT_APP_GROUPS,
   BG_TASK_SCHEDULER_PERMITTED_IDENTIFIERS,
@@ -34,7 +34,7 @@ const replacePrefix = (value: string, rewrite: IdentityRewrite): string =>
 /** installd rejects an extension or watch app whose ID is not prefixed by its app's ID. */
 export const assertNestedId = (nestedId: string, mainId: string): void => {
   if (isUnderId(nestedId, mainId)) return
-  throw new LoadstarError(ErrorCode.ExtensionPrefix, {
+  throw new IPAForgeError(ErrorCode.ExtensionPrefix, {
     message: `bundle ID "${nestedId}" is not prefixed by its app's ID "${mainId}"`,
     data: { bundleId: nestedId, appId: mainId }
   })

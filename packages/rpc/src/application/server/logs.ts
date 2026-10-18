@@ -7,7 +7,7 @@ import {
   type LogPage,
   type LogPageQuery,
   type LogRecord
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import type { LogSource } from '@rpc/domain/ports/log-source.ts'
 import type { RemoteLogPageQuery } from '@rpc/domain/protocol/types.ts'
 

@@ -1,5 +1,5 @@
 {
-  "name": "loadstar",
+  "name": "ipaforge",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@12.11.2",
@@ -22,7 +22,7 @@
   "devDependencies": {
     "@biomejs/biome": "2.5.15",
     "@formatjs/icu-messageformat-parser": "3.5.18",
-    "@loadstar/tooling-eslint": "workspace:*",
+    "@ipaforge/tooling-eslint": "workspace:*",
     "@types/node": "22.20.5",
     "@vitest/coverage-v8": "5.0.4",
     "eslint": "10.11.0",

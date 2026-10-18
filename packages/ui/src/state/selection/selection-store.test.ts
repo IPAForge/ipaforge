@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import { silentLogger } from '@loadstar/kernel'
+import { silentLogger } from '@ipaforge/kernel'
 import { createMemoryPreferencesStore } from '@ui/services/preferences/preferences-store.ts'
 import { selectionKeys } from '@ui/state/selection/constants.ts'
 import { createSelectionStore } from '@ui/state/selection/selection-store.ts'

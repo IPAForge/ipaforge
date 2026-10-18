@@ -1,6 +1,6 @@
 import { resolveDeviceConfig } from '@device/domain/config.ts'
 import type { DeviceDeps, DeviceDepsInput, Sleep } from '@device/types.ts'
-import { silentLogger, systemClock } from '@loadstar/kernel'
+import { silentLogger, systemClock } from '@ipaforge/kernel'
 
 export const realSleep: Sleep = (ms, signal) =>
   new Promise((resolve, reject) => {

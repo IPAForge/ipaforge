@@ -1,5 +1,5 @@
 // WebSocketFactory over the standard WebSocket that Node 22+ and Electron provide.
-import type { WebSocketFactory, WebSocketLike } from '@loadstar/apple'
+import type { WebSocketFactory, WebSocketLike } from '@ipaforge/apple'
 
 export const createWebSocketFactory = (): WebSocketFactory => (url) => {
   const Socket = globalThis.WebSocket

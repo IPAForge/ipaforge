@@ -5,7 +5,7 @@ import type {
   Team
 } from '@apple/domain/types.ts'
 
-/** A certificate Loadstar created, with the private key that only exists on this computer. */
+/** A certificate IPAForge created, with the private key that only exists on this computer. */
 export type CertificateIdentity = {
   readonly certificate: DevelopmentCertificate
   /** PKCS#8 DER. */
@@ -13,7 +13,7 @@ export type CertificateIdentity = {
 }
 
 export type EnsureCertificateOptions = {
-  /** Name Apple shows for the certificate's machine (identifies Loadstar in the revoke picker). */
+  /** Name Apple shows for the certificate's machine (identifies IPAForge in the revoke picker). */
   readonly machineName: string
   /** A certificate (and key) saved from an earlier run: reused while Apple still lists it. */
   readonly stored?: CertificateIdentity

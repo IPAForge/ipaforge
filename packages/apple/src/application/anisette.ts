@@ -18,7 +18,7 @@ import {
   getHeadersV3
 } from '@apple/infrastructure/anisette/v3.ts'
 import type { AppleDeps } from '@apple/types.ts'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 export const createAnisetteService = (
   deps: AppleDeps,
@@ -85,7 +85,7 @@ export const createAnisetteService = (
         })
       }
     }
-    throw new LoadstarError(ErrorCode.AnisetteUnavailable, {
+    throw new IPAForgeError(ErrorCode.AnisetteUnavailable, {
       message: `no anisette server worked (${failures.length} tried)`,
       data: { tried: failures }
     })
@@ -102,13 +102,13 @@ export const createAnisetteService = (
       address: data.serverAddress
     }
     if (server.protocol === 'v1') {
-      throw new LoadstarError(ErrorCode.AnisetteUnavailable, {
+      throw new IPAForgeError(ErrorCode.AnisetteUnavailable, {
         message: 'this anisette server cannot resync'
       })
     }
     const state = await states.load(server)
     if (!state?.adiPb)
-      throw new LoadstarError(ErrorCode.AnisetteNotProvisioned, {
+      throw new IPAForgeError(ErrorCode.AnisetteNotProvisioned, {
         data: { server: server.name }
       })
     const result = await getHeadersV3(
@@ -119,7 +119,7 @@ export const createAnisetteService = (
       resyncData
     )
     if (result.kind !== 'headers') {
-      throw new LoadstarError(ErrorCode.AnisetteNotProvisioned, {
+      throw new IPAForgeError(ErrorCode.AnisetteNotProvisioned, {
         message: result.message,
         data: { server: server.name }
       })

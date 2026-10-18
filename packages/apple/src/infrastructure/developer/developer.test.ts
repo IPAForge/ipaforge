@@ -22,7 +22,7 @@ import {
   type PlistDict,
   parsePlist,
   serializeXmlPlist
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const anisette: AnisetteData = {
   headers: {
@@ -160,7 +160,7 @@ describe('response parsing', () => {
           [
             createDict([
               ['serialNumber', 'AB12'],
-              ['machineName', 'Loadstar'],
+              ['machineName', 'IPAForge'],
               ['certificatePlatform', 'ios']
             ]),
             createDict([['name', 'no serial']])
@@ -170,7 +170,7 @@ describe('response parsing', () => {
       (entry) => skipped.push(entry)
     )
     expect(certificates.map((certificate) => certificate.machineName)).toEqual([
-      'Loadstar'
+      'IPAForge'
     ])
     expect(skipped).toHaveLength(1)
   })
@@ -211,7 +211,7 @@ describe('response parsing', () => {
 
 describe('certificate signing request', () => {
   it('is a valid, self-signed PKCS#10 request with the machine name as CN', async () => {
-    const { csrPem, privateKey } = await createCertificateRequest('Loadstar')
+    const { csrPem, privateKey } = await createCertificateRequest('IPAForge')
     expect(csrPem).toMatch(/^-----BEGIN CERTIFICATE REQUEST-----\n/)
     const der = fromBase64(csrPem.replace(/-----[A-Z ]+-----|\s+/g, ''))
     const request = pkijs.CertificationRequest.fromBER(der.slice().buffer)
@@ -219,7 +219,7 @@ describe('certificate signing request', () => {
     const cn = request.subject.typesAndValues.find(
       (entry) => entry.type === '2.5.4.3'
     )
-    expect(cn?.value.valueBlock.value).toBe('Loadstar')
+    expect(cn?.value.valueBlock.value).toBe('IPAForge')
     expect(privateKey.byteLength).toBeGreaterThan(1000)
   })
 })

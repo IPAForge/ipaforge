@@ -1,6 +1,6 @@
 // Answers a query by calling the Engine method it names.
-import type { Engine } from '@loadstar/installer'
-import { compact } from '@loadstar/kernel'
+import type { Engine } from '@ipaforge/installer'
+import { compact } from '@ipaforge/kernel'
 import { toPlanInstallInput } from '@rpc/application/server/inputs.ts'
 import type { QueryHandlers, RunQuery } from '@rpc/application/server/types.ts'
 import type { ResolveIpa } from '@rpc/domain/ports/resolve-ipa.ts'

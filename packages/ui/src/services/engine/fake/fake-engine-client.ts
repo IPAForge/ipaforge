@@ -2,17 +2,17 @@
 // every message is validated and structured-cloned as it would be over the Electron MessagePort.
 import {
   ErrorCode,
-  LoadstarError,
+  IPAForgeError,
   type Logger,
   silentLogger
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import {
   createEngineClient,
   createMemoryTransportPair,
   createRpcServer,
   type Engine,
   type EngineClient
-} from '@loadstar/rpc'
+} from '@ipaforge/rpc'
 import { createFakeEngine } from '@ui/services/engine/fake/fake-engine.ts'
 import { createFakeLogs } from '@ui/services/engine/fake/fake-logs.ts'
 import type { FakeEngineOptions } from '@ui/services/engine/fake/types.ts'
@@ -26,7 +26,7 @@ export type FakeEngineClientOptions = FakeEngineOptions & {
 
 /** Imported IPAs come with Phase 9's file dialogs; the fake has nothing to open. */
 const noIpas = async () => {
-  throw new LoadstarError(ErrorCode.InvalidBundle, {
+  throw new IPAForgeError(ErrorCode.InvalidBundle, {
     message: 'the fake Engine opens no IPAs'
   })
 }

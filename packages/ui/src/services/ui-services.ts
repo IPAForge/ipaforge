@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 
-import type { Logger } from '@loadstar/kernel'
-import type { EngineClient } from '@loadstar/rpc'
+import type { Logger } from '@ipaforge/kernel'
+import type { EngineClient } from '@ipaforge/rpc'
 import type { PreferencesStore } from '@ui/services/preferences/preferences-store.ts'
 import type { ClipboardWriter } from '@ui/services/system/clipboard.ts'
 import type { FileSaver } from '@ui/services/system/file-saver.ts'

@@ -2,7 +2,7 @@
 // carries an `0xe800xxxx` code; these decide which recovery the user is shown.
 
 import { INSTALLD_CODE_ERRORS } from '@device/domain/constants.ts'
-import { compact, ErrorCode } from '@loadstar/kernel'
+import { compact, ErrorCode } from '@ipaforge/kernel'
 
 const FREE_APP_LIMIT =
   /maximum number of installed apps using a free developer profile/i

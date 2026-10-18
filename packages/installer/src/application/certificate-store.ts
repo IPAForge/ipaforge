@@ -11,7 +11,7 @@ import type {
 import type {
   CertificateIdentity,
   DevelopmentCertificate
-} from '@loadstar/apple'
+} from '@ipaforge/apple'
 import {
   compact,
   fromBase64,
@@ -20,7 +20,7 @@ import {
   toBase64,
   utf8Decode,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 export const certificateKey = (accountId: string, teamId: string): string =>
   `installer/certificate/${accountId}/${teamId}`

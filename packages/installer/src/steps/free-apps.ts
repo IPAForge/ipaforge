@@ -6,7 +6,7 @@ import { StepWeight } from '@installer/domain/step-weights.ts'
 import type { InstallState } from '@installer/domain/types.ts'
 import type { Step } from '@installer/pipeline/types.ts'
 import { appStepId, jobAt, required } from '@installer/steps/app-job.ts'
-import { compact } from '@loadstar/kernel'
+import { compact } from '@ipaforge/kernel'
 
 export const freeAppsStep = (
   runtime: FlowRuntime,

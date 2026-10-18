@@ -6,8 +6,8 @@ import {
   connect as tlsConnect
 } from 'node:tls'
 
-import type { TlsCredentials } from '@loadstar/device'
-import { compact, ErrorCode, equalBytes, LoadstarError } from '@loadstar/kernel'
+import type { TlsCredentials } from '@ipaforge/device'
+import { compact, ErrorCode, equalBytes, IPAForgeError } from '@ipaforge/kernel'
 
 /**
  * OpenSSL security level for device TLS. Pair records made by older systems sign certificates with SHA-1,
@@ -52,7 +52,7 @@ export const matchesPinnedCertificate = (
 }
 
 const pinMismatch = () =>
-  new LoadstarError(ErrorCode.InvalidPairRecord, {
+  new IPAForgeError(ErrorCode.InvalidPairRecord, {
     message:
       'the device presented a certificate that does not match its pair record'
   })
@@ -71,7 +71,7 @@ type TlsErrorDetails = {
 const handshakeFailed = (error: unknown) => {
   const { message, code, reason } = (error ?? {}) as TlsErrorDetails
 
-  return new LoadstarError(ErrorCode.DeviceProtocolError, {
+  return new IPAForgeError(ErrorCode.DeviceProtocolError, {
     message: `TLS handshake with the device failed: ${message ?? String(error)}`,
     cause: error,
     data: compact({ tlsError: code, reason })
@@ -110,7 +110,7 @@ export const upgradeToDeviceTls = (
     }
     const fail = (error: unknown) => {
       secure.destroy()
-      reject(error instanceof LoadstarError ? error : handshakeFailed(error))
+      reject(error instanceof IPAForgeError ? error : handshakeFailed(error))
     }
     secure.once('error', fail)
     secure.once('secureConnect', () => {

@@ -2,7 +2,7 @@ import { join } from 'node:path'
 
 import { describe, expect, it } from 'vitest'
 
-import { type PlistDict, parseXmlPlist, utf8Decode } from '@loadstar/kernel'
+import { type PlistDict, parseXmlPlist, utf8Decode } from '@ipaforge/kernel'
 import {
   FIXTURES_DIR,
   readFixture,

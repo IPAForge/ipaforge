@@ -5,9 +5,9 @@ import {
   compareBytes,
   createDict,
   ErrorCode,
-  LoadstarError,
+  IPAForgeError,
   serializeXmlPlist
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import { CS_CDHASH_LEN } from '@signer/domain/blobs/constants.ts'
 import type { Hasher } from '@signer/domain/ports/types.ts'
 import {
@@ -142,7 +142,7 @@ export const signCodeDirectories = async (
 ): Promise<Uint8Array> => {
   const primary = codeDirectories[0]
   if (!primary)
-    throw new LoadstarError(ErrorCode.Unexpected, {
+    throw new IPAForgeError(ErrorCode.Unexpected, {
       message: 'no CodeDirectory to sign'
     })
 
@@ -193,7 +193,7 @@ export const signCodeDirectories = async (
     )
     useExplicitNullParameter(signedData)
   } catch (error) {
-    throw new LoadstarError(ErrorCode.InvalidCertificate, {
+    throw new IPAForgeError(ErrorCode.InvalidCertificate, {
       message: 'CMS signing failed',
       cause: error
     })

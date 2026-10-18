@@ -1,4 +1,4 @@
-// Apple developer-account resources as Loadstar uses them, plus the rules that keep free accounts within Apple's
+// Apple developer-account resources as IPAForge uses them, plus the rules that keep free accounts within Apple's
 // limits (10 App IDs per 7 days, few development certificates).
 
 import {
@@ -11,7 +11,7 @@ import type {
   AppIdQuota,
   DevelopmentCertificate
 } from '@apple/domain/types.ts'
-import { compact, ErrorCode } from '@loadstar/kernel'
+import { compact, ErrorCode } from '@ipaforge/kernel'
 
 /** Feature flag that enables App Groups on an App ID. */
 export const APP_GROUPS_FEATURE = 'APG3427HIY'

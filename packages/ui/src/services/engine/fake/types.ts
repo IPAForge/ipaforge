@@ -1,10 +1,10 @@
-import type { ErrorCode } from '@loadstar/kernel'
+import type { ErrorCode } from '@ipaforge/kernel'
 import type {
   CommandOptions,
   DeviceWatchEvent,
   PromptRequest,
   StepDetail as StepReport
-} from '@loadstar/rpc'
+} from '@ipaforge/rpc'
 import type { fakeScenarioIds } from '@ui/services/engine/fake/fake-scenarios.ts'
 import type { Account, Device, DeviceCheck } from '@ui/services/engine/types.ts'
 

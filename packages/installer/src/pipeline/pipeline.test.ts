@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import { pipeline } from '@installer/pipeline/pipeline.ts'
 import type { PipelineEvent, Step } from '@installer/pipeline/types.ts'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 type State = {
   readonly log: readonly string[]
@@ -91,7 +91,7 @@ describe('pipeline', () => {
       idempotent: true,
       run: async (state) => {
         calls++
-        if (calls < 3) throw new LoadstarError(ErrorCode.Offline)
+        if (calls < 3) throw new IPAForgeError(ErrorCode.Offline)
         return { log: [...state.log, 'download'] }
       }
     }
@@ -109,7 +109,7 @@ describe('pipeline', () => {
       labelKey: 'c',
       run: async () => {
         writes++
-        throw new LoadstarError(ErrorCode.Offline)
+        throw new IPAForgeError(ErrorCode.Offline)
       }
     }
     const failed = await pipeline<State>('demo', [nonIdempotent]).run(
@@ -128,7 +128,7 @@ describe('pipeline', () => {
         id: 'upload',
         labelKey: 'u',
         run: async (state) => {
-          if (fail) throw new LoadstarError(ErrorCode.DeviceLocked)
+          if (fail) throw new IPAForgeError(ErrorCode.DeviceLocked)
           return { log: [...state.log, 'upload'] }
         }
       },

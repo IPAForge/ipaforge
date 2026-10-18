@@ -1,7 +1,7 @@
 import { Button } from '@heroui/react'
 import { useTranslation } from 'react-i18next'
 
-import { LOG_BUFFER_CAPACITY } from '@loadstar/kernel'
+import { LOG_BUFFER_CAPACITY } from '@ipaforge/kernel'
 import { DebugDetailsSwitch } from '@ui/features/logs/components/debug-details-switch.tsx'
 import type { FollowState } from '@ui/features/logs/types.ts'
 

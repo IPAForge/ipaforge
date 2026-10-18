@@ -1,5 +1,5 @@
 // Requests waiting for their response: each settles once, on its response, its timeout, or the channel closing.
-import { type LoadstarError, toLoadstarError } from '@loadstar/kernel'
+import { type IPAForgeError, toIPAForgeError } from '@ipaforge/kernel'
 import type { RequestTable, Waiting } from '@rpc/application/client/types.ts'
 import { disconnected, timedOut } from '@rpc/domain/errors.ts'
 import type { Transport } from '@rpc/domain/ports/transport.ts'
@@ -21,14 +21,14 @@ export const createRequestTable = (
     return entry
   }
 
-  const reject = (id: string, error: LoadstarError): void =>
+  const reject = (id: string, error: IPAForgeError): void =>
     settle(id)?.reject(error)
 
   const post = (id: string, body: RequestBody): void => {
     try {
       transport.send({ v: PROTOCOL_VERSION, id, ...body })
     } catch (error) {
-      reject(id, toLoadstarError(error, disconnected().code))
+      reject(id, toIPAForgeError(error, disconnected().code))
     }
   }
 

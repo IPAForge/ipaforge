@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
 
 import { findSideStoreTarget } from '@installer/sidestore/target.ts'
-import { createDict } from '@loadstar/kernel'
-import type { CodeBundle } from '@loadstar/signer'
+import { createDict } from '@ipaforge/kernel'
+import type { CodeBundle } from '@ipaforge/signer'
 
 const bundle = (
   path: string,

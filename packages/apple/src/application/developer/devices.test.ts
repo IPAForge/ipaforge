@@ -7,16 +7,16 @@ import type { AppleDeps } from '@apple/types.ts'
 import {
   createDict,
   ErrorCode,
-  LoadstarError,
+  IPAForgeError,
   type PlistDict,
   silentLogger
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const team: Team = { id: 'TEAM1', name: 'Test', isFree: true }
 const UDID = '00008110-000A1B2C3D4E401C'
 
 const developerError = (action: string, resultCode: number) =>
-  new LoadstarError(ErrorCode.DeveloperRequestFailed, {
+  new IPAForgeError(ErrorCode.DeveloperRequestFailed, {
     data: { action, resultCode }
   })
 
@@ -97,7 +97,7 @@ describe('registerDevice', () => {
       throw developerError('addDevice', 5405)
     })
     await expect(registerDevice(ctx, team, UDID, 'Phone')).rejects.toThrow(
-      LoadstarError
+      IPAForgeError
     )
   })
 })

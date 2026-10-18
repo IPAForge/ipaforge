@@ -7,7 +7,7 @@ import {
   planAppIds
 } from '@apple/domain/developer.ts'
 import type { AppId } from '@apple/domain/types.ts'
-import { createDict, ErrorCode } from '@loadstar/kernel'
+import { createDict, ErrorCode } from '@ipaforge/kernel'
 
 const now = new Date('2026-10-15T12:00:00Z')
 const appId = (identifier: string, expiresAt?: string): AppId => ({

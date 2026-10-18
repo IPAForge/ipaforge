@@ -8,7 +8,7 @@ import {
   type PlistDict,
   parseXmlPlist,
   toHex
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import { type FixtureCase, readFixture } from '@signer/__tests__/fixtures.ts'
 import { signedTargets } from '@signer/__tests__/targets.ts'
 import {

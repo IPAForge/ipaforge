@@ -9,12 +9,12 @@
 - Event and action handlers start with `on`: props (`onClose`, `onSignedIn`) and the functions a component passes to them or attaches to events (`onAddAppleId`, `onChoose`). When a component's own handler would clash with a prop of the same name, name it after its event (`onFormSubmit` calling the `onSubmit` prop). Helpers that aren't handlers keep plain verbs (`follow`, `respond`).
 - Types, classes, React components: `PascalCase`; no `I` prefix on object types
 - Constants: `camelCase`, except frozen lookup tables, which use `PascalCase` objects with `as const` (e.g. `ErrorCode`)
-- Packages: `@loadstar/<context>` (`kernel`, `signer`, `device`, `apple`, `catalog`, `installer`, `rpc`, `ui`)
+- Packages: `@ipaforge/<context>` (`kernel`, `signer`, `device`, `apple`, `catalog`, `installer`, `rpc`, `ui`)
 - Binary-format constants keep Apple's names (`CSMAGIC_CODEDIRECTORY`, `LC_CODE_SIGNATURE`) so they stay grep-able against the XNU headers
 
 ## Formatting and lint
 
-Biome formats and lints everything (`biome.json`). ESLint (`eslint.config.js`) does three things Biome can't: blank lines between statements, SonarSource's rules (`eslint-plugin-sonarjs`, the rules SonarQube runs), and the `@loadstar/structure` rules (see [File Structure](#file-structure)). `pnpm lint` runs both, and `pnpm lint:fix` fixes both. Editors format on save (see [contributing](../contributing.md#editor-setup)).
+Biome formats and lints everything (`biome.json`). ESLint (`eslint.config.js`) does three things Biome can't: blank lines between statements, SonarSource's rules (`eslint-plugin-sonarjs`, the rules SonarQube runs), and the `@ipaforge/structure` rules (see [File Structure](#file-structure)). `pnpm lint` runs both, and `pnpm lint:fix` fixes both. Editors format on save (see [contributing](../contributing.md#editor-setup)).
 
 - **Style** for JS, TS and TSX: single quotes (double quotes in JSX attributes), no semicolons, no trailing commas, 80 columns, 2-space indent.
 
@@ -29,7 +29,7 @@ Biome formats and lints everything (`biome.json`). ESLint (`eslint.config.js`) d
 - **Imports** are sorted by Biome into four groups, separated by a blank line and sorted alphabetically within each:
   1. Node built-ins (`node:fs`);
   2. external packages (`react`, `zod`);
-  3. our own: `@loadstar/*` and every `@<alias>/*` from `tsconfig.base.json` `paths` (`@kernel/…`, `@ui/…`);
+  3. our own: `@ipaforge/*` and every `@<alias>/*` from `tsconfig.base.json` `paths` (`@kernel/…`, `@ui/…`);
   4. relative paths (rare, since imports are absolute).
 
   When you add an alias to `tsconfig.base.json` `paths`, add it to both lists of the `organizeImports` groups in `biome.json` (the exclusion from external packages and the "our own" group).
@@ -55,12 +55,12 @@ Biome formats and lints everything (`biome.json`). ESLint (`eslint.config.js`) d
 - Use arrow functions everywhere: `const name = (args): Return => …` and `export const name = …`. **Never** write a `function` declaration or expression. This is enforced by the Biome GritQL plugin `tooling/biome/no-function-declaration.grit` and by `useArrowFunction`.
 - Prefer concise bodies for single expressions (`=> value`). Wrap object literals in parentheses: `=> ({ … })`.
 - Object literals use arrow properties (`start: (controller) => { … }`), not method shorthand, unless `this` is required.
-- Classes are still allowed where state and invariants belong together (`LoadstarError`, `ByteReader`). Their methods use normal class syntax.
+- Classes are still allowed where state and invariants belong together (`IPAForgeError`, `ByteReader`). Their methods use normal class syntax.
 - Arrow `const`s are not hoisted: define helpers before any top-level code runs them.
 
 ## File Structure
 
-Every file does one job, and the lint (`@loadstar/structure` in `tooling/eslint/structure.js`) holds the parts a machine can check.
+Every file does one job, and the lint (`@ipaforge/structure` in `tooling/eslint/structure.js`) holds the parts a machine can check.
 
 - **One component per file.** A `.tsx` file holds one component, its imports and, at most, its one type (usually its props). Nothing else lives at its top level: a smaller component gets its own file next to it, a lookup table goes to `constants.ts`, logic to a hook or a utils file (`component-file`).
 - **At most one type per file.** A file that needs one type (a component's props, a function's options) declares it at the top. Two or more go into the folder's **`types.ts`**, one per folder, imported where they're used (`one-type-per-file`). Test files are exempt.
@@ -79,7 +79,7 @@ Every file does one job, and the lint (`@loadstar/structure` in `tooling/eslint/
 
 ## Imports
 
-- Use absolute imports everywhere: `@<package>/…` inside a package (for example `@signer/domain/blobs/index.ts`), and `@loadstar/<package>` across packages. Relative `./` or `../` imports are not allowed, and neither is another package's `@alias`. Both are enforced by `pnpm check:boundaries` (`relative-import`, `foreign-subpath`).
+- Use absolute imports everywhere: `@<package>/…` inside a package (for example `@signer/domain/blobs/index.ts`), and `@ipaforge/<package>` across packages. Relative `./` or `../` imports are not allowed, and neither is another package's `@alias`. Both are enforced by `pnpm check:boundaries` (`relative-import`, `foreign-subpath`).
 - Aliases are declared once in `tsconfig.base.json` `paths`. Vite and Vitest read them through `tooling/vite/workspace-aliases.ts`; esbuild and tsx read the tsconfig directly. Package scripts run with `tsx`, because plain `node` doesn't resolve tsconfig paths.
 
 ## Module Structure
@@ -92,7 +92,7 @@ Every file does one job, and the lint (`@loadstar/structure` in `tooling/eslint/
 
 ## Error Handling
 
-- Throw `LoadstarError` with an `ErrorCode`. Never throw strings, and never throw a bare `Error` across a package boundary.
+- Throw `IPAForgeError` with an `ErrorCode`. Never throw strings, and never throw a bare `Error` across a package boundary.
 - Wrap foreign errors with `{ cause }`. Never lose the original.
 - Validate all external input (Apple responses, device plists, GitHub API, RPC payloads) with zod at the boundary. Inside the core, trust the types.
 - Async operations that can take more than about 1 s accept an `AbortSignal`.
@@ -114,7 +114,7 @@ Every file does one job, and the lint (`@loadstar/structure` in `tooling/eslint/
 - Strings live in `packages/ui/src/locales/<language>.json`, nested by feature (`nav.install`, `settings.language.title`), in ICU MessageFormat (`{count, plural, one {…} other {…}}`). `en.json` is the source of truth; `status.json` lists every language as `source`, `draft` or `reviewed`.
 - Keys are typed: `t()` accepts only keys of `en.json` (react-i18next `CustomTypeOptions`, `i18n/setup/types.ts`). Every `ErrorCode` needs `errors.<code>.title` and `.body`, every recovery action `recovery.<id>`, and every step label its key; a missing one fails typecheck (`i18n/required-keys.ts`), and a test checks the same keys in every shipped language. `pnpm check:locales` fails on missing or extra keys, broken ICU or changed placeholders in any language.
 - Only `en.json` is bundled; other languages load on demand (`import.meta.glob`). Hosts `await prepareLanguage(services)` before rendering `<App language={…}/>`, and language changes go through `useLanguage().choose`, which loads before switching.
-- Format dates, numbers, lists and relative times with `useFormat()` (standard `Intl`, memoised per locale), never by hand. Error text comes from the code's keys, never from `LoadstarError.message`.
+- Format dates, numbers, lists and relative times with `useFormat()` (standard `Intl`, memoised per locale), never by hand. Error text comes from the code's keys, never from `IPAForgeError.message`.
 - Direction-dependent icons (a "next" chevron, a "back" arrow) use `MirroredIcon`, which flips them in right-to-left languages.
 - Components never call adapters or the engine directly. They use `EngineClient` hooks (TanStack Query) from `ui/hooks`.
 - **Live data: push, not polling.** Live state comes from push events: usbmuxd `Listen` for devices, run streams for installs, the log stream. Local data such as accounts is refreshed after sign-in, sign-out and each install run (a store-change stream may come later). Poll only as a fallback where no event source exists, slowly, and only while the UI is waiting for something (such as "unlock the device" during a step), then stop. Apple and network data (teams, certificates, App ID quota, catalog) is fetched on demand and cached: when a screen needs it or right before an install, plus an explicit Refresh. No `refetchInterval`, and no `refetchOnWindowFocus` / `refetchOnReconnect` for queries that hit Apple or GitHub; the shared query client (`hooks/queries/query-client.ts`) sets those defaults.

@@ -6,7 +6,7 @@ import {
   concatBytes,
   type FileSource,
   silentLogger
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import { FIXTURES_DIR, readTree } from '@signer/__tests__/fixtures.ts'
 import type { BundleTree } from '@signer/domain/bundle/types.ts'
 import { writeIpa } from '@signer/infrastructure/ipa/index.ts'

@@ -10,11 +10,11 @@ import {
   bytesFileSource,
   concatBytes,
   ErrorCode,
-  LoadstarError,
+  IPAForgeError,
   silentLogger,
   toHex,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import { FIXTURES_DIR, readTree } from '@signer/__tests__/fixtures.ts'
 import type { BundleTree } from '@signer/domain/bundle/types.ts'
 import {
@@ -25,7 +25,7 @@ import {
 } from '@signer/infrastructure/ipa/index.ts'
 
 const isMac = process.platform === 'darwin'
-const temp = mkdtempSync(join(tmpdir(), 'loadstar-ipa-'))
+const temp = mkdtempSync(join(tmpdir(), 'ipaforge-ipa-'))
 afterAll(() => rmSync(temp, { recursive: true, force: true }))
 const logger = silentLogger
 
@@ -209,7 +209,7 @@ describe('IPA round trip', () => {
         logger
       }
     ).catch((e) => e)
-    expect(plain).toBeInstanceOf(LoadstarError) // no Payload/ → refused
+    expect(plain).toBeInstanceOf(IPAForgeError) // no Payload/ → refused
     execFileSync('mkdir', ['-p', join(temp, 'dittoroot/Payload')])
     execFileSync('cp', [
       '-R',
@@ -245,7 +245,7 @@ describe('IPA safety', () => {
     'C:/Windows/x',
     'Payload/A.app/../../x'
   ])('rejects %s', (name) => {
-    expect(() => assertSafePath(name)).toThrow(LoadstarError)
+    expect(() => assertSafePath(name)).toThrow(IPAForgeError)
   })
 
   it('rejects archives containing a zip-slip entry', async () => {
@@ -307,8 +307,8 @@ describe('IPA safety', () => {
   })
 })
 
-describe.skipIf(!process.env.LOADSTAR_BENCH)(
-  'IPA memory (LOADSTAR_BENCH=1)',
+describe.skipIf(!process.env.IPAFORGE_BENCH)(
+  'IPA memory (IPAFORGE_BENCH=1)',
   () => {
     const MB = 1024 * 1024
     const peakDuring = async <T>(

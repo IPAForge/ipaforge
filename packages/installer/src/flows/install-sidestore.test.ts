@@ -17,11 +17,11 @@ import { PromptKind } from '@installer/domain/prompts.ts'
 import type { InstallState } from '@installer/domain/types.ts'
 import type { RunEvent } from '@installer/engine/types.ts'
 import type { PipelineResult } from '@installer/pipeline/types.ts'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
-import { exportPkcs12 } from '@loadstar/signer'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
+import { exportPkcs12 } from '@ipaforge/signer'
 
-vi.mock('@loadstar/signer', async (importOriginal) => ({
-  ...(await importOriginal<typeof import('@loadstar/signer')>()),
+vi.mock('@ipaforge/signer', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@ipaforge/signer')>()),
   exportPkcs12: vi.fn(() => new Uint8Array([0x30]))
 }))
 
@@ -275,7 +275,7 @@ describe('installSideStore', () => {
   })
 
   it('recovers once when installd still refuses for the free-app limit', async () => {
-    const refusal = new LoadstarError(ErrorCode.FreeAppLimit, {
+    const refusal = new IPAForgeError(ErrorCode.FreeAppLimit, {
       data: { freeProfileApps: ['com.hidden', SIDESTORE_ID] }
     })
     const h = createHarness({ device: { installErrors: [refusal] } })
@@ -292,7 +292,7 @@ describe('installSideStore', () => {
 
   it('marks the account banned on this device when Apple bans the profile', async () => {
     const h = createHarness({
-      device: { installErrors: [new LoadstarError(ErrorCode.ProfileBanned)] }
+      device: { installErrors: [new IPAForgeError(ErrorCode.ProfileBanned)] }
     })
     const result = await h.engine.installSideStore(input, {
       onPrompt: scripted()
@@ -319,7 +319,7 @@ describe('installSideStore', () => {
 
   it('deletes the signed IPA when the install fails, and signs again on resume', async () => {
     const h = createHarness({
-      device: { installErrors: [new LoadstarError(ErrorCode.InstallFailed)] }
+      device: { installErrors: [new IPAForgeError(ErrorCode.InstallFailed)] }
     })
     const failed = await h.engine.installSideStore(input).result
     expect(failed.status).toBe('failed')

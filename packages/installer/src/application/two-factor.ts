@@ -8,8 +8,8 @@ import type {
   TwoFactorChallenge,
   TwoFactorMethod,
   TwoFactorMethods
-} from '@loadstar/apple'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+} from '@ipaforge/apple'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 const offeredMethods = (methods: TwoFactorMethods): TwoFactorMethod[] => [
   ...(methods.trustedDevice ? [{ type: 'trusted_device' as const }] : []),
@@ -26,7 +26,7 @@ const chooseMethod = async (
   const offered = offeredMethods(methods)
   const [only] = offered
   if (!only)
-    throw new LoadstarError(ErrorCode.TwoFactorUnsupported, {
+    throw new IPAForgeError(ErrorCode.TwoFactorUnsupported, {
       message: 'no second-factor method offered'
     })
   if (offered.length === 1) return only
@@ -34,7 +34,7 @@ const chooseMethod = async (
 }
 
 const isInvalidCode = (error: unknown): boolean =>
-  error instanceof LoadstarError &&
+  error instanceof IPAForgeError &&
   error.code === ErrorCode.TwoFactorInvalidCode
 
 const submitUntilAccepted = async (

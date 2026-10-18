@@ -4,7 +4,7 @@ import type {
   EngineClient,
   Prompts,
   RemoteInstallSideStoreInput
-} from '@loadstar/rpc'
+} from '@ipaforge/rpc'
 
 type Resolved<M extends keyof EngineClient> = EngineClient[M] extends (
   ...args: never[]

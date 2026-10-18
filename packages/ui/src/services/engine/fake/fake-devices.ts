@@ -1,7 +1,7 @@
 // The fake Engine's connected devices and their live feed, like the Engine's `watchDevices`: the list first, then
 // each attach and detach with the list after it. Tests plug devices in and out; the `hot-plug` scenario does it on
 // a timer so the dev host shows the feed.
-import type { DeviceWatchEvent } from '@loadstar/rpc'
+import type { DeviceWatchEvent } from '@ipaforge/rpc'
 import { FAKE_IPAD, fakeDevices } from '@ui/services/engine/fake/fake-data.ts'
 import type {
   DeviceFeedListener,

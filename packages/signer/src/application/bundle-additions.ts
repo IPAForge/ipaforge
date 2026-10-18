@@ -1,12 +1,12 @@
 import {
   createDict,
   ErrorCode,
+  IPAForgeError,
   isPlistDict,
-  LoadstarError,
   type PlistDict,
   parsePlist,
   serializeXmlPlist
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import { UNSAFE_SEGMENTS } from '@signer/application/constants.ts'
 import type {
   BundleAddition,
@@ -27,8 +27,8 @@ const isContainedPath = (path: string): boolean =>
 const invalidAddition = (
   message: string,
   data: Record<string, unknown>
-): LoadstarError =>
-  new LoadstarError(ErrorCode.InvalidBundle, { message, data })
+): IPAForgeError =>
+  new IPAForgeError(ErrorCode.InvalidBundle, { message, data })
 
 const withOriginalIdentifiers = (
   bundles: readonly CodeBundle[],

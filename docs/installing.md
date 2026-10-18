@@ -1,18 +1,18 @@
 [← Back to README](../README.md) · [Getting Started →](getting-started.md)
 
-# Installing Loadstar
+# Installing IPAForge
 
-> **Loadstar is pre-alpha: there is no installable release yet.** This page describes how installing will work for 1.0. Until then, developers can run the engine from source ([Getting Started](getting-started.md)).
+> **IPAForge is pre-alpha: there is no installable release yet.** This page describes how installing will work for 1.0. Until then, developers can run the engine from source ([Getting Started](getting-started.md)).
 
 ## Download
 
-Get the latest version from the **[Releases page](https://github.com/SirReaDy/loadstar/releases/latest)**. Only download Loadstar from there. Builds are signed, and the app updates itself.
+Get the latest version from the **[Releases page](https://github.com/SirReaDy/ipaforge/releases/latest)**. Only download IPAForge from there. Builds are signed, and the app updates itself.
 
 | Your computer | File | Notes |
 |---|---|---|
-| **Windows 10/11** (x64, arm64) | `Loadstar-Setup-<version>.exe` | Code-signed installer |
-| **macOS** (Apple silicon, Intel) | `Loadstar-<version>.dmg` | Signed and notarised by Apple |
-| **Linux** (x64, arm64) | `Loadstar-<version>.AppImage`, `.deb`, `.rpm` | AppImage runs anywhere; deb/rpm integrate with your package manager |
+| **Windows 10/11** (x64, arm64) | `IPAForge-Setup-<version>.exe` | Code-signed installer |
+| **macOS** (Apple silicon, Intel) | `IPAForge-<version>.dmg` | Signed and notarised by Apple |
+| **Linux** (x64, arm64) | `IPAForge-<version>.AppImage`, `.deb`, `.rpm` | AppImage runs anywhere; deb/rpm integrate with your package manager |
 
 ## Before you start
 
@@ -29,24 +29,24 @@ Get the latest version from the **[Releases page](https://github.com/SirReaDy/lo
 ## Install
 
 ### Windows
-1. Run `Loadstar-Setup-<version>.exe` and follow the installer.
-2. Start Loadstar from the Start menu.
+1. Run `IPAForge-Setup-<version>.exe` and follow the installer.
+2. Start IPAForge from the Start menu.
 
 ### macOS
-1. Open `Loadstar-<version>.dmg` and drag **Loadstar** into **Applications**.
+1. Open `IPAForge-<version>.dmg` and drag **IPAForge** into **Applications**.
 2. Start it from Applications. The build is notarised, so macOS opens it without warnings.
 
 ### Linux
-- **AppImage:** `chmod +x Loadstar-<version>.AppImage`, then run it.
-- **Debian/Ubuntu:** `sudo apt install ./Loadstar-<version>.deb`
-- **Fedora/openSUSE:** `sudo dnf install ./Loadstar-<version>.rpm`
+- **AppImage:** `chmod +x IPAForge-<version>.AppImage`, then run it.
+- **Debian/Ubuntu:** `sudo apt install ./IPAForge-<version>.deb`
+- **Fedora/openSUSE:** `sudo dnf install ./IPAForge-<version>.rpm`
 
 ## First run
 
-Loadstar walks you through setup. Each step checks itself and explains what to do if something is missing:
+IPAForge walks you through setup. Each step checks itself and explains what to do if something is missing:
 
 1. **Connect your device** and tap **Trust** on it. Unlock it first.
-2. **Developer Mode** (iOS 16 and later): Loadstar makes the switch appear in **Settings › Privacy & Security**. Turn it on, and the device restarts.
+2. **Developer Mode** (iOS 16 and later): IPAForge makes the switch appear in **Settings › Privacy & Security**. Turn it on, and the device restarts.
 3. **Sign in with your Apple ID** and enter the code shown on your trusted device.
 4. **Choose your team**, if your Apple ID has more than one.
 5. **Choose what to install:** SideStore, LiveContainer + SideStore, or your own `.ipa` files.
@@ -56,18 +56,18 @@ After installing SideStore:
 - **Install LocalDevVPN** from the App Store; SideStore uses it to refresh apps.
 - Open SideStore and sign in.
 
-Loadstar places the pairing file and certificate SideStore needs automatically.
+IPAForge places the pairing file and certificate SideStore needs automatically.
 
 ## Updating and uninstalling
 
-- **Updates:** Loadstar checks for updates and installs them after asking.
+- **Updates:** IPAForge checks for updates and installs them after asking.
 - **Uninstall:**
   - **Windows:** Settings › Apps;
-  - **macOS:** drag Loadstar to the Bin;
+  - **macOS:** drag IPAForge to the Bin;
   - **Linux:** remove the AppImage or the package.
 - **Your saved accounts** are kept in the system keychain. Sign them out in **Manage → Accounts** before uninstalling if you want them gone.
 
 ## Problems?
 
 - [Device](device.md) explains device errors, and [Apple Account](apple-account.md) explains sign-in errors. Each error message names its code.
-- Still stuck? [Open an issue](https://github.com/SirReaDy/loadstar/issues/new/choose) with the error code. **Never post** your Apple ID password, verification codes, pairing files, certificates or device UDID.
+- Still stuck? [Open an issue](https://github.com/SirReaDy/ipaforge/issues/new/choose) with the error code. **Never post** your Apple ID password, verification codes, pairing files, certificates or device UDID.

@@ -2,14 +2,14 @@ import {
   compareBytes,
   concatBytes,
   ErrorCode,
+  IPAForgeError,
   isPlistDict,
-  LoadstarError,
   type PlistDict,
   PlistReal,
   type PlistValue,
   serializeXmlPlist,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import {
   CSMAGIC_EMBEDDED_DER_ENTITLEMENTS,
   CSMAGIC_EMBEDDED_ENTITLEMENTS
@@ -50,7 +50,7 @@ const derInteger = (value: number | bigint): Uint8Array => {
 }
 
 const unsupported = (type: string): never => {
-  throw new LoadstarError(ErrorCode.InvalidPlist, {
+  throw new IPAForgeError(ErrorCode.InvalidPlist, {
     message: `entitlements cannot contain ${type} values (not representable in DER)`
   })
 }

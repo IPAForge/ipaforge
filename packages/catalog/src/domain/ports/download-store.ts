@@ -1,4 +1,4 @@
-import type { FileSource } from '@loadstar/kernel'
+import type { FileSource } from '@ipaforge/kernel'
 
 /**
  * Where downloaded IPAs are kept (desktop: the app's cache folder). Entries are written in full and verified

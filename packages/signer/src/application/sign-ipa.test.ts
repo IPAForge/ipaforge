@@ -17,10 +17,10 @@ import {
   concatBytes,
   ErrorCode,
   fixedClock,
-  LoadstarError,
+  IPAForgeError,
   silentLogger,
   toHex
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import { FIXTURES_DIR, readTree } from '@signer/__tests__/fixtures.ts'
 import {
   createTestIdentity,
@@ -43,7 +43,7 @@ const hasher = createHasher()
 const now = new Date('2026-10-13T12:00:00Z')
 const deps = { logger: silentLogger, clock: fixedClock(now), hasher }
 const TEAM = 'ABCDE12345'
-const temp = mkdtempSync(join(tmpdir(), 'loadstar-signipa-'))
+const temp = mkdtempSync(join(tmpdir(), 'ipaforge-signipa-'))
 afterAll(() => rmSync(temp, { recursive: true, force: true }))
 
 let identity: TestIdentity
@@ -133,9 +133,9 @@ describe('signIpa', () => {
       'writing'
     ])
     expect(result.summary.bundles.map((b) => b.identifier)).toEqual([
-      'com.loadstar.fixture.lib',
-      'com.loadstar.fixture.app.ext',
-      'com.loadstar.fixture.app'
+      'com.ipaforge.fixture.lib',
+      'com.ipaforge.fixture.app.ext',
+      'com.ipaforge.fixture.app'
     ])
 
     const reread = await readIpa(bytesFileSource('out.ipa', output), {
@@ -151,7 +151,7 @@ describe('signIpa', () => {
   })
 
   it('prepares for sideloading: new IDs, profiles embedded, Apple-verifiable', async () => {
-    const newMain = `com.loadstar.fixture.app.${TEAM}`
+    const newMain = `com.ipaforge.fixture.app.${TEAM}`
     const result = await signIpa(
       bytesFileSource('Test.ipa', await fixtureIpa()),
       {
@@ -192,14 +192,14 @@ describe('signIpa', () => {
     await expect(promise).rejects.toMatchObject({ code: ErrorCode.Aborted })
   })
 
-  it('wraps unreadable input in a LoadstarError', async () => {
+  it('wraps unreadable input in an IPAForgeError', async () => {
     await expect(
       signIpa(
         bytesFileSource('x.ipa', new Uint8Array(100)),
         { signing: { kind: 'adhoc' } },
         deps
       )
-    ).rejects.toBeInstanceOf(LoadstarError)
+    ).rejects.toBeInstanceOf(IPAForgeError)
   })
 })
 
@@ -229,8 +229,8 @@ const loadSideStore = async (): Promise<Uint8Array> => {
   return bytes
 }
 
-describe.skipIf(!process.env.LOADSTAR_E2E)(
-  'SideStore end to end (LOADSTAR_E2E=1)',
+describe.skipIf(!process.env.IPAFORGE_E2E)(
+  'SideStore end to end (IPAFORGE_E2E=1)',
   () => {
     it('sideload-signs the real SideStore IPA into something Apple verifies', async () => {
       const bytes = await loadSideStore()

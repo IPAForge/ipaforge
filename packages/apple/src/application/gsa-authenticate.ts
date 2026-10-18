@@ -37,16 +37,16 @@ import {
   ErrorCode,
   equalBytes,
   fromBase64,
+  IPAForgeError,
   isPlistDict,
-  LoadstarError,
   type PlistDict,
   stringAt
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const PROTOCOLS: readonly PasswordProtocol[] = ['s2k', 's2k_fo']
 
-const protocolError = (message: string): LoadstarError =>
-  new LoadstarError(ErrorCode.AppleProtocolError, { message })
+const protocolError = (message: string): IPAForgeError =>
+  new IPAForgeError(ErrorCode.AppleProtocolError, { message })
 
 const bytesField = (dict: PlistDict, key: string): Uint8Array => {
   const value = dict[key]
@@ -65,11 +65,11 @@ const stringField = (dict: PlistDict, key: string): string => {
 const checkSkew = (
   deps: AppleDeps,
   skewMs: number | undefined,
-  error: LoadstarError
-): LoadstarError => {
+  error: IPAForgeError
+): IPAForgeError => {
   if (skewMs === undefined || Math.abs(skewMs) <= deps.config.maxClockSkewMs)
     return error
-  return new LoadstarError(ErrorCode.ClockSkew, {
+  return new IPAForgeError(ErrorCode.ClockSkew, {
     cause: error,
     data: { skewSeconds: Math.round(skewMs / 1000) }
   })
@@ -84,7 +84,7 @@ const assertStepOk = (
   try {
     assertGsaOk(step.status, operation)
   } catch (error) {
-    throw checkSkew(deps, step.clockSkewMs, error as LoadstarError)
+    throw checkSkew(deps, step.clockSkewMs, error as IPAForgeError)
   }
 }
 

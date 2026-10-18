@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, it } from 'vitest'
 
-import { ErrorCode } from '@loadstar/kernel'
+import { ErrorCode } from '@ipaforge/kernel'
 import {
   createTestIdentity,
   type TestIdentity
@@ -42,7 +42,7 @@ beforeAll(async () => {
     certificate: identity.certificate,
     privateKey,
     password: PASSWORD,
-    friendlyName: 'Loadstar'
+    friendlyName: 'IPAForge'
   })
 })
 
@@ -55,7 +55,7 @@ describe('exportPkcs12', () => {
     const cert = pfx.getBags({ bagType: OID_CERT_BAG })[OID_CERT_BAG]?.[0]
 
     expect(key?.key?.n.toString(16)).toBe(cert?.cert?.publicKey.n.toString(16))
-    expect(cert?.attributes.friendlyName).toEqual(['Loadstar'])
+    expect(cert?.attributes.friendlyName).toEqual(['IPAForge'])
     expect(key?.attributes.localKeyId).toEqual(cert?.attributes.localKeyId)
   })
 

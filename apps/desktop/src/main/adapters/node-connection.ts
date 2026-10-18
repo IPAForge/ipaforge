@@ -7,8 +7,8 @@ import {
   writeTo
 } from '@desktop/main/adapters/connection/stream-reader.ts'
 import type { Stream } from '@desktop/main/adapters/connection/types.ts'
-import type { Connection } from '@loadstar/device'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import type { Connection } from '@ipaforge/device'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 const CLOSE_TIMEOUT_MS = 1000
 
@@ -37,7 +37,7 @@ export const createNodeConnection = (socket: Socket): Connection => {
     write: (bytes) => writeTo(stream, bytes),
     startTls: async (credentials) => {
       if (stream !== socket)
-        throw new LoadstarError(ErrorCode.DeviceProtocolError, {
+        throw new IPAForgeError(ErrorCode.DeviceProtocolError, {
           message: 'TLS already active'
         })
       reader.detach()

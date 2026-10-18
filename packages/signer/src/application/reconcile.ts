@@ -1,10 +1,10 @@
 import {
   ErrorCode,
-  LoadstarError,
+  IPAForgeError,
   type Logger,
   type PlistDict,
   serializeXmlPlist
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import { embeddedEntitlements } from '@signer/application/embedded-entitlements.ts'
 import { sideloadEntitlements } from '@signer/application/sideload-entitlements.ts'
 import type {
@@ -51,7 +51,7 @@ const fail = (
   message: string,
   data: Record<string, unknown>
 ): never => {
-  throw new LoadstarError(code, { message, data })
+  throw new IPAForgeError(code, { message, data })
 }
 
 const provisionsDevice = (

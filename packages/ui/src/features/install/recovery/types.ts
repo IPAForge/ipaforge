@@ -1,4 +1,4 @@
-import type { RecoveryAction } from '@loadstar/rpc'
+import type { RecoveryAction } from '@ipaforge/rpc'
 import type { OutcomeProps } from '@ui/features/install/run/types.ts'
 import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 import type { RunFailure } from '@ui/state/active-run/types.ts'

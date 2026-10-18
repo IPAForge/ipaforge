@@ -18,11 +18,11 @@ import { nonEmpty } from '@apple/domain/values.ts'
 import {
   compact,
   ErrorCode,
-  LoadstarError,
+  IPAForgeError,
   type SecretStore,
   utf8Decode,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const sessionKey = (id: string) => `apple/session/${id}`
 const passwordKey = (id: string) => `apple/password/${id}`
@@ -33,7 +33,7 @@ const displayNameOf = (session: AppleSession): string | undefined =>
 const findAccount = (index: AccountIndex, id: string): SavedAccount => {
   const account = index.accounts.find((candidate) => candidate.id === id)
   if (!account)
-    throw new LoadstarError(ErrorCode.AccountNotFound, { data: { id } })
+    throw new IPAForgeError(ErrorCode.AccountNotFound, { data: { id } })
   return account
 }
 

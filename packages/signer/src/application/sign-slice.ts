@@ -2,10 +2,10 @@
 import {
   compact,
   ErrorCode,
-  LoadstarError,
+  IPAForgeError,
   type PlistDict,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import { NSPECIAL } from '@signer/application/constants.ts'
 import {
   carriesEntitlements,
@@ -64,7 +64,7 @@ const highestSpecialSlot = (special: SpecialSlotData): number =>
 
 const assertDecrypted = (slice: Slice, identifier: string): void => {
   if (!isEncryptedSlice(slice)) return
-  throw new LoadstarError(ErrorCode.EncryptedBinary, {
+  throw new IPAForgeError(ErrorCode.EncryptedBinary, {
     message:
       'binary is FairPlay-encrypted (App Store build); a decrypted IPA is required',
     data: { identifier }
@@ -249,7 +249,7 @@ const embedSignature = (
   superBlob: Uint8Array
 ): void => {
   if (superBlob.byteLength > prepared.datasize) {
-    throw new LoadstarError(ErrorCode.Unexpected, {
+    throw new IPAForgeError(ErrorCode.Unexpected, {
       message: 'signature larger than its reservation',
       data: { signature: superBlob.byteLength, reserved: prepared.datasize }
     })

@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import type { RecoveryAction } from '@loadstar/rpc'
+import type { RecoveryAction } from '@ipaforge/rpc'
 import { FixButton } from '@ui/features/install/recovery/components/fix-button.tsx'
 import { FixGuidance } from '@ui/features/install/recovery/components/fix-guidance.tsx'
 import { fixes } from '@ui/features/install/recovery/constants.ts'

@@ -72,7 +72,7 @@
               ":BLANK_LINE:",
               [
                 ":PACKAGE:",
-                "!@loadstar/**",
+                "!@ipaforge/**",
                 "!@kernel/**",
                 "!@signer/**",
                 "!@device/**",
@@ -85,7 +85,7 @@
               ],
               ":BLANK_LINE:",
               [
-                "@loadstar/**",
+                "@ipaforge/**",
                 "@kernel/**",
                 "@signer/**",
                 "@device/**",

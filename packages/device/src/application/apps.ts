@@ -4,7 +4,7 @@ import { useInstallationProxy } from '@device/application/services.ts'
 import type { DeviceSession } from '@device/application/types.ts'
 import type { InstalledApp } from '@device/infrastructure/installation-proxy/apps.ts'
 import type { ApplicationType } from '@device/infrastructure/installation-proxy/types.ts'
-import { compact } from '@loadstar/kernel'
+import { compact } from '@ipaforge/kernel'
 
 export const listApps = (
   ctx: DeviceContext,

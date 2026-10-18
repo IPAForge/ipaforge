@@ -2,7 +2,7 @@ import { Check } from 'lucide-react'
 import { CheckboxButton, CheckboxField } from 'react-aria-components'
 import { useTranslation } from 'react-i18next'
 
-import type { PairingAppChoice } from '@loadstar/rpc'
+import type { PairingAppChoice } from '@ipaforge/rpc'
 import { pairingAppPurposeKey } from '@ui/features/install/prompts/utils/pairing-app-purpose.ts'
 import { pairingRowClass } from '@ui/features/install/prompts/utils/pairing-row-class.ts'
 

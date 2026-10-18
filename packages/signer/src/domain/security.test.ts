@@ -1,9 +1,9 @@
 // Regression tests for hostile inputs (security review 2026-10-13): every case must fail fast with a
-// LoadstarError instead of exhausting memory or CPU.
+// IPAForgeError instead of exhausting memory or CPU.
 
 import { describe, expect, it } from 'vitest'
 
-import { ErrorCode, parseBinaryPlist, utf8Encode } from '@loadstar/kernel'
+import { ErrorCode, parseBinaryPlist, utf8Encode } from '@ipaforge/kernel'
 import { thrownCode } from '@signer/__tests__/errors.ts'
 import { readFixture } from '@signer/__tests__/fixtures.ts'
 import { DEFAULT_SIGNER_LIMITS } from '@signer/domain/config.ts'

@@ -24,12 +24,12 @@ import {
   compact,
   createDict,
   ErrorCode,
+  IPAForgeError,
   isPlistDict,
-  LoadstarError,
   type PlistDict,
   serializeXmlPlist,
   stringAt
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 export const DEVELOPER_BASE =
   'https://developerservices2.apple.com/services/QH65B2/'
@@ -69,9 +69,9 @@ const requestBody = (deps: AppleDeps, fields: DeveloperFields): PlistDict =>
 /** 401 means the app token expired; 403 on `listTeams` means the Apple ID cannot use developer services. */
 const assertAuthorized = (response: FetchResult, action: string): void => {
   if (response.status === HTTP_UNAUTHORIZED)
-    throw new LoadstarError(ErrorCode.SessionExpired, { data: { action } })
+    throw new IPAForgeError(ErrorCode.SessionExpired, { data: { action } })
   if (response.status !== HTTP_FORBIDDEN) return
-  throw new LoadstarError(
+  throw new IPAForgeError(
     action === 'listTeams'
       ? ErrorCode.NotEligibleForDevelopment
       : ErrorCode.DeveloperRequestFailed,
@@ -97,7 +97,7 @@ const assertResultOk = (
   })
   const message =
     stringAt(value, 'userString') ?? stringAt(value, 'resultString') ?? ''
-  throw new LoadstarError(developerErrorCode(resultCode, message), {
+  throw new IPAForgeError(developerErrorCode(resultCode, message), {
     message: `${action} failed: ${resultCode} ${message}`.trim(),
     data: compact({ action, resultCode, appleMessage: nonEmpty(message) })
   })
@@ -135,7 +135,7 @@ export const developerRequest = async (
   assertAuthorized(response, action)
   const value = parseApplePlist(response.body, `developer ${action}`)
   if (!isPlistDict(value))
-    throw new LoadstarError(ErrorCode.AppleProtocolError, {
+    throw new IPAForgeError(ErrorCode.AppleProtocolError, {
       message: `${action}: not a dict`
     })
   assertResultOk(deps, value, action)

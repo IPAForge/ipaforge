@@ -1,5 +1,5 @@
 {
-  "name": "@loadstar/tooling-eslint",
+  "name": "@ipaforge/tooling-eslint",
   "private": true,
   "type": "module",
   "description": "ESLint plugins for the root eslint.config.js, in their own package so typescript-eslint resolves TypeScript 6 (TypeScript 7 ships no JS API).",

@@ -1,5 +1,5 @@
 // A run's events and outcome in wire form: errors serialized, file handles dropped, checkpoints kept server-side.
-import type { PipelineResult, RunEvent } from '@loadstar/installer'
+import type { PipelineResult, RunEvent } from '@ipaforge/installer'
 import type { CheckpointStore } from '@rpc/application/server/types.ts'
 import type {
   Command,

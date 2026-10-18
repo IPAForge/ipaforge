@@ -1,4 +1,4 @@
-import type { LogLevel } from '@loadstar/kernel'
+import type { LogLevel } from '@ipaforge/kernel'
 
 /** Where a line comes from, as the viewer groups scopes (see `features/logs/constants.ts`). */
 export type LogArea =

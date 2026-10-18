@@ -8,8 +8,8 @@ import {
   type UsbmuxdEndpoint,
   usbmuxdHint
 } from '@desktop/main/adapters/usbmux/usbmuxd-endpoint.ts'
-import type { DeviceTransport } from '@loadstar/device'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import type { DeviceTransport } from '@ipaforge/device'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 const CONNECT_TIMEOUT_MS = 5000
 
@@ -19,7 +19,7 @@ const connectTo = (endpoint: UsbmuxdEndpoint): Socket =>
     : connect({ host: endpoint.host, port: endpoint.port })
 
 const unavailable = (endpoint: UsbmuxdEndpoint, cause: Error) =>
-  new LoadstarError(ErrorCode.UsbmuxdUnavailable, {
+  new IPAForgeError(ErrorCode.UsbmuxdUnavailable, {
     cause,
     data: { endpoint: describeEndpoint(endpoint), hint: usbmuxdHint() }
   })

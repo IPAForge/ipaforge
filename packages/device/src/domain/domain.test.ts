@@ -9,7 +9,7 @@ import {
   staleProfiles,
   summarizeProfile
 } from '@device/domain/profiles.ts'
-import { utf8Encode } from '@loadstar/kernel'
+import { utf8Encode } from '@ipaforge/kernel'
 
 describe('device helpers', () => {
   it('parses versions and shortens UDIDs', () => {

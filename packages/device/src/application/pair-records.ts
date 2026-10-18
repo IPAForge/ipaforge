@@ -1,4 +1,4 @@
-// Where pair records live: usbmuxd (the OS's own record, read only) first, Loadstar's secret store as the fallback.
+// Where pair records live: usbmuxd (the OS's own record, read only) first, IPAForge's secret store as the fallback.
 import type { DeviceContext } from '@device/application/context.ts'
 import type { StoredPairRecord } from '@device/application/types.ts'
 import { shortUdid } from '@device/domain/device.ts'
@@ -7,14 +7,14 @@ import {
   serializePairRecord
 } from '@device/domain/pairing/pair-record.ts'
 import type { PairRecord } from '@device/domain/pairing/types.ts'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
-/** Key under which Loadstar keeps a pair record of its own. */
+/** Key under which IPAForge keeps a pair record of its own. */
 export const pairRecordSecretKey = (udid: string): string =>
   `pair-record/${udid}`
 
-export const notPairedError = (udid: string): LoadstarError =>
-  new LoadstarError(ErrorCode.DeviceNotPaired, {
+export const notPairedError = (udid: string): IPAForgeError =>
+  new IPAForgeError(ErrorCode.DeviceNotPaired, {
     data: { device: shortUdid(udid) }
   })
 
@@ -37,7 +37,7 @@ const readOwnPairRecord = async (
   return bytes ? parsePairRecord(bytes, ctx.deps.config.plist) : undefined
 }
 
-/** The pair record for `udid`: usbmuxd's (the OS trusts this host) first, then Loadstar's own one. */
+/** The pair record for `udid`: usbmuxd's (the OS trusts this host) first, then IPAForge's own one. */
 export const getPairRecord = async (
   ctx: DeviceContext,
   udid: string
@@ -64,7 +64,7 @@ export const requirePairRecord = async (
   return stored.record
 }
 
-/** Keeps a pair record Loadstar made itself. It only ever goes to the secret store, never over the OS's record. */
+/** Keeps a pair record IPAForge made itself. It only ever goes to the secret store, never over the OS's record. */
 export const saveOwnPairRecord = (
   ctx: DeviceContext,
   udid: string,
@@ -76,7 +76,7 @@ export const saveOwnPairRecord = (
 export const exportPairRecord = (record: PairRecord): Uint8Array =>
   serializePairRecord(record)
 
-/** Imports a pair record from plist bytes into Loadstar's own store. */
+/** Imports a pair record from plist bytes into IPAForge's own store. */
 export const importPairRecord = async (
   ctx: DeviceContext,
   udid: string,

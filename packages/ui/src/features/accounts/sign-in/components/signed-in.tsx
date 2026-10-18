@@ -7,7 +7,7 @@ type SignedInProps = {
   onDone: () => void
 }
 
-/** The end of a sign-in: which Apple ID Loadstar now has. */
+/** The end of a sign-in: which Apple ID IPAForge now has. */
 export const SignedIn = ({ appleId, onDone }: SignedInProps) => {
   const { t } = useTranslation()
 

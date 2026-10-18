@@ -1,4 +1,4 @@
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 import { parseCertificate } from '@signer/infrastructure/cms/certificate.ts'
 import {
   fromBinary,
@@ -30,8 +30,8 @@ export type Pkcs12Input = {
   readonly friendlyName?: string
 }
 
-const invalidInput = (message: string, cause: unknown): LoadstarError =>
-  new LoadstarError(ErrorCode.InvalidCertificate, { message, cause })
+const invalidInput = (message: string, cause: unknown): IPAForgeError =>
+  new IPAForgeError(ErrorCode.InvalidCertificate, { message, cause })
 
 const checkInput = (input: Pkcs12Input): void => {
   parseCertificate(input.certificate)

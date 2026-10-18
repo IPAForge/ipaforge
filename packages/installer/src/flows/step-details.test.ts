@@ -18,8 +18,8 @@ import { PromptKind } from '@installer/domain/prompts.ts'
 import type { RunEvent } from '@installer/engine/types.ts'
 import type { StepDetail } from '@installer/pipeline/types.ts'
 
-vi.mock('@loadstar/signer', async (importOriginal) => ({
-  ...(await importOriginal<typeof import('@loadstar/signer')>()),
+vi.mock('@ipaforge/signer', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@ipaforge/signer')>()),
   exportPkcs12: vi.fn(() => new Uint8Array([0x30]))
 }))
 

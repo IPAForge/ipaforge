@@ -3,9 +3,9 @@ import {
   compact,
   ErrorCode,
   type FileSource,
-  LoadstarError,
-  toLoadstarError
-} from '@loadstar/kernel'
+  IPAForgeError,
+  toIPAForgeError
+} from '@ipaforge/kernel'
 import { embeddedEntitlements } from '@signer/application/embedded-entitlements.ts'
 import { resolveDeps } from '@signer/deps.ts'
 import { discoverBundles } from '@signer/domain/bundle/discover.ts'
@@ -56,7 +56,7 @@ const assertDecrypted = (
     signal?.throwIfAborted()
     if (entry.kind !== 'file' || !isMachO(entry.data)) continue
     if (!isEncryptedMachO(entry.data, limits)) continue
-    throw new LoadstarError(ErrorCode.EncryptedBinary, {
+    throw new IPAForgeError(ErrorCode.EncryptedBinary, {
       message:
         'binary is FairPlay-encrypted (App Store build); a decrypted IPA is required',
       data: { path }
@@ -108,7 +108,7 @@ export const inspectIpa = async (
     })
     return inspection
   } catch (error) {
-    const failure = toLoadstarError(error)
+    const failure = toIPAForgeError(error)
     logger.error('inspection failed', { code: failure.code, error: failure })
     throw failure
   }

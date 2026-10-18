@@ -5,7 +5,7 @@ import { request as httpRequest, type IncomingMessage } from 'node:http'
 import { request as httpsRequest } from 'node:https'
 
 import { TRUSTED_ROOTS } from '@desktop/main/adapters/http/trusted-roots.ts'
-import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 export type SendOptions = {
   readonly method: string
@@ -31,7 +31,7 @@ const requestFailure = (
 ): unknown =>
   error.name === 'AbortError' && signal?.reason instanceof Error
     ? signal.reason
-    : new LoadstarError(ErrorCode.Offline, {
+    : new IPAForgeError(ErrorCode.Offline, {
         cause: error,
         data: { host: url.host }
       })

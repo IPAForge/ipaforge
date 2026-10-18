@@ -1,4 +1,4 @@
-import type { Logger } from '@loadstar/kernel'
+import type { Logger } from '@ipaforge/kernel'
 import type { SYSTEM_LANGUAGE } from '@ui/i18n/languages/language-store.ts'
 import type { PSEUDO_LOCALE } from '@ui/i18n/languages/languages.ts'
 import type status from '@ui/locales/status.json'

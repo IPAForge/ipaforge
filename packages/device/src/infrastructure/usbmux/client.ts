@@ -28,12 +28,12 @@ import {
   compact,
   createDict,
   ErrorCode,
-  LoadstarError,
+  IPAForgeError,
   type PlistDict
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
-const resultError = (number: number, what: string): LoadstarError =>
-  new LoadstarError(
+const resultError = (number: number, what: string): IPAForgeError =>
+  new IPAForgeError(
     RESULT_ERRORS.get(number) ?? ErrorCode.DeviceProtocolError,
     {
       message: `usbmuxd ${what} failed with result ${number}`,
@@ -72,8 +72,8 @@ export const createUsbmuxClient = (
     try {
       return createLink(await transport.connectUsbmux())
     } catch (error) {
-      if (error instanceof LoadstarError) throw error
-      throw new LoadstarError(ErrorCode.UsbmuxdUnavailable, { cause: error })
+      if (error instanceof IPAForgeError) throw error
+      throw new IPAForgeError(ErrorCode.UsbmuxdUnavailable, { cause: error })
     }
   }
 

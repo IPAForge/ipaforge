@@ -1,5 +1,5 @@
 // Pairing on our own (the fallback): sends lockdown `Pair` with generated certificates and keeps the record in
-// Loadstar's secret store only. The OS's record in usbmuxd is never written.
+// IPAForge's secret store only. The OS's record in usbmuxd is never written.
 import type { DeviceContext } from '@device/application/context.ts'
 import { openLockdown } from '@device/application/lockdown.ts'
 import { reportPaired } from '@device/application/pair-options.ts'
@@ -12,7 +12,7 @@ import type { UsbmuxDevice } from '@device/domain/types.ts'
 import { withClient } from '@device/infrastructure/closeable.ts'
 import type { LockdownClient } from '@device/infrastructure/lockdown/types.ts'
 import { createPairRecord } from '@device/infrastructure/pairing/certificates.ts'
-import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 type WaitingStage = 'waiting_for_trust' | 'waiting_for_unlock'
 
@@ -31,7 +31,7 @@ const readDevicePublicKey = async (
 ): Promise<Uint8Array> => {
   const devicePublicKey = await lockdown.getValue('DevicePublicKey')
   if (!(devicePublicKey instanceof Uint8Array)) {
-    throw new LoadstarError(ErrorCode.DeviceProtocolError, {
+    throw new IPAForgeError(ErrorCode.DeviceProtocolError, {
       message: 'device returned no DevicePublicKey'
     })
   }
@@ -40,7 +40,7 @@ const readDevicePublicKey = async (
 
 /** What the user still has to do when `Pair` fails with `error`; `undefined` when it is a real failure. */
 const waitingStage = (error: unknown): WaitingStage | undefined => {
-  if (!(error instanceof LoadstarError)) return undefined
+  if (!(error instanceof IPAForgeError)) return undefined
   if (error.code === ErrorCode.DeviceLocked) return 'waiting_for_unlock'
   if (error.code === ErrorCode.PairingPending) return 'waiting_for_trust'
   return undefined
@@ -66,7 +66,7 @@ const pairUntilTrusted = async (
       const stage = waitingStage(error)
       if (!stage) throw error
       if (clock.now().getTime() >= deadline) {
-        throw new LoadstarError(ErrorCode.DeviceTimeout, {
+        throw new IPAForgeError(ErrorCode.DeviceTimeout, {
           cause: error,
           data: { stage: 'pairing' }
         })
@@ -101,7 +101,7 @@ const createTrustedRecord = async (
 }
 
 /**
- * Creates a pairing of Loadstar's own. The device shows "Trust This Computer?"; we keep asking until the user
+ * Creates a pairing of IPAForge's own. The device shows "Trust This Computer?"; we keep asking until the user
  * answers, the device is unlocked, or `pairingTimeoutMs` passes. The record goes to the secret store only.
  */
 export const pairWithOwnRecord = async (

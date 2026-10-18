@@ -19,20 +19,20 @@ import {
 } from '@installer/steps/app-job.ts'
 import { PERCENT } from '@installer/steps/constants.ts'
 import { signToScratch } from '@installer/steps/sign.ts'
-import type { DeviceHandle, InstallStage } from '@loadstar/device'
+import type { DeviceHandle, InstallStage } from '@ipaforge/device'
 import {
   compact,
   ErrorCode,
   type FileSource,
-  LoadstarError
-} from '@loadstar/kernel'
+  IPAForgeError
+} from '@ipaforge/kernel'
 
-const hasCode = (error: unknown, code: ErrorCode): error is LoadstarError =>
-  error instanceof LoadstarError && error.code === code
+const hasCode = (error: unknown, code: ErrorCode): error is IPAForgeError =>
+  error instanceof IPAForgeError && error.code === code
 
 /** The apps installd says hold the free-profile slots, other than the one being installed. */
 const listedFreeApps = (
-  error: LoadstarError,
+  error: IPAForgeError,
   installing: string
 ): { bundleId: string }[] => {
   const listed = error.data?.freeProfileApps
@@ -73,7 +73,7 @@ const retryAfterRemoval = async (
     error,
     file,
     installing
-  }: { error: LoadstarError; file: FileSource; installing: string }
+  }: { error: IPAForgeError; file: FileSource; installing: string }
 ): Promise<void> => {
   const apps = listedFreeApps(error, installing)
   if (apps.length === 0) throw error

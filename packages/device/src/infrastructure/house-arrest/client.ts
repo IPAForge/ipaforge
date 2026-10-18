@@ -12,13 +12,13 @@ import {
 import {
   createDict,
   ErrorCode,
-  LoadstarError,
+  IPAForgeError,
   type Logger
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 /**
  * `documents`: the app's Documents folder (apps with file sharing).
- * `container`: the whole app container (development-signed apps, i.e. everything Loadstar installs).
+ * `container`: the whole app container (development-signed apps, i.e. everything IPAForge installs).
  */
 export type ContainerMode = 'documents' | 'container'
 
@@ -47,7 +47,7 @@ export const vendContainer = async (
       typeof response.Error === 'string'
         ? response.Error
         : String(response.Status)
-    throw new LoadstarError(ErrorCode.ServiceUnavailable, {
+    throw new IPAForgeError(ErrorCode.ServiceUnavailable, {
       message: `house_arrest ${command} failed for ${bundleId}: ${error}`,
       data: { houseArrestError: error, bundleId }
     })

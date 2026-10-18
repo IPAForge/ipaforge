@@ -4,8 +4,8 @@ import {
 } from '@installer/sidestore/constants.ts'
 import { findSideStoreTarget } from '@installer/sidestore/target.ts'
 import type { CertificateTrust } from '@installer/sidestore/trust.ts'
-import { createDict, ErrorCode, LoadstarError } from '@loadstar/kernel'
-import { type BundleAdditions, exportPkcs12 } from '@loadstar/signer'
+import { createDict, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
+import { type BundleAdditions, exportPkcs12 } from '@ipaforge/signer'
 
 /** The development certificate SideStore should hold, as plain data. */
 export type SideStoreCertificate = {
@@ -20,7 +20,7 @@ export type SideStoreCertificate = {
 
 const requireMachineId = (input: SideStoreCertificate): string => {
   if (input.machineId) return input.machineId
-  throw new LoadstarError(ErrorCode.CertificateMachineIdMissing, {
+  throw new IPAForgeError(ErrorCode.CertificateMachineIdMissing, {
     message:
       'the certificate has no machineId, so SideStore could not open its .p12',
     data: { serialNumber: input.serialNumber }

@@ -1,7 +1,7 @@
 import { act, waitFor } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { PromptKind } from '@loadstar/rpc'
+import { PromptKind } from '@ipaforge/rpc'
 import { renderAppHook } from '@ui/__tests__/hook-wrapper.tsx'
 import { useRun } from '@ui/hooks/use-run.ts'
 import { FAKE_IPHONE } from '@ui/services/engine/fake/fake-data.ts'

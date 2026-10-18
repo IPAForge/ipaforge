@@ -4,7 +4,7 @@ import { act, screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { describe, expect, it, vi } from 'vitest'
 
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 import { t } from '@ui/__tests__/test-i18n.ts'
 import {
   renderApp,
@@ -39,7 +39,7 @@ const countingTeams = (listTeams: (accountId: string) => Promise<Team[]>) => {
 const expiredFor =
   (expired: string) =>
   async (accountId: string): Promise<Team[]> => {
-    if (accountId === expired) throw new LoadstarError(ErrorCode.SessionExpired)
+    if (accountId === expired) throw new IPAForgeError(ErrorCode.SessionExpired)
     return [PERSONAL_TEAM]
   }
 

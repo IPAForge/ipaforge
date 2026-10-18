@@ -9,7 +9,7 @@ import {
   required,
   updateJob
 } from '@installer/steps/app-job.ts'
-import { compact } from '@loadstar/kernel'
+import { compact } from '@ipaforge/kernel'
 
 /** App IDs, the app group and a profile for every bundle of the app. */
 export const provisionStep = (

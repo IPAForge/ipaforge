@@ -17,7 +17,7 @@ import {
   parseXmlPlist,
   silentLogger,
   toHex
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import {
   FIXTURES_DIR,
   readFixture,
@@ -43,7 +43,7 @@ const deps = {
   clock: fixedClock(new Date('2026-10-13T12:00:00Z'))
 }
 const isMac = process.platform === 'darwin'
-const temp = mkdtempSync(join(tmpdir(), 'loadstar-signbundle-'))
+const temp = mkdtempSync(join(tmpdir(), 'ipaforge-signbundle-'))
 afterAll(() => rmSync(temp, { recursive: true, force: true }))
 
 const loadTree = (root: string): BundleTree =>
@@ -128,9 +128,9 @@ describe('signBundle (ad-hoc) on Test.app', () => {
       ''
     ])
     expect(summary.bundles.map((b) => b.identifier)).toEqual([
-      'com.loadstar.fixture.lib',
-      'com.loadstar.fixture.app.ext',
-      'com.loadstar.fixture.app'
+      'com.ipaforge.fixture.lib',
+      'com.ipaforge.fixture.app.ext',
+      'com.ipaforge.fixture.app'
     ])
     expect(summary.looseBinaries).toBe(1)
   })
@@ -210,7 +210,7 @@ describe('signBundle with a certificate', () => {
             }
           ).data
         )
-      ).toBe('profile:com.loadstar.fixture.app.ext')
+      ).toBe('profile:com.ipaforge.fixture.app.ext')
 
       const root = join(temp, 'Test.app')
       writeTree(tree, root)

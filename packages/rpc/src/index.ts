@@ -1,4 +1,4 @@
-// Public API of @loadstar/rpc: the typed channel between the Engine (server) and the UI (EngineClient).
+// Public API of @ipaforge/rpc: the typed channel between the Engine (server) and the UI (EngineClient).
 
 // Installer data and types the UI needs (prompt kinds, recovery actions, step labels, the Engine's shapes for a
 // stand-in Engine) without importing the installer.
@@ -31,7 +31,7 @@ export {
   StepLabel,
   type TeamCertificates,
   type TeamQuery
-} from '@loadstar/installer'
+} from '@ipaforge/installer'
 export { createEngineClient } from '@rpc/application/client.ts'
 export { createRpcServer } from '@rpc/application/server.ts'
 export type {

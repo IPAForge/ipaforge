@@ -1,6 +1,6 @@
 // What the user picked in the top bar, kept through PreferencesStore so it survives a restart: the Apple ID and the
 // device in use.
-import type { Logger } from '@loadstar/kernel'
+import type { Logger } from '@ipaforge/kernel'
 import type { PreferencesStore } from '@ui/services/preferences/preferences-store.ts'
 import { selectionKeys } from '@ui/state/selection/constants.ts'
 import type { Selection, SelectionStore } from '@ui/state/selection/types.ts'

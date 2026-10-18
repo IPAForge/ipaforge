@@ -2,15 +2,15 @@ import { describe, expect, it } from 'vitest'
 
 import { ErrorCode, isErrorCode } from '@kernel/errors/codes.ts'
 import {
-  isLoadstarError,
-  LoadstarError,
-  toLoadstarError
-} from '@kernel/errors/loadstar-error.ts'
+  IPAForgeError,
+  isIPAForgeError,
+  toIPAForgeError
+} from '@kernel/errors/ipaforge-error.ts'
 
-describe('LoadstarError', () => {
+describe('IPAForgeError', () => {
   it('carries code, data and cause', () => {
     const cause = new Error('socket closed')
-    const error = new LoadstarError(ErrorCode.DeviceLocked, {
+    const error = new IPAForgeError(ErrorCode.DeviceLocked, {
       cause,
       data: { udid: 'x' }
     })
@@ -19,35 +19,35 @@ describe('LoadstarError', () => {
     expect(error.data).toEqual({ udid: 'x' })
     expect(error.cause).toBe(cause)
     expect(error.message).toBe('device.locked')
-    expect(isLoadstarError(error)).toBe(true)
+    expect(isIPAForgeError(error)).toBe(true)
   })
 
   it('round-trips through JSON including the cause chain', () => {
-    const inner = new LoadstarError(ErrorCode.Offline, {
+    const inner = new IPAForgeError(ErrorCode.Offline, {
       message: 'dns failed'
     })
-    const outer = new LoadstarError(ErrorCode.AnisetteUnavailable, {
+    const outer = new IPAForgeError(ErrorCode.AnisetteUnavailable, {
       cause: inner,
       data: { servers: 3 }
     })
 
-    const restored = LoadstarError.fromJSON(JSON.parse(JSON.stringify(outer)))
+    const restored = IPAForgeError.fromJSON(JSON.parse(JSON.stringify(outer)))
 
     expect(restored.code).toBe(ErrorCode.AnisetteUnavailable)
     expect(restored.data).toEqual({ servers: 3 })
-    expect(restored.cause).toBeInstanceOf(LoadstarError)
-    expect((restored.cause as LoadstarError).code).toBe(ErrorCode.Offline)
-    expect((restored.cause as LoadstarError).message).toBe('dns failed')
+    expect(restored.cause).toBeInstanceOf(IPAForgeError)
+    expect((restored.cause as IPAForgeError).code).toBe(ErrorCode.Offline)
+    expect((restored.cause as IPAForgeError).message).toBe('dns failed')
   })
 
   it('serializes foreign causes as plain errors', () => {
-    const outer = new LoadstarError(ErrorCode.Unexpected, {
+    const outer = new IPAForgeError(ErrorCode.Unexpected, {
       cause: new TypeError('bad')
     })
     const json = outer.toJSON()
 
     expect(json.cause).toEqual({ name: 'TypeError', message: 'bad' })
-    const restored = LoadstarError.fromJSON(json)
+    const restored = IPAForgeError.fromJSON(json)
     expect((restored.cause as Error).name).toBe('TypeError')
   })
 
@@ -57,7 +57,7 @@ describe('LoadstarError', () => {
       error = new Error(`level ${i}`, { cause: error })
     let depth = 0
     for (
-      let node = new LoadstarError(ErrorCode.Unexpected, {
+      let node = new IPAForgeError(ErrorCode.Unexpected, {
         cause: error
       }).toJSON();
       node.cause;
@@ -68,10 +68,10 @@ describe('LoadstarError', () => {
   })
 })
 
-describe('toLoadstarError', () => {
-  it('returns LoadstarErrors unchanged', () => {
-    const error = new LoadstarError(ErrorCode.ZipSlip)
-    expect(toLoadstarError(error)).toBe(error)
+describe('toIPAForgeError', () => {
+  it('returns IPAForgeErrors unchanged', () => {
+    const error = new IPAForgeError(ErrorCode.ZipSlip)
+    expect(toIPAForgeError(error)).toBe(error)
   })
 
   it.each([
@@ -80,7 +80,7 @@ describe('toLoadstarError', () => {
     ['an Error', new Error('kaput'), 'kaput'],
     ['an object', { reason: 'nope' }, '{"reason":"nope"}']
   ])('wraps %s with the fallback code', (_label, thrown, message) => {
-    const error = toLoadstarError(thrown, ErrorCode.InvalidMachO)
+    const error = toIPAForgeError(thrown, ErrorCode.InvalidMachO)
     expect(error.code).toBe(ErrorCode.InvalidMachO)
     expect(error.cause).toBe(thrown)
     expect(error.message).toBe(message)
@@ -89,13 +89,13 @@ describe('toLoadstarError', () => {
   it('maps aborts to internal.aborted', () => {
     const controller = new AbortController()
     controller.abort()
-    expect(toLoadstarError(controller.signal.reason).code).toBe(
+    expect(toIPAForgeError(controller.signal.reason).code).toBe(
       ErrorCode.Aborted
     )
   })
 
   it('defaults to internal.unexpected', () => {
-    expect(toLoadstarError(undefined).code).toBe(ErrorCode.Unexpected)
+    expect(toIPAForgeError(undefined).code).toBe(ErrorCode.Unexpected)
   })
 })
 

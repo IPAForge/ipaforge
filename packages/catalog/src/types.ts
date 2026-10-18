@@ -1,6 +1,6 @@
 import type { CatalogConfig } from '@catalog/domain/config.ts'
 import type { DownloadStore } from '@catalog/domain/ports/download-store.ts'
-import type { Clock, HttpClient, Logger } from '@loadstar/kernel'
+import type { Clock, HttpClient, Logger } from '@ipaforge/kernel'
 
 export type CatalogDeps = {
   readonly http: HttpClient

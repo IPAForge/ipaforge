@@ -1,4 +1,4 @@
-// Public API of @loadstar/device: talks to iPhones and iPads through the system usbmuxd.
+// Public API of @ipaforge/device: talks to iPhones and iPads through the system usbmuxd.
 
 export { assertCanRunSideloadedApps } from '@device/application/checks.ts'
 export type { DeviceHandle } from '@device/application/handle.ts'

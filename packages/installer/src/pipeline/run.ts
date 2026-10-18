@@ -1,7 +1,7 @@
 // The runner: walks the steps in order, merging what each produces into the state, and stops at the first
 // cancellation or failure with a checkpoint to resume from.
 import { attemptStep } from '@installer/pipeline/attempt-step.ts'
-import { asLoadstarError, isAbort } from '@installer/pipeline/errors.ts'
+import { asIPAForgeError, isAbort } from '@installer/pipeline/errors.ts'
 import { createProgress } from '@installer/pipeline/progress.ts'
 import { stepWeight } from '@installer/pipeline/step.ts'
 import { createStepContext } from '@installer/pipeline/step-context.ts'
@@ -47,7 +47,7 @@ export const runPipeline = async <S>(
   })
 
   const failed = (step: Step<S>, error: unknown): PipelineResult<S> => {
-    const failure = asLoadstarError(error, step.id)
+    const failure = asIPAForgeError(error, step.id)
     emit({ type: 'step-failed', stepId: step.id, error: failure })
     return {
       status: 'failed',

@@ -1,4 +1,4 @@
-import { createLogger } from '@loadstar/kernel'
+import { createLogger } from '@ipaforge/kernel'
 import type { LanguageId } from '@ui/i18n/languages/types.ts'
 import { loadLocaleBundle } from '@ui/i18n/loading/locale-bundles.ts'
 import { createLocaleLoader } from '@ui/i18n/loading/locale-loader.ts'

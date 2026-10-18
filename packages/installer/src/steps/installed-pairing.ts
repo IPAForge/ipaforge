@@ -6,8 +6,8 @@ import { StepWeight } from '@installer/domain/step-weights.ts'
 import type { InstallState } from '@installer/domain/types.ts'
 import type { Step } from '@installer/pipeline/types.ts'
 import { jobAt, required } from '@installer/steps/app-job.ts'
-import { type AppFileTarget, PAIRING_APPS } from '@loadstar/device'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { type AppFileTarget, PAIRING_APPS } from '@ipaforge/device'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 const pairingTargetsFor = (
   appId: string,
@@ -15,7 +15,7 @@ const pairingTargetsFor = (
 ): AppFileTarget[] => {
   const app = PAIRING_APPS.find((candidate) => candidate.id === appId)
   if (!app)
-    throw new LoadstarError(ErrorCode.Unexpected, {
+    throw new IPAForgeError(ErrorCode.Unexpected, {
       message: `unknown pairing app ${appId}`
     })
   return app.files.map((path) => ({ bundleId, path }))

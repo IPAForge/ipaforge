@@ -1,4 +1,4 @@
-import type { RecoveryAction } from '@loadstar/rpc'
+import type { RecoveryAction } from '@ipaforge/rpc'
 import { fixes } from '@ui/features/install/recovery/constants.ts'
 import type { RecoveryFixes } from '@ui/features/install/recovery/types.ts'
 

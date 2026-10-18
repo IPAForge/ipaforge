@@ -1,6 +1,6 @@
 // Starts the Engine command a request names, once its inputs are ready.
-import type { CommandOptions, Engine, RunHandle } from '@loadstar/installer'
-import { compact } from '@loadstar/kernel'
+import type { CommandOptions, Engine, RunHandle } from '@ipaforge/installer'
+import { compact } from '@ipaforge/kernel'
 import { toInstallAppsInput } from '@rpc/application/server/inputs.ts'
 import type {
   CommandStarters,

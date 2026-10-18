@@ -38,12 +38,12 @@ import {
   compact,
   createDict,
   ErrorCode,
+  IPAForgeError,
   isPlistDict,
-  LoadstarError,
   parsePlist,
   toBase64,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 export type {
   TrustedPhone,
@@ -78,8 +78,8 @@ const twoFactorHeaders =
     }
   }
 
-const smsRefused = (message: string): LoadstarError =>
-  new LoadstarError(ErrorCode.SmsUnavailable, {
+const smsRefused = (message: string): IPAForgeError =>
+  new IPAForgeError(ErrorCode.SmsUnavailable, {
     message,
     data: {
       status: HTTP_FORBIDDEN,
@@ -110,7 +110,7 @@ const fetchMethods = async (
 
 const assertUsable = (methods: TwoFactorMethods): void => {
   if (!methods.securityKeysOnly) return
-  throw new LoadstarError(ErrorCode.TwoFactorUnsupported, {
+  throw new IPAForgeError(ErrorCode.TwoFactorUnsupported, {
     message: 'this Apple ID only allows security keys',
     data: { reason: 'security_keys' }
   })
@@ -157,7 +157,7 @@ const requestSmsCode = async (
     throw smsRefused('Apple refused to send an SMS code for this sign-in')
   const code = serviceErrorCode(response.body)
   if (response.status === HTTP_LOCKED) {
-    throw new LoadstarError(
+    throw new IPAForgeError(
       code === GsaCode.SmsUnavailable
         ? ErrorCode.SmsUnavailable
         : ErrorCode.RateLimited,
@@ -167,7 +167,7 @@ const requestSmsCode = async (
     )
   }
   if (code !== undefined && !isCodeAlreadySent({ ec: code })) {
-    throw new LoadstarError(gsaErrorCode({ ec: code }), {
+    throw new IPAForgeError(gsaErrorCode({ ec: code }), {
       data: { serviceError: code }
     })
   }
@@ -191,7 +191,7 @@ const submitDeviceCode = async (
   const value = parsePlist(response.body)
   const status = statusOf(isPlistDict(value) ? value : createDict())
   if (status.ec === 0 && response.status < HTTP_BAD_REQUEST) return
-  throw new LoadstarError(
+  throw new IPAForgeError(
     status.ec ? gsaErrorCode(status) : ErrorCode.TwoFactorInvalidCode,
     {
       data: { gsaCode: status.ec }
@@ -240,7 +240,7 @@ const submitPhoneCode = async (
   })
   if (response.status < HTTP_BAD_REQUEST) return
   const serviceCode = serviceErrorCode(response.body)
-  throw new LoadstarError(
+  throw new IPAForgeError(
     serviceCode === undefined
       ? ErrorCode.TwoFactorInvalidCode
       : gsaErrorCode({ ec: serviceCode }),

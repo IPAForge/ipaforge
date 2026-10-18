@@ -7,7 +7,7 @@ import { PLIST_CONTENT_TYPE } from '@apple/infrastructure/apple-headers.ts'
 import { fetchApple } from '@apple/infrastructure/http.ts'
 import { parseApplePlist } from '@apple/infrastructure/plist-diagnostics.ts'
 import type { AppleDeps } from '@apple/types.ts'
-import { ErrorCode, isPlistDict, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError, isPlistDict } from '@ipaforge/kernel'
 
 export type UrlBag = Readonly<Record<string, string>>
 
@@ -25,7 +25,7 @@ const fetchBag = async (deps: AppleDeps): Promise<UrlBag> => {
   const urls =
     isPlistDict(value) && isPlistDict(value.urls) ? value.urls : undefined
   if (!urls)
-    throw new LoadstarError(ErrorCode.AppleProtocolError, {
+    throw new IPAForgeError(ErrorCode.AppleProtocolError, {
       message: 'URL bag has no urls'
     })
   const bag: Record<string, string> = {}
@@ -61,7 +61,7 @@ export const bagUrl = async (
     })
   }
   if (!fallback)
-    throw new LoadstarError(ErrorCode.AppleProtocolError, {
+    throw new IPAForgeError(ErrorCode.AppleProtocolError, {
       message: `URL bag has no ${key}`
     })
   return fallback

@@ -1,7 +1,7 @@
 // `apple-probe developer`: read-only listing of teams, devices, certificates and App IDs.
 import type { AppleProbe } from '@desktop/probes/apple/context.ts'
 import { obtainSession } from '@desktop/probes/apple/session.ts'
-import type { DeveloperServices, Team } from '@loadstar/apple'
+import type { DeveloperServices, Team } from '@ipaforge/apple'
 
 /** `YYYY-MM-DD`. */
 const day = (date: Date): string => date.toISOString().slice(0, 10)

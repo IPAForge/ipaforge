@@ -29,15 +29,15 @@ import {
   createDict,
   ErrorCode,
   fromBase64,
+  IPAForgeError,
   isPlistDict,
-  LoadstarError,
   type PlistDict,
   parsePlist,
   serializeXmlPlist,
   toBase64,
   trimEndChar,
   utf8Decode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const clientInfoSchema = z.looseObject({
   client_info: z.string().min(1),
@@ -112,7 +112,7 @@ const applePlist = async (
   const value = parsePlist(response.body)
   const inner = isPlistDict(value) ? value.Response : undefined
   if (!isPlistDict(inner))
-    throw new LoadstarError(ErrorCode.AppleProtocolError, {
+    throw new IPAForgeError(ErrorCode.AppleProtocolError, {
       message: `${url}: no Response`
     })
   return inner
@@ -123,8 +123,8 @@ const provisioningUrls = async (deps: AppleDeps) => ({
   finish: await bagUrl(deps, 'midFinishProvisioning')
 })
 
-const anisetteError = (message: string, cause?: unknown): LoadstarError =>
-  new LoadstarError(ErrorCode.AnisetteUnavailable, compact({ message, cause }))
+const anisetteError = (message: string, cause?: unknown): IPAForgeError =>
+  new IPAForgeError(ErrorCode.AnisetteUnavailable, compact({ message, cause }))
 
 const parseSocketMessage = (value: unknown): SocketMessage => {
   const parsed = socketMessageSchema.safeParse(value)
@@ -139,8 +139,8 @@ const socketReader = (socket: WebSocketLike, timeoutMs: number) => {
     resolve: (value: unknown) => void
     reject: (error: unknown) => void
   }[] = []
-  let failure: LoadstarError | undefined
-  const fail = (error: LoadstarError) => {
+  let failure: IPAForgeError | undefined
+  const fail = (error: IPAForgeError) => {
     failure ??= error
     for (const waiter of waiters.splice(0)) waiter.reject(failure)
   }
@@ -195,7 +195,7 @@ const socketReader = (socket: WebSocketLike, timeoutMs: number) => {
 
 const expectStep = (message: { result: string }, wanted: string): void => {
   if (message.result !== wanted) {
-    throw new LoadstarError(ErrorCode.AnisetteUnavailable, {
+    throw new IPAForgeError(ErrorCode.AnisetteUnavailable, {
       message: `anisette provisioning: expected ${wanted}, got ${message.result}`,
       data: { anisetteResult: message.result }
     })
@@ -206,7 +206,7 @@ const stringField = (dict: PlistDict, key: string): string => {
   const value = dict[key]
   if (typeof value === 'string') return value
   if (value instanceof Uint8Array) return toBase64(value)
-  throw new LoadstarError(ErrorCode.AppleProtocolError, {
+  throw new IPAForgeError(ErrorCode.AppleProtocolError, {
     message: `provisioning response has no ${key}`
   })
 }
@@ -251,7 +251,7 @@ export const provisionV3 = async (
     const done = await reader.next()
     expectStep(done, 'ProvisioningSuccess')
     if (typeof done.adi_pb !== 'string') {
-      throw new LoadstarError(ErrorCode.AnisetteUnavailable, {
+      throw new IPAForgeError(ErrorCode.AnisetteUnavailable, {
         message: 'provisioning succeeded without adi_pb'
       })
     }

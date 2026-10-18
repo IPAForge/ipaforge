@@ -7,7 +7,7 @@ import {
 } from '@tanstack/react-router'
 import type { ComponentType } from 'react'
 
-import { compact } from '@loadstar/kernel'
+import { compact } from '@ipaforge/kernel'
 import { AppShell } from '@ui/components/shell/app-shell.tsx'
 import { AccountsPage } from '@ui/features/accounts/accounts-page.tsx'
 import { CertificatesPage } from '@ui/features/certificates/certificates-page.tsx'

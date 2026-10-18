@@ -1,13 +1,13 @@
 // `device-probe afc-check`: writes, reads back and deletes a file in PublicStaging.
 import type { DeviceProbe } from '@desktop/probes/device/context.ts'
-import type { AfcClient } from '@loadstar/device'
-import { utf8Decode, utf8Encode } from '@loadstar/kernel'
+import type { AfcClient } from '@ipaforge/device'
+import { utf8Decode, utf8Encode } from '@ipaforge/kernel'
 
 const STAGING = 'PublicStaging'
 
 const roundTrip = async (afc: AfcClient) => {
-  const path = `${STAGING}/loadstar-probe-${Date.now()}.txt`
-  const text = `written by Loadstar at ${new Date().toISOString()}`
+  const path = `${STAGING}/ipaforge-probe-${Date.now()}.txt`
+  const text = `written by IPAForge at ${new Date().toISOString()}`
   console.log(`1. PublicStaging exists: ${await afc.exists(STAGING)}`)
   if (!(await afc.exists(STAGING))) await afc.mkdir(STAGING)
   await afc.writeFile(path, utf8Encode(text))

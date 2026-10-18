@@ -35,8 +35,8 @@ import {
   compact,
   concatBytes,
   ErrorCode,
-  LoadstarError
-} from '@loadstar/kernel'
+  IPAForgeError
+} from '@ipaforge/kernel'
 
 const fileType = (ifmt: string | undefined): AfcFileType =>
   FILE_TYPES.get(ifmt ?? '') ?? 'other'
@@ -102,7 +102,7 @@ export const createAfcClient = (
     const handle =
       operation === AfcOperation.FileOpenResult ? readU64(payload) : undefined
     if (handle === undefined) {
-      throw new LoadstarError(ErrorCode.AfcError, {
+      throw new IPAForgeError(ErrorCode.AfcError, {
         message: 'FileOpen returned no handle',
         data: { path }
       })

@@ -2,7 +2,7 @@
 
 ## Overview
 
-Loadstar is a desktop app for Windows, macOS and Linux (Electron). The engine's *logic* is the same on every OS: signing Mach-O binaries, speaking lockdown to an iPhone, authenticating against Apple. Only the *I/O* differs, and only slightly:
+IPAForge is a desktop app for Windows, macOS and Linux (Electron). The engine's *logic* is the same on every OS: signing Mach-O binaries, speaking lockdown to an iPhone, authenticating against Apple. Only the *I/O* differs, and only slightly:
 
 | Concern | Desktop (Electron main / utility process) |
 |---|---|
@@ -14,7 +14,7 @@ Loadstar is a desktop app for Windows, macOS and Linux (Electron). The engine's 
 
 Explicit Architecture still pays off here. Each **package is a bounded context**. The pure domain and application code defines **ports**. `apps/desktop` is the **composition root** that plugs in **adapters**. The core never imports `node:*`, `electron` or DOM APIs, so it can be tested without a phone or an Apple account, and every OS difference stays in one place.
 
-> The web version (WebUSB + relay) was dropped on 2026-10-15. Loadstar is desktop-only.
+> The web version (WebUSB + relay) was dropped on 2026-10-15. IPAForge is desktop-only.
 
 ## Decision Rationale
 
@@ -25,11 +25,11 @@ Explicit Architecture still pays off here. Each **package is a bounded context**
 ## Folder Structure
 
 ```
-loadstar/
+ipaforge/
 ├── packages/                       # ── BOUNDED CONTEXTS (pure, platform-agnostic) ──
-│   ├── kernel/                     # shared kernel: LoadstarError, ports, logger, bytes utils, plist
+│   ├── kernel/                     # shared kernel: IPAForgeError, ports, logger, bytes utils, plist
 │   │   └── src/
-│   │       ├── errors/             # LoadstarError, ErrorCode catalog (codes only, no UI text)
+│   │       ├── errors/             # IPAForgeError, ErrorCode catalog (codes only, no UI text)
 │   │       ├── ports/              # Logger, Clock, HttpClient, SecretStore, FileSource, Cache
 │   │       ├── bytes/              # Uint8Array helpers, base64, hex, DataView readers and writers
 │   │       ├── plist/              # XML and binary plist parse and write
@@ -102,7 +102,7 @@ loadstar/
 │       └── src/
 │           ├── main/               # Engine wiring: Node adapters, secrets (file key sealed by safeStorage), rpc server per window
 │           ├── preload/            # forwards the rpc MessagePort to the page; exposes no API
-│           └── renderer/           # wraps the port in a Transport, createEngineClient, mounts @loadstar/ui
+│           └── renderer/           # wraps the port in a Transport, createEngineClient, mounts @ipaforge/ui
 │
 ├── fixtures/                       # golden inputs + Apple codesign outputs (generated on macOS CI)
 └── docs/                           # user and contributor docs; design/ holds architecture, roadmap, conventions and references
@@ -131,7 +131,7 @@ kernel  ←  signer, device, apple, catalog  ←  installer  ←  rpc  ←  ui
 - **Engine facade.** `installer/engine.ts` is the only API the UI sees: commands (`installSideStore`, `installApps`, `placePairing`, `signIn`, `signOut`), queries (`listDevices`, `listCertificates`, …) and progress streams.
 - **Typed RPC.** `rpc` serializes Engine calls over an Electron `MessageChannelMain` between the main (or utility) process and the renderer. Payloads are validated with zod on both sides. Long operations stream `ProgressEvent`s and accept an `AbortSignal`.
 - **Pipelines.** A flow is an ordered list of `Step`s. Each step is a pure-ish async function `(ctx, input) => output` with a stable id, i18n label key, weight (for the progress bar) and an optional `undo`. The runner handles progress, cancellation, retries (only for steps marked idempotent) and resume after an interactive prompt (2FA, choose team, revoke certificate).
-- **Errors.** Everything throws or returns `LoadstarError { code, cause?, data? }`. `installer/diagnostics` classifies raw failures, such as a lockdown `PasswordProtected`, Apple result code `-80045` or installation_proxy `DeviceNotSupportedByThinning`, into a catalogued `ErrorCode`. The UI maps `ErrorCode` to a recovery screen.
+- **Errors.** Everything throws or returns `IPAForgeError { code, cause?, data? }`. `installer/diagnostics` classifies raw failures, such as a lockdown `PasswordProtected`, Apple result code `-80045` or installation_proxy `DeviceNotSupportedByThinning`, into a catalogued `ErrorCode`. The UI maps `ErrorCode` to a recovery screen.
 
 ## Key Principles
 
@@ -245,7 +245,7 @@ export const ErrorCode = {
 } as const
 export type ErrorCode = (typeof ErrorCode)[keyof typeof ErrorCode]
 
-export class LoadstarError extends Error {
+export class IPAForgeError extends Error {
   constructor(
     readonly code: ErrorCode,
     options?: { cause?: unknown; data?: Record<string, unknown> }

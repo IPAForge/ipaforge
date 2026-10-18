@@ -5,7 +5,7 @@
 	<key>CFBundleExecutable</key>
 	<string>Test</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.loadstar.fixture.app</string>
+	<string>com.ipaforge.fixture.app</string>
 	<key>CFBundleName</key>
 	<string>Test</string>
 	<key>CFBundlePackageType</key>
@@ -22,11 +22,11 @@
 	</array>
 	<key>ALTAppGroups</key>
 	<array>
-		<string>group.com.loadstar.fixture.app</string>
+		<string>group.com.ipaforge.fixture.app</string>
 	</array>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-		<string>com.loadstar.fixture.app.refresh</string>
+		<string>com.ipaforge.fixture.app.refresh</string>
 	</array>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>

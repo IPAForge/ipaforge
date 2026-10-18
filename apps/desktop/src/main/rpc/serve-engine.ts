@@ -7,7 +7,7 @@ import type {
   ServeEngineDeps
 } from '@desktop/main/rpc/types.ts'
 import { RPC_PORT_CHANNEL } from '@desktop/shared/rpc-channel.ts'
-import { createRpcServer, type RpcServer } from '@loadstar/rpc'
+import { createRpcServer, type RpcServer } from '@ipaforge/rpc'
 
 export const serveEngine = <P>(
   contents: RendererContents<P>,

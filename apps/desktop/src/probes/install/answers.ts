@@ -1,16 +1,16 @@
 // Answers the Engine's prompts in the terminal. An empty or invalid choice declines the prompt.
 import type { Prompt } from '@desktop/probes/shared/types.ts'
-import type { TwoFactorMethod } from '@loadstar/apple'
+import type { TwoFactorMethod } from '@ipaforge/apple'
 import {
   type PromptData,
   type PromptHandler,
   PromptKind,
   type PromptRequest
-} from '@loadstar/installer'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+} from '@ipaforge/installer'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
-const declined = (): LoadstarError =>
-  new LoadstarError(ErrorCode.PromptCancelled)
+const declined = (): IPAForgeError =>
+  new IPAForgeError(ErrorCode.PromptCancelled)
 
 /** Lists `labels` and returns the index picked (1-based on screen). */
 const choose = async (

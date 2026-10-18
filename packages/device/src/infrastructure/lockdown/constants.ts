@@ -1,5 +1,5 @@
 // lockdownd error strings and the catalogued codes they map to.
-import { ErrorCode } from '@loadstar/kernel'
+import { ErrorCode } from '@ipaforge/kernel'
 
 /** lockdownd `Error` strings the device layer reacts to directly. */
 export const LockdownErrorName = {

@@ -2,7 +2,7 @@ import { Button } from '@heroui/react'
 import { Bug } from 'lucide-react'
 import { useTranslation } from 'react-i18next'
 
-import type { ErrorCode } from '@loadstar/kernel'
+import type { ErrorCode } from '@ipaforge/kernel'
 import { issueUrl } from '@ui/features/install/recovery/utils/issue-url.ts'
 import { useUiServices } from '@ui/hooks/use-ui-services.ts'
 

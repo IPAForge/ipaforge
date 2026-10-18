@@ -1,2 +1,2 @@
-import { kernel } from "@loadstar/kernel";
+import { kernel } from "@ipaforge/kernel";
 export const z = kernel;

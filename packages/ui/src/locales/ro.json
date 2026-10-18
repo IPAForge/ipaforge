@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Loadstar"
+    "name": "IPAForge"
   },
   "shell": {
     "skipToContent": "Salt la conținut",
@@ -57,7 +57,7 @@
     },
     "signInNeeded": {
       "title": "Apple ID-ul tău are nevoie să te autentifici din nou",
-      "body": "Sesiunea salvată pentru {appleId} a expirat. Poți instala în continuare: Loadstar îți cere parola când ajunge acolo."
+      "body": "Sesiunea salvată pentru {appleId} a expirat. Poți instala în continuare: IPAForge îți cere parola când ajunge acolo."
     },
     "blocked": {
       "title": "Apple a blocat {appleId} pe {device}",
@@ -103,7 +103,7 @@
       "certificateNew": "Se creează unul nou",
       "certificatesOnTeam": "{count, plural, =0 {Niciunul în echipă încă} one {# în echipă} few {# în echipă} other {# în echipă}}",
       "team": "Echipă",
-      "certificateNewWhy": "Loadstar nu are încă un certificat propriu în această echipă. {count, plural, =0 {} one {Cel existent aparține altui instrument, care își păstrează cheia privată.} few {Cele # existente aparțin altor instrumente, care își păstrează cheile private.} other {Cele # existente aparțin altor instrumente, care își păstrează cheile private.}}"
+      "certificateNewWhy": "IPAForge nu are încă un certificat propriu în această echipă. {count, plural, =0 {} one {Cel existent aparține altui instrument, care își păstrează cheia privată.} few {Cele # existente aparțin altor instrumente, care își păstrează cheile private.} other {Cele # existente aparțin altor instrumente, care își păstrează cheile private.}}"
     },
     "readiness": {
       "noDevice": "Conectează întâi un dispozitiv.",
@@ -141,7 +141,7 @@
       },
       "unsupportedPrompt": {
         "title": "Acest pas are nevoie de un răspuns",
-        "body": "Loadstar are nevoie de un răspuns la o întrebare pe care această versiune nu o poate afișa. Anulează instalarea și actualizează Loadstar."
+        "body": "IPAForge are nevoie de un răspuns la o întrebare pe care această versiune nu o poate afișa. Anulează instalarea și actualizează IPAForge."
       },
       "backToInstall": "Înapoi la Instalare",
       "report": {
@@ -217,7 +217,7 @@
     "language": {
       "title": "Limbă",
       "system": "Sistem ({language})",
-      "hint": "Loadstar folosește limba sistemului, dacă nu alegi alta aici.",
+      "hint": "IPAForge folosește limba sistemului, dacă nu alegi alta aici.",
       "draft": "ciornă"
     }
   },
@@ -240,7 +240,7 @@
     "device": {
       "locked": {
         "title": "Deblochează dispozitivul",
-        "body": "Dispozitivul este blocat, așa că Loadstar nu poate comunica cu el. Deblochează-l și ține-l deblocat până se termină instalarea."
+        "body": "Dispozitivul este blocat, așa că IPAForge nu poate comunica cu el. Deblochează-l și ține-l deblocat până se termină instalarea."
       },
       "developer_mode_off": {
         "title": "Modul dezvoltator este dezactivat",
@@ -252,7 +252,7 @@
       },
       "usbmuxd_unavailable": {
         "title": "Suportul pentru dispozitive nu rulează",
-        "body": "Loadstar nu poate accesa serviciul de sistem care comunică cu iPhone și iPad. Instalează-l sau pornește-l, apoi încearcă din nou."
+        "body": "IPAForge nu poate accesa serviciul de sistem care comunică cu iPhone și iPad. Instalează-l sau pornește-l, apoi încearcă din nou."
       },
       "not_found": {
         "title": "Niciun dispozitiv găsit",
@@ -276,11 +276,11 @@
       },
       "service_unavailable": {
         "title": "Un serviciu al dispozitivului nu a pornit",
-        "body": "Dispozitivul a refuzat să pornească un serviciu de care Loadstar are nevoie. Deblochează-l, reconectează-l și încearcă din nou."
+        "body": "Dispozitivul a refuzat să pornească un serviciu de care IPAForge are nevoie. Deblochează-l, reconectează-l și încearcă din nou."
       },
       "protocol_error": {
         "title": "Răspuns neașteptat de la dispozitiv",
-        "body": "Dispozitivul a trimis ceva ce Loadstar nu a înțeles. Reconectează-l; dacă se repetă, actualizează Loadstar sau raportează problema."
+        "body": "Dispozitivul a trimis ceva ce IPAForge nu a înțeles. Reconectează-l; dacă se repetă, actualizează IPAForge sau raportează problema."
       },
       "install_failed": {
         "title": "Instalarea a eșuat",
@@ -366,7 +366,7 @@
       },
       "two_factor_unsupported": {
         "title": "Această metodă de autentificare nu este acceptată",
-        "body": "Acest ID Apple folosește o metodă de autentificare cu doi factori pe care Loadstar nu o acceptă încă, de exemplu o cheie de securitate. Folosește alt ID Apple."
+        "body": "Acest ID Apple folosește o metodă de autentificare cu doi factori pe care IPAForge nu o acceptă încă, de exemplu o cheie de securitate. Folosește alt ID Apple."
       },
       "sms_unavailable": {
         "title": "Codurile prin SMS nu sunt disponibile",
@@ -378,7 +378,7 @@
       },
       "protocol_error": {
         "title": "Răspuns neașteptat de la Apple",
-        "body": "Apple a trimis ceva ce Loadstar nu a înțeles. Actualizează Loadstar sau raportează problema dacă se repetă."
+        "body": "Apple a trimis ceva ce IPAForge nu a înțeles. Actualizează IPAForge sau raportează problema dacă se repetă."
       },
       "session_expired": {
         "title": "Sesiunea a expirat",
@@ -386,7 +386,7 @@
       },
       "account_not_found": {
         "title": "ID-ul Apple nu a fost găsit",
-        "body": "Loadstar nu are o sesiune salvată pentru acest ID Apple. Autentifică-te din nou."
+        "body": "IPAForge nu are o sesiune salvată pentru acest ID Apple. Autentifică-te din nou."
       },
       "not_eligible": {
         "title": "Acest ID Apple nu poate fi folosit pentru dezvoltare",
@@ -414,7 +414,7 @@
       },
       "invalid_app_id_name": {
         "title": "Apple a respins numele App ID-ului",
-        "body": "Apple nu a acceptat numele ales de Loadstar pentru App ID. Actualizează Loadstar sau raportează problema."
+        "body": "Apple nu a acceptat numele ales de IPAForge pentru App ID. Actualizează IPAForge sau raportează problema."
       },
       "certificate_not_revocable": {
         "title": "Acest certificat nu poate fi revocat aici",
@@ -432,11 +432,11 @@
     "catalog": {
       "source_gone": {
         "title": "Versiunea nu mai este disponibilă",
-        "body": "Locul din care a fost descărcată aplicația nu mai există. Alege alt canal, importă un IPA sau actualizează Loadstar."
+        "body": "Locul din care a fost descărcată aplicația nu mai există. Alege alt canal, importă un IPA sau actualizează IPAForge."
       },
       "unavailable": {
         "title": "Lista de aplicații nu a putut fi încărcată",
-        "body": "Loadstar nu a putut obține lista de aplicații. Verifică rețeaua și încearcă din nou."
+        "body": "IPAForge nu a putut obține lista de aplicații. Verifică rețeaua și încearcă din nou."
       },
       "download_failed": {
         "title": "Descărcarea a eșuat",
@@ -448,7 +448,7 @@
       },
       "checksum_missing": {
         "title": "Descărcarea nu poate fi verificată",
-        "body": "Această versiune nu are sumă de control, așa că Loadstar nu o poate verifica. Alege alt canal sau importă singur fișierul IPA."
+        "body": "Această versiune nu are sumă de control, așa că IPAForge nu o poate verifica. Alege alt canal sau importă singur fișierul IPA."
       },
       "rate_limited": {
         "title": "Prea multe cereri către GitHub",
@@ -464,7 +464,7 @@
     "net": {
       "offline": {
         "title": "Ești offline",
-        "body": "Loadstar nu poate accesa internetul. Verifică conexiunea la rețea și încearcă din nou."
+        "body": "IPAForge nu poate accesa internetul. Verifică conexiunea la rețea și încearcă din nou."
       }
     },
     "signer": {
@@ -498,15 +498,15 @@
       },
       "zip_slip": {
         "title": "IPA-ul este nesigur",
-        "body": "IPA-ul încearcă să scrie fișiere în afara propriului dosar, așa că Loadstar l-a refuzat. Alege alt IPA."
+        "body": "IPA-ul încearcă să scrie fișiere în afara propriului dosar, așa că IPAForge l-a refuzat. Alege alt IPA."
       },
       "invalid_certificate": {
         "title": "Certificatul nu este valid",
-        "body": "Certificatul de semnare nu a putut fi folosit. Revocă-l ca Loadstar să poată crea unul nou, apoi încearcă din nou."
+        "body": "Certificatul de semnare nu a putut fi folosit. Revocă-l ca IPAForge să poată crea unul nou, apoi încearcă din nou."
       },
       "unknown_issuer": {
         "title": "Emitent de certificat necunoscut",
-        "body": "Loadstar nu recunoaște emitentul certificatului. Actualizează Loadstar și verifică rețeaua."
+        "body": "IPAForge nu recunoaște emitentul certificatului. Actualizează IPAForge și verifică rețeaua."
       },
       "invalid_bundle": {
         "title": "Pachetul aplicației nu este valid",
@@ -548,7 +548,7 @@
       },
       "certificate_machine_id_missing": {
         "title": "Certificatul nu poate fi partajat",
-        "body": "Acestui certificat îi lipsesc datele de care SideStore are nevoie pentru a-l deschide. Revocă-l ca Loadstar să poată crea unul nou, apoi încearcă din nou."
+        "body": "Acestui certificat îi lipsesc datele de care SideStore are nevoie pentru a-l deschide. Revocă-l ca IPAForge să poată crea unul nou, apoi încearcă din nou."
       },
       "team_required": {
         "title": "Alege o echipă",
@@ -558,15 +558,15 @@
     "rpc": {
       "invalid_message": {
         "title": "Eroare de comunicare internă",
-        "body": "Componentele Loadstar nu s-au putut înțelege între ele. Actualizează Loadstar sau raportează problema."
+        "body": "Componentele IPAForge nu s-au putut înțelege între ele. Actualizează IPAForge sau raportează problema."
       },
       "disconnected": {
         "title": "Conexiunea cu motorul s-a pierdut",
-        "body": "Motorul Loadstar nu mai răspunde. Încearcă din nou și raportează problema dacă se repetă."
+        "body": "Motorul IPAForge nu mai răspunde. Încearcă din nou și raportează problema dacă se repetă."
       },
       "timeout": {
         "title": "Motorul nu a răspuns",
-        "body": "Motorul Loadstar a răspuns prea greu. Încearcă din nou și raportează problema dacă se repetă."
+        "body": "Motorul IPAForge a răspuns prea greu. Încearcă din nou și raportează problema dacă se repetă."
       }
     },
     "internal": {
@@ -609,7 +609,7 @@
     "choose-another-ipa": "Alege alt IPA",
     "choose-another-channel": "Alege alt canal",
     "import-ipa": "Importă un IPA",
-    "update-loadstar": "Actualizează Loadstar",
+    "update-ipaforge": "Actualizează IPAForge",
     "report-issue": "Raportează problema",
     "or": "Sau",
     "switchAccount": {
@@ -682,7 +682,7 @@
         "how": "Setează un cod pe dispozitiv în Configurări › Face ID și cod, apoi încearcă din nou."
       },
       "installDeviceSupport": {
-        "how": "Pe Windows, instalează Apple Devices (sau iTunes) din Microsoft Store, apoi repornește Loadstar."
+        "how": "Pe Windows, instalează Apple Devices (sau iTunes) din Microsoft Store, apoi repornește IPAForge."
       },
       "reinstallApp": {
         "how": "Șterge aplicația de pe dispozitiv, apoi încearcă din nou."
@@ -802,15 +802,15 @@
     "suggested": "Sugerat",
     "team": {
       "title": "Ce echipă semnează aplicația?",
-      "body": "Acest ID Apple aparține mai multor echipe. Loadstar ține minte alegerea ta pentru acest ID Apple.",
+      "body": "Acest ID Apple aparține mai multor echipe. IPAForge ține minte alegerea ta pentru acest ID Apple.",
       "free": "Gratuită: aplicațiile expiră după 7 zile, 3 aplicații pe dispozitiv",
       "paid": "Plătită: aplicațiile durează un an, fără limită",
       "checking": "Se folosește această echipă…"
     },
     "revoke": {
       "title": "Revoci un certificat?",
-      "body": "Această echipă are deja numărul maxim de certificate de dezvoltare, așa că Loadstar trebuie să revoce unul pentru a-și face unul propriu. Aplicațiile semnate cu cel revocat nu se mai reîmprospătează.",
-      "loadstar": "Creat de Loadstar pe alt computer",
+      "body": "Această echipă are deja numărul maxim de certificate de dezvoltare, așa că IPAForge trebuie să revoce unul pentru a-și face unul propriu. Aplicațiile semnate cu cel revocat nu se mai reîmprospătează.",
+      "ipaforge": "Creat de IPAForge pe alt computer",
       "sidestore": "Creat de SideStore",
       "machine": "Creat pe „{machine}” (de obicei Xcode)",
       "unknown": "Creat de un instrument necunoscut",
@@ -852,7 +852,7 @@
   },
   "signIn": {
     "title": "Adaugă un Apple ID",
-    "body": "Loadstar semnează aplicații cu el. Parola ta ajunge doar la Apple.",
+    "body": "IPAForge semnează aplicații cu el. Parola ta ajunge doar la Apple.",
     "appleId": "Apple ID",
     "password": "Parolă",
     "submit": "Autentificare",
@@ -863,10 +863,10 @@
       "close": "Gata"
     },
     "rememberPassword": "Salvează parola în portchei-ul sistemului",
-    "rememberPasswordHint": "Permite Loadstar să se autentifice singur din nou când expiră sesiunea."
+    "rememberPasswordHint": "Permite IPAForge să se autentifice singur din nou când expiră sesiunea."
   },
   "accounts": {
-    "description": "Apple ID-urile cu care Loadstar semnează aplicații. Cel folosit apare în bara de sus.",
+    "description": "Apple ID-urile cu care IPAForge semnează aplicații. Cel folosit apare în bara de sus.",
     "list": "Apple ID-uri salvate",
     "empty": "Niciun Apple ID încă. Adaugă unul pentru a instala SideStore.",
     "freeTeam": "{name} (gratuit)",
@@ -884,14 +884,14 @@
     "signOut": {
       "action": "Deconectează",
       "title": "Te deconectezi de la {appleId}?",
-      "forgets": "Loadstar uită acest Apple ID, sesiunea lui și parola salvată.",
+      "forgets": "IPAForge uită acest Apple ID, sesiunea lui și parola salvată.",
       "keeps": "Certificatele lui de semnare rămân pe acest computer, așa că o nouă autentificare le refolosește. Aplicațiile deja instalate funcționează până expiră.",
       "confirm": "Deconectează"
     }
   },
   "logs": {
     "title": "Jurnal",
-    "lede": "Ce a făcut Loadstar, rând cu rând. Deschide-l de oriunde cu",
+    "lede": "Ce a făcut IPAForge, rând cu rând. Deschide-l de oriunde cu",
     "shortcut": {
       "control": "Ctrl+",
       "command": "⌘",
@@ -960,7 +960,7 @@
     "empty": {
       "none": {
         "title": "Nimic în jurnal încă",
-        "body": "Rândurile apar aici pe măsură ce Loadstar lucrează: conectarea unui dispozitiv, autentificarea, instalarea."
+        "body": "Rândurile apar aici pe măsură ce IPAForge lucrează: conectarea unui dispozitiv, autentificarea, instalarea."
       },
       "noMatch": {
         "title": "Niciun rând potrivit",

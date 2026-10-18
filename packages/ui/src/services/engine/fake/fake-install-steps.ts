@@ -1,11 +1,11 @@
 // The fake installSideStore: the Engine's fifteen steps with their ids, labels and weights, playing the
 // scenario's prompts, retries and failure.
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 import {
   PromptKind,
   StepLabel,
   type StepDetail as StepReport
-} from '@loadstar/rpc'
+} from '@ipaforge/rpc'
 import {
   FAKE_IPA_SIZE,
   FAKE_IPHONE,
@@ -67,7 +67,7 @@ const download =
 
 const checkDevice: StepBody = async (state, context) => {
   if (state.udid !== FAKE_IPHONE)
-    throw new LoadstarError(ErrorCode.DeviceNotPaired, {
+    throw new IPAForgeError(ErrorCode.DeviceNotPaired, {
       data: { udid: state.udid }
     })
   context.detail({

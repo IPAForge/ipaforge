@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 import { t } from '@ui/__tests__/test-i18n.ts'
 import { renderApp } from '@ui/__tests__/test-services.tsx'
 import { createFakeEngineClient } from '@ui/services/engine/fake/fake-engine-client.ts'
@@ -20,7 +20,7 @@ describe('EngineStatus on the Devices page', () => {
         delayMs: 0,
         overrides: {
           listDevices: async () => {
-            throw new LoadstarError(ErrorCode.UsbmuxdUnavailable)
+            throw new IPAForgeError(ErrorCode.UsbmuxdUnavailable)
           },
           // Like the Engine: without usbmuxd the feed has nothing to send.
           watchDevices: () => () => {}

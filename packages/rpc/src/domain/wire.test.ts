@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { bytesFileSource } from '@loadstar/kernel'
+import { bytesFileSource } from '@ipaforge/kernel'
 import { toWire } from '@rpc/domain/wire.ts'
 
 describe('toWire', () => {

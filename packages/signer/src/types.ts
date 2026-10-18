@@ -1,4 +1,4 @@
-import type { Clock, Logger } from '@loadstar/kernel'
+import type { Clock, Logger } from '@ipaforge/kernel'
 import type { Hasher } from '@signer/domain/ports/types.ts'
 
 /** Collaborators every public signer operation accepts. */

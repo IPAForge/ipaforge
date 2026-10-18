@@ -1,7 +1,7 @@
 import { Alert, Button, Modal } from '@heroui/react'
 import { useTranslation } from 'react-i18next'
 
-import { toLoadstarError } from '@loadstar/kernel'
+import { toIPAForgeError } from '@ipaforge/kernel'
 import { useSignOut } from '@ui/hooks/queries/use-sign-out.ts'
 import { errorTitleKey } from '@ui/i18n/required-keys.ts'
 import type { Account } from '@ui/services/engine/types.ts'
@@ -13,7 +13,7 @@ type SignOutDialogProps = {
   onSignedOut: (account: Account) => void
 }
 
-/** Asks before signing out, saying what Loadstar forgets and what it keeps. */
+/** Asks before signing out, saying what IPAForge forgets and what it keeps. */
 export const SignOutDialog = ({
   account,
   onClose,
@@ -47,7 +47,7 @@ export const SignOutDialog = ({
                   <Alert.Indicator />
                   <Alert.Content>
                     <Alert.Title>
-                      {t(errorTitleKey(toLoadstarError(signOut.error).code))}
+                      {t(errorTitleKey(toIPAForgeError(signOut.error).code))}
                     </Alert.Title>
                   </Alert.Content>
                 </Alert>

@@ -1,12 +1,12 @@
 // The fake Engine's runs and device feed, logged the way the real Engine logs them, so the log viewer has the
 // same lines to show in the browser.
-import type { Logger } from '@loadstar/kernel'
+import type { Logger } from '@ipaforge/kernel'
 import {
   type Engine,
   logRunEvent,
   logRunResult,
   type RunHandle
-} from '@loadstar/rpc'
+} from '@ipaforge/rpc'
 
 const COMMANDS = [
   'installSideStore',

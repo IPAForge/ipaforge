@@ -1,4 +1,4 @@
-// Public API of @loadstar/catalog: what can be installed, which release, and downloading it safely.
+// Public API of @ipaforge/catalog: what can be installed, which release, and downloading it safely.
 export {
   type Catalog,
   createCatalog,

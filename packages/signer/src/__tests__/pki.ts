@@ -44,7 +44,7 @@ const name = (
   new pkijs.RelativeDistinguishedNames({
     typesAndValues: [
       [OID_COUNTRY, 'US'],
-      [OID_ORGANIZATION, 'Loadstar Test'],
+      [OID_ORGANIZATION, 'IPAForge Test'],
       ...(ou ? [[OID_ORGANIZATIONAL_UNIT, ou] as const] : []),
       [OID_COMMON_NAME, commonName]
     ].map(

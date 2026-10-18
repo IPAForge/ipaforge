@@ -6,7 +6,7 @@ import {
   type PlistLimits,
   parsePlist,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const XML_START = utf8Encode('<?xml')
 const PLIST_END = utf8Encode('</plist>')

@@ -6,7 +6,7 @@ import {
   totalWeight
 } from '@installer/pipeline/progress.ts'
 import type { Step } from '@installer/pipeline/types.ts'
-import { compact } from '@loadstar/kernel'
+import { compact } from '@ipaforge/kernel'
 
 const step = (weight?: number): Step<unknown> =>
   compact({ id: 's', labelKey: 's', weight, run: async () => undefined })

@@ -1,7 +1,7 @@
 // What the fake Engine's devices answer when their status is read: lock state, Developer Mode and trust. Each
 // scenario starts from its own states; the `devices` scenario shows every state and how each one is fixed (Check
 // again sees the iPad unlocked, Ask again pairs the iPhone SE, whose Developer Mode is still off).
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 import {
   FAKE_IPAD,
   FAKE_IPHONE,
@@ -64,7 +64,7 @@ export const createFakeDeviceStates = (
   const status = async (udid: string): Promise<DeviceCheck> => {
     const state = states.get(udid)
     if (!state?.trusted)
-      throw new LoadstarError(ErrorCode.DeviceNotPaired, { data: { udid } })
+      throw new IPAForgeError(ErrorCode.DeviceNotPaired, { data: { udid } })
     const locked = state.locksFor > 0
     if (locked) state.locksFor -= 1
 
@@ -76,7 +76,7 @@ export const createFakeDeviceStates = (
     pair: async (udid) => {
       const state = states.get(udid)
       if (!state)
-        throw new LoadstarError(ErrorCode.DeviceNotFound, { data: { udid } })
+        throw new IPAForgeError(ErrorCode.DeviceNotFound, { data: { udid } })
       state.trusted = true
       return status(udid)
     }

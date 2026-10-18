@@ -10,7 +10,7 @@ import {
   toBase64,
   utf8Decode,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const sessionSchema = z.object({
   appleId: z.string(),

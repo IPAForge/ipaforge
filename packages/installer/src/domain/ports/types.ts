@@ -1,9 +1,9 @@
-import type { FileSource } from '@loadstar/kernel'
+import type { FileSource } from '@ipaforge/kernel'
 import type {
   BundleAdditions,
   CodeBundle,
   IpaInspection
-} from '@loadstar/signer'
+} from '@ipaforge/signer'
 
 /** Everything needed to sign one IPA for sideloading. */
 export type SignRequest = {
@@ -24,7 +24,7 @@ export type SignRequest = {
 }
 
 /**
- * The signer as the flows use it. The default is `@loadstar/signer`; tests swap in a fake so flows run without
+ * The signer as the flows use it. The default is `@ipaforge/signer`; tests swap in a fake so flows run without
  * real certificates.
  */
 export type IpaSigner = {

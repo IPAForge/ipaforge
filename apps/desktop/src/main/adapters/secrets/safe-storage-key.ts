@@ -5,7 +5,7 @@ import { readFile } from 'node:fs/promises'
 
 import type { KeyProvider } from '@desktop/main/adapters/secrets/mac-keychain-key.ts'
 import { writePrivateFile } from '@desktop/main/adapters/secrets/private-file.ts'
-import { fromHex, toHex } from '@loadstar/kernel'
+import { fromHex, toHex } from '@ipaforge/kernel'
 
 const KEY_BYTES = 32
 /** Linux without a keyring: safeStorage "encrypts" with a hard-coded password, which protects nothing. */

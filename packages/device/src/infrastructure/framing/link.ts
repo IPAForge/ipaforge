@@ -3,7 +3,7 @@ import {
   createStreamReader,
   type StreamReader
 } from '@device/infrastructure/framing/stream-reader.ts'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 /** A connection plus its read buffer. Protocols that switch framing mid-stream (house_arrest → AFC) share it. */
 export type Link = {
@@ -22,7 +22,7 @@ export const createLink = (connection: Connection): Link => {
     write: (bytes) => connection.write(bytes),
     startTls: async (credentials) => {
       if (reader.buffered > 0) {
-        throw new LoadstarError(ErrorCode.DeviceProtocolError, {
+        throw new IPAForgeError(ErrorCode.DeviceProtocolError, {
           message: `${reader.buffered} unread bytes before the TLS upgrade`
         })
       }

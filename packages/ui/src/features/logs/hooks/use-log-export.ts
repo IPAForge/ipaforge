@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import type { LogEntry, LogFilter } from '@loadstar/kernel'
+import type { LogEntry, LogFilter } from '@ipaforge/kernel'
 import { NOTE_TIMEOUT_MS } from '@ui/features/logs/constants.ts'
 import type { ExportKind, LogsNote } from '@ui/features/logs/types.ts'
 import { fetchAllLines } from '@ui/features/logs/utils/fetch-all-lines.ts'

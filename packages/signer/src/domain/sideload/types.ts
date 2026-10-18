@@ -1,4 +1,4 @@
-import type { ErrorCode } from '@loadstar/kernel'
+import type { ErrorCode } from '@ipaforge/kernel'
 import type { BundleKind } from '@signer/domain/bundle/types.ts'
 
 /** The device facts the check needs (lockdownd's `ProductVersion` and `DeviceClass`). */

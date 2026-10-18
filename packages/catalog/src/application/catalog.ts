@@ -11,7 +11,7 @@ import { recommendedChannel } from '@catalog/domain/manifest.ts'
 import type { ResolvedRelease } from '@catalog/domain/release.ts'
 import type { CatalogApp, Channel, Manifest } from '@catalog/domain/types.ts'
 import type { CatalogDepsInput } from '@catalog/types.ts'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 export type {
   DownloadOptions,
@@ -46,7 +46,7 @@ export const createCatalog = (input: CatalogDepsInput): Catalog => {
       (candidate) => candidate.id === appId
     )
     if (!found)
-      throw new LoadstarError(ErrorCode.CatalogUnavailable, {
+      throw new IPAForgeError(ErrorCode.CatalogUnavailable, {
         message: `unknown app ${appId}`,
         data: { appId }
       })

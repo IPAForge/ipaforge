@@ -10,11 +10,11 @@ import {
   safeStorageKey
 } from '@desktop/main/adapters/secrets/safe-storage-key.ts'
 import { createDesktopSecrets } from '@desktop/main/secrets.ts'
-import { silentLogger, utf8Decode, utf8Encode } from '@loadstar/kernel'
+import { silentLogger, utf8Decode, utf8Encode } from '@ipaforge/kernel'
 
 const dirs: string[] = []
 const tempDir = async () => {
-  const dir = await mkdtemp(join(tmpdir(), 'loadstar-secrets-'))
+  const dir = await mkdtemp(join(tmpdir(), 'ipaforge-secrets-'))
   dirs.push(dir)
   return dir
 }

@@ -9,7 +9,7 @@ import type {
 import { shortUdid } from '@device/domain/device.ts'
 import type { AfcClient, AfcStat } from '@device/infrastructure/afc/types.ts'
 import { withClient } from '@device/infrastructure/closeable.ts'
-import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 const RETRY_DELAY_MS = 500
 const NS_PER_MS = 1e6
@@ -22,7 +22,7 @@ const parentOf = (path: string): string | undefined => {
 
 /** AFC over house_arrest drops occasionally (device locked, afcd hiccups): retry once after a short pause. */
 const isTransient = (error: unknown): boolean =>
-  error instanceof LoadstarError &&
+  error instanceof IPAForgeError &&
   (error.code === ErrorCode.DeviceDisconnected ||
     error.code === ErrorCode.AfcError)
 
@@ -73,7 +73,7 @@ const verifySize = async (
 ): Promise<void> => {
   const written = await afc.stat(target.path)
   if (written.size === expected) return
-  throw new LoadstarError(ErrorCode.AfcError, {
+  throw new IPAForgeError(ErrorCode.AfcError, {
     message: `wrote ${expected} bytes but the device has ${written.size}`,
     data: { bundleId: target.bundleId, path: target.path }
   })

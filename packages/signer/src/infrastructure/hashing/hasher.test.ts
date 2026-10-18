@@ -2,7 +2,7 @@ import { createHash } from 'node:crypto'
 
 import { describe, expect, it } from 'vitest'
 
-import { toHex, utf8Encode } from '@loadstar/kernel'
+import { toHex, utf8Encode } from '@ipaforge/kernel'
 import {
   createHasher,
   createNobleHasher,
@@ -94,8 +94,8 @@ describe('createHasher', () => {
   })
 })
 
-describe.skipIf(!process.env.LOADSTAR_BENCH)(
-  'throughput (LOADSTAR_BENCH=1)',
+describe.skipIf(!process.env.IPAFORGE_BENCH)(
+  'throughput (IPAFORGE_BENCH=1)',
   () => {
     // WebCrypto is the production path; noble is a fallback for contexts without crypto.subtle.
     const floors: Record<string, number> = { webcrypto: 300, noble: 100 }

@@ -17,12 +17,12 @@ import type {
 } from '@catalog/domain/types.ts'
 import { findGithubAsset } from '@catalog/infrastructure/github.ts'
 import type { CatalogDeps } from '@catalog/types.ts'
-import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 const sourcesOf = (app: CatalogApp, channel: Channel): Source[] => {
   const release = app.channels[channel]
   if (!release) {
-    throw new LoadstarError(ErrorCode.CatalogUnavailable, {
+    throw new IPAForgeError(ErrorCode.CatalogUnavailable, {
       message: `${app.name} has no ${channel} channel`,
       data: { appId: app.id, channel }
     })
@@ -106,8 +106,8 @@ const noReleaseError = (
   app: CatalogApp,
   channel: Channel,
   skipped: readonly Skip[]
-): LoadstarError =>
-  new LoadstarError(
+): IPAForgeError =>
+  new IPAForgeError(
     skipped.some((skip) => skip.reason === 'no-checksum')
       ? ErrorCode.ChecksumMissing
       : ErrorCode.ReleaseSourceGone,

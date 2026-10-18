@@ -4,8 +4,8 @@ import { existsSync } from 'node:fs'
 
 import { nodeFileSource } from '@desktop/main/adapters/file-source.ts'
 import type { InstallProbe } from '@desktop/probes/install/context.ts'
-import type { AppSource, InstallPlan } from '@loadstar/installer'
-import { compact } from '@loadstar/kernel'
+import type { AppSource, InstallPlan } from '@ipaforge/installer'
+import { compact } from '@ipaforge/kernel'
 
 const day = (date: Date | undefined): string =>
   date ? date.toISOString().slice(0, 10) : '?'

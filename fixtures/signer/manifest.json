@@ -3,12 +3,12 @@
   "iphoneosSdk": "26.4",
   "clang": "Apple clang version 21.0.0 (clang-2100.0.123.102)",
   "cases": [
-    {"name":"thin-min10","kind":"binary","role":"main","identifier":"com.loadstar.fixture.thin-min10","entitlements":"entitlements/app.plist","minOS":"10.0"},
-    {"name":"thin-min14","kind":"binary","role":"main","identifier":"com.loadstar.fixture.thin-min14","entitlements":"entitlements/app.plist","minOS":"14.0"},
-    {"name":"thin-min16","kind":"binary","role":"main","identifier":"com.loadstar.fixture.thin-min16","entitlements":"entitlements/app.plist","minOS":"16.0"},
-    {"name":"fat","kind":"binary","role":"main","identifier":"com.loadstar.fixture.fat","entitlements":"entitlements/app.plist","minOS":"14.0"},
-    {"name":"nosig.dylib","kind":"binary","role":"dylib","identifier":"com.loadstar.fixture.nosig","entitlements":null,"minOS":"14.0"},
-    {"name":"resign","kind":"binary","role":"main","identifier":"com.loadstar.fixture.resign","entitlements":"entitlements/resign.plist","minOS":"14.0"},
-    {"name":"Test.app","kind":"bundle","role":"main","identifier":"com.loadstar.fixture.app","entitlements":"entitlements/app.plist","minOS":"14.0","symlinks":["Strings-link"],"nested":[{"path":"Frameworks/Lib.framework","role":"framework","identifier":"com.loadstar.fixture.lib","entitlements":null},{"path":"Frameworks/libloose.dylib","role":"dylib","identifier":"libloose","entitlements":null},{"path":"PlugIns/Ext.appex","role":"appex","identifier":"com.loadstar.fixture.app.ext","entitlements":"entitlements/appex.plist"}]}
+    {"name":"thin-min10","kind":"binary","role":"main","identifier":"com.ipaforge.fixture.thin-min10","entitlements":"entitlements/app.plist","minOS":"10.0"},
+    {"name":"thin-min14","kind":"binary","role":"main","identifier":"com.ipaforge.fixture.thin-min14","entitlements":"entitlements/app.plist","minOS":"14.0"},
+    {"name":"thin-min16","kind":"binary","role":"main","identifier":"com.ipaforge.fixture.thin-min16","entitlements":"entitlements/app.plist","minOS":"16.0"},
+    {"name":"fat","kind":"binary","role":"main","identifier":"com.ipaforge.fixture.fat","entitlements":"entitlements/app.plist","minOS":"14.0"},
+    {"name":"nosig.dylib","kind":"binary","role":"dylib","identifier":"com.ipaforge.fixture.nosig","entitlements":null,"minOS":"14.0"},
+    {"name":"resign","kind":"binary","role":"main","identifier":"com.ipaforge.fixture.resign","entitlements":"entitlements/resign.plist","minOS":"14.0"},
+    {"name":"Test.app","kind":"bundle","role":"main","identifier":"com.ipaforge.fixture.app","entitlements":"entitlements/app.plist","minOS":"14.0","symlinks":["Strings-link"],"nested":[{"path":"Frameworks/Lib.framework","role":"framework","identifier":"com.ipaforge.fixture.lib","entitlements":null},{"path":"Frameworks/libloose.dylib","role":"dylib","identifier":"libloose","entitlements":null},{"path":"PlugIns/Ext.appex","role":"appex","identifier":"com.ipaforge.fixture.app.ext","entitlements":"entitlements/appex.plist"}]}
   ]
 }

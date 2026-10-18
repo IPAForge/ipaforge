@@ -3,7 +3,7 @@
 import * as asn1js from 'asn1js'
 import * as pkijs from 'pkijs'
 
-import { toBase64 } from '@loadstar/kernel'
+import { toBase64 } from '@ipaforge/kernel'
 import { randomSerialNumber } from '@signer/__tests__/serial.ts'
 import type { SigningIdentity } from '@signer/infrastructure/cms/index.ts'
 import {
@@ -65,7 +65,7 @@ export const createTestIdentity = async (
 ): Promise<TestIdentity> => {
   const teamId = options.teamId ?? 'ABCDE12345'
   const commonName =
-    options.commonName ?? `Apple Development: Loadstar Test (${teamId})`
+    options.commonName ?? `Apple Development: IPAForge Test (${teamId})`
   const keys = await testKeys()
 
   const certificate = new pkijs.Certificate()
@@ -75,7 +75,7 @@ export const createTestIdentity = async (
   })
   const subject = rdn([
     [OID_COUNTRY, 'US'],
-    [OID_ORGANIZATION, 'Loadstar Test'],
+    [OID_ORGANIZATION, 'IPAForge Test'],
     [OID_ORGANIZATIONAL_UNIT, teamId],
     [OID_COMMON_NAME, commonName]
   ])

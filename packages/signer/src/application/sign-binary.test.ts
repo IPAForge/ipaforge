@@ -8,12 +8,12 @@ import { afterAll, describe, expect, it } from 'vitest'
 import {
   ErrorCode,
   fixedClock,
+  IPAForgeError,
   isPlistDict,
-  LoadstarError,
   parseXmlPlist,
   silentLogger,
   toHex
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import { readFixture } from '@signer/__tests__/fixtures.ts'
 import {
   createTestIdentity,
@@ -35,7 +35,7 @@ const deps = {
   clock: fixedClock(new Date('2026-10-13T12:00:00Z'))
 }
 const isMac = process.platform === 'darwin'
-const temp = mkdtempSync(join(tmpdir(), 'loadstar-signbinary-'))
+const temp = mkdtempSync(join(tmpdir(), 'ipaforge-signbinary-'))
 afterAll(() => rmSync(temp, { recursive: true, force: true }))
 
 const loadEntitlements = (path: string): EntitlementsInput => {
@@ -121,7 +121,7 @@ describe('signBinary with a certificate', () => {
     const result = await signBinary(
       readFixture('inputs', name),
       {
-        identifier: `com.loadstar.test.${name}`,
+        identifier: `com.ipaforge.test.${name}`,
         signing: await testSigning(identity),
         ...(name.endsWith('.dylib')
           ? {}
@@ -147,7 +147,7 @@ describe('signBinary with a certificate', () => {
     const result = await signBinary(
       readFixture('inputs', 'fat'),
       {
-        identifier: 'com.loadstar.fat',
+        identifier: 'com.ipaforge.fat',
         signing: { kind: 'identity', identity, teamId: identity.teamId }
       },
       deps
@@ -197,13 +197,13 @@ describe('signBinary refusals', () => {
     ).rejects.toThrow()
   })
 
-  it('rejects non-Mach-O input with a LoadstarError', async () => {
+  it('rejects non-Mach-O input with an IPAForgeError', async () => {
     await expect(
       signBinary(
         new Uint8Array(64),
         { identifier: 'x', signing: { kind: 'adhoc' } },
         deps
       )
-    ).rejects.toBeInstanceOf(LoadstarError)
+    ).rejects.toBeInstanceOf(IPAForgeError)
   })
 })

@@ -5,8 +5,8 @@ import {
   ZipReader
 } from '@zip.js/zip.js'
 
-import type { FileSource, Logger } from '@loadstar/kernel'
-import { utf8Decode } from '@loadstar/kernel'
+import type { FileSource, Logger } from '@ipaforge/kernel'
+import { utf8Decode } from '@ipaforge/kernel'
 import {
   DEFAULT_FILE_MODE,
   EXECUTABLE_MODE,

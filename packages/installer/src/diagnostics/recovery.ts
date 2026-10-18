@@ -28,7 +28,7 @@ export const RecoveryAction = {
   ChooseAnotherIpa: 'choose-another-ipa',
   ChooseAnotherChannel: 'choose-another-channel',
   ImportIpa: 'import-ipa',
-  UpdateLoadstar: 'update-loadstar',
+  UpdateIPAForge: 'update-ipaforge',
   ReportIssue: 'report-issue'
 } as const
 

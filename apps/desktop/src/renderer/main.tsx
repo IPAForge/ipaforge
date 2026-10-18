@@ -1,6 +1,6 @@
 // Electron renderer: a sandboxed browser context. It waits for the rpc MessagePort the preload forwards, connects
 // an EngineClient to the Engine in the main process over it, then mounts the UI with the browser services.
-import '@loadstar/ui/styles.css'
+import '@ipaforge/ui/styles.css'
 
 import { createHashHistory } from '@tanstack/react-router'
 import { StrictMode } from 'react'
@@ -10,9 +10,9 @@ import {
   messagePortTransport,
   receiveEnginePort
 } from '@desktop/renderer/engine-port.ts'
-import type { LogLevel } from '@loadstar/kernel'
-import { createEngineClient } from '@loadstar/rpc'
-import { App, createBrowserServices, prepareLanguage } from '@loadstar/ui'
+import type { LogLevel } from '@ipaforge/kernel'
+import { createEngineClient } from '@ipaforge/rpc'
+import { App, createBrowserServices, prepareLanguage } from '@ipaforge/ui'
 
 const ROOT_ELEMENT_ID = 'root'
 /** Verbose while developing, quieter in a production build. */

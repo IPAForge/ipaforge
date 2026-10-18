@@ -1,4 +1,4 @@
-import { ByteReader, ByteWriter, utf8Encode } from '@loadstar/kernel'
+import { ByteReader, ByteWriter, utf8Encode } from '@ipaforge/kernel'
 import {
   CS_CDHASH_LEN,
   CS_SUPPORTSCODELIMIT64,

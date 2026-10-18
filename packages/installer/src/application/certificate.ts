@@ -13,16 +13,16 @@ import type {
   DeveloperServices,
   EnsureCertificateOptions,
   Team
-} from '@loadstar/apple'
-import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
+} from '@ipaforge/apple'
+import { compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 export type CertificateOwner = {
   readonly accountId: string
   readonly team: Team
 }
 
-const isCertificateLimit = (error: unknown): error is LoadstarError =>
-  error instanceof LoadstarError && error.code === ErrorCode.CertificateLimit
+const isCertificateLimit = (error: unknown): error is IPAForgeError =>
+  error instanceof IPAForgeError && error.code === ErrorCode.CertificateLimit
 
 const isChoice = (value: unknown): value is CertificateChoice =>
   typeof value === 'object' &&
@@ -30,7 +30,7 @@ const isChoice = (value: unknown): value is CertificateChoice =>
   typeof (value as CertificateChoice).serialNumber === 'string'
 
 /** The certificates `apple.certificate_limit` lists (who made each one, when it expires). */
-const revocable = (error: LoadstarError): CertificateChoice[] => {
+const revocable = (error: IPAForgeError): CertificateChoice[] => {
   const listed = error.data?.certificates
 
   return Array.isArray(listed) ? listed.filter(isChoice) : []
@@ -38,7 +38,7 @@ const revocable = (error: LoadstarError): CertificateChoice[] => {
 
 const chooseRevocation = async (
   context: StepContext,
-  error: LoadstarError
+  error: IPAForgeError
 ): Promise<string> => {
   const certificates = revocable(error)
   const serialNumber = await ask(context, PromptKind.RevokeCertificate, {
@@ -111,7 +111,7 @@ export const loadTeamCertificate = async (
     owner.team.id
   )
   if (identity?.certificate.serialNumber === serialNumber) return identity
-  throw new LoadstarError(ErrorCode.SigningIdentityInvalid, {
+  throw new IPAForgeError(ErrorCode.SigningIdentityInvalid, {
     message: 'the certificate chosen for this install is no longer stored',
     data: { team: owner.team.id }
   })

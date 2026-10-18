@@ -11,8 +11,8 @@ import {
   required,
   updateJob
 } from '@installer/steps/app-job.ts'
-import { compact } from '@loadstar/kernel'
-import { assertCompatible } from '@loadstar/signer'
+import { compact } from '@ipaforge/kernel'
+import { assertCompatible } from '@ipaforge/signer'
 
 export const inspectStep = (
   runtime: FlowRuntime,

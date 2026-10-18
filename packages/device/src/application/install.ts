@@ -9,7 +9,7 @@ import { PUBLIC_STAGING_DIR } from '@device/domain/constants.ts'
 import { shortUdid } from '@device/domain/device.ts'
 import type { AfcClient } from '@device/infrastructure/afc/types.ts'
 import { withClient } from '@device/infrastructure/closeable.ts'
-import { compact, type FileSource } from '@loadstar/kernel'
+import { compact, type FileSource } from '@ipaforge/kernel'
 
 /** Share of the overall progress taken by the upload; installation_proxy's own 0–100 fills the second half. */
 const UPLOAD_SHARE = 50

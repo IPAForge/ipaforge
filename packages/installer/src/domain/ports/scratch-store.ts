@@ -1,4 +1,4 @@
-import type { FileSource } from '@loadstar/kernel'
+import type { FileSource } from '@ipaforge/kernel'
 
 /**
  * Where signed IPAs wait between signing and installing (desktop: a temporary folder). The device needs a file

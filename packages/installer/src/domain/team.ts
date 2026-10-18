@@ -1,6 +1,6 @@
 // Which team to use without asking: the one requested, else the one remembered for the account, else the only one.
-import type { Team } from '@loadstar/apple'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import type { Team } from '@ipaforge/apple'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 export type TeamPreference = {
   readonly requested?: string | undefined
@@ -10,7 +10,7 @@ export type TeamPreference = {
 const requestedTeam = (teams: readonly Team[], requested: string): Team => {
   const team = teams.find((candidate) => candidate.id === requested)
   if (team) return team
-  throw new LoadstarError(ErrorCode.TeamRequired, {
+  throw new IPAForgeError(ErrorCode.TeamRequired, {
     message: "the requested team is not one of the account's teams",
     data: { teams: teams.length }
   })
@@ -21,7 +21,7 @@ export const preselectTeam = (
   teams: readonly Team[],
   preference: TeamPreference
 ): Team | undefined => {
-  if (teams.length === 0) throw new LoadstarError(ErrorCode.NoTeams)
+  if (teams.length === 0) throw new IPAForgeError(ErrorCode.NoTeams)
   if (preference.requested) return requestedTeam(teams, preference.requested)
   const remembered = teams.find(
     (candidate) => candidate.id === preference.remembered
@@ -37,7 +37,7 @@ export const requireTeam = (
 ): Team => {
   const team = preselectTeam(teams, preference)
   if (team) return team
-  throw new LoadstarError(ErrorCode.TeamRequired, {
+  throw new IPAForgeError(ErrorCode.TeamRequired, {
     data: { teams: teams.length }
   })
 }

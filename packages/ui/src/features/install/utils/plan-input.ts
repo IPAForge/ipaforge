@@ -1,4 +1,4 @@
-import type { RemotePlanInstallInput } from '@loadstar/rpc'
+import type { RemotePlanInstallInput } from '@ipaforge/rpc'
 import { variantAppId } from '@ui/services/engine/constants.ts'
 import type { InstallSideStoreInput } from '@ui/services/engine/types.ts'
 

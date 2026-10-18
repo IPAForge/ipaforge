@@ -4,7 +4,7 @@ import { open, stat } from 'node:fs/promises'
 import { basename } from 'node:path'
 import { Readable } from 'node:stream'
 
-import type { FileSource } from '@loadstar/kernel'
+import type { FileSource } from '@ipaforge/kernel'
 
 export const nodeFileSource = async (path: string): Promise<FileSource> => {
   const { size } = await stat(path)

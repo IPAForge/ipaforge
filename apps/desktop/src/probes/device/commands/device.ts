@@ -3,7 +3,7 @@ import {
   type DeviceProbe,
   printPairingProgress
 } from '@desktop/probes/device/context.ts'
-import type { PairMethod } from '@loadstar/device'
+import type { PairMethod } from '@ipaforge/device'
 
 export const listCommand =
   ({ manager, show }: DeviceProbe) =>
@@ -30,7 +30,7 @@ export const infoCommand =
       })
     })
 
-/** `--own` pairs with Loadstar's own certificates straight away; by default the OS's pairing is awaited. */
+/** `--own` pairs with IPAForge's own certificates straight away; by default the OS's pairing is awaited. */
 const pairMethod = ({ args }: DeviceProbe): PairMethod =>
   args.flag('own') ? 'own' : 'os'
 
@@ -39,7 +39,7 @@ export const pairCommand = (probe: DeviceProbe) => async (): Promise<void> => {
   const method = pairMethod(probe)
   console.log(
     method === 'own'
-      ? "pairing with Loadstar's own record: unlock the device and tap Trust"
+      ? "pairing with IPAForge's own record: unlock the device and tap Trust"
       : "waiting for this computer's pairing: unlock the device and tap Trust (own pairing after the timeout)"
   )
   await probe.manager.pair(device.udid, {

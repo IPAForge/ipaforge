@@ -1,15 +1,15 @@
 // The Engine's side of the channel: validates every request, answers queries, starts and tracks runs, and sends
-// every failure back as a serialized LoadstarError. Nothing a peer sends can make it throw.
+// every failure back as a serialized IPAForgeError. Nothing a peer sends can make it throw.
 
 import type { z } from 'zod'
 
 import {
   ErrorCode,
-  type LoadstarError,
+  type IPAForgeError,
   type LogRecord,
   silentLogger,
-  toLoadstarError
-} from '@loadstar/kernel'
+  toIPAForgeError
+} from '@ipaforge/kernel'
 import { createCheckpointStore } from '@rpc/application/server/checkpoints.ts'
 import { createCommandStarter } from '@rpc/application/server/commands.ts'
 import { createLogRequests } from '@rpc/application/server/logs.ts'
@@ -47,7 +47,7 @@ export const createRpcServer = ({
       if (quiet) return
       log.warn('RPC send failed', {
         type: body.type,
-        code: toLoadstarError(error).code
+        code: toIPAForgeError(error).code
       })
     }
   }
@@ -81,7 +81,7 @@ export const createRpcServer = ({
     log: (request) => logRequests.write(request.record as LogRecord)
   }
 
-  const sendError = (id: string, error: LoadstarError): void => {
+  const sendError = (id: string, error: IPAForgeError): void => {
     // A catalogued failure is an answer the UI shows; an unexpected one is a bug worth seeing in the log.
     if (error.code === ErrorCode.Unexpected)
       log.warn('RPC request failed unexpectedly', {
@@ -100,7 +100,7 @@ export const createRpcServer = ({
       )(request)
       send({ type: 'response', id: request.id, value: toWire(value) })
     } catch (error) {
-      sendError(request.id, toLoadstarError(error))
+      sendError(request.id, toIPAForgeError(error))
     }
   }
 

@@ -1,4 +1,4 @@
-import type { Clock, Logger, PlistDict } from '@loadstar/kernel'
+import type { Clock, Logger, PlistDict } from '@ipaforge/kernel'
 import type {
   DesignatedRequirement,
   SpecialSlotData

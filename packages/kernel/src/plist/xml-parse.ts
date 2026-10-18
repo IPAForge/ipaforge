@@ -1,7 +1,7 @@
 import { fromBase64 } from '@kernel/bytes/base64.ts'
 import { utf8Decode } from '@kernel/bytes/bytes.ts'
 import { ErrorCode } from '@kernel/errors/codes.ts'
-import { LoadstarError } from '@kernel/errors/loadstar-error.ts'
+import { IPAForgeError } from '@kernel/errors/ipaforge-error.ts'
 import { DEFAULT_PLIST_LIMITS, type PlistLimits } from '@kernel/plist/limits.ts'
 import { createDict, real } from '@kernel/plist/model.ts'
 import type {
@@ -103,7 +103,7 @@ const decodeInput = (input: Uint8Array | string): string => {
   try {
     xml = typeof input === 'string' ? input : utf8Decode(input)
   } catch (error) {
-    throw new LoadstarError(ErrorCode.InvalidPlist, {
+    throw new IPAForgeError(ErrorCode.InvalidPlist, {
       message: 'XML plist is not valid UTF-8',
       cause: error
     })

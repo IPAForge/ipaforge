@@ -1,4 +1,4 @@
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 import { alignUp, alignUpBig } from '@signer/domain/macho/align.ts'
 import {
   LC_CODE_SIGNATURE,
@@ -75,14 +75,14 @@ const linkeditOf = (slice: Slice): Segment => {
     (segment) => segment.name === '__LINKEDIT'
   )
   if (!linkedit)
-    throw new LoadstarError(ErrorCode.InvalidMachO, {
+    throw new IPAForgeError(ErrorCode.InvalidMachO, {
       message: 'no __LINKEDIT segment'
     })
   const last = slice.segments.reduce((a, b) =>
     b.fileoff >= a.fileoff && b.filesize > 0n ? b : a
   )
   if (last !== linkedit) {
-    throw new LoadstarError(ErrorCode.InvalidMachO, {
+    throw new IPAForgeError(ErrorCode.InvalidMachO, {
       message: '__LINKEDIT is not the last segment in the file'
     })
   }
@@ -99,7 +99,7 @@ const signatureCommandOffset = (
   linkeditEnd: number
 ): number => {
   if (existing && existing.dataoff + existing.datasize > linkeditEnd) {
-    throw new LoadstarError(ErrorCode.InvalidMachO, {
+    throw new IPAForgeError(ErrorCode.InvalidMachO, {
       message: 'code signature extends past __LINKEDIT'
     })
   }
@@ -109,7 +109,7 @@ const signatureCommandOffset = (
     !existing &&
     commandOffset + LINKEDIT_DATA_COMMAND_SIZE > slice.firstSectionOffset
   ) {
-    throw new LoadstarError(ErrorCode.NoHeaderSpace, {
+    throw new IPAForgeError(ErrorCode.NoHeaderSpace, {
       message:
         'no room for LC_CODE_SIGNATURE (relink with a larger -headerpad)',
       data: {

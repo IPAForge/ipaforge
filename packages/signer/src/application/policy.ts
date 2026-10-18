@@ -1,4 +1,4 @@
-import type { PlistDict } from '@loadstar/kernel'
+import type { PlistDict } from '@ipaforge/kernel'
 import {
   EXEC_SEG_ENTITLEMENT_FLAGS,
   SHA1_REQUIRED_BELOW,

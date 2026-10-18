@@ -11,7 +11,7 @@ import {
   toBase64,
   utf8Decode,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const LAST_GOOD_KEY = 'anisette/last-good'
 const stateKey = (server: AnisetteServer): string =>

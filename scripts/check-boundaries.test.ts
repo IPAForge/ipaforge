@@ -24,10 +24,10 @@ describe('checkBoundaries', () => {
       'installer/src/index.ts:3 foreign-subpath @kernel/bytes/index.ts',
       'kernel/src/index.ts:1 node-builtin node:fs',
       'kernel/src/index.ts:2 node-builtin path',
-      'mystery/src/index.ts:1 unknown-package @loadstar/kernel',
+      'mystery/src/index.ts:1 unknown-package @ipaforge/kernel',
       'signer/src/index.ts:1 platform-module electron',
-      'signer/src/index.ts:2 deep-import @loadstar/kernel/src/internal',
-      'signer/src/index.ts:3 forbidden-edge @loadstar/device',
+      'signer/src/index.ts:2 deep-import @ipaforge/kernel/src/internal',
+      'signer/src/index.ts:3 forbidden-edge @ipaforge/device',
       'signer/src/index.ts:4 escape ../../installer/src/index.ts'
     ])
   })

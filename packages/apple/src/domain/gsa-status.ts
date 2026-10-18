@@ -1,7 +1,7 @@
 // GrandSlam status codes → catalogued errors (see docs/design/failure-catalogue.md §2).
 import { GSA_ERROR_BY_EC, GsaCode, GsaHsc } from '@apple/domain/constants.ts'
 import { nonEmpty } from '@apple/domain/values.ts'
-import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 const LOCKED_MESSAGE = /locked for security reasons/i
 const HTTP_TOO_MANY_REQUESTS = 429
@@ -41,7 +41,7 @@ export const gsaErrorCode = (status: GsaStatus): ErrorCode => {
 export const assertGsaOk = (status: GsaStatus, operation: string): void => {
   if (status.ec === 0) return
   const suffix = status.em ? ` ${status.em}` : ''
-  throw new LoadstarError(gsaErrorCode(status), {
+  throw new IPAForgeError(gsaErrorCode(status), {
     message: `GSA ${operation} failed: ${status.ec}${suffix}`,
     data: compact({
       gsaCode: status.ec,

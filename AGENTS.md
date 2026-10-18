@@ -4,7 +4,7 @@
 
 ## Project Overview
 
-Loadstar is an open-source desktop tool (Windows, macOS, Linux) for installing SideStore and preloading other apps onto iOS devices, built on a pure-TypeScript engine. Details: `docs/design/overview.md`.
+IPAForge is an open-source desktop tool (Windows, macOS, Linux) for installing SideStore and preloading other apps onto iOS devices, built on a pure-TypeScript engine. Details: `docs/design/overview.md`.
 
 ## Tech Stack
 
@@ -15,12 +15,12 @@ Loadstar is an open-source desktop tool (Windows, macOS, Linux) for installing S
 
 ## Project Structure
 
-> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `packages/rpc`, `packages/ui` (palettes, top bar and sidebar shell, routes, i18n with six languages, Engine query hooks and the device feed, Apple ID sign-in and the Accounts page, the device picker and Devices page, the install home, the install run with its questions, step details and recovery box (`state/active-run`, `state/selection`), the log viewer (`features/logs`, `state/log-view`); runs in a browser on a fake Engine via its own Vite config), `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, the RPC transport and IPA resolver, maintainer probes, and the Electron shell: one hardened window rendering `@loadstar/ui`, connected to the Engine in main over a MessagePort), `fixtures/signer`, `scripts/`, `.github/workflows/`.
+> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `packages/rpc`, `packages/ui` (palettes, top bar and sidebar shell, routes, i18n with six languages, Engine query hooks and the device feed, Apple ID sign-in and the Accounts page, the device picker and Devices page, the install home, the install run with its questions, step details and recovery box (`state/active-run`, `state/selection`), the log viewer (`features/logs`, `state/log-view`); runs in a browser on a fake Engine via its own Vite config), `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, the RPC transport and IPA resolver, maintainer probes, and the Electron shell: one hardened window rendering `@ipaforge/ui`, connected to the Engine in main over a MessagePort), `fixtures/signer`, `scripts/`, `.github/workflows/`.
 
 ```
-loadstar/
+ipaforge/
 ├── packages/
-│   ├── kernel/       # LoadstarError/ErrorCode, ports (Logger, HttpClient, SecretStore, FileSource), bytes and text utils, plist
+│   ├── kernel/       # IPAForgeError/ErrorCode, ports (Logger, HttpClient, SecretStore, FileSource), bytes and text utils, plist
 │   ├── signer/       # Mach-O code signing (CodeDirectory, CodeResources, entitlements, CMS, fat, bundles, IPA)
 │   ├── device/       # usbmux, lockdown, pairing, AFC, house_arrest, installation_proxy
 │   ├── apple/        # GSA auth + 2FA, anisette provider chain, developer services API
@@ -60,19 +60,19 @@ loadstar/
 | `apps/desktop/src/main/rpc/serve-engine.ts` | Serves the Engine to the window: a fresh `MessageChannelMain` per page load, `createRpcServer` on one end, the other posted to the page |
 | `apps/desktop/src/preload/forward-port.ts` | The preload's only job: forward the rpc port to the page (no `contextBridge` API) |
 | `apps/desktop/src/renderer/engine-port.ts` | Renderer: receives the port and wraps it in a `Transport` for `createEngineClient` |
-| `apps/desktop/src/renderer/main.tsx` | Electron renderer: connects the `EngineClient`, then mounts `@loadstar/ui` with the browser services and a hash history |
-| `apps/desktop/electron.vite.config.ts` | electron-vite builds for main, preload and renderer (`pnpm --filter @loadstar/desktop dev` / `build`) |
+| `apps/desktop/src/renderer/main.tsx` | Electron renderer: connects the `EngineClient`, then mounts `@ipaforge/ui` with the browser services and a hash history |
+| `apps/desktop/electron.vite.config.ts` | electron-vite builds for main, preload and renderer (`pnpm --filter @ipaforge/desktop dev` / `build`) |
 | `packages/ui/src/services/engine/fake/fake-engine.ts` | The fake Engine the browser dev host and UI tests use (`?scenario=` in dev) |
 | `packages/installer/src/application/device-watch.ts` | The device feed (usbmuxd `Listen`, reconnect, fallback polling) behind `engine.watchDevices` |
 | `packages/ui/src/hooks/queries/` | TanStack Query hooks for every Engine query, the query client defaults and the device feed; keys in `query-keys.ts` |
 | `packages/ui/src/App.tsx` | UI root that every host mounts: providers (services, query, language, theme) + router with the shell |
 | `packages/ui/src/locales/en.json` | English UI strings, the source of truth for every translation (`status.json` lists languages and drafts) |
 | `packages/ui/src/i18n/` | i18next setup, typed keys, language matching and store, on-demand locale loading (`prepareLanguage`), pseudo-locale, `Intl` formatters |
-| `packages/ui/src/main.tsx` | Browser entry for the UI (`pnpm --filter @loadstar/ui dev` / `build`) |
+| `packages/ui/src/main.tsx` | Browser entry for the UI (`pnpm --filter @ipaforge/ui dev` / `build`) |
 | `pnpm-workspace.yaml` / `turbo.json` | Workspace and task graph |
-| `packages/kernel/src/index.ts` | LoadstarError/ErrorCode, ports, logger, byte utilities |
+| `packages/kernel/src/index.ts` | IPAForgeError/ErrorCode, ports, logger, byte utilities |
 | `scripts/check-boundaries.ts` | Architecture dependency-rule checker |
-| `biome.json` / `eslint.config.js` | Code style: Biome formats and lints; ESLint adds blank lines, the SonarJS rules and the `@loadstar/structure` file-structure rules (`tooling/eslint/structure.js`) |
+| `biome.json` / `eslint.config.js` | Code style: Biome formats and lints; ESLint adds blank lines, the SonarJS rules and the `@ipaforge/structure` file-structure rules (`tooling/eslint/structure.js`) |
 | `scripts/check-locales.ts` | Locale checker: keys, ICU syntax and placeholders vs `en.json`, completion per language |
 | `.github/workflows/ci.yml` | Lint, typecheck, boundaries, locales and tests on Linux, Windows and macOS |
 
@@ -105,7 +105,7 @@ loadstar/
 | docs/design/architecture.md | Architecture decisions and dependency rules |
 | docs/design/roadmap.md | Milestones |
 | docs/design/conventions.md | Coding conventions |
-| docs/design/failure-catalogue.md | What breaks sideloading installers in practice, and how Loadstar handles each failure |
+| docs/design/failure-catalogue.md | What breaks sideloading installers in practice, and how IPAForge handles each failure |
 | docs/design/js-libs.md | Library research for the pure-TypeScript re-signer (versions, licenses, benchmarks) |
 
 ## Agent Rules

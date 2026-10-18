@@ -1,4 +1,4 @@
-import { PromptKind, type PromptRequest } from '@loadstar/rpc'
+import { PromptKind, type PromptRequest } from '@ipaforge/rpc'
 import type { PromptProps } from '@ui/components/prompts/prompt-props.ts'
 import { TwoFactorCodePrompt } from '@ui/components/prompts/two-factor-code-prompt.tsx'
 import { TwoFactorMethodPrompt } from '@ui/components/prompts/two-factor-method-prompt.tsx'

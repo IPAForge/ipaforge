@@ -2,7 +2,7 @@ import {
   createDict,
   type PlistValue,
   serializeXmlPlist
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import {
   CODE_RESOURCES,
   CODE_SIGNATURE_DIR,

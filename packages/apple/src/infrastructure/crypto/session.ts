@@ -1,5 +1,5 @@
 // Decryption of the data GrandSlam returns after sign-in (`spd`) and of app tokens (`et`).
-import { ErrorCode, LoadstarError, utf8Encode } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError, utf8Encode } from '@ipaforge/kernel'
 
 const subtle = () => globalThis.crypto.subtle
 const buffer = (bytes: Uint8Array): Uint8Array<ArrayBuffer> =>
@@ -47,7 +47,7 @@ export const decryptSpd = async (
       )
     )
   } catch (error) {
-    throw new LoadstarError(ErrorCode.AppleProtocolError, {
+    throw new IPAForgeError(ErrorCode.AppleProtocolError, {
       message: 'could not decrypt session data',
       cause: error
     })
@@ -63,7 +63,7 @@ export const decryptAppToken = async (
   et: Uint8Array
 ): Promise<Uint8Array> => {
   if (et.byteLength <= ET_HEADER + ET_IV + AES_BLOCK) {
-    throw new LoadstarError(ErrorCode.AppleProtocolError, {
+    throw new IPAForgeError(ErrorCode.AppleProtocolError, {
       message: 'app token too short'
     })
   }
@@ -91,7 +91,7 @@ export const decryptAppToken = async (
       )
     )
   } catch (error) {
-    throw new LoadstarError(ErrorCode.AppleProtocolError, {
+    throw new IPAForgeError(ErrorCode.AppleProtocolError, {
       message: 'could not decrypt app token',
       cause: error
     })

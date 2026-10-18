@@ -1,7 +1,7 @@
 import { execFile } from 'node:child_process'
 import { promisify } from 'node:util'
 
-import { fromHex, toHex } from '@loadstar/kernel'
+import { fromHex, toHex } from '@ipaforge/kernel'
 
 const run = promisify(execFile)
 const KEY_BYTES = 32

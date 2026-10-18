@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import type { PairingAppChoice } from '@loadstar/rpc'
+import type { PairingAppChoice } from '@ipaforge/rpc'
 import type { PairingChoice } from '@ui/features/install/prompts/types.ts'
 
 /** The apps ticked for the pairing file: all of them to start with, since the Engine offers only apps that use it. */

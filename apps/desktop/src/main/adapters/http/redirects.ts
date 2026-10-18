@@ -1,4 +1,4 @@
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 export const MAX_REDIRECTS = 5
 
@@ -36,7 +36,7 @@ export const redirectTarget = (
 ): { url: URL; headers: Record<string, string> } => {
   const url = new URL(location, from)
   if (from.protocol === 'https:' && url.protocol !== 'https:') {
-    throw new LoadstarError(ErrorCode.Offline, {
+    throw new IPAForgeError(ErrorCode.Offline, {
       message: `refused a redirect from HTTPS to ${url.protocol}`,
       data: { host: from.host, location: url.host }
     })

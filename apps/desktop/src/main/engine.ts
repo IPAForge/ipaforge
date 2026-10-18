@@ -6,11 +6,11 @@ import { createFileScratchStore } from '@desktop/main/adapters/file-scratch-stor
 import { createNodeHttpClient } from '@desktop/main/adapters/http-client.ts'
 import { createNodeUsbmuxTransport } from '@desktop/main/adapters/usbmux-transport.ts'
 import { createWebSocketFactory } from '@desktop/main/adapters/web-socket.ts'
-import { createAppleAccounts } from '@loadstar/apple'
-import { createCatalog } from '@loadstar/catalog'
-import { createDeviceManager } from '@loadstar/device'
-import { createEngine, type Engine } from '@loadstar/installer'
-import { type Logger, type SecretStore, silentLogger } from '@loadstar/kernel'
+import { createAppleAccounts } from '@ipaforge/apple'
+import { createCatalog } from '@ipaforge/catalog'
+import { createDeviceManager } from '@ipaforge/device'
+import { createEngine, type Engine } from '@ipaforge/installer'
+import { type Logger, type SecretStore, silentLogger } from '@ipaforge/kernel'
 
 export type DesktopEngineOptions = {
   /** Accounts, sessions, certificates and their keys, pair records the OS would not keep. */

@@ -10,11 +10,11 @@ import { plistInteger } from '@device/infrastructure/framing/plist-values.ts'
 import {
   createDict,
   ErrorCode,
-  LoadstarError,
+  IPAForgeError,
   type Logger,
   type PlistDict,
   type PlistValue
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const PROFILE_TYPE = 'Provisioning'
 const STATUS_OK = 0
@@ -40,7 +40,7 @@ const payloads = (response: PlistDict): Uint8Array[] =>
 const ensureOk = (response: PlistDict, messageType: string): PlistDict => {
   const status = statusOf(response)
   if (status !== STATUS_OK) {
-    throw new LoadstarError(ErrorCode.ServiceUnavailable, {
+    throw new IPAForgeError(ErrorCode.ServiceUnavailable, {
       message: `misagent ${messageType} failed with status ${status}`,
       data: { misagentStatus: status, messageType }
     })

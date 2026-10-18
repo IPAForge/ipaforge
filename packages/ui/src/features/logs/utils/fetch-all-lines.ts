@@ -1,5 +1,5 @@
-import { LOG_PAGE_MAX, type LogEntry, type LogFilter } from '@loadstar/kernel'
-import type { EngineLogs } from '@loadstar/rpc'
+import { LOG_PAGE_MAX, type LogEntry, type LogFilter } from '@ipaforge/kernel'
+import type { EngineLogs } from '@ipaforge/rpc'
 
 /** Every line matching `filter`, oldest first, read from the Engine a page at a time (for Copy and Save). */
 export const fetchAllLines = async (

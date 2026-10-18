@@ -3,14 +3,14 @@
 import { createHash } from 'node:crypto'
 
 import { nodeFileSource } from '@desktop/main/adapters/file-source.ts'
-import type { DownloadStore } from '@loadstar/catalog'
+import type { DownloadStore } from '@ipaforge/catalog'
 import {
   ErrorCode,
   type FileSource,
   type HttpClient,
-  LoadstarError
-} from '@loadstar/kernel'
-import type { ResolveIpa } from '@loadstar/rpc'
+  IPAForgeError
+} from '@ipaforge/kernel'
+import type { ResolveIpa } from '@ipaforge/rpc'
 
 export type IpaResolverDeps = {
   readonly http: HttpClient
@@ -21,7 +21,7 @@ const openFile = async (path: string): Promise<FileSource> => {
   try {
     return await nodeFileSource(path)
   } catch (cause) {
-    throw new LoadstarError(ErrorCode.InvalidBundle, {
+    throw new IPAForgeError(ErrorCode.InvalidBundle, {
       message: 'the picked IPA cannot be read',
       cause
     })
@@ -46,7 +46,7 @@ const download = async (
   const response = await http.request({ method: 'GET', url, signal })
   if (response.status < 200 || response.status >= 300) {
     await response.body.cancel()
-    throw new LoadstarError(ErrorCode.DownloadFailed, {
+    throw new IPAForgeError(ErrorCode.DownloadFailed, {
       message: 'IPA download failed',
       data: { status: response.status }
     })

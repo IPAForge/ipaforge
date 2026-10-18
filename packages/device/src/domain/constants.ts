@@ -1,5 +1,5 @@
 // Protocol constants fixed by usbmuxd, lockdownd and the device services. Not configuration.
-import { ErrorCode } from '@loadstar/kernel'
+import { ErrorCode } from '@ipaforge/kernel'
 
 /** usbmux packet header: length, version, message type, tag (all u32 little-endian). */
 export const USBMUX_HEADER_SIZE = 16

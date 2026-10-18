@@ -19,7 +19,7 @@ import {
   serverProof,
   sha256
 } from '@apple/infrastructure/crypto/srp.ts'
-import { equalBytes, utf8Encode } from '@loadstar/kernel'
+import { equalBytes, utf8Encode } from '@ipaforge/kernel'
 
 const buffer = (bytes: Uint8Array): Uint8Array<ArrayBuffer> =>
   bytes as Uint8Array<ArrayBuffer>

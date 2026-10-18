@@ -20,7 +20,7 @@ import {
   SRP_N,
   serverProof
 } from '@apple/infrastructure/crypto/srp.ts'
-import { toHex, utf8Decode, utf8Encode } from '@loadstar/kernel'
+import { toHex, utf8Decode, utf8Encode } from '@ipaforge/kernel'
 
 /** Miller–Rabin with fixed bases: catches any mistyped digit in the group prime. */
 const isProbablePrime = (n: bigint): boolean => {

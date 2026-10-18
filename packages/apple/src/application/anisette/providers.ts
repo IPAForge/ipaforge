@@ -16,7 +16,7 @@ import {
   provisionV3
 } from '@apple/infrastructure/anisette/v3.ts'
 import type { AppleDeps } from '@apple/types.ts'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 /** A rejected state is provisioned again once; a second rejection fails this server. */
 const V3_ATTEMPTS = 2
@@ -89,7 +89,7 @@ export const fromV3 = async (
     })
     state = { identifier: ready.identifier }
   }
-  throw new LoadstarError(ErrorCode.AnisetteNotProvisioned, {
+  throw new IPAForgeError(ErrorCode.AnisetteNotProvisioned, {
     data: { server: server.name }
   })
 }

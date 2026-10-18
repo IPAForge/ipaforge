@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 
-import { toLoadstarError } from '@loadstar/kernel'
+import { toIPAForgeError } from '@ipaforge/kernel'
 import type { DeviceView } from '@ui/features/devices/types.ts'
 import { errorTitleKey } from '@ui/i18n/required-keys.ts'
 
@@ -10,7 +10,7 @@ type UnavailableBodyProps = { view: DeviceView }
 export const UnavailableBody = ({ view }: UnavailableBodyProps) => {
   const { t } = useTranslation()
   const reason = view.error
-    ? t(errorTitleKey(toLoadstarError(view.error).code))
+    ? t(errorTitleKey(toIPAForgeError(view.error).code))
     : undefined
 
   return (

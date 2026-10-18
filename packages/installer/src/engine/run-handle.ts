@@ -15,7 +15,7 @@ import type {
 import type { Flow } from '@installer/flows/flow.ts'
 import type { PipelineResult } from '@installer/pipeline/types.ts'
 import type { InstallerDeps } from '@installer/types.ts'
-import { compact } from '@loadstar/kernel'
+import { compact } from '@ipaforge/kernel'
 
 const linkAbort = (
   controller: AbortController,

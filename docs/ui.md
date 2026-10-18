@@ -2,25 +2,25 @@
 
 # The User Interface
 
-`@loadstar/ui` is the React app the desktop shell renders: React 19, HeroUI v3, Tailwind v4, TanStack Router and Query, and Lucide icons. It is a package like the others. It can import only `@loadstar/kernel` and `@loadstar/rpc`, and it never reaches a device, Apple or the file system on its own. The host gives it everything it needs.
+`@ipaforge/ui` is the React app the desktop shell renders: React 19, HeroUI v3, Tailwind v4, TanStack Router and Query, and Lucide icons. It is a package like the others. It can import only `@ipaforge/kernel` and `@ipaforge/rpc`, and it never reaches a device, Apple or the file system on its own. The host gives it everything it needs.
 
 ## Running it in Electron
 
 ```sh
-pnpm --filter @loadstar/desktop dev      # opens the app in Electron, hot reload
-pnpm --filter @loadstar/desktop build    # main, preload and renderer into apps/desktop/out
+pnpm --filter @ipaforge/desktop dev      # opens the app in Electron, hot reload
+pnpm --filter @ipaforge/desktop build    # main, preload and renderer into apps/desktop/out
 ```
 
-`apps/desktop/src/renderer/main.tsx` mounts `App` the same way as the browser entry: with `createBrowserServices` and `prepareLanguage` (see [Loading languages](#loading-languages)), since the renderer is a sandboxed browser context, and with a hash history, because a build is loaded from `file://`. The window runs with `contextIsolation`, `sandbox` and no Node integration, under a strict Content-Security-Policy, and it blocks new windows and navigation. A page the UI asks to open (`window.open`) goes to the default browser only when it is on the allowed list in `apps/desktop/src/main/constants.ts` (a new Loadstar issue on GitHub, Apple's account and developer pages); anything else is blocked and logged. The main process serves the Engine over a `MessageChannelMain` (one per page load); the preload only forwards the other end of it to the page, which wraps it in a `Transport` for `createEngineClient`. Nothing else is exposed to the page.
+`apps/desktop/src/renderer/main.tsx` mounts `App` the same way as the browser entry: with `createBrowserServices` and `prepareLanguage` (see [Loading languages](#loading-languages)), since the renderer is a sandboxed browser context, and with a hash history, because a build is loaded from `file://`. The window runs with `contextIsolation`, `sandbox` and no Node integration, under a strict Content-Security-Policy, and it blocks new windows and navigation. A page the UI asks to open (`window.open`) goes to the default browser only when it is on the allowed list in `apps/desktop/src/main/constants.ts` (a new IPAForge issue on GitHub, Apple's account and developer pages); anything else is blocked and logged. The main process serves the Engine over a `MessageChannelMain` (one per page load); the preload only forwards the other end of it to the page, which wraps it in a `Transport` for `createEngineClient`. Nothing else is exposed to the page.
 
 ## Running it in a browser
 
 The UI also runs without Electron. The package is a plain Vite app: `index.html` and `vite.config.ts` sit at the package root, and `src/main.tsx` mounts `App` with the browser services once `prepareLanguage` has loaded the language.
 
 ```sh
-pnpm --filter @loadstar/ui dev      # http://localhost:5180, hot reload
-pnpm --filter @loadstar/ui build    # production build into packages/ui/dist
-pnpm --filter @loadstar/ui preview  # serve the build
+pnpm --filter @ipaforge/ui dev      # http://localhost:5180, hot reload
+pnpm --filter @ipaforge/ui build    # production build into packages/ui/dist
+pnpm --filter @ipaforge/ui preview  # serve the build
 ```
 
 In development it logs at debug level to the browser console; a production build logs from `info` up. Preferences are kept in `localStorage`. Without Electron there is no real Engine: `src/main.tsx` connects a fake one (`src/services/engine/fake/`) over the rpc memory transport. In development `?scenario=<id>` picks what it plays (`happy`, `hot-plug`, `devices`, `accounts`, `no-accounts`, `sign-in-no-2fa`, `wrong-password`, `two-factor`, `two-teams`, `certificate-limit`, `free-app-limit`, `retry`, and the failures `device-locked`, `app-id-quota`, `profile-banned`, `offline`, `checksum`, `unsupported-ios`, `anisette`, and `logs`, which fills the log buffer with 3,000 lines to try paging, search and the virtual list); tests use the same fake. The fake keeps its own log buffer, and logs its runs and devices the way the real Engine does. The `hot-plug` scenario plugs the fake iPad in and out every 5 s. The `devices` scenario shows every device state: the iPhone on USB and Wi-Fi (ready, with `studio@` blocked on it), a locked iPad (unlocked on a later read), and an iPhone SE that doesn't trust this computer (**Ask again** pairs it, then its Developer Mode is off).
@@ -52,7 +52,7 @@ packages/ui/
     └── i18n/           # setup/, languages/, loading/, provider/, plus formatters, pseudo-locale, required keys
 ```
 
-The package exports `App`, the service types and factories, the palettes and the theme types from `@loadstar/ui`, and the stylesheet from `@loadstar/ui/styles.css`.
+The package exports `App`, the service types and factories, the palettes and the theme types from `@ipaforge/ui`, and the stylesheet from `@ipaforge/ui/styles.css`.
 
 ## What a host provides
 
@@ -61,7 +61,7 @@ The package exports `App`, the service types and factories, the palettes and the
 | Service | Purpose | Browser implementation |
 |---|---|---|
 | `Logger` (kernel) | Structured logs. `App` scopes them to `ui`, and features add `ui.theme`, `ui.router` and so on. Every record also goes to the Engine's log buffer (`engine.logs.write`), so Logs shows the UI's lines with the Engine's | `createLogger` with `consoleLogSink` (from `logLevel` up) |
-| `PreferencesStore` | Synchronous `read`/`write` of UI preferences (palette, colour mode, language) | `createLocalStoragePreferences`, under keys prefixed `loadstar.` |
+| `PreferencesStore` | Synchronous `read`/`write` of UI preferences (palette, colour mode, language) | `createLocalStoragePreferences`, under keys prefixed `ipaforge.` |
 | `ColorSchemeSource` | The OS light/dark preference, and when it changes | `createMediaColorSchemeSource(matchMedia)` |
 | `LocaleSource` | The OS's preferred languages, most preferred first | `createNavigatorLocaleSource(navigator)` |
 | `EngineClient` (rpc) | The Engine: queries, runs and `classify`. `App` logs every request at debug level under `ui.engine` (the method, and the code of a failure; never the arguments) | the fake Engine over the memory transport (`createFakeEngineClient`); in Electron, `createEngineClient` over the MessagePort |
@@ -74,7 +74,7 @@ The package exports `App`, the service types and factories, the palettes and the
 
 ## Engine queries
 
-Components reach the Engine only through the TanStack Query hooks in `src/hooks/queries/`: `useDevices` (one entry per device), `useDeviceStatus`, `useAccounts`, `useTeams`, `useCatalogApps`, `useRecommendedChannel`, `useAppIdQuota`, `useCertificates` and `usePlanInstall`, plus the mutation `useSignOut` (`use-sign-out.ts`). Their cache keys live in one module, `query-keys.ts`, with every account query under `['accounts', …]` so one invalidation refreshes them all. A hook whose input is not known yet (no device picked) waits instead of asking. Failures arrive as `LoadstarError`s with their code.
+Components reach the Engine only through the TanStack Query hooks in `src/hooks/queries/`: `useDevices` (one entry per device), `useDeviceStatus`, `useAccounts`, `useTeams`, `useCatalogApps`, `useRecommendedChannel`, `useAppIdQuota`, `useCertificates` and `usePlanInstall`, plus the mutation `useSignOut` (`use-sign-out.ts`). Their cache keys live in one module, `query-keys.ts`, with every account query under `['accounts', …]` so one invalidation refreshes them all. A hook whose input is not known yet (no device picked) waits instead of asking. Failures arrive as `IPAForgeError`s with their code.
 
 ### Live data: push, not polling
 
@@ -128,7 +128,7 @@ To add a palette, add its id to `paletteIds`, add its tokens to `palettes.ts` an
   - **Questions** show as dialogs over any section (`features/install/prompts/run-prompt-host.tsx`, one dialog per question in `asked-prompts.ts`). Each has **Cancel install**, which stops the run at that step; **Resume** asks it again. After an answer the dialog stays, its controls read-only and the chosen one busy, until the Engine's next event (`answering` in the run view).
     - **Password** and **second factor**: as in sign-in.
     - **Team**: one click per team, saying what free and paid mean; the Engine remembers the choice for the Apple ID.
-    - **Revoke a certificate**: picked in a list, then confirmed with a red **Revoke and continue**. Each certificate says who made it, from the machine name Apple keeps with it (Loadstar elsewhere, SideStore/AltStore, a named computer, unknown), and what revoking it breaks, in amber. One made by Loadstar is suggested and listed first.
+    - **Revoke a certificate**: picked in a list, then confirmed with a red **Revoke and continue**. Each certificate says who made it, from the machine name Apple keeps with it (IPAForge elsewhere, SideStore/AltStore, a named computer, unknown), and what revoking it breaks, in amber. One made by IPAForge is suggested and listed first.
     - **Remove an app to make room** (the free-app limit): picked, then confirmed with a red **Remove and continue**.
     - **Share the certificate** with an imported app that looks like SideStore: **Share** or **Don't share**.
     - **Which apps get the pairing file**: a checkbox row per app, all ticked to start, with what each known app does with the file (`pairingAppPurposeKeys`), **Select all** / **Clear all**, and a button that counts them ("Place in 2 apps").
@@ -136,11 +136,11 @@ To add a palette, add its id to `paletteIds`, add its tokens to `palettes.ts` an
   - **Ended:** installed, with what to do on the device; cancelled, with **Resume** from the checkpoint (finished steps aren't repeated); failed, with the recovery box (`features/install/recovery/`):
     - the error's title and text (the code itself only in the diagnostics);
     - the fixes the Engine lists for the code (the diagnostics catalogue, via `engine.classify`), in its order: the first as a card with what to do (a sentence, steps, or an Apple page with **Copy**) and its button ("It's on, try again"), the others as buttons;
-    - what each fix does is a table in `constants.ts` (`fixes`, one entry per `RecoveryAction`): continue from the checkpoint, ask the device to trust this computer and then continue (`engine.pairDevice`), **Use another Apple ID** (a picker of the saved Apple IDs, without the one that failed or any blocked on the device; the run starts again with the one picked, which becomes the one in use), **Install from Nightly/Stable** (names the other channel and starts again on it), or only explain (no App IDs left, with the date the next one frees from the plan; device support on Windows). Apple pages have **Open** (in the browser) and **Copy**. Fixes whose screen comes in a later phase (another anisette server, another IPA, updating Loadstar, choosing another team) aren't shown yet;
+    - what each fix does is a table in `constants.ts` (`fixes`, one entry per `RecoveryAction`): continue from the checkpoint, ask the device to trust this computer and then continue (`engine.pairDevice`), **Use another Apple ID** (a picker of the saved Apple IDs, without the one that failed or any blocked on the device; the run starts again with the one picked, which becomes the one in use), **Install from Nightly/Stable** (names the other channel and starts again on it), or only explain (no App IDs left, with the date the next one frees from the plan; device support on Windows). Apple pages have **Open** (in the browser) and **Copy**. Fixes whose screen comes in a later phase (another anisette server, another IPA, updating IPAForge, choosing another team) aren't shown yet;
     - Try again isn't offered twice when the first fix already continues the run;
     - where the run continues from, **Copy diagnostics** (the code, step, app version, install choice and device model, never an Apple ID, name or serial), **Back to Install** (to choose another app, channel or Apple ID; the cancelled box has it too), **Show logs** (Logs with only this run's lines, from when it started to when it ended), and **Report the problem**, which opens a new GitHub issue in the browser with the title and diagnostics filled in (`utils/issue-url.ts`); nothing is sent until the user submits it there.
 
-**Manage → Accounts** (`features/accounts/`) lists the saved Apple IDs with their teams and state, marks the one **in use**, and offers **Use**, **Sign in again** (only for an expired session; it opens sign-in with the Apple ID filled in) and **Sign out**. Signing out asks first, in a dialog that says what Loadstar forgets (the Apple ID, its session, its saved password) and what it keeps (its signing certificates, so signing in again reuses them; installed apps keep working until they expire). Signing out the Apple ID in use hands its place to the next saved one. An **Add Apple ID** button opens sign-in.
+**Manage → Accounts** (`features/accounts/`) lists the saved Apple IDs with their teams and state, marks the one **in use**, and offers **Use**, **Sign in again** (only for an expired session; it opens sign-in with the Apple ID filled in) and **Sign out**. Signing out asks first, in a dialog that says what IPAForge forgets (the Apple ID, its session, its saved password) and what it keeps (its signing certificates, so signing in again reuses them; installed apps keep working until they expire). Signing out the Apple ID in use hands its place to the next saved one. An **Add Apple ID** button opens sign-in.
 
 Accounts are local data, but the Engine's account store has no change feed, so the UI invalidates the accounts query after a sign-in or a sign-out (never on a timer or on focus). Teams come from `listTeams` when the picker or the page shows an Apple ID: one query per account (the same key), so the top bar, the menu and the Accounts page always agree. An expired session is an answer, not a failure: `useTeams` turns `apple.session_expired` into `{ kind: 'sign-in-needed' }` data, which never goes stale and is not asked again when a menu opens, a component mounts or the window gets focus. It changes only when that account signs in or out (both invalidate the account's queries). Other failures are not retried on mount either.
 
@@ -151,7 +151,7 @@ The first Tab stop is a **Skip to content** link, which is visible only when foc
 - **Nothing is loaded whole.** The Engine keeps the last 5,000 records in memory (`createLogBuffer`, already redacted by the logger). The page asks for the newest 200 that match (`engine.logs.page`), and the next 200 up when the list nears the top. The list is virtual (`@tanstack/react-virtual`): only the rows on screen and a few around them are rendered, and a row that opens its details is measured as it renders.
 - **Filters and search run in the Engine**, next to the buffer: the level (All, Info, Warnings, Errors, each with its count), the area, the text (in the message, the scope and the fields, once typing pauses for 250 ms; matches are marked), and an install run's time span. Active filters show as chips, each removable. The filters live in a store kept by `App` (`state/log-view/`), so they stay when the user leaves Logs and comes back.
 - **New lines are pushed** (`engine.logs.watch`), never polled. While the list is at the bottom it follows them; scrolled up, it stays put and counts them, with **N new lines · Jump to latest**. Older pages added above keep the view still.
-- **Copy** puts the lines the filters show on the clipboard; **Save…** writes every line kept this session to `loadstar-logs-<date>-<time>.log`. Both read the lines from the Engine first and say how many, and that the logs name the device, apps and team. **Clear** empties the view only.
+- **Copy** puts the lines the filters show on the clipboard; **Save…** writes every line kept this session to `ipaforge-logs-<date>-<time>.log`. Both read the lines from the Engine first and say how many, and that the logs name the device, apps and team. **Clear** empties the view only.
 - **Include debug details** has the Engine record debug lines too (`engine.logs.setLevel`), until the app restarts.
 - **Ctrl+L** (⌘L on macOS) opens Logs from any section, and goes back from Logs (`features/logs/hooks/use-logs-shortcut.ts`, mounted by the shell); <kbd>/</kbd> focuses the search.
 
@@ -178,7 +178,7 @@ English is bundled; every other language is its own chunk, loaded on demand (see
 3. Add the key to every other locale file, translated if you can. Otherwise leave it as an empty string: it shows English and counts as untranslated until a translator fills it in.
 4. Run `pnpm check:locales`.
 
-`t()` is typed against `en.json`, so a typo or a key missing from it is a type error. The keys for the Engine's data are required: every `ErrorCode` has `errors.<code>.title` and `errors.<code>.body`, every recovery action `recovery.<id>`, and every step label (`install.steps.*`, `pairing.steps.*`) its key. `src/i18n/required-keys.ts` turns a missing one into a type error that names it, and a test checks the same keys in every shipped language. A new `ErrorCode` therefore fails `pnpm typecheck` until it has English text. `ErrorCode` comes from `@loadstar/kernel`; `RecoveryAction` and `StepLabel` come through `@loadstar/rpc`.
+`t()` is typed against `en.json`, so a typo or a key missing from it is a type error. The keys for the Engine's data are required: every `ErrorCode` has `errors.<code>.title` and `errors.<code>.body`, every recovery action `recovery.<id>`, and every step label (`install.steps.*`, `pairing.steps.*`) its key. `src/i18n/required-keys.ts` turns a missing one into a type error that names it, and a test checks the same keys in every shipped language. A new `ErrorCode` therefore fails `pnpm typecheck` until it has English text. `ErrorCode` comes from `@ipaforge/kernel`; `RecoveryAction` and `StepLabel` come through `@ipaforge/rpc`.
 
 ### Adding a language
 
@@ -221,7 +221,7 @@ The active locale sets `<html lang dir>`; Arabic, Hebrew, Persian and Urdu are `
 
 ### The pseudo-locale
 
-Development builds (`pnpm --filter @loadstar/ui dev`, `pnpm --filter @loadstar/desktop dev`, and tests) also offer `en-XA` in the language picker. It is generated from `en.json` when it is first chosen: every letter accented, the text padded to about 40 % longer and wrapped in brackets, `[Îñšţåļļ~~~]`. ICU arguments, plural branches and `#` are left intact. Text without accents is hard-coded; text without its closing bracket is truncated. Production builds don't include it.
+Development builds (`pnpm --filter @ipaforge/ui dev`, `pnpm --filter @ipaforge/desktop dev`, and tests) also offer `en-XA` in the language picker. It is generated from `en.json` when it is first chosen: every letter accented, the text padded to about 40 % longer and wrapped in brackets, `[Îñšţåļļ~~~]`. ICU arguments, plural branches and `#` are left intact. Text without accents is hard-coded; text without its closing bracket is truncated. Production builds don't include it.
 
 ### Loading languages
 

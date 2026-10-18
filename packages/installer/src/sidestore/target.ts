@@ -5,7 +5,7 @@ import {
   SIDESTORE_BUNDLE_ID,
   SIDESTORE_FRAMEWORK_NAME
 } from '@installer/sidestore/constants.ts'
-import type { CodeBundle } from '@loadstar/signer'
+import type { CodeBundle } from '@ipaforge/signer'
 
 const isDirectFramework = (bundle: CodeBundle): boolean =>
   bundle.kind === 'framework' &&

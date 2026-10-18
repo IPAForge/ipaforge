@@ -7,7 +7,7 @@ import {
   createDict,
   type PlistValue,
   serializeXmlPlist
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import type { TestIdentity } from '@signer/__tests__/identity.ts'
 import { toArrayBuffer } from '@signer/infrastructure/cms/certificate.ts'
 import { OID_DATA, OID_SIGNED_DATA } from '@signer/infrastructure/cms/oids.ts'
@@ -35,7 +35,7 @@ export const makeProfile = async (
   ])
   const plist = serializeXmlPlist(
     createDict([
-      ['AppIDName', `Loadstar ${options.bundleId}`],
+      ['AppIDName', `IPAForge ${options.bundleId}`],
       ['ApplicationIdentifierPrefix', [options.teamId]],
       ['CreationDate', new Date('2026-10-01T00:00:00Z')],
       ['DeveloperCertificates', [...options.certificates]],
@@ -51,7 +51,7 @@ export const makeProfile = async (
         [...(options.devices ?? ['00008110-000A1B2C3D4E5F60'])]
       ],
       ['TeamIdentifier', [options.teamId]],
-      ['TeamName', 'Loadstar Test'],
+      ['TeamName', 'IPAForge Test'],
       ['TimeToLive', 7],
       ['UUID', crypto.randomUUID().toUpperCase()],
       ['Version', 1]

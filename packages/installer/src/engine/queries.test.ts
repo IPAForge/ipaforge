@@ -11,7 +11,7 @@ import {
   UDID
 } from '@installer/__tests__/fakes.ts'
 import { createHarness } from '@installer/__tests__/harness.ts'
-import { ErrorCode } from '@loadstar/kernel'
+import { ErrorCode } from '@ipaforge/kernel'
 
 describe('engine queries', () => {
   it('previews an install without writing to Apple or the device', async () => {

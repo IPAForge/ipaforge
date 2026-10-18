@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { createLogger, type LogRecord } from '@loadstar/kernel'
+import { createLogger, type LogRecord } from '@ipaforge/kernel'
 import { createTestI18n } from '@ui/__tests__/test-i18n.ts'
 import { createI18n } from '@ui/i18n/setup/create-i18n.ts'
 

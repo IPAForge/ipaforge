@@ -1,6 +1,6 @@
 // The live feeds the UI subscribed to, by the id it chose: each forwards the Engine's events over the channel
 // until the UI unsubscribes or the channel closes.
-import type { Engine } from '@loadstar/installer'
+import type { Engine } from '@ipaforge/installer'
 import { subscriptionIdInUse } from '@rpc/domain/errors.ts'
 import type { LogSource } from '@rpc/domain/ports/log-source.ts'
 import type {

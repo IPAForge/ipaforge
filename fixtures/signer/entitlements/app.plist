@@ -3,12 +3,12 @@
 <plist version="1.0">
 <dict>
 	<key>application-identifier</key>
-	<string>ABCDE12345.com.loadstar.fixture.app</string>
+	<string>ABCDE12345.com.ipaforge.fixture.app</string>
 	<key>com.apple.developer.team-identifier</key>
 	<string>ABCDE12345</string>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.com.loadstar.fixture.app</string>
+		<string>group.com.ipaforge.fixture.app</string>
 	</array>
 	<key>get-task-allow</key>
 	<true/>

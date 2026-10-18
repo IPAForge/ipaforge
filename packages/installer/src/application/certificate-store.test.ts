@@ -5,7 +5,7 @@ import {
   certificateKey,
   createCertificateStore
 } from '@installer/application/certificate-store.ts'
-import { silentLogger, utf8Encode } from '@loadstar/kernel'
+import { silentLogger, utf8Encode } from '@ipaforge/kernel'
 
 describe('certificate store', () => {
   it('keeps a certificate and its key per account and team', async () => {

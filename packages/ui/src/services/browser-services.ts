@@ -3,8 +3,8 @@ import {
   isLevelAtLeast,
   type LogLevel,
   type LogRecord
-} from '@loadstar/kernel'
-import type { EngineClient } from '@loadstar/rpc'
+} from '@ipaforge/kernel'
+import type { EngineClient } from '@ipaforge/rpc'
 import { consoleLogSink } from '@ui/services/logging/console-log-sink.ts'
 import { createLocalStoragePreferences } from '@ui/services/preferences/local-storage-preferences.ts'
 import { createNavigatorClipboard } from '@ui/services/system/clipboard.ts'

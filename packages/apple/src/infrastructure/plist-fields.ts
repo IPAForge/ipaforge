@@ -1,5 +1,5 @@
 // Typed reads of loosely typed plist values from Apple responses.
-import type { PlistValue } from '@loadstar/kernel'
+import type { PlistValue } from '@ipaforge/kernel'
 
 /** Apple sends integers as plist `integer`, which can parse to a number or a bigint. */
 export const plistNumber = (

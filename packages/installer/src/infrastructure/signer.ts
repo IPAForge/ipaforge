@@ -1,11 +1,11 @@
-// The default IpaSigner: @loadstar/signer with an Apple development identity (key imported through WebCrypto,
+// The default IpaSigner: @ipaforge/signer with an Apple development identity (key imported through WebCrypto,
 // chain from the bundled Apple certificates).
 import type { IpaSigner, SignRequest } from '@installer/domain/ports/types.ts'
 import {
   KEY_ALGORITHM,
   SIGN_PROGRESS
 } from '@installer/infrastructure/constants.ts'
-import { compact, type Logger } from '@loadstar/kernel'
+import { compact, type Logger } from '@ipaforge/kernel'
 import {
   discoverBundles,
   inspectIpa,
@@ -16,7 +16,7 @@ import {
   type SignIpaOptions,
   type SigningIdentity,
   signIpa
-} from '@loadstar/signer'
+} from '@ipaforge/signer'
 
 const signingIdentity = async (
   request: SignRequest

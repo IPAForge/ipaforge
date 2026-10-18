@@ -14,14 +14,14 @@ import type {
   DevelopmentCertificate,
   SavedAccount,
   Team
-} from '@loadstar/apple'
-import type { CatalogApp, Channel } from '@loadstar/catalog'
-import type { DeviceCheck, UsbmuxDevice } from '@loadstar/device'
+} from '@ipaforge/apple'
+import type { CatalogApp, Channel } from '@ipaforge/catalog'
+import type { DeviceCheck, UsbmuxDevice } from '@ipaforge/device'
 import type {
   CompatibilityProblem,
   IpaInspection,
   SideloadIdentityPlan
-} from '@loadstar/signer'
+} from '@ipaforge/signer'
 
 export type PlanInstallInput = {
   readonly udid: string

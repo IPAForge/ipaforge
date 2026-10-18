@@ -18,13 +18,13 @@ import type { AppleDeps } from '@apple/types.ts'
 import {
   createDict,
   ErrorCode,
+  IPAForgeError,
   isPlistDict,
-  LoadstarError,
   type PlistDict,
   parsePlist,
-  toLoadstarError,
+  toIPAForgeError,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 export const XCODE_APP = 'com.apple.gs.xcode.auth'
 
@@ -72,14 +72,14 @@ const requestEncryptedToken = async (
       sessionAnisetteServer: session.anisetteServer
     })
   if (status.ec !== 0 && status.hsc === HSC_UNAUTHORIZED)
-    throw new LoadstarError(ErrorCode.SessionExpired, {
+    throw new IPAForgeError(ErrorCode.SessionExpired, {
       message: 'Apple refused the session for an app token',
       data: { request: 'apptokens', gsaCode: status.ec, hsc: status.hsc }
     })
   assertGsaOk(status, 'apptokens')
   const et = response.et
   if (!(et instanceof Uint8Array))
-    throw new LoadstarError(ErrorCode.AppleProtocolError, { message: 'no et' })
+    throw new IPAForgeError(ErrorCode.AppleProtocolError, { message: 'no et' })
   return et
 }
 
@@ -92,7 +92,7 @@ const tokenEntry = (
     isPlistDict(plain) && isPlistDict(plain.t) ? plain.t : undefined
   const entry = tokens?.[app]
   if (!isPlistDict(entry) || typeof entry.token !== 'string') {
-    throw new LoadstarError(ErrorCode.AppleProtocolError, {
+    throw new IPAForgeError(ErrorCode.AppleProtocolError, {
       message: `no token for ${app}`
     })
   }
@@ -123,7 +123,7 @@ export const createAppTokenService = (
         deps.logger.info('app token request failed', {
           request: 'apptokens',
           app,
-          code: toLoadstarError(error).code
+          code: toIPAForgeError(error).code
         })
         throw error
       })

@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
-import type { LogLevel } from '@loadstar/kernel'
+import type { LogLevel } from '@ipaforge/kernel'
 import { queryKeys } from '@ui/hooks/queries/query-keys.ts'
 import { useEngine } from '@ui/hooks/use-engine.ts'
 

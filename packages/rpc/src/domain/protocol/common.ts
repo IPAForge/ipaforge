@@ -6,7 +6,7 @@ import {
   type ErrorCode,
   isErrorCode,
   type SerializedError
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 /** Bumped on any incompatible change; both sides ship together, so a mismatch is a bug, never negotiated. */
 export const PROTOCOL_VERSION = 1
@@ -29,7 +29,7 @@ export const recordSchema = z.record(z.string(), z.unknown())
 const errorCodeSchema = z.custom<ErrorCode>(isErrorCode, 'unknown error code')
 
 /**
- * A LoadstarError as `toJSON()` writes it, cause chain included. Zod types optionals as `?: T | undefined`; a parsed
+ * An IPAForgeError as `toJSON()` writes it, cause chain included. Zod types optionals as `?: T | undefined`; a parsed
  * message never holds an explicit `undefined` there, so the exact type is safe.
  */
 export const serializedErrorSchema: z.ZodType<SerializedError> = z.lazy(

@@ -1,5 +1,5 @@
-import type { Engine } from '@loadstar/installer'
-import type { Logger } from '@loadstar/kernel'
+import type { Engine } from '@ipaforge/installer'
+import type { Logger } from '@ipaforge/kernel'
 import type { RpcConfig } from '@rpc/domain/config.ts'
 import type { LogSource } from '@rpc/domain/ports/log-source.ts'
 import type { ResolveIpa } from '@rpc/domain/ports/resolve-ipa.ts'

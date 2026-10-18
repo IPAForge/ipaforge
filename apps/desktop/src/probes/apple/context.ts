@@ -5,7 +5,7 @@ import { createProbeLogger } from '@desktop/probes/shared/logger.ts'
 import { createPrompt } from '@desktop/probes/shared/prompt.ts'
 import { createProbeSecrets } from '@desktop/probes/shared/secrets.ts'
 import type { Prompt } from '@desktop/probes/shared/types.ts'
-import { type AppleAccounts, createAppleAccounts } from '@loadstar/apple'
+import { type AppleAccounts, createAppleAccounts } from '@ipaforge/apple'
 
 export type AppleProbe = {
   readonly apple: AppleAccounts

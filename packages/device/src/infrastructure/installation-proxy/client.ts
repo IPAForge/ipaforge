@@ -23,7 +23,7 @@ import {
   type Logger,
   type PlistDict,
   stringAt
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const STATUS_COMPLETE = 'Complete'
 const PERCENT_COMPLETE = 100

@@ -1,4 +1,4 @@
-// The UI in a plain browser: `pnpm --filter @loadstar/ui dev` and `build` (into `dist/`).
+// The UI in a plain browser: `pnpm --filter @ipaforge/ui dev` and `build` (into `dist/`).
 // The Electron renderer mounts `App` with its own Vite config.
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'

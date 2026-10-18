@@ -1,6 +1,6 @@
 // The fake Engine's mutable state: the scenario, the saved accounts (sign-in adds one, a ban marks one), which
 // accounts have a live session, and which scripted failures already happened.
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 import {
   EXPIRED_ACCOUNT,
   FAKE_IPHONE,
@@ -51,7 +51,7 @@ const accountsFor = (scenario: FakeScenarioId): Account[] => {
 /** Sign-out: the account and its session are forgotten, like the Engine's account store does. */
 export const forgetAccount = (world: FakeWorld, accountId: string): void => {
   if (!world.accounts.some((account) => account.id === accountId))
-    throw new LoadstarError(ErrorCode.AccountNotFound, {
+    throw new IPAForgeError(ErrorCode.AccountNotFound, {
       data: { id: accountId }
     })
   world.accounts = world.accounts.filter((account) => account.id !== accountId)
@@ -92,7 +92,7 @@ export const teamsFor = (world: FakeWorld, accountId: string): Team[] =>
 /** Developer-services queries need a live session, as with the Engine. */
 export const requireSession = (world: FakeWorld, accountId: string): void => {
   if (!world.accounts.some((account) => account.id === accountId))
-    throw new LoadstarError(ErrorCode.AccountNotFound, {
+    throw new IPAForgeError(ErrorCode.AccountNotFound, {
       data: { id: accountId }
     })
   if (world.signedIn.has(accountId)) return
@@ -100,7 +100,7 @@ export const requireSession = (world: FakeWorld, accountId: string): void => {
     world.signedIn.add(accountId)
     return
   }
-  throw new LoadstarError(ErrorCode.SessionExpired)
+  throw new IPAForgeError(ErrorCode.SessionExpired)
 }
 
 const markBanned = (world: FakeWorld, accountId: string, udid: string) => {
@@ -129,5 +129,5 @@ export const failOnce = (
   world.failed.add(stepId)
   if (failure.code === ErrorCode.ProfileBanned)
     markBanned(world, run.accountId, run.udid)
-  throw new LoadstarError(failure.code, { data: { stepId } })
+  throw new IPAForgeError(failure.code, { data: { stepId } })
 }

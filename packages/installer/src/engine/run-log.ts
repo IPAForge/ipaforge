@@ -2,7 +2,7 @@
 // ended. Progress ticks are left out; they would bury the rest. Every line carries the flow's id.
 import type { RunEvent } from '@installer/engine/types.ts'
 import type { PipelineResult } from '@installer/pipeline/types.ts'
-import type { Logger } from '@loadstar/kernel'
+import type { Logger } from '@ipaforge/kernel'
 
 type EventLogger = (logger: Logger, event: never) => void
 

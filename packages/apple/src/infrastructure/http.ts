@@ -9,12 +9,12 @@ import {
   ErrorCode,
   type HttpMethod,
   type HttpResponse,
+  IPAForgeError,
   isTransientHttpStatus,
-  LoadstarError,
   readBody,
   retry,
   utf8DecodeLenient
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 /** Bytes of an unexpected response body kept in the error, for diagnosis. */
 const ERROR_BODY_PREVIEW_BYTES = 512
@@ -40,7 +40,7 @@ class TransientHttpError extends Error {
 /** Rate limits, temporary server failures, timeouts and network drops (adapters report those as `net.offline`). */
 const isTransient = (error: unknown): boolean =>
   error instanceof TransientHttpError ||
-  (error instanceof LoadstarError && error.code === ErrorCode.Offline) ||
+  (error instanceof IPAForgeError && error.code === ErrorCode.Offline) ||
   (error instanceof Error && error.name === 'TimeoutError')
 
 const headerValue = (
@@ -73,10 +73,10 @@ const rejectedStatusError = (
   method: HttpMethod,
   status: number,
   body: Uint8Array
-): LoadstarError => {
+): IPAForgeError => {
   const target = new URL(url)
 
-  return new LoadstarError(httpErrorCode(status), {
+  return new IPAForgeError(httpErrorCode(status), {
     message: `${method} ${target.host}${target.pathname} → HTTP ${status}`,
     data: {
       status,
@@ -122,16 +122,16 @@ const fetchOnce = async (
   })
 }
 
-/** What a failure that survived the retries becomes: always a catalogued `LoadstarError`. */
-const toFetchError = (url: string, error: unknown): LoadstarError => {
+/** What a failure that survived the retries becomes: always a catalogued `IPAForgeError`. */
+const toFetchError = (url: string, error: unknown): IPAForgeError => {
   if (error instanceof TransientHttpError) {
-    return new LoadstarError(httpErrorCode(error.status), {
+    return new IPAForgeError(httpErrorCode(error.status), {
       message: `${hostOf(url)} answered HTTP ${error.status}`,
       data: { status: error.status, host: hostOf(url) }
     })
   }
-  if (error instanceof LoadstarError) return error
-  return new LoadstarError(ErrorCode.Offline, {
+  if (error instanceof IPAForgeError) return error
+  return new IPAForgeError(ErrorCode.Offline, {
     cause: error,
     data: { host: hostOf(url) }
   })

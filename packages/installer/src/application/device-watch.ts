@@ -8,8 +8,8 @@ import type {
   DeviceWatchEvent,
   DeviceWatchListener
 } from '@installer/application/types.ts'
-import type { DeviceEvent, UsbmuxDevice } from '@loadstar/device'
-import { ErrorCode, LoadstarError, toLoadstarError } from '@loadstar/kernel'
+import type { DeviceEvent, UsbmuxDevice } from '@ipaforge/device'
+import { ErrorCode, IPAForgeError, toIPAForgeError } from '@ipaforge/kernel'
 
 const abortableSleep = (ms: number, signal: AbortSignal): Promise<void> =>
   new Promise((resolve, reject) => {
@@ -42,7 +42,7 @@ const byDevice = (attached: ReadonlyMap<number, UsbmuxDevice>) => {
 /** usbmuxd answered `Listen` with an error before sending anything: it will not stream on this machine. */
 const isListenRefused = (error: unknown, received: boolean): boolean =>
   !received &&
-  error instanceof LoadstarError &&
+  error instanceof IPAForgeError &&
   error.code === ErrorCode.DeviceProtocolError
 
 export const createDeviceWatch = ({
@@ -95,7 +95,7 @@ export const createDeviceWatch = ({
     while (!signal.aborted) {
       await sleep(config.devicePollIntervalMs, signal)
       await refresh().catch((error: unknown) =>
-        log.debug('device list failed', { code: toLoadstarError(error).code })
+        log.debug('device list failed', { code: toIPAForgeError(error).code })
       )
     }
   }
@@ -121,7 +121,7 @@ export const createDeviceWatch = ({
       throw error
     }
     if (signal.aborted) return 'stopped'
-    throw new LoadstarError(ErrorCode.DeviceDisconnected, {
+    throw new IPAForgeError(ErrorCode.DeviceDisconnected, {
       message: 'the usbmuxd event stream ended'
     })
   }
@@ -139,7 +139,7 @@ export const createDeviceWatch = ({
         failures += 1
         const delayMs = backoff(failures)
         log.warn('device watch lost; reconnecting', {
-          code: toLoadstarError(error).code,
+          code: toIPAForgeError(error).code,
           attempt: failures,
           delayMs
         })

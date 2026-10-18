@@ -1,6 +1,6 @@
 import { skipToken, useQuery } from '@tanstack/react-query'
 
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 import { QUERY_STALE_TIME_MS } from '@ui/hooks/queries/query-client.ts'
 import { queryKeys } from '@ui/hooks/queries/query-keys.ts'
 import { useEngine } from '@ui/hooks/use-engine.ts'
@@ -15,7 +15,7 @@ export type TeamsAnswer =
   | { readonly kind: 'sign-in-needed' }
 
 const isSessionExpired = (error: unknown): boolean =>
-  error instanceof LoadstarError && error.code === ErrorCode.SessionExpired
+  error instanceof IPAForgeError && error.code === ErrorCode.SessionExpired
 
 /**
  * An account's teams (one query per account, shared by every component showing it). "Sign-in needed" stays until

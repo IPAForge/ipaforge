@@ -1,6 +1,6 @@
 // Whether an inspected app can run on a target device: minimum iOS, device family and CPU architecture. Pure, so
 // the installer can check before any Apple call and a plan can report the problem without failing.
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 import { isVersionAtLeast } from '@signer/domain/macho/version.ts'
 import {
   FAMILIES_BY_DEVICE_CLASS,
@@ -67,14 +67,14 @@ export const checkCompatibility = (
   return undefined
 }
 
-/** Throws the problem `checkCompatibility` finds, as a `LoadstarError` with its code and data. */
+/** Throws the problem `checkCompatibility` finds, as a `IPAForgeError` with its code and data. */
 export const assertCompatible = (
   inspection: IpaInspection,
   device: TargetDevice
 ): void => {
   const problem = checkCompatibility(inspection, device)
   if (!problem) return
-  throw new LoadstarError(problem.code, {
+  throw new IPAForgeError(problem.code, {
     message: 'the app cannot run on this device',
     data: problem.data
   })

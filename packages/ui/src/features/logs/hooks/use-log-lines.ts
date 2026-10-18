@@ -7,7 +7,7 @@ import {
   type LogLevel,
   type LogPage,
   matchesLogFilter
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import { LOG_PAGE_SIZE } from '@ui/features/logs/constants.ts'
 import { useLiveEntries } from '@ui/features/logs/hooks/use-live-entries.ts'
 import type { LogLines } from '@ui/features/logs/types.ts'

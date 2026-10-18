@@ -1,4 +1,4 @@
-import { compact, type Logger } from '@loadstar/kernel'
+import { compact, type Logger } from '@ipaforge/kernel'
 import { hashAlgorithmsFor } from '@signer/application/policy.ts'
 import { signBinary } from '@signer/application/sign-binary.ts'
 import type {

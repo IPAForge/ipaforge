@@ -8,7 +8,7 @@ import type {
   StepContext,
   StepContextDeps
 } from '@installer/pipeline/types.ts'
-import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 const reportProgress =
   <S>(
@@ -40,7 +40,7 @@ const askUser =
   ({ signal, onPrompt }: StepContextDeps) =>
   async <T>(request: PromptRequest): Promise<T> => {
     if (!onPrompt) {
-      throw new LoadstarError(ErrorCode.PromptCancelled, {
+      throw new IPAForgeError(ErrorCode.PromptCancelled, {
         message: `no prompt handler for ${request.kind}`
       })
     }

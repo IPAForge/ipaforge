@@ -11,7 +11,7 @@ import type {
   TwoFactorMethods
 } from '@apple/domain/types.ts'
 import type { AppleDeps } from '@apple/types.ts'
-import type { ErrorCode } from '@loadstar/kernel'
+import type { ErrorCode } from '@ipaforge/kernel'
 
 export type AccountHealth = {
   readonly lastSuccessAt?: string | undefined

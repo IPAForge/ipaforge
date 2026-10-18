@@ -1,8 +1,8 @@
 import { createMemoryHistory } from '@tanstack/react-router'
 import { render } from '@testing-library/react'
 
-import { compact, createLogger, type LogRecord } from '@loadstar/kernel'
-import type { EngineClient } from '@loadstar/rpc'
+import { compact, createLogger, type LogRecord } from '@ipaforge/kernel'
+import type { EngineClient } from '@ipaforge/rpc'
 import { App } from '@ui/App.tsx'
 import type { LoadBundle } from '@ui/i18n/loading/types.ts'
 import { prepareLanguage } from '@ui/i18n/setup/prepare-language.ts'

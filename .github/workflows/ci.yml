@@ -54,7 +54,7 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter @loadstar/desktop build
+      - run: pnpm --filter @ipaforge/desktop build
 
   # Apple `codesign` is the signer's oracle: fixtures must still match it, and every Apple-verification
   # test (codesign --verify --deep --strict) runs here, plus the real SideStore end-to-end signing.
@@ -77,7 +77,7 @@ jobs:
       - name: Fixtures still match this codesign (toolchain drift check)
         run: fixtures/signer/generate.sh --check
       - name: Signer tests incl. Apple verification
-        run: pnpm vitest run --project @loadstar/signer
+        run: pnpm vitest run --project @ipaforge/signer
       - uses: actions/cache@v6
         with:
           path: .cache/e2e
@@ -85,4 +85,4 @@ jobs:
       - name: SideStore end to end
         run: pnpm vitest run packages/signer/src/application/sign-ipa.test.ts
         env:
-          LOADSTAR_E2E: "1"
+          IPAFORGE_E2E: "1"

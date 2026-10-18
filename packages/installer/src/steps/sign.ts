@@ -19,9 +19,9 @@ import {
   updateJob
 } from '@installer/steps/app-job.ts'
 import { SIGNED_PREFIX } from '@installer/steps/constants.ts'
-import type { CertificateIdentity } from '@loadstar/apple'
-import { compact } from '@loadstar/kernel'
-import type { BundleAdditions } from '@loadstar/signer'
+import type { CertificateIdentity } from '@ipaforge/apple'
+import { compact } from '@ipaforge/kernel'
+import type { BundleAdditions } from '@ipaforge/signer'
 
 const certificateAdditions = (
   job: AppJob,

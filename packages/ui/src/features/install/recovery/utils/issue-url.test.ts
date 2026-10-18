@@ -8,7 +8,7 @@ describe('issueUrl', () => {
       issueUrl('Install failed: device.locked', 'code: device.locked')
     )
     expect(url.origin + url.pathname).toBe(
-      'https://github.com/SirReaDy/loadstar/issues/new'
+      'https://github.com/SirReaDy/ipaforge/issues/new'
     )
     expect(url.searchParams.get('title')).toBe('Install failed: device.locked')
     expect(url.searchParams.get('body')).toContain(

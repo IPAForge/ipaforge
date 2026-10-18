@@ -7,13 +7,13 @@ import { toDevices, toTeams } from '@apple/infrastructure/developer/parse.ts'
 import {
   createDict,
   ErrorCode,
-  LoadstarError,
+  IPAForgeError,
   type PlistDict
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 export const listTeams = async (ctx: DeveloperContext): Promise<Team[]> => {
   const teams = toTeams(await ctx.request('listTeams', 'any'), ctx.skip('team'))
-  if (teams.length === 0) throw new LoadstarError(ErrorCode.NoTeams)
+  if (teams.length === 0) throw new IPAForgeError(ErrorCode.NoTeams)
   return teams
 }
 
@@ -28,7 +28,7 @@ export const listDevices = async (
  * not show it (a race with another tool, or a list that lags).
  */
 const isAlreadyRegistered = (error: unknown): boolean =>
-  error instanceof LoadstarError &&
+  error instanceof IPAForgeError &&
   error.data?.action === 'addDevice' &&
   error.data.resultCode === DeveloperCode.InvalidName
 

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
 
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
-import type { RunEvent } from '@loadstar/rpc'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
+import type { RunEvent } from '@ipaforge/rpc'
 import {
   answeredView,
   brokenView,
@@ -175,7 +175,7 @@ describe('finishedView', () => {
   })
 
   it('fails at a step, keeping the error and the checkpoint', () => {
-    const error = new LoadstarError(ErrorCode.DeviceLocked)
+    const error = new IPAForgeError(ErrorCode.DeviceLocked)
     const view = finishedView(running, {
       status: 'failed',
       error,
@@ -195,7 +195,7 @@ describe('finishedView', () => {
     })
     const declined = finishedView(running, {
       status: 'failed',
-      error: new LoadstarError(ErrorCode.PromptCancelled),
+      error: new IPAForgeError(ErrorCode.PromptCancelled),
       failedStep: 'device',
       checkpoint: CHECKPOINT
     })
@@ -209,7 +209,7 @@ describe('finishedView', () => {
   it('fails where it was, without a checkpoint, when the channel breaks', () => {
     const view = brokenView(
       running,
-      new LoadstarError(ErrorCode.RpcDisconnected)
+      new IPAForgeError(ErrorCode.RpcDisconnected)
     )
     expect(view.failure?.stepId).toBe('device')
     expect(view.checkpoint).toBeUndefined()

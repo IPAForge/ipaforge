@@ -10,7 +10,7 @@ import {
   serializeXmlPlist,
   silentLogger,
   withKey
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import {
   addBundle,
   encrypted,
@@ -30,7 +30,7 @@ import {
 import { planSideloadIdentity } from '@signer/domain/sideload/identity-plan.ts'
 import { writeIpa } from '@signer/infrastructure/ipa/index.ts'
 
-const MAIN = 'com.loadstar.fixture.app'
+const MAIN = 'com.ipaforge.fixture.app'
 const TEAM = 'ABCDE12345'
 
 const ipaOf = async (app: BundleTree): Promise<FileSource> => {
@@ -84,9 +84,9 @@ describe('inspectIpa', () => {
     const entitlements = createDict([
       [
         'com.apple.security.application-groups',
-        [`group.${MAIN}`, 'group.com.loadstar.shared']
+        [`group.${MAIN}`, 'group.com.ipaforge.shared']
       ],
-      ['keychain-access-groups', ['OLDTEAM456.com.loadstar.shared']]
+      ['keychain-access-groups', ['OLDTEAM456.com.ipaforge.shared']]
     ])
     setFile(
       tree,
@@ -132,8 +132,8 @@ describe('inspectIpa', () => {
           name: 'X'
         }
       ],
-      appGroups: [`group.${MAIN}`, 'group.com.loadstar.shared'],
-      keychainAccessGroups: ['OLDTEAM456.com.loadstar.shared'],
+      appGroups: [`group.${MAIN}`, 'group.com.ipaforge.shared'],
+      keychainAccessGroups: ['OLDTEAM456.com.ipaforge.shared'],
       altAppGroups: [`group.${MAIN}`]
     })
 

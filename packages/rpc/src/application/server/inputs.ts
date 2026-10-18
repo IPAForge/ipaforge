@@ -4,8 +4,8 @@ import type {
   AppSource,
   InstallAppsInput,
   PlanInstallInput
-} from '@loadstar/installer'
-import { compact } from '@loadstar/kernel'
+} from '@ipaforge/installer'
+import { compact } from '@ipaforge/kernel'
 import type {
   InstallAppsCall,
   PlanInstallCall

@@ -1,6 +1,6 @@
 import { resolveAppleConfig } from '@apple/domain/config.ts'
 import type { AppleDeps, AppleDepsInput, Sleep } from '@apple/types.ts'
-import { silentLogger, systemClock } from '@loadstar/kernel'
+import { silentLogger, systemClock } from '@ipaforge/kernel'
 
 const realSleep: Sleep = (ms, signal) =>
   new Promise((resolve, reject) => {

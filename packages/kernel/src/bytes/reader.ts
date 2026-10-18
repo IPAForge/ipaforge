@@ -1,6 +1,6 @@
 import { utf8DecodeLenient } from '@kernel/bytes/bytes.ts'
 import { ErrorCode } from '@kernel/errors/codes.ts'
-import { LoadstarError } from '@kernel/errors/loadstar-error.ts'
+import { IPAForgeError } from '@kernel/errors/ipaforge-error.ts'
 
 /**
  * Bounds-checked sequential reader. Every multi-byte read names its endianness explicitly:
@@ -111,7 +111,7 @@ export class ByteReader {
   }
 
   #outOfRange(offset: number, length: number): never {
-    throw new LoadstarError(ErrorCode.Unexpected, {
+    throw new IPAForgeError(ErrorCode.Unexpected, {
       message: 'read out of range',
       data: { offset, length, size: this.#bytes.byteLength }
     })

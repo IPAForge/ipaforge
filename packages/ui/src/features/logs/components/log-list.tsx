@@ -2,7 +2,7 @@ import { Spinner } from '@heroui/react'
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import type { LogEntry } from '@loadstar/kernel'
+import type { LogEntry } from '@ipaforge/kernel'
 import { JumpToLatest } from '@ui/features/logs/components/jump-to-latest.tsx'
 import { LogRow } from '@ui/features/logs/components/log-row.tsx'
 import { LogsEmpty } from '@ui/features/logs/components/logs-empty.tsx'

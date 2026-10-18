@@ -1,7 +1,7 @@
 import { DEFAULT_INSTALLER_CONFIG } from '@installer/domain/config.ts'
 import { createDefaultSigner } from '@installer/infrastructure/signer.ts'
 import type { InstallerDeps, InstallerDepsInput } from '@installer/types.ts'
-import { silentLogger, systemClock } from '@loadstar/kernel'
+import { silentLogger, systemClock } from '@ipaforge/kernel'
 
 export const resolveInstallerDeps = (
   input: InstallerDepsInput

@@ -2,7 +2,7 @@ import { Card } from '@heroui/react'
 import type { ReactNode } from 'react'
 import { useTranslation } from 'react-i18next'
 
-import { compact } from '@loadstar/kernel'
+import { compact } from '@ipaforge/kernel'
 import { PageHeader } from '@ui/components/page-header.tsx'
 import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 

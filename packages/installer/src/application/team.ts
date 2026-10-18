@@ -4,7 +4,7 @@ import { PromptKind } from '@installer/domain/prompts.ts'
 import { preselectTeam, requireTeam } from '@installer/domain/team.ts'
 import type { StepContext } from '@installer/pipeline/types.ts'
 import type { InstallerDeps } from '@installer/types.ts'
-import type { DeveloperServices, Team } from '@loadstar/apple'
+import type { DeveloperServices, Team } from '@ipaforge/apple'
 
 /** The team remembered for the saved account (the last one it installed with). */
 export const rememberedTeamId = async (

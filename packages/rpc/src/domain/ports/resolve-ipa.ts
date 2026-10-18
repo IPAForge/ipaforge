@@ -1,4 +1,4 @@
-import type { FileSource } from '@loadstar/kernel'
+import type { FileSource } from '@ipaforge/kernel'
 import type { ExternalIpa } from '@rpc/domain/protocol/types.ts'
 
 /** Turns an IPA the UI named (a picked file or a URL) into a readable file on the Engine's side. */

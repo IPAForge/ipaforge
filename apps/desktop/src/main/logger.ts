@@ -4,8 +4,8 @@ import {
   createLogLevel,
   type Logger,
   parseLogLevel
-} from '@loadstar/kernel'
-import type { LogSource } from '@loadstar/rpc'
+} from '@ipaforge/kernel'
+import type { LogSource } from '@ipaforge/rpc'
 
 const MAIN_LOG_SCOPE = 'desktop'
 

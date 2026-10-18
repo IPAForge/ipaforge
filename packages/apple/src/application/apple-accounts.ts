@@ -1,4 +1,4 @@
-// The public facade of @loadstar/apple: anisette, sign-in with 2FA, app tokens, saved accounts and preflight.
+// The public facade of @ipaforge/apple: anisette, sign-in with 2FA, app tokens, saved accounts and preflight.
 
 import { createAccountStore } from '@apple/application/accounts.ts'
 import { createAnisetteService } from '@apple/application/anisette.ts'
@@ -20,7 +20,7 @@ import type {
 import { resolveAppleDeps } from '@apple/deps.ts'
 import type { AppleSession } from '@apple/domain/types.ts'
 import type { AppleDepsInput } from '@apple/types.ts'
-import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 const findSaved = async (
   accounts: AccountStore,
@@ -28,8 +28,8 @@ const findSaved = async (
 ): Promise<SavedAccount | undefined> =>
   (await accounts.list()).find((candidate) => candidate.id === id)
 
-const isSessionExpired = (error: unknown): error is LoadstarError =>
-  error instanceof LoadstarError && error.code === ErrorCode.SessionExpired
+const isSessionExpired = (error: unknown): error is IPAForgeError =>
+  error instanceof IPAForgeError && error.code === ErrorCode.SessionExpired
 
 /** The saved session when Apple still accepts it (checked with an app token request). */
 const reuseSession = async (
@@ -68,7 +68,7 @@ export const resumeAccount = async (
 ): Promise<ResumeResult> => {
   const account = await findSaved(services.accounts, id)
   if (!account)
-    throw new LoadstarError(ErrorCode.AccountNotFound, { data: { id } })
+    throw new IPAForgeError(ErrorCode.AccountNotFound, { data: { id } })
   const session = await reuseSession(services, id)
   if (session) return { kind: 'signed_in', session }
   const password = await services.accounts.password(id)

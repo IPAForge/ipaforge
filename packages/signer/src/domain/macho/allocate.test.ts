@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 
-import { ErrorCode, LoadstarError, toHex } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError, toHex } from '@ipaforge/kernel'
 import { readFixture } from '@signer/__tests__/fixtures.ts'
 import { signedTargets } from '@signer/__tests__/targets.ts'
 import {
@@ -135,8 +135,8 @@ describe('allocation errors', () => {
       prepareImage(cramped, 1024)
       expect.unreachable()
     } catch (error) {
-      expect(error).toBeInstanceOf(LoadstarError)
-      expect((error as LoadstarError).code).toBe(ErrorCode.NoHeaderSpace)
+      expect(error).toBeInstanceOf(IPAForgeError)
+      expect((error as IPAForgeError).code).toBe(ErrorCode.NoHeaderSpace)
     }
   })
 
@@ -147,6 +147,6 @@ describe('allocation errors', () => {
       ...slice,
       codeSignature: { ...slice.codeSignature, datasize: 1 << 24 }
     }
-    expect(() => prepareImage(broken, 1024)).toThrow(LoadstarError)
+    expect(() => prepareImage(broken, 1024)).toThrow(IPAForgeError)
   })
 })

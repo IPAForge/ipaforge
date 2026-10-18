@@ -1,5 +1,5 @@
 import type { ProgressTracker } from '@installer/pipeline/progress.ts'
-import type { LoadstarError } from '@loadstar/kernel'
+import type { IPAForgeError } from '@ipaforge/kernel'
 
 /** A step as the run announces it up front, so the UI can list every step before it starts. */
 export type PlannedStep = {
@@ -101,7 +101,7 @@ export type PipelineEvent =
   | {
       readonly type: 'step-failed'
       readonly stepId: string
-      readonly error: LoadstarError
+      readonly error: IPAForgeError
     }
   | { readonly type: 'progress'; readonly fraction: number }
 
@@ -118,7 +118,7 @@ export type PipelineResult<S> =
   | { readonly status: 'completed'; readonly state: S }
   | {
       readonly status: 'failed'
-      readonly error: LoadstarError
+      readonly error: IPAForgeError
       readonly failedStep: string
       readonly checkpoint: Checkpoint<S>
     }

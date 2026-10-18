@@ -22,7 +22,7 @@ describe('recoveryFixes', () => {
     expect(
       recoveryFixes(['change-anisette-server', 'check-network', 'retry'])
     ).toEqual({ first: 'check-network', others: [] })
-    expect(recoveryFixes(['update-loadstar', 'report-issue'])).toEqual({
+    expect(recoveryFixes(['update-ipaforge', 'report-issue'])).toEqual({
       first: undefined,
       others: []
     })

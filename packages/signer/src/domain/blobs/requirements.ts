@@ -1,4 +1,4 @@
-import { ByteWriter, utf8Encode } from '@loadstar/kernel'
+import { ByteWriter, utf8Encode } from '@ipaforge/kernel'
 import {
   CSMAGIC_REQUIREMENT,
   CSMAGIC_REQUIREMENTS

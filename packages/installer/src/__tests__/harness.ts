@@ -11,7 +11,7 @@ import {
 } from '@installer/__tests__/fakes.ts'
 import { createEngine } from '@installer/engine.ts'
 import type { PromptHandler, PromptRequest } from '@installer/pipeline/types.ts'
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 export type HarnessOptions = {
   readonly device?: FakeDeviceOptions
@@ -51,7 +51,7 @@ export const scripted = (
     asked.push(request)
     const answer = answers[request.kind]
     if (!answer)
-      throw new LoadstarError(ErrorCode.PromptCancelled, {
+      throw new IPAForgeError(ErrorCode.PromptCancelled, {
         message: `unexpected ${request.kind}`
       })
     return answer(request)

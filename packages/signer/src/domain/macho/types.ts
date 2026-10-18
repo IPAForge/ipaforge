@@ -1,4 +1,4 @@
-import type { ByteReader } from '@loadstar/kernel'
+import type { ByteReader } from '@ipaforge/kernel'
 
 export type Segment = {
   readonly name: string

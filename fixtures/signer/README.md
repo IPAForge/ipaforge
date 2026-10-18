@@ -1,6 +1,6 @@
 # Signer golden fixtures
 
-Apple's `codesign` is the oracle for `@loadstar/signer`. Every case here is a small iOS binary or bundle:
+Apple's `codesign` is the oracle for `@ipaforge/signer`. Every case here is a small iOS binary or bundle:
 
 - `inputs/` contains the unsigned binaries and bundles, plus one already-signed binary for the re-sign case;
 - `expected/` contains the same inputs **ad-hoc signed by Apple `codesign`**, bottom-up.

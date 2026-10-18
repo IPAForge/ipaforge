@@ -1,12 +1,12 @@
 export { ErrorCode, isErrorCode } from '@kernel/errors/codes.ts'
 export {
+  IPAForgeError,
   isAbortError,
-  isLoadstarError,
-  LoadstarError,
-  toLoadstarError
-} from '@kernel/errors/loadstar-error.ts'
+  isIPAForgeError,
+  toIPAForgeError
+} from '@kernel/errors/ipaforge-error.ts'
 export type {
   ErrorData,
-  LoadstarErrorOptions,
+  IPAForgeErrorOptions,
   SerializedError
 } from '@kernel/errors/types.ts'

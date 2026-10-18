@@ -12,8 +12,8 @@ import {
   pipeline,
   type RunEvent,
   type RunHandle
-} from '@loadstar/installer'
-import { compact, ErrorCode, LoadstarError } from '@loadstar/kernel'
+} from '@ipaforge/installer'
+import { compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 export type FakeState = {
   readonly apps: readonly AppSource[]
@@ -57,7 +57,7 @@ const flow = (control: FakeControl) =>
       run: async () => {
         if (control.installFailures > 0) {
           control.installFailures--
-          throw new LoadstarError(ErrorCode.InstallFailed, {
+          throw new IPAForgeError(ErrorCode.InstallFailed, {
             data: { bundleId: 'com.example.app' }
           })
         }
@@ -96,7 +96,7 @@ const startRun = (
   const take = () => {
     const current = waiting
     if (!current)
-      throw new LoadstarError(ErrorCode.Unexpected, {
+      throw new IPAForgeError(ErrorCode.Unexpected, {
         message: 'no prompt is waiting'
       })
     waiting = undefined
@@ -111,7 +111,7 @@ const startRun = (
     },
     pending: () => waiting?.request,
     answer: (answer) => take().resolve(answer),
-    decline: () => take().reject(new LoadstarError(ErrorCode.PromptCancelled)),
+    decline: () => take().reject(new IPAForgeError(ErrorCode.PromptCancelled)),
     cancel: () => {},
     result: flow(control).run(
       initial,
@@ -151,9 +151,9 @@ export const createFakeEngine = () => {
   const engine = {
     listDevices: async () => [{ udid: 'UDID1', connection: 'USB' }],
     deviceStatus: async (udid: string) => {
-      throw new LoadstarError(ErrorCode.DeviceLocked, {
+      throw new IPAForgeError(ErrorCode.DeviceLocked, {
         data: { udid },
-        cause: new LoadstarError(ErrorCode.Offline, {
+        cause: new IPAForgeError(ErrorCode.Offline, {
           message: 'lockdown went away'
         })
       })
@@ -190,7 +190,7 @@ export const createFakeEngine = () => {
         options
       ),
     placePairing: () => {
-      throw new LoadstarError(ErrorCode.TeamRequired, {
+      throw new IPAForgeError(ErrorCode.TeamRequired, {
         data: { accountId: 'acct' }
       })
     },
@@ -200,7 +200,7 @@ export const createFakeEngine = () => {
     },
     signOut: async (accountId: string) => {
       if (accountId !== 'acct')
-        throw new LoadstarError(ErrorCode.AccountNotFound, {
+        throw new IPAForgeError(ErrorCode.AccountNotFound, {
           data: { id: accountId }
         })
       control.signedOut.push(accountId)

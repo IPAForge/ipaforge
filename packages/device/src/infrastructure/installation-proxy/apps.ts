@@ -5,7 +5,7 @@ import {
   type PlistDict,
   type PlistValue,
   stringAt
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 export type InstalledApp = {
   readonly bundleId: string

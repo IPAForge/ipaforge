@@ -1,5 +1,5 @@
 // Concrete keychain access groups for a re-provisioned executable (signer-spec §8.2).
-import { type PlistDict, stringAt } from '@loadstar/kernel'
+import { type PlistDict, stringAt } from '@ipaforge/kernel'
 import { stringsOf } from '@signer/domain/dict.ts'
 import {
   APP_IDENTIFIER_PREFIX_VARIABLE,

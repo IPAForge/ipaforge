@@ -1,4 +1,4 @@
-import { compact, type LogFilter } from '@loadstar/kernel'
+import { compact, type LogFilter } from '@ipaforge/kernel'
 import { LOG_AREA_SCOPES } from '@ui/features/logs/constants.ts'
 import type { LogViewState } from '@ui/state/log-view/types.ts'
 

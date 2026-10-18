@@ -6,7 +6,7 @@ import {
   toBase64,
   toHex,
   utf8Encode
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 import { rejection } from '@signer/__tests__/errors.ts'
 import {
   createCertificate,

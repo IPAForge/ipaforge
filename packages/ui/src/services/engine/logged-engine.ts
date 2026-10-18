@@ -1,7 +1,7 @@
 // The host's EngineClient with every query and command logged at debug level (scope `ui.engine`): the method and,
 // for a failed query, the error code. Arguments are never logged; an answer or input may hold a secret.
-import { type Logger, toLoadstarError } from '@loadstar/kernel'
-import type { EngineClient } from '@loadstar/rpc'
+import { type Logger, toIPAForgeError } from '@ipaforge/kernel'
+import type { EngineClient } from '@ipaforge/rpc'
 
 type AnyMethod = (...args: unknown[]) => unknown
 
@@ -13,7 +13,7 @@ const logged = (method: string, call: AnyMethod, logger: Logger): AnyMethod => {
       value.catch((error: unknown) =>
         logger.debug('engine request failed', {
           method,
-          code: toLoadstarError(error).code
+          code: toIPAForgeError(error).code
         })
       )
     return value

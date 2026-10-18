@@ -1,6 +1,6 @@
 import { skipToken, useQuery } from '@tanstack/react-query'
 
-import type { TeamQuery } from '@loadstar/rpc'
+import type { TeamQuery } from '@ipaforge/rpc'
 import { queryKeys } from '@ui/hooks/queries/query-keys.ts'
 import { useEngine } from '@ui/hooks/use-engine.ts'
 

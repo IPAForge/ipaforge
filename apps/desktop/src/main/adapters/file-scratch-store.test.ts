@@ -5,13 +5,13 @@ import { join } from 'node:path'
 import { afterEach, describe, expect, it } from 'vitest'
 
 import { createFileScratchStore } from '@desktop/main/adapters/file-scratch-store.ts'
-import { bytesFileSource } from '@loadstar/kernel'
+import { bytesFileSource } from '@ipaforge/kernel'
 
 const PERMISSION_BITS = 0o777
 const dirs: string[] = []
 
 const tempRoot = async (): Promise<string> => {
-  const dir = await mkdtemp(join(tmpdir(), 'loadstar-scratch-'))
+  const dir = await mkdtemp(join(tmpdir(), 'ipaforge-scratch-'))
   dirs.push(dir)
   return join(dir, 'scratch')
 }

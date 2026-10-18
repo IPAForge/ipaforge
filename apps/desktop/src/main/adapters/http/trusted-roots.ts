@@ -2,9 +2,9 @@
 // services) use certificates from Apple's private CA, which public root stores do not include.
 import { rootCertificates } from 'node:tls'
 
-import { encodePem } from '@loadstar/device'
-import { fromBase64 } from '@loadstar/kernel'
-import { APPLE_CERTIFICATES } from '@loadstar/signer'
+import { encodePem } from '@ipaforge/device'
+import { fromBase64 } from '@ipaforge/kernel'
+import { APPLE_CERTIFICATES } from '@ipaforge/signer'
 
 const appleRoots = APPLE_CERTIFICATES.filter(
   (certificate) => certificate.kind === 'root'

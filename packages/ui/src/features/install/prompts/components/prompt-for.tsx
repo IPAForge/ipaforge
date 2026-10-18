@@ -1,4 +1,4 @@
-import type { PromptRequest } from '@loadstar/rpc'
+import type { PromptRequest } from '@ipaforge/rpc'
 import { NotYetAsked } from '@ui/features/install/prompts/components/not-yet-asked.tsx'
 import type { RunPromptActions } from '@ui/features/install/prompts/types.ts'
 import { askedPrompt } from '@ui/features/install/prompts/utils/asked-prompt.ts'

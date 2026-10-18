@@ -1,5 +1,5 @@
 {
-  "name": "@loadstar/installer",
+  "name": "@ipaforge/installer",
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
@@ -12,11 +12,11 @@
     "typecheck": "tsc -p tsconfig.src.json && tsc -p tsconfig.json"
   },
   "dependencies": {
-    "@loadstar/apple": "workspace:*",
-    "@loadstar/catalog": "workspace:*",
-    "@loadstar/device": "workspace:*",
-    "@loadstar/kernel": "workspace:*",
-    "@loadstar/signer": "workspace:*",
+    "@ipaforge/apple": "workspace:*",
+    "@ipaforge/catalog": "workspace:*",
+    "@ipaforge/device": "workspace:*",
+    "@ipaforge/kernel": "workspace:*",
+    "@ipaforge/signer": "workspace:*",
     "zod": "4.6.6"
   }
 }

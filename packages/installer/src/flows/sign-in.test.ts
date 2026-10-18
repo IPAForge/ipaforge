@@ -4,7 +4,7 @@ import { ACCOUNT, twoFactorChallenge } from '@installer/__tests__/fakes.ts'
 import { createHarness, scripted } from '@installer/__tests__/harness.ts'
 import { PromptKind } from '@installer/domain/prompts.ts'
 import type { RunEvent } from '@installer/engine/types.ts'
-import { ErrorCode } from '@loadstar/kernel'
+import { ErrorCode } from '@ipaforge/kernel'
 
 const input = { appleId: ACCOUNT }
 

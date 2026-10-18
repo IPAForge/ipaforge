@@ -2,18 +2,18 @@ import { ErrorCode, isErrorCode } from '@kernel/errors/codes.ts'
 import { ABORT_ERROR_NAMES } from '@kernel/errors/constants.ts'
 import type {
   ErrorData,
-  LoadstarErrorOptions,
+  IPAForgeErrorOptions,
   SerializedError
 } from '@kernel/errors/types.ts'
 import { compact } from '@kernel/objects/compact.ts'
 
 /** The only error type that crosses package boundaries. */
-export class LoadstarError extends Error {
-  override readonly name = 'LoadstarError'
+export class IPAForgeError extends Error {
+  override readonly name = 'IPAForgeError'
   readonly code: ErrorCode
   readonly data: ErrorData | undefined
 
-  constructor(code: ErrorCode, options: LoadstarErrorOptions = {}) {
+  constructor(code: ErrorCode, options: IPAForgeErrorOptions = {}) {
     super(
       options.message ?? code,
       options.cause === undefined ? undefined : { cause: options.cause }
@@ -26,31 +26,31 @@ export class LoadstarError extends Error {
     return serializeError(this)
   }
 
-  static fromJSON(json: SerializedError): LoadstarError {
+  static fromJSON(json: SerializedError): IPAForgeError {
     const cause = json.cause ? deserializeCause(json.cause) : undefined
 
-    return new LoadstarError(
+    return new IPAForgeError(
       json.code ?? ErrorCode.Unexpected,
       compact({ message: json.message, cause, data: json.data })
     )
   }
 }
 
-export const isLoadstarError = (value: unknown): value is LoadstarError =>
-  value instanceof LoadstarError
+export const isIPAForgeError = (value: unknown): value is IPAForgeError =>
+  value instanceof IPAForgeError
 
 /**
- * Normalise anything that was thrown into a LoadstarError, keeping the original as `cause`.
+ * Normalise anything that was thrown into an IPAForgeError, keeping the original as `cause`.
  * Aborts are recognised so cancellation never surfaces as an "unexpected" failure.
  */
-export const toLoadstarError = (
+export const toIPAForgeError = (
   error: unknown,
   fallbackCode: ErrorCode = ErrorCode.Unexpected
-): LoadstarError => {
-  if (isLoadstarError(error)) return error
+): IPAForgeError => {
+  if (isIPAForgeError(error)) return error
   if (isAbortError(error))
-    return new LoadstarError(ErrorCode.Aborted, { cause: error })
-  return new LoadstarError(fallbackCode, {
+    return new IPAForgeError(ErrorCode.Aborted, { cause: error })
+  return new IPAForgeError(fallbackCode, {
     cause: error,
     message: describe(error)
   })
@@ -64,9 +64,9 @@ export const isAbortError = (error: unknown): boolean =>
 
 const MAX_CAUSE_DEPTH = 8
 
-/** A LoadstarError's code, or a foreign error's `code` when it is a catalogued one. */
+/** An IPAForgeError's code, or a foreign error's `code` when it is a catalogued one. */
 const codeOf = (error: Error): ErrorCode | undefined => {
-  if (error instanceof LoadstarError) return error.code
+  if (error instanceof IPAForgeError) return error.code
   return 'code' in error && isErrorCode(error.code) ? error.code : undefined
 }
 
@@ -79,14 +79,14 @@ const serializeError = (error: unknown, depth = 0): SerializedError => {
     name: error.name,
     message: error.message,
     code: codeOf(error),
-    data: error instanceof LoadstarError ? error.data : undefined,
+    data: error instanceof IPAForgeError ? error.data : undefined,
     cause: hasCause ? serializeError(error.cause, depth + 1) : undefined
   })
 }
 
-/** Causes that carry a code were LoadstarErrors; anything else comes back as a plain Error. */
+/** Causes that carry a code were IPAForgeErrors; anything else comes back as a plain Error. */
 const deserializeCause = (json: SerializedError): Error =>
-  json.code ? LoadstarError.fromJSON(json) : deserializeForeign(json)
+  json.code ? IPAForgeError.fromJSON(json) : deserializeForeign(json)
 
 const deserializeForeign = (json: SerializedError): Error => {
   const error = new Error(

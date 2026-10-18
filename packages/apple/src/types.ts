@@ -1,6 +1,6 @@
 import type { WebSocketFactory } from '@apple/domain/ports/types.ts'
 import type { AppleConfig, AppleConfigOverrides } from '@apple/domain/types.ts'
-import type { Clock, HttpClient, Logger, SecretStore } from '@loadstar/kernel'
+import type { Clock, HttpClient, Logger, SecretStore } from '@ipaforge/kernel'
 
 export type Sleep = (ms: number, signal?: AbortSignal) => Promise<void>
 

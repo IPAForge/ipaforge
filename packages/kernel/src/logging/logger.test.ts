@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import { ErrorCode, LoadstarError } from '@kernel/errors/index.ts'
+import { ErrorCode, IPAForgeError } from '@kernel/errors/index.ts'
 import { createLogger, parseLogLevel } from '@kernel/logging/create-logger.ts'
 import { REDACTED, redact } from '@kernel/logging/redact.ts'
 import { compact } from '@kernel/objects/compact.ts'
@@ -108,13 +108,13 @@ describe('redact', () => {
   })
 
   it('summarises binary data and serialises errors', () => {
-    const error = new LoadstarError(ErrorCode.DeviceLocked, {
+    const error = new IPAForgeError(ErrorCode.DeviceLocked, {
       data: { udid: 'secret-udid' }
     })
     expect(redact({ blob: new Uint8Array(10), error })).toEqual({
       blob: '<10 bytes>',
       error: {
-        name: 'LoadstarError',
+        name: 'IPAForgeError',
         message: 'device.locked',
         code: 'device.locked',
         data: { udid: REDACTED }

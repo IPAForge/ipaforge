@@ -10,7 +10,7 @@ import type {
 } from '@catalog/application/types.ts'
 import type { ResolvedRelease } from '@catalog/domain/release.ts'
 import type { CatalogDeps } from '@catalog/types.ts'
-import { compact, ErrorCode, LoadstarError, toHex } from '@loadstar/kernel'
+import { compact, ErrorCode, IPAForgeError, toHex } from '@ipaforge/kernel'
 
 const cacheKey = (release: ResolvedRelease): string =>
   [
@@ -29,13 +29,13 @@ const assertDownloadable = (
 ): void => {
   // Releases cross the IPC boundary, so the type alone does not guarantee a checksum.
   if (!SHA256_HEX.test(release.sha256)) {
-    throw new LoadstarError(ErrorCode.ChecksumMissing, {
+    throw new IPAForgeError(ErrorCode.ChecksumMissing, {
       message: 'release has no valid checksum',
       data: { appId: release.appId }
     })
   }
   if (!release.url.startsWith('https://')) {
-    throw new LoadstarError(ErrorCode.DownloadFailed, {
+    throw new IPAForgeError(ErrorCode.DownloadFailed, {
       message: 'release URL is not HTTPS',
       data: { appId: release.appId }
     })
@@ -44,7 +44,7 @@ const assertDownloadable = (
     release.size !== undefined &&
     release.size > deps.config.maxDownloadBytes
   ) {
-    throw new LoadstarError(ErrorCode.DownloadFailed, {
+    throw new IPAForgeError(ErrorCode.DownloadFailed, {
       message: 'file is larger than allowed',
       data: { size: release.size }
     })
@@ -60,13 +60,13 @@ const requestBody = async (
     compact({
       method: 'GET' as const,
       url: release.url,
-      headers: { 'User-Agent': 'Loadstar', Accept: 'application/octet-stream' },
+      headers: { 'User-Agent': 'IPAForge', Accept: 'application/octet-stream' },
       signal
     })
   )
   if (response.status === 200) return response.body
   await response.body.cancel().catch(() => {})
-  throw new LoadstarError(
+  throw new IPAForgeError(
     response.status === 404
       ? ErrorCode.ReleaseSourceGone
       : ErrorCode.DownloadFailed,
@@ -97,13 +97,13 @@ const verifier = (
   })
   const verify = async (): Promise<void> => {
     if (release.size !== undefined && received !== release.size) {
-      throw new LoadstarError(ErrorCode.DownloadFailed, {
+      throw new IPAForgeError(ErrorCode.DownloadFailed, {
         message: `incomplete download: ${received} of ${release.size} bytes`,
         data: { received, total: release.size }
       })
     }
     if (toHex(hash.digest()) !== release.sha256) {
-      throw new LoadstarError(ErrorCode.ChecksumMismatch, {
+      throw new IPAForgeError(ErrorCode.ChecksumMismatch, {
         message: 'the downloaded file does not match its published checksum',
         data: { appId: release.appId, version: release.version }
       })

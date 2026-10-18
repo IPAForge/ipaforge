@@ -1,4 +1,4 @@
-import { ErrorCode } from '@loadstar/kernel'
+import { ErrorCode } from '@ipaforge/kernel'
 
 /** Errors worth retrying for an idempotent step: the network, rate limits, busy services, dropped devices.
  * (Catalog download errors join this list when the install flows use the catalog.) */

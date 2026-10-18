@@ -1,6 +1,6 @@
 // The fake Apple sign-in: the password, then a second factor through prompts, as the Engine asks them.
-import { ErrorCode, LoadstarError } from '@loadstar/kernel'
-import { PromptKind } from '@loadstar/rpc'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
+import { PromptKind } from '@ipaforge/rpc'
 import { FAKE_TWO_FACTOR_CODE } from '@ui/services/engine/fake/fake-data.ts'
 import type { ScriptedStepContext } from '@ui/services/engine/fake/types.ts'
 import type {
@@ -45,5 +45,5 @@ export const completeTwoFactor = async (
     await appleAnswer()
     if (code === FAKE_TWO_FACTOR_CODE) return
   }
-  throw new LoadstarError(ErrorCode.TwoFactorInvalidCode)
+  throw new IPAForgeError(ErrorCode.TwoFactorInvalidCode)
 }

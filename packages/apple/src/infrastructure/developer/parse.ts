@@ -16,11 +16,11 @@ import { nonEmpty } from '@apple/domain/values.ts'
 import {
   compact,
   ErrorCode,
+  IPAForgeError,
   isPlistDict,
-  LoadstarError,
   type PlistDict,
   type PlistValue
-} from '@loadstar/kernel'
+} from '@ipaforge/kernel'
 
 const text = z.string()
 const optionalText = z.string().optional()
@@ -101,7 +101,7 @@ const parseList = <S extends z.ZodType, T>(
 
 const required = <T>(value: T | undefined, what: string): T => {
   if (value === undefined)
-    throw new LoadstarError(ErrorCode.AppleProtocolError, {
+    throw new IPAForgeError(ErrorCode.AppleProtocolError, {
       message: `response has no ${what}`
     })
   return value
@@ -244,7 +244,7 @@ export const toSubmittedCertificate = (
 ): { serialNumber?: string; id?: string } => {
   const request = response.certRequest
   if (!isPlistDict(request))
-    throw new LoadstarError(ErrorCode.AppleProtocolError, {
+    throw new IPAForgeError(ErrorCode.AppleProtocolError, {
       message: 'no certRequest'
     })
   const serial = request.serialNum ?? request.serialNumber
