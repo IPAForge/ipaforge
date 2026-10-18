@@ -58,7 +58,7 @@ export default [
     }
   },
   {
-    // Maintainer scripts and tests run `codesign`, `openssl` and `unzip` from PATH on purpose.
+    // Maintainer scripts and tests run `codesign`, `openssl`, `security`, `plutil` and `ditto` from PATH on purpose.
     files: [
       'scripts/**',
       'packages/*/scripts/**',

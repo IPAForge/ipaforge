@@ -8,7 +8,7 @@
 - Sideloading installers typically fail in **auth (anisette)**, **hardcoded download URLs**, **signing/provisioning**, and **opaque errors**. Loadstar's architecture targets each one.
 - **LiveContainer's GitHub repository is gone** (404 under both org and original owner). Release sources must be data, and their disappearance must be a handled error.
 - **Sideloader / Provision (Dadoum, GPL-3.0 / no SPDX licence)** are ideas only, never code. Take on-device profile management (misagent) into Phase 2; consider local anisette (Provision) as an opt-in sidecar in Phase 3. The CoreTrust bypass ("trollsign") is out of scope.
-- **Real-world failures are catalogued** in `references/failure-catalogue.md` (about 800 user reports, 2026-10-15). The biggest causes are anisette/Apple client identity (~30 %), pairing and device state (~15 %), team-level profile bans (~7 %), and App ID/certificate limits. Every phase plans against that catalogue.
+- **Real-world failures are catalogued** in `failure-catalogue.md` (about 800 user reports, 2026-10-15). The biggest causes are anisette/Apple client identity (~30 %), pairing and device state (~15 %), team-level profile bans (~7 %), and App ID/certificate limits. Every phase plans against that catalogue.
 - **Preloading SideStore sources** cannot be done directly over USB today. Plan: show deep links and a QR code (v1), then propose an upstream "preload manifest" in SideStore.
 
 ## 1. Signer spike (2026-10-13)
@@ -105,7 +105,7 @@ Reviewed for ideas only. **Sideloader is GPL-3.0** (D language), so our clean-ro
 
 ## 5. Failure catalogue (2026-10-15)
 
-Summary of `references/failure-catalogue.md`:
+Summary of `failure-catalogue.md`:
 - Apple-facing identity (client info, user agent) must be remotely updatable data, ideally from the anisette server's `/v3/client_info`. Hardcoded identities caused waves of `-80045` and HTTP 503.
 - Anisette servers need health checks and automatic failover; users should never have to pick one.
 - Pairing needs a passcode, an unlocked device and accepted trust prompts; Wi-Fi debugging (`EnableWifiDebugging`) answers `MissingValue` without a passcode.

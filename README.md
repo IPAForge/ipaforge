@@ -10,7 +10,7 @@
 
 Loadstar signs into your Apple ID, gets a free development certificate, re-signs apps, installs them over USB, and sets up SideStore so it can refresh itself. It also preloads any extra apps you choose in the same run. The whole engine is TypeScript, and the app is a desktop app built with Electron.
 
-> **Status: pre-alpha.** The signing engine, the device layer, Apple ID sign-in and developer services are built and verified, and the install flows are built. The UI comes next, and nothing is installable yet. See the [Roadmap](docs/roadmap.md).
+> **Status: pre-alpha.** The signing engine, the device layer, Apple ID sign-in, developer services, the install flows and the Engine RPC are built. The desktop app is in progress: it connects to the Engine, signs in Apple IDs, shows devices and runs the SideStore install with its questions. There is no packaged release yet. See the [Roadmap](docs/roadmap.md).
 
 ## Design goals
 

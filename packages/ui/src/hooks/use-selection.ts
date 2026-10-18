@@ -55,7 +55,9 @@ export const useDeviceInUse = (): DeviceInUse | undefined => {
   const devices = useDevices().data
   const picked = selection.device
   const pickedDevice = devices?.find((device) => device.udid === picked)
-  const pickedStatus = useDeviceStatus(picked, false)
+  // Same settings as every other reader of this device's status: asked while connected, cached once unplugged.
+  // A reader that never asks would share the query and make a refresh fail ("queryFn set to skipToken").
+  const pickedStatus = useDeviceStatus(picked, pickedDevice !== undefined)
   if (pickedDevice)
     return { udid: pickedDevice.udid, device: pickedDevice, isConnected: true }
   if (picked && pickedStatus.data)

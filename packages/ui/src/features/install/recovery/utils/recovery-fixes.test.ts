@@ -1,0 +1,30 @@
+import { describe, expect, it } from 'vitest'
+
+import { recoveryFixes } from '@ui/features/install/recovery/utils/recovery-fixes.ts'
+
+describe('recoveryFixes', () => {
+  it('keeps the Engine’s order, first fix first', () => {
+    expect(recoveryFixes(['wait-for-app-id-slot', 'switch-account'])).toEqual({
+      first: 'wait-for-app-id-slot',
+      others: ['switch-account']
+    })
+  })
+
+  it('doesn’t offer Try again twice when the first fix already continues the run', () => {
+    expect(recoveryFixes(['unlock-device', 'retry'])).toEqual({
+      first: 'unlock-device',
+      others: []
+    })
+    expect(recoveryFixes(['trust-computer', 'retry']).others).toEqual(['retry'])
+  })
+
+  it('leaves out fixes whose screen comes later', () => {
+    expect(
+      recoveryFixes(['change-anisette-server', 'check-network', 'retry'])
+    ).toEqual({ first: 'check-network', others: [] })
+    expect(recoveryFixes(['update-loadstar', 'report-issue'])).toEqual({
+      first: undefined,
+      others: []
+    })
+  })
+})

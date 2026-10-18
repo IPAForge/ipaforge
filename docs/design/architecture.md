@@ -27,11 +27,15 @@ Explicit Architecture still pays off here. Each **package is a bounded context**
 ```
 loadstar/
 ├── packages/                       # ── BOUNDED CONTEXTS (pure, platform-agnostic) ──
-│   ├── kernel/                     # shared kernel: Result, LoadstarError, events, Logger port, bytes utils
+│   ├── kernel/                     # shared kernel: LoadstarError, ports, logger, bytes utils, plist
 │   │   └── src/
 │   │       ├── errors/             # LoadstarError, ErrorCode catalog (codes only, no UI text)
 │   │       ├── ports/              # Logger, Clock, HttpClient, SecretStore, FileSource, Cache
-│   │       └── bytes/              # Uint8Array helpers, base64, hex, DataView readers
+│   │       ├── bytes/              # Uint8Array helpers, base64, hex, DataView readers and writers
+│   │       ├── plist/              # XML and binary plist parse and write
+│   │       ├── logging/            # createLogger, redaction
+│   │       ├── retry/              # retry with backoff
+│   │       ├── text/, objects/     # small string and object helpers
 │   │
 │   ├── signer/                     # CONTEXT: code signing (spike-proven)
 │   │   └── src/
@@ -49,21 +53,29 @@ loadstar/
 │   │
 │   ├── apple/                      # CONTEXT: Apple account + developer services
 │   │   └── src/
-│   │       ├── domain/             # Account, Team, Certificate, AppId, Profile, Session; ports: AnisetteProvider
-│   │       ├── auth/               # GSA SRP-6a login, 2FA (trusted device, SMS), token refresh
-│   │       ├── anisette/           # v3 client, provider chain with health checks + fallback, native (macOS) hook
-│   │       └── developer/          # developer services API (teams, certs, app IDs, groups, profiles, devices)
+│   │       ├── domain/             # sessions, two-factor, anisette and developer types, config; ports
+│   │       ├── application/        # createAppleAccounts, sign-in, two-factor, app tokens; accounts/ (saved accounts),
+│   │       │                       # anisette/ (provider chain, server list), developer/ (certificates, app IDs, devices, provisioning)
+│   │       └── infrastructure/     # gsa/ (GSA client, url bag), anisette/ (v1, v3), developer/ (services client, CSR),
+│   │                               # crypto/ (SRP-6a, session keys)
 │   │
 │   ├── catalog/                    # CONTEXT: where apps come from
 │   │   └── src/
 │   │       ├── domain/             # Source, Release, Channel, AppRef
-│   │       └── application/        # resolveRelease (GitHub API), download (stream + checksum), cache
+│   │       ├── application/        # resolveRelease, download (stream + checksum), cache
+│   │       └── infrastructure/     # github.ts (GitHub releases API)
 │   │
 │   ├── installer/                  # CONTEXT: orchestration (application layer over all contexts)
 │   │   └── src/
-│   │       ├── pipeline/           # Step<I,O>, Pipeline runner, progress events, cancellation, resume
-│   │       ├── flows/              # installSideStore, installApps (preload), placePairing, refreshCertificate
-│   │       ├── diagnostics/        # error classification → ErrorCode (locked device, quota, DevMode…)
+│   │       ├── domain/             # prompts, team, free apps, App ID budget, step weights, config; ports
+│   │       ├── application/        # runtime, prompts (ask), sign-in, two-factor, certificate store, device watch
+│   │       ├── pipeline/           # Step, Pipeline runner, progress events, cancellation, resume
+│   │       ├── steps/              # the steps flows are built from (sign-in, team, certificate, provision, sign, install…)
+│   │       ├── flows/              # installSideStore, installApps (preload), placePairing, signIn
+│   │       ├── sidestore/          # SideStore-specific target, certificate and trust handling
+│   │       ├── diagnostics/        # error classification → ErrorCode (locked device, quota, DevMode…), recovery
+│   │       ├── infrastructure/     # the signer behind the installer's signing port
+│   │       ├── engine/             # runs, prompt queue, event log, queries, install plan
 │   │       └── engine.ts           # Engine facade = the API every shell exposes to the UI
 │   │
 │   ├── rpc/                        # typed request/stream RPC (Engine ⇄ UI) over Electron IPC
@@ -77,10 +89,13 @@ loadstar/
 │           ├── styles.css          # the only stylesheet (Tailwind + HeroUI)
 │           ├── components/         # the shell and thin compositions of HeroUI components (no CSS files)
 │           ├── features/           # install/, preload/, devices/, accounts/, certificates/, logs/, settings/
-│           ├── hooks/              # useTheme, useUiServices, later the EngineClient hooks
+│           ├── hooks/              # queries/ (Engine query hooks), useEngine, useRun, useSelection, useLanguage,
+│           │                       # useFormat, useTheme, useUiServices
+│           ├── state/              # stores outside components: active-run/ (the install run), selection/
 │           ├── services/           # what the host provides (UiServices) + browser and in-memory implementations
 │           ├── theme/              # palettes/ (data → HeroUI CSS variables), store/, provider/
-│           └── locales/            # UI strings (i18next locales/*.json from 6b)
+│           ├── i18n/               # i18next setup, languages, on-demand loading, formatters
+│           └── locales/            # UI strings (one JSON file per language)
 │
 ├── apps/                           # ── COMPOSITION ROOTS (adapters + wiring) ──
 │   └── desktop/                    # Electron
@@ -113,7 +128,7 @@ kernel  ←  signer, device, apple, catalog  ←  installer  ←  rpc  ←  ui
 ## Layer/Module Communication
 
 - **Ports in, adapters out.** A context declares interfaces (`DeviceTransport.connect(udid, port): Promise<Duplex>`, `HttpClient.request(req): Promise<Response>`), and the shell injects implementations into the `Engine` constructor.
-- **Engine facade.** `installer/engine.ts` is the only API the UI sees: commands (`installSideStore`, `preload`, `signIn`, …), queries (`listDevices`, `listCertificates`, …) and progress streams.
+- **Engine facade.** `installer/engine.ts` is the only API the UI sees: commands (`installSideStore`, `installApps`, `placePairing`, `signIn`, `signOut`), queries (`listDevices`, `listCertificates`, …) and progress streams.
 - **Typed RPC.** `rpc` serializes Engine calls over an Electron `MessageChannelMain` between the main (or utility) process and the renderer. Payloads are validated with zod on both sides. Long operations stream `ProgressEvent`s and accept an `AbortSignal`.
 - **Pipelines.** A flow is an ordered list of `Step`s. Each step is a pure-ish async function `(ctx, input) => output` with a stable id, i18n label key, weight (for the progress bar) and an optional `undo`. The runner handles progress, cancellation, retries (only for steps marked idempotent) and resume after an interactive prompt (2FA, choose team, revoke certificate).
 - **Errors.** Everything throws or returns `LoadstarError { code, cause?, data? }`. `installer/diagnostics` classifies raw failures, such as a lockdown `PasswordProtected`, Apple result code `-80045` or installation_proxy `DeviceNotSupportedByThinning`, into a catalogued `ErrorCode`. The UI maps `ErrorCode` to a recovery screen.
@@ -172,8 +187,8 @@ const devices = createDeviceManager({
 ### A pipeline flow in the installer (application layer)
 
 ```ts
-// packages/installer/src/flows/install-sidestore.ts
-import { pipeline, step } from '../pipeline'
+// packages/installer/src/flows/install-sidestore.ts (a simplified sketch; the real steps live in @installer/steps/)
+import { pipeline } from '@installer/pipeline/pipeline.ts'
 
 export const installSideStore = pipeline('installSideStore', [
   step(
@@ -226,7 +241,7 @@ export const ErrorCode = {
   CertificateLimit: 'apple.certificate_limit',
   AnisetteUnavailable: 'apple.anisette_unavailable',
   ReleaseSourceGone: 'catalog.source_gone',
-  NoInternet: 'net.offline'
+  Offline: 'net.offline'
 } as const
 export type ErrorCode = (typeof ErrorCode)[keyof typeof ErrorCode]
 

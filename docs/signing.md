@@ -187,7 +187,7 @@ Lower-level building blocks are also exported: `signBundle`, `signBinary`, `reco
 | CMS verifies with pkijs and `openssl cms` | `infrastructure/cms/cms.test.ts` |
 | PKCS#12 export round-trips (key matches certificate, wrong password fails) and uses 3DES bags + HMAC-SHA1 at 2048 iterations | `infrastructure/pkcs12/pkcs12.test.ts` |
 | Added files are sealed in their bundle's and their parent's `CodeResources` | `application/bundle-additions.test.ts` |
-| Plist writer matches `plutil` byte for byte (including `%.17g` reals) | `domain/plist/plist.test.ts` |
+| Plist writer matches `plutil` byte for byte (including `%.17g` reals) | `domain/plist.test.ts` |
 | Real SideStore 0.7.0-alpha is sideload-signed in ~0.5 s and verifies | `application/sign-ipa.test.ts` (`LOADSTAR_E2E=1`) |
 
 The golden inputs and Apple outputs live in `fixtures/signer/` ([README](../fixtures/signer/README.md)). Regenerate them on macOS with `fixtures/signer/generate.sh`; `--check` fails when an Xcode update changes Apple's behaviour. Checking the CMS against a **real** Apple Development certificate is a one-command maintainer step: [`fixtures/signer/REAL-CERT.md`](../fixtures/signer/REAL-CERT.md).

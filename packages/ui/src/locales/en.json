@@ -91,7 +91,7 @@
       "checking": "Downloading {app} and checking with Apple… The download is kept, so the install reuses it.",
       "unavailable": "Couldn't check with Apple. You can still install: each step checks again.",
       "appIds": "App IDs",
-      "appIdsValue": "uses {uses} · {left, plural, one {# left this week} other {# left this week}}",
+      "appIdsValue": "{created, plural, =0 {All {reused} already registered} other {{reused, plural, =0 {{created} new} other {{created} new, {reused} reused}}}} · {left, plural, one {# left this week} other {# left this week}}",
       "nextSlot": "Next one frees on {date}",
       "freeApps": "Free apps on the device",
       "freeAppsValue": "{used} of {limit} used",
@@ -142,7 +142,8 @@
       "unsupportedPrompt": {
         "title": "This step needs an answer",
         "body": "Loadstar needs an answer to a question this version can’t show. Cancel the install and update Loadstar."
-      }
+      },
+      "backToInstall": "Back to Install"
     },
     "summary": {
       "title": "This install",
@@ -152,7 +153,8 @@
       "deviceValue": "{name} · iOS {ios}",
       "account": "Apple ID",
       "appIds": "App IDs",
-      "appIdsValue": "{count, plural, one {# left this week} other {# left this week}}"
+      "appIdsValue": "{count, plural, one {# left this week} other {# left this week}}",
+      "freeApps": "Free apps"
     },
     "done": {
       "title": "{app} is on {device}.",
@@ -163,11 +165,9 @@
     "cancelled": {
       "title": "Stopped at “{step}”.",
       "body": "Nothing already done is repeated when you resume.",
-      "resume": "Resume",
-      "close": "Close"
+      "resume": "Resume"
     },
     "failed": {
-      "tryAgain": "Try again",
       "continues": "Finished steps are kept: trying again continues from “{step}”.",
       "copy": "Copy diagnostics",
       "copied": "Copied",
@@ -580,7 +580,90 @@
     "choose-another-channel": "Choose another channel",
     "import-ipa": "Import an IPA",
     "update-loadstar": "Update Loadstar",
-    "report-issue": "Report the problem"
+    "report-issue": "Report the problem",
+    "or": "Or",
+    "switchAccount": {
+      "title": "Use another Apple ID",
+      "body": "The install starts again with the Apple ID you pick."
+    },
+    "fix": {
+      "copy": "Copy",
+      "copied": "Copied",
+      "done": "Done, try again",
+      "waitAndRetry": {
+        "how": "Apple is busy or limiting requests. Wait a minute, then try again."
+      },
+      "checkNetwork": {
+        "how": "Make sure this computer is online, then try again."
+      },
+      "checkClock": {
+        "step1": "Open the date and time settings on this computer",
+        "step2": "Turn on setting the date and time automatically"
+      },
+      "reEnterPassword": {
+        "how": "Trying again asks for the password; check it before you enter it."
+      },
+      "reEnterCode": {
+        "how": "Trying again asks for a new verification code."
+      },
+      "useTrustedDevice": {
+        "how": "When the code is asked for, choose a trusted device instead of a text message."
+      },
+      "signInAgain": {
+        "how": "Trying again asks for the password to sign in again."
+      },
+      "signInOnAppleDevice": {
+        "how": "Sign in to this Apple ID on an iPhone, iPad or Mac, or at Apple’s website, and follow what it asks:"
+      },
+      "switchAccount": {
+        "how": "Pick one of your saved Apple IDs. The install starts again with it.",
+        "button": "Choose an Apple ID…"
+      },
+      "verifyEmail": {
+        "how": "Verify the email address of this Apple ID at Apple’s website:"
+      },
+      "acceptAgreement": {
+        "how": "Sign in at Apple’s developer website and accept the agreement it shows:"
+      },
+      "revokeCertificate": {
+        "how": "Trying again asks which certificate to revoke."
+      },
+      "waitForAppIdSlot": {
+        "how": "Apple frees each App ID 7 days after it was made. Install again once one is free, or use another Apple ID.",
+        "next": "The next App ID frees on {date}."
+      },
+      "chooseAppToRemove": {
+        "how": "Trying again asks which app to remove to make room."
+      },
+      "unlockDevice": {
+        "how": "Unlock the device and keep it unlocked until the install finishes."
+      },
+      "enableDeveloperMode": {
+        "button": "It’s on, try again"
+      },
+      "trustComputer": {
+        "how": "Unlock the device. When it asks whether to trust this computer, tap Trust and enter the passcode.",
+        "button": "Ask again on the device"
+      },
+      "reconnectDevice": {
+        "how": "Unplug the device, plug it in again and unlock it."
+      },
+      "setPasscode": {
+        "how": "Set a passcode on the device in Settings › Face ID & Passcode, then try again."
+      },
+      "installDeviceSupport": {
+        "how": "On Windows, install Apple Devices (or iTunes) from Microsoft Store, then restart Loadstar."
+      },
+      "reinstallApp": {
+        "how": "Delete the app from the device, then try again."
+      },
+      "chooseAnotherChannel": {
+        "how": "The other channel’s build may work on this device.",
+        "button": "Install from {channel}"
+      },
+      "open": "Open"
+    },
+    "reportHint": "Opens a new GitHub issue with the diagnostics filled in. Nothing is sent until you submit it."
   },
   "devices": {
     "engine": {

@@ -2,14 +2,20 @@ import { useTranslation } from 'react-i18next'
 
 import type { RunTarget, SummaryItem } from '@ui/features/install/run/types.ts'
 import { useAppIdQuota } from '@ui/hooks/queries/use-app-id-quota.ts'
+import type { InstallPlan } from '@ui/services/engine/types.ts'
 
-type RunSummaryProps = { target: RunTarget; accountId: string }
+type RunSummaryProps = {
+  target: RunTarget
+  accountId: string
+  /** The install's plan, when read: the free-app slots on the device. */
+  plan: InstallPlan | undefined
+}
 
 /**
  * "This install" as one full-width strip over the steps: the app, channel, device, Apple ID and, when known, the
- * App IDs left this week. It wraps onto more lines in a narrow window.
+ * App IDs left this week and the free-app slots on the device. It wraps onto more lines in a narrow window.
  */
-export const RunSummary = ({ target, accountId }: RunSummaryProps) => {
+export const RunSummary = ({ target, accountId, plan }: RunSummaryProps) => {
   const { t } = useTranslation()
   const quota = useAppIdQuota({ accountId }).data?.quota
   const info = target.check?.info
@@ -31,6 +37,17 @@ export const RunSummary = ({ target, accountId }: RunSummaryProps) => {
           {
             labelKey: 'install.summary.appIds',
             value: t('install.summary.appIdsValue', { count: quota.available })
+          } satisfies SummaryItem
+        ]
+      : []),
+    ...(plan?.freeSlots
+      ? [
+          {
+            labelKey: 'install.summary.freeApps',
+            value: t('install.plan.freeAppsValue', {
+              used: plan.freeSlots.occupied.length,
+              limit: plan.freeSlots.limit
+            })
           } satisfies SummaryItem
         ]
       : [])

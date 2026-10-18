@@ -29,12 +29,12 @@ The whole engine is written in **TypeScript** and runs in Electron on all three 
 
 - **Programming language:** TypeScript 7 (strict), ESM only
 - **Monorepo:** pnpm 12 workspaces + Turborepo. Packages are source-only (`exports` → `src/index.ts`, no build step); the apps' bundlers compile them
-- **UI:** React 19, HeroUI v3 (React Aria based), Tailwind CSS v4 (utility classes only, no hand-written CSS), Motion for animation, Lucide icons
-- **UI state and data:** TanStack Router, TanStack Query (async/server state), Zustand (local UI state)
+- **UI:** React 19, HeroUI v3 (React Aria based), Tailwind CSS v4 (utility classes only, no hand-written CSS), Lucide icons
+- **UI state and data:** TanStack Router, TanStack Query (async/server state); local UI state lives in small stores read with React `useSyncExternalStore`
 - **Desktop shell:** Electron 44 via electron-vite 6, packaged with electron-builder (Windows, macOS, Linux)
 - **Crypto and formats:** WebCrypto, pkijs + asn1js (CMS, CSR, X.509), @noble/hashes (fallback hasher), node-forge (legacy `.p12` import only, Phase 10), @zip.js/zip.js (IPA streaming). Plists use an **in-house** XML and binary parser and a CoreFoundation-exact writer, because `@plist/*` loses the real-vs-integer distinction.
 - **Validation:** zod 4 at all I/O boundaries (e.g. provisioning profiles)
-- **Quality:** Vitest 5, Playwright (Electron UI e2e, added in Phase 9), Biome 2 (lint and format)
+- **Quality:** Vitest 5, Playwright (Electron UI e2e, added in Phase 9), Biome 2 (lint and format), ESLint 10 (blank lines, SonarJS, file structure)
 - **Database / ORM:** none. Local persistence uses the OS keychain (Electron `safeStorage`) and app-data files.
 
 ## Architecture Notes
@@ -57,7 +57,7 @@ See `docs/design/architecture.md` for the full architecture guidelines.
 - **Logging:** structured logger port with levels (`LOG_LEVEL`), redaction of tokens, passwords and serials, and an in-app log viewer.
 - **Error handling:** typed `LoadstarError` with a stable `code`, a user message key and a recovery action. No raw stack traces in the UI.
 - **Accessibility:** WCAG 2.2 AA through React Aria primitives, with full keyboard navigation.
-- **Licensing:** MIT (proposed). No code copied from other sideloading tools, ldid (AGPL) or ipa-resign (proprietary). zsign and rcodesign are used as references only.
+- **Licensing:** MIT. No code copied from other sideloading tools, ldid (AGPL) or ipa-resign (proprietary). zsign and rcodesign are used as references only.
 
 ## Architecture
 

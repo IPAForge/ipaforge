@@ -34,7 +34,9 @@ export const useDeviceStatus = (
 
   return useQuery({
     queryKey: queryKeys.deviceStatus(udid),
-    queryFn: udid && isConnected ? () => engine.deviceStatus(udid) : skipToken,
+    queryFn: udid ? () => engine.deviceStatus(udid) : skipToken,
+    // Not asked while unplugged; the request itself stays, so a refresh by another reader never finds it missing.
+    enabled: isConnected,
     gcTime: Number.POSITIVE_INFINITY,
     retry: retryOnce,
     retryDelay: RETRY_DELAY_MS

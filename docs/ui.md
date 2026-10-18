@@ -11,7 +11,7 @@ pnpm --filter @loadstar/desktop dev      # opens the app in Electron, hot reload
 pnpm --filter @loadstar/desktop build    # main, preload and renderer into apps/desktop/out
 ```
 
-`apps/desktop/src/renderer/main.tsx` mounts `App` the same way as the browser entry: with `createBrowserServices` and `prepareLanguage` (see [Loading languages](#loading-languages)), since the renderer is a sandboxed browser context, and with a hash history, because a build is loaded from `file://`. The window runs with `contextIsolation`, `sandbox` and no Node integration, under a strict Content-Security-Policy, and it blocks new windows and navigation. The main process serves the Engine over a `MessageChannelMain` (one per page load); the preload only forwards the other end of it to the page, which wraps it in a `Transport` for `createEngineClient`. Nothing else is exposed to the page.
+`apps/desktop/src/renderer/main.tsx` mounts `App` the same way as the browser entry: with `createBrowserServices` and `prepareLanguage` (see [Loading languages](#loading-languages)), since the renderer is a sandboxed browser context, and with a hash history, because a build is loaded from `file://`. The window runs with `contextIsolation`, `sandbox` and no Node integration, under a strict Content-Security-Policy, and it blocks new windows and navigation. A page the UI asks to open (`window.open`) goes to the default browser only when it is on the allowed list in `apps/desktop/src/main/constants.ts` (a new Loadstar issue on GitHub, Apple's account and developer pages); anything else is blocked and logged. The main process serves the Engine over a `MessageChannelMain` (one per page load); the preload only forwards the other end of it to the page, which wraps it in a `Transport` for `createEngineClient`. Nothing else is exposed to the page.
 
 ## Running it in a browser
 
@@ -45,8 +45,8 @@ packages/ui/
     ├── features/       # one folder per section: install, preload, devices, accounts, certificates, logs, settings;
     │                   #   the page at its root, then components/, hooks/, utils/, constants.ts, types.ts as needed
     ├── state/          # stores kept outside components: active-run/ (the install run), selection/ (device and Apple ID in use)
-    ├── hooks/          # useTheme, useUiServices, useLanguage, useFormat, useEngine; queries/ (Engine query hooks)
-    ├── services/       # what the UI gets from its host: preferences/, system/ (OS colour scheme, languages, clipboard), logging/, engine/ (request logging, the fake Engine)
+    ├── hooks/          # useTheme, useUiServices, useLanguage, useFormat, useEngine, useRun (use-run.ts), useSelection (use-selection.ts); queries/ (Engine query hooks)
+    ├── services/       # what the UI gets from its host: preferences/, system/ (OS colour scheme, languages, clipboard, opening links), logging/, engine/ (request logging, the fake Engine)
     ├── theme/          # palettes/ (data + applying them), store/, provider/
     ├── locales/        # one JSON file per language (en.json is the source of truth) and status.json
     └── i18n/           # setup/, languages/, loading/, provider/, plus formatters, pseudo-locale, required keys
@@ -66,13 +66,14 @@ The package exports `App`, the service types and factories, the palettes and the
 | `LocaleSource` | The OS's preferred languages, most preferred first | `createNavigatorLocaleSource(navigator)` |
 | `EngineClient` (rpc) | The Engine: queries, runs and `classify`. `App` logs every request at debug level under `ui.engine` (the method, and the code of a failure; never the arguments) | the fake Engine over the memory transport (`createFakeEngineClient`); in Electron, `createEngineClient` over the MessagePort |
 | `ClipboardWriter` | Writes text to the clipboard (copied diagnostics) | `createNavigatorClipboard(navigator)` |
+| `LinkOpener` | Opens a web page in the browser (a pre-filled issue, an Apple page) | `createWindowLinkOpener(window)` |
 | `appVersion` | The app's version, for diagnostics | the package version, defined by Vite as `import.meta.env.VITE_APP_VERSION` |
 
 `createBrowserServices(window, { logLevel, engine, appVersion })` builds them all; `engine` is a function that gets the logger and returns the host's `EngineClient`. `App` touches no browser global when it is imported, so the Electron renderer can mount `<App services={…} language={…}/>` with its own services and history. Tests use `createMemoryPreferencesStore()`, a fixed or controllable colour-scheme source, `createFixedLocaleSource([...])`, `createMemoryClipboard()` and the fake Engine with no delay (`renderApp(path, { scenario })`).
 
 ## Engine queries
 
-Components reach the Engine only through the TanStack Query hooks in `src/hooks/queries/`: `useDevices` (one entry per device), `useDeviceStatus`, `useAccounts`, `useTeams`, `useCatalogApps`, `useRecommendedChannel`, `useAppIdQuota`, `useCertificates` and `usePlanInstall`. Their cache keys live in one module, `query-keys.ts`, with every account query under `['accounts', …]` so one invalidation refreshes them all. A hook whose input is not known yet (no device picked) waits instead of asking. Failures arrive as `LoadstarError`s with their code.
+Components reach the Engine only through the TanStack Query hooks in `src/hooks/queries/`: `useDevices` (one entry per device), `useDeviceStatus`, `useAccounts`, `useTeams`, `useCatalogApps`, `useRecommendedChannel`, `useAppIdQuota`, `useCertificates` and `usePlanInstall`, plus the mutation `useSignOut` (`use-sign-out.ts`). Their cache keys live in one module, `query-keys.ts`, with every account query under `['accounts', …]` so one invalidation refreshes them all. A hook whose input is not known yet (no device picked) waits instead of asking. Failures arrive as `LoadstarError`s with their code.
 
 ### Live data: push, not polling
 
@@ -122,7 +123,7 @@ To add a palette, add its id to `paletteIds`, add its tokens to `palettes.ts` an
   - **This install**, from the Engine's read-only `planInstall`: the App IDs it uses and how many are left this week (and when the next frees), the free-app slots on the device, whether the certificate is reused, and the team. It is read once the device and the Apple ID are ready, and again when the choice changes; never polled;
   - **Install**, which waits only for the device (and an Apple ID that isn't blocked there, with enough App IDs). An expired session doesn't block it: the run asks for the password.
 
-  Pressing Install starts `engine.installSideStore`. The run lives in a store kept by `App` (`state/active-run/`), not in the page, so it goes on in other sections, with a badge on **Install** in the sidebar. Its events are pushed by the Engine and reduced into a view (`utils/reduce-run-event.ts`, one handler per event type, and `run-view.ts`): every step with its state and detail (download size, an automatic retry), the overall progress, the question waiting for an answer, and how it ended. The page shows it in one full-width column: the title and progress, a strip with the app, channel, device, Apple ID and App IDs left, how it is going or how it ended, then the steps.
+  Pressing Install starts `engine.installSideStore`. The run lives in a store kept by `App` (`state/active-run/`), not in the page, so it goes on in other sections, with a badge on **Install** in the sidebar. Its events are pushed by the Engine and reduced into a view (`utils/reduce-run-event.ts`, one handler per event type, and `run-view.ts`): every step with its state and detail (download size, an automatic retry), the overall progress, the question waiting for an answer, and how it ended. The page shows it in one full-width column: the title and progress, a strip with the app, channel, device, Apple ID, App IDs left and the free apps on the device (from the plan the home page read), how it is going or how it ended, then the steps.
   - **Questions** show as dialogs over any section (`features/install/prompts/run-prompt-host.tsx`, one dialog per question in `asked-prompts.ts`). Each has **Cancel install**, which stops the run at that step; **Resume** asks it again. After an answer the dialog stays, its controls read-only and the chosen one busy, until the Engine's next event (`answering` in the run view).
     - **Password** and **second factor**: as in sign-in.
     - **Team**: one click per team, saying what free and paid mean; the Engine remembers the choice for the Apple ID.
@@ -131,7 +132,12 @@ To add a palette, add its id to `paletteIds`, add its tokens to `palettes.ts` an
     - **Share the certificate** with an imported app that looks like SideStore: **Share** or **Don't share**.
     - **Which apps get the pairing file**: a checkbox row per app, all ticked to start, with what each known app does with the file (`pairingAppPurposeKeys`), **Select all** / **Clear all**, and a button that counts them ("Place in 2 apps").
     - A question a newer Engine asks that this version doesn't know offers **Cancel install**.
-  - **Ended:** installed, with what to do on the device; cancelled, with **Resume** from the checkpoint (finished steps aren't repeated); failed, with the error's title and text, **Try again** (from the checkpoint) and **Copy diagnostics** (the code, step, app version, install choice and device model, never an Apple ID, name or serial).
+  - **Ended:** installed, with what to do on the device; cancelled, with **Resume** from the checkpoint (finished steps aren't repeated); failed, with the recovery box (`features/install/recovery/`):
+    - the error's title and text (the code itself only in the diagnostics);
+    - the fixes the Engine lists for the code (the diagnostics catalogue, via `engine.classify`), in its order: the first as a card with what to do (a sentence, steps, or an Apple page with **Copy**) and its button ("It's on, try again"), the others as buttons;
+    - what each fix does is a table in `constants.ts` (`fixes`, one entry per `RecoveryAction`): continue from the checkpoint, ask the device to trust this computer and then continue (`engine.pairDevice`), **Use another Apple ID** (a picker of the saved Apple IDs, without the one that failed or any blocked on the device; the run starts again with the one picked, which becomes the one in use), **Install from Nightly/Stable** (names the other channel and starts again on it), or only explain (no App IDs left, with the date the next one frees from the plan; device support on Windows). Apple pages have **Open** (in the browser) and **Copy**. Fixes whose screen comes in a later phase (another anisette server, another IPA, updating Loadstar, choosing another team) aren't shown yet;
+    - Try again isn't offered twice when the first fix already continues the run;
+    - where the run continues from, **Copy diagnostics** (the code, step, app version, install choice and device model, never an Apple ID, name or serial), **Back to Install** (to choose another app, channel or Apple ID; the cancelled box has it too), and **Report the problem**, which opens a new GitHub issue in the browser with the title and diagnostics filled in (`utils/issue-url.ts`); nothing is sent until the user submits it there.
 
 **Manage → Accounts** (`features/accounts/`) lists the saved Apple IDs with their teams and state, marks the one **in use**, and offers **Use**, **Sign in again** (only for an expired session; it opens sign-in with the Apple ID filled in) and **Sign out**. Signing out asks first, in a dialog that says what Loadstar forgets (the Apple ID, its session, its saved password) and what it keeps (its signing certificates, so signing in again reuses them; installed apps keep working until they expire). Signing out the Apple ID in use hands its place to the next saved one. An **Add Apple ID** button opens sign-in.
 
@@ -224,7 +230,7 @@ Tests call `await renderApp(path, { languages, preferences, load })`, which runs
 - **No CSS files.** The only stylesheet is `src/styles.css`, which imports Tailwind and then HeroUI. Everything else uses HeroUI components and Tailwind utilities.
 - **No `style={{}}` for theming.** Colours come from the palette variables through utilities such as `bg-accent-soft`, `text-muted` and `border-border`.
 - **Logical utilities only:** `ms-`/`me-`, `ps-`/`pe-`, `start-`/`end-`, `border-s`/`border-e`, never `ml-`/`left-`. The layout then mirrors in right-to-left languages without changes.
-- **No string literals in JSX.** Text and user-visible props (`aria-label`, `title`, `placeholder`, `label`, `alt`) come from `t()`. The Biome plugin `tooling/biome/no-jsx-literal-text.grit` fails lint on JSX text with a letter in it and on string literals in those props, in `src/**/*.tsx`.
+- **No string literals in JSX.** Text and user-visible props (`aria-label`, `aria-description`, `aria-placeholder`, `aria-roledescription`, `aria-valuetext`, `title`, `placeholder`, `label`, `alt`) come from `t()`. The Biome plugin `tooling/biome/no-jsx-literal-text.grit` fails lint on JSX text with a letter in it and on string literals in those props, in `src/**/*.tsx`.
 
 ## Related
 

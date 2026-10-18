@@ -13,6 +13,7 @@ import { SignInNeededNotice } from '@ui/features/install/home/components/sign-in
 import { ThisInstall } from '@ui/features/install/home/components/this-install.tsx'
 import { VariantChoice } from '@ui/features/install/home/components/variant-choice.tsx'
 import { installReadiness } from '@ui/features/install/home/utils/readiness.ts'
+import { planInput } from '@ui/features/install/utils/plan-input.ts'
 import { usePlanInstall } from '@ui/hooks/queries/use-plan-install.ts'
 import { useRecommendedChannel } from '@ui/hooks/queries/use-recommended-channel.ts'
 import { useRun } from '@ui/hooks/use-run.ts'
@@ -49,11 +50,7 @@ export const InstallHome = () => {
     (accountView.state === 'ready' || accountView.state === 'checking')
   const plan = usePlanInstall(
     canPlan
-      ? {
-          udid: inUse.udid,
-          accountId: account.id,
-          source: { kind: 'catalog', appId: variantAppId[variant], channel }
-        }
+      ? planInput({ udid: inUse.udid, accountId: account.id, variant, channel })
       : undefined
   )
   const readiness = installReadiness(

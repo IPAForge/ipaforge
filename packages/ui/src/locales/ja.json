@@ -91,7 +91,7 @@
       "checking": "{app} をダウンロードして Apple に確認中… ダウンロードは保存され、インストールで再利用されます。",
       "unavailable": "Apple に確認できませんでした。インストールはできます。各ステップで再確認します。",
       "appIds": "App ID",
-      "appIdsValue": "{uses} 個使用 · {left, plural, other {今週の残り # 個}}",
+      "appIdsValue": "{created, plural, =0 {{reused} 個すべて登録済み} other {{reused, plural, =0 {新規 {created} 個} other {新規 {created} 個、再利用 {reused} 個}}}} · {left, plural, other {今週の残り # 個}}",
       "nextSlot": "次の空きは {date}",
       "freeApps": "デバイス上の無料 App",
       "freeAppsValue": "{limit} 個中 {used} 個使用",
@@ -142,7 +142,8 @@
       "unsupportedPrompt": {
         "title": "このステップには回答が必要です",
         "body": "このバージョンでは表示できない質問への回答が必要です。インストールを中止して Loadstar をアップデートしてください。"
-      }
+      },
+      "backToInstall": "インストールに戻る"
     },
     "summary": {
       "title": "このインストール",
@@ -152,7 +153,8 @@
       "deviceValue": "{name} · iOS {ios}",
       "account": "Apple ID",
       "appIds": "App ID",
-      "appIdsValue": "{count, plural, other {今週の残り # 個}}"
+      "appIdsValue": "{count, plural, other {今週の残り # 個}}",
+      "freeApps": "無料 App"
     },
     "done": {
       "title": "{app} を {device} にインストールしました。",
@@ -163,11 +165,9 @@
     "cancelled": {
       "title": "「{step}」で停止しました。",
       "body": "再開しても完了済みの作業は繰り返されません。",
-      "resume": "再開",
-      "close": "閉じる"
+      "resume": "再開"
     },
     "failed": {
-      "tryAgain": "再試行",
       "continues": "完了したステップは保持され、「{step}」から再開します。",
       "copy": "診断情報をコピー",
       "copied": "コピーしました",
@@ -580,7 +580,90 @@
     "choose-another-channel": "別のチャンネルを選択",
     "import-ipa": "IPAを読み込む",
     "update-loadstar": "Loadstarをアップデート",
-    "report-issue": "問題を報告"
+    "report-issue": "問題を報告",
+    "or": "または",
+    "switchAccount": {
+      "title": "別の Apple ID を使用",
+      "body": "選んだ Apple ID でインストールをやり直します。"
+    },
+    "fix": {
+      "copy": "コピー",
+      "copied": "コピーしました",
+      "done": "完了したので再試行",
+      "waitAndRetry": {
+        "how": "Apple が混雑しているか、リクエストを制限しています。1 分待ってから再試行してください。"
+      },
+      "checkNetwork": {
+        "how": "このコンピュータがオンラインか確認してから再試行してください。"
+      },
+      "checkClock": {
+        "step1": "このコンピュータの日付と時刻の設定を開きます",
+        "step2": "日付と時刻を自動で設定するをオンにします"
+      },
+      "reEnterPassword": {
+        "how": "再試行するとパスワードを求められます。入力前に確認してください。"
+      },
+      "reEnterCode": {
+        "how": "再試行すると新しい確認コードを求められます。"
+      },
+      "useTrustedDevice": {
+        "how": "コードを求められたら、SMS ではなく信頼できるデバイスを選んでください。"
+      },
+      "signInAgain": {
+        "how": "再試行すると、再サインインのためにパスワードを求められます。"
+      },
+      "signInOnAppleDevice": {
+        "how": "iPhone、iPad、Mac、または Apple の Web サイトでこの Apple ID にサインインし、指示に従ってください："
+      },
+      "switchAccount": {
+        "how": "保存済みの Apple ID を選んでください。その Apple ID でインストールをやり直します。",
+        "button": "Apple ID を選択…"
+      },
+      "verifyEmail": {
+        "how": "Apple の Web サイトでこの Apple ID のメールアドレスを確認してください："
+      },
+      "acceptAgreement": {
+        "how": "Apple Developer の Web サイトにサインインし、表示される契約に同意してください："
+      },
+      "revokeCertificate": {
+        "how": "再試行すると、取り消す証明書を尋ねられます。"
+      },
+      "waitForAppIdSlot": {
+        "how": "Apple は App ID を作成から 7 日後に解放します。空きが出たら再インストールするか、別の Apple ID を使ってください。",
+        "next": "次の App ID は {date} に空きます。"
+      },
+      "chooseAppToRemove": {
+        "how": "再試行すると、空きを作るために削除する App を尋ねられます。"
+      },
+      "unlockDevice": {
+        "how": "デバイスのロックを解除し、インストールが終わるまで解除したままにしてください。"
+      },
+      "enableDeveloperMode": {
+        "button": "オンにしたので再試行"
+      },
+      "trustComputer": {
+        "how": "デバイスのロックを解除し、このコンピュータを信頼するか聞かれたら「信頼」をタップしてパスコードを入力してください。",
+        "button": "デバイスでもう一度確認"
+      },
+      "reconnectDevice": {
+        "how": "デバイスを取り外し、接続し直してロックを解除してください。"
+      },
+      "setPasscode": {
+        "how": "デバイスの 設定 › Face ID とパスコード でパスコードを設定してから再試行してください。"
+      },
+      "installDeviceSupport": {
+        "how": "Windows では Microsoft Store から Apple Devices（または iTunes）をインストールし、Loadstar を再起動してください。"
+      },
+      "reinstallApp": {
+        "how": "デバイスから App を削除してから再試行してください。"
+      },
+      "chooseAnotherChannel": {
+        "how": "もう一方のチャンネルのビルドならこのデバイスで動くかもしれません。",
+        "button": "{channel} からインストール"
+      },
+      "open": "開く"
+    },
+    "reportHint": "診断情報を記入した新しい GitHub Issue を開きます。送信するまで何も送られません。"
   },
   "devices": {
     "engine": {
