@@ -4,7 +4,7 @@
 
 ## Current status
 
-IPAForge is **pre-alpha**. Phases 0–6 are complete: foundation, signer, device layer, Apple account, developer services, the installer and the UI foundation. Phase 8 (install and preload) is under way: the Preload page is in; app sources and updates come next. Onboarding (Phase 7) follows once every screen is built. There is no installable build yet; see [Installing](installing.md) for how it will work.
+IPAForge is in **alpha**: test builds are on the [Releases page](https://github.com/SirReaDy/ipaforge/releases). Phases 0–6 are complete: foundation, signer, device layer, Apple account, developer services, the installer and the UI foundation. Phase 8 (install and preload) is under way: the Preload page is in; app sources and updates come next. Onboarding (Phase 7) follows once every screen is built. See [Installing](installing.md) to try a build.
 
 | Area | State |
 |---|---|
@@ -53,6 +53,7 @@ CI runs the same commands on Ubuntu, Windows and macOS (`.github/workflows/ci.ym
 pnpm --filter @ipaforge/desktop dev      # the app in Electron, with hot reload
 pnpm --filter @ipaforge/desktop build    # main, preload and renderer into apps/desktop/out
 pnpm --filter @ipaforge/desktop preview  # build, then launch the built app
+pnpm --filter @ipaforge/desktop dist     # installers for this system into apps/desktop/release (electron-builder)
 pnpm --filter @ipaforge/ui dev           # the UI alone in a browser, http://localhost:5180
 ```
 

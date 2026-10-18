@@ -62,6 +62,8 @@ ipaforge/
 | `apps/desktop/src/main/rpc/choose-ipas.ts` | The IPA file dialog behind "Choose files…" on the Preload page, in the main process |
 | `apps/desktop/src/renderer/engine-port.ts` | Renderer: receives the port and wraps it in a `Transport` for `createEngineClient` |
 | `apps/desktop/src/renderer/main.tsx` | Electron renderer: connects the `EngineClient`, then mounts `@ipaforge/ui` with the browser services and a hash history |
+| `apps/desktop/electron-builder.yml` | Installers (DMG, NSIS, AppImage, deb, rpm): `pnpm --filter @ipaforge/desktop dist` |
+| `.github/workflows/release.yml` | On a `v*` tag: builds the installers on all three systems and publishes the GitHub release (notes from `docs/releases/<version>.md`) |
 | `apps/desktop/electron.vite.config.ts` | electron-vite builds for main, preload and renderer (`pnpm --filter @ipaforge/desktop dev` / `build`) |
 | `packages/ui/src/services/engine/fake/fake-engine.ts` | The fake Engine the browser dev host and UI tests use (`?scenario=` in dev) |
 | `packages/installer/src/application/device-watch.ts` | The device feed (usbmuxd `Listen`, reconnect, fallback polling) behind `engine.watchDevices` |

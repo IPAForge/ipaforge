@@ -2,17 +2,28 @@
 
 # Installing IPAForge
 
-> **IPAForge is pre-alpha: there is no installable release yet.** This page describes how installing will work for 1.0. Until then, developers can run the engine from source ([Getting Started](getting-started.md)).
+> **IPAForge is in alpha.** The first test builds are on the **[Releases page](https://github.com/SirReaDy/ipaforge/releases)** as pre-releases. They work, but expect rough edges, and please [report](#problems) what breaks.
 
 ## Download
 
-Get the latest version from the **[Releases page](https://github.com/SirReaDy/ipaforge/releases/latest)**. Only download IPAForge from there. Builds are signed, and the app updates itself.
+Get IPAForge from the **[Releases page](https://github.com/SirReaDy/ipaforge/releases)**, and only from there. Each release lists its files' SHA-256 checksums in `SHA256SUMS.txt`.
 
-| Your computer | File | Notes |
-|---|---|---|
-| **Windows 10/11** (x64, arm64) | `IPAForge-Setup-<version>.exe` | Code-signed installer |
-| **macOS** (Apple silicon, Intel) | `IPAForge-<version>.dmg` | Signed and notarised by Apple |
-| **Linux** (x64, arm64) | `IPAForge-<version>.AppImage`, `.deb`, `.rpm` | AppImage runs anywhere; deb/rpm integrate with your package manager |
+| Your computer | File |
+|---|---|
+| **Mac with Apple silicon** (M1 and later) | `IPAForge-<version>-mac-arm64.dmg` |
+| **Mac with Intel** | `IPAForge-<version>-mac-x64.dmg` |
+| **Windows 10/11** (x64; also runs on Windows on Arm) | `IPAForge-<version>-win-x64.exe` |
+| **Linux** (x64, arm64) | `IPAForge-<version>-linux-*.AppImage` runs anywhere; `.deb` and `.rpm` integrate with your package manager |
+
+### Alpha builds aren't signed yet
+
+Code signing (a Windows certificate, Apple notarisation) comes before the first beta. Until then, your system warns the first time you open IPAForge:
+
+- **macOS** says Apple can't check it for malicious software. Click **Done**, then open **System Settings › Privacy & Security**, scroll to *"IPAForge" was blocked* and click **Open Anyway**. From Terminal, `xattr -dr com.apple.quarantine /Applications/IPAForge.app` does the same.
+- **Windows** SmartScreen says it protected your PC: click **More info › Run anyway**.
+- **Linux** doesn't check signatures; make the AppImage executable (below).
+
+The app doesn't update itself yet: download the next build from the Releases page.
 
 ## Before you start
 
@@ -29,21 +40,21 @@ Get the latest version from the **[Releases page](https://github.com/SirReaDy/ip
 ## Install
 
 ### Windows
-1. Run `IPAForge-Setup-<version>.exe` and follow the installer.
+1. Run `IPAForge-<version>-win-x64.exe` and follow the installer (the first time, **More info › Run anyway**).
 2. Start IPAForge from the Start menu.
 
 ### macOS
-1. Open `IPAForge-<version>.dmg` and drag **IPAForge** into **Applications**.
-2. Start it from Applications. The build is notarised, so macOS opens it without warnings.
+1. Open `IPAForge-<version>-mac-<arch>.dmg` and drag **IPAForge** into **Applications**.
+2. Start it from Applications (the first time, allow it as described above).
 
 ### Linux
-- **AppImage:** `chmod +x IPAForge-<version>.AppImage`, then run it.
-- **Debian/Ubuntu:** `sudo apt install ./IPAForge-<version>.deb`
-- **Fedora/openSUSE:** `sudo dnf install ./IPAForge-<version>.rpm`
+- **AppImage:** `chmod +x IPAForge-<version>-linux-*.AppImage`, then run it.
+- **Debian/Ubuntu:** `sudo apt install ./IPAForge-<version>-linux-amd64.deb`
+- **Fedora/openSUSE:** `sudo dnf install ./IPAForge-<version>-linux-x86_64.rpm`
 
 ## First run
 
-IPAForge walks you through setup. Each step checks itself and explains what to do if something is missing:
+Start on **Install**: it says what to fix first, one thing at a time (a guided first-run setup comes in a later release):
 
 1. **Connect your device** and tap **Trust** on it. Unlock it first.
 2. **Developer Mode** (iOS 16 and later): IPAForge makes the switch appear in **Settings › Privacy & Security**. Turn it on, and the device restarts.
@@ -60,7 +71,7 @@ IPAForge places the pairing file and certificate SideStore needs automatically.
 
 ## Updating and uninstalling
 
-- **Updates:** IPAForge checks for updates and installs them after asking.
+- **Updates:** during the alpha, download the next build from the Releases page (automatic updates come later).
 - **Uninstall:**
   - **Windows:** Settings › Apps;
   - **macOS:** drag IPAForge to the Bin;

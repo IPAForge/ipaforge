@@ -13,7 +13,7 @@ IPAForge is an open-source desktop app for installing [SideStore](https://github
 The engine is written entirely in TypeScript, with no native helpers or bundled command-line tools. The desktop app is built with Electron.
 
 > [!NOTE]
-> **Pre-alpha.** The engine is complete, and the desktop app is in active development. There is no packaged release yet. See [Project status](#project-status) and the [Roadmap](docs/roadmap.md).
+> **Alpha.** The engine is complete, and the first test builds for macOS, Windows and Linux are on the [Releases page](https://github.com/SirReaDy/ipaforge/releases) (not signed yet; [how to open them](docs/installing.md#alpha-builds-arent-signed-yet)). See [Project status](#project-status) and the [Roadmap](docs/roadmap.md).
 
 ## Why IPAForge
 
@@ -52,7 +52,7 @@ Coming next: app sources and updates (browse trusted sources, update every insta
 | Install engine | `@ipaforge/installer` | ✅ Complete: resumable pipelines, install flows, free-app limit, error catalogue |
 | Engine ⇄ UI protocol | `@ipaforge/rpc` | ✅ Complete: typed, validated messages over Electron IPC |
 | User interface | `@ipaforge/ui` | ✅ Foundation complete: accounts, devices, the install run with its questions, step details, recovery and the log viewer, in six languages, checked by screenshot and WCAG 2.2 AA tests; onboarding and preloading come next |
-| Desktop app | `apps/desktop` | 🚧 In progress: the hardened Electron shell runs against the real engine; packaging and auto-update are planned |
+| Desktop app | `apps/desktop` | 🚧 Alpha: installers for macOS (DMG), Windows (NSIS) and Linux (AppImage, deb, rpm), built and published by CI on a version tag; code signing and auto-update are planned |
 
 Sideload signing has been verified against real devices and Apple accounts. Apple's own `codesign --verify --deep --strict` accepts the output, including a full SideStore build signed in about half a second. Details: [Code Signing](docs/signing.md).
 
