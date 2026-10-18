@@ -143,7 +143,36 @@
         "title": "Acest pas are nevoie de un răspuns",
         "body": "Loadstar are nevoie de un răspuns la o întrebare pe care această versiune nu o poate afișa. Anulează instalarea și actualizează Loadstar."
       },
-      "backToInstall": "Înapoi la Instalare"
+      "backToInstall": "Înapoi la Instalare",
+      "report": {
+        "device": "{model} · iOS {ios}",
+        "release": "{app} {version} · {channel}",
+        "download": "{size} · suma de control verificată",
+        "downloadCached": "{size} · din memoria de descărcări",
+        "app": "{app} · {extensions, plural, =0 {fără extensii} one {# extensie} few {# extensii} other {# de extensii}}",
+        "session": {
+          "reused": "Sesiunea salvată a fost refolosită",
+          "renewed": "Autentificat din nou cu parola salvată",
+          "signed-in": "Autentificat"
+        },
+        "registered": "Înregistrat în echipă",
+        "alreadyRegistered": "Deja înregistrat în echipă",
+        "certificate": {
+          "reused": "Certificatul salvat a fost refolosit",
+          "created": "S-a creat un certificat nou",
+          "replaced": "S-a revocat unul și s-a creat un certificat nou"
+        },
+        "removed": "S-a șters {app} · {used}",
+        "profiles": "{count, plural, one {# profil} few {# profiluri} other {# de profiluri}}",
+        "signed": "{count, plural, one {# pachet semnat} few {# pachete semnate} other {# de pachete semnate}}",
+        "phase": {
+          "uploading": "Se încarcă pe dispozitiv",
+          "installing": "Se instalează"
+        },
+        "pairing": "Pus în {apps}",
+        "shared": "Certificat partajat",
+        "notShared": "Certificat nepartajat"
+      }
     },
     "summary": {
       "title": "Această instalare",

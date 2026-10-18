@@ -1,7 +1,7 @@
 import type { AccountState } from '@installer/domain/types.ts'
 import type { SavedAccount } from '@loadstar/apple'
 import type { Channel } from '@loadstar/catalog'
-import type { AppFileTarget } from '@loadstar/device'
+import type { AppFileTarget, PairingTarget } from '@loadstar/device'
 
 export type SideStoreVariant = 'sidestore' | 'livecontainer'
 
@@ -29,7 +29,8 @@ export type PlacePairingInput = {
 export type PairingState = AccountState & {
   readonly bundleIds?: readonly string[]
   readonly overwrite: PairingOverwrite
-  readonly targets?: readonly AppFileTarget[]
+  /** The chosen apps' pairing paths, with each app's name. */
+  readonly targets?: readonly PairingTarget[]
   readonly placed?: readonly AppFileTarget[]
 }
 

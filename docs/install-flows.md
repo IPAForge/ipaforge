@@ -43,6 +43,28 @@ The signing certificate goes only into an app Loadstar has a reason to trust:
 
 Opens the device and the account, finds the pairing apps on the device (SideStore, LiveContainer, StikDebug, StikStore), asks which ones should get this computer's pairing file, and writes it. Sideloaded copies count only when one of the account's teams signed them. With `keep-existing`, files that are already there are left alone.
 
+## Step details
+
+Each step tells the UI what it did, with `context.detail(detail)` (a `step-detail` event). The UI shows it under the step once the step is done:
+
+| Step | Detail |
+|---|---|
+| `device` | the model and iOS version |
+| `resolve-N` | the release version and channel |
+| `download-N` | the size, and whether it came from the download cache |
+| `inspect-N` | the app's name, version and number of extensions |
+| `sign-in` | the saved session reused, renewed with the saved password, or signed in with a typed password |
+| `team` | the team, and whether it is free |
+| `register-device` | registered now, or already registered |
+| `certificate` | reused, created, or replaced after a revoke |
+| `app-ids` | how many are created and reused, and how many are left this week |
+| `free-apps-N` | the free apps on the device and the limit, and the app removed to make room |
+| `provision-N` | the number of profiles |
+| `sign-N` | the number of bundles signed |
+| `install-N` | uploading, then installing |
+| `pairing` / `place` | the apps that got the pairing file |
+| `certificate-sharing-N` | whether the certificate was shared |
+
 ## Free-app limit
 
 A free team can have 3 apps on one device, and iOS counts expired ones too. Before installing, Loadstar works out which installed apps hold a slot:

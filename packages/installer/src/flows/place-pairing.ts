@@ -41,13 +41,32 @@ const chosenBundleIds = async (
     apps: appChoices(targets)
   }))
 
+/** The targets whose file is not there yet (the statuses come back in the order asked). */
 const withoutExisting = async (
   handle: DeviceHandle,
-  targets: readonly AppFileTarget[]
-) =>
-  (await handle.appFileStatus(targets))
-    .filter((status) => !status.exists)
-    .map((status) => status.target)
+  targets: readonly PairingTarget[]
+): Promise<PairingTarget[]> => {
+  const statuses = await handle.appFileStatus(targets)
+
+  return targets.filter((_, at) => statuses[at]?.exists !== true)
+}
+
+/** Each app the file went into, once, by name. */
+const placedApps = (
+  targets: readonly PairingTarget[],
+  placed: readonly AppFileTarget[]
+): string[] => [
+  ...new Set(
+    targets
+      .filter((target) =>
+        placed.some(
+          (done) =>
+            done.bundleId === target.bundleId && done.path === target.path
+        )
+      )
+      .map((target) => target.appName)
+  )
+]
 
 const targetsStep = (runtime: FlowRuntime): Step<PairingState> => ({
   id: 'targets',
@@ -74,12 +93,15 @@ const placeStep = (runtime: FlowRuntime): Step<PairingState> => ({
   id: 'place',
   labelKey: StepLabel.placePairing,
   weight: StepWeight.pairing,
-  run: async (state) => {
+  run: async (state, context) => {
     const targets = required(state.targets, 'pairing targets')
-    if (targets.length === 0) return { placed: [] }
-    return {
-      placed: await (await runtime.device(state.udid)).placePairingFile(targets)
-    }
+    const placed =
+      targets.length === 0
+        ? []
+        : await (await runtime.device(state.udid)).placePairingFile(targets)
+    context.detail({ kind: 'pairing', apps: placedApps(targets, placed) })
+
+    return { placed }
   }
 })
 

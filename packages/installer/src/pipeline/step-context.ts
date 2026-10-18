@@ -1,4 +1,4 @@
-// The context handed to a running step: cancellation, progress reporting and prompts.
+// The context handed to a running step: cancellation, progress and detail reporting, and prompts.
 
 import { clampFraction } from '@installer/pipeline/progress.ts'
 import { stepWeight } from '@installer/pipeline/step.ts'
@@ -31,6 +31,11 @@ const reportProgress =
     })
   }
 
+const reportDetail =
+  <S>(step: Step<S>, { emit }: StepContextDeps): StepContext['detail'] =>
+  (detail) =>
+    emit({ type: 'step-detail', stepId: step.id, detail })
+
 const askUser =
   ({ signal, onPrompt }: StepContextDeps) =>
   async <T>(request: PromptRequest): Promise<T> => {
@@ -48,5 +53,6 @@ export const createStepContext = <S>(
 ): StepContext => ({
   signal: deps.signal,
   progress: reportProgress(step, deps),
+  detail: reportDetail(step, deps),
   prompt: askUser(deps)
 })

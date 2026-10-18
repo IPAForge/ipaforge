@@ -18,6 +18,7 @@ export const teamStep = <S extends AccountState>(
       accountId: state.accountId,
       requested: state.teamId
     })
+    context.detail({ kind: 'team', name: team.name, isFree: team.isFree })
 
     return { team } as Partial<S>
   }

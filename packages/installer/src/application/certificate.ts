@@ -3,6 +3,7 @@
 // a failure later in the flow never strands a certificate whose key is lost.
 import { ask } from '@installer/application/ask.ts'
 import { createCertificateStore } from '@installer/application/certificate-store.ts'
+import type { EnsuredCertificate } from '@installer/application/types.ts'
 import { PromptKind } from '@installer/domain/prompts.ts'
 import type { CertificateChoice } from '@installer/domain/types.ts'
 import type { StepContext } from '@installer/pipeline/types.ts'
@@ -58,16 +59,21 @@ const ensureWithRevoke = async (
   team: Team,
   options: EnsureCertificateOptions,
   context: StepContext
-): Promise<CertificateIdentity> => {
+): Promise<{ identity: CertificateIdentity; revoked: boolean }> => {
+  let revoked = false
   for (;;) {
     try {
-      return await developer.ensureCertificate(team, options)
+      return {
+        identity: await developer.ensureCertificate(team, options),
+        revoked
+      }
     } catch (error) {
       if (!isCertificateLimit(error)) throw error
       await developer.revokeCertificate(
         team,
         await chooseRevocation(context, error)
       )
+      revoked = true
     }
   }
 }
@@ -77,20 +83,21 @@ export const ensureTeamCertificate = async (
   developer: DeveloperServices,
   context: StepContext,
   owner: CertificateOwner
-): Promise<CertificateIdentity> => {
+): Promise<EnsuredCertificate> => {
   const store = createCertificateStore(deps.secrets, deps.logger)
   const stored = await store.load(owner.accountId, owner.team.id)
   const options = compact({ machineName: deps.config.machineName, stored })
-  const identity = await ensureWithRevoke(
+  const { identity, revoked } = await ensureWithRevoke(
     developer,
     owner.team,
     options,
     context
   )
-  if (identity.certificate.serialNumber !== stored?.certificate.serialNumber) {
-    await store.save(owner.accountId, owner.team.id, identity)
-  }
-  return identity
+  if (identity.certificate.serialNumber === stored?.certificate.serialNumber)
+    return { identity, how: 'reused' }
+  await store.save(owner.accountId, owner.team.id, identity)
+
+  return { identity, how: revoked ? 'replaced' : 'created' }
 }
 
 /** The stored identity for the certificate a run chose earlier. */

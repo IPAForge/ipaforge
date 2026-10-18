@@ -6,15 +6,24 @@ import {
   stepStateKeys
 } from '@ui/features/install/run/constants.ts'
 import { useStepDetail } from '@ui/features/install/run/hooks/use-step-detail.ts'
+import { useStepReport } from '@ui/features/install/run/hooks/use-step-report.ts'
 import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 import type { StepView } from '@ui/state/active-run/types.ts'
 
-type StepRowProps = { step: StepView }
+type StepRowProps = {
+  step: StepView
+  /** The app being installed, for the release step's words. */
+  appName: string
+}
 
-/** One step: its icon, label (from the Engine's label key), state or percentage, and detail. */
-export const StepRow = ({ step }: StepRowProps) => {
+/** One step: its icon, label (from the Engine's label key), state or percentage, and what it is doing or did. */
+export const StepRow = ({ step, appName }: StepRowProps) => {
   const { t } = useTranslation()
-  const detail = useStepDetail(step.detail)
+  const progress = useStepDetail(step.detail)
+  const report = useStepReport(step, appName)
+  // While the step runs, how far it is (MB downloaded, a retry); once it's done, what it did.
+  const detail =
+    step.state === 'active' && progress ? progress : (report ?? progress)
   const { icon: Icon, className } = stepIcons[step.state]
   const stateKey = stepStateKeys[step.state]
   const percent =

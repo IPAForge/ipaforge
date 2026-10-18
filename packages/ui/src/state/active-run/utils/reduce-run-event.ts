@@ -43,6 +43,8 @@ const runEventHandlers = {
       fraction: 1,
       detail: step.detail?.kind === 'bytes' ? step.detail : undefined
     })),
+  'step-detail': (view, event) =>
+    updateStep(view, event.stepId, () => ({ report: event.detail })),
   'step-failed': (view, event) =>
     updateStep(view, event.stepId, () => ({ state: 'failed' })),
   progress: (view, event) => ({ ...view, fraction: event.fraction }),

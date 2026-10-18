@@ -72,12 +72,21 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
     - [x] 6c-5: install home and install run (#46)
     - [x] 6c-6: the run's questions (#53)
     - [x] quality: SonarJS lint (#41, #44); file structure rules across the project (#48–#52)
-    - [ ] 6c-7: recovery: a fix per error, Report the problem as a pre-filled GitHub issue, Apple pages opened in the browser (in review)
-    - [ ] 6c-8: step details: what each step did (release version, session reused, team, certificate, App IDs, free apps)
+    - [x] 6c-7: recovery: a fix per error, Report the problem as a pre-filled GitHub issue, Apple pages opened in the browser (#54)
+    - [x] 6c-8: step details: what each step did (release version, session reused, team, certificate, App IDs, free apps)
     - [ ] 6d: log buffer, log stream and log viewer
     - [ ] 6e: screenshot and accessibility tests per locale
 - [ ] **7. Onboarding**: a first-run guided wizard with platform checks (usbmuxd / Apple Mobile Device driver, with copyable fixes per OS), network preflight (Apple, anisette, clock skew), connecting and trusting the device, Developer Mode, Apple ID sign-in with 2FA, team choice, and choosing what to install. It can be resumed and re-run from settings
 - [ ] **8. Install and preload experience**: one-click SideStore (stable/nightly), a preload picker (local IPAs, URLs, catalog apps), source deep links and a QR code for SideStore, a live pipeline view, dedicated recovery screens for every `ErrorCode` with "copy diagnostics", an on-device checklist per iOS version, a "Repair SideStore" wizard, and one-click switching to another Apple ID when one is banned
+  - progress (built during Phase 6c):
+    - [x] one-click SideStore or LiveContainer + SideStore, Stable or Nightly (#46)
+    - [x] a live pipeline view (#46), with the run's questions (#53) and what each step did (6c-8)
+    - [x] recovery screens for every `ErrorCode`, with copy diagnostics and a pre-filled issue report (#54)
+    - [x] switching to another Apple ID when one is banned: the Install notice (#45) and the recovery picker (#54)
+    - [ ] the preload picker (local IPAs, URLs, catalog apps)
+    - [ ] source deep links and a QR code for SideStore
+    - [ ] the on-device checklist per iOS version (unlock, Trust and Developer Mode steps exist; a full checklist doesn't)
+    - [ ] the "Repair SideStore" wizard
   - to check with a real LiveContainer build: its LiveProcess extension gets the main app's `keychain-access-groups`
   - to measure: a larger AFC write chunk (`afcWriteChunkBytes`, 64 KiB today; 1 MiB is reported faster) for big IPAs
   - later: AltStore as an install target (`ALTDeviceId` in `Info.plist` and an encrypted `ALTPairingFile.dat` at the bundle root)

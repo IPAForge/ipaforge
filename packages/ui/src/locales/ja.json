@@ -143,7 +143,36 @@
         "title": "このステップには回答が必要です",
         "body": "このバージョンでは表示できない質問への回答が必要です。インストールを中止して Loadstar をアップデートしてください。"
       },
-      "backToInstall": "インストールに戻る"
+      "backToInstall": "インストールに戻る",
+      "report": {
+        "device": "{model} · iOS {ios}",
+        "release": "{app} {version} · {channel}",
+        "download": "{size} · チェックサム確認済み",
+        "downloadCached": "{size} · ダウンロードキャッシュから",
+        "app": "{app} · {extensions, plural, =0 {拡張機能なし} other {拡張機能 # 個}}",
+        "session": {
+          "reused": "保存済みセッションを再利用",
+          "renewed": "保存済みパスワードで再サインイン",
+          "signed-in": "サインイン済み"
+        },
+        "registered": "チームに登録しました",
+        "alreadyRegistered": "チームに登録済み",
+        "certificate": {
+          "reused": "保存済み証明書を再利用",
+          "created": "新しい証明書を作成",
+          "replaced": "1 つ取り消して新しい証明書を作成"
+        },
+        "removed": "{app} を削除 · {used}",
+        "profiles": "{count, plural, other {プロファイル # 個}}",
+        "signed": "{count, plural, other {# 個のバンドルに署名}}",
+        "phase": {
+          "uploading": "デバイスへ転送中",
+          "installing": "インストール中"
+        },
+        "pairing": "{apps} に配置",
+        "shared": "証明書を共有しました",
+        "notShared": "証明書は共有していません"
+      }
     },
     "summary": {
       "title": "このインストール",

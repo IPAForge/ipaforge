@@ -2,6 +2,7 @@
 // remove when there is no room, then uninstalls it and removes its profiles.
 import { ask } from '@installer/application/ask.ts'
 import type {
+  FreeSlotOutcome,
   FreeSlotRequest,
   FreeSlots
 } from '@installer/application/types.ts'
@@ -83,23 +84,30 @@ export const chooseAppToRemove = async (
   })
 }
 
-/** Frees slots until one more free-profile app fits, asking the user each time which app goes. */
+/** The name of `bundleId` among `apps`, else the bundle ID itself. */
+const appLabel = (apps: readonly FreeProfileApp[], bundleId: string): string =>
+  apps.find((app) => app.bundleId === bundleId)?.name ?? bundleId
+
+/**
+ * Frees slots until one more free-profile app fits, asking the user each time which app goes. Returns the slots
+ * other apps hold then, and the last app removed.
+ */
 export const ensureFreeSlot = async (
   handle: DeviceHandle,
   context: StepContext,
   request: FreeSlotRequest
-): Promise<void> => {
+): Promise<FreeSlotOutcome> => {
+  let removed: string | undefined
   for (;;) {
     const { profiles, occupied } = await freeSlotsOnDevice(
       handle,
       request.rules,
       request.installing
     )
-    if (!needsFreeSlot(occupied, request.limit)) return
-    await removeFreeApp(
-      handle,
-      profiles,
-      await chooseAppToRemove(context, occupied, request)
-    )
+    if (!needsFreeSlot(occupied, request.limit))
+      return compact({ used: occupied.length, removed })
+    const chosen = await chooseAppToRemove(context, occupied, request)
+    await removeFreeApp(handle, profiles, chosen)
+    removed = appLabel(occupied, chosen)
   }
 }

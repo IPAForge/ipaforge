@@ -143,7 +143,36 @@
         "title": "This step needs an answer",
         "body": "Loadstar needs an answer to a question this version can’t show. Cancel the install and update Loadstar."
       },
-      "backToInstall": "Back to Install"
+      "backToInstall": "Back to Install",
+      "report": {
+        "device": "{model} · iOS {ios}",
+        "release": "{app} {version} · {channel}",
+        "download": "{size} · checksum verified",
+        "downloadCached": "{size} · from the download cache",
+        "app": "{app} · {extensions, plural, =0 {no extensions} one {# extension} other {# extensions}}",
+        "session": {
+          "reused": "Saved session reused",
+          "renewed": "Signed in again with the saved password",
+          "signed-in": "Signed in"
+        },
+        "registered": "Registered with the team",
+        "alreadyRegistered": "Already registered with the team",
+        "certificate": {
+          "reused": "Reused the saved certificate",
+          "created": "Made a new certificate",
+          "replaced": "Revoked one and made a new certificate"
+        },
+        "removed": "Removed {app} · {used}",
+        "profiles": "{count, plural, one {# profile} other {# profiles}}",
+        "signed": "{count, plural, one {# bundle signed} other {# bundles signed}}",
+        "phase": {
+          "uploading": "Uploading to the device",
+          "installing": "Installing"
+        },
+        "pairing": "Placed in {apps}",
+        "shared": "Certificate shared",
+        "notShared": "Certificate not shared"
+      }
     },
     "summary": {
       "title": "This install",

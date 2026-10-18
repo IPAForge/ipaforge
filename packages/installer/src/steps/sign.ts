@@ -84,8 +84,14 @@ export const signStep = (
   id: appStepId('sign', index),
   labelKey: StepLabel.sign,
   weight: StepWeight.sign,
-  run: async (state, context) =>
-    updateJob(state, index, {
-      signed: await signToScratch(runtime, state, index, context)
+  run: async (state, context) => {
+    const signed = await signToScratch(runtime, state, index, context)
+    context.detail({
+      kind: 'signed',
+      bundles: required(jobAt(state, index).identity, 'identity plan').bundles
+        .length
     })
+
+    return updateJob(state, index, { signed })
+  }
 })

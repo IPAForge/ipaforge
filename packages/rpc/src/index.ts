@@ -25,6 +25,7 @@ export {
   type RunEvent,
   type RunHandle,
   type SignInState,
+  type StepDetail,
   StepLabel,
   type TeamCertificates,
   type TeamQuery

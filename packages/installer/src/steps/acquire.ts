@@ -37,10 +37,14 @@ export const resolveReleaseStep = (
     const channel =
       source.channel ??
       (await catalog.recommendedChannel(source.appId, state.device?.iosVersion))
-
-    return updateJob(state, index, {
-      release: await catalog.resolve(source.appId, channel, context.signal)
+    const release = await catalog.resolve(source.appId, channel, context.signal)
+    context.detail({
+      kind: 'release',
+      version: release.version,
+      channel: release.channel
     })
+
+    return updateJob(state, index, { release })
   }
 })
 
@@ -54,14 +58,18 @@ export const downloadStep = (
   idempotent: true,
   run: async (state, context) => {
     const release = required(jobAt(state, index).release, 'release')
-    const { file, sha256 } = await runtime.deps.catalog.download(release, {
-      onProgress: ({ received, total }) =>
-        context.progress(
-          total ? received / total : 0,
-          compact({ received, total })
-        ),
-      signal: context.signal
-    })
+    const { file, sha256, cached } = await runtime.deps.catalog.download(
+      release,
+      {
+        onProgress: ({ received, total }) =>
+          context.progress(
+            total ? received / total : 0,
+            compact({ received, total })
+          ),
+        signal: context.signal
+      }
+    )
+    context.detail({ kind: 'download', bytes: file.size, cached })
 
     return updateJob(state, index, {
       file,

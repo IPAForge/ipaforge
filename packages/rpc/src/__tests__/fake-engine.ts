@@ -31,6 +31,13 @@ const flow = (control: FakeControl) =>
       labelKey: 'step.prepare',
       run: async (_state, context) => {
         context.progress(0.5, { phase: 'reading' })
+        context.detail({
+          kind: 'app',
+          name: 'My App',
+          version: '1.2',
+          extensions: 2
+        })
+        context.detail({ kind: 'pairing', apps: ['SideStore', 'StikDebug'] })
         return { prepared: true }
       }
     },

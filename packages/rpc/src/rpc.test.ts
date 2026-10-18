@@ -9,6 +9,8 @@ import {
 } from '@rpc/__tests__/fake-engine.ts'
 import { createEngineClient } from '@rpc/application/client.ts'
 import { createRpcServer } from '@rpc/application/server.ts'
+import { PROTOCOL_VERSION } from '@rpc/domain/protocol/common.ts'
+import { messageSchema } from '@rpc/domain/protocol/messages.ts'
 import type { ExternalIpa } from '@rpc/domain/protocol/types.ts'
 import type { RemoteRunHandle, Wire } from '@rpc/domain/types.ts'
 import { createMemoryTransportPair } from '@rpc/infrastructure/memory-transport.ts'
@@ -168,6 +170,54 @@ describe('runs', () => {
     const replayed: string[] = []
     handle.subscribe((event) => replayed.push(event.type))
     expect(replayed).toEqual(events)
+  })
+
+  it("carries a step's details to the UI intact", async () => {
+    const { client } = setup()
+    const handle = installApps(client)
+    const details: RunEvent[] = []
+    handle.subscribe((event) => {
+      if (event.type === 'step-detail') details.push(event)
+    })
+    await nextPrompt(handle)
+    handle.cancel()
+    await handle.result
+
+    expect(details).toEqual([
+      {
+        type: 'step-detail',
+        stepId: 'prepare',
+        detail: { kind: 'app', name: 'My App', version: '1.2', extensions: 2 }
+      },
+      {
+        type: 'step-detail',
+        stepId: 'prepare',
+        detail: { kind: 'pairing', apps: ['SideStore', 'StikDebug'] }
+      }
+    ])
+  })
+
+  it('refuses a step detail that does not match its kind', () => {
+    const event = (detail: unknown) => ({
+      v: PROTOCOL_VERSION,
+      type: 'run-event',
+      runId: 'run-1',
+      event: { type: 'step-detail', stepId: 'app-ids', detail }
+    })
+    expect(
+      messageSchema.safeParse(
+        event({ kind: 'app-ids', created: 1, reused: 0, left: 9 })
+      ).success
+    ).toBe(true)
+    for (const invalid of [
+      { kind: 'app-ids', created: -1, reused: 0, left: 9 },
+      { kind: 'app-ids', created: 1.5, reused: 0, left: 9 },
+      { kind: 'session', how: 'guessed' },
+      { kind: 'pairing', apps: [1] },
+      { kind: 'release', version: '1.0' },
+      { kind: 'unknown' }
+    ])
+      expect(messageSchema.safeParse(event(invalid)).success).toBe(false)
   })
 
   it('starts a sign-in with the Apple ID only, announcing its steps first', async () => {

@@ -21,7 +21,7 @@ export const RunView = ({ run }: RunViewProps) => {
       <RunHeader view={run.view} target={target} />
       <RunSummary target={target} accountId={run.input.accountId} plan={plan} />
       <RunOutcome run={run} target={target} />
-      <StepList steps={run.view.steps} />
+      <StepList steps={run.view.steps} appName={target.app} />
     </div>
   )
 }

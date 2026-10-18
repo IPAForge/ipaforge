@@ -6,6 +6,7 @@ import { StepWeight } from '@installer/domain/step-weights.ts'
 import type { InstallState } from '@installer/domain/types.ts'
 import type { Step } from '@installer/pipeline/types.ts'
 import { appStepId, jobAt, required } from '@installer/steps/app-job.ts'
+import { compact } from '@loadstar/kernel'
 
 export const freeAppsStep = (
   runtime: FlowRuntime,
@@ -19,14 +20,26 @@ export const freeAppsStep = (
     const { config } = runtime.deps
     const team = required(state.team, 'team')
     const identity = required(jobAt(state, index).identity, 'identity plan')
-    await ensureFreeSlot(await runtime.device(state.udid), context, {
-      rules: {
-        freeTeamIds: new Set([team.id]),
-        maxLifetimeMs: config.freeProfileMaxLifetimeMs
-      },
-      limit: config.freeAppLimit,
-      installing: identity.newMainBundleId
-    })
+    const { used, removed } = await ensureFreeSlot(
+      await runtime.device(state.udid),
+      context,
+      {
+        rules: {
+          freeTeamIds: new Set([team.id]),
+          maxLifetimeMs: config.freeProfileMaxLifetimeMs
+        },
+        limit: config.freeAppLimit,
+        installing: identity.newMainBundleId
+      }
+    )
+    context.detail(
+      compact({
+        kind: 'free-apps' as const,
+        used,
+        limit: config.freeAppLimit,
+        removed
+      })
+    )
     return undefined
   }
 })
