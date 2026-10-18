@@ -15,3 +15,6 @@ coverage/
 packages/ui/src/__screenshots__/**/*-darwin.png
 packages/ui/src/__screenshots__/**/*-win32.png
 packages/ui/.vitest/
+
+# Desktop installers (electron-builder)
+apps/desktop/release/

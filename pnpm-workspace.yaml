@@ -6,3 +6,5 @@ packages:
 # Dependencies allowed to run install scripts (pnpm blocks all others).
 allowBuilds:
   esbuild: true
+  # Squirrel.Windows only; the Windows installer is NSIS, so its download script is not needed.
+  electron-winstaller: false

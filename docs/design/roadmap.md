@@ -93,7 +93,11 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
   - later: AltStore as an install target (`ALTDeviceId` in `Info.plist` and an encrypted `ALTPairingFile.dat` at the bundle root)
   - when Apple reports a negative number of App IDs left, explain it and offer to try anyway instead of stopping
 - [ ] **9. Desktop app**: Electron 44 shell with Node adapters, a hardened preload (`contextIsolation`, typed RPC only), electron-builder packages (Windows NSIS, macOS DMG signed and notarized, Linux AppImage, deb and rpm), and auto-update
-  - status: a minimal shell exists early (one window with `contextIsolation`, `sandbox`, a strict CSP and blocked navigation, rendering `@ipaforge/ui`), and CI builds it with electron-vite on Linux, Windows and macOS. Packaging, signing and notarisation, auto-update, the Engine wiring and the hardened RPC preload remain
+  - status: the shell (one window with `contextIsolation`, `sandbox`, a strict CSP and blocked navigation, rendering `@ipaforge/ui`) runs the real Engine over the rpc MessagePort, and CI builds it on Linux, Windows and macOS
+  - progress:
+    - [x] alpha installers with electron-builder: macOS DMG (Apple silicon and Intel, ad-hoc signed), Windows NSIS (x64), Linux AppImage (x64, arm64), deb and rpm; a release workflow that builds them on a version tag and publishes a GitHub release (a pre-release for `-alpha`/`-beta`/`-rc`) with checksums and the notes in `docs/releases/` (#61)
+    - [ ] code signing: Windows certificate, Apple Developer ID with notarisation and the hardened runtime
+    - [ ] auto-update
   - trust certificates installed in the OS (company proxies, self-hosted anisette servers with their own CA) for anisette and Apple requests, alongside Node's bundled roots and Apple's (`tls.getCACertificates('system')`)
 - [ ] **10. Management tools**: certificate and app-ID management, pairing files per app (place, export, version), certificate and account import/export (`.p12`), and developer portal tools
   - later: signing in with a security key (today detected and explained, not completed)
