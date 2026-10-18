@@ -200,7 +200,8 @@
       "continues": "Finished steps are kept: trying again continues from “{step}”.",
       "copy": "Copy diagnostics",
       "copied": "Copied",
-      "copyFailed": "Couldn't copy"
+      "copyFailed": "Couldn't copy",
+      "showLogs": "Show logs"
     }
   },
   "pairing": {
@@ -886,6 +887,107 @@
       "forgets": "Loadstar forgets this Apple ID, its session and its saved password.",
       "keeps": "Its signing certificates stay on this computer, so signing in again reuses them. Apps already installed keep working until they expire.",
       "confirm": "Sign out"
+    }
+  },
+  "logs": {
+    "title": "Logs",
+    "lede": "What Loadstar did, line by line. Open it from anywhere with",
+    "shortcut": {
+      "control": "Ctrl+",
+      "command": "⌘",
+      "key": "L"
+    },
+    "copy": "Copy",
+    "save": "Save…",
+    "clear": "Clear",
+    "cleared": "View cleared. Save still writes every line kept this session.",
+    "search": {
+      "label": "Search the logs",
+      "placeholder": "Search messages and details",
+      "key": "/"
+    },
+    "level": {
+      "label": "Level",
+      "all": "All",
+      "info": "Info",
+      "warn": "Warnings",
+      "error": "Errors"
+    },
+    "levelName": {
+      "debug": "Debug",
+      "info": "Info",
+      "warn": "Warning",
+      "error": "Error"
+    },
+    "area": {
+      "label": "Area",
+      "all": "All areas",
+      "install": "Install",
+      "device": "Device",
+      "apple": "Apple",
+      "catalog": "Catalog",
+      "signing": "Signing",
+      "engine": "Engine",
+      "interface": "Interface",
+      "app": "App"
+    },
+    "filters": {
+      "showing": "Showing only:",
+      "run": "This install run ({time})",
+      "text": "“{text}”",
+      "remove": "Remove the filter {filter}"
+    },
+    "list": {
+      "label": "Log lines",
+      "loadingOlder": "Loading older lines…"
+    },
+    "row": {
+      "details": "{count, plural, one {# detail} other {# details}}",
+      "scope": "area",
+      "redacted": "[redacted]",
+      "copy": "Copy line"
+    },
+    "follow": {
+      "on": "Following new lines",
+      "off": "Paused",
+      "pause": "Pause",
+      "resume": "Follow"
+    },
+    "jump": "{count, plural, one {# new line} other {# new lines}} · Jump to latest",
+    "count": "{matching, plural, one {# matching line} other {# matching lines}} · the last {capacity, number} are kept this session",
+    "debug": "Include debug details",
+    "privacy": "Passwords, tokens, keys, serial numbers and device identifiers are never written to the logs; they show as [redacted]. Logs stay on this computer until you copy or save them.",
+    "empty": {
+      "none": {
+        "title": "Nothing logged yet",
+        "body": "Lines appear here as Loadstar works: connecting a device, signing in, installing."
+      },
+      "noMatch": {
+        "title": "No lines match",
+        "body": "Change the level, the area or the search.",
+        "showAll": "Show all lines"
+      },
+      "cleared": {
+        "title": "View cleared",
+        "body": "New lines appear here as they come."
+      },
+      "failed": {
+        "title": "Couldn't read the logs",
+        "body": "The connection to the Engine may have closed. Reopen Logs to try again."
+      }
+    },
+    "export": {
+      "copyTitle": "{count, plural, one {Copy # line?} other {Copy # lines?}}",
+      "saveTitle": "{count, plural, one {Save # line to a file?} other {Save # lines to a file?}}",
+      "copyBody": "The lines shown, with the filters you set.",
+      "saveBody": "Every line kept this session, whatever the filters.",
+      "warning": "Passwords, tokens and device identifiers are already left out, but the logs do name your device model, apps and team. Check them before you post them publicly.",
+      "confirmCopy": "Copy",
+      "confirmSave": "Save",
+      "copied": "{count, plural, one {Copied # line} other {Copied # lines}}",
+      "saved": "{count, plural, one {Saved # line} other {Saved # lines}}",
+      "copyFailed": "Couldn't copy the lines",
+      "saveFailed": "Couldn't save the lines"
     }
   }
 }

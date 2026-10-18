@@ -34,6 +34,7 @@ const walk = (
   depth: number,
   seen: WeakSet<object>
 ): unknown => {
+  if (typeof value === 'function') return '[function]'
   if (value === null || typeof value !== 'object')
     return typeof value === 'bigint' ? `${value}n` : value
   if (value instanceof Uint8Array || value instanceof ArrayBuffer)

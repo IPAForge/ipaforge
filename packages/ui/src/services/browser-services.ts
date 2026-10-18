@@ -1,9 +1,15 @@
-import { createLogger, type LogLevel } from '@loadstar/kernel'
+import {
+  createLogger,
+  isLevelAtLeast,
+  type LogLevel,
+  type LogRecord
+} from '@loadstar/kernel'
 import type { EngineClient } from '@loadstar/rpc'
 import { consoleLogSink } from '@ui/services/logging/console-log-sink.ts'
 import { createLocalStoragePreferences } from '@ui/services/preferences/local-storage-preferences.ts'
 import { createNavigatorClipboard } from '@ui/services/system/clipboard.ts'
 import { createMediaColorSchemeSource } from '@ui/services/system/color-scheme-source.ts'
+import { createDownloadFileSaver } from '@ui/services/system/file-saver.ts'
 import { createWindowLinkOpener } from '@ui/services/system/link-opener.ts'
 import { createNavigatorLocaleSource } from '@ui/services/system/locale-source.ts'
 import type { UiServices } from '@ui/services/ui-services.ts'
@@ -23,15 +29,27 @@ export const createBrowserServices = (
   host: Window,
   { logLevel, engine, appVersion }: BrowserServicesOptions
 ): UiServices => {
-  const logger = createLogger({ level: logLevel, sink: consoleLogSink })
+  // Every record goes to the Engine's log buffer (it keeps those at its own level), so the log viewer shows the
+  // UI's lines with the Engine's; the console gets them from `logLevel` up.
+  let toEngine: ((record: LogRecord) => void) | undefined
+  const logger = createLogger({
+    level: 'debug',
+    sink: (record) => {
+      if (isLevelAtLeast(record.level, logLevel)) consoleLogSink(record)
+      toEngine?.(record)
+    }
+  })
+  const client = engine(logger)
+  toEngine = client.logs.write
 
   return {
     logger,
     preferences: createLocalStoragePreferences(host.localStorage),
     colorScheme: createMediaColorSchemeSource(host.matchMedia.bind(host)),
     localeSource: createNavigatorLocaleSource(host.navigator),
-    engine: engine(logger),
+    engine: client,
     clipboard: createNavigatorClipboard(host.navigator),
+    files: createDownloadFileSaver({ document: host.document, URL }),
     links: createWindowLinkOpener(host),
     appVersion
   }

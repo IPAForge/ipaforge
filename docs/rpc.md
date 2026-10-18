@@ -49,8 +49,11 @@ UI to Engine, each with an `id` that its response echoes:
 | `answer` | `runId`, `answer` | `handle.answer()` |
 | `decline` | `runId` | `handle.decline()` |
 | `cancel` | `runId` | `handle.cancel()` |
-| `subscribe` | `subscriptionId`, `topic` (`devices`) | `engine.watchDevices()` |
+| `subscribe` | `subscriptionId`, `topic` (`devices` or `logs`) | `engine.watchDevices()`, or the host's log buffer |
 | `unsubscribe` | `subscriptionId` | the unsubscribe it returned |
+| `logs` | `query: { minLevel?, scopes?, text?, from?, to?, after?, before?, limit? }` | A page of the host's log buffer, filtered and searched there (at most 1,000 entries) |
+| `log-level` | `level?` | The level the host records at; with `level`, changes it first |
+| `log` | `record` | A record the UI logged, kept with the Engine's if the level would have recorded it |
 
 Engine to UI:
 
@@ -61,7 +64,7 @@ Engine to UI:
 | `run-event` | `runId`, `event` | A pipeline event or a `prompt` |
 | `run-result` | `runId`, `result` | The run ended: `completed`, `failed` or `cancelled` |
 | `run-error` | `runId`, `error` | The run threw instead of returning a result |
-| `subscription-event` | `subscriptionId`, `event` | One event of a live feed (for `devices`: the list, an attach or a detach) |
+| `subscription-event` | `subscriptionId`, `event` | One event of a live feed (for `devices`: the list, an attach or a detach; for `logs`: `{ type: 'log', entry }`) |
 
 ## How a run streams
 
@@ -73,6 +76,8 @@ Engine to UI:
 ## Live feeds
 
 `client.watchDevices(listener)` subscribes to connected devices under an id the client picks and returns the function that unsubscribes. The listener gets `{ type: 'devices', devices }` first, then `attached` / `detached` events, each followed by the new list. Events are validated with zod on both sides, like every other message; an event for a subscription the client no longer has is dropped. Subscribing twice under one id is `rpc.invalid_message`; unsubscribing twice is harmless.
+
+`client.logs` is the log viewer's side: `page(query)` returns `{ entries, hasMore, counts }` (the newest matching entries, oldest first, and the count per level ignoring `minLevel`); `watch(listener)` gets every new entry; `level()` and `setLevel(level)` read and change the level; `write(record)` sends one of the UI's records, fire and forget. The host passes its buffer and level to `createRpcServer({ logs })`; without them the viewer gets empty pages. None of this traffic is logged, and a log entry that fails to send is dropped silently: logging the failure would make the next entry to send.
 
 When the channel closes, the server cancels its runs, ends its subscriptions and forgets its checkpoints. The client rejects everything waiting with `rpc.disconnected` and drops its subscriptions.
 

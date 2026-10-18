@@ -200,7 +200,8 @@
       "continues": "完了したステップは保持され、「{step}」から再開します。",
       "copy": "診断情報をコピー",
       "copied": "コピーしました",
-      "copyFailed": "コピーできませんでした"
+      "copyFailed": "コピーできませんでした",
+      "showLogs": "ログを表示"
     }
   },
   "pairing": {
@@ -886,6 +887,107 @@
       "forgets": "LoadstarはこのApple ID、そのセッション、保存されたパスワードを削除します。",
       "keeps": "署名証明書はこのコンピュータに残るため、再度サインインすると再利用されます。インストール済みのアプリは期限が切れるまで動作します。",
       "confirm": "サインアウト"
+    }
+  },
+  "logs": {
+    "title": "ログ",
+    "lede": "Loadstar が行ったことを 1 行ずつ。どこからでも次のキーで開けます:",
+    "shortcut": {
+      "control": "Ctrl+",
+      "command": "⌘",
+      "key": "L"
+    },
+    "copy": "コピー",
+    "save": "保存…",
+    "clear": "クリア",
+    "cleared": "表示をクリアしました。保存すると、このセッションのすべての行が書き出されます。",
+    "search": {
+      "label": "ログを検索",
+      "placeholder": "メッセージと詳細を検索",
+      "key": "/"
+    },
+    "level": {
+      "label": "レベル",
+      "all": "すべて",
+      "info": "情報",
+      "warn": "警告",
+      "error": "エラー"
+    },
+    "levelName": {
+      "debug": "デバッグ",
+      "info": "情報",
+      "warn": "警告",
+      "error": "エラー"
+    },
+    "area": {
+      "label": "領域",
+      "all": "すべての領域",
+      "install": "インストール",
+      "device": "デバイス",
+      "apple": "Apple",
+      "catalog": "カタログ",
+      "signing": "署名",
+      "engine": "エンジン",
+      "interface": "インターフェイス",
+      "app": "アプリ"
+    },
+    "filters": {
+      "showing": "表示中:",
+      "run": "このインストール({time})",
+      "text": "「{text}」",
+      "remove": "フィルタ {filter} を解除"
+    },
+    "list": {
+      "label": "ログの行",
+      "loadingOlder": "古い行を読み込み中…"
+    },
+    "row": {
+      "details": "{count, plural, other {詳細 # 件}}",
+      "scope": "領域",
+      "redacted": "[非表示]",
+      "copy": "行をコピー"
+    },
+    "follow": {
+      "on": "新しい行を追跡中",
+      "off": "一時停止中",
+      "pause": "一時停止",
+      "resume": "追跡"
+    },
+    "jump": "{count, plural, other {新しい行 # 件}} · 最新へ移動",
+    "count": "{matching, plural, other {一致する行 # 件}} · このセッションでは最新 {capacity, number} 行を保持",
+    "debug": "デバッグ詳細を含める",
+    "privacy": "パスワード、トークン、鍵、シリアル番号、デバイス識別子はログに書き込まれず、[非表示] と表示されます。ログはコピーまたは保存しない限りこのコンピュータに留まります。",
+    "empty": {
+      "none": {
+        "title": "まだログはありません",
+        "body": "Loadstar の動作に合わせてここに行が表示されます(デバイスの接続、サインイン、インストールなど)。"
+      },
+      "noMatch": {
+        "title": "一致する行はありません",
+        "body": "レベル、領域、検索を変更してください。",
+        "showAll": "すべての行を表示"
+      },
+      "cleared": {
+        "title": "表示をクリアしました",
+        "body": "新しい行は届き次第ここに表示されます。"
+      },
+      "failed": {
+        "title": "ログを読み込めませんでした",
+        "body": "エンジンとの接続が切れた可能性があります。ログを開き直してもう一度お試しください。"
+      }
+    },
+    "export": {
+      "copyTitle": "{count, plural, other {# 行をコピーしますか?}}",
+      "saveTitle": "{count, plural, other {# 行をファイルに保存しますか?}}",
+      "copyBody": "設定したフィルタで表示されている行です。",
+      "saveBody": "フィルタに関係なく、このセッションで保持しているすべての行です。",
+      "warning": "パスワード、トークン、デバイス識別子はすでに除外されていますが、ログにはデバイスのモデル、アプリ、チームが含まれます。公開する前に確認してください。",
+      "confirmCopy": "コピー",
+      "confirmSave": "保存",
+      "copied": "{count, plural, other {# 行をコピーしました}}",
+      "saved": "{count, plural, other {# 行を保存しました}}",
+      "copyFailed": "行をコピーできませんでした",
+      "saveFailed": "行を保存できませんでした"
     }
   }
 }

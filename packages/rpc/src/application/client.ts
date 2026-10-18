@@ -7,6 +7,9 @@ import { classify, type DeviceWatchEvent } from '@loadstar/installer'
 import {
   compact,
   LoadstarError,
+  type LogEntry,
+  type LogLevel,
+  type LogPage,
   silentLogger,
   toLoadstarError
 } from '@loadstar/kernel'
@@ -25,10 +28,13 @@ import { messageSchema } from '@rpc/domain/protocol/messages.ts'
 import type {
   CommandCallInput,
   Message,
-  QueryCallInput
+  QueryCallInput,
+  SubscriptionTopic,
+  WireSubscriptionEvent
 } from '@rpc/domain/protocol/types.ts'
 import type {
   EngineClient,
+  EngineLogs,
   RemoteCommandOptions,
   RemoteRunHandle
 } from '@rpc/domain/types.ts'
@@ -53,7 +59,10 @@ export const createEngineClient = (
   const logger = (options.logger ?? silentLogger).child({ scope: 'rpc' })
   const requests = createRequestTable(transport, config.requestTimeoutMs)
   const runs = new Map<string, ClientRun<unknown>>()
-  const subscriptions = new Map<string, (event: DeviceWatchEvent) => void>()
+  const subscriptions = new Map<
+    string,
+    (event: WireSubscriptionEvent) => void
+  >()
 
   /** Query results are trusted to have the Engine's types: the envelope is validated, the payload is the Engine's. */
   const query = <T>(call: QueryCallInput): Promise<T> =>
@@ -83,9 +92,10 @@ export const createEngineClient = (
     return run.handle
   }
 
-  /** A live feed: events go to `listener` until the returned function is called or the channel closes. */
-  const watchDevices = (
-    listener: (event: DeviceWatchEvent) => void
+  /** A live feed: events go to `onEvent` until the returned function is called or the channel closes. */
+  const subscribe = (
+    topic: SubscriptionTopic,
+    onEvent: (event: WireSubscriptionEvent) => void
   ): (() => void) => {
     const subscriptionId = crypto.randomUUID()
     const failed = (type: string) => (error: unknown) =>
@@ -94,15 +104,39 @@ export const createEngineClient = (
         type,
         code: toLoadstarError(error).code
       })
-    subscriptions.set(subscriptionId, listener)
+    subscriptions.set(subscriptionId, onEvent)
     requests
-      .send({ type: 'subscribe', subscriptionId, topic: 'devices' })
+      .send({ type: 'subscribe', subscriptionId, topic })
       .catch(failed('subscribe'))
     return () => {
       if (!subscriptions.delete(subscriptionId)) return
       requests
         .send({ type: 'unsubscribe', subscriptionId })
         .catch(failed('unsubscribe'))
+    }
+  }
+
+  const watchDevices = (
+    listener: (event: DeviceWatchEvent) => void
+  ): (() => void) =>
+    subscribe('devices', (event) => {
+      if (event.type !== 'log') listener(compact(event) as DeviceWatchEvent)
+    })
+
+  /** Nothing here logs: the viewer's own traffic would otherwise fill the log it reads. */
+  const logs: EngineLogs = {
+    page: (query = {}) =>
+      requests.send({ type: 'logs', query }) as Promise<LogPage>,
+    watch: (listener) =>
+      subscribe('logs', (event) => {
+        if (event.type === 'log') listener(compact(event.entry) as LogEntry)
+      }),
+    level: () => requests.send({ type: 'log-level' }) as Promise<LogLevel>,
+    setLevel: async (level) => {
+      await requests.send({ type: 'log-level', level })
+    },
+    write: (record) => {
+      requests.send({ type: 'log', record: compact(record) }).catch(() => {})
     }
   }
 
@@ -121,9 +155,7 @@ export const createEngineClient = (
     'run-error': (message) =>
       endRun(message.runId)?.fail(LoadstarError.fromJSON(message.error)),
     'subscription-event': (message) =>
-      subscriptions.get(message.subscriptionId)?.(
-        compact(message.event) as DeviceWatchEvent
-      )
+      subscriptions.get(message.subscriptionId)?.(message.event)
   }
 
   const rejectInvalid = (raw: unknown, issues: z.ZodError): void => {
@@ -174,6 +206,7 @@ export const createEngineClient = (
       start({ command: 'placePairing', input }, options),
     signIn: (input, options) => start({ command: 'signIn', input }, options),
     watchDevices,
-    classify
+    classify,
+    logs
   }
 }

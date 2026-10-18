@@ -11,7 +11,7 @@ import { createRpcServer, type RpcServer } from '@loadstar/rpc'
 
 export const serveEngine = <P>(
   contents: RendererContents<P>,
-  { engine, resolveIpa, logger, createChannel }: ServeEngineDeps<P>
+  { engine, resolveIpa, logs, logger, createChannel }: ServeEngineDeps<P>
 ): void => {
   let server: RpcServer | undefined
 
@@ -22,7 +22,8 @@ export const serveEngine = <P>(
       engine,
       transport: messagePortTransport(port1),
       resolveIpa,
-      logger
+      logger,
+      ...(logs ? { logs } : {})
     })
     contents.postMessage(RPC_PORT_CHANNEL, null, [port2])
     logger.info('engine connected to the renderer')

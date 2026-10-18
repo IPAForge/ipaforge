@@ -57,10 +57,9 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
     - right-to-left layouts (Arabic, Hebrew, Persian, Urdu) built from logical Tailwind utilities (`ms-`/`me-`, `start`/`end`), with mirrored icons where meaning depends on direction;
     - locale-aware dates, numbers and lists (`Intl.DateTimeFormat`, `NumberFormat`, `ListFormat`, `RelativeTimeFormat`);
     - a pseudo-locale (accented and about 40 % longer) for catching truncation and untranslated strings, plus screenshot tests in German (long), Arabic (RTL) and Japanese (CJK)
-  - done along the way: the 2FA code field takes the length Apple asks for, 4-digit codes for older (`hsa`) accounts included (#40); devices coming and going (a refresh, a cable wiggle) never open a full-screen error, the picker and the Devices page say it quietly (#45)
+  - done along the way: the 2FA code field takes the length Apple asks for, 4-digit codes for older (`hsa`) accounts included (#40); devices coming and going (a refresh, a cable wiggle) never open a full-screen error, the picker and the Devices page say it quietly (#45); a keyboard shortcut to open the logs, Ctrl+L or ⌘L on macOS (#56)
   - still open:
     - recovery: a dedicated error for an app that doesn't support the device (installation_proxy `DeviceNotSupportedByThinning`, today the generic `device.install_failed`), with its own screen
-    - logs: a keyboard shortcut to open them (Ctrl+L, ⌘L on macOS), in 6d
     - to check by hand: the sign-in dialog with password managers filling the form (e.g. Bitwarden)
   - progress (one PR per step):
     - [x] 6a: UI package, palettes and the sidebar shell (#28), with a minimal Electron shell (#29, #34)
@@ -74,7 +73,7 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
     - [x] quality: SonarJS lint (#41, #44); file structure rules across the project (#48–#52)
     - [x] 6c-7: recovery: a fix per error, Report the problem as a pre-filled GitHub issue, Apple pages opened in the browser (#54)
     - [x] 6c-8: step details: what each step did (release version, session reused, team, certificate, App IDs, free apps) (#55)
-    - [ ] 6d: log buffer, log stream and log viewer
+    - [x] 6d: log buffer, log stream and log viewer: paged and searched in the Engine, a virtual list, live lines, Copy and Save, debug details, Show logs for a failed run, Ctrl+L (#56)
     - [ ] 6e: screenshot and accessibility tests per locale
 - [ ] **7. Onboarding**: a first-run guided wizard with platform checks (usbmuxd / Apple Mobile Device driver, with copyable fixes per OS), network preflight (Apple, anisette, clock skew), connecting and trusting the device, Developer Mode, Apple ID sign-in with 2FA, team choice, and choosing what to install. It can be resumed and re-run from settings
 - [ ] **8. Install and preload experience**: one-click SideStore (stable/nightly), a preload picker (local IPAs, URLs, catalog apps), source deep links and a QR code for SideStore, a live pipeline view, dedicated recovery screens for every `ErrorCode` with "copy diagnostics", an on-device checklist per iOS version, a "Repair SideStore" wizard, and one-click switching to another Apple ID when one is banned

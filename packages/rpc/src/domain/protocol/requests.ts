@@ -16,6 +16,11 @@ import {
   signInInputSchema,
   teamQuerySchema
 } from '@rpc/domain/protocol/inputs.ts'
+import {
+  logLevelSchema,
+  logPageQuerySchema,
+  logRecordSchema
+} from '@rpc/domain/protocol/logs.ts'
 import { subscriptionTopicSchema } from '@rpc/domain/protocol/subscriptions.ts'
 
 const call = <M extends string, A extends z.ZodTuple>(method: M, args: A) =>
@@ -75,5 +80,11 @@ export const requestSchema = z.discriminatedUnion('type', [
     subscriptionId: idSchema,
     topic: subscriptionTopicSchema
   }),
-  request('unsubscribe', { subscriptionId: idSchema })
+  request('unsubscribe', { subscriptionId: idSchema }),
+  /** A page of the log buffer, filtered and searched on the Engine's side. */
+  request('logs', { query: logPageQuerySchema }),
+  /** The level the Engine records at; with `level`, changes it first. */
+  request('log-level', { level: logLevelSchema.optional() }),
+  /** A record the UI logged, kept with the Engine's so the viewer shows both. */
+  request('log', { record: logRecordSchema })
 ])

@@ -25,7 +25,8 @@ export const fakeScenarioIds = [
   'offline',
   'checksum',
   'unsupported-ios',
-  'anisette'
+  'anisette',
+  'logs'
 ] as const
 
 /** The step each failing scenario stops at, once. */

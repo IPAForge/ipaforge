@@ -15,8 +15,11 @@ const DEFAULT_LOG_LEVEL: LogLevel = 'info'
 const SCOPE_SEPARATOR = '.'
 
 export type CreateLoggerOptions = {
-  /** Minimum level emitted. Composition roots resolve it from `LOG_LEVEL` or settings. */
-  readonly level?: LogLevel
+  /**
+   * Minimum level emitted. Composition roots resolve it from `LOG_LEVEL` or settings; a function is read on every
+   * record, so the level can change while the app runs (`createLogLevel`).
+   */
+  readonly level?: LogLevel | (() => LogLevel)
   readonly sink: LogSink
   /** Field-name pattern to mask; defaults to credentials, keys and device identifiers. */
   readonly redactPattern?: RegExp
@@ -59,7 +62,9 @@ const reportSinkFailure = (
 
 /** Create a structured, redacting logger. It never throws, even when the sink does. */
 export const createLogger = (options: CreateLoggerOptions): Logger => {
-  const threshold = LEVEL_ORDER[options.level ?? DEFAULT_LOG_LEVEL]
+  const minLevel = options.level ?? DEFAULT_LOG_LEVEL
+  const threshold = (): number =>
+    LEVEL_ORDER[typeof minLevel === 'function' ? minLevel() : minLevel]
   const pattern = options.redactPattern ?? DEFAULT_REDACT_PATTERN
   const clock = options.clock ?? systemClock
   const bindings = options.bindings ?? {}
@@ -81,7 +86,7 @@ export const createLogger = (options: CreateLoggerOptions): Logger => {
   }
 
   const emit = (level: LogLevel, msg: string, fields?: LogFields): void => {
-    if (LEVEL_ORDER[level] < threshold) return
+    if (LEVEL_ORDER[level] < threshold()) return
     try {
       options.sink(toRecord(level, msg, fields))
     } catch (error) {

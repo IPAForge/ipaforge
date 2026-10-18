@@ -4,7 +4,7 @@
 
 ## Current status
 
-Loadstar is **pre-alpha**. Phases 0–5 are complete: foundation, signer, device layer, Apple account, developer services and the installer. Phase 6 (UI) is in progress: everything up to the install run is in; logs and screenshot tests are next. There is no installable build yet; see [Installing](installing.md) for how it will work.
+Loadstar is **pre-alpha**. Phases 0–5 are complete: foundation, signer, device layer, Apple account, developer services and the installer. Phase 6 (UI) is in progress: everything up to the log viewer is in; screenshot and accessibility tests are next. There is no installable build yet; see [Installing](installing.md) for how it will work.
 
 | Area | State |
 |---|---|
@@ -16,7 +16,7 @@ Loadstar is **pre-alpha**. Phases 0–5 are complete: foundation, signer, device
 | Developer services (`apple.developer`) | Implemented (Phase 4): reads verified with a real account |
 | Installer (`@loadstar/installer`) | Implemented (Phase 5): pipelines, catalog, install flows, IPA checks against the device, free-app limit, diagnostics and the Engine facade |
 | Engine RPC (`@loadstar/rpc`) | Implemented (Phase 5): typed, validated Engine ⇄ UI messages; wired in Electron over a `MessageChannelMain` (`apps/desktop/src/main/rpc/serve-engine.ts`) |
-| UI (`@loadstar/ui`) | In progress (Phase 6): palettes, the shell, routes, translations, accounts and sign-in, devices, the install run with its questions, step details and recovery screens |
+| UI (`@loadstar/ui`) | In progress (Phase 6): palettes, the shell, routes, translations, accounts and sign-in, devices, the install run with its questions, step details and recovery screens, the log viewer |
 | Desktop app (`apps/desktop`) | The Electron shell renders the UI connected to the real Engine; packaging comes in Phase 9 |
 
 ## What you'll need (once released)

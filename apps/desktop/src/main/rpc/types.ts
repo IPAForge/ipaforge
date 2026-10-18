@@ -1,6 +1,6 @@
 import type { Engine } from '@loadstar/installer'
 import type { Logger } from '@loadstar/kernel'
-import type { ResolveIpa } from '@loadstar/rpc'
+import type { LogSource, ResolveIpa } from '@loadstar/rpc'
 
 export type MessageListener = (event: { readonly data: unknown }) => void
 
@@ -30,6 +30,8 @@ export type RendererContents<P> = {
 export type ServeEngineDeps<P> = {
   readonly engine: Engine
   readonly resolveIpa: ResolveIpa
+  /** Served to the log viewer; without it the viewer is empty. */
+  readonly logs?: LogSource
   readonly logger: Logger
   /** `() => new MessageChannelMain()` */
   readonly createChannel: () => ChannelPair<P>

@@ -80,6 +80,9 @@ export type RunEventHandlers = {
 export type ActiveRun = {
   readonly input: InstallSideStoreInput
   readonly view: RunView
+  /** ISO times the run (with any resumes) started and ended, for its lines in the log viewer. */
+  readonly startedAt: string
+  readonly endedAt?: string | undefined
 }
 
 export type ActiveRunStore = {
