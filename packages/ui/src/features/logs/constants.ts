@@ -51,8 +51,8 @@ export const LEVEL_NAME_KEYS = {
 export const LEVEL_BADGE_CLASSES = {
   debug: 'text-muted',
   info: 'bg-surface-secondary text-accent',
-  warn: 'bg-warning-soft text-warning',
-  error: 'bg-danger-soft text-danger'
+  warn: 'bg-warning-soft text-warning-soft-foreground',
+  error: 'bg-danger-soft text-danger-soft-foreground'
 } as const satisfies Readonly<Record<LogLevel, string>>
 
 export const ROW_TONE_CLASSES = {

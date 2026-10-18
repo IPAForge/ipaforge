@@ -48,7 +48,7 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
   - a remote source manifest (SideStore and LiveContainer stable/nightly, mirrors, SHA-256, iOS compatibility table);
   - flows: `installSideStore` (SideStore or LiveContainer + SideStore, including certificate injection: `ALTCertificate.p12` + `ALTCertificateID`, into the SideStore framework for LiveContainer), free-app-limit resolution, `installApps` (any IPA, preload), `placePairing` (several apps from a data-driven list of known apps and their pairing-file locations);
   - a diagnostics error catalog, the Engine facade, and `@ipaforge/rpc`
-- [ ] **6. UI foundation**: `@ipaforge/ui` with HeroUI v3 and Tailwind v4 (no CSS files):
+- [x] **6. UI foundation**: `@ipaforge/ui` with HeroUI v3 and Tailwind v4 (no CSS files):
   - palette themes as TS data (Graphite, Ocean, Aurora, Sunset, Forest, Rose), each with light and dark variants;
   - i18n, TanStack Router and Query, `EngineClient`, a layout shell, and the log viewer;
   - translation foundation:
@@ -74,7 +74,7 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
     - [x] 6c-7: recovery: a fix per error, Report the problem as a pre-filled GitHub issue, Apple pages opened in the browser (#54)
     - [x] 6c-8: step details: what each step did (release version, session reused, team, certificate, App IDs, free apps) (#55)
     - [x] 6d: log buffer, log stream and log viewer: paged and searched in the Engine, a virtual list, live lines, Copy and Save, debug details, Show logs for a failed run, Ctrl+L (#56)
-    - [ ] 6e: screenshot and accessibility tests per locale
+    - [x] 6e: screenshot and accessibility tests per locale: every main screen in five languages and dark mode, clipped-text, WCAG 2.2 AA and keyboard checks in a real Chromium, Linux references made in Docker; contrast fixes for muted, red and amber text (#58)
 - [ ] **7. Onboarding**: a first-run guided wizard with platform checks (usbmuxd / Apple Mobile Device driver, with copyable fixes per OS), network preflight (Apple, anisette, clock skew), connecting and trusting the device, Developer Mode, Apple ID sign-in with 2FA, team choice, and choosing what to install. It can be resumed and re-run from settings
 - [ ] **8. Install and preload experience**: one-click SideStore (stable/nightly), a preload picker (local IPAs, URLs, catalog apps), source deep links and a QR code for SideStore, a live pipeline view, dedicated recovery screens for every `ErrorCode` with "copy diagnostics", an on-device checklist per iOS version, a "Repair SideStore" wizard, and one-click switching to another Apple ID when one is banned
   - progress (built during Phase 6c):
@@ -125,3 +125,4 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
 | 3. Apple account (sign-in + device 2FA + app token verified with a real account; SMS refused by Apple) | 2026-10-15 |
 | 4. Developer services | 2026-10-15 |
 | 5. Installer engine and catalog | 2026-10-15 |
+| 6. UI foundation | 2026-10-18 |

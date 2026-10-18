@@ -10,3 +10,8 @@ coverage/
 !fixtures/**/.DS_Store
 # local caches (e.g. downloaded IPAs for opt-in e2e tests)
 .cache/
+
+# Browser tests: only the Linux reference screenshots are kept (packages/ui/scripts/update-screenshots.sh)
+packages/ui/src/__screenshots__/**/*-darwin.png
+packages/ui/src/__screenshots__/**/*-win32.png
+packages/ui/.vitest/

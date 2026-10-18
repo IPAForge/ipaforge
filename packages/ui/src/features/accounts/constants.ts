@@ -13,7 +13,7 @@ export const accountTone = {
 export const accountStateClasses = {
   checking: 'text-muted',
   ready: '',
-  signInNeeded: 'text-warning',
-  blocked: 'text-danger',
-  unreachable: 'text-warning'
+  signInNeeded: 'text-warning-soft-foreground',
+  blocked: 'text-danger-soft-foreground',
+  unreachable: 'text-warning-soft-foreground'
 } as const satisfies Record<AccountState, string>

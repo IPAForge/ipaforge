@@ -24,17 +24,17 @@ export const deviceTone = {
 export const deviceStateClasses = {
   checking: 'text-muted',
   ready: 'text-success',
-  locked: 'text-warning',
-  developerModeOff: 'text-warning',
-  notTrusted: 'text-danger',
-  unavailable: 'text-danger',
+  locked: 'text-warning-soft-foreground',
+  developerModeOff: 'text-warning-soft-foreground',
+  notTrusted: 'text-danger-soft-foreground',
+  unavailable: 'text-danger-soft-foreground',
   notConnected: 'text-muted'
 } as const satisfies Record<DeviceState, string>
 
 /** The tints of a notice: the box itself and its title. */
 export const noticeToneClasses = {
-  warning: { box: 'bg-warning-soft', title: 'text-warning' },
-  danger: { box: 'bg-danger-soft', title: 'text-danger' }
+  warning: { box: 'bg-warning-soft', title: 'text-warning-soft-foreground' },
+  danger: { box: 'bg-danger-soft', title: 'text-danger-soft-foreground' }
 } as const
 
 /** How long a note stays: long enough to read, short enough not to pile up while a cable is wiggled. */

@@ -53,7 +53,7 @@ export const TwoFactorCodePrompt = ({
         </InputOTP.Group>
       </InputOTP>
       {data.retry ? (
-        <p role="alert" className="text-danger text-sm">
+        <p role="alert" className="text-danger-soft-foreground text-sm">
           {t('prompts.code.wrong')}
         </p>
       ) : null}

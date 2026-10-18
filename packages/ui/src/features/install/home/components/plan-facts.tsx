@@ -31,7 +31,7 @@ export const PlanFacts = ({ plan }: PlanFactsProps) => {
           left: appIds.available
         })}
         note={nextSlot}
-        tone={appIds.enough ? '' : 'text-danger'}
+        tone={appIds.enough ? '' : 'text-danger-soft-foreground'}
       />
       <PlanFact
         label={t('install.plan.freeApps')}
@@ -44,7 +44,7 @@ export const PlanFacts = ({ plan }: PlanFactsProps) => {
             : t('install.plan.noLimit')
         }
         note={freeSlots ? t(freeAppsNoteKey) : undefined}
-        tone={isFull ? 'text-warning' : ''}
+        tone={isFull ? 'text-warning-soft-foreground' : ''}
       />
       <PlanFact
         label={t('install.plan.certificate')}

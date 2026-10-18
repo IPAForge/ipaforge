@@ -47,7 +47,7 @@ export const PickList = ({
               <span className="text-muted text-sm">{option.description}</span>
             ) : null}
             {option.warning ? (
-              <span className="flex items-center gap-1 text-sm text-warning">
+              <span className="flex items-center gap-1 text-sm text-warning-soft-foreground">
                 <TriangleAlert aria-hidden="true" className="size-4 shrink-0" />
                 {option.warning}
               </span>

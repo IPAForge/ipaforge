@@ -35,7 +35,7 @@ export const ChoiceButton = ({
       <span className="font-normal text-muted text-sm">{description}</span>
     ) : null}
     {warning ? (
-      <span className="flex items-center gap-1 font-normal text-sm text-warning">
+      <span className="flex items-center gap-1 font-normal text-sm text-warning-soft-foreground">
         <TriangleAlert aria-hidden="true" className="size-4 shrink-0" />
         {warning}
       </span>

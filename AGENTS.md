@@ -68,6 +68,8 @@ ipaforge/
 | `packages/ui/src/App.tsx` | UI root that every host mounts: providers (services, query, language, theme) + router with the shell |
 | `packages/ui/src/locales/en.json` | English UI strings, the source of truth for every translation (`status.json` lists languages and drafts) |
 | `packages/ui/src/i18n/` | i18next setup, typed keys, language matching and store, on-demand locale loading (`prepareLanguage`), pseudo-locale, `Intl` formatters |
+| `packages/ui/src/screens.browser.test.tsx` | Screenshot, clipped-text and WCAG 2.2 AA tests of the main screens in a real Chromium (`pnpm test:browser`; references in `src/__screenshots__/`) |
+| `packages/ui/scripts/update-screenshots.sh` | Rebuilds the Linux reference screenshots in Playwright's Docker image (`pnpm --filter @ipaforge/ui test:browser:update`) |
 | `packages/ui/src/main.tsx` | Browser entry for the UI (`pnpm --filter @ipaforge/ui dev` / `build`) |
 | `pnpm-workspace.yaml` / `turbo.json` | Workspace and task graph |
 | `packages/kernel/src/index.ts` | IPAForgeError/ErrorCode, ports, logger, byte utilities |

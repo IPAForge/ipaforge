@@ -134,4 +134,5 @@ Every file does one job, and the lint (`@ipaforge/structure` in `tooling/eslint/
 - Vitest unit tests for every `domain/` and `application/` module.
 - The signer and encoders use golden fixtures (`fixtures/`) compared byte for byte with Apple `codesign` output.
 - Adapters get contract tests that share one suite per port.
+- The UI's main screens have screenshot, clipped-text, WCAG 2.2 AA (axe) and keyboard tests in a real Chromium (`*.browser.test.tsx`, `pnpm test:browser`). Reference images are made on Linux in Playwright's Docker image (`pnpm --filter @ipaforge/ui test:browser:update`) and committed with the change that alters them.
 
