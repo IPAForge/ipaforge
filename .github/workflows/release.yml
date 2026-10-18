@@ -25,7 +25,8 @@ jobs:
   build:
     name: build (${{ matrix.os }})
     strategy:
-      fail-fast: true
+      # Every system reports its own result.
+      fail-fast: false
       matrix:
         include:
           - os: macos-latest

@@ -41,5 +41,6 @@
   "productName": "IPAForge",
   "description": "Install SideStore and preload your apps onto iPhone and iPad.",
   "author": "Dan Motpan",
-  "homepage": "https://github.com/SirReaDy/ipaforge"
+  "homepage": "https://github.com/SirReaDy/ipaforge",
+  "desktopName": "ipaforge.desktop"
 }

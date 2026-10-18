@@ -43,6 +43,8 @@ nsis:
   createDesktopShortcut: true
 
 linux:
+  # The package name (@ipaforge/desktop) can't be a file name.
+  executableName: ipaforge
   icon: build/icon.png
   category: Development
   synopsis: Install SideStore and your apps on iPhone and iPad
