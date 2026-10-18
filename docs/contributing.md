@@ -128,7 +128,7 @@ A release is a version tag; CI does the rest (`.github/workflows/release.yml`):
 
 1. Set the version in `apps/desktop/package.json` (`0.1.0-alpha.2`, `0.1.0-beta.1`, `1.0.0`): it is the version the app shows and the installers carry.
 2. Write the release notes in `docs/releases/<version>.md`: what's new, what to download, known limitations.
-3. Merge both to `main`, then tag that commit and push the tag: `git tag v0.1.0-alpha.2 && git push origin v0.1.0-alpha.2`.
+3. Merge both to `main`, then tag that commit and push the tag: `git tag v0.1.0-alpha.2 && git push origin v0.1.0-alpha.2`. Publishing a release with a new tag from GitHub's web page works too: the workflow then only adds the installers to it, keeping its title and notes.
 
 The workflow checks that the tag matches the version, builds the installers on macOS, Windows and Linux, and publishes a GitHub release with them, `SHA256SUMS.txt` and the notes. A version with a pre-release part (`-alpha`, `-beta`, `-rc`) is published as a pre-release. To try the installers locally: `pnpm --filter @ipaforge/desktop dist` (this system only; output in `apps/desktop/release/`).
 

@@ -86,11 +86,17 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           version="${GITHUB_REF_NAME#v}"
-          notes="docs/releases/${version}.md"
-          test -f "$notes" || { echo "missing $notes"; exit 1; }
           prerelease=""
           case "$version" in *-*) prerelease="--prerelease" ;; esac
-          gh release create "$GITHUB_REF_NAME" dist/* \
-            --title "IPAForge ${version}" \
-            --notes-file "$notes" \
-            $prerelease
+          # A release made on GitHub's web page (which created the tag) keeps its title and notes: only the files
+          # are added. Otherwise the release is created here, with the notes from docs/releases/.
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" dist/* --clobber
+          else
+            notes="docs/releases/${version}.md"
+            test -f "$notes" || { echo "missing $notes"; exit 1; }
+            gh release create "$GITHUB_REF_NAME" dist/* \
+              --title "IPAForge ${version}" \
+              --notes-file "$notes" \
+              $prerelease
+          fi
