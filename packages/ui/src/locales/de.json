@@ -4,7 +4,11 @@
   },
   "shell": {
     "skipToContent": "Zum Inhalt springen",
-    "navigation": "Bereiche"
+    "navigation": "Bereiche",
+    "credit": {
+      "madeWith": "Mit ❤️ und ☕ gemacht von {name}",
+      "copyright": "© {year} {name}"
+    }
   },
   "topBar": {
     "device": "Gerät",
@@ -880,6 +884,10 @@
     "description": "Die Apple-IDs, mit denen IPAForge Apps signiert. Die verwendete steht in der oberen Leiste.",
     "list": "Gespeicherte Apple-IDs",
     "empty": "Noch keine Apple-IDs. Füge eine hinzu, um SideStore zu installieren.",
+    "notSaved": {
+      "title": "Apple-IDs werden nicht gespeichert",
+      "body": "IPAForge kann den Schlüsselbund des Systems nicht verwenden (vielleicht wurde der Zugriff verweigert), daher bleiben deine Apple-IDs nur bis zum Beenden erhalten. Um sie zu speichern, öffne IPAForge erneut und erlaube den Zugriff auf den Schlüsselbund, wenn du gefragt wirst."
+    },
     "freeTeam": "{name} (kostenlos)",
     "withState": "{line} · {state}",
     "state": {

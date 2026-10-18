@@ -186,6 +186,7 @@ export const createFakeEngine = ({
     deviceStatus: deviceStates.status,
     pairDevice: deviceStates.pair,
     listAccounts: async () => world.accounts,
+    canSaveAccounts: async () => world.scenario !== 'no-keychain',
     signOut: async (accountId) => forgetAccount(world, accountId),
     listTeams: async (accountId) => {
       requireSession(world, accountId)

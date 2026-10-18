@@ -4,7 +4,11 @@
   },
   "shell": {
     "skipToContent": "コンテンツへスキップ",
-    "navigation": "セクション"
+    "navigation": "セクション",
+    "credit": {
+      "madeWith": "{name} が ❤️ と ☕ で作りました",
+      "copyright": "© {year} {name}"
+    }
   },
   "topBar": {
     "device": "デバイス",
@@ -880,6 +884,10 @@
     "description": "IPAForgeがアプリの署名に使うApple ID。使用中のものは上部のバーに表示されます。",
     "list": "保存済みのApple ID",
     "empty": "まだApple IDがありません。SideStoreをインストールするには追加してください。",
+    "notSaved": {
+      "title": "Apple ID は保存されていません",
+      "body": "IPAForge はシステムのキーチェーンを使用できないため（アクセスが拒否された可能性があります）、Apple ID はアプリを終了するまでしか保持されません。保存するには、IPAForge をもう一度開き、確認が表示されたらキーチェーンへのアクセスを許可してください。"
+    },
     "freeTeam": "{name}(無料)",
     "withState": "{line} · {state}",
     "state": {

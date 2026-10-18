@@ -12,6 +12,8 @@ export const createRoutedSecretStore = (
   return {
     get: (key) => pick(key).get(key),
     set: (key, value) => pick(key).set(key, value),
-    delete: (key) => pick(key).delete(key)
+    delete: (key) => pick(key).delete(key),
+    // Whether credentials survive a restart is up to the store they go to.
+    isPersistent: async () => (await volatile.isPersistent?.()) ?? true
   }
 }

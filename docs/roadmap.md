@@ -15,7 +15,7 @@ The detailed roadmap, with each phase's scope, is [design/roadmap.md](design/roa
 | 6 | UI foundation ✓ | HeroUI + Tailwind shell, colour palettes, i18n, Engine connection, accounts, devices, install run, its questions, recovery, step details, the log viewer, and screenshot and accessibility tests (#28–#58) |
 | 7 | Onboarding | First-run guided wizard |
 | 8 | Install & preload UX (in progress) | One-click SideStore ✓, live run view ✓, recovery screens ✓, Apple ID switch ✓, preload picker ✓ (#59); next: app sources and updates, deep links / QR, on-device checklist, Repair SideStore |
-| 9 | Desktop app (alpha builds ✓, #61) | Electron packages for Windows, macOS, Linux ✓ (unsigned alpha); next: code signing, auto-update |
+| 9 | Desktop app (alpha builds ✓, #61, #62) | Electron packages for Windows, macOS, Linux ✓ (unsigned alpha); next: code signing, auto-update |
 | 10 | Management tools | Certificates, app IDs, pairing files, import/export |
 | 11 | Wireless & remote pairing | Wi-Fi installs and the iOS 17+ RP pairing file |
 | 12 | Release 1.0 | Docs site, translations, security review, release pipeline, reusable packages on npm |

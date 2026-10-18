@@ -14,6 +14,7 @@ const queryHandlers = (
   deviceStatus: ([udid]) => engine.deviceStatus(udid),
   pairDevice: ([udid]) => engine.pairDevice(udid),
   listAccounts: () => engine.listAccounts(),
+  canSaveAccounts: () => engine.canSaveAccounts(),
   signOut: ([accountId]) => engine.signOut(accountId),
   listTeams: ([accountId]) => engine.listTeams(accountId),
   catalogApps: () => engine.catalogApps(),

@@ -32,6 +32,7 @@ export const queryCallSchema = z.discriminatedUnion('method', [
   /** Waits for the Trust tap on the device, so it can take as long as the user does. */
   call('pairDevice', z.tuple([textSchema])),
   call('listAccounts', z.tuple([])),
+  call('canSaveAccounts', z.tuple([])),
   call('listTeams', z.tuple([textSchema])),
   call('catalogApps', z.tuple([])),
   call('recommendedChannel', z.tuple([textSchema, textSchema.optional()])),

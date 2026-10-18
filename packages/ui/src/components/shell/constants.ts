@@ -1,5 +1,11 @@
 import type { StatusTone } from '@ui/components/shell/types.ts'
 
+/** Who made IPAForge, as the sidebar's credit names them. */
+export const AUTHOR = 'Dan Motpan'
+
+/** The year the copyright notice names (the first release's). */
+export const COPYRIGHT_YEAR = '2026'
+
 /** The `main` element the skip link jumps to. */
 export const MAIN_CONTENT_ID = 'main-content'
 

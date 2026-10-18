@@ -13,6 +13,7 @@ export const fakeScenarioIds = [
   'accounts',
   'no-accounts',
   'sign-in-no-2fa',
+  'no-keychain',
   'wrong-password',
   'two-factor',
   'two-teams',
