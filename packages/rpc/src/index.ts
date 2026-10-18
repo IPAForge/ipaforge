@@ -12,6 +12,8 @@ export {
   type Engine,
   type InstallPlan,
   type InstallState,
+  logRunEvent,
+  logRunResult,
   type PairingAppChoice,
   type PipelineResult,
   type PlannedStep,
@@ -38,6 +40,7 @@ export type {
   RpcServerOptions
 } from '@rpc/application/types.ts'
 export { DEFAULT_RPC_CONFIG, type RpcConfig } from '@rpc/domain/config.ts'
+export type { LogSource } from '@rpc/domain/ports/log-source.ts'
 export type { ResolveIpa } from '@rpc/domain/ports/resolve-ipa.ts'
 export type { Transport } from '@rpc/domain/ports/transport.ts'
 export { PROTOCOL_VERSION } from '@rpc/domain/protocol/common.ts'
@@ -58,6 +61,7 @@ export type {
 } from '@rpc/domain/protocol/types.ts'
 export type {
   EngineClient,
+  EngineLogs,
   RemoteCommandOptions,
   RemoteResult,
   RemoteRunHandle,

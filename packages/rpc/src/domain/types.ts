@@ -9,7 +9,14 @@ import type {
   RunEvent,
   SignInState
 } from '@loadstar/installer'
-import type { LoadstarError } from '@loadstar/kernel'
+import type {
+  LoadstarError,
+  LogEntry,
+  LogLevel,
+  LogPage,
+  LogPageQuery,
+  LogRecord
+} from '@loadstar/kernel'
 import type {
   RemoteCheckpoint,
   RemoteInstallAppsInput,
@@ -49,6 +56,19 @@ export type RemoteRunHandle<S> = {
   readonly result: Promise<RemoteResult<S>>
 }
 
+/** The Engine's log buffer, for the log viewer: paged and searched on the Engine's side, then live. */
+export type EngineLogs = {
+  /** The newest matching entries, oldest first; pass `before` (the oldest `seq` shown) for the next page up. */
+  page(query?: LogPageQuery): Promise<LogPage>
+  /** Every new entry, unfiltered; returns the function that stops listening. */
+  watch(listener: (entry: LogEntry) => void): () => void
+  level(): Promise<LogLevel>
+  /** Until the app restarts; the host starts at its own level (`LOG_LEVEL`, else info). */
+  setLevel(level: LogLevel): Promise<void>
+  /** Keeps a record the UI logged with the Engine's. Fire and forget: a failure is dropped, never logged. */
+  write(record: LogRecord): void
+}
+
 export type EngineClient = Omit<EngineQueries, 'planInstall'> & {
   planInstall(input: RemotePlanInstallInput): Promise<InstallPlan>
   installSideStore(
@@ -77,6 +97,7 @@ export type EngineClient = Omit<EngineQueries, 'planInstall'> & {
   signOut(accountId: string): Promise<void>
   /** Runs locally: errors arrive as LoadstarErrors with their code, data and cause chain intact. */
   classify(error: unknown): Diagnosis
+  readonly logs: EngineLogs
 }
 
 // What a value looks like after crossing the channel. Structured clone keeps data (Maps, Dates, bytes) but refuses

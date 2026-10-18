@@ -200,7 +200,8 @@
       "continues": "Erledigte Schritte bleiben: Ein neuer Versuch macht bei „{step}“ weiter.",
       "copy": "Diagnose kopieren",
       "copied": "Kopiert",
-      "copyFailed": "Konnte nicht kopieren"
+      "copyFailed": "Konnte nicht kopieren",
+      "showLogs": "Protokoll anzeigen"
     }
   },
   "pairing": {
@@ -886,6 +887,107 @@
       "forgets": "Loadstar vergisst diese Apple-ID, ihre Sitzung und ihr gespeichertes Passwort.",
       "keeps": "Ihre Signaturzertifikate bleiben auf diesem Computer, sodass eine erneute Anmeldung sie wiederverwendet. Bereits installierte Apps laufen weiter, bis sie ablaufen.",
       "confirm": "Abmelden"
+    }
+  },
+  "logs": {
+    "title": "Protokoll",
+    "lede": "Was Loadstar getan hat, Zeile für Zeile. Von überall aus zu öffnen mit",
+    "shortcut": {
+      "control": "Strg+",
+      "command": "⌘",
+      "key": "L"
+    },
+    "copy": "Kopieren",
+    "save": "Speichern…",
+    "clear": "Leeren",
+    "cleared": "Ansicht geleert. Speichern schreibt weiterhin jede Zeile dieser Sitzung.",
+    "search": {
+      "label": "Protokoll durchsuchen",
+      "placeholder": "Meldungen und Details durchsuchen",
+      "key": "/"
+    },
+    "level": {
+      "label": "Stufe",
+      "all": "Alle",
+      "info": "Info",
+      "warn": "Warnungen",
+      "error": "Fehler"
+    },
+    "levelName": {
+      "debug": "Debug",
+      "info": "Info",
+      "warn": "Warnung",
+      "error": "Fehler"
+    },
+    "area": {
+      "label": "Bereich",
+      "all": "Alle Bereiche",
+      "install": "Installation",
+      "device": "Gerät",
+      "apple": "Apple",
+      "catalog": "Katalog",
+      "signing": "Signierung",
+      "engine": "Engine",
+      "interface": "Oberfläche",
+      "app": "App"
+    },
+    "filters": {
+      "showing": "Nur angezeigt:",
+      "run": "Diese Installation ({time})",
+      "text": "„{text}“",
+      "remove": "Filter {filter} entfernen"
+    },
+    "list": {
+      "label": "Protokollzeilen",
+      "loadingOlder": "Ältere Zeilen werden geladen…"
+    },
+    "row": {
+      "details": "{count, plural, one {# Detail} other {# Details}}",
+      "scope": "Bereich",
+      "redacted": "[ausgeblendet]",
+      "copy": "Zeile kopieren"
+    },
+    "follow": {
+      "on": "Neue Zeilen werden verfolgt",
+      "off": "Angehalten",
+      "pause": "Anhalten",
+      "resume": "Verfolgen"
+    },
+    "jump": "{count, plural, one {# neue Zeile} other {# neue Zeilen}} · Zur neuesten",
+    "count": "{matching, plural, one {# passende Zeile} other {# passende Zeilen}} · die letzten {capacity, number} werden in dieser Sitzung behalten",
+    "debug": "Debug-Details einschließen",
+    "privacy": "Passwörter, Tokens, Schlüssel, Seriennummern und Gerätekennungen werden nie ins Protokoll geschrieben; sie erscheinen als [ausgeblendet]. Das Protokoll bleibt auf diesem Computer, bis du es kopierst oder speicherst.",
+    "empty": {
+      "none": {
+        "title": "Noch nichts protokolliert",
+        "body": "Zeilen erscheinen hier, während Loadstar arbeitet: Gerät verbinden, anmelden, installieren."
+      },
+      "noMatch": {
+        "title": "Keine passenden Zeilen",
+        "body": "Ändere die Stufe, den Bereich oder die Suche.",
+        "showAll": "Alle Zeilen anzeigen"
+      },
+      "cleared": {
+        "title": "Ansicht geleert",
+        "body": "Neue Zeilen erscheinen hier, sobald sie kommen."
+      },
+      "failed": {
+        "title": "Das Protokoll konnte nicht gelesen werden",
+        "body": "Die Verbindung zur Engine wurde vielleicht getrennt. Öffne das Protokoll erneut, um es noch einmal zu versuchen."
+      }
+    },
+    "export": {
+      "copyTitle": "{count, plural, one {# Zeile kopieren?} other {# Zeilen kopieren?}}",
+      "saveTitle": "{count, plural, one {# Zeile in eine Datei speichern?} other {# Zeilen in eine Datei speichern?}}",
+      "copyBody": "Die angezeigten Zeilen, mit deinen Filtern.",
+      "saveBody": "Jede Zeile dieser Sitzung, unabhängig von den Filtern.",
+      "warning": "Passwörter, Tokens und Gerätekennungen sind bereits ausgelassen, aber das Protokoll nennt dein Gerätemodell, deine Apps und dein Team. Prüfe es, bevor du es öffentlich teilst.",
+      "confirmCopy": "Kopieren",
+      "confirmSave": "Speichern",
+      "copied": "{count, plural, one {# Zeile kopiert} other {# Zeilen kopiert}}",
+      "saved": "{count, plural, one {# Zeile gespeichert} other {# Zeilen gespeichert}}",
+      "copyFailed": "Die Zeilen konnten nicht kopiert werden",
+      "saveFailed": "Die Zeilen konnten nicht gespeichert werden"
     }
   }
 }

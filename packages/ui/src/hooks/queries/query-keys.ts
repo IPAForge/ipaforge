@@ -1,5 +1,6 @@
 // Every Engine query's cache key, in one place: invalidating `accounts` refreshes an account's teams, quota and
 // certificates too, because their keys start with it.
+import type { LogFilter } from '@loadstar/kernel'
 import type { RemotePlanInstallInput, TeamQuery } from '@loadstar/rpc'
 
 const teamKey = ({ accountId, teamId }: TeamQuery) =>
@@ -22,5 +23,8 @@ export const queryKeys = {
   certificates: (query: TeamQuery | undefined) =>
     query ? ([...teamKey(query), 'certificates'] as const) : ['idle'],
   planInstall: (input: RemotePlanInstallInput | undefined) =>
-    ['plan', input ?? null] as const
+    ['plan', input ?? null] as const,
+  /** Pages of the Engine's log buffer for one filter; never cached between visits to Logs. */
+  logs: (filter: LogFilter) => ['logs', 'lines', filter] as const,
+  logLevel: ['logs', 'level'] as const
 }

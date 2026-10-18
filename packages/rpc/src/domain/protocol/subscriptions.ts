@@ -1,8 +1,8 @@
-// Live feeds the UI subscribes to (today: connected devices). Each subscription has an id the client picks; the
+// Live feeds the UI subscribes to: connected devices and new log entries. Each subscription has an id the client picks; the
 // server streams `subscription-event`s for it until the client unsubscribes or the channel closes.
 import { z } from 'zod'
 
-export const subscriptionTopicSchema = z.enum(['devices'])
+export const subscriptionTopicSchema = z.enum(['devices', 'logs'])
 
 const usbmuxDeviceSchema = z.object({
   udid: z.string().min(1),

@@ -66,12 +66,14 @@ const recording = (client: EngineClient) => {
   const engine = Object.fromEntries(
     Object.entries(client).map(([method, call]) => [
       method,
-      (...args: unknown[]) => {
-        calls.push({ method, args })
-        return (call as (...args: unknown[]) => unknown)(...args)
-      }
+      typeof call === 'function'
+        ? (...args: unknown[]) => {
+            calls.push({ method, args })
+            return (call as (...args: unknown[]) => unknown)(...args)
+          }
+        : call
     ])
-  ) as EngineClient
+  ) as unknown as EngineClient
 
   return { engine, calls }
 }

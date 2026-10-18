@@ -10,6 +10,11 @@ import type {
   signInInputSchema
 } from '@rpc/domain/protocol/inputs.ts'
 import type {
+  logEntrySchema,
+  logEventSchema,
+  logPageQuerySchema
+} from '@rpc/domain/protocol/logs.ts'
+import type {
   messageSchema,
   pipelineEventSchema,
   remoteCheckpointSchema,
@@ -81,3 +86,11 @@ export type RequestBody =
 export type SubscriptionTopic = z.infer<typeof subscriptionTopicSchema>
 
 export type WireDeviceWatchEvent = z.infer<typeof deviceWatchEventSchema>
+
+export type WireLogEntry = z.infer<typeof logEntrySchema>
+
+export type WireLogEvent = z.infer<typeof logEventSchema>
+
+export type WireSubscriptionEvent = WireDeviceWatchEvent | WireLogEvent
+
+export type RemoteLogPageQuery = z.input<typeof logPageQuerySchema>

@@ -19,7 +19,7 @@ import {
 import { createFileDownloadStore } from '@desktop/main/adapters/file-download-store.ts'
 import { createNodeHttpClient } from '@desktop/main/adapters/http-client.ts'
 import { createDesktopEngine } from '@desktop/main/engine.ts'
-import { createMainLogger } from '@desktop/main/logger.ts'
+import { createMainLogging, type MainLogging } from '@desktop/main/logger.ts'
 import { createIpaResolver } from '@desktop/main/rpc/resolve-ipa.ts'
 import { serveEngine } from '@desktop/main/rpc/serve-engine.ts'
 import { createDesktopSecrets } from '@desktop/main/secrets.ts'
@@ -31,7 +31,7 @@ import { createMainWindow } from '@desktop/main/window.ts'
 import type { Logger } from '@loadstar/kernel'
 
 /** Wires the Engine (needs the app to be ready: safeStorage) and returns how a window connects to it. */
-const createEngineConnector = (logger: Logger) => {
+const createEngineConnector = ({ logger, logs }: MainLogging) => {
   const dataDir = app.getPath('userData')
   const secrets = createDesktopSecrets({
     dataDir,
@@ -49,6 +49,7 @@ const createEngineConnector = (logger: Logger) => {
     serveEngine(contents, {
       engine,
       resolveIpa,
+      logs,
       logger,
       createChannel: () => new MessageChannelMain()
     })
@@ -63,7 +64,8 @@ const openWindow = (
   )
 }
 
-const start = (logger: Logger): void => {
+const start = (logging: MainLogging): void => {
+  const { logger } = logging
   app.on('web-contents-created', (_event, contents) =>
     lockDownWebContents(contents, logger, (url) => shell.openExternal(url))
   )
@@ -79,7 +81,7 @@ const start = (logger: Logger): void => {
         electron: process.versions.electron,
         platform: process.platform
       })
-      const connect = createEngineConnector(logger)
+      const connect = createEngineConnector(logging)
       app.on('activate', () => {
         if (BrowserWindow.getAllWindows().length === 0)
           openWindow(logger, connect)
@@ -89,4 +91,4 @@ const start = (logger: Logger): void => {
     .catch((error: unknown) => logger.error('could not start', { error }))
 }
 
-start(createMainLogger())
+start(createMainLogging())

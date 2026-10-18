@@ -6,11 +6,13 @@ import type { z } from 'zod'
 import {
   ErrorCode,
   type LoadstarError,
+  type LogRecord,
   silentLogger,
   toLoadstarError
 } from '@loadstar/kernel'
 import { createCheckpointStore } from '@rpc/application/server/checkpoints.ts'
 import { createCommandStarter } from '@rpc/application/server/commands.ts'
+import { createLogRequests } from '@rpc/application/server/logs.ts'
 import { createQueryRunner } from '@rpc/application/server/queries.ts'
 import { createRunRegistry } from '@rpc/application/server/runs.ts'
 import { createSubscriptionRegistry } from '@rpc/application/server/subscriptions.ts'
@@ -29,17 +31,20 @@ export const createRpcServer = ({
   engine,
   transport,
   resolveIpa,
+  logs,
   logger = silentLogger
 }: RpcServerOptions): RpcServer => {
   const log = logger.child({ scope: 'rpc' })
   const lifetime = new AbortController()
   const checkpoints = createCheckpointStore()
 
-  const send = (body: MessageBody): void => {
+  /** `quiet` sends never log a failure: a log entry that fails to send must not log another entry to send. */
+  const send = (body: MessageBody, { quiet = false } = {}): void => {
     if (lifetime.signal.aborted) return
     try {
       transport.send({ v: PROTOCOL_VERSION, ...body })
     } catch (error) {
+      if (quiet) return
       log.warn('RPC send failed', {
         type: body.type,
         code: toLoadstarError(error).code
@@ -54,7 +59,13 @@ export const createRpcServer = ({
     send
   })
 
-  const subscriptions = createSubscriptionRegistry(engine, send)
+  const subscriptions = createSubscriptionRegistry(
+    engine,
+    logs,
+    (subscriptionId, event, options) =>
+      send({ type: 'subscription-event', subscriptionId, event }, options)
+  )
+  const logRequests = createLogRequests(logs)
 
   const handlers: RequestHandlers = {
     query: (request) => runQuery(request.call, lifetime.signal),
@@ -64,7 +75,10 @@ export const createRpcServer = ({
     cancel: (request) => runs.cancel(request.runId),
     subscribe: (request) =>
       subscriptions.subscribe(request.subscriptionId, request.topic),
-    unsubscribe: (request) => subscriptions.unsubscribe(request.subscriptionId)
+    unsubscribe: (request) => subscriptions.unsubscribe(request.subscriptionId),
+    logs: (request) => logRequests.page(request.query),
+    'log-level': (request) => logRequests.level(request.level),
+    log: (request) => logRequests.write(request.record as LogRecord)
   }
 
   const sendError = (id: string, error: LoadstarError): void => {

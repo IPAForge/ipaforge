@@ -6,6 +6,7 @@ import {
 } from '@installer/application/runtime.ts'
 import { createEventLog } from '@installer/engine/event-log.ts'
 import { createPromptQueue } from '@installer/engine/prompt-queue.ts'
+import { logRunEvent, logRunResult } from '@installer/engine/run-log.ts'
 import type {
   CommandOptions,
   RunEvent,
@@ -50,6 +51,11 @@ export const startRun = <S>(
     events.emit({ type: 'prompt', request })
   )
   const { pipeline, initial } = build(runtime)
+  const logger = deps.logger.child({
+    scope: 'installer.run',
+    flow: pipeline.id
+  })
+  events.subscribe((event) => logRunEvent(logger, event))
   const result = runToEnd(runtime, () =>
     pipeline.run(
       initial,
@@ -60,6 +66,10 @@ export const startRun = <S>(
         resume: options.resume
       })
     )
+  )
+  void result.then(
+    (outcome) => logRunResult(logger, outcome),
+    (error: unknown) => logger.error('run broke', { error })
   )
 
   return {

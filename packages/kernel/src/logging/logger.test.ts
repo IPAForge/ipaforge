@@ -122,6 +122,12 @@ describe('redact', () => {
     })
   })
 
+  it('names functions instead of keeping them, so a record can cross a channel', () => {
+    const record = redact({ onDone: () => {} })
+    expect(record).toEqual({ onDone: '[function]' })
+    expect(() => structuredClone(record)).not.toThrow()
+  })
+
   it('breaks cycles', () => {
     const node: Record<string, unknown> = { name: 'a' }
     node.self = node

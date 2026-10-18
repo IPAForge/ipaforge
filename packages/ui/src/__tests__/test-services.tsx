@@ -13,6 +13,7 @@ import type {
 } from '@ui/services/engine/fake/types.ts'
 import { createMemoryPreferencesStore } from '@ui/services/preferences/preferences-store.ts'
 import { createMemoryClipboard } from '@ui/services/system/clipboard.ts'
+import { createMemoryFileSaver } from '@ui/services/system/file-saver.ts'
 import { createMemoryLinkOpener } from '@ui/services/system/link-opener.ts'
 import { createFixedLocaleSource } from '@ui/services/system/locale-source.ts'
 import type {
@@ -72,6 +73,7 @@ export const createTestServices = ({
   const scheme = createControllableScheme('light')
   const clipboard = createMemoryClipboard()
   const links = createMemoryLinkOpener()
+  const files = createMemoryFileSaver()
   const services: UiServices = {
     logger: createLogger({
       level: 'debug',
@@ -86,11 +88,12 @@ export const createTestServices = ({
         compact({ scenario, devices, appleAnswer, delayMs: 0, appleDelayMs: 0 })
       ),
     clipboard,
+    files,
     links,
     appVersion: '0.0.0-test'
   }
 
-  return { services, records, scheme, clipboard, links }
+  return { services, records, scheme, clipboard, files, links }
 }
 
 /** Prepares the language like a host does, then renders the whole app at `path` with in-memory services. */

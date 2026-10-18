@@ -22,3 +22,10 @@ export const SENSITIVE_KEYS = [
   'cookie',
   'set-cookie'
 ]
+
+/** How many records a log buffer keeps; older ones are dropped as new ones arrive. */
+export const LOG_BUFFER_CAPACITY = 5000
+
+/** Entries per page when a reader doesn't say, and the most it may ask for. */
+export const LOG_PAGE_SIZE = 200
+export const LOG_PAGE_MAX = 1000

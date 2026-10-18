@@ -12,6 +12,7 @@ import type { RecoveryBoxProps } from '@ui/features/install/recovery/types.ts'
 import { recoveryFixes } from '@ui/features/install/recovery/utils/recovery-fixes.ts'
 import { BackToInstall } from '@ui/features/install/run/components/back-to-install.tsx'
 import { CopyDiagnostics } from '@ui/features/install/run/components/copy-diagnostics.tsx'
+import { ShowLogs } from '@ui/features/install/run/components/show-logs.tsx'
 import { stepLabel } from '@ui/features/install/run/utils/step-label.ts'
 import { useEngine } from '@ui/hooks/use-engine.ts'
 import { useRun } from '@ui/hooks/use-run.ts'
@@ -21,8 +22,8 @@ import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 
 /**
  * A failed run: what went wrong, the fixes the Engine lists for its error (the first with what to do and its
- * button, the others as buttons), where the run continues from, Back to Install to choose again, and diagnostics
- * for a report. The error code itself is only in the diagnostics.
+ * button, the others as buttons), where the run continues from, Back to Install to choose again, diagnostics for a
+ * report, and the run's lines in Logs. The error code itself is only in the diagnostics.
  */
 export const RecoveryBox = ({ run, failure, target }: RecoveryBoxProps) => {
   const { t } = useTranslation()
@@ -90,6 +91,7 @@ export const RecoveryBox = ({ run, failure, target }: RecoveryBoxProps) => {
         <div className="flex flex-wrap items-center gap-3">
           <BackToInstall />
           <CopyDiagnostics text={diagnostics} />
+          <ShowLogs run={run} />
           <ReportProblem code={code} diagnostics={diagnostics} />
         </div>
       </div>

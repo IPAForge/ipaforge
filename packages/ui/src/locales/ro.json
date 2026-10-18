@@ -200,7 +200,8 @@
       "continues": "Pașii terminați se păstrează: o nouă încercare continuă de la „{step}”.",
       "copy": "Copiază diagnosticul",
       "copied": "Copiat",
-      "copyFailed": "Nu s-a putut copia"
+      "copyFailed": "Nu s-a putut copia",
+      "showLogs": "Arată jurnalul"
     }
   },
   "pairing": {
@@ -886,6 +887,107 @@
       "forgets": "Loadstar uită acest Apple ID, sesiunea lui și parola salvată.",
       "keeps": "Certificatele lui de semnare rămân pe acest computer, așa că o nouă autentificare le refolosește. Aplicațiile deja instalate funcționează până expiră.",
       "confirm": "Deconectează"
+    }
+  },
+  "logs": {
+    "title": "Jurnal",
+    "lede": "Ce a făcut Loadstar, rând cu rând. Deschide-l de oriunde cu",
+    "shortcut": {
+      "control": "Ctrl+",
+      "command": "⌘",
+      "key": "L"
+    },
+    "copy": "Copiază",
+    "save": "Salvează…",
+    "clear": "Golește",
+    "cleared": "Vizualizare golită. Salvarea scrie în continuare fiecare rând din această sesiune.",
+    "search": {
+      "label": "Caută în jurnal",
+      "placeholder": "Caută în mesaje și detalii",
+      "key": "/"
+    },
+    "level": {
+      "label": "Nivel",
+      "all": "Toate",
+      "info": "Info",
+      "warn": "Avertismente",
+      "error": "Erori"
+    },
+    "levelName": {
+      "debug": "Depanare",
+      "info": "Info",
+      "warn": "Avertisment",
+      "error": "Eroare"
+    },
+    "area": {
+      "label": "Zonă",
+      "all": "Toate zonele",
+      "install": "Instalare",
+      "device": "Dispozitiv",
+      "apple": "Apple",
+      "catalog": "Catalog",
+      "signing": "Semnare",
+      "engine": "Engine",
+      "interface": "Interfață",
+      "app": "Aplicație"
+    },
+    "filters": {
+      "showing": "Doar:",
+      "run": "Această instalare ({time})",
+      "text": "„{text}”",
+      "remove": "Elimină filtrul {filter}"
+    },
+    "list": {
+      "label": "Rânduri din jurnal",
+      "loadingOlder": "Se încarcă rândurile mai vechi…"
+    },
+    "row": {
+      "details": "{count, plural, one {# detaliu} few {# detalii} other {# de detalii}}",
+      "scope": "zonă",
+      "redacted": "[ascuns]",
+      "copy": "Copiază rândul"
+    },
+    "follow": {
+      "on": "Urmărește rândurile noi",
+      "off": "În pauză",
+      "pause": "Pauză",
+      "resume": "Urmărește"
+    },
+    "jump": "{count, plural, one {# rând nou} few {# rânduri noi} other {# de rânduri noi}} · Mergi la cele mai noi",
+    "count": "{matching, plural, one {# rând potrivit} few {# rânduri potrivite} other {# de rânduri potrivite}} · ultimele {capacity, number} sunt păstrate în această sesiune",
+    "debug": "Include detaliile de depanare",
+    "privacy": "Parolele, tokenurile, cheile, numerele de serie și identificatorii dispozitivului nu sunt scrise niciodată în jurnal; apar ca [ascuns]. Jurnalul rămâne pe acest computer până când îl copiezi sau îl salvezi.",
+    "empty": {
+      "none": {
+        "title": "Nimic în jurnal încă",
+        "body": "Rândurile apar aici pe măsură ce Loadstar lucrează: conectarea unui dispozitiv, autentificarea, instalarea."
+      },
+      "noMatch": {
+        "title": "Niciun rând potrivit",
+        "body": "Schimbă nivelul, zona sau căutarea.",
+        "showAll": "Arată toate rândurile"
+      },
+      "cleared": {
+        "title": "Vizualizare golită",
+        "body": "Rândurile noi apar aici pe măsură ce vin."
+      },
+      "failed": {
+        "title": "Jurnalul nu a putut fi citit",
+        "body": "Conexiunea cu Engine s-a închis, poate. Redeschide Jurnalul ca să încerci din nou."
+      }
+    },
+    "export": {
+      "copyTitle": "{count, plural, one {Copiezi # rând?} few {Copiezi # rânduri?} other {Copiezi # de rânduri?}}",
+      "saveTitle": "{count, plural, one {Salvezi # rând într-un fișier?} few {Salvezi # rânduri într-un fișier?} other {Salvezi # de rânduri într-un fișier?}}",
+      "copyBody": "Rândurile afișate, cu filtrele alese.",
+      "saveBody": "Fiecare rând păstrat în această sesiune, indiferent de filtre.",
+      "warning": "Parolele, tokenurile și identificatorii dispozitivului sunt deja omise, dar jurnalul numește modelul dispozitivului, aplicațiile și echipa. Verifică-l înainte să-l publici.",
+      "confirmCopy": "Copiază",
+      "confirmSave": "Salvează",
+      "copied": "{count, plural, one {# rând copiat} few {# rânduri copiate} other {# de rânduri copiate}}",
+      "saved": "{count, plural, one {# rând salvat} few {# rânduri salvate} other {# de rânduri salvate}}",
+      "copyFailed": "Rândurile nu au putut fi copiate",
+      "saveFailed": "Rândurile nu au putut fi salvate"
     }
   }
 }

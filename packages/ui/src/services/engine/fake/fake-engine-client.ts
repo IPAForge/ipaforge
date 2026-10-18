@@ -14,7 +14,9 @@ import {
   type EngineClient
 } from '@loadstar/rpc'
 import { createFakeEngine } from '@ui/services/engine/fake/fake-engine.ts'
+import { createFakeLogs } from '@ui/services/engine/fake/fake-logs.ts'
 import type { FakeEngineOptions } from '@ui/services/engine/fake/types.ts'
+import { withRunLogging } from '@ui/services/engine/fake/with-run-logging.ts'
 
 export type FakeEngineClientOptions = FakeEngineOptions & {
   readonly logger?: Logger
@@ -35,11 +37,18 @@ export const createFakeEngineClient = ({
   ...options
 }: FakeEngineClientOptions = {}): EngineClient => {
   const [serverEnd, clientEnd] = createMemoryTransportPair()
+  const { logger: engineLogger, ...logs } = createFakeLogs(
+    options.scenario ?? 'happy'
+  )
   createRpcServer({
-    engine: { ...createFakeEngine(options), ...overrides },
+    engine: withRunLogging(
+      { ...createFakeEngine(options), ...overrides },
+      engineLogger
+    ),
     transport: serverEnd,
     resolveIpa: noIpas,
-    logger
+    logs,
+    logger: engineLogger
   })
 
   return createEngineClient(clientEnd, { logger })

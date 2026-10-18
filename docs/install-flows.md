@@ -43,6 +43,10 @@ The signing certificate goes only into an app Loadstar has a reason to trust:
 
 Opens the device and the account, finds the pairing apps on the device (SideStore, LiveContainer, StikDebug, StikStore), asks which ones should get this computer's pairing file, and writes it. Sideloaded copies count only when one of the account's teams signed them. With `keep-existing`, files that are already there are left alone.
 
+## The run in the log
+
+Every run also writes its story to the log, under `installer.run` with the flow's id: started, each step done (with what it did) or failed with its code, automatic retries, the questions it waited on, and how it ended. Progress ticks are left out. **Show logs** in the recovery box opens Logs on exactly that run.
+
 ## Step details
 
 Each step tells the UI what it did, with `context.detail(detail)` (a `step-detail` event). The UI shows it under the step once the step is done:

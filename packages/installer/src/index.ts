@@ -40,6 +40,7 @@ export type {
   Prompts,
   RemovableApp
 } from '@installer/domain/types.ts'
+export { logRunEvent, logRunResult } from '@installer/engine/run-log.ts'
 export type {
   AppIdUsage,
   CertificateStatus,

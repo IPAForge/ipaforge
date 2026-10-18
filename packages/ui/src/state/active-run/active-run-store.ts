@@ -38,21 +38,27 @@ export const createActiveRunStore = ({
     for (const listener of [...listeners]) listener()
   }
 
-  const setView = (run: InstallRun, update: (view: RunView) => RunView) => {
+  const now = () => new Date().toISOString()
+
+  const setView = (
+    run: InstallRun,
+    update: (view: RunView) => RunView,
+    endedAt?: string
+  ) => {
     if (run !== handle || !state) return
-    set({ ...state, view: update(state.view) })
+    set({ ...state, view: update(state.view), ...(endedAt ? { endedAt } : {}) })
   }
 
   const settle = (run: InstallRun, result: RemoteResult<unknown>) => {
     log.info('install run ended', { status: result.status })
-    setView(run, (view) => finishedView(view, result))
+    setView(run, (view) => finishedView(view, result), now())
     onSettled?.()
   }
 
   const fail = (run: InstallRun, error: unknown) => {
     const failure = toLoadstarError(error)
     log.warn('install run broke off', { code: failure.code })
-    setView(run, (view) => brokenView(view, failure))
+    setView(run, (view) => brokenView(view, failure), now())
     onSettled?.()
   }
 
@@ -61,7 +67,9 @@ export const createActiveRunStore = ({
     const resume = previous?.checkpoint
     const run = engine.installSideStore(input, compact({ resume }))
     handle = run
-    set({ input, view: startingView(resume ? previous : undefined) })
+    // A resumed run's lines start where the run first started.
+    const startedAt = (resume && state?.startedAt) || now()
+    set({ input, view: startingView(resume ? previous : undefined), startedAt })
     log.info('install run started', {
       variant: input.variant,
       resumed: resume !== undefined

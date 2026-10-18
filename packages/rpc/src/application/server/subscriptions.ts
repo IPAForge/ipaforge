@@ -2,10 +2,12 @@
 // until the UI unsubscribes or the channel closes.
 import type { Engine } from '@loadstar/installer'
 import { subscriptionIdInUse } from '@rpc/domain/errors.ts'
+import type { LogSource } from '@rpc/domain/ports/log-source.ts'
 import type {
-  MessageBody,
   SubscriptionTopic,
-  WireDeviceWatchEvent
+  WireDeviceWatchEvent,
+  WireLogEntry,
+  WireSubscriptionEvent
 } from '@rpc/domain/protocol/types.ts'
 import { toWire } from '@rpc/domain/wire.ts'
 
@@ -17,22 +19,36 @@ export type SubscriptionRegistry = {
   closeAll(): void
 }
 
+const nothingToStop = (): void => {}
+
 export const createSubscriptionRegistry = (
   engine: Engine,
-  send: (message: MessageBody) => void
+  logs: LogSource | undefined,
+  /** Sends one event; for logs it must not log a failure, or the failure would be the next entry to send. */
+  sendEvent: (
+    subscriptionId: string,
+    event: WireSubscriptionEvent,
+    options: { readonly quiet: boolean }
+  ) => void
 ): SubscriptionRegistry => {
   const active = new Map<string, () => void>()
 
   const topics: Record<SubscriptionTopic, (id: string) => () => void> = {
     devices: (subscriptionId) =>
       engine.watchDevices((event) =>
-        send({
-          type: 'subscription-event',
-          subscriptionId,
-          // The Engine's event is plain data; zod's inferred arrays are just not readonly.
-          event: toWire(event) as WireDeviceWatchEvent
+        // The Engine's event is plain data; zod's inferred arrays are just not readonly.
+        sendEvent(subscriptionId, toWire(event) as WireDeviceWatchEvent, {
+          quiet: false
         })
-      )
+      ),
+    logs: (subscriptionId) =>
+      logs?.buffer.subscribe((entry) =>
+        sendEvent(
+          subscriptionId,
+          { type: 'log', entry: toWire(entry) as WireLogEntry },
+          { quiet: true }
+        )
+      ) ?? nothingToStop
   }
 
   return {

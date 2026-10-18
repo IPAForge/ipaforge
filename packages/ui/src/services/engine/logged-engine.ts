@@ -20,7 +20,9 @@ const logged = (method: string, call: AnyMethod, logger: Logger): AnyMethod => {
   }
 }
 
-/** `classify` runs locally and is left as it is. */
+/** Left as they are: `classify` runs locally, and the log viewer's own traffic would fill the log it reads. */
+const UNLOGGED = new Set(['classify', 'logs'])
+
 export const withRequestLogging = (
   engine: EngineClient,
   logger: Logger
@@ -30,7 +32,7 @@ export const withRequestLogging = (
   return Object.fromEntries(
     Object.entries(engine).map(([method, call]) => [
       method,
-      method === 'classify' ? call : logged(method, call as AnyMethod, log)
+      UNLOGGED.has(method) ? call : logged(method, call as AnyMethod, log)
     ])
   ) as EngineClient
 }
