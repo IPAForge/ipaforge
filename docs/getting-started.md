@@ -4,7 +4,7 @@
 
 ## Current status
 
-IPAForge is **pre-alpha**. Phases 0–6 are complete: foundation, signer, device layer, Apple account, developer services, the installer and the UI foundation. Next come onboarding (Phase 7) and the rest of the install and preload experience (Phase 8). There is no installable build yet; see [Installing](installing.md) for how it will work.
+IPAForge is **pre-alpha**. Phases 0–6 are complete: foundation, signer, device layer, Apple account, developer services, the installer and the UI foundation. Phase 8 (install and preload) is under way: the Preload page is in; app sources and updates come next. Onboarding (Phase 7) follows once every screen is built. There is no installable build yet; see [Installing](installing.md) for how it will work.
 
 | Area | State |
 |---|---|

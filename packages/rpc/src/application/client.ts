@@ -33,6 +33,7 @@ import type {
   WireSubscriptionEvent
 } from '@rpc/domain/protocol/types.ts'
 import type {
+  ChosenIpa,
   EngineClient,
   EngineLogs,
   RemoteCommandOptions,
@@ -207,6 +208,8 @@ export const createEngineClient = (
     signIn: (input, options) => start({ command: 'signIn', input }, options),
     watchDevices,
     classify,
-    logs
+    logs,
+    chooseIpas: () =>
+      requests.send({ type: 'choose-ipas' }) as Promise<readonly ChosenIpa[]>
   }
 }

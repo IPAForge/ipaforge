@@ -1,12 +1,10 @@
-// The install run, kept outside any component so it goes on while the user visits other sections. It follows
-// the run handle's events into a RunView, forwards answers, and starts the next run: resumed from the last
-// checkpoint, or anew with a changed input (another Apple ID or channel).
+// The install run, kept outside any component so it goes on while the user visits other sections: SideStore from
+// the Install page or a list of apps from the Preload page, one at a time since it holds the device. It follows the
+// run handle's events into a RunView, forwards answers, and starts the next run: resumed from the last checkpoint,
+// or anew with a changed input (another Apple ID or channel).
 import { compact, toIPAForgeError } from '@ipaforge/kernel'
 import type { RemoteResult } from '@ipaforge/rpc'
-import type {
-  InstallRun,
-  InstallSideStoreInput
-} from '@ui/services/engine/types.ts'
+import type { InstallRun } from '@ui/services/engine/types.ts'
 import {
   answeredView,
   brokenView,
@@ -18,9 +16,15 @@ import type {
   ActiveRun,
   ActiveRunStore,
   ActiveRunStoreOptions,
+  RunRequest,
   RunView
 } from '@ui/state/active-run/types.ts'
 import { reduceRunEvent } from '@ui/state/active-run/utils/reduce-run-event.ts'
+import {
+  launchRun,
+  patchedRequest,
+  runLogFields
+} from '@ui/state/active-run/utils/run-requests.ts'
 
 export const createActiveRunStore = ({
   engine,
@@ -62,16 +66,20 @@ export const createActiveRunStore = ({
     onSettled?.()
   }
 
-  const launch = (input: InstallSideStoreInput, previous?: RunView) => {
+  const launch = (request: RunRequest, previous?: RunView) => {
     stopFollowing?.()
     const resume = previous?.checkpoint
-    const run = engine.installSideStore(input, compact({ resume }))
+    const run = launchRun(engine, request, compact({ resume }))
     handle = run
     // A resumed run's lines start where the run first started.
     const startedAt = (resume && state?.startedAt) || now()
-    set({ input, view: startingView(resume ? previous : undefined), startedAt })
+    set({
+      ...request,
+      view: startingView(resume ? previous : undefined),
+      startedAt
+    })
     log.info('install run started', {
-      variant: input.variant,
+      ...runLogFields(request),
       resumed: resume !== undefined
     })
     stopFollowing = run.subscribe((event) =>
@@ -97,14 +105,17 @@ export const createActiveRunStore = ({
       }
     },
     start: (input) => {
-      if (!isRunActive(state?.view)) launch(input)
+      if (!isRunActive(state?.view)) launch({ kind: 'sidestore', input })
+    },
+    startApps: (input, apps) => {
+      if (!isRunActive(state?.view)) launch({ kind: 'apps', input, apps })
     },
     resume: () => {
-      if (state?.view.checkpoint) launch(state.input, state.view)
+      if (state?.view.checkpoint) launch(state, state.view)
     },
     restart: (patch) => {
       if (state && !isRunActive(state.view))
-        launch({ ...state.input, ...patch })
+        launch(patchedRequest(state, patch))
     },
     answer: (answer) =>
       whileWaiting((run) => {

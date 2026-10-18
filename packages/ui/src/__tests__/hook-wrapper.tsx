@@ -13,6 +13,8 @@ import type { LanguageSetup } from '@ui/i18n/setup/types.ts'
 import { UiServicesContext } from '@ui/services/ui-services.ts'
 import { ActiveRunContext } from '@ui/state/active-run/active-run-context.ts'
 import { createActiveRunStore } from '@ui/state/active-run/active-run-store.ts'
+import { PreloadContext } from '@ui/state/preload/preload-context.ts'
+import { createPreloadStore } from '@ui/state/preload/preload-store.ts'
 import { SelectionContext } from '@ui/state/selection/selection-context.ts'
 import { createSelectionStore } from '@ui/state/selection/selection-store.ts'
 
@@ -33,6 +35,7 @@ const createAppWrapper = (
     engine: test.services.engine,
     logger: test.services.logger
   })
+  const preload = createPreloadStore()
   const withLanguage = (children: ReactNode) =>
     language ? (
       <LanguageProvider setup={language}>{children}</LanguageProvider>
@@ -44,14 +47,16 @@ const createAppWrapper = (
       <QueryClientProvider client={queryClient}>
         <SelectionContext value={selection}>
           <ActiveRunContext value={run}>
-            {withLanguage(children)}
+            <PreloadContext value={preload}>
+              {withLanguage(children)}
+            </PreloadContext>
           </ActiveRunContext>
         </SelectionContext>
       </QueryClientProvider>
     </UiServicesContext>
   )
 
-  return { ...test, queryClient, selection, run, wrapper }
+  return { ...test, queryClient, selection, run, preload, wrapper }
 }
 
 /** Renders a hook inside the providers `App` gives it, without the UI. */

@@ -77,12 +77,13 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
     - [x] 6e: screenshot and accessibility tests per locale: every main screen in five languages and dark mode, clipped-text, WCAG 2.2 AA and keyboard checks in a real Chromium, Linux references made in Docker; contrast fixes for muted, red and amber text (#58)
 - [ ] **7. Onboarding**: a first-run guided wizard with platform checks (usbmuxd / Apple Mobile Device driver, with copyable fixes per OS), network preflight (Apple, anisette, clock skew), connecting and trusting the device, Developer Mode, Apple ID sign-in with 2FA, team choice, and choosing what to install. It can be resumed and re-run from settings
 - [ ] **8. Install and preload experience**: one-click SideStore (stable/nightly), a preload picker (local IPAs, URLs, catalog apps), source deep links and a QR code for SideStore, a live pipeline view, dedicated recovery screens for every `ErrorCode` with "copy diagnostics", an on-device checklist per iOS version, a "Repair SideStore" wizard, and one-click switching to another Apple ID when one is banned
-  - progress (built during Phase 6c):
+  - progress (most built during Phase 6c):
     - [x] one-click SideStore or LiveContainer + SideStore, Stable or Nightly (#46)
     - [x] a live pipeline view (#46), with the run's questions (#53) and what each step did (#55)
     - [x] recovery screens for every `ErrorCode`, with copy diagnostics and a pre-filled issue report (#54)
     - [x] switching to another Apple ID when one is banned: the Install notice (#45) and the recovery picker (#54)
-    - [ ] the preload picker (local IPAs, URLs, catalog apps)
+    - [x] 8-1: the preload picker: drop or choose IPAs, add a link, or pick from the catalog (now with LiveContainer, StikDebug and Feather, release names with a `*` wildcard), each app checked by the Engine when added, the list added up against App IDs and free-app slots, one run with the steps grouped by app; SideStore installed this way gets its pairing file too (#59)
+    - [ ] 8-1b: app sources and updates: AltStore-format sources (the developers' own, SideStore's Team Picks) to browse in the picker, and "Update all" for the apps on the device that have a newer version
     - [ ] source deep links and a QR code for SideStore
     - [ ] the on-device checklist per iOS version (unlock, Trust and Developer Mode steps exist; a full checklist doesn't)
     - [ ] the "Repair SideStore" wizard

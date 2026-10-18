@@ -21,6 +21,11 @@ export type UiServices = {
   readonly clipboard: ClipboardWriter
   /** Saves text as a file the user keeps (Save in Logs). */
   readonly files: FileSaver
+  /**
+   * Where a file dropped on the window is, to name it to the Engine. Electron: its real path. A plain browser
+   * can't know, so it gives the file's name, which only the fake Engine accepts. Undefined: it can't be used.
+   */
+  readonly droppedFilePath: (file: File) => string | undefined
   /** Opens a web page in the user's browser. */
   readonly links: LinkOpener
   /** Shown in copied diagnostics. */

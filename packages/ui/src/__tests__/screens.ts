@@ -51,6 +51,22 @@ export const pressInstall = async () => {
   install.click()
 }
 
+/** Fills the Preload list (StikDebug from the catalog, a chosen file) and waits until both are read. */
+export const fillPreload = async () => {
+  const add = await waitFor(() => {
+    const button = document.querySelector('main article button')
+    if (!(button instanceof HTMLElement)) throw new Error('no catalog yet')
+    return button
+  })
+  add.click()
+  const choose = document.querySelector('main button')
+  if (choose instanceof HTMLElement) choose.click()
+  await waitFor(() => {
+    expect(all('main ul li')).toHaveLength(2)
+    expect(all('main .button--primary:not([disabled])')).toHaveLength(1)
+  })
+}
+
 /** A failed run's recovery box, with its fixes. */
 export const recoveryShown = () =>
   waitFor(() => expect(all('[role="alert"] button').length).toBeGreaterThan(2))

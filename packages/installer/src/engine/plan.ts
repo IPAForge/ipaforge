@@ -90,6 +90,19 @@ const freeSlots = async (
   return { occupied, limit: config.freeAppLimit }
 }
 
+/** The version on the device of the app this would install (its sideload bundle ID), if it is there. */
+const installedVersion = async (
+  runtime: FlowRuntime,
+  udid: string,
+  bundleId: string
+): Promise<string | undefined> => {
+  const app = (await (await runtime.device(udid)).lookupApps([bundleId])).get(
+    bundleId
+  )
+
+  return app?.shortVersion ?? app?.version
+}
+
 const buildPlan = async (
   runtime: FlowRuntime,
   input: PlanInstallInput
@@ -114,6 +127,11 @@ const buildPlan = async (
     inspection,
     compatibility,
     identity,
+    installedVersion: await installedVersion(
+      runtime,
+      input.udid,
+      identity.newMainBundleId
+    ),
     appIds: await developer.planAppIds(team, plannedIdentifiers([identity])),
     freeSlots: slots,
     certificate: await certificateStatus(deps, developer, input, team),

@@ -1,6 +1,6 @@
 import type { Engine } from '@ipaforge/installer'
 import type { Logger } from '@ipaforge/kernel'
-import type { LogSource, ResolveIpa } from '@ipaforge/rpc'
+import type { ChooseIpas, LogSource, ResolveIpa } from '@ipaforge/rpc'
 
 export type MessageListener = (event: { readonly data: unknown }) => void
 
@@ -32,7 +32,23 @@ export type ServeEngineDeps<P> = {
   readonly resolveIpa: ResolveIpa
   /** Served to the log viewer; without it the viewer is empty. */
   readonly logs?: LogSource
+  /** The file dialog for this window's "Choose files…" (main process only). */
+  readonly chooseIpas?: ChooseIpas
   readonly logger: Logger
   /** `() => new MessageChannelMain()` */
   readonly createChannel: () => ChannelPair<P>
+}
+
+/** The part of Electron's `dialog.showOpenDialog` the IPA chooser uses, already bound to the window. */
+export type ChooseIpasDeps = {
+  showOpenDialog(options: {
+    readonly properties: readonly ('openFile' | 'multiSelections')[]
+    readonly filters: readonly {
+      readonly name: string
+      readonly extensions: readonly string[]
+    }[]
+  }): Promise<{
+    readonly canceled: boolean
+    readonly filePaths: readonly string[]
+  }>
 }

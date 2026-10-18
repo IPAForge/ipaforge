@@ -11,7 +11,14 @@ import { createRpcServer, type RpcServer } from '@ipaforge/rpc'
 
 export const serveEngine = <P>(
   contents: RendererContents<P>,
-  { engine, resolveIpa, logs, logger, createChannel }: ServeEngineDeps<P>
+  {
+    engine,
+    resolveIpa,
+    logs,
+    chooseIpas,
+    logger,
+    createChannel
+  }: ServeEngineDeps<P>
 ): void => {
   let server: RpcServer | undefined
 
@@ -23,7 +30,8 @@ export const serveEngine = <P>(
       transport: messagePortTransport(port1),
       resolveIpa,
       logger,
-      ...(logs ? { logs } : {})
+      ...(logs ? { logs } : {}),
+      ...(chooseIpas ? { chooseIpas } : {})
     })
     contents.postMessage(RPC_PORT_CHANNEL, null, [port2])
     logger.info('engine connected to the renderer')

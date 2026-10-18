@@ -13,7 +13,9 @@ export const SidebarLink = ({ section }: SidebarLinkProps) => {
   const { t } = useTranslation()
   const { run } = useRun()
   const Icon = section.icon
-  const isRunning = section.id === 'install' && isRunActive(run?.view)
+  // The badge sits on the section of the run going on: Install for SideStore, Preload for apps.
+  const runSection = run?.kind === 'apps' ? 'preload' : 'install'
+  const isRunning = section.id === runSection && isRunActive(run?.view)
 
   return (
     <Link to={section.path} className={LINK_CLASSES}>

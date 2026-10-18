@@ -20,7 +20,10 @@ export const useFixHandlers = (
     resume: onContinue,
     pair: () => pair.mutate(undefined, { onSuccess: onContinue }),
     account: onChooseAccount,
-    channel: () => restart({ channel: otherChannel(run.input.channel) }),
+    channel: () => {
+      if (run.kind === 'sidestore')
+        restart({ channel: otherChannel(run.input.channel) })
+    },
     isPairing: pair.isPending
   }
 }

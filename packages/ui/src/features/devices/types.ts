@@ -1,8 +1,8 @@
 import type { ReactNode } from 'react'
-import type { useTranslation } from 'react-i18next'
 
 import type { StatusTone } from '@ui/components/shell/types.ts'
 import type { useDevices } from '@ui/hooks/queries/use-devices.ts'
+import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 import type { DeviceCheck } from '@ui/services/engine/types.ts'
 
 export type DeviceState =
@@ -59,8 +59,14 @@ export type Notice = {
   readonly checkAgain: boolean
 }
 
+/**
+ * A message by key with its values, as plain text. The notice builders get this rather than i18next's generic `t`,
+ * whose inferred return types grow too deep for TypeScript across a table of builders.
+ */
+export type Say = (
+  key: TranslationKey,
+  values?: Readonly<Record<string, string>>
+) => string
+
 /** Builds the notice for a device in one state. */
-export type NoticeBuilder = (
-  t: ReturnType<typeof useTranslation>['t'],
-  props: NoticeProps
-) => Notice
+export type NoticeBuilder = (say: Say, props: NoticeProps) => Notice

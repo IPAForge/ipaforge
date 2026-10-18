@@ -100,9 +100,44 @@ export const fakeCatalogApps: CatalogApp[] = [
       stable: {
         github: {
           repo: 'LiveContainer/LiveContainer',
+          asset: 'LiveContainer+SideStore.ipa'
+        }
+      }
+    }
+  },
+  {
+    id: 'livecontainer',
+    name: 'LiveContainer',
+    bundleId: 'com.kdt.livecontainer',
+    kind: 'app',
+    channels: {
+      stable: {
+        github: {
+          repo: 'LiveContainer/LiveContainer',
           asset: 'LiveContainer.ipa'
         }
       }
+    }
+  },
+  {
+    id: 'stikdebug',
+    name: 'StikDebug',
+    bundleId: 'com.stik.stikdebug',
+    kind: 'app',
+    minimumIos: '17.4',
+    channels: {
+      stable: {
+        github: { repo: 'StikDebug/StikDebug', asset: 'StikDebug-*.ipa' }
+      }
+    }
+  },
+  {
+    id: 'feather',
+    name: 'Feather',
+    bundleId: 'thewonderofyou.Feather',
+    kind: 'app',
+    channels: {
+      stable: { github: { repo: 'khcrysalis/Feather', asset: 'Feather.ipa' } }
     }
   }
 ]

@@ -45,6 +45,8 @@ export type InstallPlan = {
   /** Why the device cannot run the app (the error installing would stop with); absent when it can. */
   readonly compatibility?: CompatibilityProblem
   readonly identity: SideloadIdentityPlan
+  /** The version on the device now, when the app is already installed: installing updates it and keeps its data. */
+  readonly installedVersion?: string
   readonly appIds: AppIdPlan
   /** Free teams only: the apps holding a slot (the app itself left out) and the limit. */
   readonly freeSlots?: {

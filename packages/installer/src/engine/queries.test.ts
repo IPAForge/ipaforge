@@ -49,6 +49,31 @@ describe('engine queries', () => {
     expect(h.devices.calls.closed).toBe(1)
   })
 
+  it('says which version is on the device when the app is already installed', async () => {
+    const bundleId = `com.example.game.${FREE_TEAM.id}`
+    const h = createHarness({
+      device: {
+        installed: new Map([
+          [bundleId, { ...installedApp(bundleId), shortVersion: '1.2' }]
+        ])
+      },
+      signerIds: { 'game.ipa': 'com.example.game' }
+    })
+    const plan = await h.engine.planInstall({
+      udid: UDID,
+      accountId: ACCOUNT,
+      source: { kind: 'file', file: ipaFile('game.ipa') }
+    })
+    expect(plan.installedVersion).toBe('1.2')
+
+    const fresh = await createHarness().engine.planInstall({
+      udid: UDID,
+      accountId: ACCOUNT,
+      source: { kind: 'file', file: ipaFile('game.ipa') }
+    })
+    expect(fresh.installedVersion).toBeUndefined()
+  })
+
   it('reports an app the device cannot run without failing the plan', async () => {
     const h = createHarness({ device: { deviceClass: 'iPad' } })
     h.signer.signer.inspect = async () => {

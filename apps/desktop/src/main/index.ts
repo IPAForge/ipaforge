@@ -9,6 +9,7 @@ import { join } from 'node:path'
 import {
   app,
   BrowserWindow,
+  dialog,
   MessageChannelMain,
   safeStorage,
   session,
@@ -20,6 +21,7 @@ import { createFileDownloadStore } from '@desktop/main/adapters/file-download-st
 import { createNodeHttpClient } from '@desktop/main/adapters/http-client.ts'
 import { createDesktopEngine } from '@desktop/main/engine.ts'
 import { createMainLogging, type MainLogging } from '@desktop/main/logger.ts'
+import { createIpaChooser } from '@desktop/main/rpc/choose-ipas.ts'
 import { createIpaResolver } from '@desktop/main/rpc/resolve-ipa.ts'
 import { serveEngine } from '@desktop/main/rpc/serve-engine.ts'
 import { createDesktopSecrets } from '@desktop/main/secrets.ts'
@@ -50,6 +52,22 @@ const createEngineConnector = ({ logger, logs }: MainLogging) => {
       engine,
       resolveIpa,
       logs,
+      chooseIpas: createIpaChooser({
+        showOpenDialog: (options) => {
+          const window = BrowserWindow.fromWebContents(contents)
+          const settings = {
+            properties: [...options.properties],
+            filters: options.filters.map((filter) => ({
+              ...filter,
+              extensions: [...filter.extensions]
+            }))
+          }
+
+          return window
+            ? dialog.showOpenDialog(window, settings)
+            : dialog.showOpenDialog(settings)
+        }
+      }),
       logger,
       createChannel: () => new MessageChannelMain()
     })

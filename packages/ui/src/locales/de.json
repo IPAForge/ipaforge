@@ -172,7 +172,8 @@
         "pairing": "Abgelegt in {apps}",
         "shared": "Zertifikat geteilt",
         "notShared": "Zertifikat nicht geteilt"
-      }
+      },
+      "subtitleApps": "{device} · {appleId}"
     },
     "summary": {
       "title": "Diese Installation",
@@ -183,7 +184,8 @@
       "account": "Apple-ID",
       "appIds": "App-IDs",
       "appIdsValue": "{count, plural, one {# übrig diese Woche} other {# übrig diese Woche}}",
-      "freeApps": "Kostenlose Apps"
+      "freeApps": "Kostenlose Apps",
+      "apps": "Apps"
     },
     "done": {
       "title": "{app} ist auf {device}.",
@@ -988,6 +990,100 @@
       "saved": "{count, plural, one {# Zeile gespeichert} other {# Zeilen gespeichert}}",
       "copyFailed": "Die Zeilen konnten nicht kopiert werden",
       "saveFailed": "Die Zeilen konnten nicht gespeichert werden"
+    }
+  },
+  "preload": {
+    "title": "Apps vorab installieren",
+    "description": "Installiere deine eigenen Apps: mit deiner Apple-ID signiert, per USB installiert, eine nach der anderen.",
+    "add": {
+      "drop": ".ipa-Dateien hier ablegen",
+      "or": "oder",
+      "choose": "Dateien auswählen…",
+      "link": "Über einen Link hinzufügen…"
+    },
+    "catalog": {
+      "title": "Aus dem Katalog",
+      "hint": "Neueste Versionen, gegen ihre veröffentlichte Prüfsumme geprüft",
+      "recommended": "Empfohlen",
+      "added": "Hinzugefügt",
+      "add": "Hinzufügen",
+      "sidestore": "Aktualisiert und installiert Apps selbst auf dem Gerät.",
+      "livecontainerSidestore": "LiveContainer mit SideStore darin.",
+      "livecontainer": "Führt viele Apps in einer aus, über das 3-App-Limit hinaus.",
+      "stikdebug": "Aktiviert JIT für Apps, die es brauchen, auf dem Gerät.",
+      "feather": "Signiert und installiert Apps auf dem Gerät mit deinem Zertifikat."
+    },
+    "list": {
+      "title": "Zu installieren",
+      "count": "{count, plural, one {# App} other {# Apps}}",
+      "empty": "Noch keine Apps. Lege .ipa-Dateien hier ab, wähle sie aus, füge einen Link hinzu oder wähle aus dem Katalog."
+    },
+    "row": {
+      "waiting": "Wartet auf Gerät und Apple-ID",
+      "checking": "Wird geprüft…",
+      "downloading": "Wird geladen und geprüft…",
+      "appIds": "{count, plural, one {# App-ID} other {# App-IDs}}{extensions, plural, =0 {} one { (App + # Erweiterung)} other { (App + # Erweiterungen)}}",
+      "updates": "Aktualisiert {from} → {to} · behält ihre Daten",
+      "new": "Neu auf dem Gerät",
+      "pairing": "Erhält die Pairing-Datei und das Zertifikat",
+      "fromCatalog": "Aus dem Katalog · Stabil",
+      "remove": "{name} entfernen",
+      "cannot": "Kann nicht installiert werden."
+    },
+    "problem": {
+      "notIpa": "Nur .ipa-Dateien können installiert werden.",
+      "unreadable": "IPAForge kann diese Datei nicht lesen. Füge sie stattdessen mit „Dateien auswählen…“ hinzu.",
+      "needsIos": "Benötigt iOS {needs}; dieses Gerät hat iOS {has}."
+    },
+    "summary": {
+      "appIds": "{count, plural, one {# neu} other {# neu}} · {left, plural, one {# übrig diese Woche} other {# übrig diese Woche}}",
+      "appIdsNoLimit": "{count, plural, one {# neu} other {# neu}}",
+      "notEnough": "Nicht genug übrig. Entferne eine App oder warte. {next}",
+      "freeApps": "{after} von {limit} nach dieser Installation",
+      "freeAppsOver": "{used, plural, one {# ist schon da.} other {# sind schon da.}} Die Installation fragt, welche App entfernt werden soll, oder entferne eine aus dieser Liste."
+    },
+    "install": "{count, plural, =0 {Installieren} one {# App installieren} other {# Apps installieren}}",
+    "clear": "Liste leeren",
+    "readiness": {
+      "busy": "Warte auf die laufende Installation.",
+      "empty": "Füge zuerst eine App hinzu.",
+      "checking": "Apps werden geprüft…",
+      "problems": "Entferne die Apps, die nicht installiert werden können."
+    },
+    "link": {
+      "title": "Über einen Link hinzufügen",
+      "body": "Ein direkter Link zu einer .ipa-Datei. IPAForge lädt sie herunter und prüft sie dann wie jede andere App.",
+      "label": "Link",
+      "placeholder": "https://example.com/MyApp.ipa",
+      "add": "Hinzufügen",
+      "httpsOnly": "Nur https-Links können heruntergeladen werden.",
+      "invalid": "Das ist kein Link.",
+      "notIpa": "Der Link muss auf eine .ipa-Datei verweisen."
+    },
+    "elsewhere": {
+      "apps": "Apps werden installiert",
+      "sidestore": "SideStore wird installiert",
+      "body": "Eine Installation nach der anderen: Sie braucht das Gerät. Diese kann starten, wenn die andere fertig ist.",
+      "open": "Öffnen"
+    },
+    "run": {
+      "title": {
+        "running": "{count, plural, one {{app} wird installiert} other {# Apps werden installiert}}",
+        "completed": "{count, plural, one {{app} ist installiert} other {# Apps sind installiert}}",
+        "failed": "Nicht alle Apps konnten installiert werden"
+      },
+      "backToPreload": "Zurück zu Vorab installieren",
+      "shared": "Dieses Gerät und deine Apple-ID",
+      "group": {
+        "failed": "Fehlgeschlagen",
+        "done": "Fertig",
+        "active": "Läuft",
+        "pending": "Wartet"
+      }
+    },
+    "done": {
+      "title": "{count, plural, one {{app} ist auf {device}.} other {{app} sind auf {device}.}}",
+      "open": "Öffne jede App über den Home-Bildschirm."
     }
   }
 }

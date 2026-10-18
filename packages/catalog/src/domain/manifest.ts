@@ -12,8 +12,11 @@ const sha256 = z
 const githubSchema = z.object({
   repo: z.string().regex(/^[\w.-]+\/[\w.-]+$/, 'owner/name'),
   tag: z.string().min(1).optional(),
-  /** Exact asset name, e.g. `SideStore.ipa`. */
-  asset: z.string().min(1)
+  /** The asset's name, e.g. `SideStore.ipa`; one `*` stands for any text (`StikDebug-*.ipa`). */
+  asset: z
+    .string()
+    .min(1)
+    .refine((name) => name.split('*').length <= 2, 'at most one *')
 })
 
 export const githubLocationSchema = z.object({

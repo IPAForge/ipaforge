@@ -172,7 +172,8 @@
         "pairing": "Placed in {apps}",
         "shared": "Certificate shared",
         "notShared": "Certificate not shared"
-      }
+      },
+      "subtitleApps": "{device} · {appleId}"
     },
     "summary": {
       "title": "This install",
@@ -183,7 +184,8 @@
       "account": "Apple ID",
       "appIds": "App IDs",
       "appIdsValue": "{count, plural, one {# left this week} other {# left this week}}",
-      "freeApps": "Free apps"
+      "freeApps": "Free apps",
+      "apps": "Apps"
     },
     "done": {
       "title": "{app} is on {device}.",
@@ -988,6 +990,100 @@
       "saved": "{count, plural, one {Saved # line} other {Saved # lines}}",
       "copyFailed": "Couldn't copy the lines",
       "saveFailed": "Couldn't save the lines"
+    }
+  },
+  "preload": {
+    "title": "Preload apps",
+    "description": "Install your own apps: signed with your Apple ID, installed over USB, one after another.",
+    "add": {
+      "drop": "Drop .ipa files here",
+      "or": "or",
+      "choose": "Choose files…",
+      "link": "Add from a link…"
+    },
+    "catalog": {
+      "title": "From the catalog",
+      "hint": "Latest releases, checked against their published checksum",
+      "recommended": "Recommended",
+      "added": "Added",
+      "add": "Add",
+      "sidestore": "Refreshes and installs apps on the device by itself.",
+      "livecontainerSidestore": "LiveContainer with SideStore inside it.",
+      "livecontainer": "Runs many apps inside one, past the 3-app limit.",
+      "stikdebug": "Turns on JIT for apps that need it, on the device.",
+      "feather": "Signs and installs apps on the device with your certificate."
+    },
+    "list": {
+      "title": "To install",
+      "count": "{count, plural, one {# app} other {# apps}}",
+      "empty": "No apps yet. Drop .ipa files here, choose them, add a link, or pick from the catalog."
+    },
+    "row": {
+      "waiting": "Waiting for the device and Apple ID",
+      "checking": "Checking…",
+      "downloading": "Downloading and checking…",
+      "appIds": "{count, plural, one {# App ID} other {# App IDs}}{extensions, plural, =0 {} one { (app + # extension)} other { (app + # extensions)}}",
+      "updates": "Updates {from} → {to} · keeps its data",
+      "new": "New on the device",
+      "pairing": "Gets the pairing file and certificate",
+      "fromCatalog": "From the catalog · Stable",
+      "remove": "Remove {name}",
+      "cannot": "Can't be installed."
+    },
+    "problem": {
+      "notIpa": "Only .ipa files can be installed.",
+      "unreadable": "IPAForge can't read this file. Add it with Choose files… instead.",
+      "needsIos": "Needs iOS {needs}; this device has iOS {has}."
+    },
+    "summary": {
+      "appIds": "{count, plural, one {# new} other {# new}} · {left, plural, one {# left this week} other {# left this week}}",
+      "appIdsNoLimit": "{count, plural, one {# new} other {# new}}",
+      "notEnough": "Not enough left. Remove an app, or wait. {next}",
+      "freeApps": "{after} of {limit} after this install",
+      "freeAppsOver": "{used, plural, one {# already there.} other {# already there.}} The install will ask which app to remove, or remove one from this list."
+    },
+    "install": "{count, plural, =0 {Install} one {Install # app} other {Install # apps}}",
+    "clear": "Clear the list",
+    "readiness": {
+      "busy": "Wait for the install that's running.",
+      "empty": "Add an app first.",
+      "checking": "Checking the apps…",
+      "problems": "Remove the apps that can't be installed."
+    },
+    "link": {
+      "title": "Add from a link",
+      "body": "A direct link to an .ipa file. IPAForge downloads it, then checks it like any other app.",
+      "label": "Link",
+      "placeholder": "https://example.com/MyApp.ipa",
+      "add": "Add",
+      "httpsOnly": "Only https links can be downloaded.",
+      "invalid": "That isn't a link.",
+      "notIpa": "The link must point to an .ipa file."
+    },
+    "elsewhere": {
+      "apps": "Apps are being installed",
+      "sidestore": "SideStore is being installed",
+      "body": "One install at a time: it needs the device. This one can start when it is done.",
+      "open": "Open it"
+    },
+    "run": {
+      "title": {
+        "running": "{count, plural, one {Installing {app}} other {Installing # apps}}",
+        "completed": "{count, plural, one {{app} is installed} other {# apps are installed}}",
+        "failed": "Couldn't install all the apps"
+      },
+      "backToPreload": "Back to Preload",
+      "shared": "This device and your Apple ID",
+      "group": {
+        "failed": "Failed",
+        "done": "Done",
+        "active": "In progress",
+        "pending": "Waiting"
+      }
+    },
+    "done": {
+      "title": "{count, plural, one {{app} is on {device}.} other {{app} are on {device}.}}",
+      "open": "Open each app from the Home Screen."
     }
   }
 }

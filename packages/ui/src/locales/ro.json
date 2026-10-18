@@ -172,7 +172,8 @@
         "pairing": "Pus în {apps}",
         "shared": "Certificat partajat",
         "notShared": "Certificat nepartajat"
-      }
+      },
+      "subtitleApps": "{device} · {appleId}"
     },
     "summary": {
       "title": "Această instalare",
@@ -183,7 +184,8 @@
       "account": "ID Apple",
       "appIds": "ID-uri de aplicație",
       "appIdsValue": "{count, plural, one {# rămas săptămâna asta} few {# rămase săptămâna asta} other {# rămase săptămâna asta}}",
-      "freeApps": "Aplicații gratuite"
+      "freeApps": "Aplicații gratuite",
+      "apps": "Aplicații"
     },
     "done": {
       "title": "{app} este pe {device}.",
@@ -988,6 +990,100 @@
       "saved": "{count, plural, one {# rând salvat} few {# rânduri salvate} other {# de rânduri salvate}}",
       "copyFailed": "Rândurile nu au putut fi copiate",
       "saveFailed": "Rândurile nu au putut fi salvate"
+    }
+  },
+  "preload": {
+    "title": "Preîncarcă aplicații",
+    "description": "Instalează propriile aplicații: semnate cu ID-ul tău Apple, instalate prin USB, una după alta.",
+    "add": {
+      "drop": "Trage fișiere .ipa aici",
+      "or": "sau",
+      "choose": "Alege fișiere…",
+      "link": "Adaugă dintr-un link…"
+    },
+    "catalog": {
+      "title": "Din catalog",
+      "hint": "Cele mai noi versiuni, verificate cu suma de control publicată",
+      "recommended": "Recomandat",
+      "added": "Adăugat",
+      "add": "Adaugă",
+      "sidestore": "Reîmprospătează și instalează singur aplicații pe dispozitiv.",
+      "livecontainerSidestore": "LiveContainer cu SideStore în interior.",
+      "livecontainer": "Rulează multe aplicații într-una singură, peste limita de 3 aplicații.",
+      "stikdebug": "Activează JIT pentru aplicațiile care au nevoie, pe dispozitiv.",
+      "feather": "Semnează și instalează aplicații pe dispozitiv cu certificatul tău."
+    },
+    "list": {
+      "title": "De instalat",
+      "count": "{count, plural, one {# aplicație} few {# aplicații} other {# de aplicații}}",
+      "empty": "Nicio aplicație încă. Trage fișiere .ipa aici, alege-le, adaugă un link sau alege din catalog."
+    },
+    "row": {
+      "waiting": "Așteaptă dispozitivul și ID-ul Apple",
+      "checking": "Se verifică…",
+      "downloading": "Se descarcă și se verifică…",
+      "appIds": "{count, plural, one {# ID de aplicație} few {# ID-uri de aplicație} other {# de ID-uri de aplicație}}{extensions, plural, =0 {} one { (aplicație + # extensie)} few { (aplicație + # extensii)} other { (aplicație + # de extensii)}}",
+      "updates": "Actualizează {from} → {to} · își păstrează datele",
+      "new": "Nouă pe dispozitiv",
+      "pairing": "Primește fișierul de asociere și certificatul",
+      "fromCatalog": "Din catalog · Stabil",
+      "remove": "Elimină {name}",
+      "cannot": "Nu poate fi instalată."
+    },
+    "problem": {
+      "notIpa": "Doar fișierele .ipa pot fi instalate.",
+      "unreadable": "IPAForge nu poate citi acest fișier. Adaugă-l cu „Alege fișiere…”.",
+      "needsIos": "Necesită iOS {needs}; acest dispozitiv are iOS {has}."
+    },
+    "summary": {
+      "appIds": "{count, plural, one {# nou} few {# noi} other {# noi}} · {left, plural, one {# rămas săptămâna aceasta} few {# rămase săptămâna aceasta} other {# rămase săptămâna aceasta}}",
+      "appIdsNoLimit": "{count, plural, one {# nou} few {# noi} other {# noi}}",
+      "notEnough": "Nu sunt destule. Elimină o aplicație sau așteaptă. {next}",
+      "freeApps": "{after} din {limit} după această instalare",
+      "freeAppsOver": "{used, plural, one {# este deja acolo.} few {# sunt deja acolo.} other {# sunt deja acolo.}} Instalarea va întreba ce aplicație să elimine, sau elimină una din această listă."
+    },
+    "install": "{count, plural, =0 {Instalează} one {Instalează # aplicație} few {Instalează # aplicații} other {Instalează # de aplicații}}",
+    "clear": "Golește lista",
+    "readiness": {
+      "busy": "Așteaptă instalarea care rulează.",
+      "empty": "Adaugă mai întâi o aplicație.",
+      "checking": "Se verifică aplicațiile…",
+      "problems": "Elimină aplicațiile care nu pot fi instalate."
+    },
+    "link": {
+      "title": "Adaugă dintr-un link",
+      "body": "Un link direct către un fișier .ipa. IPAForge îl descarcă, apoi îl verifică la fel ca pe orice altă aplicație.",
+      "label": "Link",
+      "placeholder": "https://example.com/MyApp.ipa",
+      "add": "Adaugă",
+      "httpsOnly": "Doar linkurile https pot fi descărcate.",
+      "invalid": "Acesta nu este un link.",
+      "notIpa": "Linkul trebuie să ducă la un fișier .ipa."
+    },
+    "elsewhere": {
+      "apps": "Se instalează aplicații",
+      "sidestore": "Se instalează SideStore",
+      "body": "O singură instalare odată: are nevoie de dispozitiv. Aceasta poate începe după ce se termină.",
+      "open": "Deschide"
+    },
+    "run": {
+      "title": {
+        "running": "{count, plural, one {Se instalează {app}} few {Se instalează # aplicații} other {Se instalează # de aplicații}}",
+        "completed": "{count, plural, one {{app} este instalată} few {# aplicații sunt instalate} other {# de aplicații sunt instalate}}",
+        "failed": "Nu s-au putut instala toate aplicațiile"
+      },
+      "backToPreload": "Înapoi la Preîncărcare",
+      "shared": "Acest dispozitiv și ID-ul tău Apple",
+      "group": {
+        "failed": "Eșuat",
+        "done": "Gata",
+        "active": "În curs",
+        "pending": "În așteptare"
+      }
+    },
+    "done": {
+      "title": "{count, plural, one {{app} este pe {device}.} other {{app} sunt pe {device}.}}",
+      "open": "Deschide fiecare aplicație de pe ecranul principal."
     }
   }
 }

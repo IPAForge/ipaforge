@@ -42,8 +42,32 @@ describe('createActiveRunStore', () => {
     const { store } = setup('two-teams')
     store.start(INPUT)
     store.start({ ...INPUT, variant: 'livecontainer' })
+    store.startApps(
+      { udid: INPUT.udid, accountId: INPUT.accountId, apps: [] },
+      []
+    )
     await until(store, 'waiting')
-    expect(store.getState()?.input.variant).toBe('sidestore')
+    const run = store.getState()
+    expect(run?.kind).toBe('sidestore')
+    expect(run?.kind === 'sidestore' && run.input.variant).toBe('sidestore')
+  })
+
+  it('runs the apps of the preload list, and starts them again with another Apple ID', async () => {
+    const { store } = setup()
+    const source = { kind: 'catalog' as const, appId: 'stikdebug' }
+    const apps = [{ name: 'StikDebug', version: '3.1.15', source }]
+    store.startApps(
+      { udid: INPUT.udid, accountId: INPUT.accountId, apps: [source] },
+      apps
+    )
+    await until(store, 'completed')
+    const run = store.getState()
+    expect(run?.kind).toBe('apps')
+    expect(run?.view.steps.map((step) => step.id)).toContain('install-0')
+
+    store.restart({ accountId: 'studio@example.com' })
+    expect(store.getState()?.input.accountId).toBe('studio@example.com')
+    expect(store.getState()?.kind).toBe('apps')
   })
 
   it('answers the waiting prompt through the run handle', async () => {

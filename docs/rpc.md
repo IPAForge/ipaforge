@@ -54,6 +54,7 @@ UI to Engine, each with an `id` that its response echoes:
 | `logs` | `query: { minLevel?, scopes?, text?, from?, to?, after?, before?, limit? }` | A page of the host's log buffer, filtered and searched there (at most 1,000 entries) |
 | `log-level` | `level?` | The level the host records at; with `level`, changes it first |
 | `log` | `record` | A record the UI logged, kept with the Engine's if the level would have recorded it |
+| `choose-ipas` | | The host's file dialog for IPAs: the files picked, or none |
 
 Engine to UI:
 
@@ -92,6 +93,8 @@ A `FileSource` cannot cross the channel, so the UI names an IPA instead:
 | `{ kind: "file", path }` | `resolveIpa`: the desktop opens the file where it is |
 | `{ kind: "url", url }` | `resolveIpa`: the desktop downloads it (HTTPS only) into the download cache |
 | `{ kind: "catalog", appId, channel? }` | Nobody: the flows download and verify catalog apps themselves |
+
+The UI never sees the file system. To pick IPAs it sends `choose-ipas` and gets back `[{ path, name, size }]` from the host's own file dialog (`createRpcServer({ chooseIpas })`; the desktop app opens it in the main process, bound to the window); without a dialog, or when the user cancels, the answer is empty. A file dropped on the window gets its path from the preload's one function (see [User Interface](ui.md)).
 
 ## Errors
 

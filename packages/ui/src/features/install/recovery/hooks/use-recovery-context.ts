@@ -13,12 +13,12 @@ import type { ActiveRun } from '@ui/state/active-run/types.ts'
 export const useRecoveryContext = (run: ActiveRun): RecoveryContext => {
   const { t } = useTranslation()
   const { date } = useFormat()
-  const nextSlotAt = useRunPlan(run.input)?.appIds.nextSlotAt
+  const nextSlotAt = useRunPlan(run)?.appIds.nextSlotAt
+  const channel =
+    run.kind === 'sidestore' ? otherChannel(run.input.channel) : 'stable'
 
   return {
-    labelValues: {
-      channel: t(`install.channel.${otherChannel(run.input.channel)}`)
-    },
+    labelValues: { channel: t(`install.channel.${channel}`) },
     nextAppIdSlot: nextSlotAt ? date(new Date(nextSlotAt)) : undefined
   }
 }

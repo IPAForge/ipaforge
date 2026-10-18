@@ -101,7 +101,7 @@ ipaforge/
 │   └── desktop/                    # Electron
 │       └── src/
 │           ├── main/               # Engine wiring: Node adapters, secrets (file key sealed by safeStorage), rpc server per window
-│           ├── preload/            # forwards the rpc MessagePort to the page; exposes no API
+│           ├── preload/            # forwards the rpc MessagePort to the page; exposes one function: a dropped file's path
 │           └── renderer/           # wraps the port in a Transport, createEngineClient, mounts @ipaforge/ui
 │
 ├── fixtures/                       # golden inputs + Apple codesign outputs (generated on macOS CI)

@@ -3,6 +3,7 @@
 
 import { z } from 'zod'
 
+import { matchesAssetName } from '@catalog/infrastructure/asset-name.ts'
 import type {
   GithubLookup,
   GithubQuery,
@@ -94,8 +95,8 @@ export const findGithubAsset = async (
 ): Promise<GithubLookup> => {
   const release = await fetchRelease(deps, query, signal)
   if (!release) return { kind: 'gone' }
-  const asset = release.assets.find(
-    (candidate) => candidate.name === query.asset
+  const asset = release.assets.find((candidate) =>
+    matchesAssetName(candidate.name, query.asset)
   )
   if (!asset) return { kind: 'no-asset', version: release.tag_name }
   return {

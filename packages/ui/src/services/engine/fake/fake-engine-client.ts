@@ -1,11 +1,6 @@
 // An EngineClient backed by the fake Engine, over the rpc memory transport: the real server and client, so
 // every message is validated and structured-cloned as it would be over the Electron MessagePort.
-import {
-  ErrorCode,
-  IPAForgeError,
-  type Logger,
-  silentLogger
-} from '@ipaforge/kernel'
+import { type Logger, silentLogger } from '@ipaforge/kernel'
 import {
   createEngineClient,
   createMemoryTransportPair,
@@ -13,8 +8,15 @@ import {
   type Engine,
   type EngineClient
 } from '@ipaforge/rpc'
-import { createFakeEngine } from '@ui/services/engine/fake/fake-engine.ts'
+import {
+  createFakeEngine,
+  DEFAULT_DELAY_MS
+} from '@ui/services/engine/fake/fake-engine.ts'
 import { createFakeLogs } from '@ui/services/engine/fake/fake-logs.ts'
+import {
+  createFakeResolveIpa,
+  FAKE_CHOSEN_IPAS
+} from '@ui/services/engine/fake/fake-resolve-ipa.ts'
 import type { FakeEngineOptions } from '@ui/services/engine/fake/types.ts'
 import { withRunLogging } from '@ui/services/engine/fake/with-run-logging.ts'
 
@@ -22,13 +24,6 @@ export type FakeEngineClientOptions = FakeEngineOptions & {
   readonly logger?: Logger
   /** Replaces some of the fake's methods (tests: no devices, a query that fails). */
   readonly overrides?: Partial<Engine>
-}
-
-/** Imported IPAs come with Phase 9's file dialogs; the fake has nothing to open. */
-const noIpas = async () => {
-  throw new IPAForgeError(ErrorCode.InvalidBundle, {
-    message: 'the fake Engine opens no IPAs'
-  })
 }
 
 export const createFakeEngineClient = ({
@@ -46,7 +41,8 @@ export const createFakeEngineClient = ({
       engineLogger
     ),
     transport: serverEnd,
-    resolveIpa: noIpas,
+    resolveIpa: createFakeResolveIpa(options.delayMs ?? DEFAULT_DELAY_MS),
+    chooseIpas: async () => FAKE_CHOSEN_IPAS,
     logs,
     logger: engineLogger
   })

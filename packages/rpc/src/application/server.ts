@@ -32,6 +32,7 @@ export const createRpcServer = ({
   transport,
   resolveIpa,
   logs,
+  chooseIpas,
   logger = silentLogger
 }: RpcServerOptions): RpcServer => {
   const log = logger.child({ scope: 'rpc' })
@@ -78,7 +79,8 @@ export const createRpcServer = ({
     unsubscribe: (request) => subscriptions.unsubscribe(request.subscriptionId),
     logs: (request) => logRequests.page(request.query),
     'log-level': (request) => logRequests.level(request.level),
-    log: (request) => logRequests.write(request.record as LogRecord)
+    log: (request) => logRequests.write(request.record as LogRecord),
+    'choose-ipas': () => chooseIpas?.() ?? []
   }
 
   const sendError = (id: string, error: IPAForgeError): void => {

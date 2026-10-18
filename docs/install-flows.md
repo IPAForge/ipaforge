@@ -32,7 +32,7 @@ A new certificate is stored with its private key, per account and team, as soon 
 
 ### Install apps
 
-Installs one or more IPAs, from the catalog or from files, one after another. All apps are downloaded and inspected first, each checked against the device (minimum iOS, device family, architecture), so an app the device cannot run stops the run before any Apple call. The account steps then run once (sign-in, team, device, certificate) and check the App ID budget for all apps together. After that, each app goes through `free-apps`, `provision`, `sign` and `install`.
+Installs one or more IPAs, from the catalog or from files, one after another (the Preload page). All apps are downloaded and inspected first, each checked against the device (minimum iOS, device family, architecture), so an app the device cannot run stops the run before any Apple call. The account steps then run once (sign-in, team, device, certificate) and check the App ID budget for all apps together. After that, each app goes through `free-apps`, `provision`, `sign` and `install`. When the list holds SideStore from the catalog (on its own or in LiveContainer), the run ends with the `pairing` step as Install SideStore does, so it gets this computer's pairing file too. Each app's steps carry its place in the list (`inspect-0`, `install-1`), which the UI groups them by.
 
 The signing certificate goes only into an app IPAForge has a reason to trust:
 
@@ -118,7 +118,7 @@ pnpm --filter @ipaforge/desktop install-probe ipa <file.ipa…> --yes
 pnpm --filter @ipaforge/desktop install-probe pairing --yes              # --keep-existing
 ```
 
-- `plan` writes nothing to Apple or the device. It prints the IPA inspection, whether the device can run the app (`InstallPlan.compatibility`: the code and data the install would stop with, reported without failing the plan), the new identity, the App ID budget against what is needed, the free-app slots and the certificate status.
+- `plan` writes nothing to Apple or the device. It prints the IPA inspection, whether the device can run the app (`InstallPlan.compatibility`: the code and data the install would stop with, reported without failing the plan), the version already on the device (`installedVersion`, when it is there), the new identity, the App ID budget against what is needed, the free-app slots and the certificate status.
 - The other commands refuse to run without `--yes`. Every command takes `--account <id>` and `--udid <udid>`; `plan`, `sidestore` and `ipa` also take `--team <id>`.
 - Prompts are answered in the terminal; an empty answer declines. On failure the probe prints the `classify()` result.
 - It shares `apple-probe`'s saved data under `~/.ipaforge/dev`. Each team's certificate and key are kept in the encrypted store, IPAs in `downloads/` and signed IPAs in `scratch/` until they are installed.

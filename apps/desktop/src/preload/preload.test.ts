@@ -1,11 +1,13 @@
 import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { forwardRpcPort } from '@desktop/preload/forward-port.ts'
+import { FILE_PATHS_GLOBAL } from '@desktop/shared/file-paths.ts'
 import { RPC_PORT_CHANNEL } from '@desktop/shared/rpc-channel.ts'
 
 const electron = vi.hoisted(() => ({
   ipcRenderer: { on: vi.fn() },
-  contextBridge: { exposeInMainWorld: vi.fn() }
+  contextBridge: { exposeInMainWorld: vi.fn() },
+  webUtils: { getPathForFile: vi.fn(() => '/Users/me/Game.ipa') }
 }))
 
 vi.mock('electron', () => electron)
@@ -35,12 +37,22 @@ describe('forwardRpcPort', () => {
 })
 
 describe('the preload', () => {
-  it('exposes no API to the page: it only listens for the rpc port', async () => {
+  it('listens only for the rpc port, and gives the page one function: the path of a dropped file', async () => {
     vi.stubGlobal('postMessage', vi.fn())
     await import('@desktop/preload/index.ts')
 
-    expect(electron.contextBridge.exposeInMainWorld).not.toHaveBeenCalled()
     expect(electron.ipcRenderer.on).toHaveBeenCalledTimes(1)
     expect(electron.ipcRenderer.on.mock.calls[0]?.[0]).toBe(RPC_PORT_CHANNEL)
+    expect(electron.contextBridge.exposeInMainWorld).toHaveBeenCalledTimes(1)
+    const [key, api] = electron.contextBridge.exposeInMainWorld.mock
+      .calls[0] as unknown as [
+      string,
+      Record<string, (file: unknown) => string>
+    ]
+    expect(key).toBe(FILE_PATHS_GLOBAL)
+    expect(Object.keys(api)).toEqual(['pathOf'])
+    const dropped = {}
+    expect(api.pathOf?.(dropped)).toBe('/Users/me/Game.ipa')
+    expect(electron.webUtils.getPathForFile).toHaveBeenCalledWith(dropped)
   })
 })

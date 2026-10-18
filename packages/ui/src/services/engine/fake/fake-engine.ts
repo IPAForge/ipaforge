@@ -11,9 +11,12 @@ import {
   type RunHandle,
   StepLabel
 } from '@ipaforge/rpc'
+import { fakeAppFor, fakePlanFor } from '@ui/services/engine/fake/fake-apps.ts'
+import { fakeAppsSteps } from '@ui/services/engine/fake/fake-apps-steps.ts'
 import {
   fakeCatalogApps,
   fakeCertificates,
+  fakeIphoneCheck,
   fakePairingApps,
   showcaseDevices
 } from '@ui/services/engine/fake/fake-data.ts'
@@ -33,6 +36,7 @@ import {
 } from '@ui/services/engine/fake/fake-world.ts'
 import { startScriptedRun } from '@ui/services/engine/fake/scripted-run.ts'
 import type {
+  FakeAppSource,
   FakeEngineOptions,
   FakeInstallState,
   FakeSignInState,
@@ -40,7 +44,8 @@ import type {
 } from '@ui/services/engine/fake/types.ts'
 import type { Account } from '@ui/services/engine/types.ts'
 
-const DEFAULT_DELAY_MS = 120
+/** Pause between run events in the browser dev host. */
+export const DEFAULT_DELAY_MS = 120
 const DEFAULT_APPLE_DELAY_MS = 600
 
 const teamOf = (world: FakeWorld, { accountId, teamId }: TeamQuery) => {
@@ -60,6 +65,27 @@ const installRun = (
   startScriptedRun<FakeInstallState>({
     pipelineId: 'installSideStore',
     steps: fakeInstallSteps(world),
+    initial: { udid: input.udid, accountId: input.accountId },
+    options,
+    delayMs: world.delayMs
+  })
+
+/** The Preload page's apps, in order, as the fake knows them. */
+const appsRun = (
+  world: FakeWorld,
+  input: {
+    readonly udid: string
+    readonly accountId: string
+    readonly apps: readonly unknown[]
+  },
+  options: CommandOptions<FakeInstallState> | undefined
+) =>
+  startScriptedRun<FakeInstallState>({
+    pipelineId: 'installApps',
+    steps: fakeAppsSteps(
+      world,
+      input.apps.map((source) => fakeAppFor(source as FakeAppSource))
+    ),
     initial: { udid: input.udid, accountId: input.accountId },
     options,
     delayMs: world.delayMs
@@ -179,24 +205,19 @@ export const createFakeEngine = ({
         expiresAt: new Date(certificate.expiresAt)
       }))
     }),
-    planInstall: async (input) =>
-      ({
-        team: teamOf(world, input),
-        appIds: {
-          reuse: [],
-          create: ['com.example.app', 'com.example.app.widget'],
-          available: 8,
-          enough: true,
-          nextSlotAt: new Date('2026-10-19T00:00:00Z')
-        },
-        freeSlots: { occupied: [{ bundleId: 'com.example.other' }], limit: 3 },
-        certificate: { stored: true, reusable: true, onTeam: 1 },
-        sharesCertificate: true
-      }) as unknown as InstallPlan,
+    planInstall: async (input) => {
+      const team = teamOf(world, input)
+
+      return fakePlanFor(
+        fakeAppFor(input.source as FakeAppSource),
+        team,
+        fakeIphoneCheck.info.productVersion
+      ) as unknown as InstallPlan
+    },
     installSideStore: (input, options) =>
       asRun(installRun(world, input, options as never)),
     installApps: (input, options) =>
-      asRun(installRun(world, input, options as never)),
+      asRun(appsRun(world, input, options as never)),
     placePairing: () => asRun(pairingRun(world)),
     signIn: (input, options) =>
       asRun(signInRun(world, input, options as never)),

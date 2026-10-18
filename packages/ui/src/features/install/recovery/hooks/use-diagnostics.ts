@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { modelName } from '@ui/features/devices/utils/model-name.ts'
 import type { RunTarget } from '@ui/features/install/run/types.ts'
 import { diagnosticsText } from '@ui/features/install/run/utils/diagnostics-text.ts'
+import { installLine } from '@ui/features/install/run/utils/install-line.ts'
 import { stepLabel } from '@ui/features/install/run/utils/step-label.ts'
 import { useUiServices } from '@ui/hooks/use-ui-services.ts'
 import type { TranslationKey } from '@ui/i18n/setup/types.ts'
@@ -22,14 +23,11 @@ export const useDiagnostics = (
   const { i18n } = useTranslation()
   const en = i18n.getFixedT('en')
   const { appVersion } = useUiServices()
-  const { variant, channel = 'stable' } = run.input
   const labelKey = stepLabel(run, failure.stepId)
   const info = target.check?.info
   const step = labelKey
     ? `${en(labelKey as TranslationKey)} (${failure.stepId})`
     : failure.stepId || UNKNOWN
-  const appName = en(`install.variant.${variant}.title`)
-  const channelName = en(`install.channel.${channel}`)
   const device = info
     ? `${modelName(info.productType)} (${info.productType}), iOS ${info.productVersion}`
     : UNKNOWN
@@ -38,7 +36,7 @@ export const useDiagnostics = (
     appVersion,
     code: failure.error.code,
     step,
-    install: `${appName}, ${channelName} (${variant}, ${channel})`,
+    install: installLine(run, en),
     device
   })
 }

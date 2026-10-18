@@ -103,3 +103,20 @@ export type PendingPrompt = {
   readonly resolve: (answer: unknown) => void
   readonly reject: (error: unknown) => void
 }
+
+/** An app the fake Engine installs from the Preload page. */
+export type FakeApp = {
+  readonly name: string
+  readonly version: string
+  readonly extensions: number
+  readonly isCatalog: boolean
+  /** On the device already, in this version. */
+  readonly installedVersion?: string | undefined
+  /** The device's iOS is too old for it. */
+  readonly needsIos?: string | undefined
+}
+
+/** An app source as the fake Engine gets it: a catalog app, or a file the rpc server already opened. */
+export type FakeAppSource =
+  | { readonly kind: 'catalog'; readonly appId: string }
+  | { readonly kind: 'file'; readonly file: { readonly name: string } }

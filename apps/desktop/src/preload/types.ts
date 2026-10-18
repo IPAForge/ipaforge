@@ -14,3 +14,11 @@ export type PortTarget = {
     transfer: Transferable[]
   ): void
 }
+
+/** The parts of Electron's `contextBridge` and `webUtils` the file-path bridge uses. */
+export type FilePathBridge = {
+  readonly contextBridge: {
+    exposeInMainWorld(key: string, api: unknown): void
+  }
+  readonly webUtils: { getPathForFile(file: never): string }
+}

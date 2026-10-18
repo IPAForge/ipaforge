@@ -26,7 +26,7 @@
 ```
 
 - **Locations:**
-  - `github` resolves through the GitHub API: the latest release, or `tag`, and the asset with exactly that name.
+  - `github` resolves through the GitHub API: the latest release, or `tag`, and the asset with exactly that name, or, with one `*` in it, the first asset that fits (`StikDebug-*.ipa` for releases whose file name carries the version). No regular expressions: the manifest is fetched over the network.
   - `{ "url": "https://…", "sha256": "…", "size": … }` is a direct HTTPS download.
 - **Mirrors** are tried in order when the primary repository, release or asset is gone.
 - **Checksums are mandatory (fail closed).**

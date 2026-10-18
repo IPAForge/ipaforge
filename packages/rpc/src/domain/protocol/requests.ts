@@ -86,5 +86,7 @@ export const requestSchema = z.discriminatedUnion('type', [
   /** The level the Engine records at; with `level`, changes it first. */
   request('log-level', { level: logLevelSchema.optional() }),
   /** A record the UI logged, kept with the Engine's so the viewer shows both. */
-  request('log', { record: logRecordSchema })
+  request('log', { record: logRecordSchema }),
+  /** The host's file dialog for IPAs; the answer names the files the user picked. */
+  request('choose-ipas', {})
 ])
