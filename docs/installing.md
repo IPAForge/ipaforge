@@ -21,6 +21,7 @@ Code signing (a Windows certificate, Apple notarisation) comes before the first 
 
 - **macOS** says Apple can't check it for malicious software. Click **Done**, then open **System Settings › Privacy & Security**, scroll to *"IPAForge" was blocked* and click **Open Anyway**. From Terminal, `xattr -dr com.apple.quarantine /Applications/IPAForge.app` does the same.
 - **Windows** SmartScreen says it protected your PC: click **More info › Run anyway**.
+- **The macOS keychain:** saved Apple IDs are encrypted with a key kept in one keychain item of IPAForge's own, *IPAForge Safe Storage* (Chrome, VS Code and Slack keep theirs the same way). After an update, macOS may ask for your login password before IPAForge reads it: click **Always Allow**. With **Deny**, IPAForge works but keeps Apple IDs only until it quits, and **Accounts** says so.
 - **Linux** doesn't check signatures; make the AppImage executable (below).
 
 The app doesn't update itself yet: download the next build from the Releases page.

@@ -43,6 +43,7 @@ export const createEngineQueries = (deps: InstallerDeps): EngineQueries => ({
   deviceStatus: (udid) => deviceStatus(deps, udid, false),
   pairDevice: (udid) => deviceStatus(deps, udid, true),
   listAccounts: () => deps.apple.accounts.list(),
+  canSaveAccounts: async () => (await deps.secrets.isPersistent?.()) ?? true,
   listTeams: async (accountId) =>
     (await createFlowRuntime(deps).developer(accountId)).teams(),
   catalogApps: async () => (await deps.catalog.manifest()).apps,

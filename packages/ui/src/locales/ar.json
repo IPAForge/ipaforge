@@ -4,7 +4,11 @@
   },
   "shell": {
     "skipToContent": "تخطَّ إلى المحتوى",
-    "navigation": "الأقسام"
+    "navigation": "الأقسام",
+    "credit": {
+      "madeWith": "صُنع بـ ❤️ و☕ بواسطة {name}",
+      "copyright": "© {year} {name}"
+    }
   },
   "topBar": {
     "device": "الجهاز",
@@ -880,6 +884,10 @@
     "description": "معرّفات Apple التي يوقّع بها IPAForge التطبيقات. المعرّف المستخدم يظهر في الشريط العلوي.",
     "list": "معرّفات Apple المحفوظة",
     "empty": "لا توجد معرّفات Apple بعد. أضف واحدًا لتثبيت SideStore.",
+    "notSaved": {
+      "title": "لا يتم حفظ معرّفات Apple",
+      "body": "لا يستطيع IPAForge استخدام سلسلة مفاتيح النظام (ربما تم رفض الوصول)، لذا تُحفظ معرّفات Apple حتى إغلاق التطبيق فقط. لحفظها، افتح IPAForge مرة أخرى واسمح بالوصول إلى سلسلة المفاتيح عند الطلب."
+    },
     "freeTeam": "{name} (مجاني)",
     "withState": "{line} · {state}",
     "state": {

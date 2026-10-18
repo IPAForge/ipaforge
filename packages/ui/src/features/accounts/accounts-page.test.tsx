@@ -37,6 +37,18 @@ const topBarAccount = (appleId: string) =>
   })
 
 describe('Accounts page', () => {
+  it('says when Apple IDs are kept only until the app quits, and nothing otherwise', async () => {
+    await openPage({ scenario: 'no-keychain' })
+    expect(await screen.findByText(t('accounts.notSaved.title'))).toBeDefined()
+    expect(screen.getByText(t('accounts.notSaved.body'))).toBeDefined()
+  })
+
+  it('shows no keychain notice when Apple IDs are saved', async () => {
+    const { list } = await openPage()
+    await waitFor(() => expect(rowFor(list, WORK)).toBeDefined())
+    expect(screen.queryByText(t('accounts.notSaved.title'))).toBeNull()
+  })
+
   it('lists every saved Apple ID with its teams, marking the one in use', async () => {
     const { list } = await openPage()
     const work = rowFor(list, WORK)

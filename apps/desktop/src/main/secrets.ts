@@ -2,7 +2,8 @@
 // encrypted file whose key safeStorage protects with the OS keychain. Where the OS offers no real keychain
 // (Linux without a secret service) they stay in memory for this session only, never on disk in the clear. The
 // anisette (machine) identity is not a credential and goes to a 0600 file, so Apple sees the same machine on
-// every launch.
+// every launch. The keychain is first touched when a secret is, never while the app starts: on macOS that can ask
+// for the login password, and the window must already be open by then.
 import { join } from 'node:path'
 
 import { createEncryptedFileSecretStore } from '@desktop/main/adapters/encrypted-file-secret-store.ts'
@@ -25,7 +26,7 @@ export type DesktopSecretsOptions = {
   readonly logger: Logger
 }
 
-const sensitiveStore = ({
+const openSensitiveStore = ({
   dataDir,
   safeStorage,
   platform,
@@ -33,12 +34,33 @@ const sensitiveStore = ({
 }: DesktopSecretsOptions): SecretStore => {
   if (!isSafeStorageUsable(safeStorage, platform)) {
     logger.warn('no OS keychain: accounts are kept for this session only')
-    return createMemorySecretStore()
+    const memory = createMemorySecretStore()
+
+    return { ...memory, isPersistent: async () => false }
   }
-  return createEncryptedFileSecretStore(
-    join(dataDir, 'secrets.enc'),
-    safeStorageKey(safeStorage, join(dataDir, 'secrets.key'))
-  )
+  return {
+    ...createEncryptedFileSecretStore(
+      join(dataDir, 'secrets.enc'),
+      safeStorageKey(safeStorage, join(dataDir, 'secrets.key'))
+    ),
+    isPersistent: async () => true
+  }
+}
+
+/** Opens the store on first use, so the keychain is asked once, when a secret is needed. */
+const sensitiveStore = (options: DesktopSecretsOptions): SecretStore => {
+  let store: SecretStore | undefined
+  const open = () => {
+    store ??= openSensitiveStore(options)
+    return store
+  }
+
+  return {
+    get: (key) => open().get(key),
+    set: (key, value) => open().set(key, value),
+    delete: (key) => open().delete(key),
+    isPersistent: async () => (await open().isPersistent?.()) ?? true
+  }
 }
 
 export const createDesktopSecrets = (

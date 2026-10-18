@@ -102,6 +102,51 @@ describe('createDesktopSecrets', () => {
   })
 })
 
+describe('createDesktopSecrets and the keychain', () => {
+  /** Counts how often the keychain is reached. */
+  const countingSafeStorage = (available: boolean) => {
+    const calls = { count: 0 }
+    const base = fakeSafeStorage({ available })
+    const safeStorage: SafeStorageLike = {
+      ...base,
+      isEncryptionAvailable: () => {
+        calls.count += 1
+        return base.isEncryptionAvailable()
+      }
+    }
+
+    return { safeStorage, calls }
+  }
+
+  it('does not touch the keychain until a secret is needed, then asks once', async () => {
+    const { safeStorage, calls } = countingSafeStorage(true)
+    const secrets = createDesktopSecrets({
+      dataDir: await tempDir(),
+      safeStorage,
+      platform: 'darwin',
+      logger: silentLogger
+    })
+    await secrets.set('anisette/identity', utf8Encode('machine'))
+    expect(calls.count).toBe(0)
+
+    await secrets.get('apple/account-index')
+    await secrets.set('apple/session/a', utf8Encode('token'))
+    expect(calls.count).toBe(1)
+    expect(await secrets.isPersistent?.()).toBe(true)
+  })
+
+  it('says secrets are not kept when the keychain is refused', async () => {
+    const { safeStorage } = countingSafeStorage(false)
+    const secrets = createDesktopSecrets({
+      dataDir: await tempDir(),
+      safeStorage,
+      platform: 'darwin',
+      logger: silentLogger
+    })
+    expect(await secrets.isPersistent?.()).toBe(false)
+  })
+})
+
 describe('the secret stores under concurrent use', () => {
   const keys = ['apple/account-index', 'apple/session/a', 'apple/session/b']
 

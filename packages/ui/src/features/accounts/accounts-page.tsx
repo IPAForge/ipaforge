@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 import { PageHeader } from '@ui/components/page-header.tsx'
 import { AccountRow } from '@ui/features/accounts/components/account-row.tsx'
+import { NotSavedNotice } from '@ui/features/accounts/components/not-saved-notice.tsx'
 import { SignOutDialog } from '@ui/features/accounts/components/sign-out-dialog.tsx'
 import { SignInDialog } from '@ui/features/accounts/sign-in/sign-in-dialog.tsx'
 import { useAccounts } from '@ui/hooks/queries/use-accounts.ts'
@@ -55,6 +56,7 @@ export const AccountsPage = () => {
           {t('topBar.addAppleId')}
         </Button>
       </div>
+      <NotSavedNotice />
       <Card>
         <Card.Content>
           {accounts.length > 0 ? (

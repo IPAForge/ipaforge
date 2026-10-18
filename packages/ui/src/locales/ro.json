@@ -4,7 +4,11 @@
   },
   "shell": {
     "skipToContent": "Salt la conținut",
-    "navigation": "Secțiuni"
+    "navigation": "Secțiuni",
+    "credit": {
+      "madeWith": "Făcut cu ❤️ și ☕ de {name}",
+      "copyright": "© {year} {name}"
+    }
   },
   "topBar": {
     "device": "Dispozitiv",
@@ -880,6 +884,10 @@
     "description": "Apple ID-urile cu care IPAForge semnează aplicații. Cel folosit apare în bara de sus.",
     "list": "Apple ID-uri salvate",
     "empty": "Niciun Apple ID încă. Adaugă unul pentru a instala SideStore.",
+    "notSaved": {
+      "title": "ID-urile Apple nu se salvează",
+      "body": "IPAForge nu poate folosi keychain-ul sistemului (poate accesul a fost refuzat), așa că ID-urile Apple sunt păstrate doar până închizi aplicația. Ca să le salvezi, deschide IPAForge din nou și permite accesul la keychain când ești întrebat."
+    },
     "freeTeam": "{name} (gratuit)",
     "withState": "{line} · {state}",
     "state": {

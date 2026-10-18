@@ -102,6 +102,8 @@ export type EngineQueries = {
    */
   pairDevice(udid: string): Promise<DeviceCheck>
   listAccounts(): Promise<SavedAccount[]>
+  /** False when saved Apple IDs last only until the app quits: no OS keychain, or access to it was denied. */
+  canSaveAccounts(): Promise<boolean>
   listTeams(accountId: string): Promise<Team[]>
   catalogApps(): Promise<readonly CatalogApp[]>
   recommendedChannel(appId: string, iosVersion?: string): Promise<Channel>

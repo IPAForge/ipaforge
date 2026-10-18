@@ -189,6 +189,7 @@ export const createEngineClient = (
     deviceStatus: (udid) => query({ method: 'deviceStatus', args: [udid] }),
     pairDevice: (udid) => query({ method: 'pairDevice', args: [udid] }),
     listAccounts: () => query({ method: 'listAccounts', args: [] }),
+    canSaveAccounts: () => query({ method: 'canSaveAccounts', args: [] }),
     signOut: (accountId) => query({ method: 'signOut', args: [accountId] }),
     listTeams: (accountId) => query({ method: 'listTeams', args: [accountId] }),
     catalogApps: () => query({ method: 'catalogApps', args: [] }),

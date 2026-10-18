@@ -31,6 +31,15 @@ describe('AppShell', () => {
     expect(screen.getByRole('main')).toBeDefined()
   })
 
+  it('credits its maker at the foot of the sidebar', async () => {
+    await renderApp('/devices')
+    const madeWith = await screen.findByText(
+      t('shell.credit.madeWith', { name: 'Dan Motpan' })
+    )
+    const credit = madeWith.closest('footer')
+    expect(credit?.textContent).toContain('© 2026 Dan Motpan')
+  })
+
   it('lists every section in the sidebar, in order', async () => {
     await renderApp('/devices')
     const links = within(await findSidebar()).getAllByRole('link')

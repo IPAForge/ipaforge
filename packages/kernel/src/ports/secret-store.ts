@@ -6,4 +6,6 @@ export type SecretStore = {
   get(key: string): Promise<Uint8Array | undefined>
   set(key: string, value: Uint8Array): Promise<void>
   delete(key: string): Promise<void>
+  /** False when secrets last only until the app quits (no OS keychain, or the user denied access). */
+  isPersistent?(): Promise<boolean>
 }

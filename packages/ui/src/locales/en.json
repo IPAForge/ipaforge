@@ -4,7 +4,11 @@
   },
   "shell": {
     "skipToContent": "Skip to content",
-    "navigation": "Sections"
+    "navigation": "Sections",
+    "credit": {
+      "madeWith": "Made with ❤️ and ☕ by {name}",
+      "copyright": "© {year} {name}"
+    }
   },
   "topBar": {
     "device": "Device",
@@ -880,6 +884,10 @@
     "description": "The Apple IDs IPAForge signs apps with. The one in use is shown in the top bar.",
     "list": "Saved Apple IDs",
     "empty": "No Apple IDs yet. Add one to install SideStore.",
+    "notSaved": {
+      "title": "Apple IDs aren't being saved",
+      "body": "IPAForge can't use the system keychain (access may have been denied), so your Apple IDs are kept only until it quits. To save them, open IPAForge again and allow keychain access when asked."
+    },
     "freeTeam": "{name} (free)",
     "withState": "{line} · {state}",
     "state": {

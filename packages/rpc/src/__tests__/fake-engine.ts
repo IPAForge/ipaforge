@@ -163,6 +163,7 @@ export const createFakeEngine = () => {
       return { info: { udid, name: 'iPhone' }, locked: false }
     },
     listAccounts: async () => [{ id: 'acct', appleId: 'someone@example.com' }],
+    canSaveAccounts: async () => true,
     listTeams: async () => TEAMS,
     catalogApps: async () => [],
     recommendedChannel: async (appId: string, iosVersion?: string) =>
