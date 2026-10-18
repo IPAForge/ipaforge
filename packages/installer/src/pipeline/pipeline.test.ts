@@ -45,6 +45,28 @@ describe('pipeline', () => {
     expect(fractions).toEqual([0.25, 0.625, 1])
   })
 
+  it('reports what a step did as a step-detail event with its id', async () => {
+    const events: PipelineEvent[] = []
+    const flow = pipeline<State>('demo', [
+      {
+        id: 'team',
+        labelKey: 't',
+        run: async (state, context) => {
+          context.detail({ kind: 'team', name: 'Personal Team', isFree: true })
+          return { log: [...state.log, 'team'] }
+        }
+      }
+    ])
+    await flow.run({ log: [] }, { onEvent: (event) => events.push(event) })
+    expect(events.filter((e) => e.type === 'step-detail')).toEqual([
+      {
+        type: 'step-detail',
+        stepId: 'team',
+        detail: { kind: 'team', name: 'Personal Team', isFree: true }
+      }
+    ])
+  })
+
   it('skips steps whose condition holds', async () => {
     const flow = pipeline<State>('demo', [
       {

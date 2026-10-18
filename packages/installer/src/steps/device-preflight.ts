@@ -26,11 +26,12 @@ export const devicePreflightStep = <S extends AccountState>(
   labelKey: StepLabel.device,
   weight: StepWeight.check,
   idempotent: true,
-  run: async (state) => {
+  run: async (state, context) => {
     const check = await (await runtime.device(state.udid)).check()
     assertUnlocked(check)
     assertCanRunSideloadedApps(check)
-    const { name, productVersion, deviceClass } = check.info
+    const { name, productType, productVersion, deviceClass } = check.info
+    context.detail({ kind: 'device', productType, iosVersion: productVersion })
 
     return {
       device: {

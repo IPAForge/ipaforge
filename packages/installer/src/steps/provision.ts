@@ -19,7 +19,7 @@ export const provisionStep = (
   id: appStepId('provision', index),
   labelKey: StepLabel.provision,
   weight: StepWeight.provision,
-  run: async (state) => {
+  run: async (state, context) => {
     const identity = required(jobAt(state, index).identity, 'identity plan')
     const device = required(state.device, 'device')
     const developer = await runtime.developer(state.accountId)
@@ -31,6 +31,7 @@ export const provisionStep = (
         appGroup: identity.appGroup
       })
     )
+    context.detail({ kind: 'profiles', count: profiles.size })
 
     return updateJob(state, index, { profiles })
   }

@@ -59,6 +59,7 @@ export const plannedSteps = (
       labelKey,
       state: earlier && isFinished(earlier.state) ? earlier.state : 'done',
       fraction: 1,
-      detail: earlier?.detail
+      detail: earlier?.detail,
+      report: earlier?.report
     }
   })

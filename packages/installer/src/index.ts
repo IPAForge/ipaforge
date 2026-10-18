@@ -80,7 +80,8 @@ export type {
   PromptRequest,
   RunOptions,
   Step,
-  StepContext
+  StepContext,
+  StepDetail
 } from '@installer/pipeline/types.ts'
 export {
   type SideStoreCertificate,

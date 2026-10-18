@@ -2,7 +2,8 @@ import type { ErrorCode } from '@loadstar/kernel'
 import type {
   CommandOptions,
   DeviceWatchEvent,
-  PromptRequest
+  PromptRequest,
+  StepDetail as StepReport
 } from '@loadstar/rpc'
 import type { fakeScenarioIds } from '@ui/services/engine/fake/fake-scenarios.ts'
 import type { Account, Device, DeviceCheck } from '@ui/services/engine/types.ts'
@@ -74,6 +75,8 @@ export type ScriptedStepContext = {
     detail?: Readonly<Record<string, unknown>>
   ): Promise<void>
   prompt<T>(request: PromptRequest): Promise<T>
+  /** Reports what the step did, as the Engine's steps do. */
+  detail(report: StepReport): void
   /** Reports an automatic retry, then waits its delay. */
   retrying(attempt: number, delayMs: number, code: string): Promise<void>
 }

@@ -13,9 +13,13 @@ export const signInStep = <S extends AccountState>(
   labelKey: StepLabel.signIn,
   weight: StepWeight.appleRequest,
   run: async (state, context) => {
-    runtime.useSession(
-      await signInAccount(runtime.deps, context, state.accountId)
+    const { session, how } = await signInAccount(
+      runtime.deps,
+      context,
+      state.accountId
     )
+    runtime.useSession(session)
+    context.detail({ kind: 'session', how })
     return undefined
   }
 })

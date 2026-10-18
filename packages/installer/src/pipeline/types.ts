@@ -7,6 +7,60 @@ export type PlannedStep = {
   readonly labelKey: string
 }
 
+/** What a step did, for the run's step list. */
+export type StepDetail =
+  | {
+      readonly kind: 'device'
+      readonly productType: string
+      readonly iosVersion: string
+    }
+  | {
+      readonly kind: 'release'
+      readonly version: string
+      readonly channel: 'stable' | 'nightly'
+    }
+  | {
+      readonly kind: 'download'
+      readonly bytes: number
+      readonly cached: boolean
+    }
+  | {
+      readonly kind: 'app'
+      readonly name: string
+      readonly version?: string
+      readonly extensions: number
+    }
+  | {
+      readonly kind: 'session'
+      readonly how: 'reused' | 'renewed' | 'signed-in'
+    }
+  | { readonly kind: 'team'; readonly name: string; readonly isFree: boolean }
+  | { readonly kind: 'device-registration'; readonly isNew: boolean }
+  | {
+      readonly kind: 'certificate'
+      readonly how: 'reused' | 'created' | 'replaced'
+    }
+  | {
+      readonly kind: 'app-ids'
+      readonly created: number
+      readonly reused: number
+      readonly left: number
+    }
+  | {
+      readonly kind: 'free-apps'
+      readonly used: number
+      readonly limit: number
+      readonly removed?: string
+    }
+  | { readonly kind: 'profiles'; readonly count: number }
+  | { readonly kind: 'signed'; readonly bundles: number }
+  | {
+      readonly kind: 'install-phase'
+      readonly phase: 'uploading' | 'installing'
+    }
+  | { readonly kind: 'pairing'; readonly apps: readonly string[] }
+  | { readonly kind: 'certificate-shared'; readonly isShared: boolean }
+
 export type PipelineEvent =
   | {
       /** First event of every run: all its steps, those a resumed run already finished, and the progress so far. */
@@ -35,6 +89,12 @@ export type PipelineEvent =
       readonly attempt: number
       readonly delayMs: number
       readonly code?: string
+    }
+  | {
+      /** What the step did (the release it picked, the certificate it reused…), once it knows. */
+      readonly type: 'step-detail'
+      readonly stepId: string
+      readonly detail: StepDetail
     }
   | { readonly type: 'step-skipped'; readonly stepId: string }
   | { readonly type: 'step-completed'; readonly stepId: string }
@@ -106,6 +166,8 @@ export type StepContext = {
   readonly signal: AbortSignal
   /** Reports progress within this step, 0–1. */
   progress(fraction: number, detail?: Readonly<Record<string, unknown>>): void
+  /** Tells the UI what this step did (`step-detail`). */
+  detail(detail: StepDetail): void
   /** Asks the user; resolves with their answer. Throws `installer.prompt_cancelled` when they decline. */
   prompt<T = unknown>(request: PromptRequest): Promise<T>
 }

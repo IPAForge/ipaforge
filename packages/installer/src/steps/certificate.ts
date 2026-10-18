@@ -14,7 +14,7 @@ export const certificateStep = (runtime: FlowRuntime): Step<InstallState> => ({
   run: async (state, context) => {
     const developer = await runtime.developer(state.accountId)
     const team = required(state.team, 'team')
-    const identity = await ensureTeamCertificate(
+    const { identity, how } = await ensureTeamCertificate(
       runtime.deps,
       developer,
       context,
@@ -23,6 +23,7 @@ export const certificateStep = (runtime: FlowRuntime): Step<InstallState> => ({
         team
       }
     )
+    context.detail({ kind: 'certificate', how })
 
     return { certificateSerial: identity.certificate.serialNumber }
   }

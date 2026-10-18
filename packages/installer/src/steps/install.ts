@@ -19,7 +19,7 @@ import {
 } from '@installer/steps/app-job.ts'
 import { PERCENT } from '@installer/steps/constants.ts'
 import { signToScratch } from '@installer/steps/sign.ts'
-import type { DeviceHandle } from '@loadstar/device'
+import type { DeviceHandle, InstallStage } from '@loadstar/device'
 import {
   compact,
   ErrorCode,
@@ -45,15 +45,24 @@ const listedFreeApps = (
     .map((bundleId) => ({ bundleId }))
 }
 
+/** Reports progress, and each phase (upload, then installd's install) as it begins. */
 const install = (
   handle: DeviceHandle,
   file: FileSource,
   context: StepContext
-): Promise<void> =>
-  handle.installIpa(file, {
-    onProgress: ({ percent }) => context.progress(percent / PERCENT),
+): Promise<void> => {
+  let phase: InstallStage | undefined
+
+  return handle.installIpa(file, {
+    onProgress: ({ stage, percent }) => {
+      if (stage !== phase && stage !== 'done')
+        context.detail({ kind: 'install-phase', phase: stage })
+      phase = stage
+      context.progress(percent / PERCENT)
+    },
     signal: context.signal
   })
+}
 
 /** Frees the slot the user picks from installd's list, then installs again. */
 const retryAfterRemoval = async (

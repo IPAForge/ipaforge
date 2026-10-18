@@ -130,6 +130,8 @@ export const startScriptedRun = <S>({
     },
     prompt: async <T>(request: PromptRequest) =>
       (await prompts.ask(request, signal)) as T,
+    detail: (report) =>
+      events.emit({ type: 'step-detail', stepId: step.stepId, detail: report }),
     retrying: async (attempt, retryDelayMs, code) => {
       events.emit({
         type: 'step-retrying',

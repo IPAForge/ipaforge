@@ -22,6 +22,7 @@ import type {
   DeviceManager,
   DeviceProfile,
   InstalledApp,
+  InstallIpaOptions,
   PairingTarget
 } from '@loadstar/device'
 import {
@@ -144,9 +145,13 @@ export const fakeDevices = (options: FakeDeviceOptions = {}) => {
       developerMode: options.developerMode ?? 'on',
       activated: true
     }),
-    installIpa: async (file: FileSource) => {
+    installIpa: async (file: FileSource, install?: InstallIpaOptions) => {
+      install?.onProgress?.({ stage: 'uploading', percent: 0 })
+      install?.onProgress?.({ stage: 'uploading', percent: 50 })
       const error = installErrors.shift()
       if (error) throw error
+      install?.onProgress?.({ stage: 'installing', percent: 75 })
+      install?.onProgress?.({ stage: 'done', percent: 100 })
       calls.installs.push(file)
     },
     uninstall: async (bundleId: string) => {
@@ -210,6 +215,10 @@ export type FakeAppleOptions = {
   existingCertificates?: DevelopmentCertificate[]
   maxCertificates?: number
   appIdPlan?: Partial<AppIdPlan>
+  /** The session saved for the account (default `session`; null = none saved). */
+  savedSession?: AppleSession | null
+  /** Devices already registered on the team. */
+  registeredDevices?: string[]
 }
 
 export const certificateFor = (
@@ -299,8 +308,11 @@ export const fakeApple = (options: FakeAppleOptions = {}) => {
     } satisfies CertificateIdentity
   }
 
+  const registeredDevices = [...(options.registeredDevices ?? [])]
   const developer = {
     teams: async () => teams,
+    devices: async () =>
+      [...registeredDevices, ...calls.registered].map((udid) => ({ udid })),
     registerDevice: async (_team: Team, udid: string) => {
       calls.registered.push(udid)
       return { udid }
@@ -356,6 +368,10 @@ export const fakeApple = (options: FakeAppleOptions = {}) => {
     },
     accounts: {
       list: async () => [account],
+      session: async () =>
+        options.savedSession === null
+          ? undefined
+          : (options.savedSession ?? session),
       remove: async (id: string) => {
         calls.removed.push(id)
       },

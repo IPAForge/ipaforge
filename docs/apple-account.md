@@ -100,7 +100,7 @@ pnpm --filter @loadstar/desktop apple-probe forget      # delete saved accounts
 
 - Everything Apple-facing is in `packages/apple/src/domain/config.ts` and can be overridden: endpoints, client identity, the URL-bag identity, the `cpd` header list, the Xcode version and the anisette server list. When Apple changes something, the fix is usually there.
 - `LOG_LEVEL=debug` logs the shape of every GrandSlam request and the status Apple returns, never secrets.
-- What changed and why is recorded in `docs/design/research.md` §7 and `docs/design/failure-catalogue.md`.
+- What Apple requires today, and what changed and why, is recorded in `docs/design/failure-catalogue.md`.
 
 ## See Also
 

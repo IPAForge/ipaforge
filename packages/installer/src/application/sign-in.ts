@@ -2,6 +2,7 @@
 // password, else the password from the user. A second factor is completed through prompts.
 import { ask } from '@installer/application/ask.ts'
 import { completeTwoFactor } from '@installer/application/two-factor.ts'
+import type { OpenedAccount } from '@installer/application/types.ts'
 import { PromptKind } from '@installer/domain/prompts.ts'
 import type { StepContext } from '@installer/pipeline/types.ts'
 import type { InstallerDeps } from '@installer/types.ts'
@@ -38,18 +39,32 @@ const signInWithPassword = async (
   return result
 }
 
+/** Apple accepted the saved session as it was (same token), rather than a new one from the saved password. */
+const isSameSession = (
+  saved: AppleSession | undefined,
+  resumed: AppleSession
+): boolean =>
+  saved !== undefined &&
+  saved.adsid === resumed.adsid &&
+  saved.idmsToken === resumed.idmsToken
+
 export const signInAccount = async (
   deps: InstallerDeps,
   context: StepContext,
   accountId: string
-): Promise<AppleSession> => {
+): Promise<OpenedAccount> => {
+  const saved = await deps.apple.accounts.session(accountId)
   const resumed = await deps.apple.resume(accountId)
-  if (resumed.kind !== 'needs_password') return finish(deps, context, resumed)
-  return finish(
-    deps,
-    context,
-    await signInWithPassword(deps, context, resumed.appleId)
-  )
+  if (resumed.kind === 'signed_in')
+    return {
+      session: resumed.session,
+      how: isSameSession(saved, resumed.session) ? 'reused' : 'renewed'
+    }
+  if (resumed.kind === 'two_factor')
+    return { session: await finish(deps, context, resumed), how: 'renewed' }
+  const result = await signInWithPassword(deps, context, resumed.appleId)
+
+  return { session: await finish(deps, context, result), how: 'signed-in' }
 }
 
 /**

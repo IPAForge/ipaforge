@@ -17,7 +17,7 @@ export const appIdsStep = (runtime: FlowRuntime): Step<InstallState> => ({
   labelKey: StepLabel.appIds,
   weight: StepWeight.appleRequest,
   idempotent: true,
-  run: async (state) => {
+  run: async (state, context) => {
     const team = required(state.team, 'team')
     const apps = state.apps.map((job) => ({
       ...job,
@@ -27,12 +27,18 @@ export const appIdsStep = (runtime: FlowRuntime): Step<InstallState> => ({
       )
     }))
     const developer = await runtime.developer(state.accountId)
-    assertAppIdBudget(
-      await developer.planAppIds(
-        team,
-        plannedIdentifiers(apps.map((job) => job.identity))
-      )
+    const plan = await developer.planAppIds(
+      team,
+      plannedIdentifiers(apps.map((job) => job.identity))
     )
+    assertAppIdBudget(plan)
+    context.detail({
+      kind: 'app-ids',
+      created: plan.create.length,
+      reused: plan.reuse.length,
+      left: Math.max(0, plan.available - plan.create.length)
+    })
+
     return { apps }
   }
 })

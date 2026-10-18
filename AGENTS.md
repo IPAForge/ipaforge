@@ -15,7 +15,7 @@ Loadstar is an open-source desktop tool (Windows, macOS, Linux) for installing S
 
 ## Project Structure
 
-> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `packages/rpc`, `packages/ui` (palettes, top bar and sidebar shell, routes, i18n with six languages, Engine query hooks and the device feed, Apple ID sign-in and the Accounts page, the device picker and Devices page, the install home, the install run and its questions (`state/active-run`, `state/selection`); runs in a browser on a fake Engine via its own Vite config), `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, the RPC transport and IPA resolver, maintainer probes, and the Electron shell: one hardened window rendering `@loadstar/ui`, connected to the Engine in main over a MessagePort), `fixtures/signer`, `scripts/`, `.github/workflows/`.
+> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `packages/rpc`, `packages/ui` (palettes, top bar and sidebar shell, routes, i18n with six languages, Engine query hooks and the device feed, Apple ID sign-in and the Accounts page, the device picker and Devices page, the install home, the install run with its questions, step details and recovery box (`state/active-run`, `state/selection`); runs in a browser on a fake Engine via its own Vite config), `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, the RPC transport and IPA resolver, maintainer probes, and the Electron shell: one hardened window rendering `@loadstar/ui`, connected to the Engine in main over a MessagePort), `fixtures/signer`, `scripts/`, `.github/workflows/`.
 
 ```
 loadstar/
@@ -104,7 +104,6 @@ loadstar/
 | docs/design/overview.md | Project specification and tech stack |
 | docs/design/architecture.md | Architecture decisions and dependency rules |
 | docs/design/roadmap.md | Milestones |
-| docs/design/research.md | Research and verified findings |
 | docs/design/conventions.md | Coding conventions |
 | docs/design/failure-catalogue.md | What breaks sideloading installers in practice, and how Loadstar handles each failure |
 | docs/design/js-libs.md | Library research for the pure-TypeScript re-signer (versions, licenses, benchmarks) |

@@ -11,6 +11,7 @@ import {
   required,
   updateJob
 } from '@installer/steps/app-job.ts'
+import { compact } from '@loadstar/kernel'
 import { assertCompatible } from '@loadstar/signer'
 
 export const inspectStep = (
@@ -25,6 +26,17 @@ export const inspectStep = (
     const file = required(jobAt(state, index).file, 'IPA file')
     const inspection = await runtime.deps.signer.inspect(file, context.signal)
     assertCompatible(inspection, required(state.device, 'device summary'))
+    context.detail(
+      compact({
+        kind: 'app' as const,
+        name: inspection.app.name,
+        version: inspection.app.version,
+        extensions: inspection.nested.filter(
+          (bundle) => bundle.kind === 'appex'
+        ).length
+      })
+    )
+
     return updateJob(state, index, { inspection })
   }
 })

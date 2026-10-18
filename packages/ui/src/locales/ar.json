@@ -143,7 +143,36 @@
         "title": "تحتاج هذه الخطوة إلى إجابة",
         "body": "يحتاج Loadstar إلى إجابة عن سؤال لا يستطيع هذا الإصدار عرضه. ألغِ التثبيت وحدّث Loadstar."
       },
-      "backToInstall": "العودة إلى التثبيت"
+      "backToInstall": "العودة إلى التثبيت",
+      "report": {
+        "device": "{model} · iOS {ios}",
+        "release": "{app} {version} · {channel}",
+        "download": "{size} · تم التحقق من المجموع",
+        "downloadCached": "{size} · من ذاكرة التنزيلات",
+        "app": "{app} · {extensions, plural, =0 {بلا ملحقات} one {ملحق واحد} two {ملحقان} few {# ملحقات} many {# ملحقًا} other {# ملحق}}",
+        "session": {
+          "reused": "أعيد استخدام الجلسة المحفوظة",
+          "renewed": "سُجّل الدخول مجددًا بكلمة السر المحفوظة",
+          "signed-in": "تم تسجيل الدخول"
+        },
+        "registered": "سُجّل في الفريق",
+        "alreadyRegistered": "مسجّل في الفريق مسبقًا",
+        "certificate": {
+          "reused": "أعيد استخدام الشهادة المحفوظة",
+          "created": "أُنشئت شهادة جديدة",
+          "replaced": "أُلغيت شهادة وأُنشئت أخرى جديدة"
+        },
+        "removed": "أُزيل {app} · {used}",
+        "profiles": "{count, plural, zero {لا ملفات تعريف} one {ملف تعريف واحد} two {ملفا تعريف} few {# ملفات تعريف} many {# ملف تعريف} other {# ملف تعريف}}",
+        "signed": "{count, plural, zero {لم توقَّع حزم} one {وُقّعت حزمة واحدة} two {وُقّعت حزمتان} few {وُقّعت # حزم} many {وُقّعت # حزمة} other {وُقّعت # حزمة}}",
+        "phase": {
+          "uploading": "جارٍ الرفع إلى الجهاز",
+          "installing": "جارٍ التثبيت"
+        },
+        "pairing": "وُضع في {apps}",
+        "shared": "تمت مشاركة الشهادة",
+        "notShared": "لم تُشارك الشهادة"
+      }
     },
     "summary": {
       "title": "هذا التثبيت",

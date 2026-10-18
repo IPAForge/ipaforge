@@ -3,7 +3,8 @@ import type {
   EngineClient,
   PromptRequest,
   RemoteCheckpoint,
-  RunEvent
+  RunEvent,
+  StepDetail as StepReport
 } from '@loadstar/rpc'
 import type { InstallSideStoreInput } from '@ui/services/engine/types.ts'
 
@@ -34,6 +35,8 @@ export type StepView = {
   /** 0–1, within the step. */
   readonly fraction: number
   readonly detail?: StepDetail | undefined
+  /** What the step did, as the Engine reported it ("SideStore 0.7.0", "Saved session reused"). */
+  readonly report?: StepReport | undefined
 }
 
 export type RunStatus =

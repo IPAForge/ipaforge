@@ -28,17 +28,20 @@ export const installedPairingStep = (
   labelKey: StepLabel.pairing,
   weight: StepWeight.pairing,
   skip: (state) => state.pairingApp === undefined,
-  run: async (state) => {
-    const bundleId = required(
-      jobAt(state, 0).identity,
-      'identity plan'
-    ).newMainBundleId
+  run: async (state, context) => {
+    const job = jobAt(state, 0)
+    const bundleId = required(job.identity, 'identity plan').newMainBundleId
     const targets = pairingTargetsFor(
       required(state.pairingApp, 'pairing app'),
       bundleId
     )
     const handle = await runtime.device(state.udid)
+    const pairingPlaced = await handle.placePairingFile(targets)
+    context.detail({
+      kind: 'pairing',
+      apps: [job.inspection?.app.name ?? bundleId]
+    })
 
-    return { pairingPlaced: await handle.placePairingFile(targets) }
+    return { pairingPlaced }
   }
 })

@@ -143,7 +143,36 @@
         "title": "Dieser Schritt braucht eine Antwort",
         "body": "Loadstar braucht eine Antwort auf eine Frage, die diese Version nicht anzeigen kann. Brich die Installation ab und aktualisiere Loadstar."
       },
-      "backToInstall": "Zurück zur Installation"
+      "backToInstall": "Zurück zur Installation",
+      "report": {
+        "device": "{model} · iOS {ios}",
+        "release": "{app} {version} · {channel}",
+        "download": "{size} · Prüfsumme geprüft",
+        "downloadCached": "{size} · aus dem Download-Cache",
+        "app": "{app} · {extensions, plural, =0 {keine Erweiterungen} one {# Erweiterung} other {# Erweiterungen}}",
+        "session": {
+          "reused": "Gespeicherte Sitzung wiederverwendet",
+          "renewed": "Mit dem gespeicherten Passwort neu angemeldet",
+          "signed-in": "Angemeldet"
+        },
+        "registered": "Beim Team registriert",
+        "alreadyRegistered": "Bereits beim Team registriert",
+        "certificate": {
+          "reused": "Gespeichertes Zertifikat wiederverwendet",
+          "created": "Neues Zertifikat erstellt",
+          "replaced": "Eines widerrufen und ein neues erstellt"
+        },
+        "removed": "{app} entfernt · {used}",
+        "profiles": "{count, plural, one {# Profil} other {# Profile}}",
+        "signed": "{count, plural, one {# Bundle signiert} other {# Bundles signiert}}",
+        "phase": {
+          "uploading": "Wird auf das Gerät übertragen",
+          "installing": "Wird installiert"
+        },
+        "pairing": "Abgelegt in {apps}",
+        "shared": "Zertifikat geteilt",
+        "notShared": "Zertifikat nicht geteilt"
+      }
     },
     "summary": {
       "title": "Diese Installation",

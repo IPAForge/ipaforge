@@ -12,6 +12,41 @@ import { deviceWatchEventSchema } from '@rpc/domain/protocol/subscriptions.ts'
 
 const stepId = z.string()
 
+const count = z.number().int().nonnegative()
+
+const detail = <K extends string, S extends z.ZodRawShape>(kind: K, shape: S) =>
+  z.object({ kind: z.literal(kind), ...shape })
+
+/** What a step did (the installer's `StepDetail`), every field checked. */
+export const stepDetailSchema = z.discriminatedUnion('kind', [
+  detail('device', { productType: z.string(), iosVersion: z.string() }),
+  detail('release', {
+    version: z.string(),
+    channel: z.enum(['stable', 'nightly'])
+  }),
+  detail('download', { bytes: count, cached: z.boolean() }),
+  detail('app', {
+    name: z.string(),
+    version: z.string().optional(),
+    extensions: count
+  }),
+  detail('session', { how: z.enum(['reused', 'renewed', 'signed-in']) }),
+  detail('team', { name: z.string(), isFree: z.boolean() }),
+  detail('device-registration', { isNew: z.boolean() }),
+  detail('certificate', { how: z.enum(['reused', 'created', 'replaced']) }),
+  detail('app-ids', { created: count, reused: count, left: count }),
+  detail('free-apps', {
+    used: count,
+    limit: count,
+    removed: z.string().optional()
+  }),
+  detail('profiles', { count }),
+  detail('signed', { bundles: count }),
+  detail('install-phase', { phase: z.enum(['uploading', 'installing']) }),
+  detail('pairing', { apps: z.array(z.string()) }),
+  detail('certificate-shared', { isShared: z.boolean() })
+])
+
 export const pipelineEventSchema = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('run-started'),
@@ -39,6 +74,11 @@ export const pipelineEventSchema = z.discriminatedUnion('type', [
     attempt: z.number().int(),
     delayMs: z.number(),
     code: z.string().optional()
+  }),
+  z.object({
+    type: z.literal('step-detail'),
+    stepId,
+    detail: stepDetailSchema
   }),
   z.object({ type: z.literal('step-skipped'), stepId }),
   z.object({ type: z.literal('step-completed'), stepId }),

@@ -18,7 +18,7 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
 | Save and switch between multiple Apple IDs | 3, 10 |
 | SideStore integration: sources via deep links/QR, anisette server choice, Wi-Fi refresh prerequisites | 5, 8, 11 |
 | The app in every language iOS supports (about 40, right-to-left included), community-translated, picked automatically from the OS | 6, 7–9, 12 |
-| Every known failure detected and handled: automatic retry or fix where possible, otherwise a recovery screen (catalogue built from real user reports: `references/failure-catalogue.md`) | all |
+| Every known failure detected and handled: automatic retry or fix where possible, otherwise a recovery screen (catalogue built from real user reports: `docs/design/failure-catalogue.md`) | all |
 
 ## Milestones
 
@@ -34,12 +34,12 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
   - services: TLS sessions, AFC, house_arrest, installation_proxy (install with progress, list apps), misagent (profiles on the device);
   - checks: Developer Mode and locked device. Node adapters are tested on real hardware
 - [x] **3. Apple account**: `@loadstar/apple`:
-  - anisette v3 client with a health-checked server chain and automatic fallback (native anisette on macOS), plus an opt-in **local anisette** provider: a Provision `anisette-server` sidecar that downloads Apple's libraries itself, so no third-party server is needed (RESEARCH.md §4; v1 protocol client done, sidecar process management moves to Phase 9);
+  - anisette v3 client with a health-checked server chain and automatic fallback (native anisette on macOS), plus an opt-in **local anisette** provider: a Provision `anisette-server` sidecar that downloads Apple's libraries itself, so no third-party server is needed (reviewed Dadoum/Provision for ideas only: it can't be pure TypeScript and Apple's libraries can't be redistributed; v1 protocol client done, sidecar process management moves to Phase 9);
   - GSA SRP-6a login, 2FA (trusted device and SMS, with non-fatal phone lookup), token refresh;
   - multiple Apple IDs: `SecretStore`-backed saved accounts with switch, sign-out and per-account team/certificate state;
   - Apple-facing client identity as remotely updatable data (from the anisette server's `client_info` or signed config), never constants;
   - a full 2FA state machine (device push, SMS number picker, resend, legacy 4-digit codes, server-provided code length, "code already sent" states, security-key explanation);
-  - automatic recovery for every known login failure (`references/failure-catalogue.md`): anisette failover and re-provisioning, clock-skew and connectivity preflight, backoff on 429/503, no auto-retry on wrong passwords, account health and ban flags
+  - automatic recovery for every known login failure (`docs/design/failure-catalogue.md`): anisette failover and re-provisioning, clock-skew and connectivity preflight, backoff on 429/503, no auto-retry on wrong passwords, account health and ban flags
 - [x] **4. Developer services**: teams (team picker remembered per Apple ID), certificate lifecycle (reuse by machine name and key, a revoke picker showing which tool created each certificate, per-type revoke, `.p12` export/import with the `machineId` password), App IDs with budgeting before any write (clamped quota, next free slot, normalised names, conserve mode), app groups, devices, provisioning profiles, defensive parsing of every response, and `provisionApp()`, which yields everything the signer needs for an IPA and its extensions
 - [x] **5. Installer engine and catalog**:
   - the pipeline runner (progress, cancel, resume, idempotent retry);
@@ -57,11 +57,11 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
     - right-to-left layouts (Arabic, Hebrew, Persian, Urdu) built from logical Tailwind utilities (`ms-`/`me-`, `start`/`end`), with mirrored icons where meaning depends on direction;
     - locale-aware dates, numbers and lists (`Intl.DateTimeFormat`, `NumberFormat`, `ListFormat`, `RelativeTimeFormat`);
     - a pseudo-locale (accented and about 40 % longer) for catching truncation and untranslated strings, plus screenshot tests in German (long), Arabic (RTL) and Japanese (CJK)
-  - to check in the 2FA prompts: the code field accepts the length Apple asks for, including 4-digit codes for older (`hsa`) accounts
-  - devices coming and going (a refresh, a cable wiggle) never open a full-screen error: the picker and the Devices page say it quietly
-  - recovery: a dedicated error for an app that doesn't support the device (installation_proxy `DeviceNotSupportedByThinning`), with its own screen instead of the generic install failure
-  - logs: a keyboard shortcut to open them (Ctrl+L, ⌘L on macOS)
-  - to check: the sign-in dialog with password managers filling the form (e.g. Bitwarden)
+  - done along the way: the 2FA code field takes the length Apple asks for, 4-digit codes for older (`hsa`) accounts included (#40); devices coming and going (a refresh, a cable wiggle) never open a full-screen error, the picker and the Devices page say it quietly (#45)
+  - still open:
+    - recovery: a dedicated error for an app that doesn't support the device (installation_proxy `DeviceNotSupportedByThinning`, today the generic `device.install_failed`), with its own screen
+    - logs: a keyboard shortcut to open them (Ctrl+L, ⌘L on macOS), in 6d
+    - to check by hand: the sign-in dialog with password managers filling the form (e.g. Bitwarden)
   - progress (one PR per step):
     - [x] 6a: UI package, palettes and the sidebar shell (#28), with a minimal Electron shell (#29, #34)
     - [x] 6b: translations, on-demand languages, right-to-left and locale checks (#36); code style (#37)
@@ -72,12 +72,21 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
     - [x] 6c-5: install home and install run (#46)
     - [x] 6c-6: the run's questions (#53)
     - [x] quality: SonarJS lint (#41, #44); file structure rules across the project (#48–#52)
-    - [ ] 6c-7: recovery: a fix per error, Report the problem as a pre-filled GitHub issue, Apple pages opened in the browser (in review)
-    - [ ] 6c-8: step details: what each step did (release version, session reused, team, certificate, App IDs, free apps)
+    - [x] 6c-7: recovery: a fix per error, Report the problem as a pre-filled GitHub issue, Apple pages opened in the browser (#54)
+    - [x] 6c-8: step details: what each step did (release version, session reused, team, certificate, App IDs, free apps) (#55)
     - [ ] 6d: log buffer, log stream and log viewer
     - [ ] 6e: screenshot and accessibility tests per locale
 - [ ] **7. Onboarding**: a first-run guided wizard with platform checks (usbmuxd / Apple Mobile Device driver, with copyable fixes per OS), network preflight (Apple, anisette, clock skew), connecting and trusting the device, Developer Mode, Apple ID sign-in with 2FA, team choice, and choosing what to install. It can be resumed and re-run from settings
 - [ ] **8. Install and preload experience**: one-click SideStore (stable/nightly), a preload picker (local IPAs, URLs, catalog apps), source deep links and a QR code for SideStore, a live pipeline view, dedicated recovery screens for every `ErrorCode` with "copy diagnostics", an on-device checklist per iOS version, a "Repair SideStore" wizard, and one-click switching to another Apple ID when one is banned
+  - progress (built during Phase 6c):
+    - [x] one-click SideStore or LiveContainer + SideStore, Stable or Nightly (#46)
+    - [x] a live pipeline view (#46), with the run's questions (#53) and what each step did (#55)
+    - [x] recovery screens for every `ErrorCode`, with copy diagnostics and a pre-filled issue report (#54)
+    - [x] switching to another Apple ID when one is banned: the Install notice (#45) and the recovery picker (#54)
+    - [ ] the preload picker (local IPAs, URLs, catalog apps)
+    - [ ] source deep links and a QR code for SideStore
+    - [ ] the on-device checklist per iOS version (unlock, Trust and Developer Mode steps exist; a full checklist doesn't)
+    - [ ] the "Repair SideStore" wizard
   - to check with a real LiveContainer build: its LiveProcess extension gets the main app's `keychain-access-groups`
   - to measure: a larger AFC write chunk (`afcWriteChunkBytes`, 64 KiB today; 1 MiB is reported faster) for big IPAs
   - later: AltStore as an install target (`ALTDeviceId` in `Info.plist` and an encrypted `ALTPairingFile.dat` at the bundle root)

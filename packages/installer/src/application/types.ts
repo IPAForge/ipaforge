@@ -7,7 +7,8 @@ import type {
   FreeProfileRules,
   ProfileFacts
 } from '@installer/domain/types.ts'
-import type { CertificateIdentity } from '@loadstar/apple'
+import type { StepDetail } from '@installer/pipeline/types.ts'
+import type { AppleSession, CertificateIdentity } from '@loadstar/apple'
 import type { DeviceManager, UsbmuxDevice } from '@loadstar/device'
 import type { Logger } from '@loadstar/kernel'
 
@@ -57,6 +58,24 @@ export type FreeSlotRequest = {
   readonly limit: number
   /** New main bundle ID of the app about to be installed. */
   readonly installing: string
+}
+
+/** An opened saved account, and how: its saved session, a silent sign-in with the saved password, or the user's. */
+export type OpenedAccount = {
+  readonly session: AppleSession
+  readonly how: Extract<StepDetail, { kind: 'session' }>['how']
+}
+
+/** The team's certificate, and whether it was reused, created, or created after revoking one. */
+export type EnsuredCertificate = {
+  readonly identity: CertificateIdentity
+  readonly how: Extract<StepDetail, { kind: 'certificate' }>['how']
+}
+
+/** The free-app slots other apps hold once there is room, and the app removed to make it (name, else bundle ID). */
+export type FreeSlotOutcome = {
+  readonly used: number
+  readonly removed?: string
 }
 
 export type FreeSlots = {

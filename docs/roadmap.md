@@ -12,9 +12,9 @@ The detailed roadmap, with each phase's scope, is [design/roadmap.md](design/roa
 | 3 | Apple account ✓ | Anisette with fallback, login, 2FA, saved credentials |
 | 4 | Developer services ✓ | Teams, certificates, app IDs, groups, profiles |
 | 5 | Installer engine + catalog ✓ | Pipelines, flows, release catalog, error catalog |
-| 6 | UI foundation (in progress: 6a–6c-6 done) | HeroUI + Tailwind shell, colour palettes, i18n, Engine connection, accounts, devices, install run and its questions; next: recovery, logs, screenshot tests |
+| 6 | UI foundation (in progress: 6a–6c-8 done) | HeroUI + Tailwind shell, colour palettes, i18n, Engine connection, accounts, devices, install run, its questions, recovery and step details (#28–#55); next: 6d logs, 6e screenshot and accessibility tests |
 | 7 | Onboarding | First-run guided wizard |
-| 8 | Install & preload UX | One-click SideStore, preload picker, recovery screens |
+| 8 | Install & preload UX (about half done in Phase 6c) | One-click SideStore ✓, live run view ✓, recovery screens ✓, Apple ID switch ✓; next: preload picker, deep links / QR, on-device checklist, Repair SideStore |
 | 9 | Desktop app | Electron packages for Windows, macOS, Linux; auto-update |
 | 10 | Management tools | Certificates, app IDs, pairing files, import/export |
 | 11 | Wireless & remote pairing | Wi-Fi installs and the iOS 17+ RP pairing file |

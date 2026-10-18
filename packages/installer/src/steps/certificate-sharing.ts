@@ -33,11 +33,15 @@ export const certificateSharingStep = (
       required(job.file, 'IPA file'),
       context.signal
     )
-    if (!findSideStoreTarget(bundles)) return undefined
+    if (!findSideStoreTarget(bundles)) {
+      context.detail({ kind: 'certificate-shared', isShared: false })
+      return undefined
+    }
     const approved = await ask(context, PromptKind.ShareCertificate, {
       appName: inspection.app.name,
       bundleId: inspection.app.identifier
     })
+    context.detail({ kind: 'certificate-shared', isShared: approved })
 
     return approved
       ? updateJob(state, index, { trust: { kind: 'user-approved' } })
