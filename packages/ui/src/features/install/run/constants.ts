@@ -9,18 +9,33 @@ import {
 } from 'lucide-react'
 
 import type { TranslationKey } from '@ui/i18n/setup/types.ts'
-import type { RunStatus, StepState } from '@ui/state/active-run/types.ts'
+import type {
+  RunKind,
+  RunStatus,
+  StepState
+} from '@ui/state/active-run/types.ts'
 
-/** The run's title for each status. */
+/** The run's title for each kind of run and status. */
 export const runTitleKeys = {
-  starting: 'install.run.title.running',
-  running: 'install.run.title.running',
-  waiting: 'install.run.title.running',
-  answering: 'install.run.title.running',
-  completed: 'install.run.title.completed',
-  failed: 'install.run.title.failed',
-  cancelled: 'install.run.title.cancelled'
-} as const satisfies Record<RunStatus, TranslationKey>
+  sidestore: {
+    starting: 'install.run.title.running',
+    running: 'install.run.title.running',
+    waiting: 'install.run.title.running',
+    answering: 'install.run.title.running',
+    completed: 'install.run.title.completed',
+    failed: 'install.run.title.failed',
+    cancelled: 'install.run.title.cancelled'
+  },
+  apps: {
+    starting: 'preload.run.title.running',
+    running: 'preload.run.title.running',
+    waiting: 'preload.run.title.running',
+    answering: 'preload.run.title.running',
+    completed: 'preload.run.title.completed',
+    failed: 'preload.run.title.failed',
+    cancelled: 'install.run.title.cancelled'
+  }
+} as const satisfies Record<RunKind, Record<RunStatus, TranslationKey>>
 
 /** The tints of an outcome box: the box itself and its title. */
 export const outcomeToneClasses = {
@@ -56,3 +71,17 @@ export const stepStateKeys: Partial<Record<StepState, TranslationKey>> = {
   skipped: 'install.run.stepState.skipped',
   failed: 'install.run.stepState.failed'
 }
+
+/** How a group of an apps run's steps is going, in words and colour. */
+export const groupStateText = {
+  failed: {
+    key: 'preload.run.group.failed',
+    className: 'text-danger-soft-foreground'
+  },
+  done: { key: 'preload.run.group.done', className: 'text-success' },
+  active: { key: 'preload.run.group.active', className: 'text-foreground' },
+  pending: { key: 'preload.run.group.pending', className: 'text-muted' }
+} as const satisfies Record<
+  string,
+  { readonly key: TranslationKey; readonly className: string }
+>

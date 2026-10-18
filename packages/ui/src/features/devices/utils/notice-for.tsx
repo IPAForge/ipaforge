@@ -7,48 +7,49 @@ import type {
   DeviceState,
   Notice,
   NoticeBuilder,
-  NoticeProps
+  NoticeProps,
+  Say
 } from '@ui/features/devices/types.ts'
 
 /** The notice for each state; none while checking or when the device is ready. */
 const noticeBuilders = {
   checking: undefined,
   ready: undefined,
-  notConnected: (t, { view }) => ({
+  notConnected: (say, { view }) => ({
     status: 'warning',
-    title: t('devices.notice.notConnected.title', { name: view.name }),
-    body: t('devices.notice.notConnected.body'),
+    title: say('devices.notice.notConnected.title', { name: view.name }),
+    body: say('devices.notice.notConnected.body'),
     action: null,
     checkAgain: false
   }),
-  notTrusted: (t, { udid, view }) => ({
+  notTrusted: (say, { udid, view }) => ({
     status: 'danger',
     title: view.isNamed
-      ? t('devices.notice.notTrusted.title', { name: view.name })
-      : t('devices.notice.notTrusted.titleUnnamed'),
-    body: t('devices.notice.notTrusted.body'),
+      ? say('devices.notice.notTrusted.title', { name: view.name })
+      : say('devices.notice.notTrusted.titleUnnamed'),
+    body: say('devices.notice.notTrusted.body'),
     action: <AskAgain udid={udid} />,
     checkAgain: false
   }),
-  locked: (t, { view }) => ({
+  locked: (say, { view }) => ({
     status: 'warning',
-    title: t('devices.notice.locked.title', { name: view.name }),
-    body: t('devices.notice.locked.body'),
+    title: say('devices.notice.locked.title', { name: view.name }),
+    body: say('devices.notice.locked.body'),
     action: null,
     checkAgain: true
   }),
-  developerModeOff: (t, { view }) => ({
+  developerModeOff: (say, { view }) => ({
     status: 'warning',
-    title: t('devices.notice.developerModeOff.title', { name: view.name }),
+    title: say('devices.notice.developerModeOff.title', { name: view.name }),
     body: <DeveloperModeSteps />,
     action: null,
     checkAgain: true
   }),
-  unavailable: (t, { view }) => ({
+  unavailable: (say, { view }) => ({
     status: 'danger',
     title: view.isNamed
-      ? t('devices.notice.unavailable.title', { name: view.name })
-      : t('devices.notice.unavailable.titleUnnamed'),
+      ? say('devices.notice.unavailable.title', { name: view.name })
+      : say('devices.notice.unavailable.titleUnnamed'),
     body: <UnavailableBody view={view} />,
     action: null,
     checkAgain: true
@@ -60,4 +61,8 @@ export const noticeFor = (
   t: ReturnType<typeof useTranslation>['t'],
   state: DeviceState | undefined,
   props: NoticeProps
-): Notice | undefined => (state ? noticeBuilders[state]?.(t, props) : undefined)
+): Notice | undefined => {
+  const say: Say = (key, values) => String(t(key as never, values as never))
+
+  return state ? noticeBuilders[state]?.(say, props) : undefined
+}

@@ -11,7 +11,7 @@ pnpm --filter @ipaforge/desktop dev      # opens the app in Electron, hot reload
 pnpm --filter @ipaforge/desktop build    # main, preload and renderer into apps/desktop/out
 ```
 
-`apps/desktop/src/renderer/main.tsx` mounts `App` the same way as the browser entry: with `createBrowserServices` and `prepareLanguage` (see [Loading languages](#loading-languages)), since the renderer is a sandboxed browser context, and with a hash history, because a build is loaded from `file://`. The window runs with `contextIsolation`, `sandbox` and no Node integration, under a strict Content-Security-Policy, and it blocks new windows and navigation. A page the UI asks to open (`window.open`) goes to the default browser only when it is on the allowed list in `apps/desktop/src/main/constants.ts` (a new IPAForge issue on GitHub, Apple's account and developer pages); anything else is blocked and logged. The main process serves the Engine over a `MessageChannelMain` (one per page load); the preload only forwards the other end of it to the page, which wraps it in a `Transport` for `createEngineClient`. Nothing else is exposed to the page.
+`apps/desktop/src/renderer/main.tsx` mounts `App` the same way as the browser entry: with `createBrowserServices` and `prepareLanguage` (see [Loading languages](#loading-languages)), since the renderer is a sandboxed browser context, and with a hash history, because a build is loaded from `file://`. The window runs with `contextIsolation`, `sandbox` and no Node integration, under a strict Content-Security-Policy, and it blocks new windows and navigation. A page the UI asks to open (`window.open`) goes to the default browser only when it is on the allowed list in `apps/desktop/src/main/constants.ts` (a new IPAForge issue on GitHub, Apple's account and developer pages); anything else is blocked and logged. The main process serves the Engine over a `MessageChannelMain` (one per page load); the preload forwards the other end of it to the page, which wraps it in a `Transport` for `createEngineClient`. The preload gives the page one function besides (`window.ipaforgeFiles.pathOf`, `apps/desktop/src/preload/expose-file-paths.ts`): the path of a file the user dropped on the window, from Electron's `webUtils.getPathForFile`, for the Preload page. It opens and reads nothing, and returns nothing for any other file. Nothing else is exposed to the page.
 
 ## Running it in a browser
 
@@ -67,6 +67,7 @@ The package exports `App`, the service types and factories, the palettes and the
 | `EngineClient` (rpc) | The Engine: queries, runs and `classify`. `App` logs every request at debug level under `ui.engine` (the method, and the code of a failure; never the arguments) | the fake Engine over the memory transport (`createFakeEngineClient`); in Electron, `createEngineClient` over the MessagePort |
 | `ClipboardWriter` | Writes text to the clipboard (copied diagnostics, copied log lines) | `createNavigatorClipboard(navigator)` |
 | `FileSaver` | Saves text as a file (Save in Logs) | `createDownloadFileSaver`: a download, which Electron saves through the system dialog |
+| `droppedFilePath` | Where a file dropped on the window is, to name it to the Engine (Preload) | the file's name, which only the fake Engine accepts; the Electron renderer passes the preload's `pathOf` |
 | `LinkOpener` | Opens a web page in the browser (a pre-filled issue, an Apple page) | `createWindowLinkOpener(window)` |
 | `appVersion` | The app's version, for diagnostics | the package version, defined by Vite as `import.meta.env.VITE_APP_VERSION` |
 
@@ -139,6 +140,29 @@ To add a palette, add its id to `paletteIds`, add its tokens to `palettes.ts` an
     - what each fix does is a table in `constants.ts` (`fixes`, one entry per `RecoveryAction`): continue from the checkpoint, ask the device to trust this computer and then continue (`engine.pairDevice`), **Use another Apple ID** (a picker of the saved Apple IDs, without the one that failed or any blocked on the device; the run starts again with the one picked, which becomes the one in use), **Install from Nightly/Stable** (names the other channel and starts again on it), or only explain (no App IDs left, with the date the next one frees from the plan; device support on Windows). Apple pages have **Open** (in the browser) and **Copy**. Fixes whose screen comes in a later phase (another anisette server, another IPA, updating IPAForge, choosing another team) aren't shown yet;
     - Try again isn't offered twice when the first fix already continues the run;
     - where the run continues from, **Copy diagnostics** (the code, step, app version, install choice and device model, never an Apple ID, name or serial), **Back to Install** (to choose another app, channel or Apple ID; the cancelled box has it too), **Show logs** (Logs with only this run's lines, from when it started to when it ended), and **Report the problem**, which opens a new GitHub issue in the browser with the title and diagnostics filled in (`utils/issue-url.ts`); nothing is sent until the user submits it there.
+
+**Preload** (`features/preload/`) installs your own apps, from four places:
+
+- **Drop .ipa files** anywhere on the window (the drop zone lights up). A file that isn't an .ipa is listed as such, never sent to the Engine.
+- **Choose files…** opens the host's file dialog (`engine.chooseIpas()`; in the desktop app the main process opens it).
+- **Add from a link…**: a direct https link to an .ipa, which the Engine downloads first.
+- **From the catalog**: every app the catalog lists (SideStore, LiveContainer + SideStore, LiveContainer, StikDebug, Feather), with what each is for; releases come from GitHub, checked against their published SHA-256.
+
+The list (`state/preload/`, kept while you visit other sections) asks the Engine's `planInstall` for each app once the device and the Apple ID are ready, and shows what it says:
+
+- each app's name and version, how many App IDs it uses (with its extensions), whether it is new on the device or updates the version already there (keeping its data), and for SideStore that it gets the pairing file and certificate;
+- or why it can't be installed: needs a newer iOS (both versions said), an encrypted App Store app, not an app, a release that is gone. Each row can be removed.
+
+**This install** adds the ready apps up: new App IDs against what's left this week (and when the next frees), the free-app slots after the install (the run asks which app to remove when it would go over), the certificate and the team. **Install N apps** waits for:
+
+1. the device and the Apple ID, as on Install;
+2. every app read;
+3. no app that can't be installed;
+4. enough App IDs.
+
+It starts `engine.installApps` with the ready apps. The run is the same run view as Install (one run at a time, in `state/active-run/`, which holds either kind; the other page says an install is running and links to it), with the steps grouped by app: the device and Apple ID steps first, then each app's own. **Done** empties the list.
+
+The browser dev host's fake Engine plays it too: its file dialog picks `MyGame.ipa`, a link "downloads" for a moment, StikDebug is on the device in an older version, and names decide the problems (a name with `Encrypted`, `Future` or `NotAnApp` in it).
 
 **Manage → Accounts** (`features/accounts/`) lists the saved Apple IDs with their teams and state, marks the one **in use**, and offers **Use**, **Sign in again** (only for an expired session; it opens sign-in with the Apple ID filled in) and **Sign out**. Signing out asks first, in a dialog that says what IPAForge forgets (the Apple ID, its session, its saved password) and what it keeps (its signing certificates, so signing in again reuses them; installed apps keep working until they expire). Signing out the Apple ID in use hands its place to the next saved one. An **Add Apple ID** button opens sign-in.
 
@@ -244,7 +268,7 @@ pnpm test:browser                                # the checks; compares with the
 pnpm --filter @ipaforge/ui test:browser:update   # rebuilds the reference images in Docker (any system)
 ```
 
-- **Screenshots** (`src/screens.browser.test.tsx`): the Install page, a failed run with its recovery box, Logs and Settings, in English, German (long words), Arabic (right to left), Japanese and the pseudo-locale, plus every screen in dark mode. Each is compared with its reference image in `src/__screenshots__/`; a changed screen fails with the new image and a diff (CI uploads them as `screenshot-diffs`). The clock is fixed and animations are off, so images only change when the UI does.
+- **Screenshots** (`src/screens.browser.test.tsx`): the Install page, a failed run with its recovery box, Preload with two apps, Logs and Settings, in English, German (long words), Arabic (right to left), Japanese and the pseudo-locale, plus every screen in dark mode. Each is compared with its reference image in `src/__screenshots__/`; a changed screen fails with the new image and a diff (CI uploads them as `screenshot-diffs`). The clock is fixed and animations are off, so images only change when the UI does.
 - **No clipped text:** in every language, an element with translated text that overflows its box fails the test. The pseudo-locale wraps every message in brackets, so a clipped bracket is a label too short for a longer language. User data (names, Apple IDs) may truncate by design.
 - **Accessibility:** axe checks every screen against WCAG 2.2 AA, in light and dark and right to left (contrast, names, roles, lists, target sizes).
 - **Keyboard** (`src/keyboard.browser.test.tsx`): the skip link shows on the first Tab and moves focus to the page, Tab walks the top bar and the sidebar in order with a visible focus ring, a picker opens with Enter and closes with Escape back on its button, and Ctrl+L opens Logs.

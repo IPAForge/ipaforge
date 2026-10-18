@@ -172,7 +172,8 @@
         "pairing": "{apps} に配置",
         "shared": "証明書を共有しました",
         "notShared": "証明書は共有していません"
-      }
+      },
+      "subtitleApps": "{device} · {appleId}"
     },
     "summary": {
       "title": "このインストール",
@@ -183,7 +184,8 @@
       "account": "Apple ID",
       "appIds": "App ID",
       "appIdsValue": "{count, plural, other {今週の残り # 個}}",
-      "freeApps": "無料 App"
+      "freeApps": "無料 App",
+      "apps": "アプリ"
     },
     "done": {
       "title": "{app} を {device} にインストールしました。",
@@ -988,6 +990,100 @@
       "saved": "{count, plural, other {# 行を保存しました}}",
       "copyFailed": "行をコピーできませんでした",
       "saveFailed": "行を保存できませんでした"
+    }
+  },
+  "preload": {
+    "title": "アプリのプリロード",
+    "description": "自分のアプリをインストールします。Apple ID で署名し、USB 経由で 1 つずつインストールします。",
+    "add": {
+      "drop": ".ipa ファイルをここにドロップ",
+      "or": "または",
+      "choose": "ファイルを選択…",
+      "link": "リンクから追加…"
+    },
+    "catalog": {
+      "title": "カタログから",
+      "hint": "最新リリース。公開されたチェックサムで検証済み",
+      "recommended": "おすすめ",
+      "added": "追加済み",
+      "add": "追加",
+      "sidestore": "デバイス上でアプリを自動で更新・インストールします。",
+      "livecontainerSidestore": "SideStore を内蔵した LiveContainer。",
+      "livecontainer": "1 つのアプリの中で多数のアプリを実行し、3 アプリの制限を超えられます。",
+      "stikdebug": "必要なアプリの JIT をデバイス上で有効にします。",
+      "feather": "あなたの証明書でアプリをデバイス上で署名・インストールします。"
+    },
+    "list": {
+      "title": "インストールするアプリ",
+      "count": "{count, plural, other {# 個のアプリ}}",
+      "empty": "まだアプリがありません。.ipa ファイルをここにドロップするか、選択するか、リンクを追加するか、カタログから選んでください。"
+    },
+    "row": {
+      "waiting": "デバイスと Apple ID を待っています",
+      "checking": "確認中…",
+      "downloading": "ダウンロードして確認中…",
+      "appIds": "{count, plural, other {App ID # 個}}{extensions, plural, =0 {} other {(アプリ + 拡張機能 # 個)}}",
+      "updates": "{from} → {to} に更新 · データは保持",
+      "new": "デバイスに新規",
+      "pairing": "ペアリングファイルと証明書を受け取ります",
+      "fromCatalog": "カタログから · 安定版",
+      "remove": "{name} を削除",
+      "cannot": "インストールできません。"
+    },
+    "problem": {
+      "notIpa": "インストールできるのは .ipa ファイルのみです。",
+      "unreadable": "IPAForge はこのファイルを読み込めません。「ファイルを選択…」から追加してください。",
+      "needsIos": "iOS {needs} が必要です。このデバイスは iOS {has} です。"
+    },
+    "summary": {
+      "appIds": "{count, plural, other {新規 # 個}} · {left, plural, other {今週の残り # 個}}",
+      "appIdsNoLimit": "{count, plural, other {新規 # 個}}",
+      "notEnough": "残りが足りません。アプリを削除するか、お待ちください。{next}",
+      "freeApps": "インストール後 {after} / {limit}",
+      "freeAppsOver": "{used, plural, other {すでに # 個あります。}}インストール時に削除するアプリを尋ねます。または、このリストから 1 つ削除してください。"
+    },
+    "install": "{count, plural, =0 {インストール} other {# 個のアプリをインストール}}",
+    "clear": "リストを空にする",
+    "readiness": {
+      "busy": "実行中のインストールが終わるまでお待ちください。",
+      "empty": "まずアプリを追加してください。",
+      "checking": "アプリを確認中…",
+      "problems": "インストールできないアプリを削除してください。"
+    },
+    "link": {
+      "title": "リンクから追加",
+      "body": ".ipa ファイルへの直接リンク。IPAForge がダウンロードし、ほかのアプリと同じように確認します。",
+      "label": "リンク",
+      "placeholder": "https://example.com/MyApp.ipa",
+      "add": "追加",
+      "httpsOnly": "ダウンロードできるのは https リンクのみです。",
+      "invalid": "リンクではありません。",
+      "notIpa": "リンクは .ipa ファイルを指している必要があります。"
+    },
+    "elsewhere": {
+      "apps": "アプリをインストール中です",
+      "sidestore": "SideStore をインストール中です",
+      "body": "インストールは 1 度に 1 つです(デバイスを使うため)。終わったら開始できます。",
+      "open": "開く"
+    },
+    "run": {
+      "title": {
+        "running": "{count, plural, other {{app} をインストール中}}",
+        "completed": "{count, plural, other {{app} をインストールしました}}",
+        "failed": "すべてのアプリをインストールできませんでした"
+      },
+      "backToPreload": "プリロードに戻る",
+      "shared": "このデバイスと Apple ID",
+      "group": {
+        "failed": "失敗",
+        "done": "完了",
+        "active": "進行中",
+        "pending": "待機中"
+      }
+    },
+    "done": {
+      "title": "{count, plural, other {{app} は {device} にあります。}}",
+      "open": "各アプリをホーム画面から開いてください。"
     }
   }
 }

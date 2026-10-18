@@ -19,6 +19,8 @@ export type BrowserServicesOptions = {
   /** Built by the host: over the memory transport in a browser, over the MessagePort in Electron. */
   readonly engine: (logger: UiServices['logger']) => EngineClient
   readonly appVersion: string
+  /** The Electron renderer's: the real path of a dropped file. Default: its name (for the fake Engine). */
+  readonly droppedFilePath?: (file: File) => string | undefined
 }
 
 /**
@@ -27,7 +29,12 @@ export type BrowserServicesOptions = {
  */
 export const createBrowserServices = (
   host: Window,
-  { logLevel, engine, appVersion }: BrowserServicesOptions
+  {
+    logLevel,
+    engine,
+    appVersion,
+    droppedFilePath = (file) => file.name
+  }: BrowserServicesOptions
 ): UiServices => {
   // Every record goes to the Engine's log buffer (it keeps those at its own level), so the log viewer shows the
   // UI's lines with the Engine's; the console gets them from `logLevel` up.
@@ -50,6 +57,7 @@ export const createBrowserServices = (
     engine: client,
     clipboard: createNavigatorClipboard(host.navigator),
     files: createDownloadFileSaver({ document: host.document, URL }),
+    droppedFilePath,
     links: createWindowLinkOpener(host),
     appVersion
   }

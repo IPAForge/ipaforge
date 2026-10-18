@@ -6,7 +6,12 @@ import type {
   RunEvent,
   StepDetail as StepReport
 } from '@ipaforge/rpc'
-import type { InstallSideStoreInput } from '@ui/services/engine/types.ts'
+import type {
+  AppSource,
+  Channel,
+  InstallAppsInput,
+  InstallSideStoreInput
+} from '@ui/services/engine/types.ts'
 
 export type StepState =
   | 'pending'
@@ -77,22 +82,51 @@ export type RunEventHandlers = {
   ) => RunView
 }
 
-export type ActiveRun = {
-  readonly input: InstallSideStoreInput
+/** An app an apps run installs, as the preload list showed it (the Engine only knows where it is). */
+export type RunApp = {
+  readonly name: string
+  readonly version?: string | undefined
+  readonly source: AppSource
+}
+
+/** What a run was asked to do: SideStore (the Install page) or a list of apps (the Preload page). */
+export type RunRequest =
+  | { readonly kind: 'sidestore'; readonly input: InstallSideStoreInput }
+  | {
+      readonly kind: 'apps'
+      readonly input: InstallAppsInput
+      readonly apps: readonly RunApp[]
+    }
+
+export type RunKind = RunRequest['kind']
+
+/** The install run: one at a time, since it holds the device. */
+export type ActiveRun = RunRequest & {
   readonly view: RunView
   /** ISO times the run (with any resumes) started and ended, for its lines in the log viewer. */
   readonly startedAt: string
   readonly endedAt?: string | undefined
 }
 
+/** A SideStore run, as the Install page shows it. */
+export type SideStoreRun = Extract<ActiveRun, { kind: 'sidestore' }>
+
+/** What starting again may change: the Apple ID, and for SideStore the channel. */
+export type RestartPatch = {
+  readonly accountId?: string
+  readonly channel?: Channel
+}
+
 export type ActiveRunStore = {
   getState: () => ActiveRun | undefined
   subscribe: (listener: () => void) => () => void
   start: (input: InstallSideStoreInput) => void
+  /** Installs the apps of the preload list in one run. */
+  startApps: (input: InstallAppsInput, apps: readonly RunApp[]) => void
   /** Continues a failed or cancelled run from its checkpoint. */
   resume: () => void
   /** Starts again with part of the input changed; finished steps that do not depend on it run quickly again. */
-  restart: (patch: Partial<InstallSideStoreInput>) => void
+  restart: (patch: RestartPatch) => void
   answer: (answer: unknown) => void
   decline: () => void
   cancel: () => void

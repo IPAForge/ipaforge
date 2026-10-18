@@ -4,11 +4,21 @@ import type { StepDetail as StepReport } from '@ipaforge/rpc'
 import type { outcomeToneClasses } from '@ui/features/install/run/constants.ts'
 import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 import type { DeviceCheck } from '@ui/services/engine/types.ts'
-import type { ActiveRun } from '@ui/state/active-run/types.ts'
+import type {
+  ActiveRun,
+  RunApp,
+  RunKind,
+  StepView
+} from '@ui/state/active-run/types.ts'
 
 export type RunTarget = {
+  readonly kind: RunKind
+  /** "SideStore", or the apps of an apps run as a list ("StikDebug and MyGame"). */
   readonly app: string
-  readonly channel: string
+  /** How many apps the run installs. */
+  readonly count: number
+  /** SideStore's channel; an apps run has none. */
+  readonly channel: string | undefined
   readonly deviceName: string
   readonly check?: DeviceCheck | undefined
   readonly appleId: string
@@ -52,4 +62,11 @@ export type StepReportTexts = {
     report: Extract<StepReport, { kind: K }>,
     words: ReportWords
   ) => string
+}
+
+/** An apps run's steps for one app, or the shared ones (no app). */
+export type AppStepGroup = {
+  readonly key: string
+  readonly app?: RunApp | undefined
+  readonly steps: readonly StepView[]
 }

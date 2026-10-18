@@ -33,7 +33,7 @@ const TICKS = 8
 const RETRY_DELAY_MS = 2000
 const RETRIES = 2
 
-const quick: StepBody = async () => undefined
+export const quick: StepBody = async () => undefined
 
 /** Reports progress in ticks; `detail` describes each tick. */
 const ticking =
@@ -50,7 +50,7 @@ const bytes = (fraction: number) => ({
   total: FAKE_IPA_SIZE
 })
 
-const download =
+export const download =
   (world: FakeWorld): StepBody =>
   async (_state, context) => {
     if (world.scenario === 'retry' && !world.failed.has('download-0')) {
@@ -65,7 +65,7 @@ const download =
     return undefined
   }
 
-const checkDevice: StepBody = async (state, context) => {
+export const checkDevice: StepBody = async (state, context) => {
   if (state.udid !== FAKE_IPHONE)
     throw new IPAForgeError(ErrorCode.DeviceNotPaired, {
       data: { udid: state.udid }
@@ -79,14 +79,14 @@ const checkDevice: StepBody = async (state, context) => {
 }
 
 /** A step that only reports what it did. */
-const reporting =
+export const reporting =
   (report: StepReport): StepBody =>
   async (_state, context) => {
     context.detail(report)
     return undefined
   }
 
-const signIn =
+export const signIn =
   (world: FakeWorld): StepBody =>
   async (state, context) => {
     if (world.signedIn.has(state.accountId)) {
@@ -101,7 +101,7 @@ const signIn =
     return undefined
   }
 
-const chooseTeam =
+export const chooseTeam =
   (world: FakeWorld): StepBody =>
   async (state, context) => {
     const teams = teamsFor(world, state.accountId)
@@ -122,7 +122,7 @@ const chooseTeam =
     return { teamId, isFreeTeam: team?.isFree ?? true }
   }
 
-const certificate =
+export const certificate =
   (world: FakeWorld): StepBody =>
   async (_state, context) => {
     const isFull = world.scenario === 'certificate-limit'
@@ -135,7 +135,7 @@ const certificate =
     return undefined
   }
 
-const freeApps =
+export const freeApps =
   (world: FakeWorld): StepBody =>
   async (_state, context) => {
     if (world.scenario !== 'free-app-limit') {
@@ -162,13 +162,13 @@ const freeApps =
     return undefined
   }
 
-const progressing: StepBody = async (_state, context) => {
+export const progressing: StepBody = async (_state, context) => {
   await ticking()(context)
   return undefined
 }
 
 /** A step that first plays the scenario's failure, if it is this one. */
-const step = (
+export const step = (
   world: FakeWorld,
   stepId: string,
   labelKey: string,

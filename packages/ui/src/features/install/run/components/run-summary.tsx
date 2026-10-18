@@ -20,8 +20,19 @@ export const RunSummary = ({ target, accountId, plan }: RunSummaryProps) => {
   const quota = useAppIdQuota({ accountId }).data?.quota
   const info = target.check?.info
   const items: SummaryItem[] = [
-    { labelKey: 'install.summary.app', value: target.app },
-    { labelKey: 'install.summary.channel', value: target.channel },
+    {
+      labelKey:
+        target.kind === 'apps' ? 'install.summary.apps' : 'install.summary.app',
+      value: target.app
+    },
+    ...(target.channel
+      ? [
+          {
+            labelKey: 'install.summary.channel',
+            value: target.channel
+          } satisfies SummaryItem
+        ]
+      : []),
     {
       labelKey: 'install.summary.device',
       value: info

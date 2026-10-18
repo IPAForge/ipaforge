@@ -2,7 +2,9 @@
 // packages behind it.
 import type {
   EngineClient,
+  IpaSource,
   Prompts,
+  RemoteInstallAppsInput,
   RemoteInstallSideStoreInput
 } from '@ipaforge/rpc'
 
@@ -23,6 +25,9 @@ export type TeamCertificates = Resolved<'listCertificates'>
 export type InstallPlan = Resolved<'planInstall'>
 export type SideStoreVariant = RemoteInstallSideStoreInput['variant']
 export type InstallSideStoreInput = RemoteInstallSideStoreInput
+export type InstallAppsInput = RemoteInstallAppsInput
+/** An app to preload, as the Engine is told where it is: a picked file, a link, or a catalog app. */
+export type AppSource = IpaSource
 export type InstallRun = ReturnType<EngineClient['installSideStore']>
 export type SignInRun = ReturnType<EngineClient['signIn']>
 export type TwoFactorMethods =

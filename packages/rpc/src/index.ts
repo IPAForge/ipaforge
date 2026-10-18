@@ -40,6 +40,7 @@ export type {
   RpcServerOptions
 } from '@rpc/application/types.ts'
 export { DEFAULT_RPC_CONFIG, type RpcConfig } from '@rpc/domain/config.ts'
+export type { ChooseIpas } from '@rpc/domain/ports/choose-ipas.ts'
 export type { LogSource } from '@rpc/domain/ports/log-source.ts'
 export type { ResolveIpa } from '@rpc/domain/ports/resolve-ipa.ts'
 export type { Transport } from '@rpc/domain/ports/transport.ts'
@@ -60,6 +61,7 @@ export type {
   SubscriptionTopic
 } from '@rpc/domain/protocol/types.ts'
 export type {
+  ChosenIpa,
   EngineClient,
   EngineLogs,
   RemoteCommandOptions,

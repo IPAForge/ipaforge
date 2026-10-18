@@ -42,7 +42,8 @@ export const RecoveryBox = ({ run, failure, target }: RecoveryBoxProps) => {
   const { labelValues, nextAppIdSlot } = useRecoveryContext(run)
   const { code } = failure.error
   const { first, others } = recoveryFixes(
-    engine.classify(failure.error).recovery
+    engine.classify(failure.error).recovery,
+    run.kind
   )
   const label = stepLabel(run, failure.stepId)
   const diagnostics = useDiagnostics(run, failure, target)

@@ -6,5 +6,5 @@ import { useRun } from '@ui/hooks/use-run.ts'
 export const InstallPage = () => {
   const { run } = useRun()
 
-  return run ? <RunView run={run} /> : <InstallHome />
+  return run?.kind === 'sidestore' ? <RunView run={run} /> : <InstallHome />
 }

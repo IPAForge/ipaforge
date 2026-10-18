@@ -49,6 +49,58 @@ describe('installApps', () => {
     expect(h.signer.calls.bundles).toBe(0)
   })
 
+  it('gives SideStore from the catalog the pairing file, wherever it is in the list', async () => {
+    const h = createHarness()
+    const handle = h.engine.installApps(
+      install([file('one.ipa'), { kind: 'catalog', appId: 'sidestore' }]),
+      { onPrompt: scripted() }
+    )
+    const steps: string[] = []
+    handle.subscribe((event) => {
+      if (event.type === 'step-completed') steps.push(event.stepId)
+    })
+    const result = await handle.result
+
+    expect(result.status).toBe('completed')
+    expect(steps).toContain('pairing-1')
+    expect(h.devices.calls.placed).toEqual([
+      expect.arrayContaining([
+        expect.objectContaining({
+          bundleId: `com.SideStore.SideStore.${FREE_TEAM.id}`
+        })
+      ])
+    ])
+  })
+
+  it('places no pairing file when no app needs one', async () => {
+    const h = createHarness()
+    const handle = h.engine.installApps(install([file('one.ipa')]), {
+      onPrompt: scripted()
+    })
+    const skipped: string[] = []
+    handle.subscribe((event) => {
+      if (event.type === 'step-skipped' || event.type === 'step-completed')
+        skipped.push(event.stepId)
+    })
+    await handle.result
+
+    expect(skipped.some((id) => id.startsWith('pairing'))).toBe(false)
+  })
+
+  it('gives both SideStore and LiveContainer + SideStore the pairing file in one run', async () => {
+    const h = createHarness()
+    const result = await h.engine.installApps(
+      install([
+        { kind: 'catalog', appId: 'sidestore' },
+        { kind: 'catalog', appId: 'livecontainer-sidestore' }
+      ]),
+      { onPrompt: scripted() }
+    ).result
+
+    expect(result.status).toBe('completed')
+    expect(h.devices.calls.placed).toHaveLength(2)
+  })
+
   it('checks the App ID budget for every app before provisioning any of them', async () => {
     const h = createHarness({
       apple: { appIdPlan: { enough: false, available: 1 } }

@@ -29,6 +29,7 @@ Sideloading tools tend to fail in a few recurring ways. IPAForge is designed aro
 ## Features
 
 - **One-click SideStore.** Install SideStore, or LiveContainer with SideStore, from the Stable or Nightly channel. The pairing file and signing certificate are placed automatically.
+- **Preload apps.** Drop .ipa files, choose them, add a link, or pick from the catalog (LiveContainer, StikDebug, Feather…). Each app is checked before anything changes: its version, the App IDs it needs, whether the device can run it, and whether it updates one already installed. Then they install in one run.
 - **Clear install plan.** Before anything changes, IPAForge shows what the install uses: App IDs and how many are left this week, free-app slots on the device, whether the certificate is reused, and the team.
 - **Live progress.** Every step reports what it did, for example the release it found, whether a saved session was reused, or how many App IDs it registered.
 - **Recovery, not dead ends.** Failures lead to a screen with the fixes that apply, such as continuing from where the run stopped or switching Apple ID. Diagnostics can be copied, and an issue report opens pre-filled.
@@ -37,7 +38,7 @@ Sideloading tools tend to fail in a few recurring ways. IPAForge is designed aro
 - **Your language.** The language follows the system, and right-to-left languages are supported. Six languages today, every language iOS supports by 1.0.
 - **Themes.** Six colour palettes, each with light and dark variants.
 
-Coming next: guided onboarding, a preload picker for your own IPAs, deep links and a QR code for SideStore sources, management tools for certificates and App IDs, and Wi-Fi installs.
+Coming next: app sources and updates (browse trusted sources, update every installed app in one run), deep links and a QR code for SideStore sources, guided onboarding, management tools for certificates and App IDs, and Wi-Fi installs.
 
 ## Project status
 

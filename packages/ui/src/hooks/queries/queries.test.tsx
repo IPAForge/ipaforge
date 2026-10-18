@@ -39,7 +39,10 @@ describe('query hooks over the fake Engine', () => {
     ])
     expect((await settled(useCatalogApps)).data?.map((a) => a.id)).toEqual([
       'sidestore',
-      'livecontainer-sidestore'
+      'livecontainer-sidestore',
+      'livecontainer',
+      'stikdebug',
+      'feather'
     ])
   })
 

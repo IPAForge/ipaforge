@@ -89,6 +89,7 @@ export const createTestServices = ({
       ),
     clipboard,
     files,
+    droppedFilePath: (file) => file.name,
     links,
     appVersion: '0.0.0-test'
   }

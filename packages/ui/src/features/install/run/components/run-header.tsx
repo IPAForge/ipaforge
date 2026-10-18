@@ -18,14 +18,22 @@ export const RunHeader = ({ view, target }: RunHeaderProps) => {
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div className="flex min-w-0 flex-col gap-1">
           <h1 className="font-semibold text-2xl">
-            {t(runTitleKeys[view.status], { app: target.app })}
+            {t(runTitleKeys[target.kind][view.status], {
+              app: target.app,
+              count: target.count
+            })}
           </h1>
           <p className="text-muted text-sm">
-            {t('install.run.subtitle', {
-              channel: target.channel,
-              device: target.deviceName,
-              appleId: target.appleId
-            })}
+            {target.channel
+              ? t('install.run.subtitle', {
+                  channel: target.channel,
+                  device: target.deviceName,
+                  appleId: target.appleId
+                })
+              : t('install.run.subtitleApps', {
+                  device: target.deviceName,
+                  appleId: target.appleId
+                })}
           </p>
         </div>
         <Chip size="sm">{percent}</Chip>

@@ -17,6 +17,7 @@ export const useRun = (): UseRun => {
   return {
     run,
     start: store.start,
+    startApps: store.startApps,
     resume: store.resume,
     restart: store.restart,
     answer: store.answer,

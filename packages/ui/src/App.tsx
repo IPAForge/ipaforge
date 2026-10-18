@@ -15,6 +15,8 @@ import { ActiveRunContext } from '@ui/state/active-run/active-run-context.ts'
 import { createActiveRunStore } from '@ui/state/active-run/active-run-store.ts'
 import { LogViewContext } from '@ui/state/log-view/log-view-context.ts'
 import { createLogViewStore } from '@ui/state/log-view/log-view-store.ts'
+import { PreloadContext } from '@ui/state/preload/preload-context.ts'
+import { createPreloadStore } from '@ui/state/preload/preload-store.ts'
 import { SelectionContext } from '@ui/state/selection/selection-context.ts'
 import { createSelectionStore } from '@ui/state/selection/selection-store.ts'
 import { ThemeProvider } from '@ui/theme/provider/theme-provider.tsx'
@@ -31,7 +33,7 @@ export type AppProps = {
 /**
  * The whole UI: host services (the Engine client among them), the query cache for Engine queries kept in step
  * with the device feed, what the user picked in the top bar, the install run (kept here so it goes on in other
- * sections), the log viewer's filters, the language, the theme, then the router (whose root route is the shell). Touches no browser global
+ * sections), the preload list, the log viewer's filters, the language, the theme, then the router (whose root route is the shell). Touches no browser global
  * at import time, so any host can mount it. HeroUI v3 itself needs no provider.
  */
 export const App = ({ services, language, history }: AppProps) => {
@@ -54,6 +56,7 @@ export const App = ({ services, language, history }: AppProps) => {
   )
 
   const [logView] = useState(createLogViewStore)
+  const [preload] = useState(createPreloadStore)
 
   return (
     <UiServicesContext value={scoped}>
@@ -61,13 +64,15 @@ export const App = ({ services, language, history }: AppProps) => {
         <DeviceFeed />
         <SelectionContext value={selection}>
           <ActiveRunContext value={activeRun}>
-            <LogViewContext value={logView}>
-              <LanguageProvider setup={language}>
-                <ThemeProvider>
-                  <RouterProvider router={router} />
-                </ThemeProvider>
-              </LanguageProvider>
-            </LogViewContext>
+            <PreloadContext value={preload}>
+              <LogViewContext value={logView}>
+                <LanguageProvider setup={language}>
+                  <ThemeProvider>
+                    <RouterProvider router={router} />
+                  </ThemeProvider>
+                </LanguageProvider>
+              </LogViewContext>
+            </PreloadContext>
           </ActiveRunContext>
         </SelectionContext>
       </QueryClientProvider>

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { PageHeader } from '@ui/components/page-header.tsx'
+import { RunElsewhereNotice } from '@ui/components/run-elsewhere-notice.tsx'
 import { useAccountView } from '@ui/features/accounts/hooks/use-account-view.ts'
 import { useDeviceView } from '@ui/features/devices/hooks/use-device-view.ts'
 import { BlockedNotice } from '@ui/features/install/home/components/blocked-notice.tsx'
@@ -24,6 +25,7 @@ import {
 } from '@ui/hooks/use-selection.ts'
 import { variantAppId } from '@ui/services/engine/constants.ts'
 import type { Channel, SideStoreVariant } from '@ui/services/engine/types.ts'
+import { isRunActive } from '@ui/state/active-run/run-view.ts'
 
 /**
  * The Install page before a run: what to fix first (the device, the Apple ID), what to install and from which
@@ -31,7 +33,7 @@ import type { Channel, SideStoreVariant } from '@ui/services/engine/types.ts'
  */
 export const InstallHome = () => {
   const { t } = useTranslation()
-  const { start } = useRun()
+  const { run, start } = useRun()
   const [variant, setVariant] = useState<SideStoreVariant>('sidestore')
   const [picked, setPicked] = useState<Channel | undefined>(undefined)
   const inUse = useDeviceInUse()
@@ -70,6 +72,7 @@ export const InstallHome = () => {
         titleKey="install.title"
         descriptionKey="install.description"
       />
+      <RunElsewhereNotice page="sidestore" />
       <DeviceInUseNotice />
       <BlockedNotice />
       <SignInNeededNotice />
@@ -81,7 +84,11 @@ export const InstallHome = () => {
       />
       <ThisInstall plan={plan} isWaiting={!canPlan} app={app} />
       <div className="flex flex-wrap items-center gap-3">
-        <Button size="lg" isDisabled={!readiness.isReady} onPress={onInstall}>
+        <Button
+          size="lg"
+          isDisabled={!readiness.isReady || isRunActive(run?.view)}
+          onPress={onInstall}
+        >
           <Download aria-hidden="true" className="size-4" />
           {t('install.home.install', { app })}
         </Button>

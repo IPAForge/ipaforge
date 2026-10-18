@@ -15,7 +15,7 @@ IPAForge is an open-source desktop tool (Windows, macOS, Linux) for installing S
 
 ## Project Structure
 
-> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `packages/rpc`, `packages/ui` (palettes, top bar and sidebar shell, routes, i18n with six languages, Engine query hooks and the device feed, Apple ID sign-in and the Accounts page, the device picker and Devices page, the install home, the install run with its questions, step details and recovery box (`state/active-run`, `state/selection`), the log viewer (`features/logs`, `state/log-view`); runs in a browser on a fake Engine via its own Vite config), `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, the RPC transport and IPA resolver, maintainer probes, and the Electron shell: one hardened window rendering `@ipaforge/ui`, connected to the Engine in main over a MessagePort), `fixtures/signer`, `scripts/`, `.github/workflows/`.
+> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `packages/rpc`, `packages/ui` (palettes, top bar and sidebar shell, routes, i18n with six languages, Engine query hooks and the device feed, Apple ID sign-in and the Accounts page, the device picker and Devices page, the install home, the install run with its questions, step details and recovery box (`state/active-run`, `state/selection`), the log viewer (`features/logs`, `state/log-view`), the Preload page (`features/preload`, `state/preload`); runs in a browser on a fake Engine via its own Vite config), `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, the RPC transport and IPA resolver, maintainer probes, and the Electron shell: one hardened window rendering `@ipaforge/ui`, connected to the Engine in main over a MessagePort), `fixtures/signer`, `scripts/`, `.github/workflows/`.
 
 ```
 ipaforge/
@@ -58,7 +58,8 @@ ipaforge/
 | `apps/desktop/src/main/rpc/` | Electron `MessagePortMain` transport and the IPA resolver (file path, URL download) |
 | `apps/desktop/src/main/index.ts` | Electron main: app lifecycle, hardening, the Engine (`createDesktopEngine`, secrets via `main/secrets.ts`) and the window |
 | `apps/desktop/src/main/rpc/serve-engine.ts` | Serves the Engine to the window: a fresh `MessageChannelMain` per page load, `createRpcServer` on one end, the other posted to the page |
-| `apps/desktop/src/preload/forward-port.ts` | The preload's only job: forward the rpc port to the page (no `contextBridge` API) |
+| `apps/desktop/src/preload/forward-port.ts` | The preload's main job: forward the rpc port to the page (`expose-file-paths.ts` adds its one function, a dropped file's path) |
+| `apps/desktop/src/main/rpc/choose-ipas.ts` | The IPA file dialog behind "Choose files…" on the Preload page, in the main process |
 | `apps/desktop/src/renderer/engine-port.ts` | Renderer: receives the port and wraps it in a `Transport` for `createEngineClient` |
 | `apps/desktop/src/renderer/main.tsx` | Electron renderer: connects the `EngineClient`, then mounts `@ipaforge/ui` with the browser services and a hash history |
 | `apps/desktop/electron.vite.config.ts` | electron-vite builds for main, preload and renderer (`pnpm --filter @ipaforge/desktop dev` / `build`) |

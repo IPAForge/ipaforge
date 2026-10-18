@@ -69,6 +69,13 @@ export type EngineLogs = {
   write(record: LogRecord): void
 }
 
+/** An IPA the user picked in the host's file dialog: where it is (to name it as a file source), its name and size. */
+export type ChosenIpa = {
+  readonly path: string
+  readonly name: string
+  readonly size: number
+}
+
 export type EngineClient = Omit<EngineQueries, 'planInstall'> & {
   planInstall(input: RemotePlanInstallInput): Promise<InstallPlan>
   installSideStore(
@@ -98,6 +105,8 @@ export type EngineClient = Omit<EngineQueries, 'planInstall'> & {
   /** Runs locally: errors arrive as IPAForgeErrors with their code, data and cause chain intact. */
   classify(error: unknown): Diagnosis
   readonly logs: EngineLogs
+  /** Opens the host's file dialog for IPAs (none when cancelled, or when the host has no dialog). */
+  chooseIpas(): Promise<readonly ChosenIpa[]>
 }
 
 // What a value looks like after crossing the channel. Structured clone keeps data (Maps, Dates, bytes) but refuses
