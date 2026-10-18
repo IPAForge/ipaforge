@@ -52,7 +52,9 @@ export const RecoveryBox = ({ run, failure, target }: RecoveryBoxProps) => {
       role="alert"
       className="flex flex-col gap-3 rounded-xl bg-danger-soft px-4 py-3"
     >
-      <p className="font-semibold text-danger">{t(errorTitleKey(code))}</p>
+      <p className="font-semibold text-danger-soft-foreground">
+        {t(errorTitleKey(code))}
+      </p>
       <p className="text-muted text-sm">{t(errorBodyKey(code))}</p>
       {first ? (
         <FirstFix

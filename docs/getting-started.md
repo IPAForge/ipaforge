@@ -4,7 +4,7 @@
 
 ## Current status
 
-IPAForge is **pre-alpha**. Phases 0–5 are complete: foundation, signer, device layer, Apple account, developer services and the installer. Phase 6 (UI) is in progress: everything up to the log viewer is in; screenshot and accessibility tests are next. There is no installable build yet; see [Installing](installing.md) for how it will work.
+IPAForge is **pre-alpha**. Phases 0–6 are complete: foundation, signer, device layer, Apple account, developer services, the installer and the UI foundation. Next come onboarding (Phase 7) and the rest of the install and preload experience (Phase 8). There is no installable build yet; see [Installing](installing.md) for how it will work.
 
 | Area | State |
 |---|---|
@@ -16,7 +16,7 @@ IPAForge is **pre-alpha**. Phases 0–5 are complete: foundation, signer, device
 | Developer services (`apple.developer`) | Implemented (Phase 4): reads verified with a real account |
 | Installer (`@ipaforge/installer`) | Implemented (Phase 5): pipelines, catalog, install flows, IPA checks against the device, free-app limit, diagnostics and the Engine facade |
 | Engine RPC (`@ipaforge/rpc`) | Implemented (Phase 5): typed, validated Engine ⇄ UI messages; wired in Electron over a `MessageChannelMain` (`apps/desktop/src/main/rpc/serve-engine.ts`) |
-| UI (`@ipaforge/ui`) | In progress (Phase 6): palettes, the shell, routes, translations, accounts and sign-in, devices, the install run with its questions, step details and recovery screens, the log viewer |
+| UI (`@ipaforge/ui`) | Done (Phase 6): palettes, the shell, routes, translations, accounts and sign-in, devices, the install run with its questions, step details and recovery screens, the log viewer, screenshot and accessibility tests |
 | Desktop app (`apps/desktop`) | The Electron shell renders the UI connected to the real Engine; packaging comes in Phase 9 |
 
 ## What you'll need (once released)
@@ -42,9 +42,10 @@ pnpm check:boundaries   # architecture dependency rules
 pnpm check:locales      # UI translations: keys, ICU, placeholders, completion
 pnpm test               # Vitest across all packages
 pnpm test:coverage      # same, with v8 coverage
+pnpm test:browser       # UI screenshots, accessibility and keyboard in a real Chromium (see User Interface)
 ```
 
-CI runs the same commands on Ubuntu, Windows and macOS (`.github/workflows/ci.yml`), and builds the desktop app on all three.
+CI runs the same commands on Ubuntu, Windows and macOS (`.github/workflows/ci.yml`), and builds the desktop app on all three. The browser tests run on Linux, in Playwright's Docker image; `pnpm exec playwright install chromium` gets the browser for running them locally.
 
 ### Running the app
 

@@ -28,8 +28,8 @@ export const statusDotClasses = {
 /** A status said in words next to a picker's value, in its tone's colour. */
 export const statusTextClasses = {
   ready: 'text-success',
-  warning: 'text-warning',
-  danger: 'text-danger',
+  warning: 'text-warning-soft-foreground',
+  danger: 'text-danger-soft-foreground',
   off: 'text-muted'
 } as const satisfies Record<StatusTone, string>
 

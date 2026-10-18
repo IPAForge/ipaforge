@@ -86,3 +86,24 @@ jobs:
         run: pnpm vitest run packages/signer/src/application/sign-ipa.test.ts
         env:
           IPAFORGE_E2E: "1"
+
+  # Screenshot and accessibility tests in a real Chromium. They run in Playwright's image, the one the reference
+  # images are made in (packages/ui/scripts/update-screenshots.sh), so fonts and anti-aliasing match exactly.
+  ui-browser:
+    name: ui screenshots and accessibility
+    runs-on: ubuntu-latest
+    container:
+      image: mcr.microsoft.com/playwright:v1.63.0-noble
+      options: --user 1001 --ipc=host
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test:browser
+      # The actual and diff images of a screen that changed, to compare with the reference.
+      - if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: screenshot-diffs
+          path: packages/ui/.vitest/
+          if-no-files-found: ignore

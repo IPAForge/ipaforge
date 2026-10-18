@@ -1,7 +1,8 @@
 import type { Palette, PaletteId } from '@ui/theme/types.ts'
 
 // Each palette tints the neutrals with its own hue at low chroma and keeps the accent readable
-// against both the background (as a fill) and its foreground (as text on the fill).
+// against both the background (as a fill) and its foreground (as text on the fill). Muted text keeps at least
+// 4.5:1 against every surface (WCAG AA), checked by the accessibility tests.
 export const palettes = {
   graphite: {
     light: {
@@ -13,7 +14,7 @@ export const palettes = {
       surfaceSecondary: 'oklch(0.955 0.003 260)',
       surfaceTertiary: 'oklch(0.94 0.003 260)',
       overlay: 'oklch(1 0 0)',
-      muted: 'oklch(0.55 0.012 260)',
+      muted: 'oklch(0.5 0.012 260)',
       default: 'oklch(0.94 0.003 260)',
       defaultForeground: 'oklch(0.21 0.006 260)',
       border: 'oklch(0.9 0.004 260)',
@@ -45,7 +46,7 @@ export const palettes = {
       surfaceSecondary: 'oklch(0.955 0.01 240)',
       surfaceTertiary: 'oklch(0.935 0.012 240)',
       overlay: 'oklch(0.995 0.003 240)',
-      muted: 'oklch(0.54 0.03 240)',
+      muted: 'oklch(0.495 0.03 240)',
       default: 'oklch(0.935 0.012 240)',
       defaultForeground: 'oklch(0.22 0.03 245)',
       border: 'oklch(0.89 0.015 240)',
@@ -77,7 +78,7 @@ export const palettes = {
       surfaceSecondary: 'oklch(0.955 0.01 190)',
       surfaceTertiary: 'oklch(0.935 0.012 190)',
       overlay: 'oklch(0.995 0.003 190)',
-      muted: 'oklch(0.54 0.03 195)',
+      muted: 'oklch(0.495 0.03 195)',
       default: 'oklch(0.935 0.012 190)',
       defaultForeground: 'oklch(0.22 0.025 200)',
       border: 'oklch(0.89 0.015 190)',
@@ -109,7 +110,7 @@ export const palettes = {
       surfaceSecondary: 'oklch(0.956 0.012 60)',
       surfaceTertiary: 'oklch(0.937 0.015 60)',
       overlay: 'oklch(0.997 0.003 60)',
-      muted: 'oklch(0.55 0.035 45)',
+      muted: 'oklch(0.5 0.035 45)',
       default: 'oklch(0.937 0.015 60)',
       defaultForeground: 'oklch(0.23 0.03 40)',
       border: 'oklch(0.89 0.018 60)',
@@ -141,7 +142,7 @@ export const palettes = {
       surfaceSecondary: 'oklch(0.955 0.01 140)',
       surfaceTertiary: 'oklch(0.935 0.012 140)',
       overlay: 'oklch(0.995 0.003 140)',
-      muted: 'oklch(0.54 0.03 150)',
+      muted: 'oklch(0.495 0.03 150)',
       default: 'oklch(0.935 0.012 140)',
       defaultForeground: 'oklch(0.22 0.025 150)',
       border: 'oklch(0.89 0.015 140)',
@@ -173,7 +174,7 @@ export const palettes = {
       surfaceSecondary: 'oklch(0.956 0.011 350)',
       surfaceTertiary: 'oklch(0.937 0.014 350)',
       overlay: 'oklch(0.997 0.003 350)',
-      muted: 'oklch(0.55 0.035 355)',
+      muted: 'oklch(0.5 0.035 355)',
       default: 'oklch(0.937 0.014 350)',
       defaultForeground: 'oklch(0.23 0.03 0)',
       border: 'oklch(0.89 0.017 350)',

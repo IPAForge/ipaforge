@@ -17,7 +17,8 @@
     "test:coverage": "vitest run --coverage",
     "prepare": "git config core.hooksPath .githooks || true",
     "lint:fix": "biome check --write . && eslint --fix packages apps scripts tooling",
-    "verify": "pnpm lint && pnpm typecheck && pnpm check:boundaries && pnpm check:locales && pnpm test"
+    "verify": "pnpm lint && pnpm typecheck && pnpm check:boundaries && pnpm check:locales && pnpm test",
+    "test:browser": "pnpm --filter @ipaforge/ui test:browser"
   },
   "devDependencies": {
     "@biomejs/biome": "2.5.15",

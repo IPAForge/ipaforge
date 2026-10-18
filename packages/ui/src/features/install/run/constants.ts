@@ -25,8 +25,8 @@ export const runTitleKeys = {
 /** The tints of an outcome box: the box itself and its title. */
 export const outcomeToneClasses = {
   success: { box: 'bg-success-soft', title: 'text-success' },
-  warning: { box: 'bg-warning-soft', title: 'text-warning' },
-  danger: { box: 'bg-danger-soft', title: 'text-danger' }
+  warning: { box: 'bg-warning-soft', title: 'text-warning-soft-foreground' },
+  danger: { box: 'bg-danger-soft', title: 'text-danger-soft-foreground' }
 } as const
 
 export const stepIcons = {
@@ -35,10 +35,10 @@ export const stepIcons = {
     icon: LoaderCircle,
     className: 'text-accent motion-safe:animate-spin'
   },
-  waiting: { icon: CircleAlert, className: 'text-warning' },
+  waiting: { icon: CircleAlert, className: 'text-warning-soft-foreground' },
   done: { icon: CircleCheck, className: 'text-success' },
   skipped: { icon: CircleDashed, className: 'text-muted' },
-  failed: { icon: CircleX, className: 'text-danger' }
+  failed: { icon: CircleX, className: 'text-danger-soft-foreground' }
 } as const satisfies Record<StepState, { icon: LucideIcon; className: string }>
 
 export const stepRowClasses = {
@@ -47,7 +47,7 @@ export const stepRowClasses = {
   waiting: 'bg-surface-secondary font-medium',
   done: '',
   skipped: 'text-muted',
-  failed: 'font-medium text-danger'
+  failed: 'font-medium text-danger-soft-foreground'
 } as const satisfies Record<StepState, string>
 
 /** The state said in words where the icon alone would not say it. */

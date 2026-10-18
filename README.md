@@ -50,7 +50,7 @@ Coming next: guided onboarding, a preload picker for your own IPAs, deep links a
 | Release catalog | `@ipaforge/catalog` | ✅ Complete: GitHub release resolution, mirrors, verified downloads, cache |
 | Install engine | `@ipaforge/installer` | ✅ Complete: resumable pipelines, install flows, free-app limit, error catalogue |
 | Engine ⇄ UI protocol | `@ipaforge/rpc` | ✅ Complete: typed, validated messages over Electron IPC |
-| User interface | `@ipaforge/ui` | 🚧 In progress: accounts, devices, the install run with its questions, step details, recovery and the log viewer are built; screenshot and accessibility tests are next |
+| User interface | `@ipaforge/ui` | ✅ Foundation complete: accounts, devices, the install run with its questions, step details, recovery and the log viewer, in six languages, checked by screenshot and WCAG 2.2 AA tests; onboarding and preloading come next |
 | Desktop app | `apps/desktop` | 🚧 In progress: the hardened Electron shell runs against the real engine; packaging and auto-update are planned |
 
 Sideload signing has been verified against real devices and Apple accounts. Apple's own `codesign --verify --deep --strict` accepts the output, including a full SideStore build signed in about half a second. Details: [Code Signing](docs/signing.md).

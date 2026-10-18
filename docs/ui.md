@@ -235,10 +235,27 @@ English is part of the main bundle: it is the fallback and the source of the key
 
 Tests call `await renderApp(path, { languages, preferences, load })`, which runs `prepareLanguage` like a host; `load` replaces the bundle loader to delay or fail a language.
 
+## Screenshot and accessibility tests
+
+The `*.browser.test.tsx` files run the whole app in a real Chromium (Vitest's browser mode with Playwright, `vitest.browser.config.ts`), separately from the happy-dom tests:
+
+```sh
+pnpm test:browser                                # the checks; compares with the Linux reference images on Linux
+pnpm --filter @ipaforge/ui test:browser:update   # rebuilds the reference images in Docker (any system)
+```
+
+- **Screenshots** (`src/screens.browser.test.tsx`): the Install page, a failed run with its recovery box, Logs and Settings, in English, German (long words), Arabic (right to left), Japanese and the pseudo-locale, plus every screen in dark mode. Each is compared with its reference image in `src/__screenshots__/`; a changed screen fails with the new image and a diff (CI uploads them as `screenshot-diffs`). The clock is fixed and animations are off, so images only change when the UI does.
+- **No clipped text:** in every language, an element with translated text that overflows its box fails the test. The pseudo-locale wraps every message in brackets, so a clipped bracket is a label too short for a longer language. User data (names, Apple IDs) may truncate by design.
+- **Accessibility:** axe checks every screen against WCAG 2.2 AA, in light and dark and right to left (contrast, names, roles, lists, target sizes).
+- **Keyboard** (`src/keyboard.browser.test.tsx`): the skip link shows on the first Tab and moves focus to the page, Tab walks the top bar and the sidebar in order with a visible focus ring, a picker opens with Enter and closes with Escape back on its button, and Ctrl+L opens Logs.
+
+**Reference images are Linux only.** Fonts and anti-aliasing differ on every system, so the images are made in Playwright's Docker image (`mcr.microsoft.com/playwright:v1.63.0-noble`), the one CI runs these tests in. On macOS or Windows `pnpm test:browser` writes and compares images for that system, which git ignores. After a deliberate UI change, run `test:browser:update`, look at the changed images, and commit them with the change.
+
 ## Styling rules
 
 - **No CSS files.** The only stylesheet is `src/styles.css`, which imports Tailwind and then HeroUI. Everything else uses HeroUI components and Tailwind utilities.
 - **No `style={{}}` for theming.** Colours come from the palette variables through utilities such as `bg-accent-soft`, `text-muted` and `border-border`.
+- **Readable colours.** Text in red or amber uses `text-danger-soft-foreground` / `text-warning-soft-foreground` (the fills `bg-danger`, `bg-warning` are for shapes, not text); every palette keeps `muted` at 4.5:1 or more against its surfaces. The accessibility tests check both.
 - **Logical utilities only:** `ms-`/`me-`, `ps-`/`pe-`, `start-`/`end-`, `border-s`/`border-e`, never `ml-`/`left-`. The layout then mirrors in right-to-left languages without changes.
 - **No string literals in JSX.** Text and user-visible props (`aria-label`, `aria-description`, `aria-placeholder`, `aria-roledescription`, `aria-valuetext`, `title`, `placeholder`, `label`, `alt`) come from `t()`. The Biome plugin `tooling/biome/no-jsx-literal-text.grit` fails lint on JSX text with a letter in it and on string literals in those props, in `src/**/*.tsx`.
 
