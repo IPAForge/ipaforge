@@ -21,3 +21,15 @@ export type SummaryItem = {
   readonly labelKey: TranslationKey
   readonly value: string
 }
+
+/** The lines of a diagnostics text, already worded. */
+export type DiagnosticsFacts = {
+  readonly appVersion: string
+  readonly code: string
+  /** "Install on the device (install-0)". */
+  readonly step: string
+  /** "SideStore, Stable channel (sidestore, stable)". */
+  readonly install: string
+  /** "iPhone 17 (iPhone18,3), iOS 26.6.1". */
+  readonly device: string
+}

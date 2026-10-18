@@ -1,6 +1,6 @@
+import { RecoveryBox } from '@ui/features/install/recovery/components/recovery-box.tsx'
 import { Cancelled } from '@ui/features/install/run/components/cancelled.tsx'
 import { Done } from '@ui/features/install/run/components/done.tsx'
-import { Failed } from '@ui/features/install/run/components/failed.tsx'
 import { RunningActions } from '@ui/features/install/run/components/running-actions.tsx'
 import type { OutcomeProps } from '@ui/features/install/run/types.ts'
 
@@ -10,6 +10,6 @@ export const RunOutcome = ({ run, target }: OutcomeProps) => {
   if (status === 'completed') return <Done target={target} />
   if (status === 'cancelled') return <Cancelled run={run} />
   if (status === 'failed' && failure)
-    return <Failed run={run} failure={failure} target={target} />
+    return <RecoveryBox run={run} failure={failure} target={target} />
   return <RunningActions run={run} />
 }

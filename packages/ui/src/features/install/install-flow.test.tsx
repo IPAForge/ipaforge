@@ -43,7 +43,7 @@ describe('the install home', () => {
     await renderApp('/install')
     expect(
       await screen.findByText(
-        t('install.plan.appIdsValue', { uses: 2, left: 8 })
+        t('install.plan.appIdsValue', { created: 2, reused: 0, left: 8 })
       )
     ).toBeDefined()
     expect(
@@ -104,11 +104,14 @@ describe('installing SideStore', () => {
     expect(await completedTitle()).toBeDefined()
   })
 
-  it('says what failed, copies diagnostics without secrets, and tries again from the checkpoint', async () => {
+  it('says what failed and its first fix, copies diagnostics without secrets, and continues from the checkpoint', async () => {
     const { user, clipboard } = await startInstall('device-locked')
 
+    const box = await screen.findByRole('alert')
+    expect(within(box).getByText(t('errors.device.locked.title'))).toBeDefined()
+    expect(within(box).getByText(t('recovery.unlock-device'))).toBeDefined()
     expect(
-      await screen.findByText(t('errors.device.locked.title'))
+      within(box).getByText(t('recovery.fix.unlockDevice.how'))
     ).toBeDefined()
     await user.click(
       screen.getByRole('button', { name: t('install.failed.copy') })
@@ -116,13 +119,98 @@ describe('installing SideStore', () => {
     await waitFor(() => expect(clipboard.written).toHaveLength(1))
     const [diagnostics] = clipboard.written
     expect(diagnostics).toContain('code: device.locked')
-    expect(diagnostics).toContain('device: iPhone17,1, iOS 26.1')
+    expect(diagnostics).toContain(
+      'device: iPhone 16 Pro (iPhone17,1), iOS 26.1'
+    )
+    expect(diagnostics).toContain('step: Install on the device (install-0)')
+    expect(diagnostics).toContain(
+      'install: SideStore, Stable (sidestore, stable)'
+    )
     expect(diagnostics).not.toContain('example.com')
 
+    // The first fix continues the run already, so Try again isn't offered twice.
+    const tryAgain = within(box).getAllByRole('button', {
+      name: t('recovery.retry')
+    })
+    expect(tryAgain).toHaveLength(1)
+    await user.click(tryAgain[0] as HTMLElement)
+    expect(await completedTitle()).toBeDefined()
+  })
+
+  it('goes back to the Install page after a failure, to choose another app', async () => {
+    const { user } = await startInstall('device-locked')
+    const box = await screen.findByRole('alert')
+    expect(box.textContent).not.toContain('device.locked')
     await user.click(
-      screen.getByRole('button', { name: t('install.failed.tryAgain') })
+      within(box).getByRole('button', { name: t('install.run.backToInstall') })
+    )
+
+    await user.click(
+      await screen.findByRole('radio', {
+        name: (name) =>
+          name.startsWith(t('install.variant.livecontainer.title'))
+      })
+    )
+    expect(
+      await screen.findByRole('button', {
+        name: t('install.home.install', {
+          app: t('install.variant.livecontainer.title')
+        })
+      })
+    ).toBeDefined()
+  })
+
+  it('offers another Apple ID after a ban, without the blocked one, and starts again with it', async () => {
+    const { user, services } = await startInstall('profile-banned')
+    const box = await screen.findByRole('alert')
+    await user.click(
+      within(box).getByRole('button', {
+        name: t('recovery.fix.switchAccount.button')
+      })
+    )
+    const dialog = await findDialog('recovery.switchAccount.title')
+    const current = within(dialog).getByRole('button', {
+      name: /work@example\.com/
+    })
+    expect(current.hasAttribute('disabled')).toBe(true)
+    await user.click(
+      within(dialog).getByRole('button', { name: /studio@example\.com/ })
+    )
+
+    expect(services.preferences.read('selection.account')).toBe(
+      'studio@example.com'
+    )
+    // studio@ has two teams: the new run asks which one signs.
+    expect(await findDialog('prompts.team.title')).toBeDefined()
+  })
+
+  it('starts again on the other channel when the app needs a newer iOS', async () => {
+    const { user } = await startInstall('unsupported-ios')
+    const box = await screen.findByRole('alert')
+    await user.click(
+      within(box).getByRole('button', {
+        name: t('recovery.fix.chooseAnotherChannel.button', {
+          channel: t('install.channel.nightly')
+        })
+      })
     )
     expect(await completedTitle()).toBeDefined()
+  })
+
+  it('says when the next App ID frees, from the install’s plan', async () => {
+    await startInstall('app-id-quota')
+    const box = await screen.findByRole('alert')
+    expect(box.textContent).toContain(t('recovery.wait-for-app-id-slot'))
+    expect(box.textContent).toMatch(/Oct 19, 2026|19 Oct 2026/)
+  })
+
+  it('shows the free apps on the device in the run’s summary', async () => {
+    await startInstall()
+    expect(
+      await screen.findByText(
+        t('install.plan.freeAppsValue', { used: 1, limit: 3 })
+      )
+    ).toBeDefined()
   })
 
   it('asks which certificate to revoke, warns about SideStore’s, and revokes only after confirming', async () => {

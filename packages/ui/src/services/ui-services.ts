@@ -4,6 +4,7 @@ import type { Logger } from '@loadstar/kernel'
 import type { EngineClient } from '@loadstar/rpc'
 import type { PreferencesStore } from '@ui/services/preferences/preferences-store.ts'
 import type { ClipboardWriter } from '@ui/services/system/clipboard.ts'
+import type { LinkOpener } from '@ui/services/system/link-opener.ts'
 import type { LocaleSource } from '@ui/services/system/locale-source.ts'
 import type { ColorSchemeSource } from '@ui/services/system/types.ts'
 
@@ -17,6 +18,8 @@ export type UiServices = {
   /** The Engine: over the Electron MessagePort in the desktop app, a fake one over the memory transport elsewhere. */
   readonly engine: EngineClient
   readonly clipboard: ClipboardWriter
+  /** Opens a web page in the user's browser. */
+  readonly links: LinkOpener
   /** Shown in copied diagnostics. */
   readonly appVersion: string
 }

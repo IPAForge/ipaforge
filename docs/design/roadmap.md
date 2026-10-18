@@ -62,6 +62,20 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
   - recovery: a dedicated error for an app that doesn't support the device (installation_proxy `DeviceNotSupportedByThinning`), with its own screen instead of the generic install failure
   - logs: a keyboard shortcut to open them (Ctrl+L, ⌘L on macOS)
   - to check: the sign-in dialog with password managers filling the form (e.g. Bitwarden)
+  - progress (one PR per step):
+    - [x] 6a: UI package, palettes and the sidebar shell (#28), with a minimal Electron shell (#29, #34)
+    - [x] 6b: translations, on-demand languages, right-to-left and locale checks (#36); code style (#37)
+    - [x] 6c-1: the UI connected to the Engine, with live device updates (#39)
+    - [x] 6c-2: adding an Apple ID from the top bar (#40)
+    - [x] 6c-3: accounts and teams (#42); Mac-backed anisette servers first (#43)
+    - [x] 6c-4: device picker and Devices page (#45)
+    - [x] 6c-5: install home and install run (#46)
+    - [x] 6c-6: the run's questions (#53)
+    - [x] quality: SonarJS lint (#41, #44); file structure rules across the project (#48–#52)
+    - [ ] 6c-7: recovery: a fix per error, Report the problem as a pre-filled GitHub issue, Apple pages opened in the browser (in review)
+    - [ ] 6c-8: step details: what each step did (release version, session reused, team, certificate, App IDs, free apps)
+    - [ ] 6d: log buffer, log stream and log viewer
+    - [ ] 6e: screenshot and accessibility tests per locale
 - [ ] **7. Onboarding**: a first-run guided wizard with platform checks (usbmuxd / Apple Mobile Device driver, with copyable fixes per OS), network preflight (Apple, anisette, clock skew), connecting and trusting the device, Developer Mode, Apple ID sign-in with 2FA, team choice, and choosing what to install. It can be resumed and re-run from settings
 - [ ] **8. Install and preload experience**: one-click SideStore (stable/nightly), a preload picker (local IPAs, URLs, catalog apps), source deep links and a QR code for SideStore, a live pipeline view, dedicated recovery screens for every `ErrorCode` with "copy diagnostics", an on-device checklist per iOS version, a "Repair SideStore" wizard, and one-click switching to another Apple ID when one is banned
   - to check with a real LiveContainer build: its LiveProcess extension gets the main app's `keychain-access-groups`

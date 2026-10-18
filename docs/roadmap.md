@@ -12,7 +12,7 @@ The detailed roadmap, with each phase's scope, is [design/roadmap.md](design/roa
 | 3 | Apple account ✓ | Anisette with fallback, login, 2FA, saved credentials |
 | 4 | Developer services ✓ | Teams, certificates, app IDs, groups, profiles |
 | 5 | Installer engine + catalog ✓ | Pipelines, flows, release catalog, error catalog |
-| 6 | UI foundation | HeroUI + Tailwind shell, colour palettes, i18n |
+| 6 | UI foundation (in progress: 6a–6c-6 done) | HeroUI + Tailwind shell, colour palettes, i18n, Engine connection, accounts, devices, install run and its questions; next: recovery, logs, screenshot tests |
 | 7 | Onboarding | First-run guided wizard |
 | 8 | Install & preload UX | One-click SideStore, preload picker, recovery screens |
 | 9 | Desktop app | Electron packages for Windows, macOS, Linux; auto-update |

@@ -4,7 +4,7 @@
 
 ## Current status
 
-Loadstar is **pre-alpha**. Phases 0–4 are complete: foundation, signer, device layer, Apple account and developer services. There is no installable build yet; see [Installing](installing.md) for how it will work.
+Loadstar is **pre-alpha**. Phases 0–5 are complete: foundation, signer, device layer, Apple account, developer services and the installer. Phase 6 (UI) is in progress. There is no installable build yet; see [Installing](installing.md) for how it will work.
 
 | Area | State |
 |---|---|
@@ -15,9 +15,9 @@ Loadstar is **pre-alpha**. Phases 0–4 are complete: foundation, signer, device
 | Apple account (`@loadstar/apple`) | Implemented (Phase 3): sign-in, device 2FA and developer token verified with a real account |
 | Developer services (`apple.developer`) | Implemented (Phase 4): reads verified with a real account |
 | Installer (`@loadstar/installer`) | Implemented (Phase 5): pipelines, catalog, install flows, IPA checks against the device, free-app limit, diagnostics and the Engine facade |
-| Engine RPC (`@loadstar/rpc`) | Implemented (Phase 5): typed, validated Engine ⇄ UI messages; the Electron wiring comes with the desktop app |
-| UI (`@loadstar/ui`) | In progress (Phase 6): palettes, the shell and routes |
-| Desktop app (`apps/desktop`) | A minimal Electron shell renders the UI; Engine wiring and packaging come later |
+| Engine RPC (`@loadstar/rpc`) | Implemented (Phase 5): typed, validated Engine ⇄ UI messages; wired in Electron over a `MessageChannelMain` (`apps/desktop/src/main/rpc/serve-engine.ts`) |
+| UI (`@loadstar/ui`) | In progress (Phase 6): palettes, the shell, routes, translations, accounts and sign-in, devices, the install run and its questions |
+| Desktop app (`apps/desktop`) | The Electron shell renders the UI connected to the real Engine; packaging comes in Phase 9 |
 
 ## What you'll need (once released)
 
@@ -36,7 +36,7 @@ Prerequisites: **Node 22+** (`.nvmrc`) and **pnpm**. Any pnpm 10+ switches autom
 
 ```bash
 pnpm install
-pnpm lint               # Biome: formatting + lint, including the platform-free import ban
+pnpm lint               # Biome (formatting + lint, including the platform-free import ban) + ESLint (blank lines, SonarJS, file structure)
 pnpm typecheck          # tsc for every package and the scripts
 pnpm check:boundaries   # architecture dependency rules
 pnpm check:locales      # UI translations: keys, ICU, placeholders, completion
@@ -55,7 +55,7 @@ pnpm --filter @loadstar/desktop preview  # build, then launch the built app
 pnpm --filter @loadstar/ui dev           # the UI alone in a browser, http://localhost:5180
 ```
 
-Electron downloads its binary (about 100 MB) the first time `dev` or `preview` runs, not during `pnpm install`; `pnpm --filter @loadstar/desktop ensure-electron` does the download on its own. The window is not wired to the Engine yet, so the device and Apple ID pickers are placeholders. See [The User Interface](ui.md).
+Electron downloads its binary (about 100 MB) the first time `dev` or `preview` runs, not during `pnpm install`; `pnpm --filter @loadstar/desktop ensure-electron` does the download on its own. See [The User Interface](ui.md).
 
 Opt-in test suites:
 

@@ -91,7 +91,7 @@
       "checking": "{app} wird geladen und bei Apple geprüft… Der Download bleibt erhalten, die Installation nutzt ihn wieder.",
       "unavailable": "Konnte nicht bei Apple prüfen. Du kannst trotzdem installieren: Jeder Schritt prüft erneut.",
       "appIds": "App-IDs",
-      "appIdsValue": "nutzt {uses} · {left, plural, one {# übrig diese Woche} other {# übrig diese Woche}}",
+      "appIdsValue": "{created, plural, =0 {Alle {reused} schon registriert} other {{reused, plural, =0 {{created} neu} other {{created} neu, {reused} wiederverwendet}}}} · {left, plural, one {# übrig diese Woche} other {# übrig diese Woche}}",
       "nextSlot": "Die nächste wird am {date} frei",
       "freeApps": "Kostenlose Apps auf dem Gerät",
       "freeAppsValue": "{used} von {limit} belegt",
@@ -142,7 +142,8 @@
       "unsupportedPrompt": {
         "title": "Dieser Schritt braucht eine Antwort",
         "body": "Loadstar braucht eine Antwort auf eine Frage, die diese Version nicht anzeigen kann. Brich die Installation ab und aktualisiere Loadstar."
-      }
+      },
+      "backToInstall": "Zurück zur Installation"
     },
     "summary": {
       "title": "Diese Installation",
@@ -152,7 +153,8 @@
       "deviceValue": "{name} · iOS {ios}",
       "account": "Apple-ID",
       "appIds": "App-IDs",
-      "appIdsValue": "{count, plural, one {# übrig diese Woche} other {# übrig diese Woche}}"
+      "appIdsValue": "{count, plural, one {# übrig diese Woche} other {# übrig diese Woche}}",
+      "freeApps": "Kostenlose Apps"
     },
     "done": {
       "title": "{app} ist auf {device}.",
@@ -163,11 +165,9 @@
     "cancelled": {
       "title": "Angehalten bei „{step}“.",
       "body": "Bereits Erledigtes wird beim Fortsetzen nicht wiederholt.",
-      "resume": "Fortsetzen",
-      "close": "Schließen"
+      "resume": "Fortsetzen"
     },
     "failed": {
-      "tryAgain": "Erneut versuchen",
       "continues": "Erledigte Schritte bleiben: Ein neuer Versuch macht bei „{step}“ weiter.",
       "copy": "Diagnose kopieren",
       "copied": "Kopiert",
@@ -580,7 +580,90 @@
     "choose-another-channel": "Anderen Kanal wählen",
     "import-ipa": "IPA importieren",
     "update-loadstar": "Loadstar aktualisieren",
-    "report-issue": "Problem melden"
+    "report-issue": "Problem melden",
+    "or": "Oder",
+    "switchAccount": {
+      "title": "Eine andere Apple-ID verwenden",
+      "body": "Die Installation beginnt neu mit der gewählten Apple-ID."
+    },
+    "fix": {
+      "copy": "Kopieren",
+      "copied": "Kopiert",
+      "done": "Erledigt, erneut versuchen",
+      "waitAndRetry": {
+        "how": "Apple ist ausgelastet oder begrenzt Anfragen. Warte eine Minute und versuche es dann erneut."
+      },
+      "checkNetwork": {
+        "how": "Stelle sicher, dass dieser Computer online ist, und versuche es dann erneut."
+      },
+      "checkClock": {
+        "step1": "Öffne die Datums- und Zeiteinstellungen dieses Computers",
+        "step2": "Aktiviere das automatische Einstellen von Datum und Uhrzeit"
+      },
+      "reEnterPassword": {
+        "how": "Ein neuer Versuch fragt nach dem Passwort; prüfe es vor der Eingabe."
+      },
+      "reEnterCode": {
+        "how": "Ein neuer Versuch fragt nach einem neuen Bestätigungscode."
+      },
+      "useTrustedDevice": {
+        "how": "Wähle bei der Code-Abfrage ein vertrauenswürdiges Gerät statt einer SMS."
+      },
+      "signInAgain": {
+        "how": "Ein neuer Versuch fragt nach dem Passwort, um dich erneut anzumelden."
+      },
+      "signInOnAppleDevice": {
+        "how": "Melde dich mit dieser Apple-ID auf einem iPhone, iPad oder Mac oder auf Apples Website an und folge den Hinweisen:"
+      },
+      "switchAccount": {
+        "how": "Wähle eine deiner gespeicherten Apple-IDs. Die Installation beginnt damit neu.",
+        "button": "Apple-ID wählen…"
+      },
+      "verifyEmail": {
+        "how": "Bestätige die E-Mail-Adresse dieser Apple-ID auf Apples Website:"
+      },
+      "acceptAgreement": {
+        "how": "Melde dich auf Apples Entwickler-Website an und akzeptiere die angezeigte Vereinbarung:"
+      },
+      "revokeCertificate": {
+        "how": "Ein neuer Versuch fragt, welches Zertifikat widerrufen werden soll."
+      },
+      "waitForAppIdSlot": {
+        "how": "Apple gibt jede App-ID 7 Tage nach ihrer Erstellung frei. Installiere erneut, sobald eine frei ist, oder verwende eine andere Apple-ID.",
+        "next": "Die nächste App-ID wird am {date} frei."
+      },
+      "chooseAppToRemove": {
+        "how": "Ein neuer Versuch fragt, welche App für Platz entfernt werden soll."
+      },
+      "unlockDevice": {
+        "how": "Entsperre das Gerät und lass es entsperrt, bis die Installation fertig ist."
+      },
+      "enableDeveloperMode": {
+        "button": "Ist an, erneut versuchen"
+      },
+      "trustComputer": {
+        "how": "Entsperre das Gerät. Wenn es fragt, ob es diesem Computer vertrauen soll, tippe auf „Vertrauen“ und gib den Code ein.",
+        "button": "Auf dem Gerät erneut fragen"
+      },
+      "reconnectDevice": {
+        "how": "Trenne das Gerät, schließe es wieder an und entsperre es."
+      },
+      "setPasscode": {
+        "how": "Lege auf dem Gerät unter Einstellungen › Face ID & Code einen Code fest und versuche es dann erneut."
+      },
+      "installDeviceSupport": {
+        "how": "Installiere unter Windows Apple-Geräte (oder iTunes) aus dem Microsoft Store und starte Loadstar neu."
+      },
+      "reinstallApp": {
+        "how": "Lösche die App vom Gerät und versuche es dann erneut."
+      },
+      "chooseAnotherChannel": {
+        "how": "Der Build des anderen Kanals funktioniert vielleicht auf diesem Gerät.",
+        "button": "Aus {channel} installieren"
+      },
+      "open": "Öffnen"
+    },
+    "reportHint": "Öffnet ein neues GitHub-Issue mit der Diagnose. Nichts wird gesendet, bevor du es abschickst."
   },
   "devices": {
     "engine": {

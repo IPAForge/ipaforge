@@ -1,18 +1,21 @@
-import type { RunTarget } from '@ui/features/install/run/types.ts'
-import type { ActiveRun, RunFailure } from '@ui/state/active-run/types.ts'
+import type { DiagnosticsFacts } from '@ui/features/install/run/types.ts'
 
-/** What failed and on what, never a secret; for a bug report, so it stays in English. */
-export const diagnosticsText = (
-  appVersion: string,
-  run: ActiveRun,
-  failure: RunFailure,
-  target: RunTarget
-) =>
+/**
+ * What failed and on what, for a bug report: readable names with the identifiers maintainers search for, never a
+ * secret (no Apple ID, device name or serial). In English, since it is read by maintainers.
+ */
+export const diagnosticsText = ({
+  appVersion,
+  code,
+  step,
+  install,
+  device
+}: DiagnosticsFacts): string =>
   [
     'Loadstar diagnostics',
     `version: ${appVersion}`,
-    `code: ${failure.error.code}`,
-    `step: ${failure.stepId || 'unknown'}`,
-    `install: ${run.input.variant} (${run.input.channel ?? 'stable'})`,
-    `device: ${target.check?.info.productType ?? 'unknown'}, iOS ${target.check?.info.productVersion ?? 'unknown'}`
+    `code: ${code}`,
+    `step: ${step}`,
+    `install: ${install}`,
+    `device: ${device}`
   ].join('\n')

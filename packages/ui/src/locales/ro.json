@@ -91,7 +91,7 @@
       "checking": "Se descarcă {app} și se verifică la Apple… Descărcarea se păstrează, iar instalarea o refolosește.",
       "unavailable": "Nu s-a putut verifica la Apple. Poți instala oricum: fiecare pas verifică din nou.",
       "appIds": "ID-uri de aplicație",
-      "appIdsValue": "folosește {uses} · {left, plural, one {# rămas săptămâna asta} few {# rămase săptămâna asta} other {# rămase săptămâna asta}}",
+      "appIdsValue": "{created, plural, =0 {Toate cele {reused} sunt deja înregistrate} other {{reused, plural, =0 {{created} noi} other {{created} noi, {reused} refolosite}}}} · {left, plural, one {# rămas săptămâna asta} few {# rămase săptămâna asta} other {# rămase săptămâna asta}}",
       "nextSlot": "Următorul se eliberează pe {date}",
       "freeApps": "Aplicații gratuite pe dispozitiv",
       "freeAppsValue": "{used} din {limit} folosite",
@@ -142,7 +142,8 @@
       "unsupportedPrompt": {
         "title": "Acest pas are nevoie de un răspuns",
         "body": "Loadstar are nevoie de un răspuns la o întrebare pe care această versiune nu o poate afișa. Anulează instalarea și actualizează Loadstar."
-      }
+      },
+      "backToInstall": "Înapoi la Instalare"
     },
     "summary": {
       "title": "Această instalare",
@@ -152,7 +153,8 @@
       "deviceValue": "{name} · iOS {ios}",
       "account": "ID Apple",
       "appIds": "ID-uri de aplicație",
-      "appIdsValue": "{count, plural, one {# rămas săptămâna asta} few {# rămase săptămâna asta} other {# rămase săptămâna asta}}"
+      "appIdsValue": "{count, plural, one {# rămas săptămâna asta} few {# rămase săptămâna asta} other {# rămase săptămâna asta}}",
+      "freeApps": "Aplicații gratuite"
     },
     "done": {
       "title": "{app} este pe {device}.",
@@ -163,11 +165,9 @@
     "cancelled": {
       "title": "Oprit la „{step}”.",
       "body": "Nimic din ce s-a făcut deja nu se repetă când reiei.",
-      "resume": "Reia",
-      "close": "Închide"
+      "resume": "Reia"
     },
     "failed": {
-      "tryAgain": "Încearcă din nou",
       "continues": "Pașii terminați se păstrează: o nouă încercare continuă de la „{step}”.",
       "copy": "Copiază diagnosticul",
       "copied": "Copiat",
@@ -580,7 +580,90 @@
     "choose-another-channel": "Alege alt canal",
     "import-ipa": "Importă un IPA",
     "update-loadstar": "Actualizează Loadstar",
-    "report-issue": "Raportează problema"
+    "report-issue": "Raportează problema",
+    "or": "Sau",
+    "switchAccount": {
+      "title": "Folosește alt ID Apple",
+      "body": "Instalarea începe din nou cu ID-ul Apple ales."
+    },
+    "fix": {
+      "copy": "Copiază",
+      "copied": "Copiat",
+      "done": "Gata, încearcă din nou",
+      "waitAndRetry": {
+        "how": "Apple este ocupat sau limitează cererile. Așteaptă un minut, apoi încearcă din nou."
+      },
+      "checkNetwork": {
+        "how": "Asigură-te că acest computer este online, apoi încearcă din nou."
+      },
+      "checkClock": {
+        "step1": "Deschide setările de dată și oră ale acestui computer",
+        "step2": "Activează setarea automată a datei și orei"
+      },
+      "reEnterPassword": {
+        "how": "O nouă încercare cere parola; verific-o înainte s-o introduci."
+      },
+      "reEnterCode": {
+        "how": "O nouă încercare cere un cod de verificare nou."
+      },
+      "useTrustedDevice": {
+        "how": "Când se cere codul, alege un dispozitiv de încredere în loc de mesaj text."
+      },
+      "signInAgain": {
+        "how": "O nouă încercare cere parola pentru a te autentifica din nou."
+      },
+      "signInOnAppleDevice": {
+        "how": "Autentifică-te cu acest ID Apple pe un iPhone, iPad sau Mac, ori pe site-ul Apple, și urmează ce ți se cere:"
+      },
+      "switchAccount": {
+        "how": "Alege unul dintre ID-urile Apple salvate. Instalarea începe din nou cu el.",
+        "button": "Alege un ID Apple…"
+      },
+      "verifyEmail": {
+        "how": "Confirmă adresa de e-mail a acestui ID Apple pe site-ul Apple:"
+      },
+      "acceptAgreement": {
+        "how": "Autentifică-te pe site-ul pentru dezvoltatori Apple și acceptă acordul afișat:"
+      },
+      "revokeCertificate": {
+        "how": "O nouă încercare întreabă ce certificat să fie revocat."
+      },
+      "waitForAppIdSlot": {
+        "how": "Apple eliberează fiecare ID de aplicație la 7 zile după creare. Instalează din nou când unul e liber sau folosește alt ID Apple.",
+        "next": "Următorul ID de aplicație se eliberează pe {date}."
+      },
+      "chooseAppToRemove": {
+        "how": "O nouă încercare întreabă ce aplicație să fie ștearsă pentru a face loc."
+      },
+      "unlockDevice": {
+        "how": "Deblochează dispozitivul și ține-l deblocat până se termină instalarea."
+      },
+      "enableDeveloperMode": {
+        "button": "E activat, încearcă din nou"
+      },
+      "trustComputer": {
+        "how": "Deblochează dispozitivul. Când întreabă dacă are încredere în acest computer, atinge „Ai încredere” și introdu codul.",
+        "button": "Cere din nou pe dispozitiv"
+      },
+      "reconnectDevice": {
+        "how": "Deconectează dispozitivul, conectează-l din nou și deblochează-l."
+      },
+      "setPasscode": {
+        "how": "Setează un cod pe dispozitiv în Configurări › Face ID și cod, apoi încearcă din nou."
+      },
+      "installDeviceSupport": {
+        "how": "Pe Windows, instalează Apple Devices (sau iTunes) din Microsoft Store, apoi repornește Loadstar."
+      },
+      "reinstallApp": {
+        "how": "Șterge aplicația de pe dispozitiv, apoi încearcă din nou."
+      },
+      "chooseAnotherChannel": {
+        "how": "Versiunea din celălalt canal poate funcționa pe acest dispozitiv.",
+        "button": "Instalează din {channel}"
+      },
+      "open": "Deschide"
+    },
+    "reportHint": "Deschide o problemă nouă pe GitHub cu diagnosticul completat. Nimic nu se trimite până nu o trimiți tu."
   },
   "devices": {
     "engine": {

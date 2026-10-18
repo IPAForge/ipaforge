@@ -65,7 +65,7 @@ Loadstar places the pairing file and certificate SideStore needs automatically.
   - **Windows:** Settings › Apps;
   - **macOS:** drag Loadstar to the Bin;
   - **Linux:** remove the AppImage or the package.
-- **Your saved accounts** are kept in the system keychain. Remove them in Loadstar's settings before uninstalling if you want them gone.
+- **Your saved accounts** are kept in the system keychain. Sign them out in **Manage → Accounts** before uninstalling if you want them gone.
 
 ## Problems?
 

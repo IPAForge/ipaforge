@@ -1,7 +1,7 @@
 // Manage → Devices against the fake Engine: a card per device, what to do for each state, and Use this device.
 import { screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { t } from '@ui/__tests__/test-i18n.ts'
 import { renderApp } from '@ui/__tests__/test-services.tsx'
@@ -12,6 +12,7 @@ import {
   fakeIphoneCheck
 } from '@ui/services/engine/fake/fake-data.ts'
 import { createFakeDeviceFeed } from '@ui/services/engine/fake/fake-devices.ts'
+import { createFakeEngine } from '@ui/services/engine/fake/fake-engine.ts'
 import { createFakeEngineClient } from '@ui/services/engine/fake/fake-engine-client.ts'
 import type { DeviceCheck } from '@ui/services/engine/types.ts'
 import { selectionKeys } from '@ui/state/selection/constants.ts'
@@ -126,5 +127,36 @@ describe('Install page, about the device and the Apple ID in use', () => {
     expect(services.preferences.read(selectionKeys.account)).toBe(
       'work@example.com'
     )
+  })
+})
+
+describe('Devices page, the device in use', () => {
+  it('reads the picked device again on Check again, through the Engine', async () => {
+    const user = userEvent.setup()
+    const fake = createFakeEngine({ delayMs: 0 })
+    const deviceStatus = vi.fn(fake.deviceStatus)
+    const engine = createFakeEngineClient({
+      delayMs: 0,
+      overrides: { deviceStatus }
+    })
+    await renderApp('/devices', {
+      engine,
+      preferences: { [selectionKeys.device]: FAKE_IPHONE }
+    })
+    const iphone = await card('iPhone')
+    await waitFor(() =>
+      expect(within(iphone).getByText(t('devices.state.ready'))).toBeDefined()
+    )
+    const before = deviceStatus.mock.calls.length
+
+    await user.click(
+      within(iphone).getByRole('button', { name: t('devices.checkAgain') })
+    )
+    await waitFor(() =>
+      expect(deviceStatus.mock.calls.length).toBeGreaterThan(before)
+    )
+    expect(
+      within(iphone).queryByText(t('devices.state.unavailable'))
+    ).toBeNull()
   })
 })

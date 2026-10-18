@@ -4,6 +4,7 @@ import { consoleLogSink } from '@ui/services/logging/console-log-sink.ts'
 import { createLocalStoragePreferences } from '@ui/services/preferences/local-storage-preferences.ts'
 import { createNavigatorClipboard } from '@ui/services/system/clipboard.ts'
 import { createMediaColorSchemeSource } from '@ui/services/system/color-scheme-source.ts'
+import { createWindowLinkOpener } from '@ui/services/system/link-opener.ts'
 import { createNavigatorLocaleSource } from '@ui/services/system/locale-source.ts'
 import type { UiServices } from '@ui/services/ui-services.ts'
 
@@ -16,7 +17,7 @@ export type BrowserServicesOptions = {
 
 /**
  * Services for a browser window (a plain one or the Electron renderer): console logs, localStorage preferences,
- * the OS colour scheme and languages, the clipboard, and the Engine the host connects.
+ * the OS colour scheme and languages, the clipboard, opening links, and the Engine the host connects.
  */
 export const createBrowserServices = (
   host: Window,
@@ -31,6 +32,7 @@ export const createBrowserServices = (
     localeSource: createNavigatorLocaleSource(host.navigator),
     engine: engine(logger),
     clipboard: createNavigatorClipboard(host.navigator),
+    links: createWindowLinkOpener(host),
     appVersion
   }
 }

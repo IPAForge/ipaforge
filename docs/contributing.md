@@ -58,7 +58,7 @@ This project follows the [Code of Conduct](CODE_OF_CONDUCT.md). Security issues 
 The repository ships VS Code settings in `.vscode/`. Install the two recommended extensions when VS Code offers them:
 
 - **Biome** (`biomejs.biome`) formats and lints;
-- **ESLint** (`dbaeumer.vscode-eslint`) adds the blank lines between statements and shows SonarSource findings.
+- **ESLint** (`dbaeumer.vscode-eslint`) adds the blank lines between statements and shows SonarSource findings and the file-structure rules.
 
 Formatting happens on save: Biome formats the file and sorts its imports, and ESLint adds the blank lines. Outside VS Code (or to fix the whole repository at once), run:
 
@@ -66,7 +66,7 @@ Formatting happens on save: Biome formats the file and sorts its imports, and ES
 pnpm lint:fix
 ```
 
-`pnpm lint` (part of `pnpm verify` and CI) fails on unformatted code, unsorted imports, missing blank lines and SonarSource findings (`eslint-plugin-sonarjs`: backtracking regexes, overly complex functions, tests without assertions and similar). The rules that are off, and how to justify an exception, are in [conventions](design/conventions.md#formatting-and-lint).
+`pnpm lint` (part of `pnpm verify` and CI) fails on unformatted code, unsorted imports, missing blank lines, SonarSource findings (`eslint-plugin-sonarjs`: backtracking regexes, overly complex functions, tests without assertions and similar) and the file-structure rules (`@loadstar/structure`: no `switch`, one component per `.tsx` file with nothing else at top level, at most one type per file outside the folder's `types.ts`). The rules that are off, and how to justify an exception, are in [conventions](design/conventions.md#formatting-and-lint).
 
 ## Conventions (summary)
 
@@ -114,7 +114,9 @@ Biome's `noRestrictedImports` also flags Node built-ins inside `packages/**` whi
 
 1. Create `packages/<name>/` with:
    - `package.json`: `"name": "@loadstar/<name>"`, `"type": "module"`, `"exports": { ".": "./src/index.ts" }`, and a `typecheck` script;
-   - `tsconfig.json`: extends `../../tsconfig.base.json` with `"lib": ["ES2023", "WebWorker"]` and `"types": []` (the platform-free baseline).
+   - `tsconfig.src.json`: extends `../../tsconfig.base.json` with `"lib": ["ES2023", "WebWorker"]` and `"types": []` (the platform-free baseline), and excludes the tests;
+   - `tsconfig.json`: extends `tsconfig.src.json` with `"types": ["node"]` and includes the tests (the editor's project);
+   - the `typecheck` script runs `tsc -p tsconfig.src.json && tsc -p tsconfig.json`, so the source is checked without Node types.
 2. Add the package and its allowed dependencies to `scripts/boundaries.config.ts`, add its `@<name>/*` alias to `tsconfig.base.json` `paths`, and add a `vitest.config.ts` that uses `workspaceAliases` (copy one from `packages/kernel`).
 3. Export the public API from `src/index.ts` only. Put tests next to the source as `*.test.ts`.
 

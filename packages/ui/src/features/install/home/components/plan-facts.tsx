@@ -26,7 +26,8 @@ export const PlanFacts = ({ plan }: PlanFactsProps) => {
       <PlanFact
         label={t('install.plan.appIds')}
         value={t('install.plan.appIdsValue', {
-          uses: appIds.create.length,
+          created: appIds.create.length,
+          reused: appIds.reuse.length,
           left: appIds.available
         })}
         note={nextSlot}

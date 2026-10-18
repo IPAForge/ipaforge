@@ -15,7 +15,7 @@ Loadstar is an open-source desktop tool (Windows, macOS, Linux) for installing S
 
 ## Project Structure
 
-> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `packages/rpc`, `packages/ui` (palettes, top bar and sidebar shell, routes, i18n with six languages; runs in a browser via its own Vite config), `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, the RPC transport and IPA resolver, maintainer probes, and the Electron shell: one hardened window rendering `@loadstar/ui`, connected to the Engine in main over a MessagePort), `fixtures/signer`, `scripts/`, `.github/workflows/`.
+> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `packages/rpc`, `packages/ui` (palettes, top bar and sidebar shell, routes, i18n with six languages, Engine query hooks and the device feed, Apple ID sign-in and the Accounts page, the device picker and Devices page, the install home, the install run and its questions (`state/active-run`, `state/selection`); runs in a browser on a fake Engine via its own Vite config), `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, the RPC transport and IPA resolver, maintainer probes, and the Electron shell: one hardened window rendering `@loadstar/ui`, connected to the Engine in main over a MessagePort), `fixtures/signer`, `scripts/`, `.github/workflows/`.
 
 ```
 loadstar/
@@ -40,7 +40,7 @@ loadstar/
 
 | File | Purpose |
 |------|---------|
-| `packages/installer/src/engine.ts` | The Engine facade: every capability the UI can call (`installSideStore`, `installApps`, `placePairing`, queries, `classify`) |
+| `packages/installer/src/engine.ts` | The Engine facade: every capability the UI can call (`installSideStore`, `installApps`, `placePairing`, `signIn`, `signOut`, `watchDevices`, queries, `classify`) |
 | `packages/installer/src/index.ts` | Public installer API (Engine, flows, prompts, diagnostics catalogue, pipeline runner) |
 | `packages/signer/src/index.ts` | Public signer API (`inspectIpa`, `planSideloadIdentity`, `signIpa`, `signBundle`, `signBinary`, `reconcileForSideload`, plist, IPA I/O) |
 | `fixtures/signer/generate.sh` | Regenerates the Apple `codesign` golden fixtures (macOS) |
@@ -72,7 +72,7 @@ loadstar/
 | `pnpm-workspace.yaml` / `turbo.json` | Workspace and task graph |
 | `packages/kernel/src/index.ts` | LoadstarError/ErrorCode, ports, logger, byte utilities |
 | `scripts/check-boundaries.ts` | Architecture dependency-rule checker |
-| `biome.json` / `eslint.config.js` | Code style: Biome formats and lints, ESLint only adds blank lines |
+| `biome.json` / `eslint.config.js` | Code style: Biome formats and lints; ESLint adds blank lines, the SonarJS rules and the `@loadstar/structure` file-structure rules (`tooling/eslint/structure.js`) |
 | `scripts/check-locales.ts` | Locale checker: keys, ICU syntax and placeholders vs `en.json`, completion per language |
 | `.github/workflows/ci.yml` | Lint, typecheck, boundaries, locales and tests on Linux, Windows and macOS |
 
@@ -106,6 +106,8 @@ loadstar/
 | docs/design/roadmap.md | Milestones |
 | docs/design/research.md | Research and verified findings |
 | docs/design/conventions.md | Coding conventions |
+| docs/design/failure-catalogue.md | What breaks sideloading installers in practice, and how Loadstar handles each failure |
+| docs/design/js-libs.md | Library research for the pure-TypeScript re-signer (versions, licenses, benchmarks) |
 
 ## Agent Rules
 

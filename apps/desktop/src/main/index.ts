@@ -12,6 +12,7 @@ import {
   MessageChannelMain,
   safeStorage,
   session,
+  shell,
   type WebContents
 } from 'electron'
 
@@ -23,8 +24,8 @@ import { createIpaResolver } from '@desktop/main/rpc/resolve-ipa.ts'
 import { serveEngine } from '@desktop/main/rpc/serve-engine.ts'
 import { createDesktopSecrets } from '@desktop/main/secrets.ts'
 import {
-  denyAllPermissions,
-  lockDownWebContents
+  lockDownWebContents,
+  restrictPermissions
 } from '@desktop/main/security.ts'
 import { createMainWindow } from '@desktop/main/window.ts'
 import type { Logger } from '@loadstar/kernel'
@@ -64,7 +65,7 @@ const openWindow = (
 
 const start = (logger: Logger): void => {
   app.on('web-contents-created', (_event, contents) =>
-    lockDownWebContents(contents, logger)
+    lockDownWebContents(contents, logger, (url) => shell.openExternal(url))
   )
   // macOS keeps the app running without windows; every other OS quits with the last one.
   app.on('window-all-closed', () => {
@@ -73,7 +74,7 @@ const start = (logger: Logger): void => {
   app
     .whenReady()
     .then(() => {
-      denyAllPermissions(session.defaultSession, logger)
+      restrictPermissions(session.defaultSession, logger)
       logger.info('ready', {
         electron: process.versions.electron,
         platform: process.platform
