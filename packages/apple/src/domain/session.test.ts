@@ -9,9 +9,10 @@ describe('second factor from the GSA status', () => {
       { au: 'trustedDeviceSecondaryAuth' },
       { kind: 'trusted_device', codeAlreadySent: false }
     ],
+    // Apple answers 409 with this au too, and sends nothing until asked (seen Oct 2026).
     [
       { au: 'trustedDeviceSecondaryAuth', hsc: 409 },
-      { kind: 'trusted_device', codeAlreadySent: true }
+      { kind: 'trusted_device', codeAlreadySent: false }
     ],
     [{ hsc: 409 }, { kind: 'trusted_device', codeAlreadySent: true }],
     [{ au: 'secondaryAuth' }, { kind: 'sms', codeAlreadySent: false }],

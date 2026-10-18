@@ -799,7 +799,16 @@
       "label": "Cod de verificare",
       "wrong": "Codul nu a funcționat. Verifică-l și introdu-l din nou.",
       "verify": "Verifică",
-      "checking": "Se verifică codul…"
+      "checking": "Se verifică codul…",
+      "deviceBody": "{length, plural, one {Introdu codul de # cifră afișat pe iPhone, iPad sau Mac.} few {Introdu codul de # cifre afișat pe iPhone, iPad sau Mac.} other {Introdu codul de # de cifre afișat pe iPhone, iPad sau Mac.}}",
+      "smsBody": "{length, plural, one {Introdu codul de # cifră trimis la {number}.} few {Introdu codul de # cifre trimis la {number}.} other {Introdu codul de # de cifre trimis la {number}.}}",
+      "allowHint": "Ține-l deblocat și atinge Permite când întreabă despre autentificare.",
+      "noCode": "Nu ai primit un cod?",
+      "resend": "Trimite un cod nou",
+      "textTo": "SMS la {number}",
+      "sending": "Se trimite un cod nou…",
+      "sent": "Un cod nou este pe drum.",
+      "notSent": "Apple nu a trimis un cod nou. Așteaptă câteva minute, apoi încearcă din nou."
     },
     "suggested": "Sugerat",
     "team": {

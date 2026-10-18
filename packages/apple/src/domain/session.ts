@@ -18,15 +18,17 @@ const HSC_CODE_ALREADY_SENT = 409
 
 /**
  * What the `complete` status asks for:
- * - `au = trustedDeviceSecondaryAuth` → trusted-device code; `au = secondaryAuth` → SMS;
+ * - `au = trustedDeviceSecondaryAuth` → trusted-device code, which IPAForge asks Apple to push (whatever `hsc`
+ *   says: Apple answers `hsc 409` with this `au` too, and then sends nothing until asked);
+ * - `au = secondaryAuth` → SMS;
  * - `hsc = 409` without `au` → a trusted-device code was already sent (Apple pushes it on its own);
  * - `au = repair` or nothing → signed in (the account has no 2FA to complete).
  * An unknown `au` value throws, so a new Apple step is reported instead of being mistaken for success.
  */
 const SECOND_FACTOR_BY_AU = {
-  trustedDeviceSecondaryAuth: (hsc) => ({
+  trustedDeviceSecondaryAuth: (_hsc) => ({
     kind: 'trusted_device',
-    codeAlreadySent: hsc === HSC_CODE_ALREADY_SENT
+    codeAlreadySent: false
   }),
   secondaryAuth: () => ({ kind: 'sms', codeAlreadySent: false }),
   repair: () => undefined

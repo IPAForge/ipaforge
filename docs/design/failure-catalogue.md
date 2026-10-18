@@ -43,7 +43,8 @@
 | -21669 | Wrong 2FA code | Re-prompt |
 | -28248 | SMS cannot be sent to this number | Offer device 2FA or wait |
 | HTTP 403 on `/auth` or `/auth/verify/phone` | Apple refuses the SMS flow for third-party clients (confirmed 2026-10-15 with two different clients on the same account) | `apple.sms_unavailable`: suggest a trusted device or another Apple ID; never retried or worked around |
-| -22979 / -22981, hsc 409, HTTP 412 with an active challenge | A code was already sent | Go to code entry |
+| -22979 / -22981, hsc 409 without `au`, HTTP 412 with an active challenge | A code was already sent | Go to code entry |
+| hsc 409 with `au = trustedDeviceSecondaryAuth` | A trusted-device code is needed, and Apple sends none until asked (Oct 2026: treating it as "already sent" left users with no code) | Ask for the push (`/auth/verify/trusteddevice`), go to code entry; **Send a new code** asks again |
 | -45061 | Anisette/ADI not provisioned | Re-provision automatically |
 | hsc 434 | Anisette resync required | Resync with `X-Apple-I-MD-DATA`, retry |
 | HTTP 503 / 429 | Edge block / rate limit | Backoff with jitter; status banner |

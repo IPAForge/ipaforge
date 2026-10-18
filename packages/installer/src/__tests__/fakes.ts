@@ -12,7 +12,8 @@ import type {
   ProvisionRequest,
   SavedAccount,
   Team,
-  TwoFactorChallenge
+  TwoFactorChallenge,
+  TwoFactorMethod
 } from '@ipaforge/apple'
 import type { Catalog, ResolvedRelease } from '@ipaforge/catalog'
 import type {
@@ -231,22 +232,37 @@ export const certificateFor = (
 })
 
 export const twoFactorChallenge = (
-  acceptedCode: string
-): TwoFactorChallenge & { readonly codes: string[] } => {
+  acceptedCode: string,
+  { refuseRequests = false } = {}
+): TwoFactorChallenge & {
+  readonly codes: string[]
+  /** Every new code asked for, by method. */
+  readonly sent: TwoFactorMethod[]
+  readonly submittedWith: TwoFactorMethod[]
+} => {
   const codes: string[] = []
+  const sent: TwoFactorMethod[] = []
+  const submittedWith: TwoFactorMethod[] = []
 
   return {
     codes,
+    sent,
+    submittedWith,
     requested: 'trusted_device',
     methods: async () => ({
       trustedDevice: true,
-      phones: [],
+      phones: [{ id: 7, number: '+40 ••• ••• •12' }],
       codeLength: 6,
       legacy: false,
       securityKeysOnly: false
     }),
-    requestCode: async () => {},
-    submitCode: async (_method, code) => {
+    requestCode: async (method) => {
+      sent.push(method)
+      if (refuseRequests)
+        throw new IPAForgeError(ErrorCode.RateLimited, { message: 'too many' })
+    },
+    submitCode: async (method, code) => {
+      submittedWith.push(method)
       codes.push(code)
       if (code !== acceptedCode)
         throw new IPAForgeError(ErrorCode.TwoFactorInvalidCode)

@@ -799,7 +799,16 @@
       "label": "Verification code",
       "wrong": "That code didn't work. Check it and enter it again.",
       "verify": "Verify",
-      "checking": "Checking the code…"
+      "checking": "Checking the code…",
+      "deviceBody": "{length, plural, one {Enter the #-digit code shown on your iPhone, iPad or Mac.} other {Enter the #-digit code shown on your iPhone, iPad or Mac.}}",
+      "smsBody": "{length, plural, one {Enter the #-digit code sent to {number}.} other {Enter the #-digit code sent to {number}.}}",
+      "allowHint": "Keep it unlocked, and tap Allow when it asks about signing in.",
+      "noCode": "Didn't get a code?",
+      "resend": "Send a new code",
+      "textTo": "Text {number}",
+      "sending": "Sending a new code…",
+      "sent": "A new code is on its way.",
+      "notSent": "Apple didn't send a new code. Wait a few minutes, then try again."
     },
     "suggested": "Suggested",
     "team": {

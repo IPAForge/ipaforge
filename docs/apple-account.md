@@ -12,12 +12,12 @@
    - If a server is down, the next one is used automatically.
    - The servers are a custom one (if set), the built-in ones, then the community list (`servers.sidestore.io/servers.json`, HTTPS servers only). The list is fetched when anisette is first needed and again once it is an hour old (on the next request, never polled); after a failed fetch it is tried again a minute later. The last list fetched is kept in the secret store, so an offline start or a failed fetch still uses it (`anisetteServerListMaxAgeMs`, `anisetteServerListRetryMs` in the config).
 2. **Password check (SRP).** Apple checks a proof of your password and returns encrypted session data.
-3. **Second factor.** If your account has trusted devices, Apple shows a code on them, and you type it into IPAForge.
+3. **Second factor.** If your account has trusted devices, IPAForge asks Apple to show a code on them straight away and opens the code step; you tap **Allow** on the device and type the code. **Didn't get a code?** offers **Send a new code** and, when the account has phone numbers, **Text** a number instead. When Apple refuses to send another (too many in a row), the step says so and stays open.
 4. **Developer token.** IPAForge requests the token Xcode uses for developer services. It is valid for about a year.
 
 Apple adds steps from time to time. IPAForge handles the ones known today:
 - an anisette **resync** request (`hsc 434`);
-- **"code already sent"** (`hsc 409`);
+- **"code already sent"** (`hsc 409` on its own); with `au = trustedDeviceSecondaryAuth` the same 409 does not mean a code went out: Apple sends nothing until asked, so IPAForge asks (seen October 2026; isideload does the same);
 - session data without a plist wrapper.
 
 ## Two-factor authentication

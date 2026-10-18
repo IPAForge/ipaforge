@@ -799,7 +799,16 @@
       "label": "Bestätigungscode",
       "wrong": "Dieser Code hat nicht funktioniert. Prüfe ihn und gib ihn erneut ein.",
       "verify": "Bestätigen",
-      "checking": "Der Code wird geprüft …"
+      "checking": "Der Code wird geprüft …",
+      "deviceBody": "{length, plural, one {Gib den #-stelligen Code ein, der auf deinem iPhone, iPad oder Mac angezeigt wird.} other {Gib den #-stelligen Code ein, der auf deinem iPhone, iPad oder Mac angezeigt wird.}}",
+      "smsBody": "{length, plural, one {Gib den #-stelligen Code ein, der an {number} gesendet wurde.} other {Gib den #-stelligen Code ein, der an {number} gesendet wurde.}}",
+      "allowHint": "Lass es entsperrt und tippe auf „Erlauben“, wenn nach der Anmeldung gefragt wird.",
+      "noCode": "Keinen Code erhalten?",
+      "resend": "Neuen Code senden",
+      "textTo": "SMS an {number}",
+      "sending": "Neuer Code wird gesendet…",
+      "sent": "Ein neuer Code ist unterwegs.",
+      "notSent": "Apple hat keinen neuen Code gesendet. Warte ein paar Minuten und versuche es dann erneut."
     },
     "suggested": "Empfohlen",
     "team": {

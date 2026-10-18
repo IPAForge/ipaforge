@@ -1,6 +1,11 @@
 import type { PromptKind } from '@installer/domain/prompts.ts'
 import type { CertificateTrust } from '@installer/sidestore/trust.ts'
-import type { Team, TwoFactorMethod, TwoFactorMethods } from '@ipaforge/apple'
+import type {
+  Team,
+  TrustedPhone,
+  TwoFactorMethod,
+  TwoFactorMethods
+} from '@ipaforge/apple'
 import type { Channel, ResolvedRelease } from '@ipaforge/catalog'
 import type { AppFileTarget } from '@ipaforge/device'
 import type { FileSource } from '@ipaforge/kernel'
@@ -55,8 +60,17 @@ export type Prompts = {
     answer: TwoFactorMethod
   }
   readonly [PromptKind.TwoFactorCode]: {
-    data: { method: TwoFactorMethod; codeLength: number; retry: boolean }
-    answer: string
+    data: {
+      method: TwoFactorMethod
+      codeLength: number
+      /** The last code was wrong. */
+      retry: boolean
+      /** A new code was just asked for; `false` when Apple refused to send one. */
+      resent?: boolean
+      /** Numbers a code can be texted to instead. */
+      phones: readonly TrustedPhone[]
+    }
+    answer: TwoFactorCodeAnswer
   }
   readonly [PromptKind.ChooseTeam]: {
     data: { teams: readonly Team[] }
@@ -144,3 +158,12 @@ export type InstallState = AccountState & {
   readonly pairingApp?: string
   readonly pairingPlaced?: readonly AppFileTarget[]
 }
+
+/**
+ * The answer to the code question: the code, or a request for another one, by the same way (`resend`) or by text
+ * message to one of the account's numbers (`textTo`, a phone id).
+ */
+export type TwoFactorCodeAnswer =
+  | string
+  | { readonly resend: true }
+  | { readonly textTo: number }

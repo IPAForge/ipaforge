@@ -30,7 +30,8 @@ export {
   type StepDetail,
   StepLabel,
   type TeamCertificates,
-  type TeamQuery
+  type TeamQuery,
+  type TwoFactorCodeAnswer
 } from '@ipaforge/installer'
 export { createEngineClient } from '@rpc/application/client.ts'
 export { createRpcServer } from '@rpc/application/server.ts'

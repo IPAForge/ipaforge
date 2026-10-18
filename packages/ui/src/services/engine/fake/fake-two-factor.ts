@@ -1,6 +1,6 @@
 // The fake Apple sign-in: the password, then a second factor through prompts, as the Engine asks them.
 import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
-import { PromptKind } from '@ipaforge/rpc'
+import { PromptKind, type TwoFactorCodeAnswer } from '@ipaforge/rpc'
 import { FAKE_TWO_FACTOR_CODE } from '@ui/services/engine/fake/fake-data.ts'
 import type { ScriptedStepContext } from '@ui/services/engine/fake/types.ts'
 import type {
@@ -21,29 +21,42 @@ const METHODS: TwoFactorMethods = {
 export const askPassword = (context: ScriptedStepContext, appleId: string) =>
   context.prompt<string>({ kind: PromptKind.Password, data: { appleId } })
 
-/** Asks for a method, then for the code until it is the right one (a wrong one asks again). */
+/**
+ * The second factor as the Engine asks it: Apple pushes a code to the trusted devices at once, so the code question
+ * comes straight away; it can ask for a new code, or for one by text message instead. A wrong code asks again.
+ */
 export const completeTwoFactor = async (
   context: ScriptedStepContext,
   appleAnswer: () => Promise<void>
 ): Promise<void> => {
-  const method = await context.prompt<TwoFactorMethod>({
-    kind: PromptKind.TwoFactorMethod,
-    data: { methods: METHODS }
-  })
+  let method: TwoFactorMethod = { type: 'trusted_device' }
+  let wrong = 0
+  let resent: boolean | undefined
   // Apple sends the code.
   await appleAnswer()
-  for (let attempt = 1; attempt <= CODE_ATTEMPTS; attempt++) {
-    const code = await context.prompt<string>({
-      kind: PromptKind.TwoFactorCode,
-      data: {
-        method,
-        codeLength: METHODS.codeLength,
-        retry: attempt > 1
-      }
-    })
-    // Apple checks it.
+  for (;;) {
+    const answer: TwoFactorCodeAnswer =
+      await context.prompt<TwoFactorCodeAnswer>({
+        kind: PromptKind.TwoFactorCode,
+        data: {
+          method,
+          codeLength: METHODS.codeLength,
+          retry: wrong > 0 && resent === undefined,
+          phones: METHODS.phones,
+          ...(resent === undefined ? {} : { resent })
+        }
+      })
+    // Apple sends a new code, or checks this one.
     await appleAnswer()
-    if (code === FAKE_TWO_FACTOR_CODE) return
+    if (typeof answer !== 'string') {
+      if ('textTo' in answer) method = { type: 'sms', phoneId: answer.textTo }
+      resent = true
+      continue
+    }
+    resent = undefined
+    if (answer === FAKE_TWO_FACTOR_CODE) return
+    wrong++
+    if (wrong >= CODE_ATTEMPTS)
+      throw new IPAForgeError(ErrorCode.TwoFactorInvalidCode)
   }
-  throw new IPAForgeError(ErrorCode.TwoFactorInvalidCode)
 }

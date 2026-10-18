@@ -83,6 +83,7 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
     - [x] recovery screens for every `ErrorCode`, with copy diagnostics and a pre-filled issue report (#54)
     - [x] switching to another Apple ID when one is banned: the Install notice (#45) and the recovery picker (#54)
     - [x] 8-1: the preload picker: drop or choose IPAs, add a link, or pick from the catalog (now with LiveContainer, StikDebug and Feather, release names with a `*` wildcard), each app checked by the Engine when added, the list added up against App IDs and free-app slots, one run with the steps grouped by app; SideStore installed this way gets its pairing file too (#59)
+    - [x] fix: the trusted-device code is always asked for (Apple answers `hsc 409` with `au = trustedDeviceSecondaryAuth` and sends nothing until asked), the code step comes straight away, with Send a new code and Text a number instead (#60)
     - [ ] 8-1b: app sources and updates: AltStore-format sources (the developers' own, SideStore's Team Picks) to browse in the picker, and "Update all" for the apps on the device that have a newer version
     - [ ] source deep links and a QR code for SideStore
     - [ ] the on-device checklist per iOS version (unlock, Trust and Developer Mode steps exist; a full checklist doesn't)
