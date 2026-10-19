@@ -3,7 +3,7 @@
 // a SideStore another Apple ID signed (not installed again) or none at all.
 import { screen, waitFor, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, onTestFinished, vi } from 'vitest'
 
 import { t } from '@ui/__tests__/test-i18n.ts'
 import {
@@ -14,19 +14,35 @@ import { AutoRefreshKey } from '@ui/state/auto-refresh/constants.ts'
 
 const AUTO_OFF = { [AutoRefreshKey.isOn]: 'false' }
 
+const checks = () => screen.findByRole('list', { name: t('repair.checks') })
+
+/** Results come in one by one: waits for every check to be in. */
+const REVEALED = { timeout: 3000 }
+
+/** The system asks for reduced motion: the results come in at once (a long test stays fast on slow runners). */
+const withReducedMotion = () => {
+  const original = window.matchMedia.bind(window)
+  const spy = vi
+    .spyOn(window, 'matchMedia')
+    .mockImplementation((query) =>
+      query.includes('prefers-reduced-motion')
+        ? { ...original(query), matches: true }
+        : original(query)
+    )
+
+  onTestFinished(() => spy.mockRestore())
+}
+
+/** Repair SideStore, its results coming in at once: the reveal is checked on its own, from Apps. */
 const open = async (options: TestServicesOptions = {}) => {
   const user = userEvent.setup()
 
+  withReducedMotion()
   await renderApp('/apps/sidestore', { preferences: AUTO_OFF, ...options })
   await screen.findByRole('heading', { name: t('repair.title') })
 
   return user
 }
-
-const checks = () => screen.findByRole('list', { name: t('repair.checks') })
-
-/** Results come in one by one: waits for every check to be in. */
-const REVEALED = { timeout: 3000 }
 
 /** A check's line once its result is in. */
 const lineOf = (title: string) =>
@@ -56,6 +72,16 @@ describe('Repair SideStore', () => {
     expect(
       within(await checks()).getAllByText(t('repair.checkingTag')).length
     ).toBeGreaterThan(0)
+    // Then the results come in one by one: some in, some still waiting.
+    await waitFor(() => {
+      const lines = within(
+        screen.getByRole('list', { name: t('repair.checks') })
+      ).getAllByRole('listitem')
+      const waiting = lines.filter((line) => line.hasAttribute('data-checking'))
+
+      expect(waiting.length).toBeGreaterThan(0)
+      expect(waiting.length).toBeLessThan(lines.length)
+    }, REVEALED)
   })
 
   it('says SideStore is working when every check passes', async () => {
@@ -97,7 +123,7 @@ describe('Repair SideStore', () => {
     expect(
       await screen.findByText(t('repair.fine.title'), {}, REVEALED)
     ).toBeDefined()
-  })
+  }, 15_000)
 
   it("says what it can't tell, and only runs an offered fix once it's picked", async () => {
     const user = await open({ scenario: 'sidestore-unknown' })
