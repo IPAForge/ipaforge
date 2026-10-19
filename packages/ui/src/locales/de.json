@@ -1470,5 +1470,86 @@
     "back": "Zurück",
     "done": "Fertig",
     "offer": "{count, plural, one {Füge die hier hinzugefügte Quelle auch zu SideStore hinzu, damit es ihre Apps auf dem iPhone zeigt.} other {Füge die # hier hinzugefügten Quellen auch zu SideStore hinzu, damit es ihre Apps auf dem iPhone zeigt.}}"
+  },
+  "checklist": {
+    "title": "Auf {device} · iOS {ios}",
+    "setUp": "{device} ist eingerichtet · iOS {ios}",
+    "show": "Checkliste zeigen",
+    "hide": "Ausblenden",
+    "allSet": "Alles erledigt",
+    "progress": "{left, plural, one {# Schritt offen} other {# Schritte offen}} · {done} von {total} erledigt",
+    "group": {
+      "before": "Vor dem Installieren",
+      "after": "Nach dem Installieren",
+      "sidestore": "Für SideStore"
+    },
+    "onPhone": "Auf dem iPhone",
+    "tickedTag": "Auf dem iPhone erledigt",
+    "tick": "Erledigt",
+    "notNeeded": "Unter diesem iOS nicht nötig",
+    "cable": {
+      "title": "{device} mit diesem Computer verbinden",
+      "connected": "Verbunden",
+      "none": "Nicht verbunden",
+      "how": "Beim ersten Mal per Kabel; danach geht es auch per WLAN, solange beide im selben Netz sind."
+    },
+    "unlock": {
+      "title": "Entsperren",
+      "locked": "Gesperrt",
+      "unlocked": "Entsperrt",
+      "how": "Lass es entsperrt, während IPAForge installiert."
+    },
+    "trust": {
+      "title": "Diesem Computer vertrauen",
+      "trusted": "Vertraut",
+      "notYet": "Noch nicht",
+      "step1": "Entsperre {device}.",
+      "step2": "Tippe auf „Vertrauen“, wenn es nach diesem Computer fragt.",
+      "step3": "Gib den Code ein.",
+      "again": "Erneut fragen"
+    },
+    "passcode": {
+      "title": "Einen Code festlegen",
+      "how": "SideStore erneuert per WLAN, was iOS nur mit Code erlaubt: Einstellungen › Face ID & Code."
+    },
+    "devmode": {
+      "title": "Entwicklermodus einschalten",
+      "on": "An",
+      "off": "Aus",
+      "step1": "Einstellungen › Datenschutz & Sicherheit › Entwicklermodus (fehlt er, tippe auf „Option zeigen“).",
+      "step2": "Schalte ihn ein und starte {device} neu.",
+      "step3": "Tippe nach dem Neustart auf „Einschalten“ und gib den Code ein.",
+      "reveal": "Option zeigen",
+      "revealed": "Er ist jetzt unter Einstellungen › Datenschutz & Sicherheit."
+    },
+    "developer": {
+      "title": "Deiner Apple-ID als Entwickler vertrauen",
+      "later": "Nach der ersten Installation",
+      "step1": "Einstellungen › Allgemein › VPN & Geräteverwaltung.",
+      "step2": "Tippe unter „Entwickler-App“ auf {appleId}.",
+      "step3": "Tippe auf „Vertrauen“. Das iPhone braucht dafür Internet."
+    },
+    "vpn": {
+      "title": "LocalDevVPN installieren",
+      "installed": "Installiert",
+      "notInstalled": "Nicht installiert",
+      "how": "SideStore spricht über dieses lokale VPN mit dem iPhone; nichts verlässt das Telefon. Es ist kostenlos im App Store.",
+      "qrLabel": "QR-Code der App-Store-Seite von LocalDevVPN",
+      "scan": "Scanne ihn mit der Kamera oder suche im App Store nach „LocalDevVPN“."
+    },
+    "vpnOn": {
+      "title": "LocalDevVPN verbinden, wenn SideStore erneuert",
+      "tag": "Jedes Mal",
+      "later": "Nach der Installation",
+      "how": "Öffne LocalDevVPN und tippe auf „Verbinden“, oder lass SideStore es einschalten: Es fragt beim ersten Mal."
+    },
+    "repair": {
+      "title": "SideStore kann selbst erneuern",
+      "tag": "In „Reparieren“ geprüft",
+      "how": "Sein Zertifikat, seine Kopplungsdatei und sein Ablauf."
+    },
+    "notice": "{count, plural, one {# Schritt offen auf {device}} other {# Schritte offen auf {device}}}",
+    "noticeBody": "Damit Installieren und Erneuern reibungslos laufen.",
+    "showChecklist": "Checkliste zeigen"
   }
 }

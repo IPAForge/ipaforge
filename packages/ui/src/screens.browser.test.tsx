@@ -7,6 +7,7 @@ import { page } from 'vitest/browser'
 import {
   accessibilityViolations,
   appsShown,
+  checklistShown,
   clippedTranslations,
   fillPreload,
   logsShown,
@@ -47,6 +48,10 @@ const screens = {
     await renderScreen('/preload', { ...options, scenario: 'sources-added' })
     await showSources()
     await openAddAllToSideStore()
+  },
+  devices: async (options: ScreenOptions) => {
+    await renderScreen('/devices', { ...options, scenario: 'checklist-todo' })
+    await checklistShown()
   },
   apps: async (options: ScreenOptions) => {
     await renderScreen('/apps', options)

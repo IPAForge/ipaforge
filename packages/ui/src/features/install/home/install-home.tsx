@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next'
 import { PageHeader } from '@ui/components/page-header.tsx'
 import { RunElsewhereNotice } from '@ui/components/run-elsewhere-notice.tsx'
 import { useAccountView } from '@ui/features/accounts/hooks/use-account-view.ts'
+import { ChecklistNotice } from '@ui/features/devices/checklist/components/checklist-notice.tsx'
 import { useDeviceView } from '@ui/features/devices/hooks/use-device-view.ts'
 import { BlockedNotice } from '@ui/features/install/home/components/blocked-notice.tsx'
 import { ChannelChoice } from '@ui/features/install/home/components/channel-choice.tsx'
@@ -76,6 +77,7 @@ export const InstallHome = () => {
       <DeviceInUseNotice />
       <BlockedNotice />
       <SignInNeededNotice />
+      <ChecklistNotice />
       <VariantChoice value={variant} onChange={setVariant} />
       <ChannelChoice
         value={channel}

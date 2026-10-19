@@ -187,6 +187,9 @@ export const createEngineClient = (
   return {
     listDevices: () => query({ method: 'listDevices', args: [] }),
     deviceStatus: (udid) => query({ method: 'deviceStatus', args: [udid] }),
+    deviceApps: (udid) => query({ method: 'deviceApps', args: [udid] }),
+    revealDeveloperMode: (udid) =>
+      query({ method: 'revealDeveloperMode', args: [udid] }),
     pairDevice: (udid) => query({ method: 'pairDevice', args: [udid] }),
     listAccounts: () => query({ method: 'listAccounts', args: [] }),
     canSaveAccounts: () => query({ method: 'canSaveAccounts', args: [] }),

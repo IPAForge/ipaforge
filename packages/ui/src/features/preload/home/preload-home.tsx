@@ -2,6 +2,7 @@ import { useState } from 'react'
 
 import { PageHeader } from '@ui/components/page-header.tsx'
 import { RunElsewhereNotice } from '@ui/components/run-elsewhere-notice.tsx'
+import { ChecklistNotice } from '@ui/features/devices/checklist/components/checklist-notice.tsx'
 import { BlockedNotice } from '@ui/features/install/home/components/blocked-notice.tsx'
 import { DeviceInUseNotice } from '@ui/features/install/home/components/device-in-use-notice.tsx'
 import { SignInNeededNotice } from '@ui/features/install/home/components/sign-in-needed-notice.tsx'
@@ -66,6 +67,7 @@ export const PreloadHome = () => {
       <DeviceInUseNotice />
       <BlockedNotice />
       <SignInNeededNotice />
+      <ChecklistNotice />
       <PreloadTabs
         tab={tab}
         onTab={setTab}

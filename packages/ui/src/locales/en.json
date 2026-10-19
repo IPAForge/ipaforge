@@ -1470,5 +1470,86 @@
     "back": "Back",
     "done": "Done",
     "offer": "{count, plural, one {Add the source you added here to SideStore too, so it shows its apps on the iPhone.} other {Add the # sources you added here to SideStore too, so it shows their apps on the iPhone.}}"
+  },
+  "checklist": {
+    "title": "On {device} · iOS {ios}",
+    "setUp": "{device} is set up · iOS {ios}",
+    "show": "Show checklist",
+    "hide": "Hide",
+    "allSet": "All set",
+    "progress": "{left, plural, one {# thing to do} other {# things to do}} · {done} of {total} done",
+    "group": {
+      "before": "Before installing",
+      "after": "After installing",
+      "sidestore": "For SideStore"
+    },
+    "onPhone": "On the iPhone",
+    "tickedTag": "Done on the iPhone",
+    "tick": "I did this",
+    "notNeeded": "Not needed on this iOS",
+    "cable": {
+      "title": "Connect {device} to this computer",
+      "connected": "Connected",
+      "none": "Not connected",
+      "how": "Use a cable the first time; after that, Wi-Fi works while both are on the same network."
+    },
+    "unlock": {
+      "title": "Unlock it",
+      "locked": "Locked",
+      "unlocked": "Unlocked",
+      "how": "Keep it unlocked while IPAForge installs."
+    },
+    "trust": {
+      "title": "Trust this computer",
+      "trusted": "Trusted",
+      "notYet": "Not yet",
+      "step1": "Unlock {device}.",
+      "step2": "Tap Trust when it asks about this computer.",
+      "step3": "Enter its passcode.",
+      "again": "Ask again"
+    },
+    "passcode": {
+      "title": "Set a passcode",
+      "how": "SideStore refreshes over Wi-Fi, which iOS only allows with a passcode: Settings › Face ID & Passcode."
+    },
+    "devmode": {
+      "title": "Turn on Developer Mode",
+      "on": "On",
+      "off": "Off",
+      "step1": "Settings › Privacy & Security › Developer Mode (if it isn't there, press Show the option).",
+      "step2": "Turn it on and restart {device}.",
+      "step3": "After the restart, tap Turn On and enter the passcode.",
+      "reveal": "Show the option",
+      "revealed": "It's in Settings › Privacy & Security now."
+    },
+    "developer": {
+      "title": "Trust your Apple ID as a developer",
+      "later": "After the first install",
+      "step1": "Settings › General › VPN & Device Management.",
+      "step2": "Under Developer App, tap {appleId}.",
+      "step3": "Tap Trust. The iPhone needs the internet for this."
+    },
+    "vpn": {
+      "title": "Install LocalDevVPN",
+      "installed": "Installed",
+      "notInstalled": "Not installed",
+      "how": "SideStore talks to the iPhone through this local VPN; nothing leaves the phone. It's free on the App Store.",
+      "qrLabel": "QR code of LocalDevVPN's App Store page",
+      "scan": "Scan with the Camera, or search \"LocalDevVPN\" in the App Store."
+    },
+    "vpnOn": {
+      "title": "Connect LocalDevVPN when SideStore refreshes",
+      "tag": "Each time",
+      "later": "After installing it",
+      "how": "Open LocalDevVPN and tap Connect, or let SideStore turn it on: it asks the first time."
+    },
+    "repair": {
+      "title": "SideStore can refresh by itself",
+      "tag": "Checked in Repair",
+      "how": "Its certificate, its pairing file and its expiry."
+    },
+    "notice": "{count, plural, one {# thing to do on {device}} other {# things to do on {device}}}",
+    "noticeBody": "So installing and refreshing go smoothly.",
+    "showChecklist": "Show the checklist"
   }
 }

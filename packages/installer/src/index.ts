@@ -1,6 +1,7 @@
 // Public API of @ipaforge/installer: the Engine facade, its flows, prompts and diagnostics, and the pipeline runner.
 
 export type { CatalogRelease } from '@installer/application/catalog-releases.ts'
+export type { DeviceApps } from '@installer/application/device-apps.ts'
 export { createDeviceWatch } from '@installer/application/device-watch.ts'
 export type { CheckSideStoreQuery } from '@installer/application/installed/check-sidestore.ts'
 export type { RefreshPlanQuery } from '@installer/application/installed/refresh-plan.ts'

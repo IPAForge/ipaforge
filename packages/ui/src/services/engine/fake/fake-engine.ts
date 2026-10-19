@@ -228,6 +228,9 @@ export const createFakeEngine = ({
     watchDevices: (listener, options) =>
       devices.watch(listener, options?.signal),
     deviceStatus: deviceStates.status,
+    // LocalDevVPN is on the fake iPhone, so its checklist is all set; `checklist-todo` leaves it to install.
+    deviceApps: async () => ({ localDevVpn: scenario !== 'checklist-todo' }),
+    revealDeveloperMode: async () => undefined,
     pairDevice: deviceStates.pair,
     ...installed,
     ...createFakeSources(
