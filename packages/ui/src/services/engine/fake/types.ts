@@ -2,6 +2,7 @@ import type { ErrorCode } from '@ipaforge/kernel'
 import type {
   CommandOptions,
   DeviceWatchEvent,
+  Engine,
   PromptRequest,
   StepDetail as StepReport
 } from '@ipaforge/rpc'
@@ -120,3 +121,22 @@ export type FakeApp = {
 export type FakeAppSource =
   | { readonly kind: 'catalog'; readonly appId: string }
   | { readonly kind: 'file'; readonly file: { readonly name: string } }
+
+/** An app source as the fake Engine lists it. */
+export type FakeSourceInfo = Awaited<ReturnType<Engine['listSources']>>[number]
+
+/** An app in one of the fake Engine's app sources. */
+export type FakeSourceApp = Awaited<
+  ReturnType<Engine['sourceApps']>
+>[number]['apps'][number]
+
+/** A source the fake Engine keeps: where it is, whether it's on, and its apps. */
+export type FakeSource = {
+  readonly id: string
+  readonly url: string
+  readonly builtin: boolean
+  readonly enabled: boolean
+  readonly name: string
+  readonly apps: readonly FakeSourceApp[]
+  readonly skipped: number
+}

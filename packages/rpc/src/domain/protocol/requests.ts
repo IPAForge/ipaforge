@@ -39,6 +39,14 @@ export const queryCallSchema = z.discriminatedUnion('method', [
   call('appIdQuota', z.tuple([teamQuerySchema])),
   call('listCertificates', z.tuple([teamQuerySchema])),
   call('planInstall', z.tuple([planInstallInputSchema])),
+  call('listSources', z.tuple([])),
+  call('sourceApps', z.tuple([])),
+  /** Sources are read over https only, like downloads. */
+  call('checkSource', z.tuple([z.url({ protocol: /^https$/ })])),
+  call('addSource', z.tuple([z.url({ protocol: /^https$/ })])),
+  call('removeSource', z.tuple([textSchema])),
+  call('setSourceEnabled', z.tuple([textSchema, z.boolean()])),
+  call('refreshSources', z.tuple([textSchema.optional()])),
   /** Not a read, but a one-shot call answered like one. */
   call('signOut', z.tuple([textSchema]))
 ])

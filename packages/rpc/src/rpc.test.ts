@@ -134,6 +134,23 @@ describe('queries', () => {
       })
     ).rejects.toMatchObject({ code: ErrorCode.InvalidRpcMessage })
   })
+
+  it('manages app sources through the Engine, over https only', async () => {
+    const { client } = setup()
+    const url = 'https://example.com/apps.json'
+
+    expect((await client.checkSource(url)).url).toBe(url)
+    expect(await client.addSource(url)).toMatchObject({
+      id: url,
+      builtin: false
+    })
+    await client.setSourceEnabled(url, false)
+    await client.removeSource(url)
+    expect(await client.refreshSources()).toEqual([])
+    await expect(
+      client.checkSource('http://example.com/apps.json')
+    ).rejects.toMatchObject({ code: ErrorCode.InvalidRpcMessage })
+  })
 })
 
 describe('runs', () => {

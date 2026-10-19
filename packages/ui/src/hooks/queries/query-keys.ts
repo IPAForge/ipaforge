@@ -17,6 +17,10 @@ export const queryKeys = {
   teams: (accountId: string | undefined) =>
     ['accounts', accountId ?? null, 'teams'] as const,
   catalogApps: ['catalog', 'apps'] as const,
+  /** Every query about app sources: the list and their apps. */
+  sources: ['sources'] as const,
+  sourceList: ['sources', 'list'] as const,
+  sourceApps: ['sources', 'apps'] as const,
   recommendedChannel: (appId: string, iosVersion: string | undefined) =>
     ['catalog', appId, 'channel', iosVersion ?? null] as const,
   appIdQuota: (query: TeamQuery | undefined) =>

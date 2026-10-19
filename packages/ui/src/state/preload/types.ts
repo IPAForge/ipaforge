@@ -10,6 +10,10 @@ export type PreloadItem = {
   readonly source?: AppSource | undefined
   /** The file name, the link, or the catalog app's name. */
   readonly label: string
+  /** For an app picked in Browse apps: its bundle id (a catalog app's id), so its card says it's added. */
+  readonly appId?: string | undefined
+  /** For an app from an app source: the source's name, shown as where it comes from. */
+  readonly origin?: string | undefined
   readonly size?: number | undefined
   readonly refused?: PreloadRefusal | undefined
 }

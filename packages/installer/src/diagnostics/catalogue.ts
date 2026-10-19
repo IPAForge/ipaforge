@@ -82,6 +82,10 @@ export const RECOVERY_CATALOGUE = {
   'catalog.checksum_mismatch': [R.Retry, R.ChooseAnotherChannel, R.ReportIssue],
   'catalog.checksum_missing': [R.ChooseAnotherChannel, R.ImportIpa],
   'catalog.rate_limited': [R.WaitAndRetry],
+  'catalog.app_source_unreachable': [R.CheckNetwork, R.Retry],
+  // Shown in Add source, not after a run: the way around a source is adding its app's .ipa by hand.
+  'catalog.app_source_invalid': [R.ImportIpa],
+  'catalog.app_source_exists': [R.ImportIpa],
 
   'plist.invalid': [R.ChooseAnotherIpa, R.ReportIssue],
   'net.offline': [R.CheckNetwork, R.Retry],

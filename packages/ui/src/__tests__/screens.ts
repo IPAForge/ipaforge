@@ -59,13 +59,46 @@ export const fillPreload = async () => {
     return button
   })
   add.click()
-  const choose = document.querySelector('main button')
+  // Choose files…, the drop zone's first button, the first in the Add apps tab.
+  const choose = document.querySelector('main [role="tabpanel"] button')
   if (choose instanceof HTMLElement) choose.click()
   await waitFor(() => {
     expect(all('main ul li')).toHaveLength(2)
     expect(all('main .button--primary:not([disabled])')).toHaveLength(1)
   })
 }
+
+/** Preload's Sources tab, with the built-in sources listed. */
+export const showSources = async () => {
+  const tab = await waitFor(() => {
+    const found = all('main [role="tab"]')[1]
+
+    if (!(found instanceof HTMLElement)) throw new Error('no tabs yet')
+    return found
+  })
+
+  tab.click()
+  await waitFor(() => expect(all('main ul li')).toHaveLength(2))
+}
+
+/** The box a piece of text has to stay inside: its card, row, dialog, notice or page region. */
+const BOXES =
+  'article, li, [role="dialog"], [role="alertdialog"], [role="alert"], header, nav, main'
+
+/** Text that runs out of its box (a long word, name or link that didn't wrap), by its words. */
+export const textOutsideItsBox = (): string[] =>
+  [...document.body.querySelectorAll<HTMLElement>('*')]
+    .filter((element) => ownText(element).trim() !== '')
+    .filter((element) => {
+      const box = element.parentElement?.closest(BOXES)
+      if (!box || isVisuallyHidden(element)) return false
+
+      const inner = element.getBoundingClientRect()
+      const outer = box.getBoundingClientRect()
+
+      return inner.left < outer.left - 1 || inner.right > outer.right + 1
+    })
+    .map((element) => ownText(element).trim())
 
 /** A failed run's recovery box, with its fixes. */
 export const recoveryShown = () =>

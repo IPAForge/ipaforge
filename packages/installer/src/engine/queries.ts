@@ -59,5 +59,13 @@ export const createEngineQueries = (deps: InstallerDeps): EngineQueries => ({
       team,
       certificates: await developer.certificates(team)
     })),
-  planInstall: (input) => planInstall(deps, input)
+  planInstall: (input) => planInstall(deps, input),
+  listSources: () => deps.catalog.sources.list(),
+  sourceApps: () => deps.catalog.sources.apps(),
+  checkSource: (url) => deps.catalog.sources.check(url),
+  addSource: (url) => deps.catalog.sources.add(url),
+  removeSource: (id) => deps.catalog.sources.remove(id),
+  setSourceEnabled: (id, enabled) =>
+    deps.catalog.sources.setEnabled(id, enabled),
+  refreshSources: (id) => deps.catalog.sources.refresh(id)
 })

@@ -1,6 +1,6 @@
 // Every main screen in a real browser: a reference image per language (English, German for long words, Arabic
 // right to left, Japanese, and the pseudo-locale for cut-off text) and colour mode, no translated text clipped,
-// and no WCAG 2.2 AA violation that axe can find.
+// no text running out of its box, and no WCAG 2.2 AA violation that axe can find.
 import { describe, expect, it } from 'vitest'
 import { page } from 'vitest/browser'
 
@@ -13,7 +13,9 @@ import {
   pressInstall,
   recoveryShown,
   renderScreen,
-  type ScreenOptions
+  type ScreenOptions,
+  showSources,
+  textOutsideItsBox
 } from '@ui/__tests__/screens.ts'
 import type { LanguageId } from '@ui/i18n/languages/types.ts'
 
@@ -34,6 +36,10 @@ const screens = {
     await renderScreen('/preload', options)
     await fillPreload()
   },
+  'preload-sources': async (options: ScreenOptions) => {
+    await renderScreen('/preload', options)
+    await showSources()
+  },
   logs: async (options: ScreenOptions) => {
     await renderScreen('/logs', options)
     await logsShown()
@@ -52,6 +58,7 @@ describe.each(LANGUAGES)('in %s', (language) => {
     await screens[screen]({ language })
 
     expect(clippedTranslations()).toEqual([])
+    expect(textOutsideItsBox()).toEqual([])
     await expect(whole()).toMatchScreenshot(`${screen}-${language}`)
   })
 })

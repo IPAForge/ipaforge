@@ -21,7 +21,14 @@ export const PreloadRow = ({ row, onRemove }: PreloadRowProps) => {
   const { item, plan, problem } = row
   const name = plan?.inspection.app.name ?? item.label
   const version = plan?.inspection.app.version
-  const from = sourceLine(item, t('preload.row.fromCatalog'), fileSize)
+  const from = sourceLine(
+    item,
+    {
+      catalog: t('preload.row.fromCatalog'),
+      source: (name) => t('preload.row.fromSource', { name })
+    },
+    fileSize
+  )
   const onPress = () => onRemove(item.id)
 
   return (

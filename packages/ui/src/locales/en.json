@@ -459,6 +459,18 @@
       "rate_limited": {
         "title": "Too many requests to GitHub",
         "body": "GitHub is limiting downloads for now. Wait a few minutes and try again."
+      },
+      "app_source_unreachable": {
+        "title": "Couldn't reach this source",
+        "body": "Check the link, and that you're online, then try again."
+      },
+      "app_source_invalid": {
+        "title": "This link isn't an app source",
+        "body": "It doesn't list any apps in the AltStore format. Check the link, or add the app's .ipa file instead."
+      },
+      "app_source_exists": {
+        "title": "This source is already added",
+        "body": "Its apps are in Browse apps already."
       }
     },
     "plist": {
@@ -1012,6 +1024,11 @@
   "preload": {
     "title": "Preload apps",
     "description": "Install your own apps: signed with your Apple ID, installed over USB, one after another.",
+    "tabs": {
+      "label": "Preload",
+      "apps": "Add apps",
+      "sources": "Sources"
+    },
     "add": {
       "drop": "Drop .ipa files here",
       "or": "or",
@@ -1019,8 +1036,6 @@
       "link": "Add from a link…"
     },
     "catalog": {
-      "title": "From the catalog",
-      "hint": "Latest releases, checked against their published checksum",
       "recommended": "Recommended",
       "added": "Added",
       "add": "Add",
@@ -1030,10 +1045,89 @@
       "stikdebug": "Turns on JIT for apps that need it, on the device.",
       "feather": "Signs and installs apps on the device with your certificate."
     },
+    "browse": {
+      "title": "Browse apps",
+      "count": "{apps, plural, one {# app} other {# apps}} from {sources, plural, one {# source} other {# sources}}",
+      "source": "Source",
+      "allSources": "All sources",
+      "search": "Search apps",
+      "manage": "Manage sources",
+      "noMatch": "No apps match “{query}”.",
+      "allOff": "Every source is turned off. Turn one on in Sources.",
+      "loading": "Reading the sources…",
+      "catalogLine": "Latest release · checked against its checksum",
+      "version": "{version} · {size}",
+      "from": "{name}, also in {others}",
+      "details": "Details of {name}",
+      "notRefreshed": {
+        "title": "Couldn't refresh {name}",
+        "body": "Showing its apps from the last refresh, {when}.",
+        "retry": "Try again"
+      }
+    },
+    "detail": {
+      "version": "Version",
+      "latest": "{version} (latest)",
+      "size": "Size",
+      "needs": "Needs",
+      "needsIos": "iOS {version}",
+      "anyIos": "Any iOS",
+      "from": "From",
+      "builtin": "Built in · trusted",
+      "added": "A source you added",
+      "untrusted": "From a source you added: IPAForge doesn't review its apps.",
+      "add": "Add to the list",
+      "inList": "In the list",
+      "close": "Close"
+    },
+    "sources": {
+      "description": "Where Browse apps finds apps. Built-in sources are kept by IPAForge; add others by their link (AltStore format).",
+      "add": "Add source…",
+      "refreshAll": "Refresh all",
+      "list": "Sources",
+      "builtin": "Built in · trusted",
+      "added": "Added by you",
+      "catalogName": "IPAForge catalog",
+      "apps": "{count, plural, one {# app} other {# apps}}",
+      "updated": "updated {when}",
+      "notRead": "Not read yet",
+      "skipped": "{count, plural, one {# skipped (not .ipa)} other {# skipped (not .ipa)}}",
+      "failed": "Couldn't be reached.",
+      "failedCopy": "Showing its last copy, from {when}.",
+      "refreshing": "Refreshing…",
+      "show": "Show apps from {name}",
+      "refresh": "Refresh {name}",
+      "remove": "Remove {name}",
+      "on": "On",
+      "off": "Off",
+      "note": "IPAForge doesn't review apps in sources you add. Add only sources you trust."
+    },
+    "addSource": {
+      "title": "Add a source",
+      "label": "Source link",
+      "placeholder": "https://example.com/apps.json",
+      "hint": "A source in the AltStore format, the kind SideStore reads. Usually ends in .json.",
+      "check": "Check",
+      "checking": "Checking the source…",
+      "notLink": "Enter a link that starts with https://",
+      "notHttps": "Use an https:// link: IPAForge only reads sources over a secure connection.",
+      "previewTitle": "Add this source?",
+      "includes": "{count, plural, one {# app, including:} other {# apps, including:}}",
+      "skipped": "{count, plural, one {# more left out: its download isn't an .ipa.} other {# more left out: their download isn't an .ipa.}}",
+      "warningTitle": "Only add sources you trust",
+      "warningBody": "IPAForge doesn't review the apps in sources you add. Each app is still checked before it's installed.",
+      "back": "Back",
+      "confirm": "Add source"
+    },
+    "removeSource": {
+      "title": "Remove {name}?",
+      "body": "Its apps disappear from Browse apps. Apps installed from it stay on the device, and apps in the To install list stay there too.",
+      "confirm": "Remove"
+    },
     "list": {
       "title": "To install",
       "count": "{count, plural, one {# app} other {# apps}}",
-      "empty": "No apps yet. Drop .ipa files here, choose them, add a link, or pick from the catalog."
+      "empty": "No apps yet. Drop .ipa files here, choose them, add a link, or pick one in Browse apps."
     },
     "row": {
       "waiting": "Waiting for the device and Apple ID",
@@ -1045,7 +1139,8 @@
       "pairing": "Gets the pairing file and certificate",
       "fromCatalog": "From the catalog · Stable",
       "remove": "Remove {name}",
-      "cannot": "Can't be installed."
+      "cannot": "Can't be installed.",
+      "fromSource": "From {name}"
     },
     "problem": {
       "notIpa": "Only .ipa files can be installed.",

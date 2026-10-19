@@ -9,6 +9,10 @@ export type CatalogConfig = {
   readonly requestTimeoutMs: number
   /** How long a fetched manifest is reused before fetching again. */
   readonly manifestTtlMs: number
+  /** Largest app source (AltStore format) read. */
+  readonly maxSourceBytes: number
+  /** How long an app source's copy is reused before Preload reads it again (Refresh always does). */
+  readonly sourceTtlMs: number
 }
 
 export const DEFAULT_CATALOG_CONFIG: CatalogConfig = {
@@ -17,5 +21,7 @@ export const DEFAULT_CATALOG_CONFIG: CatalogConfig = {
   githubApi: 'https://api.github.com',
   maxDownloadBytes: 2 * 1024 * 1024 * 1024,
   requestTimeoutMs: 30_000,
-  manifestTtlMs: 60 * 60 * 1000
+  manifestTtlMs: 60 * 60 * 1000,
+  maxSourceBytes: 8 * 1024 * 1024,
+  sourceTtlMs: 60 * 60 * 1000
 }

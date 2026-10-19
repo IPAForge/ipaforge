@@ -18,3 +18,15 @@ export const pairingCatalogApps: ReadonlySet<string> = new Set([
 
 /** The catalog app the card marks as recommended. */
 export const RECOMMENDED_CATALOG_APP = 'sidestore'
+
+/** The id of IPAForge's own catalog among the sources. */
+export const CATALOG_SOURCE_ID = 'ipaforge'
+
+/** The source filter's value for "All sources". */
+export const ALL_SOURCES = 'all'
+
+/** How many app names Add source shows from a source before adding it. */
+export const PREVIEW_APPS = 4
+
+/** Preload's tab keys (React Aria keys, not DOM ids). */
+export const PreloadTabKey = { apps: 'apps', sources: 'sources' } as const

@@ -3,6 +3,7 @@ import { join } from 'node:path'
 
 import { createFileDownloadStore } from '@desktop/main/adapters/file-download-store.ts'
 import { createFileScratchStore } from '@desktop/main/adapters/file-scratch-store.ts'
+import { createFileSecretStore } from '@desktop/main/adapters/file-secret-store.ts'
 import { createNodeHttpClient } from '@desktop/main/adapters/http-client.ts'
 import { createNodeUsbmuxTransport } from '@desktop/main/adapters/usbmux-transport.ts'
 import { createWebSocketFactory } from '@desktop/main/adapters/web-socket.ts'
@@ -15,7 +16,7 @@ import { type Logger, type SecretStore, silentLogger } from '@ipaforge/kernel'
 export type DesktopEngineOptions = {
   /** Accounts, sessions, certificates and their keys, pair records the OS would not keep. */
   readonly secrets: SecretStore
-  /** Downloads go to `<dataDir>/downloads`, signed IPAs wait in `<dataDir>/scratch`. */
+  /** Downloads go to `<dataDir>/downloads`, signed IPAs wait in `<dataDir>/scratch`, app sources in `<dataDir>/sources.json`. */
   readonly dataDir: string
   readonly logger?: Logger
 }
@@ -42,6 +43,8 @@ export const createDesktopEngine = ({
     catalog: createCatalog({
       http,
       store: createFileDownloadStore(join(dataDir, 'downloads')),
+      // App sources aren't secret: the same 0600 key/value file the anisette identity uses, a file of their own.
+      sourceStore: createFileSecretStore(join(dataDir, 'sources.json')),
       logger
     }),
     secrets,

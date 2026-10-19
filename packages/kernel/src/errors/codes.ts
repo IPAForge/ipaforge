@@ -63,6 +63,11 @@ export const ErrorCode = {
   ChecksumMismatch: 'catalog.checksum_mismatch',
   ChecksumMissing: 'catalog.checksum_missing',
   GithubRateLimited: 'catalog.rate_limited',
+  /** An app source (AltStore format) couldn't be fetched: offline, an HTTP error, or a timeout. */
+  AppSourceUnreachable: 'catalog.app_source_unreachable',
+  /** The link answered, but not with an app source (not JSON, too large, or no app in the AltStore format). */
+  AppSourceInvalid: 'catalog.app_source_invalid',
+  AppSourceExists: 'catalog.app_source_exists',
 
   // plist
   InvalidPlist: 'plist.invalid',

@@ -15,7 +15,13 @@ import type {
   SavedAccount,
   Team
 } from '@ipaforge/apple'
-import type { CatalogApp, Channel } from '@ipaforge/catalog'
+import type {
+  CatalogApp,
+  Channel,
+  SourceApps,
+  SourceInfo,
+  SourcePreview
+} from '@ipaforge/catalog'
 import type { DeviceCheck, UsbmuxDevice } from '@ipaforge/device'
 import type {
   CompatibilityProblem,
@@ -111,6 +117,18 @@ export type EngineQueries = {
   listCertificates(query: TeamQuery): Promise<TeamCertificates>
   /** Read-only preview of installing one app (identity, App ID budget, free-app slots, certificate). */
   planInstall(input: PlanInstallInput): Promise<InstallPlan>
+  /** App sources (the built-in ones and those added) with what was last read from each. */
+  listSources(): Promise<readonly SourceInfo[]>
+  /** The apps of every AltStore-format source that's on, read again when their copy is old. */
+  sourceApps(): Promise<readonly SourceApps[]>
+  /** Reads a link as an app source without saving it: what Add source shows before it's confirmed. */
+  checkSource(url: string): Promise<SourcePreview>
+  addSource(url: string): Promise<SourceInfo>
+  /** Forgets a source the user added (a built-in one can only be turned off). */
+  removeSource(id: string): Promise<void>
+  setSourceEnabled(id: string, enabled: boolean): Promise<void>
+  /** Reads one source again, or every source that's on; returns the list after. */
+  refreshSources(id?: string): Promise<readonly SourceInfo[]>
 }
 
 export type RunEvent =

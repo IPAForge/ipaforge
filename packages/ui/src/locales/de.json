@@ -459,6 +459,18 @@
       "rate_limited": {
         "title": "Zu viele Anfragen an GitHub",
         "body": "GitHub begrenzt Downloads gerade. Warte ein paar Minuten und versuche es erneut."
+      },
+      "app_source_unreachable": {
+        "title": "Diese Quelle ist nicht erreichbar",
+        "body": "Prüfe den Link und deine Internetverbindung und versuche es dann erneut."
+      },
+      "app_source_invalid": {
+        "title": "Dieser Link ist keine App-Quelle",
+        "body": "Er listet keine Apps im AltStore-Format. Prüfe den Link oder füge stattdessen die .ipa-Datei der App hinzu."
+      },
+      "app_source_exists": {
+        "title": "Diese Quelle ist schon hinzugefügt",
+        "body": "Ihre Apps sind bereits unter „Apps durchsuchen“."
       }
     },
     "plist": {
@@ -1012,6 +1024,11 @@
   "preload": {
     "title": "Apps vorab installieren",
     "description": "Installiere deine eigenen Apps: mit deiner Apple-ID signiert, per USB installiert, eine nach der anderen.",
+    "tabs": {
+      "label": "Vorab installieren",
+      "apps": "Apps hinzufügen",
+      "sources": "Quellen"
+    },
     "add": {
       "drop": ".ipa-Dateien hier ablegen",
       "or": "oder",
@@ -1019,8 +1036,6 @@
       "link": "Über einen Link hinzufügen…"
     },
     "catalog": {
-      "title": "Aus dem Katalog",
-      "hint": "Neueste Versionen, gegen ihre veröffentlichte Prüfsumme geprüft",
       "recommended": "Empfohlen",
       "added": "Hinzugefügt",
       "add": "Hinzufügen",
@@ -1030,10 +1045,89 @@
       "stikdebug": "Aktiviert JIT für Apps, die es brauchen, auf dem Gerät.",
       "feather": "Signiert und installiert Apps auf dem Gerät mit deinem Zertifikat."
     },
+    "browse": {
+      "title": "Apps durchsuchen",
+      "count": "{apps, plural, one {# App} other {# Apps}} aus {sources, plural, one {# Quelle} other {# Quellen}}",
+      "source": "Quelle",
+      "allSources": "Alle Quellen",
+      "search": "Apps suchen",
+      "manage": "Quellen verwalten",
+      "noMatch": "Keine Apps passen zu „{query}“.",
+      "allOff": "Alle Quellen sind ausgeschaltet. Schalte eine unter „Quellen“ ein.",
+      "loading": "Quellen werden gelesen…",
+      "catalogLine": "Neueste Version · gegen ihre Prüfsumme geprüft",
+      "version": "{version} · {size}",
+      "from": "{name}, auch in {others}",
+      "details": "Details zu {name}",
+      "notRefreshed": {
+        "title": "{name} konnte nicht aktualisiert werden",
+        "body": "Zeigt ihre Apps von der letzten Aktualisierung, {when}.",
+        "retry": "Erneut versuchen"
+      }
+    },
+    "detail": {
+      "version": "Version",
+      "latest": "{version} (neueste)",
+      "size": "Größe",
+      "needs": "Benötigt",
+      "needsIos": "iOS {version}",
+      "anyIos": "Jedes iOS",
+      "from": "Aus",
+      "builtin": "Integriert · vertrauenswürdig",
+      "added": "Eine von dir hinzugefügte Quelle",
+      "untrusted": "Aus einer von dir hinzugefügten Quelle: IPAForge prüft ihre Apps nicht.",
+      "add": "Zur Liste hinzufügen",
+      "inList": "In der Liste",
+      "close": "Schließen"
+    },
+    "sources": {
+      "description": "Wo „Apps durchsuchen“ Apps findet. Integrierte Quellen pflegt IPAForge; weitere fügst du über ihren Link hinzu (AltStore-Format).",
+      "add": "Quelle hinzufügen…",
+      "refreshAll": "Alle aktualisieren",
+      "list": "Quellen",
+      "builtin": "Integriert · vertrauenswürdig",
+      "added": "Von dir hinzugefügt",
+      "catalogName": "IPAForge-Katalog",
+      "apps": "{count, plural, one {# App} other {# Apps}}",
+      "updated": "aktualisiert {when}",
+      "notRead": "Noch nicht gelesen",
+      "skipped": "{count, plural, one {# übersprungen (keine .ipa)} other {# übersprungen (keine .ipa)}}",
+      "failed": "Nicht erreichbar.",
+      "failedCopy": "Zeigt ihre letzte Kopie vom {when}.",
+      "refreshing": "Wird aktualisiert…",
+      "show": "Apps aus {name} anzeigen",
+      "refresh": "{name} aktualisieren",
+      "remove": "{name} entfernen",
+      "on": "Ein",
+      "off": "Aus",
+      "note": "IPAForge prüft keine Apps in Quellen, die du hinzufügst. Füge nur Quellen hinzu, denen du vertraust."
+    },
+    "addSource": {
+      "title": "Quelle hinzufügen",
+      "label": "Link zur Quelle",
+      "placeholder": "https://example.com/apps.json",
+      "hint": "Eine Quelle im AltStore-Format, wie SideStore sie liest. Endet meist auf .json.",
+      "check": "Prüfen",
+      "checking": "Quelle wird geprüft…",
+      "notLink": "Gib einen Link ein, der mit https:// beginnt",
+      "notHttps": "Verwende einen https://-Link: IPAForge liest Quellen nur über eine sichere Verbindung.",
+      "previewTitle": "Diese Quelle hinzufügen?",
+      "includes": "{count, plural, one {# App, darunter:} other {# Apps, darunter:}}",
+      "skipped": "{count, plural, one {# weitere ausgelassen: Ihr Download ist keine .ipa.} other {# weitere ausgelassen: Ihr Download ist keine .ipa.}}",
+      "warningTitle": "Füge nur Quellen hinzu, denen du vertraust",
+      "warningBody": "IPAForge prüft die Apps in Quellen, die du hinzufügst, nicht. Jede App wird trotzdem vor der Installation geprüft.",
+      "back": "Zurück",
+      "confirm": "Quelle hinzufügen"
+    },
+    "removeSource": {
+      "title": "{name} entfernen?",
+      "body": "Ihre Apps verschwinden aus „Apps durchsuchen“. Daraus installierte Apps bleiben auf dem Gerät, und Apps in der Liste „Zu installieren“ bleiben ebenfalls dort.",
+      "confirm": "Entfernen"
+    },
     "list": {
       "title": "Zu installieren",
       "count": "{count, plural, one {# App} other {# Apps}}",
-      "empty": "Noch keine Apps. Lege .ipa-Dateien hier ab, wähle sie aus, füge einen Link hinzu oder wähle aus dem Katalog."
+      "empty": "Noch keine Apps. Lege .ipa-Dateien hier ab, wähle sie aus, füge einen Link hinzu oder wähle eine unter „Apps durchsuchen“."
     },
     "row": {
       "waiting": "Wartet auf Gerät und Apple-ID",
@@ -1045,7 +1139,8 @@
       "pairing": "Erhält die Pairing-Datei und das Zertifikat",
       "fromCatalog": "Aus dem Katalog · Stabil",
       "remove": "{name} entfernen",
-      "cannot": "Kann nicht installiert werden."
+      "cannot": "Kann nicht installiert werden.",
+      "fromSource": "Aus {name}"
     },
     "problem": {
       "notIpa": "Nur .ipa-Dateien können installiert werden.",
