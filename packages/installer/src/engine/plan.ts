@@ -30,7 +30,7 @@ const sourceFile = async (
   deps: InstallerDeps,
   source: AppSource
 ): Promise<FileSource> => {
-  if (source.kind === 'file') return source.file
+  if (source.kind !== 'catalog') return source.file
   const channel =
     source.channel ?? (await deps.catalog.recommendedChannel(source.appId))
 

@@ -1,6 +1,7 @@
 // Public API of @ipaforge/installer: the Engine facade, its flows, prompts and diagnostics, and the pipeline runner.
 
 export { createDeviceWatch } from '@installer/application/device-watch.ts'
+export type { RefreshPlanQuery } from '@installer/application/installed/refresh-plan.ts'
 export type {
   DeviceWatch,
   DeviceWatchEvent,
@@ -21,23 +22,30 @@ export {
   occupiedFreeSlots
 } from '@installer/domain/free-apps.ts'
 export { StepLabel } from '@installer/domain/labels.ts'
+export type { InstalledStore } from '@installer/domain/ports/installed-store.ts'
+export type { KeptIpaStore } from '@installer/domain/ports/kept-ipa-store.ts'
 export type { ScratchStore } from '@installer/domain/ports/scratch-store.ts'
 export type { IpaSigner, SignRequest } from '@installer/domain/ports/types.ts'
 export { PromptKind } from '@installer/domain/prompts.ts'
 export type {
   AccountState,
   AppJob,
+  AppMarker,
+  AppOrigin,
   AppSource,
   CertificateChoice,
   DeviceSummary,
   FreeProfileApp,
   FreeProfileRules,
+  InstalledApp,
+  InstalledRecord,
   InstallState,
   PairingAppChoice,
   ProfileFacts,
   PromptAnswer,
   PromptData,
   Prompts,
+  RefreshDecision,
   RemovableApp,
   TwoFactorCodeAnswer
 } from '@installer/domain/types.ts'
@@ -47,8 +55,10 @@ export type {
   CertificateStatus,
   CommandOptions,
   EngineQueries,
+  InstalledAppsQuery,
   InstallPlan,
   PlanInstallInput,
+  RemoveAppInput,
   RunEvent,
   RunHandle,
   TeamCertificates,
@@ -61,6 +71,10 @@ export {
 } from '@installer/flows/install-apps.ts'
 export { INSTALL_SIDESTORE } from '@installer/flows/install-sidestore.ts'
 export { PLACE_PAIRING } from '@installer/flows/place-pairing.ts'
+export {
+  REFRESH_APPS,
+  type RefreshAppsInput
+} from '@installer/flows/refresh-apps.ts'
 export { SIGN_IN } from '@installer/flows/sign-in.ts'
 export type {
   InstallSideStoreInput,

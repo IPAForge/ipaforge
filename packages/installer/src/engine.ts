@@ -1,10 +1,11 @@
 // The Engine facade: every capability the UI can call. Commands start a flow and return a run handle; queries
 // read; `classify` turns any failure into a catalogued code with its recovery actions.
 import { createDeviceWatch } from '@installer/application/device-watch.ts'
+import { installedSource } from '@installer/application/installed/installed-source.ts'
 import type { DeviceWatchListener } from '@installer/application/types.ts'
 import { resolveInstallerDeps } from '@installer/deps.ts'
 import { classify, type Diagnosis } from '@installer/diagnostics/classify.ts'
-import type { InstallState } from '@installer/domain/types.ts'
+import type { AppSource, InstallState } from '@installer/domain/types.ts'
 import { createEngineQueries } from '@installer/engine/queries.ts'
 import { startRun } from '@installer/engine/run-handle.ts'
 import type {
@@ -18,6 +19,10 @@ import {
 } from '@installer/flows/install-apps.ts'
 import { installSideStoreFlow } from '@installer/flows/install-sidestore.ts'
 import { placePairingFlow } from '@installer/flows/place-pairing.ts'
+import {
+  type RefreshAppsInput,
+  refreshAppsFlow
+} from '@installer/flows/refresh-apps.ts'
 import { signInFlow } from '@installer/flows/sign-in.ts'
 import type {
   InstallSideStoreInput,
@@ -60,6 +65,16 @@ export type Engine = EngineQueries & {
    */
   signOut(accountId: string): Promise<void>
   classify(error: unknown): Diagnosis
+  /** An app the Engine installed, as an install source for Refresh: its kept IPA and its record. */
+  installedSource(udid: string, bundleId: string): Promise<AppSource>
+  /**
+   * Refresh: new profiles only for the apps whose certificate is still valid (see `refreshPlan`), and the others
+   * signed and installed again, in one run.
+   */
+  refreshApps(
+    input: RefreshAppsInput,
+    options?: CommandOptions<InstallState>
+  ): RunHandle<InstallState>
 }
 
 export const createEngine = (input: InstallerDepsInput): Engine => {
@@ -76,6 +91,8 @@ export const createEngine = (input: InstallerDepsInput): Engine => {
       ),
     installApps: (command, options) =>
       startRun(deps, (runtime) => installAppsFlow(runtime, command), options),
+    refreshApps: (command, options) =>
+      startRun(deps, (runtime) => refreshAppsFlow(runtime, command), options),
     placePairing: (command, options) =>
       startRun(deps, (runtime) => placePairingFlow(runtime, command), options),
     signIn: (command, options) =>
@@ -86,6 +103,7 @@ export const createEngine = (input: InstallerDepsInput): Engine => {
     },
     watchDevices: (listener, options) =>
       deviceWatch.subscribe(listener, options?.signal),
-    classify
+    classify,
+    installedSource: (udid, bundleId) => installedSource(deps, udid, bundleId)
   }
 }

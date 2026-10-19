@@ -66,14 +66,15 @@ describe('Browse apps', () => {
       expect.arrayContaining(['SideStore', 'LiveContainer', 'StikDebug'])
     )
     expect(cards().filter((name) => name === 'SideStore')).toHaveLength(1)
+    // The card shows the first source and "+1"; the other sources are named on hover.
     expect(
-      within(screen.getByRole('article', { name: 'SideStore' })).getByText(
+      within(screen.getByRole('article', { name: 'SideStore' })).getByTitle(
         t('preload.browse.from', {
           name: t('preload.sources.catalogName'),
           others: 'SideStore Official'
         })
-      )
-    ).toBeDefined()
+      ).textContent
+    ).toBe(`${t('preload.sources.catalogName')} · +1`)
   })
 
   it('searches the apps and says when nothing matches', async () => {

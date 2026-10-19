@@ -107,8 +107,9 @@ export const createActiveRunStore = ({
     start: (input) => {
       if (!isRunActive(state?.view)) launch({ kind: 'sidestore', input })
     },
-    startApps: (input, apps) => {
-      if (!isRunActive(state?.view)) launch({ kind: 'apps', input, apps })
+    startApps: (input, apps, options) => {
+      if (!isRunActive(state?.view))
+        launch({ kind: 'apps', input, apps, ...options })
     },
     resume: () => {
       if (state?.view.checkpoint) launch(state, state.view)

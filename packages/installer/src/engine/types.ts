@@ -1,5 +1,10 @@
+import type { RefreshPlanQuery } from '@installer/application/installed/refresh-plan.ts'
 import type { FreeSlots } from '@installer/application/types.ts'
-import type { AppSource } from '@installer/domain/types.ts'
+import type {
+  AppSource,
+  InstalledApp,
+  RefreshDecision
+} from '@installer/domain/types.ts'
 import type {
   Checkpoint,
   PipelineEvent,
@@ -129,6 +134,25 @@ export type EngineQueries = {
   setSourceEnabled(id: string, enabled: boolean): Promise<void>
   /** Reads one source again, or every source that's on; returns the list after. */
   refreshSources(id?: string): Promise<readonly SourceInfo[]>
+  /**
+   * The apps on the device signed with one of `teamIds`, soonest to expire first, each with the Engine's record
+   * when it installed it (then it can be refreshed). Read from the device: its profiles say when each expires.
+   */
+  installedApps(query: InstalledAppsQuery): Promise<InstalledApp[]>
+  /** Deletes the app from the device and forgets it, with its kept IPA. */
+  removeApp(input: RemoveAppInput): Promise<void>
+  /** For each app to refresh: a new profile only (its certificate is still valid), or signed and installed again. */
+  refreshPlan(query: RefreshPlanQuery): Promise<RefreshDecision[]>
+}
+
+export type InstalledAppsQuery = {
+  readonly udid: string
+  readonly teamIds: readonly string[]
+}
+
+export type RemoveAppInput = {
+  readonly udid: string
+  readonly bundleId: string
 }
 
 export type RunEvent =

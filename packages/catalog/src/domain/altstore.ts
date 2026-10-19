@@ -33,6 +33,7 @@ const appSchema = z.looseObject({
   downloadURL: z.string().optional(),
   size: z.number().nonnegative().optional(),
   minOSVersion: z.string().optional(),
+  tintColor: z.unknown().optional(),
   versions: z.array(z.unknown()).optional()
 })
 
@@ -46,6 +47,16 @@ const sourceSchema = z.looseObject({
 type RawApp = z.infer<typeof appSchema>
 
 const IPA_EXTENSION = '.ipa'
+
+const HEX_COLOR = /^#?([\da-f]{6})$/i
+
+/** The app's colour as `#rrggbb`; sources write it with or without the `#`, anything else is dropped. */
+const readTint = (value: unknown): string | undefined => {
+  const match =
+    typeof value === 'string' ? HEX_COLOR.exec(value.trim()) : undefined
+
+  return match?.[1] ? `#${match[1].toLowerCase()}` : undefined
+}
 
 /** Only https links whose path ends in `.ipa`: what Preload accepts from a link added by hand. */
 export const isIpaDownload = (url: string): boolean => {
@@ -119,6 +130,7 @@ const readApp = (value: unknown): SourceApp | undefined => {
     developer: app.developerName,
     subtitle: app.subtitle,
     description: app.localizedDescription,
+    tint: readTint(app.tintColor),
     versions
   })
 }

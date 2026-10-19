@@ -33,7 +33,7 @@ describe('Language settings', () => {
     expect(html().getAttribute('lang')).toBe('de')
   })
 
-  it('lists System plus every language in its own name, drafts labelled', async () => {
+  it('lists System plus every language in its own name', async () => {
     const user = userEvent.setup()
     await renderApp('/settings')
     const list = await openLanguages(user)
@@ -44,11 +44,11 @@ describe('Language settings', () => {
     expect(options).toEqual([
       t('settings.language.system', { language: 'English' }),
       'English',
-      `Deutsch${t('settings.language.draft')}`,
-      `Română${t('settings.language.draft')}`,
-      `Русский${t('settings.language.draft')}`,
-      `العربية${t('settings.language.draft')}`,
-      `日本語${t('settings.language.draft')}`,
+      'Deutsch',
+      'Română',
+      'Русский',
+      'العربية',
+      '日本語',
       expect.stringContaining('English (') // the dev-only pseudo-locale
     ])
   })

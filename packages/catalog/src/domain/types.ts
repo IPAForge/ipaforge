@@ -37,6 +37,8 @@ export type SourceApp = {
   readonly developer?: string
   readonly subtitle?: string
   readonly description?: string
+  /** The app's colour from the source (`#rrggbb`), for its icon. */
+  readonly tint?: string
   readonly versions: readonly SourceAppVersion[]
 }
 

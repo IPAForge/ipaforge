@@ -1,3 +1,4 @@
+import { CERTIFICATE_FILE } from '@installer/sidestore/constants.ts'
 // In-memory stand-ins for the contexts the installer orchestrates, at the level of their public interfaces.
 
 import type { ScratchStore } from '@installer/domain/ports/scratch-store.ts'
@@ -132,6 +133,7 @@ export const fakeDevices = (options: FakeDeviceOptions = {}) => {
     installs: [] as FileSource[],
     uninstalled: [] as string[],
     removedProfiles: [] as string[],
+    installedProfiles: [] as Uint8Array[],
     placed: [] as AppFileTarget[][]
   }
   const handle = {
@@ -178,6 +180,9 @@ export const fakeDevices = (options: FakeDeviceOptions = {}) => {
       installed.delete(bundleId)
     },
     listProfiles: async () => profiles,
+    installProfile: async (data: Uint8Array) => {
+      calls.installedProfiles.push(data)
+    },
     removeProfile: async (uuid: string) => {
       calls.removedProfiles.push(uuid)
       profiles = profiles.filter((candidate) => candidate.uuid !== uuid)
@@ -233,6 +238,8 @@ export type FakeAppleOptions = {
   /** Certificates already on the team, made by other tools. */
   existingCertificates?: DevelopmentCertificate[]
   maxCertificates?: number
+  /** App IDs already on the team (identifiers), for refreshing their profiles. */
+  appIds?: string[]
   appIdPlan?: Partial<AppIdPlan>
   /** The session saved for the account (default `session`; null = none saved). */
   savedSession?: AppleSession | null
@@ -308,7 +315,9 @@ export const fakeApple = (options: FakeAppleOptions = {}) => {
     banned: [] as string[],
     saved: 0,
     savedOptions: [] as unknown[],
-    removed: [] as string[]
+    removed: [] as string[],
+    /** App IDs whose profile was downloaded (a refresh). */
+    profiles: [] as string[]
   }
   let serial = 0
 
@@ -360,7 +369,27 @@ export const fakeApple = (options: FakeAppleOptions = {}) => {
       )
     },
     certificates: async () => certificates,
-    appIds: async () => ({ appIds: [], quota: { available: 10, max: 10 } }),
+    appIds: async () => ({
+      appIds: (options.appIds ?? []).map((identifier) => ({
+        id: `id-${identifier}`,
+        identifier,
+        name: identifier,
+        features: createDict()
+      })),
+      quota: { available: 10, max: 10 }
+    }),
+    profile: async (_team: Team, appId: { identifier: string }) => {
+      calls.profiles.push(appId.identifier)
+
+      return {
+        id: `profile-${appId.identifier}`,
+        uuid: `new-${appId.identifier}`,
+        name: appId.identifier,
+        data: new Uint8Array([7]),
+        expiresAt: new Date('2026-11-01T00:00:00Z'),
+        appIdId: `id-${appId.identifier}`
+      }
+    },
     planAppIds: async (
       _team: Team,
       identifiers: readonly string[]
@@ -543,3 +572,9 @@ export const fakeSigner = (
 
   return { signer, calls, idOf }
 }
+
+/** Whether a sign request gives SideStore the certificate (every request also carries IPAForge's mark). */
+export const sharesCertificate = (request: SignRequest | undefined): boolean =>
+  (request?.additions?.(bundlesFor('com.SideStore.SideStore')) ?? []).some(
+    (addition) => addition.files?.has(CERTIFICATE_FILE) ?? false
+  )

@@ -6,7 +6,7 @@
     "skipToContent": "コンテンツへスキップ",
     "navigation": "セクション",
     "credit": {
-      "madeWith": "{name} が ❤️ と ☕ で作りました",
+      "madeWith": "{name}が ❤️ と ☕ で作りました",
       "copyright": "© {year} {name}"
     }
   },
@@ -19,7 +19,7 @@
     "accountMenu": "Apple ID",
     "addAppleId": "Apple IDを追加…",
     "noAccounts": "Apple IDはまだありません。",
-    "noDevicesHint": "iPhone または iPad をケーブルで接続し、ロックを解除してください。",
+    "noDevicesHint": "iPhoneまたはiPadをケーブルで接続し、ロックを解除してください。",
     "openDevices": "デバイスを開く"
   },
   "nav": {
@@ -28,6 +28,7 @@
     },
     "install": "インストール",
     "preload": "プリロード",
+    "apps": "アプリ",
     "devices": "デバイス",
     "accounts": "アカウント",
     "certificates": "証明書",
@@ -40,21 +41,22 @@
   },
   "install": {
     "title": "SideStoreをインストール",
-    "description": "あなたのApple IDで署名し、USB経由でインストールします。",
+    "description": "Apple IDで署名し、USB経由でインストールします。",
     "steps": {
       "device": "デバイスを確認",
       "resolve": "リリースを検索",
       "download": "ダウンロード",
-      "inspect": "Appを検査",
+      "inspect": "アプリを検査",
       "certificate_sharing": "証明書を共有",
       "sign_in": "Appleにサインイン",
       "team": "チームを選択",
       "register_device": "デバイスを登録",
       "certificate": "証明書を準備",
       "app_ids": "App IDを登録",
-      "free_apps": "無料Appの上限を確認",
+      "free_apps": "無料アプリの上限を確認",
       "provision": "プロビジョニングプロファイルを取得",
-      "sign": "Appに署名",
+      "refresh_profiles": "新しいプロファイルを取得",
+      "sign": "アプリに署名",
       "install": "デバイスにインストール",
       "pairing": "ペアリングファイルを配置",
       "remember": "このインストールを記録"
@@ -64,23 +66,23 @@
       "body": "{appleId}の保存されたセッションの有効期限が切れました。インストールはできます。その段階でIPAForgeがパスワードを尋ねます。"
     },
     "blocked": {
-      "title": "Apple が {device} で {appleId} をブロックしました",
-      "body": "この Apple ID で署名した App はこのデバイスで開けません。別の Apple ID を使用してください。",
-      "use": "{appleId} を使用"
+      "title": "Appleが{device}で{appleId}をブロックしました",
+      "body": "このApple IDで署名したアプリはこのデバイスで開けません。別のApple IDを使用してください。",
+      "use": "{appleId}を使用"
     },
     "home": {
       "what": "インストールするもの",
       "channel": "チャンネル",
-      "install": "{app} をインストール"
+      "install": "{app}をインストール"
     },
     "variant": {
       "sidestore": {
         "title": "SideStore",
-        "description": "デバイス上で App の更新とインストールを自動で行います。App ID を 2 つ使います。"
+        "description": "デバイス上でアプリのリフレッシュとインストールを自動で行います。App IDを2つ使います。"
       },
       "livecontainer": {
         "title": "LiveContainer + SideStore",
-        "description": "1 つの App の中で多数の App を動かし、3 App の上限を超えられます。App ID を 5 つ使います。"
+        "description": "1つのアプリの中で多数のアプリを動かせるため、3個の上限を超えられます。App IDを5つ使います。"
       }
     },
     "channel": {
@@ -91,38 +93,38 @@
     },
     "plan": {
       "title": "このインストール",
-      "waiting": "デバイスと Apple ID の準備ができると表示されます。",
-      "checking": "{app} をダウンロードして Apple に確認中… ダウンロードは保存され、インストールで再利用されます。",
-      "unavailable": "Apple に確認できませんでした。インストールはできます。各ステップで再確認します。",
+      "waiting": "デバイスとApple IDの準備ができると表示されます。",
+      "checking": "{app}をダウンロードしてAppleに確認中… ダウンロードは保存され、インストールで再利用されます。",
+      "unavailable": "Appleに確認できませんでした。インストールはできます。各ステップで再確認します。",
       "appIds": "App ID",
-      "appIdsValue": "{created, plural, =0 {{reused} 個すべて登録済み} other {{reused, plural, =0 {新規 {created} 個} other {新規 {created} 個、再利用 {reused} 個}}}} · {left, plural, other {今週の残り # 個}}",
-      "nextSlot": "次の空きは {date}",
-      "freeApps": "デバイス上の無料 App",
-      "freeAppsValue": "{limit} 個中 {used} 個使用",
-      "freeAppsRoom": "この App の空きがあります",
-      "freeAppsFull": "削除する App を選びます",
+      "appIdsValue": "{created, plural, =0 {{reused}個すべて登録済み} other {{reused, plural, =0 {新規{created}個} other {新規{created}個、再利用{reused}個}}}} · {left, plural, other {今週の残り#個}}",
+      "nextSlot": "次の空きは{date}",
+      "freeApps": "デバイス上の無料アプリ",
+      "freeAppsValue": "{limit}個中{used}個使用",
+      "freeAppsRoom": "このアプリの空きがあります",
+      "freeAppsFull": "削除するアプリを選びます",
       "noLimit": "上限なし（有料チーム）",
       "certificate": "証明書",
       "certificateReused": "再利用",
       "certificateNew": "新しく作成",
-      "certificatesOnTeam": "{count, plural, =0 {チームにはまだありません} other {チームに # 個}}",
+      "certificatesOnTeam": "{count, plural, =0 {チームにはまだありません} other {チームに#個}}",
       "team": "チーム",
-      "certificateNewWhy": "このチームには IPAForge 自身の証明書がまだありません。{count, plural, =0 {} other {既存の # 個は他のツールのもので、秘密鍵はそのツールが保持しています。}}"
+      "certificateNewWhy": "このチームにはIPAForge自身の証明書がまだありません。{count, plural, =0 {} other {既存の#個は他のツールのもので、秘密鍵はそのツールが保持しています。}}"
     },
     "readiness": {
       "noDevice": "先にデバイスを接続してください。",
       "checking": "デバイスを確認中…",
       "device": "デバイスの準備ができると使えます。",
-      "noAccount": "先に Apple ID を追加してください。",
-      "blocked": "先に別の Apple ID を使ってください。",
-      "appIds": "今週の App ID が足りません。",
+      "noAccount": "先にApple IDを追加してください。",
+      "blocked": "先に別のApple IDを使ってください。",
+      "appIds": "今週のApp IDが足りません。",
       "ready": "準備完了です。"
     },
     "run": {
       "title": {
-        "running": "{app} をインストール中",
-        "completed": "{app} をインストールしました",
-        "failed": "{app} をインストールできませんでした",
+        "running": "{app}をインストール中",
+        "completed": "{app}をインストールしました",
+        "failed": "{app}をインストールできませんでした",
         "cancelled": "インストールを中止しました"
       },
       "subtitle": "{channel} · {device} · {appleId}",
@@ -139,9 +141,9 @@
         "failed": "失敗"
       },
       "detail": {
-        "bytes": "{total} 中 {received}",
+        "bytes": "{received} / {total}",
         "received": "{received}",
-        "retrying": "接続が切れました。{seconds, plural, other {# 秒後}}に再試行します（{attempt} 回目）"
+        "retrying": "接続が切れました。{seconds, plural, other {#秒後}}に再試行します（{attempt}回目）"
       },
       "live": {
         "header": "{percent} · {left}",
@@ -150,8 +152,8 @@
         "task": {
           "line": "{task} · {count}",
           "team": "チームを確認中",
-          "appIds": "App ID を作成中",
-          "appGroup": "App グループを追加中",
+          "appIds": "App IDを作成中",
+          "appGroup": "アプリグループを追加中",
           "profiles": "プロファイルを取得中"
         },
         "phase": {
@@ -160,21 +162,21 @@
           "installing": "インストール中"
         },
         "speed": "{speed}/秒",
-        "ios": "iOS がインストール中",
-        "leftSeconds": "残り約 {seconds} 秒",
-        "leftMinutes": "{minutes, plural, other {残り約 # 分}}"
+        "ios": "iOSがインストールしています",
+        "leftSeconds": "残り約{seconds}秒",
+        "leftMinutes": "{minutes, plural, other {残り約#分}}"
       },
       "connection": {
         "usb": "USB",
         "network": "Wi-Fi"
       },
       "wifi": {
-        "title": "このデバイスは Wi-Fi で接続されています",
-        "body": "大きなアプリはケーブルで接続するとずっと速くインストールできます。Wi-Fi では、時間を節約するために IPAForge が圧縮して送信します。"
+        "title": "このデバイスはWi-Fiで接続されています",
+        "body": "大きなアプリはケーブルで接続するとずっと速くインストールできます。Wi-Fiでは、時間を節約するためにIPAForgeが圧縮して送信します。"
       },
       "unsupportedPrompt": {
         "title": "このステップには回答が必要です",
-        "body": "このバージョンでは表示できない質問への回答が必要です。インストールを中止して IPAForge をアップデートしてください。"
+        "body": "このバージョンでは表示できない質問への回答が必要です。インストールを中止してIPAForgeをアップデートしてください。"
       },
       "backToInstall": "インストールに戻る",
       "report": {
@@ -182,7 +184,7 @@
         "release": "{app} {version} · {channel}",
         "download": "{size} · チェックサム確認済み",
         "downloadCached": "{size} · ダウンロードキャッシュから",
-        "app": "{app} · {extensions, plural, =0 {拡張機能なし} other {拡張機能 # 個}}",
+        "app": "{app} · {extensions, plural, =0 {拡張機能なし} other {拡張機能#個}}",
         "session": {
           "reused": "保存済みセッションを再利用",
           "renewed": "保存済みパスワードで再サインイン",
@@ -193,17 +195,17 @@
         "certificate": {
           "reused": "保存済み証明書を再利用",
           "created": "新しい証明書を作成",
-          "replaced": "1 つ取り消して新しい証明書を作成"
+          "replaced": "1つ失効させて新しい証明書を作成"
         },
-        "removed": "{app} を削除 · {used}",
-        "profiles": "{count, plural, other {プロファイル # 個}}",
-        "signed": "{count, plural, other {# 個のバンドルに署名}}",
-        "signedCompressed": "{count, plural, other {# 個のバンドルに署名}} · Wi-Fi 用に圧縮",
+        "removed": "{app}を削除 · {used}",
+        "profiles": "{count, plural, other {プロファイル#個}}",
+        "signed": "{count, plural, other {#個のバンドルに署名}}",
+        "signedCompressed": "{count, plural, other {#個のバンドルに署名}} · Wi-Fi用に圧縮",
         "phase": {
           "uploading": "デバイスへ転送中",
           "installing": "インストール中"
         },
-        "pairing": "{apps} に配置",
+        "pairing": "{apps}に配置",
         "shared": "証明書を共有しました",
         "notShared": "証明書は共有していません"
       },
@@ -211,20 +213,20 @@
     },
     "summary": {
       "title": "このインストール",
-      "app": "App",
+      "app": "アプリ",
       "channel": "チャンネル",
       "device": "デバイス",
       "deviceValue": "{name} · iOS {ios}",
       "account": "Apple ID",
       "appIds": "App ID",
-      "appIdsValue": "{count, plural, other {今週の残り # 個}}",
-      "freeApps": "無料 App",
+      "appIdsValue": "{count, plural, other {今週の残り#個}}",
+      "freeApps": "無料アプリ",
       "apps": "アプリ"
     },
     "done": {
-      "title": "{app} を {device} にインストールしました。",
-      "trust": "デバイスで：設定 › 一般 › VPN とデバイス管理 › {appleId} を信頼します。",
-      "open": "SideStore を開いてください。ペアリングファイルと証明書はすでに入っています。",
+      "title": "{app}を{device}にインストールしました。",
+      "trust": "デバイスで「設定」›「一般」›「VPNとデバイス管理」と進み、{appleId}を信頼してください。",
+      "open": "SideStoreを開いてください。ペアリングファイルと証明書はすでに入っています。",
       "done": "完了"
     },
     "cancelled": {
@@ -242,7 +244,7 @@
   },
   "pairing": {
     "steps": {
-      "targets": "ペアリングが必要なAppを検索",
+      "targets": "ペアリングが必要なアプリを検索",
       "place": "ペアリングファイルを配置"
     }
   },
@@ -280,7 +282,7 @@
       },
       "developer_mode_off": {
         "title": "デベロッパモードがオフです",
-        "body": "サイドロードしたAppにはデベロッパモードが必要です。「設定」›「プライバシーとセキュリティ」›「デベロッパモード」でオンにしてから、デバイスを再起動してください。"
+        "body": "サイドロードしたアプリにはデベロッパモードが必要です。「設定」›「プライバシーとセキュリティ」›「デベロッパモード」でオンにしてから、デバイスを再起動してください。"
       },
       "not_paired": {
         "title": "このコンピュータはまだ信頼されていません",
@@ -320,7 +322,7 @@
       },
       "install_failed": {
         "title": "インストールに失敗しました",
-        "body": "デバイスがAppのインストールを拒否しました。もう一度お試しください。失敗が続く場合は、Appを再インストールするか問題を報告してください。"
+        "body": "デバイスがアプリのインストールを拒否しました。もう一度お試しください。失敗が続く場合は、アプリを再インストールするか問題を報告してください。"
       },
       "afc_error": {
         "title": "ファイルを転送できませんでした",
@@ -335,20 +337,20 @@
         "body": "デバイスのパスコードが必要です。「設定」›「Face IDとパスコード」で設定してから、もう一度お試しください。"
       },
       "free_app_limit": {
-        "title": "サイドロードしたAppが多すぎます",
-        "body": "無料のApple IDでは、1台のデバイスで有効にできるサイドロードAppは3つまでです。1つ削除してから、もう一度お試しください。"
+        "title": "サイドロードしたアプリが多すぎます",
+        "body": "無料のApple IDでは、1台のデバイスで有効にできるサイドロードしたアプリは3つまでです。1つ削除してから、もう一度お試しください。"
       },
       "profile_banned": {
         "title": "AppleがこのデバイスでこのApple IDをブロックしました",
-        "body": "このApple IDで署名されたAppをデバイスが受け付けません。再試行しても解決しないため、別のApple IDを使用してください。"
+        "body": "このApple IDで署名されたアプリをデバイスが受け付けません。再試行しても解決しないため、別のApple IDを使用してください。"
       },
       "identity_invalid": {
         "title": "署名用証明書が無効になりました",
-        "body": "Appの署名に使われた証明書をデバイスが拒否しました。コンピュータの時計を確認するか、証明書を失効させてからもう一度お試しください。"
+        "body": "アプリの署名に使われた証明書をデバイスが拒否しました。コンピュータの時計を確認するか、証明書を失効させてからもう一度お試しください。"
       },
       "profile_not_found": {
         "title": "プロビジョニングプロファイルがありません",
-        "body": "デバイスがAppのプロビジョニングプロファイルを見つけられませんでした。もう一度試すか、Appを再インストールしてください。"
+        "body": "デバイスがアプリのプロビジョニングプロファイルを見つけられませんでした。もう一度試すか、アプリを再インストールしてください。"
       }
     },
     "apple": {
@@ -374,7 +376,7 @@
       },
       "account_locked": {
         "title": "このApple IDはロックされています",
-        "body": "セキュリティ上の理由により、Appleがこのアカウントをロックしました。Appleデバイスまたは AppleのWebサイトでロックを解除するか、別のApple IDを使用してください。"
+        "body": "セキュリティ上の理由により、Appleがこのアカウントをロックしました。AppleデバイスまたはAppleのWebサイトでロックを解除するか、別のApple IDを使用してください。"
       },
       "account_refused": {
         "title": "Appleがサインインを拒否しました",
@@ -426,7 +428,7 @@
       },
       "not_eligible": {
         "title": "このApple IDは開発に使用できません",
-        "body": "年齢や規約などの理由により、Appleはこのアカウントでの App の署名を許可していません。別のApple IDを使用してください。"
+        "body": "年齢や規約などの理由により、Appleはこのアカウントでのアプリの署名を許可していません。別のApple IDを使用してください。"
       },
       "email_unverified": {
         "title": "メールアドレスを確認してください",
@@ -468,15 +470,15 @@
     "catalog": {
       "source_gone": {
         "title": "このリリースは利用できなくなりました",
-        "body": "このAppのダウンロード元がなくなりました。別のチャンネルを選ぶか、IPAを読み込むか、IPAForgeをアップデートしてください。"
+        "body": "このアプリのダウンロード元がなくなりました。別のチャンネルを選ぶか、IPAを読み込むか、IPAForgeをアップデートしてください。"
       },
       "unavailable": {
-        "title": "Appの一覧を読み込めませんでした",
-        "body": "IPAForgeがAppの一覧を取得できませんでした。ネットワークを確認して、もう一度お試しください。"
+        "title": "アプリの一覧を読み込めませんでした",
+        "body": "IPAForgeがアプリの一覧を取得できませんでした。ネットワークを確認して、もう一度お試しください。"
       },
       "download_failed": {
         "title": "ダウンロードに失敗しました",
-        "body": "Appをダウンロードできませんでした。ネットワークを確認して、もう一度お試しください。"
+        "body": "アプリをダウンロードできませんでした。ネットワークを確認して、もう一度お試しください。"
       },
       "checksum_mismatch": {
         "title": "ダウンロードしたファイルが破損しています",
@@ -495,18 +497,18 @@
         "body": "リンクとインターネット接続を確認して、もう一度お試しください。"
       },
       "app_source_invalid": {
-        "title": "このリンクはAppソースではありません",
-        "body": "AltStore形式のAppが含まれていません。リンクを確認するか、代わりにAppの.ipaファイルを追加してください。"
+        "title": "このリンクはアプリソースではありません",
+        "body": "AltStore形式のアプリが含まれていません。リンクを確認するか、代わりにアプリの.ipaファイルを追加してください。"
       },
       "app_source_exists": {
         "title": "このソースはすでに追加されています",
-        "body": "そのAppはすでに「アプリを探す」にあります。"
+        "body": "そのアプリはすでに「アプリを探す」にあります。"
       }
     },
     "plist": {
       "invalid": {
-        "title": "Appの設定ファイルが破損しています",
-        "body": "App内のプロパティリストを読み込めませんでした。別のIPAを選ぶか、問題を報告してください。"
+        "title": "アプリの設定ファイルが破損しています",
+        "body": "アプリ内のプロパティリストを読み込めませんでした。別のIPAを選ぶか、問題を報告してください。"
       }
     },
     "net": {
@@ -517,32 +519,32 @@
     },
     "signer": {
       "invalid_macho": {
-        "title": "Appのプログラムが破損しています",
-        "body": "Appの実行ファイルを読み込めませんでした。別のIPAを選んでください。"
+        "title": "アプリのプログラムが破損しています",
+        "body": "アプリの実行ファイルを読み込めませんでした。別のIPAを選んでください。"
       },
       "encrypted_binary": {
-        "title": "Appが暗号化されています",
+        "title": "アプリが暗号化されています",
         "body": "このIPAはApp Storeから入手したもので暗号化されたままのため、再署名できません。復号済みのIPAを選んでください。"
       },
       "unsupported_arch": {
-        "title": "サポートされていないApp形式です",
-        "body": "Appの実行ファイルが、iOSで実行できない形式になっています。別のIPAを選んでください。"
+        "title": "サポートされていないアプリ形式です",
+        "body": "アプリの実行ファイルが、iOSで実行できない形式になっています。別のIPAを選んでください。"
       },
       "unsupported_ios": {
         "title": "新しいiOSが必要です",
-        "body": "このAppには、デバイスより新しいバージョンのiOSが必要です。デバイスをアップデートするか、別のチャンネルまたはIPAを選んでください。"
+        "body": "このアプリには、デバイスより新しいバージョンのiOSが必要です。デバイスをアップデートするか、別のチャンネルまたはIPAを選んでください。"
       },
       "unsupported_device": {
         "title": "このデバイス向けではありません",
-        "body": "このAppはこの種類のデバイスに対応していません（例：iPhoneでのiPad専用App）。別のIPAを選んでください。"
+        "body": "このアプリはこの種類のデバイスに対応していません（例：iPhoneでのiPad専用アプリ）。別のIPAを選んでください。"
       },
       "no_arm64_build": {
         "title": "iPhoneまたはiPad向けのビルドがありません",
-        "body": "このAppには、iPhoneまたはiPad向けの64ビットビルドがありません（例：32ビットビルドやシミュレータ用ビルド）。別のIPAを選んでください。"
+        "body": "このアプリには、iPhoneまたはiPad向けの64ビットビルドがありません（例：32ビットビルドやシミュレータ用ビルド）。別のIPAを選んでください。"
       },
       "no_header_space": {
-        "title": "Appに署名できません",
-        "body": "Appの実行ファイルに署名を入れる余地がありません。別のIPAを選ぶか、問題を報告してください。"
+        "title": "アプリに署名できません",
+        "body": "アプリの実行ファイルに署名を入れる余地がありません。別のIPAを選ぶか、問題を報告してください。"
       },
       "zip_slip": {
         "title": "このIPAは安全ではありません",
@@ -557,20 +559,20 @@
         "body": "IPAForgeは証明書の発行元を認識できません。IPAForgeをアップデートし、ネットワークを確認してください。"
       },
       "invalid_bundle": {
-        "title": "Appバンドルが無効です",
-        "body": "このIPAには有効なAppが含まれていません。別のIPAを選んでください。"
+        "title": "アプリバンドルが無効です",
+        "body": "このIPAには有効なアプリが含まれていません。別のIPAを選んでください。"
       },
       "invalid_profile": {
         "title": "プロビジョニングプロファイルが無効です",
         "body": "Appleから受け取ったプロビジョニングプロファイルを読み込めませんでした。もう一度試し、続く場合は問題を報告してください。"
       },
       "extension_prefix": {
-        "title": "App拡張機能のIDが正しくありません",
-        "body": "拡張機能のバンドルIDが、App自体のIDで始まっていません。別のIPAを選んでください。"
+        "title": "アプリ拡張機能のIDが正しくありません",
+        "body": "拡張機能のバンドルIDが、アプリ自体のIDで始まっていません。別のIPAを選んでください。"
       },
       "profile_mismatch": {
         "title": "プロビジョニングプロファイルが一致しません",
-        "body": "プロファイルが作成対象のAppと一致しません。もう一度試し、続く場合は問題を報告してください。"
+        "body": "プロファイルが作成対象のアプリと一致しません。もう一度試し、続く場合は問題を報告してください。"
       },
       "profile_expired": {
         "title": "プロビジョニングプロファイルの有効期限が切れました",
@@ -601,6 +603,10 @@
       "team_required": {
         "title": "チームを選択してください",
         "body": "このApple IDは複数のチームに所属しています。署名に使うチームを選んでください。"
+      },
+      "kept_ipa_missing": {
+        "title": "このアプリはここではリフレッシュできません",
+        "body": "IPAForgeがこのデバイスにインストールしたアプリではないか、保存していたコピーがなくなっています。プリロードで.ipaを追加すると、もう一度インストールできます。"
       }
     },
     "rpc": {
@@ -645,7 +651,7 @@
     "choose-team": "チームを選択",
     "revoke-certificate": "証明書を失効",
     "wait-for-app-id-slot": "App IDの空きを待つ",
-    "choose-app-to-remove": "削除するAppを選択",
+    "choose-app-to-remove": "削除するアプリを選択",
     "unlock-device": "デバイスのロックを解除",
     "enable-developer-mode": "デベロッパモードをオンにする",
     "trust-computer": "このコンピュータを信頼",
@@ -653,7 +659,7 @@
     "pair-again": "もう一度ペアリング",
     "set-passcode": "パスコードを設定",
     "install-device-support": "デバイスサポートをインストール",
-    "reinstall-app": "Appを再インストール",
+    "reinstall-app": "アプリを再インストール",
     "choose-another-ipa": "別のIPAを選択",
     "choose-another-channel": "別のチャンネルを選択",
     "import-ipa": "IPAを読み込む",
@@ -661,22 +667,22 @@
     "report-issue": "問題を報告",
     "or": "または",
     "switchAccount": {
-      "title": "別の Apple ID を使用",
-      "body": "選んだ Apple ID でインストールをやり直します。"
+      "title": "別のApple IDを使用",
+      "body": "選んだApple IDでインストールをやり直します。"
     },
     "fix": {
       "copy": "コピー",
       "copied": "コピーしました",
       "done": "完了したので再試行",
       "waitAndRetry": {
-        "how": "Apple が混雑しているか、リクエストを制限しています。1 分待ってから再試行してください。"
+        "how": "Appleが混雑しているか、リクエストを制限しています。1分待ってから再試行してください。"
       },
       "checkNetwork": {
         "how": "このコンピュータがオンラインか確認してから再試行してください。"
       },
       "checkClock": {
         "step1": "このコンピュータの日付と時刻の設定を開きます",
-        "step2": "日付と時刻を自動で設定するをオンにします"
+        "step2": "日付と時刻を自動で設定する項目をオンにします"
       },
       "reEnterPassword": {
         "how": "再試行するとパスワードを求められます。入力前に確認してください。"
@@ -685,33 +691,33 @@
         "how": "再試行すると新しい確認コードを求められます。"
       },
       "useTrustedDevice": {
-        "how": "コードを求められたら、SMS ではなく信頼できるデバイスを選んでください。"
+        "how": "コードを求められたら、SMSではなく信頼できるデバイスを選んでください。"
       },
       "signInAgain": {
         "how": "再試行すると、再サインインのためにパスワードを求められます。"
       },
       "signInOnAppleDevice": {
-        "how": "iPhone、iPad、Mac、または Apple の Web サイトでこの Apple ID にサインインし、指示に従ってください："
+        "how": "iPhone、iPad、Mac、またはAppleのWebサイトでこのApple IDにサインインし、指示に従ってください："
       },
       "switchAccount": {
-        "how": "保存済みの Apple ID を選んでください。その Apple ID でインストールをやり直します。",
-        "button": "Apple ID を選択…"
+        "how": "保存済みのApple IDを選んでください。そのApple IDでインストールをやり直します。",
+        "button": "Apple IDを選択…"
       },
       "verifyEmail": {
-        "how": "Apple の Web サイトでこの Apple ID のメールアドレスを確認してください："
+        "how": "AppleのWebサイトでこのApple IDのメールアドレスを確認してください："
       },
       "acceptAgreement": {
-        "how": "Apple Developer の Web サイトにサインインし、表示される契約に同意してください："
+        "how": "Apple DeveloperのWebサイトにサインインし、表示される契約に同意してください："
       },
       "revokeCertificate": {
-        "how": "再試行すると、取り消す証明書を尋ねられます。"
+        "how": "再試行すると、失効させる証明書を尋ねられます。"
       },
       "waitForAppIdSlot": {
-        "how": "Apple は App ID を作成から 7 日後に解放します。空きが出たら再インストールするか、別の Apple ID を使ってください。",
-        "next": "次の App ID は {date} に空きます。"
+        "how": "AppleはApp IDを作成から7日後に解放します。空きが出たら再インストールするか、別のApple IDを使ってください。",
+        "next": "次のApp IDは{date}に空きます。"
       },
       "chooseAppToRemove": {
-        "how": "再試行すると、空きを作るために削除する App を尋ねられます。"
+        "how": "再試行すると、空きを作るために削除するアプリを尋ねられます。"
       },
       "unlockDevice": {
         "how": "デバイスのロックを解除し、インストールが終わるまで解除したままにしてください。"
@@ -727,29 +733,29 @@
         "how": "デバイスを取り外し、接続し直してロックを解除してください。"
       },
       "setPasscode": {
-        "how": "デバイスの 設定 › Face ID とパスコード でパスコードを設定してから再試行してください。"
+        "how": "デバイスの「設定」›「Face IDとパスコード」でパスコードを設定してから、もう一度お試しください。"
       },
       "installDeviceSupport": {
-        "how": "Windows では Microsoft Store から Apple Devices（または iTunes）をインストールし、IPAForge を再起動してください。"
+        "how": "WindowsではMicrosoft StoreからApple Devices（またはiTunes）をインストールし、IPAForgeを再起動してください。"
       },
       "reinstallApp": {
-        "how": "デバイスから App を削除してから再試行してください。"
+        "how": "デバイスからアプリを削除してから再試行してください。"
       },
       "chooseAnotherChannel": {
         "how": "もう一方のチャンネルのビルドならこのデバイスで動くかもしれません。",
-        "button": "{channel} からインストール"
+        "button": "{channel}からインストール"
       },
       "open": "開く"
     },
-    "reportHint": "診断情報を記入した新しい GitHub Issue を開きます。送信するまで何も送られません。"
+    "reportHint": "診断情報を記入した新しいGitHub Issueを開きます。送信するまで何も送られません。"
   },
   "devices": {
     "engine": {
-      "connecting": "Engineに接続しています…",
-      "connected": "{count, plural, =0 {Engine接続済み · デバイスなし} other {Engine接続済み · デバイス#台}}",
-      "failed": "Engineに接続できません:{reason}"
+      "connecting": "エンジンに接続しています…",
+      "connected": "{count, plural, =0 {エンジン接続済み · デバイスなし} other {エンジン接続済み · デバイス#台}}",
+      "failed": "エンジンに接続できません：{reason}"
     },
-    "description": "このコンピュータに接続されている iPhone と iPad。使用中のデバイスは上部バーに表示されます。",
+    "description": "このコンピュータに接続されているiPhoneとiPad。使用中のデバイスは上部バーに表示されます。",
     "unknownDevice": "不明なデバイス",
     "line": "{model} · iOS {ios} · {link}",
     "model": "{model} · iOS {ios}",
@@ -757,7 +763,7 @@
     "link": {
       "usb": "USB",
       "network": "Wi-Fi",
-      "both": "USB と Wi-Fi"
+      "both": "USBとWi-Fi"
     },
     "state": {
       "checking": "確認中…",
@@ -779,45 +785,45 @@
     },
     "empty": {
       "title": "デバイスがまだありません",
-      "body": "iPhone または iPad をケーブルで接続し、ロックを解除してください。Windows では Apple Devices または iTunes が必要です。"
+      "body": "iPhoneまたはiPadをケーブルで接続し、ロックを解除してください。WindowsではApple DevicesまたはiTunesが必要です。"
     },
     "notice": {
       "none": {
         "title": "デバイスが接続されていません",
-        "body": "iPhone または iPad をケーブルで接続し、ロックを解除してください。自動的にここに表示されます。"
+        "body": "iPhoneまたはiPadをケーブルで接続し、ロックを解除してください。自動的にここに表示されます。"
       },
       "notConnected": {
-        "title": "{name} は接続されていません",
+        "title": "{name}は接続されていません",
         "body": "もう一度接続すると自動的に使用されます。または上部バーで別のデバイスを選んでください。"
       },
       "notTrusted": {
-        "title": "{name} でこのコンピュータを信頼してください",
+        "title": "{name}でこのコンピュータを信頼してください",
         "body": "ロックを解除し、「信頼」をタップしてパスコードを入力してください。",
         "action": "もう一度確認",
         "waiting": "「信頼」を待っています…",
         "titleUnnamed": "デバイスでこのコンピュータを信頼してください"
       },
       "locked": {
-        "title": "{name} のロックを解除してください",
-        "body": "App のインストール中はロックを解除したままにしてください。"
+        "title": "{name}のロックを解除してください",
+        "body": "アプリのインストール中はロックを解除したままにしてください。"
       },
       "developerModeOff": {
-        "title": "{name} でデベロッパモードをオンにしてください",
+        "title": "{name}でデベロッパモードをオンにしてください",
         "step1": "設定 → プライバシーとセキュリティ → デベロッパモード",
         "step2": "オンにして、求められたら再起動します",
         "step3": "再起動後、「オンにする」をタップしてパスコードを入力します"
       },
       "unavailable": {
-        "title": "{name} を読み取れません",
+        "title": "{name}を読み取れません",
         "body": "一度取り外してから接続し直してください。繰り返す場合はデバイスを再起動してください。",
-        "bodyWifi": "Wi-Fi で接続されています。スリープを解除してロックを外し、このコンピュータと同じネットワークに置いてから再確認してください。ケーブルの方が確実です。",
-        "reason": "理由: {reason}",
+        "bodyWifi": "Wi-Fiで接続されています。スリープを解除してロックを外し、このコンピュータと同じネットワークに置いてから再確認してください。ケーブルの方が確実です。",
+        "reason": "理由：{reason}",
         "titleUnnamed": "デバイスを読み取れません"
       }
     },
     "notes": {
-      "connected": "{name} が接続されました",
-      "disconnected": "{name} が切断されました",
+      "connected": "{name}が接続されました",
+      "disconnected": "{name}が切断されました",
       "aDevice": "デバイス"
     }
   },
@@ -831,11 +837,11 @@
       "checking": "パスワードを確認しています…"
     },
     "method": {
-      "title": "コードの送信先は?",
+      "title": "コードの送信先は？",
       "body": "確認コードの受け取り方法を選んでください。",
       "trustedDevice": "信頼できるデバイス",
       "trustedDeviceHint": "このApple IDでサインインしているiPhone、iPad、Mac",
-      "sms": "{number}へのテキストメッセージ",
+      "sms": "{number}へのSMS",
       "smsHint": "SMS料金がかかる場合があります",
       "sending": "コードを送信しています…"
     },
@@ -846,64 +852,64 @@
       "wrong": "このコードは使えませんでした。確認してもう一度入力してください。",
       "verify": "確認",
       "checking": "コードを確認しています…",
-      "deviceBody": "{length, plural, other {iPhone、iPad、または Mac に表示された # 桁のコードを入力してください。}}",
-      "smsBody": "{length, plural, other {{number} に送信された # 桁のコードを入力してください。}}",
+      "deviceBody": "{length, plural, other {iPhone、iPad、またはMacに表示された#桁のコードを入力してください。}}",
+      "smsBody": "{length, plural, other {{number}に送信された#桁のコードを入力してください。}}",
       "allowHint": "ロックを解除したまま、サインインについて尋ねられたら「許可」をタップしてください。",
-      "noCode": "コードが届きませんか?",
+      "noCode": "コードが届きませんか？",
       "resend": "新しいコードを送信",
-      "textTo": "{number} に SMS",
+      "textTo": "{number}にSMSで送信",
       "sending": "新しいコードを送信中…",
       "sent": "新しいコードを送信しました。",
-      "notSent": "Apple が新しいコードを送信しませんでした。数分待ってからもう一度お試しください。"
+      "notSent": "Appleが新しいコードを送信しませんでした。数分待ってからもう一度お試しください。"
     },
     "suggested": "おすすめ",
     "team": {
-      "title": "どのチームで App に署名しますか？",
-      "body": "この Apple ID は複数のチームに属しています。選んだチームはこの Apple ID 用に記憶されます。",
-      "free": "無料：App は 7 日で期限切れ、デバイスあたり 3 App",
-      "paid": "有料：App は 1 年有効、App 数の上限なし",
+      "title": "どのチームでアプリに署名しますか？",
+      "body": "このApple IDは複数のチームに属しています。選んだチームはこのApple ID用に記憶されます。",
+      "free": "無料：アプリは7日で期限切れ、1台につき3個まで",
+      "paid": "有料：アプリは1年有効、個数の上限なし",
       "checking": "このチームを使用中…"
     },
     "revoke": {
-      "title": "証明書を取り消しますか？",
-      "body": "このチームは開発用証明書の上限に達しているため、IPAForge が自分の証明書を作るには 1 つ取り消す必要があります。取り消した証明書で署名した App は更新されなくなります。",
-      "ipaforge": "別のコンピュータの IPAForge が作成",
-      "sidestore": "SideStore が作成",
-      "machine": "「{machine}」で作成（通常は Xcode）",
+      "title": "証明書を失効させますか？",
+      "body": "このチームは開発用証明書の上限に達しているため、IPAForgeが自分の証明書を作るには1つ失効させる必要があります。失効させた証明書で署名したアプリはリフレッシュされなくなります。",
+      "ipaforge": "別のコンピュータのIPAForgeが作成",
+      "sidestore": "SideStoreが作成",
+      "machine": "「{machine}」で作成（通常はXcode）",
       "unknown": "不明なツールが作成",
-      "sidestoreWarning": "デバイスの SideStore は新しい証明書を作るまで App を更新しなくなります。",
-      "machineWarning": "そのコンピュータの Xcode は次回署名時に新しい証明書を作ります。",
-      "expires": "{date} に期限切れ",
-      "confirm": "取り消して続行",
-      "revoking": "証明書を取り消し中…"
+      "sidestoreWarning": "デバイスのSideStoreは、新しい証明書を作るまでアプリをリフレッシュしなくなります。",
+      "machineWarning": "そのコンピュータのXcodeは次回署名時に新しい証明書を作ります。",
+      "expires": "{date}に期限切れ",
+      "confirm": "失効させて続行",
+      "revoking": "証明書を失効させています…"
     },
     "remove": {
-      "title": "空きを作るために App を削除しますか？",
-      "body": "無料の Apple ID ではデバイスに {limit} 個まで App を入れられるため、この App を入れるには 1 つ削除する必要があります。後で再インストールできます。",
+      "title": "空きを作るためにアプリを削除しますか？",
+      "body": "無料のApple IDではデバイスに{limit}個までアプリを入れられるため、このアプリを入れるには1つ削除する必要があります。後で再インストールできます。",
       "confirm": "削除して続行",
-      "removing": "App を削除中…"
+      "removing": "アプリを削除中…"
     },
     "share": {
       "title": "署名証明書を「{app}」と共有しますか？",
-      "body": "この App は SideStore のようです。証明書があればデバイス上で App を自分で更新できます。信頼できる App とだけ共有してください。",
+      "body": "このアプリはSideStoreのようです。証明書があれば、デバイス上でアプリを自動でリフレッシュできます。信頼できるアプリとだけ共有してください。",
       "yes": "証明書を共有",
-      "yesHint": "デバイス上の App を自分で更新します",
+      "yesHint": "デバイス上のアプリを自動でリフレッシュします",
       "no": "共有しない",
       "noHint": "証明書なしでインストールされます"
     },
     "pairing": {
-      "title": "ペアリングファイルを受け取る App は？",
-      "body": "ペアリングファイルがあると、デバイス上の App がこのコンピュータと同じように Wi-Fi でデバイスと通信できます。チェックした App だけが受け取ります。",
-      "available": "{count, plural, other {デバイス上の # 個の App が使用できます}}",
+      "title": "ペアリングファイルを受け取るアプリは？",
+      "body": "ペアリングファイルがあると、デバイス上のアプリがこのコンピュータと同じようにWi-Fiでデバイスと通信できます。チェックしたアプリだけが受け取ります。",
+      "available": "{count, plural, other {デバイス上の#個のアプリが使用できます}}",
       "selectAll": "すべて選択",
       "clearAll": "すべて解除",
-      "place": "{count, plural, =0 {App を選択} other {# 個の App に配置}}",
+      "place": "{count, plural, =0 {アプリを選択} other {#個のアプリに配置}}",
       "placing": "ペアリングファイルを配置中…",
       "purpose": {
-        "sidestore": "Wi-Fi で App の更新とインストール",
-        "livecontainer": "中の App を JIT で実行",
-        "stikdebug": "他の App の JIT を有効化",
-        "stikstore": "独自のソースから App をインストール"
+        "sidestore": "Wi-Fi経由でアプリをリフレッシュ・インストール",
+        "livecontainer": "中のアプリをJITで実行",
+        "stikdebug": "他のアプリのJITを有効化",
+        "stikstore": "独自のソースからアプリをインストール"
       }
     }
   },
@@ -927,10 +933,10 @@
     "list": "保存済みのApple ID",
     "empty": "まだApple IDがありません。SideStoreをインストールするには追加してください。",
     "notSaved": {
-      "title": "Apple ID は保存されていません",
-      "body": "IPAForge はシステムのキーチェーンを使用できないため（アクセスが拒否された可能性があります）、Apple ID はアプリを終了するまでしか保持されません。保存するには、IPAForge をもう一度開き、確認が表示されたらキーチェーンへのアクセスを許可してください。"
+      "title": "Apple IDは保存されていません",
+      "body": "IPAForgeはシステムのキーチェーンを使用できないため（アクセスが拒否された可能性があります）、Apple IDはアプリを終了するまでしか保持されません。保存するには、IPAForgeをもう一度開き、確認が表示されたらキーチェーンへのアクセスを許可してください。"
     },
-    "freeTeam": "{name}(無料)",
+    "freeTeam": "{name}（無料）",
     "withState": "{line} · {state}",
     "state": {
       "checking": "確認中…",
@@ -944,15 +950,87 @@
     "signInAgain": "もう一度サインイン",
     "signOut": {
       "action": "サインアウト",
-      "title": "{appleId}からサインアウトしますか?",
+      "title": "{appleId}からサインアウトしますか？",
       "forgets": "IPAForgeはこのApple ID、そのセッション、保存されたパスワードを削除します。",
       "keeps": "署名証明書はこのコンピュータに残るため、再度サインインすると再利用されます。インストール済みのアプリは期限が切れるまで動作します。",
       "confirm": "サインアウト"
     }
   },
+  "apps": {
+    "description": "IPAForgeがこのデバイスにインストールしたアプリです。「リフレッシュ」は、有効期限が切れる前にデータを残したままアプリに署名し直します。",
+    "refreshAll": "{count, plural, =0 {すべてリフレッシュ} other {すべてリフレッシュ（#）}}",
+    "updateAll": "{count, plural, other {すべてアップデート（#）}}",
+    "refresh": "リフレッシュ",
+    "update": "アップデート",
+    "remove": "削除",
+    "removeApp": "{name}を削除",
+    "updateTo": "アップデート：{version}",
+    "from": "{source}から",
+    "needsIpa": "別のコンピュータで.ipaからIPAForgeがインストールしました。ここでリフレッシュするには、その.ipaを「プリロード」で一度追加してください。",
+    "thisDevice": "このデバイス",
+    "badge": "{count, plural, other {まもなくリフレッシュが必要なアプリ：#個}}",
+    "expiry": {
+      "in": "{days, plural, other {あと#日で期限切れ · {date}}}",
+      "today": "今日で期限切れ",
+      "expired": "{days, plural, other {#日前に期限切れ · 開けません}}",
+      "unknown": "有効期限不明"
+    },
+    "run": {
+      "checking": "Appleに確認中…",
+      "waiting": "順番待ち",
+      "done": "完了"
+    },
+    "failed": {
+      "title": "リフレッシュが完了しませんでした: {reason}",
+      "details": "詳細を表示",
+      "dismiss": "閉じる"
+    },
+    "notConnected": {
+      "title": "このデバイスは接続されていません",
+      "body": "接続すると、アプリを表示してリフレッシュやアップデートができます。"
+    },
+    "expired": {
+      "title": "{count, plural, other {#個のアプリの期限が切れています}}",
+      "body": "リフレッシュするまで開けません。データは保持されています。",
+      "refresh": "{count, plural, other {今すぐリフレッシュ}}"
+    },
+    "facts": {
+      "next": "次に期限が切れるアプリ",
+      "none": "まだありません",
+      "nextIn": "{days, plural, other {{name} · #日}}",
+      "nextExpired": "{name} · 期限切れ",
+      "count": "リフレッシュを管理中",
+      "apps": "{count, plural, other {#個のアプリ}}",
+      "auto": "自動リフレッシュ",
+      "autoOn": "{days, plural, other {オン · #日前}}",
+      "autoOff": "オフ"
+    },
+    "list": {
+      "title": "IPAForgeでインストール済み",
+      "count": "{count, plural, other {#個のアプリ · 期限が近い順}}",
+      "empty": "まだアプリはありません。SideStoreをインストールするか、アプリをプリロードすると、ここに表示されます。"
+    },
+    "others": {
+      "title": "IPAForgeでまだ管理していないアプリ",
+      "hint": "このバージョンより前にIPAForgeで、または別のツールでインストールされたもの",
+      "found": "{source}で見つかりました。リフレッシュすると、データを保持したままそこからインストールされ、以後はIPAForgeがリフレッシュを管理します。",
+      "how": "「プリロード」でその.ipaを一度追加すると、以後はIPAForgeがリフレッシュを管理します。"
+    },
+    "auto": {
+      "title": "アプリを自動でリフレッシュ",
+      "body": "IPAForgeが開いていてデバイスが接続されている間、アプリは期限が切れる前に自動でリフレッシュされます。",
+      "toggle": "自動でリフレッシュ",
+      "when": "リフレッシュするタイミング",
+      "days": "{count, plural, other {残り#日}}"
+    },
+    "removeDialog": {
+      "title": "{name}を削除しますか？",
+      "body": "{device}からデータごと削除され、無料アプリの枠が1つ空きます。プリロードからもう一度インストールできます。"
+    }
+  },
   "logs": {
     "title": "ログ",
-    "lede": "IPAForge が行ったことを 1 行ずつ。どこからでも次のキーで開けます:",
+    "lede": "IPAForgeが行ったことを1行ずつ。どこからでも次のキーで開けます：",
     "shortcut": {
       "control": "Ctrl+",
       "command": "⌘",
@@ -993,17 +1071,17 @@
       "app": "アプリ"
     },
     "filters": {
-      "showing": "表示中:",
-      "run": "このインストール({time})",
+      "showing": "表示中：",
+      "run": "このインストール（{time}）",
       "text": "「{text}」",
-      "remove": "フィルタ {filter} を解除"
+      "remove": "フィルタ{filter}を解除"
     },
     "list": {
       "label": "ログの行",
       "loadingOlder": "古い行を読み込み中…"
     },
     "row": {
-      "details": "{count, plural, other {詳細 # 件}}",
+      "details": "{count, plural, other {詳細#件}}",
       "scope": "領域",
       "redacted": "[非表示]",
       "copy": "行をコピー"
@@ -1014,14 +1092,14 @@
       "pause": "一時停止",
       "resume": "追跡"
     },
-    "jump": "{count, plural, other {新しい行 # 件}} · 最新へ移動",
-    "count": "{matching, plural, other {一致する行 # 件}} · このセッションでは最新 {capacity, number} 行を保持",
+    "jump": "{count, plural, other {新しい行#件}} · 最新へ移動",
+    "count": "{matching, plural, other {一致する行#件}} · このセッションでは最新{capacity, number}行を保持",
     "debug": "デバッグ詳細を含める",
     "privacy": "パスワード、トークン、鍵、シリアル番号、デバイス識別子はログに書き込まれず、[非表示] と表示されます。ログはコピーまたは保存しない限りこのコンピュータに留まります。",
     "empty": {
       "none": {
         "title": "まだログはありません",
-        "body": "IPAForge の動作に合わせてここに行が表示されます(デバイスの接続、サインイン、インストールなど)。"
+        "body": "IPAForgeの動作に合わせてここに行が表示されます（デバイスの接続、サインイン、インストールなど）。"
       },
       "noMatch": {
         "title": "一致する行はありません",
@@ -1038,29 +1116,29 @@
       }
     },
     "export": {
-      "copyTitle": "{count, plural, other {# 行をコピーしますか?}}",
-      "saveTitle": "{count, plural, other {# 行をファイルに保存しますか?}}",
+      "copyTitle": "{count, plural, other {#行をコピーしますか？}}",
+      "saveTitle": "{count, plural, other {#行をファイルに保存しますか？}}",
       "copyBody": "設定したフィルタで表示されている行です。",
       "saveBody": "フィルタに関係なく、このセッションで保持しているすべての行です。",
       "warning": "パスワード、トークン、デバイス識別子はすでに除外されていますが、ログにはデバイスのモデル、アプリ、チームが含まれます。公開する前に確認してください。",
       "confirmCopy": "コピー",
       "confirmSave": "保存",
-      "copied": "{count, plural, other {# 行をコピーしました}}",
-      "saved": "{count, plural, other {# 行を保存しました}}",
+      "copied": "{count, plural, other {#行をコピーしました}}",
+      "saved": "{count, plural, other {#行を保存しました}}",
       "copyFailed": "行をコピーできませんでした",
       "saveFailed": "行を保存できませんでした"
     }
   },
   "preload": {
     "title": "アプリのプリロード",
-    "description": "自分のアプリをインストールします。Apple ID で署名し、USB 経由で 1 つずつインストールします。",
+    "description": "自分のアプリをインストールします。Apple IDで署名し、USB経由で1つずつインストールします。",
     "tabs": {
       "label": "プリロード",
       "apps": "アプリを追加",
       "sources": "ソース"
     },
     "add": {
-      "drop": ".ipa ファイルをここにドロップ",
+      "drop": ".ipaファイルをここにドロップ",
       "or": "または",
       "choose": "ファイルを選択…",
       "link": "リンクから追加…"
@@ -1069,15 +1147,15 @@
       "recommended": "おすすめ",
       "added": "追加済み",
       "add": "追加",
-      "sidestore": "デバイス上でアプリを自動で更新・インストールします。",
-      "livecontainerSidestore": "SideStore を内蔵した LiveContainer。",
-      "livecontainer": "1 つのアプリの中で多数のアプリを実行し、3 アプリの制限を超えられます。",
-      "stikdebug": "必要なアプリの JIT をデバイス上で有効にします。",
-      "feather": "あなたの証明書でアプリをデバイス上で署名・インストールします。"
+      "sidestore": "デバイス上でアプリを自動でリフレッシュ・インストールします。",
+      "livecontainerSidestore": "SideStoreを内蔵したLiveContainer。",
+      "livecontainer": "1つのアプリの中で多数のアプリを動かせるため、3個の上限を超えられます。",
+      "stikdebug": "必要なアプリのJITをデバイス上で有効にします。",
+      "feather": "自分の証明書を使って、デバイス上でアプリに署名・インストールします。"
     },
     "browse": {
       "title": "アプリを探す",
-      "count": "{sources, plural, other {# 個のソース}}から{apps, plural, other {# 個のアプリ}}",
+      "count": "{sources, plural, other {#個のソース}}から{apps, plural, other {#個のアプリ}}",
       "source": "ソース",
       "allSources": "すべてのソース",
       "search": "アプリを検索",
@@ -1087,104 +1165,104 @@
       "loading": "ソースを読み込み中…",
       "catalogLine": "最新リリース · チェックサムで検証済み",
       "version": "{version} · {size}",
-      "from": "{name}（{others} にもあります）",
-      "details": "{name} の詳細",
+      "from": "{name}（{others}にもあります）",
+      "details": "{name}の詳細",
       "notRefreshed": {
-        "title": "{name} を更新できませんでした",
-        "body": "前回の更新({when})のアプリを表示しています。",
+        "title": "{name}を再読み込みできませんでした",
+        "body": "前回の読み込み（{when}）時点のアプリを表示しています。",
         "retry": "再試行"
       }
     },
     "detail": {
       "version": "バージョン",
-      "latest": "{version}(最新)",
+      "latest": "{version}（最新）",
       "size": "サイズ",
       "needs": "必要条件",
       "needsIos": "iOS {version}",
-      "anyIos": "すべての iOS",
+      "anyIos": "すべてのiOS",
       "from": "提供元",
       "builtin": "内蔵 · 信頼済み",
       "added": "あなたが追加したソース",
-      "untrusted": "あなたが追加したソースのアプリです。IPAForge はそのアプリを審査していません。",
+      "untrusted": "あなたが追加したソースのアプリです。IPAForgeはそのアプリを審査していません。",
       "add": "リストに追加",
       "inList": "リストにあります",
       "close": "閉じる"
     },
     "sources": {
-      "description": "「アプリを探す」がアプリを見つける場所です。内蔵ソースは IPAForge が管理します。ほかのソースはリンクで追加できます(AltStore 形式)。",
+      "description": "「アプリを探す」がアプリを見つける場所です。内蔵ソースはIPAForgeが管理します。ほかのソースはリンクで追加できます（AltStore形式）。",
       "add": "ソースを追加…",
-      "refreshAll": "すべて更新",
+      "refreshAll": "すべて再読み込み",
       "list": "ソース",
       "builtin": "内蔵 · 信頼済み",
       "added": "自分で追加",
-      "catalogName": "IPAForge カタログ",
-      "apps": "{count, plural, other {# 個のアプリ}}",
-      "updated": "{when}に更新",
+      "catalogName": "IPAForgeカタログ",
+      "apps": "{count, plural, other {#個のアプリ}}",
+      "updated": "{when}に読み込み済み",
       "notRead": "まだ読み込まれていません",
-      "skipped": "{count, plural, other {# 個をスキップ(.ipa ではない)}}",
+      "skipped": "{count, plural, other {#個をスキップ（.ipaではない）}}",
       "failed": "接続できませんでした。",
       "failedCopy": "{when}の最後のコピーを表示しています。",
-      "refreshing": "更新中…",
-      "show": "{name} のアプリを表示",
-      "refresh": "{name} を更新",
-      "remove": "{name} を削除",
+      "refreshing": "再読み込み中…",
+      "show": "{name}のアプリを表示",
+      "refresh": "{name}を再読み込み",
+      "remove": "{name}を削除",
       "on": "オン",
       "off": "オフ",
-      "note": "IPAForge は追加したソースのアプリを審査しません。信頼できるソースだけを追加してください。"
+      "note": "IPAForgeは追加したソースのアプリを審査しません。信頼できるソースだけを追加してください。"
     },
     "addSource": {
       "title": "ソースを追加",
       "label": "ソースのリンク",
       "placeholder": "https://example.com/apps.json",
-      "hint": "SideStore が読み込む AltStore 形式のソース。通常は .json で終わります。",
+      "hint": "SideStoreが読み込むAltStore形式のソース。通常は.jsonで終わります。",
       "check": "確認",
       "checking": "ソースを確認中…",
       "notLink": "https:// で始まるリンクを入力してください",
-      "notHttps": "https:// のリンクを使ってください。IPAForge は安全な接続でのみソースを読み込みます。",
-      "previewTitle": "このソースを追加しますか?",
-      "includes": "{count, plural, other {# 個のアプリ(以下を含む):}}",
-      "skipped": "{count, plural, other {ほかに # 個を除外しました(ダウンロードが .ipa ではありません)。}}",
+      "notHttps": "https:// のリンクを使ってください。IPAForgeは安全な接続でのみソースを読み込みます。",
+      "previewTitle": "このソースを追加しますか？",
+      "includes": "{count, plural, other {#個のアプリ（以下を含む）:}}",
+      "skipped": "{count, plural, other {ほかに#個を除外しました（ダウンロードが.ipaではありません）。}}",
       "warningTitle": "信頼できるソースだけを追加してください",
-      "warningBody": "IPAForge は追加したソースのアプリを審査しません。ただし、各アプリはインストール前に確認されます。",
+      "warningBody": "IPAForgeは追加したソースのアプリを審査しません。ただし、各アプリはインストール前に確認されます。",
       "back": "戻る",
       "confirm": "ソースを追加"
     },
     "removeSource": {
-      "title": "{name} を削除しますか?",
+      "title": "{name}を削除しますか？",
       "body": "そのアプリは「アプリを探す」から消えます。そこからインストールしたアプリはデバイスに残り、「インストールするアプリ」リストのアプリもそのまま残ります。",
       "confirm": "削除"
     },
     "list": {
       "title": "インストールするアプリ",
-      "count": "{count, plural, other {# 個のアプリ}}",
-      "empty": "まだアプリがありません。.ipa ファイルをここにドロップするか、選択するか、リンクを追加するか、「アプリを探す」から選んでください。"
+      "count": "{count, plural, other {#個のアプリ}}",
+      "empty": "まだアプリがありません。.ipaファイルをここにドロップするか、選択するか、リンクを追加するか、「アプリを探す」から選んでください。"
     },
     "row": {
-      "waiting": "デバイスと Apple ID を待っています",
+      "waiting": "デバイスとApple IDを待っています",
       "checking": "確認中…",
       "downloading": "ダウンロードして確認中…",
-      "appIds": "{count, plural, other {App ID # 個}}{extensions, plural, =0 {} other {(アプリ + 拡張機能 # 個)}}",
-      "updates": "{from} → {to} に更新 · データは保持",
+      "appIds": "{count, plural, other {App ID #個}}{extensions, plural, =0 {} other {（アプリ+拡張機能#個）}}",
+      "updates": "{from} → {to}にアップデート · データは保持",
       "new": "デバイスに新規",
       "pairing": "ペアリングファイルと証明書を受け取ります",
       "fromCatalog": "カタログから · 安定版",
-      "remove": "{name} を削除",
+      "remove": "{name}を削除",
       "cannot": "インストールできません。",
-      "fromSource": "{name} から"
+      "fromSource": "{name}から"
     },
     "problem": {
-      "notIpa": "インストールできるのは .ipa ファイルのみです。",
-      "unreadable": "IPAForge はこのファイルを読み込めません。「ファイルを選択…」から追加してください。",
-      "needsIos": "iOS {needs} が必要です。このデバイスは iOS {has} です。"
+      "notIpa": "インストールできるのは.ipaファイルのみです。",
+      "unreadable": "IPAForgeはこのファイルを読み込めません。「ファイルを選択…」から追加してください。",
+      "needsIos": "iOS {needs}が必要です。このデバイスはiOS {has}です。"
     },
     "summary": {
-      "appIds": "{count, plural, other {新規 # 個}} · {left, plural, other {今週の残り # 個}}",
-      "appIdsNoLimit": "{count, plural, other {新規 # 個}}",
+      "appIds": "{count, plural, other {新規#個}} · {left, plural, other {今週の残り#個}}",
+      "appIdsNoLimit": "{count, plural, other {新規#個}}",
       "notEnough": "残りが足りません。アプリを削除するか、お待ちください。{next}",
-      "freeApps": "インストール後 {after} / {limit}",
-      "freeAppsOver": "{used, plural, other {すでに # 個あります。}}インストール時に削除するアプリを尋ねます。または、このリストから 1 つ削除してください。"
+      "freeApps": "インストール後{after} / {limit}",
+      "freeAppsOver": "{used, plural, other {すでに#個あります。}}インストール時に削除するアプリを尋ねます。または、このリストから1つ削除してください。"
     },
-    "install": "{count, plural, =0 {インストール} other {# 個のアプリをインストール}}",
+    "install": "{count, plural, =0 {インストール} other {#個のアプリをインストール}}",
     "clear": "リストを空にする",
     "readiness": {
       "busy": "実行中のインストールが終わるまでお待ちください。",
@@ -1194,28 +1272,33 @@
     },
     "link": {
       "title": "リンクから追加",
-      "body": ".ipa ファイルへの直接リンク。IPAForge がダウンロードし、ほかのアプリと同じように確認します。",
+      "body": ".ipaファイルへの直接リンク。IPAForgeがダウンロードし、ほかのアプリと同じように確認します。",
       "label": "リンク",
-      "placeholder": "https://example.com/MyApp.ipa",
+      "placeholder": "https://example.com/Myアプリ.ipa",
       "add": "追加",
-      "httpsOnly": "ダウンロードできるのは https リンクのみです。",
+      "httpsOnly": "ダウンロードできるのはhttpsリンクのみです。",
       "invalid": "リンクではありません。",
-      "notIpa": "リンクは .ipa ファイルを指している必要があります。"
+      "notIpa": "リンクは.ipaファイルを指している必要があります。"
     },
     "elsewhere": {
       "apps": "アプリをインストール中です",
-      "sidestore": "SideStore をインストール中です",
-      "body": "インストールは 1 度に 1 つです(デバイスを使うため)。終わったら開始できます。",
+      "sidestore": "SideStoreをインストール中です",
+      "body": "インストールは1度に1つです（デバイスを使うため）。終わったら開始できます。",
       "open": "開く"
     },
     "run": {
       "title": {
-        "running": "{count, plural, other {{app} をインストール中}}",
-        "completed": "{count, plural, other {{app} をインストールしました}}",
+        "running": "{count, plural, =1 {{app}をインストール中} other {#個のアプリをインストール中}}",
+        "completed": "{count, plural, =1 {{app}をインストールしました} other {#個のアプリをインストールしました}}",
         "failed": "すべてのアプリをインストールできませんでした"
       },
       "backToPreload": "プリロードに戻る",
-      "shared": "このデバイスと Apple ID",
+      "shared": "このデバイスとApple ID",
+      "refresh": {
+        "profile": "新しいプロファイルのみ。再インストールはしません",
+        "certificate": "再インストールしました: 署名した証明書が無効になっています",
+        "unmarked": "再インストールしました: IPAForgeは署名した証明書を判別できません"
+      },
       "group": {
         "failed": "失敗",
         "done": "完了",
@@ -1224,7 +1307,7 @@
       }
     },
     "done": {
-      "title": "{count, plural, other {{app} は {device} にあります。}}",
+      "title": "{count, plural, other {{app}を{device}にインストールしました。}}",
       "open": "各アプリをホーム画面から開いてください。"
     }
   }

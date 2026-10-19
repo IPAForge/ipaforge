@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import { LINK_CLASSES } from '@ui/components/shell/constants.ts'
 import { RunningBadge } from '@ui/components/shell/running-badge.tsx'
+import { AppsBadge } from '@ui/features/apps/components/apps-badge.tsx'
 import { useRun } from '@ui/hooks/use-run.ts'
 import { isRunActive } from '@ui/state/active-run/run-view.ts'
 import type { AppSection } from '@ui/types.ts'
@@ -22,6 +23,7 @@ export const SidebarLink = ({ section }: SidebarLinkProps) => {
       <Icon aria-hidden="true" className="size-4 shrink-0" />
       <span className="truncate">{t(section.labelKey)}</span>
       {isRunning ? <RunningBadge /> : null}
+      {section.id === 'apps' && !isRunning ? <AppsBadge /> : null}
     </Link>
   )
 }

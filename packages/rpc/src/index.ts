@@ -57,6 +57,7 @@ export type {
   RemoteInstallSideStoreInput,
   RemotePlacePairingInput,
   RemotePlanInstallInput,
+  RemoteRefreshAppsInput,
   RemoteSignInInput,
   Request,
   SubscriptionTopic

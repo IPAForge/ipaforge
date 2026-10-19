@@ -105,6 +105,8 @@ export const ErrorCode = {
   CertificateMachineIdMissing: 'installer.certificate_machine_id_missing',
   /** The account has several teams and none was chosen or remembered. */
   TeamRequired: 'installer.team_required',
+  /** Refresh: the app wasn't installed by IPAForge here, or its kept IPA is gone; it has to be added again. */
+  KeptIpaMissing: 'installer.kept_ipa_missing',
 
   // rpc
   /** A message between the Engine and the UI failed validation or refers to an unknown run or checkpoint. */

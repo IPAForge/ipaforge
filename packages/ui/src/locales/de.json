@@ -17,7 +17,7 @@
     "account": "Apple-ID",
     "notSignedIn": "Nicht angemeldet",
     "accountMenu": "Apple-IDs",
-    "addAppleId": "Apple-ID hinzufügen …",
+    "addAppleId": "Apple-ID hinzufügen…",
     "noAccounts": "Noch keine Apple-IDs.",
     "noDevicesHint": "Verbinde ein iPhone oder iPad per Kabel und entsperre es.",
     "openDevices": "Geräte öffnen"
@@ -28,10 +28,11 @@
     },
     "install": "Installieren",
     "preload": "Vorladen",
+    "apps": "Apps",
     "devices": "Geräte",
     "accounts": "Accounts",
     "certificates": "Zertifikate",
-    "logs": "Protokolle",
+    "logs": "Protokoll",
     "settings": "Einstellungen",
     "installRunning": "Eine Installation läuft"
   },
@@ -54,6 +55,7 @@
       "app_ids": "App-IDs registrieren",
       "free_apps": "Limit für kostenlose Apps prüfen",
       "provision": "Bereitstellungsprofile abrufen",
+      "refresh_profiles": "Neue Profile abrufen",
       "sign": "App signieren",
       "install": "Auf dem Gerät installieren",
       "pairing": "Kopplungsdatei ablegen",
@@ -76,7 +78,7 @@
     "variant": {
       "sidestore": {
         "title": "SideStore",
-        "description": "Aktualisiert und installiert Apps selbst auf dem Gerät. Nutzt 2 App-IDs."
+        "description": "Erneuert und installiert Apps selbst auf dem Gerät. Nutzt 2 App-IDs."
       },
       "livecontainer": {
         "title": "LiveContainer + SideStore",
@@ -92,15 +94,15 @@
     "plan": {
       "title": "Diese Installation",
       "waiting": "Wird angezeigt, sobald Gerät und Apple-ID bereit sind.",
-      "checking": "{app} wird geladen und bei Apple geprüft… Der Download bleibt erhalten, die Installation nutzt ihn wieder.",
-      "unavailable": "Konnte nicht bei Apple prüfen. Du kannst trotzdem installieren: Jeder Schritt prüft erneut.",
+      "checking": "{app} wird heruntergeladen und bei Apple geprüft… Der Download bleibt erhalten, die Installation nutzt ihn wieder.",
+      "unavailable": "Prüfung bei Apple nicht möglich. Du kannst trotzdem installieren: Jeder Schritt prüft erneut.",
       "appIds": "App-IDs",
-      "appIdsValue": "{created, plural, =0 {Alle {reused} schon registriert} other {{reused, plural, =0 {{created} neu} other {{created} neu, {reused} wiederverwendet}}}} · {left, plural, one {# übrig diese Woche} other {# übrig diese Woche}}",
+      "appIdsValue": "{created, plural, =0 {Alle {reused} schon registriert} other {{reused, plural, =0 {{created} neu} other {{created} neu, {reused} wiederverwendet}}}} · {left, plural, one {diese Woche noch # frei} other {diese Woche noch # frei}}",
       "nextSlot": "Die nächste wird am {date} frei",
       "freeApps": "Kostenlose Apps auf dem Gerät",
       "freeAppsValue": "{used} von {limit} belegt",
-      "freeAppsRoom": "Platz für diese",
-      "freeAppsFull": "Du wählst eine zum Entfernen",
+      "freeAppsRoom": "Platz für diese App",
+      "freeAppsFull": "Du wählst eine App zum Entfernen aus",
       "noLimit": "Kein Limit (bezahltes Team)",
       "certificate": "Zertifikat",
       "certificateReused": "Wiederverwendet",
@@ -160,7 +162,7 @@
           "installing": "Wird installiert"
         },
         "speed": "{speed}/s",
-        "ios": "iOS installiert sie",
+        "ios": "iOS installiert die App",
         "leftSeconds": "Noch etwa {seconds} s",
         "leftMinutes": "{minutes, plural, one {Noch etwa # Min.} other {Noch etwa # Min.}}"
       },
@@ -217,14 +219,14 @@
       "deviceValue": "{name} · iOS {ios}",
       "account": "Apple-ID",
       "appIds": "App-IDs",
-      "appIdsValue": "{count, plural, one {# übrig diese Woche} other {# übrig diese Woche}}",
+      "appIdsValue": "{count, plural, one {diese Woche noch # frei} other {diese Woche noch # frei}}",
       "freeApps": "Kostenlose Apps",
       "apps": "Apps"
     },
     "done": {
-      "title": "{app} ist auf {device}.",
+      "title": "{app} ist jetzt auf {device}.",
       "trust": "Auf dem Gerät: Einstellungen › Allgemein › VPN und Geräteverwaltung › {appleId} vertrauen.",
-      "open": "Öffne SideStore: Die Pairing-Datei und dein Zertifikat sind schon drin.",
+      "open": "Öffne SideStore: Die Kopplungsdatei und dein Zertifikat sind schon darin.",
       "done": "Fertig"
     },
     "cancelled": {
@@ -236,7 +238,7 @@
       "continues": "Erledigte Schritte bleiben: Ein neuer Versuch macht bei „{step}“ weiter.",
       "copy": "Diagnose kopieren",
       "copied": "Kopiert",
-      "copyFailed": "Konnte nicht kopieren",
+      "copyFailed": "Kopieren fehlgeschlagen",
       "showLogs": "Protokoll anzeigen"
     }
   },
@@ -280,7 +282,7 @@
       },
       "developer_mode_off": {
         "title": "Der Entwicklermodus ist aus",
-        "body": "Selbst installierte Apps brauchen den Entwicklermodus. Aktiviere ihn unter „Einstellungen“ › „Datenschutz & Sicherheit“ › „Entwicklermodus“ und starte das Gerät dann neu."
+        "body": "Per Sideloading installierte Apps brauchen den Entwicklermodus. Aktiviere ihn unter „Einstellungen“ › „Datenschutz & Sicherheit“ › „Entwicklermodus“ und starte das Gerät dann neu."
       },
       "not_paired": {
         "title": "Diesem Computer wird noch nicht vertraut",
@@ -311,7 +313,7 @@
         "body": "Das Gerät akzeptiert die Kopplung mit diesem Computer nicht mehr. Trenne es, schließe es wieder an, entsperre es und tippe auf „Vertrauen“."
       },
       "service_unavailable": {
-        "title": "Ein Gerätedienst ist nicht gestartet",
+        "title": "Ein Gerätedienst ließ sich nicht starten",
         "body": "Das Gerät hat einen Dienst, den IPAForge braucht, nicht gestartet. Entsperre es, verbinde es erneut und versuche es noch einmal."
       },
       "protocol_error": {
@@ -335,8 +337,8 @@
         "body": "Dafür ist ein Gerätecode nötig. Lege einen unter „Einstellungen“ › „Face ID & Code“ fest und versuche es dann erneut."
       },
       "free_app_limit": {
-        "title": "Zu viele selbst installierte Apps",
-        "body": "Mit einer kostenlosen Apple-ID können nur drei selbst installierte Apps gleichzeitig auf einem Gerät aktiv sein. Entferne eine und versuche es dann erneut."
+        "title": "Zu viele per Sideloading installierte Apps",
+        "body": "Mit einer kostenlosen Apple-ID können nur drei per Sideloading installierte Apps gleichzeitig auf einem Gerät aktiv sein. Entferne eine und versuche es dann erneut."
       },
       "profile_banned": {
         "title": "Apple hat diese Apple-ID auf dem Gerät blockiert",
@@ -461,14 +463,14 @@
         "body": "Apple hat die Registrierung des Geräts noch nicht abgeschlossen. Warte eine Minute und versuche es erneut."
       },
       "developer_request_failed": {
-        "title": "Die Entwicklerdienste von Apple sind fehlgeschlagen",
+        "title": "Fehler bei den Entwicklerdiensten von Apple",
         "body": "Eine Anfrage an die Entwicklerdienste von Apple ist fehlgeschlagen. Versuche es erneut und melde das Problem, wenn es weiter auftritt."
       }
     },
     "catalog": {
       "source_gone": {
         "title": "Die Version ist nicht mehr verfügbar",
-        "body": "Die Quelle, aus der diese App geladen wurde, existiert nicht mehr. Wähle einen anderen Kanal, importiere eine IPA oder aktualisiere IPAForge."
+        "body": "Die Adresse, von der diese App heruntergeladen wurde, gibt es nicht mehr. Wähle einen anderen Kanal, importiere eine IPA oder aktualisiere IPAForge."
       },
       "unavailable": {
         "title": "Die App-Liste konnte nicht geladen werden",
@@ -476,11 +478,11 @@
       },
       "download_failed": {
         "title": "Der Download ist fehlgeschlagen",
-        "body": "Die App konnte nicht geladen werden. Prüfe dein Netzwerk und versuche es erneut."
+        "body": "Die App konnte nicht heruntergeladen werden. Prüfe dein Netzwerk und versuche es erneut."
       },
       "checksum_mismatch": {
         "title": "Der Download ist beschädigt",
-        "body": "Die geladene Datei passt nicht zu ihrer Prüfsumme und wurde deshalb nicht verwendet. Versuche es erneut oder wähle einen anderen Kanal."
+        "body": "Die heruntergeladene Datei passt nicht zu ihrer Prüfsumme und wurde deshalb nicht verwendet. Versuche es erneut oder wähle einen anderen Kanal."
       },
       "checksum_missing": {
         "title": "Der Download kann nicht überprüft werden",
@@ -500,7 +502,7 @@
       },
       "app_source_exists": {
         "title": "Diese Quelle ist schon hinzugefügt",
-        "body": "Ihre Apps sind bereits unter „Apps durchsuchen“."
+        "body": "Ihre Apps findest du bereits unter „Apps durchsuchen“."
       }
     },
     "plist": {
@@ -601,6 +603,10 @@
       "team_required": {
         "title": "Team auswählen",
         "body": "Diese Apple-ID gehört zu mehreren Teams. Wähle das Team, mit dem signiert werden soll."
+      },
+      "kept_ipa_missing": {
+        "title": "Diese App kann hier nicht erneuert werden",
+        "body": "IPAForge hat sie nicht auf diesem Gerät installiert, oder ihre aufbewahrte Kopie fehlt. Füge ihre .ipa unter „Vorladen“ hinzu, um sie erneut zu installieren."
       }
     },
     "rpc": {
@@ -691,17 +697,17 @@
         "how": "Ein neuer Versuch fragt nach dem Passwort, um dich erneut anzumelden."
       },
       "signInOnAppleDevice": {
-        "how": "Melde dich mit dieser Apple-ID auf einem iPhone, iPad oder Mac oder auf Apples Website an und folge den Hinweisen:"
+        "how": "Melde dich mit dieser Apple-ID auf einem iPhone, iPad oder Mac oder auf der Website von Apple an und folge den Hinweisen:"
       },
       "switchAccount": {
         "how": "Wähle eine deiner gespeicherten Apple-IDs. Die Installation beginnt damit neu.",
         "button": "Apple-ID wählen…"
       },
       "verifyEmail": {
-        "how": "Bestätige die E-Mail-Adresse dieser Apple-ID auf Apples Website:"
+        "how": "Bestätige die E-Mail-Adresse dieser Apple-ID auf der Website von Apple:"
       },
       "acceptAgreement": {
-        "how": "Melde dich auf Apples Entwickler-Website an und akzeptiere die angezeigte Vereinbarung:"
+        "how": "Melde dich auf der Entwickler-Website von Apple an und akzeptiere die angezeigte Vereinbarung:"
       },
       "revokeCertificate": {
         "how": "Ein neuer Versuch fragt, welches Zertifikat widerrufen werden soll."
@@ -711,13 +717,13 @@
         "next": "Die nächste App-ID wird am {date} frei."
       },
       "chooseAppToRemove": {
-        "how": "Ein neuer Versuch fragt, welche App für Platz entfernt werden soll."
+        "how": "Ein neuer Versuch fragt, welche App entfernt werden soll, um Platz zu schaffen."
       },
       "unlockDevice": {
         "how": "Entsperre das Gerät und lass es entsperrt, bis die Installation fertig ist."
       },
       "enableDeveloperMode": {
-        "button": "Ist an, erneut versuchen"
+        "button": "Ist aktiviert, erneut versuchen"
       },
       "trustComputer": {
         "how": "Entsperre das Gerät. Wenn es fragt, ob es diesem Computer vertrauen soll, tippe auf „Vertrauen“ und gib den Code ein.",
@@ -730,7 +736,7 @@
         "how": "Lege auf dem Gerät unter Einstellungen › Face ID & Code einen Code fest und versuche es dann erneut."
       },
       "installDeviceSupport": {
-        "how": "Installiere unter Windows Apple-Geräte (oder iTunes) aus dem Microsoft Store und starte IPAForge neu."
+        "how": "Installiere unter Windows die App „Apple Geräte“ (oder iTunes) aus dem Microsoft Store und starte IPAForge dann neu."
       },
       "reinstallApp": {
         "how": "Lösche die App vom Gerät und versuche es dann erneut."
@@ -745,7 +751,7 @@
   },
   "devices": {
     "engine": {
-      "connecting": "Verbindung zur Engine wird hergestellt …",
+      "connecting": "Verbindung zur Engine wird hergestellt…",
       "connected": "{count, plural, =0 {Engine verbunden · keine Geräte} one {Engine verbunden · # Gerät} other {Engine verbunden · # Geräte}}",
       "failed": "Die Engine ist nicht erreichbar: {reason}"
     },
@@ -779,7 +785,7 @@
     },
     "empty": {
       "title": "Noch keine Geräte",
-      "body": "Verbinde ein iPhone oder iPad per Kabel und entsperre es. Unter Windows müssen Apple-Geräte oder iTunes installiert sein."
+      "body": "Verbinde ein iPhone oder iPad per Kabel und entsperre es. Unter Windows muss „Apple Geräte“ oder iTunes installiert sein."
     },
     "notice": {
       "none": {
@@ -810,7 +816,7 @@
       "unavailable": {
         "title": "{name} kann nicht gelesen werden",
         "body": "Trenne es und schließe es wieder an. Wenn es weiter passiert, starte das Gerät neu.",
-        "bodyWifi": "Es ist über WLAN verbunden: Wecke und entsperre es und lass es im selben Netzwerk wie diesen Computer, dann erneut prüfen. Ein Kabel ist zuverlässiger.",
+        "bodyWifi": "Es ist über WLAN verbunden: Wecke und entsperre es, lass es im selben Netzwerk wie diesen Computer und klicke dann auf „Erneut prüfen“. Ein Kabel ist zuverlässiger.",
         "reason": "Grund: {reason}",
         "titleUnnamed": "Das Gerät kann nicht gelesen werden"
       }
@@ -828,7 +834,7 @@
       "title": "Erneut anmelden",
       "body": "Die gespeicherte Sitzung für {appleId} ist abgelaufen. Gib das Passwort ein, um fortzufahren.",
       "label": "Passwort",
-      "checking": "Das Passwort wird geprüft …"
+      "checking": "Das Passwort wird geprüft…"
     },
     "method": {
       "title": "Wohin soll Apple den Code senden?",
@@ -837,7 +843,7 @@
       "trustedDeviceHint": "Dein iPhone, iPad oder Mac, angemeldet mit dieser Apple-ID",
       "sms": "SMS an {number}",
       "smsHint": "Es können SMS-Gebühren anfallen",
-      "sending": "Der Code wird gesendet …"
+      "sending": "Der Code wird gesendet…"
     },
     "code": {
       "title": "Bestätigungscode eingeben",
@@ -845,7 +851,7 @@
       "label": "Bestätigungscode",
       "wrong": "Dieser Code hat nicht funktioniert. Prüfe ihn und gib ihn erneut ein.",
       "verify": "Bestätigen",
-      "checking": "Der Code wird geprüft …",
+      "checking": "Der Code wird geprüft…",
       "deviceBody": "{length, plural, one {Gib den #-stelligen Code ein, der auf deinem iPhone, iPad oder Mac angezeigt wird.} other {Gib den #-stelligen Code ein, der auf deinem iPhone, iPad oder Mac angezeigt wird.}}",
       "smsBody": "{length, plural, one {Gib den #-stelligen Code ein, der an {number} gesendet wurde.} other {Gib den #-stelligen Code ein, der an {number} gesendet wurde.}}",
       "allowHint": "Lass es entsperrt und tippe auf „Erlauben“, wenn nach der Anmeldung gefragt wird.",
@@ -861,17 +867,17 @@
       "title": "Welches Team soll die App signieren?",
       "body": "Diese Apple-ID gehört zu mehr als einem Team. IPAForge merkt sich deine Wahl für diese Apple-ID.",
       "free": "Kostenlos: Apps laufen nach 7 Tagen ab, 3 Apps pro Gerät",
-      "paid": "Bezahlt: Apps halten ein Jahr, kein App-Limit",
+      "paid": "Bezahlt: Apps gelten ein Jahr, kein App-Limit",
       "checking": "Dieses Team wird verwendet…"
     },
     "revoke": {
       "title": "Ein Zertifikat widerrufen?",
-      "body": "Dieses Team hat bereits die maximale Anzahl an Entwicklerzertifikaten, daher muss IPAForge eines widerrufen, um ein eigenes zu erstellen. Mit dem widerrufenen signierte Apps werden nicht mehr aktualisiert.",
+      "body": "Dieses Team hat bereits die maximale Anzahl an Entwicklungszertifikaten, daher muss IPAForge eines widerrufen, um ein eigenes zu erstellen. Mit dem widerrufenen signierte Apps können nicht mehr erneuert werden.",
       "ipaforge": "Von IPAForge auf einem anderen Computer erstellt",
       "sidestore": "Von SideStore erstellt",
       "machine": "Auf „{machine}“ erstellt (meist Xcode)",
       "unknown": "Von einem unbekannten Tool erstellt",
-      "sidestoreWarning": "SideStore auf deinem Gerät aktualisiert keine Apps mehr, bis es ein neues erstellt.",
+      "sidestoreWarning": "SideStore auf deinem Gerät erneuert keine Apps mehr, bis es ein neues erstellt.",
       "machineWarning": "Xcode auf diesem Computer erstellt beim nächsten Signieren ein neues.",
       "expires": "Läuft am {date} ab",
       "confirm": "Widerrufen und fortfahren",
@@ -885,22 +891,22 @@
     },
     "share": {
       "title": "Dein Signaturzertifikat mit „{app}“ teilen?",
-      "body": "Diese App sieht aus wie SideStore. Mit deinem Zertifikat kann sie Apps auf dem Gerät selbst aktualisieren. Teile es nur mit einer App, der du vertraust.",
+      "body": "Diese App sieht aus wie SideStore. Mit deinem Zertifikat kann sie Apps auf dem Gerät selbst erneuern. Teile es nur mit einer App, der du vertraust.",
       "yes": "Zertifikat teilen",
-      "yesHint": "Sie aktualisiert deine Apps auf dem Gerät selbst",
+      "yesHint": "Sie erneuert deine Apps auf dem Gerät selbst",
       "no": "Nicht teilen",
       "noHint": "Sie wird ohne dein Zertifikat installiert"
     },
     "pairing": {
-      "title": "Welche Apps erhalten die Pairing-Datei?",
-      "body": "Mit der Pairing-Datei kann eine App auf dem Gerät per WLAN mit ihm sprechen, so wie dieser Computer. Nur die angehakten Apps erhalten sie.",
+      "title": "Welche Apps erhalten die Kopplungsdatei?",
+      "body": "Mit der Kopplungsdatei kann eine App auf dem Gerät per WLAN mit ihm kommunizieren, so wie dieser Computer. Nur die angehakten Apps erhalten sie.",
       "available": "{count, plural, one {# App auf dem Gerät kann sie nutzen} other {# Apps auf dem Gerät können sie nutzen}}",
       "selectAll": "Alle auswählen",
       "clearAll": "Alle abwählen",
       "place": "{count, plural, =0 {Wähle eine App} one {In # App ablegen} other {In # Apps ablegen}}",
-      "placing": "Pairing-Datei wird abgelegt…",
+      "placing": "Kopplungsdatei wird abgelegt…",
       "purpose": {
-        "sidestore": "Aktualisiert und installiert Apps per WLAN",
+        "sidestore": "Erneuert und installiert Apps per WLAN",
         "livecontainer": "Führt die Apps darin mit JIT aus",
         "stikdebug": "Aktiviert JIT für andere Apps",
         "stikstore": "Installiert Apps aus eigenen Quellen"
@@ -913,13 +919,13 @@
     "appleId": "Apple-ID",
     "password": "Passwort",
     "submit": "Anmelden",
-    "signingIn": "Anmeldung läuft …",
+    "signingIn": "Anmeldung läuft…",
     "done": {
       "title": "Apple-ID hinzugefügt",
       "body": "Angemeldet als {appleId}.",
       "close": "Fertig"
     },
-    "rememberPassword": "Mein Passwort im Schlüsselbund des Systems sichern",
+    "rememberPassword": "Mein Passwort im Schlüsselbund des Systems speichern",
     "rememberPasswordHint": "Damit kann sich IPAForge selbst erneut anmelden, wenn die Sitzung abläuft."
   },
   "accounts": {
@@ -933,7 +939,7 @@
     "freeTeam": "{name} (kostenlos)",
     "withState": "{line} · {state}",
     "state": {
-      "checking": "Wird geprüft …",
+      "checking": "Wird geprüft…",
       "signInNeeded": "Anmeldung nötig",
       "blocked": "Auf diesem Gerät gesperrt",
       "unreachable": "Apple nicht erreichbar"
@@ -948,6 +954,78 @@
       "forgets": "IPAForge vergisst diese Apple-ID, ihre Sitzung und ihr gespeichertes Passwort.",
       "keeps": "Ihre Signaturzertifikate bleiben auf diesem Computer, sodass eine erneute Anmeldung sie wiederverwendet. Bereits installierte Apps laufen weiter, bis sie ablaufen.",
       "confirm": "Abmelden"
+    }
+  },
+  "apps": {
+    "description": "Die Apps, die IPAForge auf diesem Gerät installiert hat. „Erneuern“ signiert eine App vor dem Ablauf neu und behält ihre Daten.",
+    "refreshAll": "{count, plural, =0 {Alle erneuern} one {Alle erneuern (#)} other {Alle erneuern (#)}}",
+    "updateAll": "{count, plural, one {Alle aktualisieren (#)} other {Alle aktualisieren (#)}}",
+    "refresh": "Erneuern",
+    "update": "Aktualisieren",
+    "remove": "Entfernen",
+    "removeApp": "{name} entfernen",
+    "updateTo": "Update: {version}",
+    "from": "Aus {source}",
+    "needsIpa": "Von IPAForge aus einer .ipa auf einem anderen Computer installiert. Füge diese .ipa einmal unter „Vorladen“ hinzu, um sie hier zu erneuern.",
+    "thisDevice": "diesem Gerät",
+    "badge": "{count, plural, one {# App muss bald erneuert werden} other {# Apps müssen bald erneuert werden}}",
+    "expiry": {
+      "in": "{days, plural, one {Läuft in # Tag ab · {date}} other {Läuft in # Tagen ab · {date}}}",
+      "today": "Läuft heute ab",
+      "expired": "{days, plural, one {Vor # Tag abgelaufen · öffnet sich nicht} other {Vor # Tagen abgelaufen · öffnet sich nicht}}",
+      "unknown": "Ablauf unbekannt"
+    },
+    "run": {
+      "checking": "Wird bei Apple geprüft …",
+      "waiting": "Wartet, bis sie dran ist",
+      "done": "Fertig"
+    },
+    "failed": {
+      "title": "Erneuern nicht abgeschlossen: {reason}",
+      "details": "Details anzeigen",
+      "dismiss": "Ausblenden"
+    },
+    "notConnected": {
+      "title": "Dieses Gerät ist nicht verbunden",
+      "body": "Verbinde es, um seine Apps zu sehen und sie zu erneuern oder zu aktualisieren."
+    },
+    "expired": {
+      "title": "{count, plural, one {# App ist abgelaufen} other {# Apps sind abgelaufen}}",
+      "body": "Sie öffnen sich erst wieder, wenn sie erneuert wurden. Ihre Daten bleiben erhalten.",
+      "refresh": "{count, plural, one {Jetzt erneuern} other {Jetzt alle erneuern}}"
+    },
+    "facts": {
+      "next": "Läuft als Nächstes ab",
+      "none": "Noch nichts",
+      "nextIn": "{days, plural, one {{name} · # Tag} other {{name} · # Tage}}",
+      "nextExpired": "{name} · abgelaufen",
+      "count": "Regelmäßig erneuert",
+      "apps": "{count, plural, one {# App} other {# Apps}}",
+      "auto": "Automatisch erneuern",
+      "autoOn": "{days, plural, one {An · # Tag vorher} other {An · # Tage vorher}}",
+      "autoOff": "Aus"
+    },
+    "list": {
+      "title": "Von IPAForge installiert",
+      "count": "{count, plural, one {# App · bald ablaufende zuerst} other {# Apps · bald ablaufende zuerst}}",
+      "empty": "Noch keine Apps. Installiere SideStore oder lade Apps vor, dann erscheinen sie hier."
+    },
+    "others": {
+      "title": "Noch nicht von IPAForge verwaltet",
+      "hint": "Vor dieser Version von IPAForge oder mit einem anderen Tool installiert",
+      "found": "In {source} gefunden. „Erneuern“ installiert sie von dort, ihre Daten bleiben erhalten, und IPAForge erneuert sie von da an regelmäßig.",
+      "how": "Füge ihre .ipa einmal unter „Vorladen“ hinzu, dann erneuert IPAForge sie von da an regelmäßig."
+    },
+    "auto": {
+      "title": "Apps automatisch erneuern",
+      "body": "Solange IPAForge geöffnet und das Gerät verbunden ist, werden Apps vor dem Ablauf von selbst erneuert.",
+      "toggle": "Automatisch erneuern",
+      "when": "Erneuern bei",
+      "days": "{count, plural, one {# verbleibendem Tag} other {# verbleibenden Tagen}}"
+    },
+    "removeDialog": {
+      "title": "{name} entfernen?",
+      "body": "Sie wird mit ihren Daten von {device} gelöscht und gibt einen Platz für kostenlose Apps frei. Du kannst sie über „Vorladen“ erneut installieren."
     }
   },
   "logs": {
@@ -993,7 +1071,7 @@
       "app": "App"
     },
     "filters": {
-      "showing": "Nur angezeigt:",
+      "showing": "Angezeigt wird nur:",
       "run": "Diese Installation ({time})",
       "text": "„{text}“",
       "remove": "Filter {filter} entfernen"
@@ -1014,7 +1092,7 @@
       "pause": "Anhalten",
       "resume": "Verfolgen"
     },
-    "jump": "{count, plural, one {# neue Zeile} other {# neue Zeilen}} · Zur neuesten",
+    "jump": "{count, plural, one {# neue Zeile} other {# neue Zeilen}} · Zur neuesten springen",
     "count": "{matching, plural, one {# passende Zeile} other {# passende Zeilen}} · die letzten {capacity, number} werden in dieser Sitzung behalten",
     "debug": "Debug-Details einschließen",
     "privacy": "Passwörter, Tokens, Schlüssel, Seriennummern und Gerätekennungen werden nie ins Protokoll geschrieben; sie erscheinen als [ausgeblendet]. Das Protokoll bleibt auf diesem Computer, bis du es kopierst oder speicherst.",
@@ -1052,10 +1130,10 @@
     }
   },
   "preload": {
-    "title": "Apps vorab installieren",
+    "title": "Apps vorladen",
     "description": "Installiere deine eigenen Apps: mit deiner Apple-ID signiert, per USB installiert, eine nach der anderen.",
     "tabs": {
-      "label": "Vorab installieren",
+      "label": "Vorladen",
       "apps": "Apps hinzufügen",
       "sources": "Quellen"
     },
@@ -1069,7 +1147,7 @@
       "recommended": "Empfohlen",
       "added": "Hinzugefügt",
       "add": "Hinzufügen",
-      "sidestore": "Aktualisiert und installiert Apps selbst auf dem Gerät.",
+      "sidestore": "Erneuert und installiert Apps selbst auf dem Gerät.",
       "livecontainerSidestore": "LiveContainer mit SideStore darin.",
       "livecontainer": "Führt viele Apps in einer aus, über das 3-App-Limit hinaus.",
       "stikdebug": "Aktiviert JIT für Apps, die es brauchen, auf dem Gerät.",
@@ -1085,13 +1163,13 @@
       "noMatch": "Keine Apps passen zu „{query}“.",
       "allOff": "Alle Quellen sind ausgeschaltet. Schalte eine unter „Quellen“ ein.",
       "loading": "Quellen werden gelesen…",
-      "catalogLine": "Neueste Version · gegen ihre Prüfsumme geprüft",
+      "catalogLine": "Neueste Version · mit Prüfsumme geprüft",
       "version": "{version} · {size}",
       "from": "{name}, auch in {others}",
       "details": "Details zu {name}",
       "notRefreshed": {
         "title": "{name} konnte nicht aktualisiert werden",
-        "body": "Zeigt ihre Apps von der letzten Aktualisierung, {when}.",
+        "body": "Es werden ihre Apps vom letzten Abruf angezeigt ({when}).",
         "retry": "Erneut versuchen"
       }
     },
@@ -1123,7 +1201,7 @@
       "notRead": "Noch nicht gelesen",
       "skipped": "{count, plural, one {# übersprungen (keine .ipa)} other {# übersprungen (keine .ipa)}}",
       "failed": "Nicht erreichbar.",
-      "failedCopy": "Zeigt ihre letzte Kopie vom {when}.",
+      "failedCopy": "Es wird die zuletzt geladene Kopie angezeigt ({when}).",
       "refreshing": "Wird aktualisiert…",
       "show": "Apps aus {name} anzeigen",
       "refresh": "{name} aktualisieren",
@@ -1143,7 +1221,7 @@
       "notHttps": "Verwende einen https://-Link: IPAForge liest Quellen nur über eine sichere Verbindung.",
       "previewTitle": "Diese Quelle hinzufügen?",
       "includes": "{count, plural, one {# App, darunter:} other {# Apps, darunter:}}",
-      "skipped": "{count, plural, one {# weitere ausgelassen: Ihr Download ist keine .ipa.} other {# weitere ausgelassen: Ihr Download ist keine .ipa.}}",
+      "skipped": "{count, plural, one {# weitere ausgelassen: Ihr Download ist keine .ipa.} other {# weitere ausgelassen: Ihre Downloads sind keine .ipa-Dateien.}}",
       "warningTitle": "Füge nur Quellen hinzu, denen du vertraust",
       "warningBody": "IPAForge prüft die Apps in Quellen, die du hinzufügst, nicht. Jede App wird trotzdem vor der Installation geprüft.",
       "back": "Zurück",
@@ -1162,11 +1240,11 @@
     "row": {
       "waiting": "Wartet auf Gerät und Apple-ID",
       "checking": "Wird geprüft…",
-      "downloading": "Wird geladen und geprüft…",
+      "downloading": "Wird heruntergeladen und geprüft…",
       "appIds": "{count, plural, one {# App-ID} other {# App-IDs}}{extensions, plural, =0 {} one { (App + # Erweiterung)} other { (App + # Erweiterungen)}}",
       "updates": "Aktualisiert {from} → {to} · behält ihre Daten",
       "new": "Neu auf dem Gerät",
-      "pairing": "Erhält die Pairing-Datei und das Zertifikat",
+      "pairing": "Erhält die Kopplungsdatei und das Zertifikat",
       "fromCatalog": "Aus dem Katalog · Stabil",
       "remove": "{name} entfernen",
       "cannot": "Kann nicht installiert werden.",
@@ -1178,7 +1256,7 @@
       "needsIos": "Benötigt iOS {needs}; dieses Gerät hat iOS {has}."
     },
     "summary": {
-      "appIds": "{count, plural, one {# neu} other {# neu}} · {left, plural, one {# übrig diese Woche} other {# übrig diese Woche}}",
+      "appIds": "{count, plural, one {# neu} other {# neu}} · {left, plural, one {diese Woche noch # frei} other {diese Woche noch # frei}}",
       "appIdsNoLimit": "{count, plural, one {# neu} other {# neu}}",
       "notEnough": "Nicht genug übrig. Entferne eine App oder warte. {next}",
       "freeApps": "{after} von {limit} nach dieser Installation",
@@ -1214,8 +1292,13 @@
         "completed": "{count, plural, one {{app} ist installiert} other {# Apps sind installiert}}",
         "failed": "Nicht alle Apps konnten installiert werden"
       },
-      "backToPreload": "Zurück zu Vorab installieren",
+      "backToPreload": "Zurück zu „Vorladen“",
       "shared": "Dieses Gerät und deine Apple-ID",
+      "refresh": {
+        "profile": "Nur ein neues Profil, nichts wird neu installiert",
+        "certificate": "Neu installiert: Das Zertifikat, mit dem sie signiert wurde, ist nicht mehr gültig",
+        "unmarked": "Neu installiert: IPAForge kann nicht erkennen, welches Zertifikat sie signiert hat"
+      },
       "group": {
         "failed": "Fehlgeschlagen",
         "done": "Fertig",

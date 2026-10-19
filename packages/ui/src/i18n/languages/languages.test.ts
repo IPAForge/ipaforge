@@ -16,14 +16,8 @@ describe('languages', () => {
     expect(availableLanguages).toEqual([...shippedLanguages, PSEUDO_LOCALE])
   })
 
-  it('marks machine-drafted languages, not the source or the pseudo-locale', () => {
-    expect(shippedLanguages.filter(isDraftLanguage)).toEqual([
-      'de',
-      'ro',
-      'ru',
-      'ar',
-      'ja'
-    ])
+  it('marks no language as a draft once every translation is reviewed', () => {
+    expect(shippedLanguages.filter(isDraftLanguage)).toEqual([])
     expect(isDraftLanguage(PSEUDO_LOCALE)).toBe(false)
   })
 

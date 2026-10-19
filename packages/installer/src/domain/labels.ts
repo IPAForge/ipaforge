@@ -12,6 +12,8 @@ export const StepLabel = {
   appIds: 'install.steps.app_ids',
   freeApps: 'install.steps.free_apps',
   provision: 'install.steps.provision',
+  /** Refresh: a new profile from Apple for an app whose certificate is still valid. */
+  refreshProfiles: 'install.steps.refresh_profiles',
   sign: 'install.steps.sign',
   install: 'install.steps.install',
   pairing: 'install.steps.pairing',

@@ -1,4 +1,6 @@
 import type { InstallerConfig } from '@installer/domain/config.ts'
+import type { InstalledStore } from '@installer/domain/ports/installed-store.ts'
+import type { KeptIpaStore } from '@installer/domain/ports/kept-ipa-store.ts'
 import type { ScratchStore } from '@installer/domain/ports/scratch-store.ts'
 import type { IpaSigner } from '@installer/domain/ports/types.ts'
 import type { AppleAccounts } from '@ipaforge/apple'
@@ -14,6 +16,10 @@ export type InstallerDeps = {
   /** Holds each team's development certificate and private key between runs. */
   readonly secrets: SecretStore
   readonly scratch: ScratchStore
+  /** The apps installed on each device, remembered for Refresh. */
+  readonly installed: InstalledStore
+  /** Each installed app's original IPA, signed again by Refresh. */
+  readonly kept: KeptIpaStore
   readonly signer: IpaSigner
   readonly logger: Logger
   readonly clock: Clock

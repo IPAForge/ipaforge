@@ -146,7 +146,7 @@ To add a palette, add its id to `paletteIds`, add its tokens to `palettes.ts` an
 - **Drop .ipa files** anywhere on the window (the drop zone lights up). A file that isn't an .ipa is listed as such, never sent to the Engine.
 - **Choose files…** opens the host's file dialog (`engine.chooseIpas()`; in the desktop app the main process opens it).
 - **Add from a link…**: a direct https link to an .ipa, which the Engine downloads first.
-- **Browse apps**: the apps of every source that's on, one card each, laid out the same way (name, what it's for, the latest version and size, then **Add** and where it comes from).
+- **Browse apps**: the apps of every source that's on, one card each, laid out the same way: the icon with the name and developer (and **Recommended**), what it's for in two lines, then a footer with the latest version and size and where it comes from (`· +N` when other sources list it too, all of them in its tooltip; amber for a source you added) beside **Add**. Nothing is cut off: long names and sources wrap.
   - **Sources:** the IPAForge catalog (SideStore, LiveContainer + SideStore, LiveContainer, StikDebug, Feather; releases from GitHub, checked against their published SHA-256) and the AltStore-format app sources.
   - **One card per app:** the same app in two sources shows once, from the first (built-in sources come first), and its tag says how many others have it ("IPAForge catalog +1"; hover for their names).
   - **Filter and search:** a source filter (All sources, or one) and a search on name, developer and subtitle. **Manage sources** opens the Sources tab.
@@ -191,6 +191,16 @@ The first Tab stop is a **Skip to content** link, which is visible only when foc
 - **Include debug details** has the Engine record debug lines too (`engine.logs.setLevel`), until the app restarts.
 - **Ctrl+L** (⌘L on macOS) opens Logs from any section, and goes back from Logs (`features/logs/hooks/use-logs-shortcut.ts`, mounted by the shell); <kbd>/</kbd> focuses the search.
 
+**Apps** (`features/apps/`) lists the apps on the device in use that are signed with one of the Apple ID's teams (`engine.installedApps`), read from the device: its provisioning profiles say which team signed each app and when it expires.
+- **Installed by IPAForge,** soonest to expire first. Each row shows:
+  - the name and version, with an **Update: x.y** chip when a source that's on lists a newer version (by the app's original bundle id);
+  - when it expires (green; amber inside the refresh window; red once expired, "won't open") and where it came from (the catalog, the source listing its link, the link's host, or the file);
+  - **Update**, **Refresh** and **Remove**. The buttons sit beside the text in a wide row and under it, lined up with the text, in a narrow one (a container query); long names and links wrap.
+- **Refresh** asks the Engine first (`refreshPlan`) and then starts one run (`refreshApps`). An app whose certificate still holds gets a new profile only, like SideStore's refresh: nothing is installed again. The others are signed again and installed over the old app from its kept IPA (`{ kind: "installed", bundleId }`), its catalog app or its link, keeping its data and the certificate permission it had. In the run, each app says which: "New profile only", or "Installed again" and why (its certificate is no longer valid, or IPAForge can't tell which certificate signed it). If Apple doesn't answer the plan, every app that can be is installed again. An app installed by IPAForge on another computer is recognised by its mark and refreshed the same way, even one from an `.ipa`; it's left out only when it would need installing again and there's nothing to install it from. **Update** installs the newer version's link. While a run goes on, each row shows its step and a bar, or "Waiting for its turn". **Refresh all** and **Update all** sit at the top; an expired app gets a red notice with **Refresh it now**.
+- **Also on this device:** apps signed with the same teams by another tool; adding their `.ipa` in Preload lets IPAForge refresh them.
+- **Refresh apps automatically** (on by default, 2 days before; 1, 2 or 3; `state/auto-refresh/`, saved with the UI preferences): while IPAForge is open, the device connected and no install running, the apps inside the window are refreshed in one run (`features/apps/hooks/use-auto-refresh.ts`, mounted by the shell). No polling: one timer wakes it when the next app enters the window, and each app is tried once per expiry date.
+- The sidebar's **Apps** shows how many apps are due. The fake Engine has installed apps too (scenarios `apps-due`, `apps-expired`, `no-apps`).
+
 Routes are code-based (TanStack Router) in `src/router.tsx`: `/` redirects to `/install`, and there is one route per section in `src/sections.ts`, each with a page under `src/features/<section>/`. A section's `group` decides where the sidebar shows it. Each navigation is logged at debug level under `ui.router`.
 
 ## Translations
@@ -226,7 +236,7 @@ Nothing needs registering beyond the JSON file and `status.json`: the build pick
 
 ### Drafts and completion
 
-`status.json` gives every language a status: `source` (English), `draft` or `reviewed`. Machine-drafted translations start as `draft`, and the language picker shows a small "draft" label next to them. A language loses the label only when a native speaker has reviewed the whole file and sets it to `reviewed`. Today every language except English is a draft.
+`status.json` gives every language a status: `source` (English), `draft` or `reviewed`. Machine-drafted translations start as `draft`, and the language picker shows a small "draft" label next to them. A language loses the label once its whole file has been reviewed and set to `reviewed`. Today every language is `reviewed`, so the picker shows no labels.
 
 `pnpm check:locales` (`scripts/check-locales.ts`, part of `pnpm verify` and CI) fails on:
 

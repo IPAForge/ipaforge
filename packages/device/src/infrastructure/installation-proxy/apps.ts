@@ -24,7 +24,9 @@ export const DEFAULT_APP_ATTRIBUTES = [
   'CFBundleVersion',
   'CFBundleShortVersionString',
   'SignerIdentity',
-  'ApplicationType'
+  'ApplicationType',
+  // IPAForge's marker in an app it installed (its origin), read back by any computer.
+  'IPAForge'
 ] as const
 
 /** Empty strings count as missing. */

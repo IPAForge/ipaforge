@@ -29,15 +29,31 @@ export type InstallAppsInput = {
 
 export const INSTALL_APPS = 'installApps'
 
-/** A user's file is ready to inspect; a catalog app is downloaded first. */
-const jobFor = (source: AppSource): AppJob =>
-  source.kind === 'file' ? { source, file: source.file } : { source }
+/**
+ * A user's file is ready to inspect; a catalog app is downloaded first. An app installed before is signed again
+ * from its kept IPA, with the certificate trust it had (so the run doesn't ask again).
+ */
+const jobFor = (source: AppSource): AppJob => {
+  if (source.kind === 'catalog') return { source }
+  if (source.kind === 'file') return { source, file: source.file }
+
+  return compact({ source, file: source.file, trust: source.record.trust })
+}
+
+/** The catalog app a source is, or was first installed from (a refresh of SideStore is still SideStore). */
+const catalogIdOf = (source: AppSource): string | undefined => {
+  if (source.kind === 'catalog') return source.appId
+  if (source.kind === 'installed' && source.record.origin.kind === 'catalog')
+    return source.record.origin.appId
+
+  return undefined
+}
 
 /** Every catalog app in the list that gets the pairing file (SideStore, LiveContainer + SideStore), by position. */
 const pairingTargets = (apps: readonly AppSource[]) =>
   apps.flatMap((source, index) => {
-    const pairingApp =
-      source.kind === 'catalog' ? CATALOG_PAIRING_APPS[source.appId] : undefined
+    const appId = catalogIdOf(source)
+    const pairingApp = appId ? CATALOG_PAIRING_APPS[appId] : undefined
 
     return pairingApp ? [{ index, pairingApp }] : []
   })

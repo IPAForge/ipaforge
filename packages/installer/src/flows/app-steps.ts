@@ -16,19 +16,25 @@ import { signStep } from '@installer/steps/sign.ts'
 import { signInStep } from '@installer/steps/sign-in.ts'
 import { teamStep } from '@installer/steps/team.ts'
 
-/** Catalog apps are resolved and downloaded; a user's file asks before it may receive the certificate. */
+/**
+ * Catalog apps are resolved and downloaded; a user's file asks before it may receive the certificate. An app
+ * refreshed from its kept IPA keeps the trust it had, so it's only checked again.
+ */
 export const prepareAppSteps = (
   runtime: FlowRuntime,
   source: AppSource,
   index: number
-): Step<InstallState>[] =>
-  source.kind === 'catalog'
-    ? [
-        resolveReleaseStep(runtime, index),
-        downloadStep(runtime, index),
-        inspectStep(runtime, index)
-      ]
-    : [inspectStep(runtime, index), certificateSharingStep(runtime, index)]
+): Step<InstallState>[] => {
+  if (source.kind === 'catalog')
+    return [
+      resolveReleaseStep(runtime, index),
+      downloadStep(runtime, index),
+      inspectStep(runtime, index)
+    ]
+  if (source.kind === 'installed') return [inspectStep(runtime, index)]
+
+  return [inspectStep(runtime, index), certificateSharingStep(runtime, index)]
+}
 
 /** Sign in, pick the team, register the device, get the certificate and check the App ID budget. */
 export const accountSteps = (runtime: FlowRuntime): Step<InstallState>[] => [

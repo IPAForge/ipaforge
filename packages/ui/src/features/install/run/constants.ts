@@ -11,6 +11,7 @@ import {
 import type { InstallPhase } from '@ui/features/install/run/types.ts'
 import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 import type {
+  RefreshKind,
   RunKind,
   RunStatus,
   StepState
@@ -123,3 +124,10 @@ export const provisionTaskKeys: Readonly<Record<string, TranslationKey>> = {
   'app-group': 'install.run.live.task.appGroup',
   profiles: 'install.run.live.task.profiles'
 }
+
+/** What a refresh does to an app, under its name in the run. */
+export const refreshNoteKeys = {
+  profile: 'preload.run.refresh.profile',
+  certificate: 'preload.run.refresh.certificate',
+  unmarked: 'preload.run.refresh.unmarked'
+} as const satisfies Record<RefreshKind, TranslationKey>

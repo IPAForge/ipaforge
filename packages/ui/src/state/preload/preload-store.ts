@@ -10,6 +10,7 @@ const sameAs = (item: NewPreloadItem) => {
   if (!source) return `refused:${item.label}`
   if (source.kind === 'file') return `file:${source.path}`
   if (source.kind === 'url') return `url:${source.url}`
+  if (source.kind === 'installed') return `installed:${source.bundleId}`
   return `catalog:${source.appId}`
 }
 

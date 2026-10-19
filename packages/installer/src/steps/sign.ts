@@ -2,6 +2,11 @@
 // the user's approval) gets SideStore's certificate additions; the signed IPA waits in the scratch store
 // until the install step deletes it.
 import { loadTeamCertificate } from '@installer/application/certificate.ts'
+import {
+  markerFor,
+  originOf,
+  withMarker
+} from '@installer/application/installed/marker.ts'
 import type { FlowRuntime } from '@installer/application/runtime.ts'
 import { StepLabel } from '@installer/domain/labels.ts'
 import { StepWeight } from '@installer/domain/step-weights.ts'
@@ -72,7 +77,15 @@ export const signToScratch = async (
       profiles: required(job.profiles, 'profiles'),
       appGroups: identity.appGroups,
       deviceUdid: state.udid,
-      additions: certificateAdditions(job, certificate, der),
+      // SideStore's certificate (when it may have it), and IPAForge's mark with where the app came from.
+      additions: withMarker(
+        certificateAdditions(job, certificate, der),
+        markerFor(
+          required(job.inspection, 'inspection').app.identifier,
+          originOf(job),
+          state.certificateSerial
+        )
+      ),
       compressionLevel: isWifi
         ? runtime.deps.config.wifiCompressionLevel
         : undefined,

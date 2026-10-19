@@ -1,10 +1,11 @@
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import {
   ACCOUNT,
   FREE_TEAM,
   inspectionFor,
   ipaFile,
+  sharesCertificate,
   UDID
 } from '@installer/__tests__/fakes.ts'
 import { createHarness, scripted } from '@installer/__tests__/harness.ts'
@@ -12,6 +13,12 @@ import { PromptKind } from '@installer/domain/prompts.ts'
 import type { AppSource } from '@installer/domain/types.ts'
 import { ErrorCode } from '@ipaforge/kernel'
 import { DeviceFamily } from '@ipaforge/signer'
+
+// Building SideStore's real .p12 needs a real certificate; the tests only check that SideStore gets one.
+vi.mock('@ipaforge/signer', async (importOriginal) => ({
+  ...(await importOriginal<typeof import('@ipaforge/signer')>()),
+  exportPkcs12: vi.fn(() => new Uint8Array([0x30]))
+}))
 
 const file = (name: string): AppSource => ({
   kind: 'file',
@@ -43,9 +50,11 @@ describe('installApps', () => {
       `com.example.app.${FREE_TEAM.id}`
     ])
     // Only the checksum-verified catalog release gets the certificate.
-    expect(h.signer.calls.signed.map((r) => r.additions !== undefined)).toEqual(
-      [false, true, false]
-    )
+    expect(h.signer.calls.signed.map((r) => sharesCertificate(r))).toEqual([
+      false,
+      true,
+      false
+    ])
     expect(h.signer.calls.bundles).toBe(0)
   })
 
@@ -137,7 +146,7 @@ describe('installApps', () => {
       expect(
         result.status === 'completed' && result.state.apps[0]?.trust
       ).toEqual(trust)
-      expect(h.signer.calls.signed[0]?.additions !== undefined).toBe(answer)
+      expect(sharesCertificate(h.signer.calls.signed[0])).toBe(answer)
       expect(h.devices.calls.installs).toHaveLength(1)
     }
   )
@@ -163,7 +172,7 @@ describe('installApps', () => {
     }).result
     expect(result.status).toBe('completed')
     expect(prompts.asked).toEqual([])
-    expect(h.signer.calls.signed[0]?.additions).toBeUndefined()
+    expect(sharesCertificate(h.signer.calls.signed[0])).toBe(false)
   })
 
   it('stops at the inspect step of an app the device cannot run, before any Apple call', async () => {

@@ -106,16 +106,29 @@ export type RunApp = {
   readonly name: string
   readonly version?: string | undefined
   readonly source: AppSource
+  /** Refresh: a new profile only, or why the app is installed again. */
+  readonly refresh?: RefreshKind | undefined
+}
+
+/** How a refresh treats an app: a new profile only, or installed again (its certificate changed, or it isn't marked). */
+export type RefreshKind = 'profile' | 'certificate' | 'unmarked'
+
+/** How an apps run started from the Apps page differs from a Preload one. */
+export type AppsRunOptions = {
+  /** Refresh: installed apps (bundle ids) that get new profiles only, listed after `input.apps` in `apps`. */
+  readonly profiles?: readonly string[] | undefined
+  /** Started from the Apps page (or by automatic refresh), so a failure is shown there too. */
+  readonly fromApps?: boolean | undefined
 }
 
 /** What a run was asked to do: SideStore (the Install page) or a list of apps (the Preload page). */
 export type RunRequest =
   | { readonly kind: 'sidestore'; readonly input: InstallSideStoreInput }
-  | {
+  | ({
       readonly kind: 'apps'
       readonly input: InstallAppsInput
       readonly apps: readonly RunApp[]
-    }
+    } & AppsRunOptions)
 
 export type RunKind = RunRequest['kind']
 
@@ -141,7 +154,11 @@ export type ActiveRunStore = {
   subscribe: (listener: () => void) => () => void
   start: (input: InstallSideStoreInput) => void
   /** Installs the apps of the preload list in one run. */
-  startApps: (input: InstallAppsInput, apps: readonly RunApp[]) => void
+  startApps: (
+    input: InstallAppsInput,
+    apps: readonly RunApp[],
+    options?: AppsRunOptions
+  ) => void
   /** Continues a failed or cancelled run from its checkpoint. */
   resume: () => void
   /** Starts again with part of the input changed; finished steps that do not depend on it run quickly again. */

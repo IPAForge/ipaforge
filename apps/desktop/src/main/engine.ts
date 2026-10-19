@@ -2,6 +2,7 @@
 import { join } from 'node:path'
 
 import { createFileDownloadStore } from '@desktop/main/adapters/file-download-store.ts'
+import { createFileKeptIpaStore } from '@desktop/main/adapters/file-kept-ipa-store.ts'
 import { createFileScratchStore } from '@desktop/main/adapters/file-scratch-store.ts'
 import { createFileSecretStore } from '@desktop/main/adapters/file-secret-store.ts'
 import { createNodeHttpClient } from '@desktop/main/adapters/http-client.ts'
@@ -16,7 +17,8 @@ import { type Logger, type SecretStore, silentLogger } from '@ipaforge/kernel'
 export type DesktopEngineOptions = {
   /** Accounts, sessions, certificates and their keys, pair records the OS would not keep. */
   readonly secrets: SecretStore
-  /** Downloads go to `<dataDir>/downloads`, signed IPAs wait in `<dataDir>/scratch`, app sources in `<dataDir>/sources.json`. */
+  /** Downloads go to `<dataDir>/downloads`, signed IPAs wait in `<dataDir>/scratch`, app sources in `<dataDir>/sources.json`, installed apps in `<dataDir>/installed.json` with their IPAs in
+   * `<dataDir>/kept`. */
   readonly dataDir: string
   readonly logger?: Logger
 }
@@ -49,6 +51,9 @@ export const createDesktopEngine = ({
     }),
     secrets,
     scratch: createFileScratchStore(join(dataDir, 'scratch')),
+    // What was installed on each device (not secret), and each app's original IPA, for Refresh.
+    installed: createFileSecretStore(join(dataDir, 'installed.json')),
+    kept: createFileKeptIpaStore(join(dataDir, 'kept')),
     logger
   })
 }

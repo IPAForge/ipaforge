@@ -6,6 +6,7 @@ import { page } from 'vitest/browser'
 
 import {
   accessibilityViolations,
+  appsShown,
   clippedTranslations,
   fillPreload,
   logsShown,
@@ -39,6 +40,10 @@ const screens = {
   'preload-sources': async (options: ScreenOptions) => {
     await renderScreen('/preload', options)
     await showSources()
+  },
+  apps: async (options: ScreenOptions) => {
+    await renderScreen('/apps', options)
+    await appsShown()
   },
   logs: async (options: ScreenOptions) => {
     await renderScreen('/logs', options)

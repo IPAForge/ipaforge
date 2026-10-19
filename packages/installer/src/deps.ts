@@ -1,4 +1,6 @@
 import { DEFAULT_INSTALLER_CONFIG } from '@installer/domain/config.ts'
+import { createMemoryInstalledStore } from '@installer/infrastructure/memory-installed-store.ts'
+import { createMemoryKeptIpaStore } from '@installer/infrastructure/memory-kept-ipa-store.ts'
 import { createDefaultSigner } from '@installer/infrastructure/signer.ts'
 import type { InstallerDeps, InstallerDepsInput } from '@installer/types.ts'
 import { silentLogger, systemClock } from '@ipaforge/kernel'
@@ -14,6 +16,8 @@ export const resolveInstallerDeps = (
     catalog: input.catalog,
     secrets: input.secrets,
     scratch: input.scratch,
+    installed: input.installed ?? createMemoryInstalledStore(),
+    kept: input.kept ?? createMemoryKeptIpaStore(),
     signer: input.signer ?? createDefaultSigner(logger),
     logger,
     clock: input.clock ?? systemClock,

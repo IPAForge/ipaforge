@@ -43,7 +43,7 @@ export const SourceAppDialog = ({
         <Modal.Container placement="center" size="lg">
           <Modal.Dialog>
             <Modal.Header className="flex flex-row items-center gap-3">
-              <AppIcon name={entry.name} />
+              <AppIcon name={entry.name} tint={entry.sourceApp?.tint} />
               <div className="flex min-w-0 flex-col">
                 <Modal.Heading>{entry.name}</Modal.Heading>
                 {entry.sourceApp?.developer ? (
