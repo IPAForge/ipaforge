@@ -58,13 +58,18 @@ export const downloadStep = (
   idempotent: true,
   run: async (state, context) => {
     const release = required(jobAt(state, index).release, 'release')
+    const started = runtime.deps.clock.now().getTime()
     const { file, sha256, cached } = await runtime.deps.catalog.download(
       release,
       {
         onProgress: ({ received, total }) =>
           context.progress(
             total ? received / total : 0,
-            compact({ received, total })
+            compact({
+              received,
+              total,
+              elapsedMs: runtime.deps.clock.now().getTime() - started
+            })
           ),
         signal: context.signal
       }

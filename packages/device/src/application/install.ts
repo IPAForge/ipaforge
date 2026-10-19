@@ -36,7 +36,17 @@ const uploadIpa = async (
     compact({
       totalBytes: ipa.size,
       onProgress: (written: number, total: number | undefined) =>
-        report({ stage: 'uploading', percent: uploadPercent(written, total) }),
+        report(
+          compact({
+            stage: 'uploading' as const,
+            percent: uploadPercent(written, total),
+            stagePercent: total
+              ? Math.floor((written / total) * PERCENT_DONE)
+              : 0,
+            sent: written,
+            total
+          })
+        ),
       signal
     })
   )
@@ -57,6 +67,7 @@ const installStaged = (
         report({
           stage: 'installing',
           percent: installPercent(percent),
+          stagePercent: percent,
           status
         })
     })
@@ -87,7 +98,7 @@ export const installIpa = async (
     }
   })
 
-  report({ stage: 'done', percent: PERCENT_DONE })
+  report({ stage: 'done', percent: PERCENT_DONE, stagePercent: PERCENT_DONE })
   logger.info('installed', {
     device: shortUdid(session.device.udid),
     file: ipa.name,

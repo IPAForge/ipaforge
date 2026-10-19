@@ -23,9 +23,28 @@ export type StepState =
 
 export type StepDetail =
   | {
+      /** Downloading, or sending the app to the device. */
       readonly kind: 'bytes'
       readonly received: number
       readonly total?: number | undefined
+      /** How long this transfer has run, for the speed and the time left. */
+      readonly elapsedMs?: number | undefined
+    }
+  | {
+      /** Provisioning: which requests to Apple (the team, App IDs, the app group, profiles), and how many are done. */
+      readonly kind: 'provisioning'
+      readonly task: string
+      readonly done: number
+      readonly total: number
+      readonly fraction: number
+      readonly elapsedMs?: number | undefined
+    }
+  | {
+      /** iOS installing the app: its own percent and phase (`VerifyingApplication`…). */
+      readonly kind: 'installing'
+      readonly percent: number
+      readonly status?: string | undefined
+      readonly elapsedMs?: number | undefined
     }
   | {
       readonly kind: 'retrying'

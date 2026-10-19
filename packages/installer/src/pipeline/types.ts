@@ -13,6 +13,8 @@ export type StepDetail =
       readonly kind: 'device'
       readonly productType: string
       readonly iosVersion: string
+      /** How the device is reached: a cable, or Wi-Fi. */
+      readonly connection: 'usb' | 'network'
     }
   | {
       readonly kind: 'release'
@@ -53,7 +55,12 @@ export type StepDetail =
       readonly removed?: string
     }
   | { readonly kind: 'profiles'; readonly count: number }
-  | { readonly kind: 'signed'; readonly bundles: number }
+  | {
+      readonly kind: 'signed'
+      readonly bundles: number
+      /** Compressed because the device is on Wi-Fi. */
+      readonly compressed: boolean
+    }
   | {
       readonly kind: 'install-phase'
       readonly phase: 'uploading' | 'installing'

@@ -20,6 +20,11 @@ export type InstallerConfig = {
   readonly deviceReconnectMaxMs: number
   /** How often the device list is read when usbmuxd refuses `Listen` (the fallback; normally devices are pushed). */
   readonly devicePollIntervalMs: number
+  /**
+   * Deflate level of signed IPAs sent over Wi-Fi (0–9). Over USB they're stored: faster to write, and the cable is
+   * fast. Over Wi-Fi (about 3 MB/s) compressing usually halves what's sent, worth far more than the seconds it costs.
+   */
+  readonly wifiCompressionLevel: number
 }
 
 export const DEFAULT_INSTALLER_CONFIG: InstallerConfig = {
@@ -29,5 +34,6 @@ export const DEFAULT_INSTALLER_CONFIG: InstallerConfig = {
   twoFactorAttempts: 5,
   deviceReconnectBaseMs: 1000,
   deviceReconnectMaxMs: 30_000,
-  devicePollIntervalMs: 30_000
+  devicePollIntervalMs: 30_000,
+  wifiCompressionLevel: 6
 }

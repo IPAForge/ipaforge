@@ -70,3 +70,22 @@ export type AppStepGroup = {
   readonly app?: RunApp | undefined
   readonly steps: readonly StepView[]
 }
+
+/** What iOS is doing while it installs an app, from installd's phase names. */
+export type InstallPhase = 'unpacking' | 'checking' | 'installing'
+
+/** A running step's progress in numbers: how far, the bytes moved, the speed and the time left (when known). */
+export type LiveProgress = {
+  /** 0–100. */
+  readonly percent: number
+  readonly bytes?: { readonly received: number; readonly total: number }
+  readonly bytesPerSecond?: number
+  readonly secondsLeft?: number
+  readonly phase?: InstallPhase
+  /** Provisioning: the requests to Apple of the current task. */
+  readonly task?: {
+    readonly name: string
+    readonly done: number
+    readonly total: number
+  }
+}

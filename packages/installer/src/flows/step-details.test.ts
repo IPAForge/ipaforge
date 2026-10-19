@@ -59,7 +59,12 @@ describe('step details', () => {
     expect(details).toEqual([
       {
         stepId: 'device',
-        detail: { kind: 'device', productType: 'iPhone1,1', iosVersion: '18.0' }
+        detail: {
+          kind: 'device',
+          productType: 'iPhone1,1',
+          iosVersion: '18.0',
+          connection: 'usb'
+        }
       },
       {
         stepId: 'resolve-0',
@@ -95,7 +100,10 @@ describe('step details', () => {
         detail: { kind: 'free-apps', used: 0, limit: 3 }
       },
       { stepId: 'provision-0', detail: { kind: 'profiles', count: 1 } },
-      { stepId: 'sign-0', detail: { kind: 'signed', bundles: 1 } },
+      {
+        stepId: 'sign-0',
+        detail: { kind: 'signed', bundles: 1, compressed: false }
+      },
       {
         stepId: 'install-0',
         detail: { kind: 'install-phase', phase: 'uploading' }

@@ -20,7 +20,11 @@ const detail = <K extends string, S extends z.ZodRawShape>(kind: K, shape: S) =>
 
 /** What a step did (the installer's `StepDetail`), every field checked. */
 export const stepDetailSchema = z.discriminatedUnion('kind', [
-  detail('device', { productType: z.string(), iosVersion: z.string() }),
+  detail('device', {
+    productType: z.string(),
+    iosVersion: z.string(),
+    connection: z.enum(['usb', 'network'])
+  }),
   detail('release', {
     version: z.string(),
     channel: z.enum(['stable', 'nightly'])
@@ -42,7 +46,7 @@ export const stepDetailSchema = z.discriminatedUnion('kind', [
     removed: z.string().optional()
   }),
   detail('profiles', { count }),
-  detail('signed', { bundles: count }),
+  detail('signed', { bundles: count, compressed: z.boolean() }),
   detail('install-phase', { phase: z.enum(['uploading', 'installing']) }),
   detail('pairing', { apps: z.array(z.string()) }),
   detail('certificate-shared', { isShared: z.boolean() })

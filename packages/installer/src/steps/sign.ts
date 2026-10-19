@@ -39,6 +39,10 @@ const certificateAdditions = (
     job.trust
   )
 
+/** Whether the device is reached over Wi-Fi (then the signed IPA is compressed: less to send). */
+const onWifi = async (runtime: FlowRuntime, udid: string): Promise<boolean> =>
+  (await runtime.device(udid)).device.connectionType === 'network'
+
 /** Signs the job's IPA into the scratch store; also used by the install step when the signed copy is gone. */
 export const signToScratch = async (
   runtime: FlowRuntime,
@@ -57,6 +61,7 @@ export const signToScratch = async (
     required(state.certificateSerial, 'certificate')
   )
   const der = required(certificate.certificate.content, 'certificate content')
+  const isWifi = await onWifi(runtime, state.udid)
   const stream = await signer.sign(
     required(job.file, 'IPA file'),
     compact({
@@ -68,13 +73,16 @@ export const signToScratch = async (
       appGroups: identity.appGroups,
       deviceUdid: state.udid,
       additions: certificateAdditions(job, certificate, der),
+      compressionLevel: isWifi
+        ? runtime.deps.config.wifiCompressionLevel
+        : undefined,
       onProgress: (fraction: number) => context.progress(fraction),
       signal: context.signal
     })
   )
   const key = `${SIGNED_PREFIX}/${globalThis.crypto.randomUUID()}.ipa`
 
-  return { key, file: await scratch.put(key, stream) }
+  return { key, file: await scratch.put(key, stream), compressed: isWifi }
 }
 
 export const signStep = (
@@ -89,7 +97,8 @@ export const signStep = (
     context.detail({
       kind: 'signed',
       bundles: required(jobAt(state, index).identity, 'identity plan').bundles
-        .length
+        .length,
+      compressed: signed.compressed ?? false
     })
 
     return updateJob(state, index, { signed })

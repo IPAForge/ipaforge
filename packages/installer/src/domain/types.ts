@@ -115,6 +115,8 @@ export type AppSource =
 export type SignedIpa = {
   readonly key: string
   readonly file: FileSource
+  /** Written compressed, because the device is on Wi-Fi. */
+  readonly compressed?: boolean
 }
 
 export type AppJob = {

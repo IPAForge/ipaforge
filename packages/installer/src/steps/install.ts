@@ -45,20 +45,40 @@ const listedFreeApps = (
     .map((bundleId) => ({ bundleId }))
 }
 
-/** Reports progress, and each phase (upload, then installd's install) as it begins. */
+/**
+ * Reports progress, and each phase (upload, then installd's install) as it begins. Each progress update carries the
+ * phase, its own percent, the bytes sent and the time the phase has run, so the UI can show the speed and the time
+ * left; installd's own phase (`VerifyingApplication`…) comes with it while installing.
+ */
 const install = (
+  runtime: FlowRuntime,
   handle: DeviceHandle,
   file: FileSource,
   context: StepContext
 ): Promise<void> => {
+  const now = () => runtime.deps.clock.now().getTime()
   let phase: InstallStage | undefined
+  let phaseStarted = now()
 
   return handle.installIpa(file, {
-    onProgress: ({ stage, percent }) => {
-      if (stage !== phase && stage !== 'done')
+    onProgress: ({ stage, percent, stagePercent, status, sent, total }) => {
+      if (stage !== phase && stage !== 'done') {
         context.detail({ kind: 'install-phase', phase: stage })
+        phaseStarted = now()
+      }
+
       phase = stage
-      context.progress(percent / PERCENT)
+      context.progress(
+        percent / PERCENT,
+        compact({
+          phase: stage,
+          percent: stagePercent,
+          received: sent,
+          total,
+          elapsedMs: now() - phaseStarted,
+          status
+        })
+      )
     },
     signal: context.signal
   })
@@ -88,7 +108,7 @@ const retryAfterRemoval = async (
     })
   )
   await removeFreeApp(handle, profiles, chosen)
-  await install(handle, file, context)
+  await install(runtime, handle, file, context)
 }
 
 /** The signed IPA from the sign step, or a fresh one when a resumed run finds it deleted. */
@@ -112,7 +132,7 @@ const installSigned = async (
 ): Promise<void> => {
   const handle = await runtime.device(state.udid)
   try {
-    await install(handle, file, context)
+    await install(runtime, handle, file, context)
   } catch (error) {
     if (hasCode(error, ErrorCode.ProfileBanned))
       await runtime.deps.apple.markBanned(state.accountId, state.udid)

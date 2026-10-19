@@ -143,13 +143,42 @@
         "received": "{received}",
         "retrying": "Conexiunea s-a întrerupt. Se reîncearcă în {seconds, plural, one {# secundă} few {# secunde} other {# de secunde}} (încercarea {attempt})"
       },
+      "live": {
+        "header": "{percent} · {left}",
+        "installing": "{fraction, number, percent} · {phase}",
+        "count": "{done} din {total}",
+        "task": {
+          "line": "{task} · {count}",
+          "team": "Se verifică echipa",
+          "appIds": "Se creează App ID-urile",
+          "appGroup": "Se adaugă grupul de aplicații",
+          "profiles": "Se descarcă profilurile"
+        },
+        "phase": {
+          "unpacking": "Se dezarhivează aplicația",
+          "checking": "Se verifică aplicația",
+          "installing": "Se instalează"
+        },
+        "speed": "{speed}/s",
+        "ios": "iOS o instalează",
+        "leftSeconds": "Cam {seconds} s rămase",
+        "leftMinutes": "{minutes, plural, one {Cam # min rămas} few {Cam # min rămase} other {Cam # min rămase}}"
+      },
+      "connection": {
+        "usb": "USB",
+        "network": "Wi-Fi"
+      },
+      "wifi": {
+        "title": "Acest dispozitiv e conectat prin Wi-Fi",
+        "body": "Aplicațiile mari se instalează mult mai repede cu un cablu. Prin Wi-Fi, IPAForge le trimite comprimate ca să câștige timp."
+      },
       "unsupportedPrompt": {
         "title": "Acest pas are nevoie de un răspuns",
         "body": "IPAForge are nevoie de un răspuns la o întrebare pe care această versiune nu o poate afișa. Anulează instalarea și actualizează IPAForge."
       },
       "backToInstall": "Înapoi la Instalare",
       "report": {
-        "device": "{model} · iOS {ios}",
+        "device": "{model} · iOS {ios} · {connection}",
         "release": "{app} {version} · {channel}",
         "download": "{size} · suma de control verificată",
         "downloadCached": "{size} · din memoria de descărcări",
@@ -169,6 +198,7 @@
         "removed": "S-a șters {app} · {used}",
         "profiles": "{count, plural, one {# profil} few {# profiluri} other {# de profiluri}}",
         "signed": "{count, plural, one {# pachet semnat} few {# pachete semnate} other {# de pachete semnate}}",
+        "signedCompressed": "{count, plural, one {# pachet semnat} few {# pachete semnate} other {# de pachete semnate}} · comprimat pentru Wi-Fi",
         "phase": {
           "uploading": "Se încarcă pe dispozitiv",
           "installing": "Se instalează"

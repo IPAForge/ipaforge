@@ -32,17 +32,50 @@ export const withStepsIn = (
   )
 })
 
-export const bytesDetail = (
-  detail: Readonly<Record<string, unknown>> | undefined
+const numberOf = (value: unknown): number | undefined =>
+  typeof value === 'number' ? value : undefined
+
+/**
+ * What a progress update says about its step: requests to Apple while provisioning, bytes moved (a download, or
+ * the app sent to the device), or iOS installing the app (its own percent and phase); each with how long it has run.
+ */
+export const progressDetail = (
+  detail: Readonly<Record<string, unknown>> | undefined,
+  fraction = 0
 ): StepDetail | undefined => {
-  const received = detail?.received
-  const total = detail?.total
-  if (typeof received !== 'number') return undefined
-  return {
-    kind: 'bytes',
-    received,
-    total: typeof total === 'number' ? total : undefined
-  }
+  const elapsedMs = numberOf(detail?.elapsedMs)
+  const percent = numberOf(detail?.percent)
+  const done = numberOf(detail?.done)
+  const total = numberOf(detail?.total)
+
+  if (
+    detail?.phase === 'provisioning' &&
+    typeof detail.task === 'string' &&
+    done !== undefined &&
+    total !== undefined
+  )
+    return {
+      kind: 'provisioning',
+      task: detail.task,
+      done,
+      total,
+      fraction,
+      elapsedMs
+    }
+
+  if (detail?.phase === 'installing' && percent !== undefined)
+    return {
+      kind: 'installing',
+      percent,
+      status: typeof detail.status === 'string' ? detail.status : undefined,
+      elapsedMs
+    }
+
+  const received = numberOf(detail?.received)
+
+  if (received === undefined) return undefined
+
+  return { kind: 'bytes', received, total: numberOf(detail?.total), elapsedMs }
 }
 
 /** Steps a resumed run already finished keep how they finished (done or skipped) and their detail. */

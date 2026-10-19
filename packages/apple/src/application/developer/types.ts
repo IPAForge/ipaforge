@@ -32,6 +32,20 @@ export type ProvisionRequest = {
   readonly bundles: readonly BundleRequest[]
   /** App group to register and assign to every bundle (e.g. `group.com.SideStore.SideStore.ABCDE12345`). */
   readonly appGroup?: string
+  /** Called after each request to Apple, with what it was part of and how many of all are done. */
+  readonly onProgress?: (progress: ProvisionProgress) => void
+}
+
+/** What provisioning is doing: checking the team, making App IDs, adding the app group, or getting profiles. */
+export type ProvisionTask = 'team' | 'app-ids' | 'app-group' | 'profiles'
+
+export type ProvisionProgress = {
+  readonly task: ProvisionTask
+  /** Within the task: requests done, and how many it makes. */
+  readonly done: number
+  readonly total: number
+  /** Across the whole provisioning: 0–1. */
+  readonly fraction: number
 }
 
 export type ProvisionResult = {
