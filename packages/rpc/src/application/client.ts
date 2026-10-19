@@ -209,6 +209,8 @@ export const createEngineClient = (
         method: 'refreshPlan',
         args: [{ ...planQuery, bundleIds: [...planQuery.bundleIds] }]
       }),
+    checkSideStore: (sideStoreQuery) =>
+      query({ method: 'checkSideStore', args: [sideStoreQuery] }),
     signOut: (accountId) => query({ method: 'signOut', args: [accountId] }),
     listTeams: (accountId) => query({ method: 'listTeams', args: [accountId] }),
     catalogApps: () => query({ method: 'catalogApps', args: [] }),
@@ -225,6 +227,8 @@ export const createEngineClient = (
       start({ command: 'installApps', input }, options),
     refreshApps: (input, options) =>
       start({ command: 'refreshApps', input }, options),
+    repairSideStore: (input, options) =>
+      start({ command: 'repairSideStore', input }, options),
     placePairing: (input, options) =>
       start({ command: 'placePairing', input }, options),
     signIn: (input, options) => start({ command: 'signIn', input }, options),

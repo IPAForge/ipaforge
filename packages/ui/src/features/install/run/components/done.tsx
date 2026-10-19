@@ -2,6 +2,7 @@ import { Button } from '@heroui/react'
 import { useTranslation } from 'react-i18next'
 
 import { OutcomeBox } from '@ui/features/install/run/components/outcome-box.tsx'
+import { doneKeys } from '@ui/features/install/run/constants.ts'
 import type { RunTarget } from '@ui/features/install/run/types.ts'
 import { usePreloadList } from '@ui/hooks/use-preload-list.ts'
 import { useRun } from '@ui/hooks/use-run.ts'
@@ -22,19 +23,16 @@ export const Done = ({ target }: DoneProps) => {
   return (
     <OutcomeBox
       tone="success"
-      title={t(
-        target.kind === 'apps' ? 'preload.done.title' : 'install.done.title',
-        { app: target.app, count: target.count, device: target.deviceName }
-      )}
+      title={t(doneKeys[target.kind].title, {
+        app: target.app,
+        count: target.count,
+        device: target.deviceName
+      })}
       actions={<Button onPress={onDone}>{t('install.done.done')}</Button>}
     >
       <ol className="list-decimal ps-5">
         <li>{t('install.done.trust', { appleId: target.appleId })}</li>
-        <li>
-          {t(
-            target.kind === 'apps' ? 'preload.done.open' : 'install.done.open'
-          )}
-        </li>
+        <li>{t(doneKeys[target.kind].open)}</li>
       </ol>
     </OutcomeBox>
   )

@@ -16,6 +16,8 @@ import { DevicesPage } from '@ui/features/devices/devices-page.tsx'
 import { InstallPage } from '@ui/features/install/install-page.tsx'
 import { LogsPage } from '@ui/features/logs/logs-page.tsx'
 import { PreloadPage } from '@ui/features/preload/preload-page.tsx'
+import { REPAIR_PATH } from '@ui/features/repair/constants.ts'
+import { RepairPage } from '@ui/features/repair/repair-page.tsx'
 import { SettingsPage } from '@ui/features/settings/settings-page.tsx'
 import { homePath, sections } from '@ui/sections.ts'
 import type { AppRouter, AppRouterOptions, SectionId } from '@ui/types.ts'
@@ -55,7 +57,18 @@ const sectionRoutes = sections.map((section) =>
   })
 )
 
-const routeTree = rootRoute.addChildren([indexRoute, ...sectionRoutes])
+// Repair SideStore: under Install (whose sidebar link stays highlighted), not a section of its own.
+const repairRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: REPAIR_PATH,
+  component: RepairPage
+})
+
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  ...sectionRoutes,
+  repairRoute
+])
 
 /** Code-based routes: `/` redirects home, one route per sidebar section, all inside the shell. */
 export const createAppRouter = ({ logger, history }: AppRouterOptions) => {

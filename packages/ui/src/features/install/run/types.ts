@@ -11,8 +11,11 @@ import type {
   StepView
 } from '@ui/state/active-run/types.ts'
 
+/** What a run is about, as its screen says it: SideStore, a list of apps, or repairing SideStore. */
+export type TargetKind = RunKind | 'repair'
+
 export type RunTarget = {
-  readonly kind: RunKind
+  readonly kind: TargetKind
   /** "SideStore", or the apps of an apps run as a list ("StikDebug and MyGame"). */
   readonly app: string
   /** How many apps the run installs. */

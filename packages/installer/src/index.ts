@@ -1,6 +1,7 @@
 // Public API of @ipaforge/installer: the Engine facade, its flows, prompts and diagnostics, and the pipeline runner.
 
 export { createDeviceWatch } from '@installer/application/device-watch.ts'
+export type { CheckSideStoreQuery } from '@installer/application/installed/check-sidestore.ts'
 export type { RefreshPlanQuery } from '@installer/application/installed/refresh-plan.ts'
 export type {
   DeviceWatch,
@@ -47,6 +48,9 @@ export type {
   Prompts,
   RefreshDecision,
   RemovableApp,
+  SideStoreCheck,
+  SideStoreHealth,
+  SideStoreSigner,
   TwoFactorCodeAnswer
 } from '@installer/domain/types.ts'
 export { logRunEvent, logRunResult } from '@installer/engine/run-log.ts'
@@ -75,6 +79,10 @@ export {
   REFRESH_APPS,
   type RefreshAppsInput
 } from '@installer/flows/refresh-apps.ts'
+export {
+  REPAIR_SIDESTORE,
+  type RepairSideStoreInput
+} from '@installer/flows/repair-sidestore.ts'
 export { SIGN_IN } from '@installer/flows/sign-in.ts'
 export type {
   InstallSideStoreInput,

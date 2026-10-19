@@ -35,7 +35,8 @@ const queryHandlers = (
   refreshSources: ([id]) => engine.refreshSources(id),
   installedApps: ([query]) => engine.installedApps(query),
   removeApp: ([input]) => engine.removeApp(input),
-  refreshPlan: ([query]) => engine.refreshPlan(compact(query))
+  refreshPlan: ([query]) => engine.refreshPlan(compact(query)),
+  checkSideStore: ([query]) => engine.checkSideStore(compact(query))
 })
 
 export const createQueryRunner = (

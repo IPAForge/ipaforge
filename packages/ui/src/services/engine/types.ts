@@ -26,6 +26,11 @@ export type SourceAppVersion = SourceApp['versions'][number]
 export type SourcePreview = Resolved<'checkSource'>
 export type InstalledApp = Resolved<'installedApps'>[number]
 
+/** Repair SideStore's check: the device's state and SideStore's health. */
+export type SideStoreCheck = Resolved<'checkSideStore'>
+
+export type SideStoreHealth = NonNullable<SideStoreCheck['sideStore']>
+
 /** What a refresh does to an installed app: a new profile only, or installed again and why. */
 export type RefreshDecision = Resolved<'refreshPlan'>[number]
 export type Channel = Resolved<'recommendedChannel'>

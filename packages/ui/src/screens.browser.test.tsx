@@ -14,6 +14,7 @@ import {
   pressInstall,
   recoveryShown,
   renderScreen,
+  repairShown,
   type ScreenOptions,
   showSources,
   textOutsideItsBox
@@ -44,6 +45,13 @@ const screens = {
   apps: async (options: ScreenOptions) => {
     await renderScreen('/apps', options)
     await appsShown()
+  },
+  repair: async (options: ScreenOptions) => {
+    await renderScreen('/apps/sidestore', {
+      ...options,
+      scenario: 'sidestore-unknown'
+    })
+    await repairShown()
   },
   logs: async (options: ScreenOptions) => {
     await renderScreen('/logs', options)

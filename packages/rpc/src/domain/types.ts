@@ -24,6 +24,7 @@ import type {
   RemotePlacePairingInput,
   RemotePlanInstallInput,
   RemoteRefreshAppsInput,
+  RemoteRepairSideStoreInput,
   RemoteSignInInput
 } from '@rpc/domain/protocol/types.ts'
 
@@ -89,6 +90,10 @@ export type EngineClient = Omit<EngineQueries, 'planInstall'> & {
   ): RemoteRunHandle<Wire<InstallState>>
   refreshApps(
     input: RemoteRefreshAppsInput,
+    options?: RemoteCommandOptions
+  ): RemoteRunHandle<Wire<InstallState>>
+  repairSideStore(
+    input: RemoteRepairSideStoreInput,
     options?: RemoteCommandOptions
   ): RemoteRunHandle<Wire<InstallState>>
   placePairing(

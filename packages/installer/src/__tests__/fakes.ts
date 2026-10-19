@@ -101,6 +101,8 @@ export type FakeDeviceOptions = {
   /** Errors thrown by successive installs (undefined = success). */
   installErrors?: (IPAForgeError | undefined)[]
   pairingTargets?: PairingTarget[]
+  /** Files in apps' containers, by `<bundle id>/<path>`. */
+  files?: Map<string, Uint8Array>
   productVersion?: string
   deviceClass?: string
 }
@@ -116,6 +118,9 @@ export const profile = (
   applicationIdentifier: `${teamId}.${bundleId}`,
   raw: new Uint8Array()
 })
+
+/** The host id this computer pairs with, in the fake device's pair record. */
+export const HOST_ID = 'HOST-THIS-COMPUTER'
 
 export const installedApp = (bundleId: string, name?: string): InstalledApp =>
   name === undefined
@@ -136,7 +141,10 @@ export const fakeDevices = (options: FakeDeviceOptions = {}) => {
     installedProfiles: [] as Uint8Array[],
     placed: [] as AppFileTarget[][]
   }
+  const files = options.files ?? new Map<string, Uint8Array>()
+  const fileKey = (target: AppFileTarget) => `${target.bundleId}/${target.path}`
   const handle = {
+    pairRecord: { hostId: HOST_ID },
     device: {
       udid: UDID,
       deviceId: 1,
@@ -199,8 +207,16 @@ export const fakeDevices = (options: FakeDeviceOptions = {}) => {
     appFileStatus: async (targets: readonly AppFileTarget[]) =>
       targets.map((target) => ({
         target,
-        exists: target.path.includes('Legacy')
+        exists: target.path.includes('Legacy') || files.has(fileKey(target))
       })),
+    readAppFile: async (target: AppFileTarget) => {
+      const data = files.get(fileKey(target))
+
+      if (!data) throw new IPAForgeError(ErrorCode.Unexpected)
+
+      return data
+    },
+    listApps: async () => [...installed.values()],
     close: async () => {
       calls.closed++
     }

@@ -7,7 +7,12 @@ import type {
   StepDetail as StepReport
 } from '@ipaforge/rpc'
 import type { fakeScenarioIds } from '@ui/services/engine/fake/fake-scenarios.ts'
-import type { Account, Device, DeviceCheck } from '@ui/services/engine/types.ts'
+import type {
+  Account,
+  Device,
+  DeviceCheck,
+  SideStoreHealth
+} from '@ui/services/engine/types.ts'
 
 export type FakeDeviceState = {
   readonly check: DeviceCheck
@@ -148,4 +153,22 @@ export type FakeSource = {
   readonly name: string
   readonly apps: readonly FakeSourceApp[]
   readonly skipped: number
+}
+
+/** What a fake repair run fixes. */
+export type FakeRepairFixes = {
+  readonly reinstall: boolean
+  readonly profile: boolean
+  readonly pairing: boolean
+}
+
+/** The fake SideStore's problems (besides its expiry, read from the fake installed apps). */
+export type FakeSideStoreState = {
+  /** Expired this many days ago; none: as the installed app says. */
+  readonly expiredDays?: number
+  readonly signing: SideStoreHealth['signing']
+  readonly ownCertificate: SideStoreHealth['ownCertificate']
+  readonly pairing: SideStoreHealth['pairing']
+  readonly version: string
+  readonly signedBy: SideStoreHealth['signedBy']
 }

@@ -1018,6 +1018,9 @@
       "title": "Încă nepăstrate de IPAForge",
       "hint": "Instalate înainte de această versiune de IPAForge sau cu alt instrument",
       "found": "Găsită în {source}. Reîmprospătarea o instalează de acolo, cu datele păstrate, iar IPAForge o reîmprospătează de acum înainte.",
+      "foundMany": "Găsită în {source} și în {count, plural, one {încă # sursă} few {încă # surse} other {încă # de surse}}. Reîmprospătarea o instalează din cea aleasă mai jos, păstrându-i datele, iar IPAForge o reîmprospătează de acum înainte.",
+      "pickSource": "Instalează din",
+      "choice": "{source} · {version}",
       "how": "Adaugă o dată fișierul .ipa în Preîncărcare, iar IPAForge o reîmprospătează de acum înainte."
     },
     "auto": {
@@ -1314,5 +1317,129 @@
       "title": "{count, plural, one {{app} este pe {device}.} few {{app} sunt pe {device}.} other {{app} sunt pe {device}.}}",
       "open": "Deschide fiecare aplicație de pe ecranul principal."
     }
+  },
+  "repair": {
+    "title": "Repară SideStore",
+    "description": "IPAForge verifică SideStore pe {device} și repară ce îl împiedică să-ți reîmprospăteze singur aplicațiile.",
+    "checkAgain": "Verifică din nou",
+    "checking": "Se verifică SideStore…",
+    "checks": "Verificări",
+    "failed": "SideStore nu a putut fi verificat: {reason}",
+    "failedBody": "Verifică dacă dispozitivul e conectat și deblocat, apoi apasă „Verifică din nou”.",
+    "ok": "OK",
+    "unknown": "Nu se știe",
+    "deviceFirst": "Mai întâi pregătește {device}",
+    "device": {
+      "title": "{device} e pregătit",
+      "ok": "Deblocat, de încredere și cu Mod dezvoltator activ.",
+      "locked": "E blocat. Deblochează-l, apoi apasă „Verifică din nou”.",
+      "lockedTag": "Blocat",
+      "developerMode": "Mod dezvoltator e dezactivat, așa că SideStore și aplicațiile instalate de el nu se deschid. Pe iPhone: Configurări › Confidențialitate și securitate › Mod dezvoltator, apoi repornește-l.",
+      "developerModeTag": "Mod dezvoltator dezactivat"
+    },
+    "installed": {
+      "title": "SideStore e instalat",
+      "missing": "SideStore nu e pe {device}.",
+      "missingTag": "Neinstalat"
+    },
+    "signer": {
+      "title": "E semnat cu echipa pe care o folosești aici",
+      "ok": "Repararea îl poate reinstala sau îi poate da un profil nou fără să-i piardă datele.",
+      "otherTeam": "L-a semnat altă echipă a acestui Apple ID. Reinstalarea cu echipa aceasta ar adăuga un al doilea SideStore, fără datele și aplicațiile lui.",
+      "otherTeamTag": "Altă echipă",
+      "otherAppleId": "L-a semnat alt Apple ID. Reinstalarea cu acesta ar adăuga un al doilea SideStore, fără datele și aplicațiile lui.",
+      "otherAppleIdTag": "Alt Apple ID"
+    },
+    "version": {
+      "title": "SideStore e la zi",
+      "ok": "Versiunea {version}, cea mai nouă.",
+      "outdated": "Versiunea {version}; a apărut {latest}. Versiunilor mai vechi le pot lipsi corecturi pentru reîmprospătarea pe iOS recent.",
+      "outdatedTag": "{latest} disponibilă",
+      "unknown": "Versiunea {version}. Catalogul nu a putut fi accesat pentru comparare."
+    },
+    "expiry": {
+      "title": "SideStore nu a expirat",
+      "ok": "{days, plural, one {Expiră în # zi.} few {Expiră în # zile.} other {Expiră în # de zile.}}",
+      "soon": "{days, plural, =0 {Expiră azi.} one {Expiră în # zi.} few {Expiră în # zile.} other {Expiră în # de zile.}} După ce expiră, SideStore nu se mai poate reîmprospăta singur.",
+      "soonTag": "Expiră curând",
+      "expired": "{days, plural, one {A expirat acum # zi.} few {A expirat acum # zile.} other {A expirat acum # de zile.}} Nu se deschide, deci nu-ți poate reîmprospăta aplicațiile.",
+      "expiredTag": "Expirat",
+      "unknown": "Dispozitivul nu arată niciun profil pentru el."
+    },
+    "signing": {
+      "title": "Certificatul cu care a fost semnat e valid",
+      "ok": "Încă valid la Apple.",
+      "revoked": "A fost revocat sau a expirat. SideStore nu se mai deschide la următoarea pornire.",
+      "revokedTag": "Revocat",
+      "unknown": "Instalat cu alt instrument, așa că IPAForge nu vede ce certificat l-a semnat. Repararea îl poate reinstala, ca să fie sigur."
+    },
+    "own": {
+      "title": "SideStore poate semna singur aplicații",
+      "ok": "Are un certificat valid cu care să-ți reîmprospăteze aplicațiile.",
+      "missing": "Nu are niciun certificat, așa că la reîmprospătare îți cere să te autentifici sau eșuează.",
+      "missingTag": "Fără certificat",
+      "other": "Certificatul primit nu mai e valid. Poate l-a înlocuit cu unul mai nou al lui; dacă reîmprospătarea eșuează în SideStore, reinstalează-l.",
+      "otherTag": "Poate a fost înlocuit"
+    },
+    "pairing": {
+      "title": "SideStore are un fișier de asociere",
+      "ok": "Există și e asocierea acestui computer cu {device}.",
+      "missing": "Lipsește: SideStore nu poate ajunge la dispozitiv ca să instaleze sau să reîmprospăteze aplicații.",
+      "missingTag": "Lipsește",
+      "other": "E al altui computer. Funcționează cât timp acea asociere rămâne validă; resetarea încrederii pe dispozitiv o strică.",
+      "otherTag": "Alt computer"
+    },
+    "manual": {
+      "title": "Pe iPhone · IPAForge nu le poate verifica",
+      "tag": "Verifică tu",
+      "vpn": {
+        "title": "VPN-ul SideStore e pornit la reîmprospătare",
+        "body": "Deschide LocalDevVPN și conectează-l înainte să reîmprospătezi în SideStore."
+      },
+      "anisette": {
+        "title": "SideStore ajunge la serverul lui anisette",
+        "body": "În SideStore › Configurări › Anisette, alege alt server dacă la reîmprospătare spune că nu se poate autentifica."
+      }
+    },
+    "plan": {
+      "title": "Repararea va",
+      "reinstall": "Reinstala SideStore",
+      "reinstallBody": "Din catalogul IPAForge, semnat cu un certificat valid care e pus și în el. Datele lui și aplicațiile tale rămân.",
+      "profile": "Da SideStore un profil nou",
+      "profileBody": "Nu se reinstalează nimic.",
+      "pairing": "Plasa fișierul de asociere al acestui computer",
+      "pairingBody": "În Documentele SideStore, în locul celui existent.",
+      "optional": "În plus, dacă vrei",
+      "offerReinstall": "Reinstalează SideStore, ca să fii sigur",
+      "offerPairing": "Înlocuiește fișierul de asociere cu al acestui computer",
+      "hint": "O singură rulare. Ține {device} conectat și deblocat.",
+      "start": "Repară SideStore"
+    },
+    "blocked": {
+      "title": "SideStore nu poate fi reinstalat cu acest Apple ID",
+      "body": "L-a semnat altă echipă sau alt Apple ID, așa că datele lui nu s-ar păstra. Alege acel Apple ID în bara de sus, apoi apasă „Verifică din nou”."
+    },
+    "notInstalled": {
+      "title": "SideStore nu e pe {device}",
+      "body": "Instalează-l mai întâi, din pagina Instalare.",
+      "install": "Instalează SideStore"
+    },
+    "fine": {
+      "title": "SideStore funcționează",
+      "body": "Nimic de reparat. Dacă tot nu poate reîmprospăta, verifică cele două lucruri de pe iPhone de mai jos."
+    },
+    "run": {
+      "title": {
+        "running": "Se repară SideStore",
+        "completed": "SideStore e reparat",
+        "failed": "SideStore nu a putut fi reparat"
+      }
+    },
+    "done": {
+      "title": "SideStore pe {device} e reparat.",
+      "open": "Deschide SideStore și reîmprospătează-ți aplicațiile."
+    },
+    "open": "Verifică SideStore",
+    "checkingTag": "Se verifică…"
   }
 }

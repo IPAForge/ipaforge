@@ -261,6 +261,24 @@ describe('runs', () => {
     })
   })
 
+  it('checks SideStore, then repairs it with the fixes it needs', async () => {
+    const { client, control } = setup()
+    const found = await client.checkSideStore(ACCOUNT)
+    const handle = client.repairSideStore({
+      ...ACCOUNT,
+      bundleId: 'com.SideStore.SideStore.TEAM',
+      reinstall: false,
+      profile: false,
+      pairing: true
+    })
+    await nextPrompt(handle)
+    handle.cancel()
+    await handle.result
+
+    expect(found.sideStore?.pairing).toBe('missing')
+    expect(control.repairInputs[0]).toMatchObject({ pairing: true })
+  })
+
   it('plans a refresh, then refreshes profiles and installs the kept IPAs again', async () => {
     const { client, control, resolveIpa } = setup()
     const decisions = await client.refreshPlan({

@@ -7,7 +7,7 @@ import type {
   TwoFactorMethods
 } from '@ipaforge/apple'
 import type { Channel, ResolvedRelease } from '@ipaforge/catalog'
-import type { AppFileTarget } from '@ipaforge/device'
+import type { AppFileTarget, DeveloperModeState } from '@ipaforge/device'
 import type { FileSource } from '@ipaforge/kernel'
 import type { IpaInspection, SideloadIdentityPlan } from '@ipaforge/signer'
 
@@ -184,6 +184,35 @@ export type InstalledApp = {
   readonly record?: InstalledRecord
   /** Installed by IPAForge (on this computer or another): where it came from, read from the app itself. */
   readonly marker?: AppMarker
+}
+
+/** Whose team signed SideStore: the chosen team, another of the Apple ID's teams, or another Apple ID's. */
+export type SideStoreSigner = 'team' | 'other-team' | 'other-apple-id'
+
+/**
+ * SideStore on a device, checked for what keeps it from refreshing apps by itself. `signing` is `unknown` when the
+ * app has no IPAForge mark (installed by another tool), so the certificate that signed it can't be told.
+ */
+export type SideStoreHealth = {
+  readonly bundleId: string
+  readonly version?: string
+  /** The catalog's latest version on its channel; undefined when the catalog can't be reached. */
+  readonly latest?: string
+  readonly channel: Channel
+  readonly signedBy: SideStoreSigner
+  readonly expiresAt?: Date
+  readonly signing: 'valid' | 'revoked' | 'unknown'
+  /** The certificate inside SideStore: valid, missing, or not one of the team's valid ones (it may have replaced it). */
+  readonly ownCertificate: 'valid' | 'missing' | 'other'
+  /** Its pairing file: this computer's, another computer's, or none. */
+  readonly pairing: 'this-computer' | 'other-computer' | 'missing'
+}
+
+/** What Repair SideStore found: the device's state and, when it's installed, SideStore's health. */
+export type SideStoreCheck = {
+  readonly locked: boolean
+  readonly developerMode: DeveloperModeState
+  readonly sideStore?: SideStoreHealth
 }
 
 /** One app moving through a flow; each step fills in what it produced. */

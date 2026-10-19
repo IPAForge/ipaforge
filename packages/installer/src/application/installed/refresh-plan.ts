@@ -4,6 +4,7 @@
 // so the app is installed again.
 
 import { readMarker } from '@installer/application/installed/marker.ts'
+import { validCertificateSerials } from '@installer/application/installed/valid-certificates.ts'
 import { createFlowRuntime } from '@installer/application/runtime.ts'
 import { queryTeam } from '@installer/application/team.ts'
 import type { RefreshDecision } from '@installer/domain/types.ts'
@@ -17,8 +18,6 @@ export type RefreshPlanQuery = {
   readonly bundleIds: readonly string[]
 }
 
-const REVOKED = 'Revoked'
-
 export const planRefresh = async (
   deps: InstallerDeps,
   query: RefreshPlanQuery
@@ -28,16 +27,7 @@ export const planRefresh = async (
     accountId: query.accountId,
     requested: query.teamId
   })
-  const now = deps.clock.now()
-  const valid = new Set(
-    (await developer.certificates(team))
-      .filter(
-        (certificate) =>
-          certificate.status !== REVOKED &&
-          (!certificate.expiresAt || certificate.expiresAt > now)
-      )
-      .map((certificate) => certificate.serialNumber.toUpperCase())
-  )
+  const valid = await validCertificateSerials(deps, developer, team)
   const handle = await deps.devices.open(query.udid, { autoPair: false })
 
   try {

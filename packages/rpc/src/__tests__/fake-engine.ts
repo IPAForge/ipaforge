@@ -132,6 +132,7 @@ export type FakeControl = {
   readonly planned: unknown[]
   readonly appInputs: InstallAppsInput[]
   readonly refreshInputs: RefreshAppsInput[]
+  readonly repairInputs: unknown[]
   readonly signIns: unknown[]
   readonly signedOut: string[]
   readonly paired: string[]
@@ -146,6 +147,7 @@ export const createFakeEngine = () => {
     planned: [],
     appInputs: [],
     refreshInputs: [],
+    repairInputs: [],
     signIns: [],
     signedOut: [],
     paired: [],
@@ -213,6 +215,18 @@ export const createFakeEngine = () => {
       control.refreshInputs.push(input)
       return startRun(control, { apps: input.apps }, options)
     },
+    repairSideStore: (input: unknown, options?: CommandOptions<FakeState>) => {
+      control.repairInputs.push(input)
+      return startRun(control, { apps: [] }, options)
+    },
+    checkSideStore: async () => ({
+      locked: false,
+      developerMode: 'on',
+      sideStore: {
+        bundleId: 'com.SideStore.SideStore.TEAM',
+        pairing: 'missing'
+      }
+    }),
     refreshPlan: async (query: { bundleIds: readonly string[] }) =>
       query.bundleIds.map((bundleId) => ({ bundleId, kind: 'profile' })),
     installedSource: async (_udid: string, bundleId: string) => ({
