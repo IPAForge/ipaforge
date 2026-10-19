@@ -12,8 +12,23 @@ Get IPAForge from the **[Releases page](https://github.com/SirReaDy/ipaforge/rel
 |---|---|
 | **Mac with Apple silicon** (M1 and later) | `IPAForge-<version>-mac-arm64.dmg` |
 | **Mac with Intel** | `IPAForge-<version>-mac-x64.dmg` |
-| **Windows 10/11** (x64; also runs on Windows on Arm) | `IPAForge-<version>-win-x64.exe` |
+| **Windows 10/11** (x64; also runs on Windows on Arm) | `IPAForge-<version>-win-x64.exe`, or `.msi` for managed installs |
 | **Linux** (x64, arm64) | `IPAForge-<version>-linux-*.AppImage` runs anywhere; `.deb` and `.rpm` integrate with your package manager |
+
+The `.zip`, `.blockmap` and `latest*.yml` files are for automatic updates; you don't need them.
+
+### Checking a download
+
+Every file has a signature next to it, `<file>.sigstore.json`, made by the release workflow with its GitHub identity: it proves the file was built by this repository's workflow from the release tag, and hasn't changed since. With [cosign](https://docs.sigstore.dev/cosign/system_config/installation/):
+
+```sh
+cosign verify-blob IPAForge-<version>-mac-arm64.dmg \
+  --bundle IPAForge-<version>-mac-arm64.dmg.sigstore.json \
+  --certificate-identity "https://github.com/SirReaDy/ipaforge/.github/workflows/release.yml@refs/tags/v<version>" \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com
+```
+
+This is not code signing: your system still warns about an unsigned app (below).
 
 ### Alpha builds aren't signed yet
 

@@ -13,13 +13,22 @@ files:
 asar: true
 npmRebuild: false
 artifactName: ${productName}-${version}-${os}-${arch}.${ext}
-publish: null
+# Where updates will come from. Nothing is uploaded from here (`--publish never`); it makes electron-builder write
+# the update metadata (latest.yml, latest-mac.yml, latest-linux*.yml) the release workflow attaches.
+publish:
+  provider: github
+  owner: SirReaDy
+  repo: ipaforge
+  releaseType: prerelease
 
 mac:
   category: public.app-category.developer-tools
   icon: build/icon.png
   target:
     - target: dmg
+      arch: [arm64, x64]
+    # The zipped app is what an update downloads.
+    - target: zip
       arch: [arm64, x64]
   # Ad-hoc ("-"): no Apple Developer ID yet. Gatekeeper still asks on first open.
   identity: '-'
@@ -35,6 +44,13 @@ win:
     # x64 only: it also runs on Windows on Arm (emulated), and two arches would make one combined installer.
     - target: nsis
       arch: [x64]
+    - target: msi
+      arch: [x64]
+
+msi:
+  oneClick: false
+  perMachine: false
+  createDesktopShortcut: true
 
 nsis:
   oneClick: false
@@ -53,6 +69,6 @@ linux:
     - target: AppImage
       arch: [x64, arm64]
     - target: deb
-      arch: [x64]
+      arch: [x64, arm64]
     - target: rpm
-      arch: [x64]
+      arch: [x64, arm64]
