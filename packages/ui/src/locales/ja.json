@@ -1018,6 +1018,9 @@
       "title": "IPAForgeでまだ管理していないアプリ",
       "hint": "このバージョンより前にIPAForgeで、または別のツールでインストールされたもの",
       "found": "{source}で見つかりました。リフレッシュすると、データを保持したままそこからインストールされ、以後はIPAForgeがリフレッシュを管理します。",
+      "foundMany": "{source}とほか{count, plural, other {#件}}のソースで見つかりました。リフレッシュでは下で選んだソースからインストールし、データはそのまま残ります。以後はIPAForgeがリフレッシュを続けます。",
+      "pickSource": "インストール元",
+      "choice": "{source} · {version}",
       "how": "「プリロード」でその.ipaを一度追加すると、以後はIPAForgeがリフレッシュを管理します。"
     },
     "auto": {
@@ -1314,5 +1317,129 @@
       "title": "{count, plural, other {{app}を{device}にインストールしました。}}",
       "open": "各アプリをホーム画面から開いてください。"
     }
+  },
+  "repair": {
+    "title": "SideStoreを修復",
+    "description": "IPAForgeが{device}のSideStoreを確認し、アプリを自分でリフレッシュできない原因を修復します。",
+    "checkAgain": "もう一度確認",
+    "checking": "SideStoreを確認中…",
+    "checks": "確認項目",
+    "failed": "SideStoreを確認できませんでした: {reason}",
+    "failedBody": "デバイスが接続され、ロックが解除されていることを確認してから「もう一度確認」を押してください。",
+    "ok": "OK",
+    "unknown": "不明",
+    "deviceFirst": "まず{device}を準備してください",
+    "device": {
+      "title": "{device}の準備ができています",
+      "ok": "ロック解除済み、このコンピュータを信頼済み、デベロッパモードはオンです。",
+      "locked": "ロックされています。ロックを解除してから「もう一度確認」を押してください。",
+      "lockedTag": "ロック中",
+      "developerMode": "デベロッパモードがオフのため、SideStoreとそれでインストールしたアプリは開きません。iPhoneで「設定」›「プライバシーとセキュリティ」›「デベロッパモード」をオンにして再起動してください。",
+      "developerModeTag": "デベロッパモードがオフ"
+    },
+    "installed": {
+      "title": "SideStoreがインストールされています",
+      "missing": "{device}にSideStoreがありません。",
+      "missingTag": "未インストール"
+    },
+    "signer": {
+      "title": "ここで使っているチームで署名されています",
+      "ok": "修復では、データを失わずに再インストールや新しいプロファイルの付与ができます。",
+      "otherTeam": "このApple IDの別のチームが署名しています。このチームで再インストールすると、データとアプリのない2つ目のSideStoreが追加されます。",
+      "otherTeamTag": "別のチーム",
+      "otherAppleId": "別のApple IDが署名しています。このApple IDで再インストールすると、データとアプリのない2つ目のSideStoreが追加されます。",
+      "otherAppleIdTag": "別のApple ID"
+    },
+    "version": {
+      "title": "SideStoreは最新です",
+      "ok": "バージョン{version}(最新)。",
+      "outdated": "バージョン{version}です。{latest}が出ています。古いバージョンには、最近のiOSでのリフレッシュの修正が入っていないことがあります。",
+      "outdatedTag": "{latest}があります",
+      "unknown": "バージョン{version}。カタログに接続できず、比較できません。"
+    },
+    "expiry": {
+      "title": "SideStoreの期限が切れていません",
+      "ok": "{days, plural, other {あと#日で期限切れ。}}",
+      "soon": "{days, plural, =0 {今日期限切れ。} other {あと#日で期限切れ。}}期限が切れると、SideStoreは自分をリフレッシュできません。",
+      "soonTag": "まもなく期限切れ",
+      "expired": "{days, plural, other {#日前に期限切れ。}}開けないため、アプリをリフレッシュできません。",
+      "expiredTag": "期限切れ",
+      "unknown": "デバイスにこのアプリのプロファイルが見つかりません。"
+    },
+    "signing": {
+      "title": "署名した証明書は有効です",
+      "ok": "Apple側でまだ有効です。",
+      "revoked": "取り消されたか、期限が切れています。次回の起動からSideStoreは開かなくなります。",
+      "revokedTag": "取り消し済み",
+      "unknown": "別のツールでインストールされたため、どの証明書で署名されたかIPAForgeにはわかりません。念のため修復で再インストールできます。"
+    },
+    "own": {
+      "title": "SideStoreが自分でアプリに署名できます",
+      "ok": "アプリをリフレッシュするための有効な証明書を持っています。",
+      "missing": "証明書を持っていないため、リフレッシュ時にサインインを求められるか、失敗します。",
+      "missingTag": "証明書なし",
+      "other": "渡された証明書はもう有効ではありません。SideStoreが自分で新しい証明書に置き換えた可能性があります。SideStoreでリフレッシュが失敗する場合は再インストールしてください。",
+      "otherTag": "置き換えられた可能性"
+    },
+    "pairing": {
+      "title": "SideStoreにペアリングファイルがあります",
+      "ok": "あり、このコンピュータと{device}のペアリングです。",
+      "missing": "ありません。SideStoreがデバイスに接続できず、アプリのインストールやリフレッシュができません。",
+      "missingTag": "なし",
+      "other": "別のコンピュータのものです。そのペアリングが有効な間は動作しますが、デバイスで信頼をリセットすると使えなくなります。",
+      "otherTag": "別のコンピュータ"
+    },
+    "manual": {
+      "title": "iPhoneで確認 · IPAForgeでは確認できません",
+      "tag": "ご自身で確認",
+      "vpn": {
+        "title": "リフレッシュ時にSideStoreのVPNがオン",
+        "body": "SideStoreでリフレッシュする前に、LocalDevVPNを開いて接続してください。"
+      },
+      "anisette": {
+        "title": "SideStoreがanisetteサーバに接続できる",
+        "body": "リフレッシュ時にサインインできないと表示される場合は、SideStore ›「設定」›「Anisette」で別のサーバを選んでください。"
+      }
+    },
+    "plan": {
+      "title": "修復で行うこと",
+      "reinstall": "SideStoreを再インストール",
+      "reinstallBody": "IPAForgeカタログから、有効な証明書で署名し、その証明書も中に入れます。データとアプリはそのままです。",
+      "profile": "SideStoreに新しいプロファイルを付与",
+      "profileBody": "何も再インストールしません。",
+      "pairing": "このコンピュータのペアリングファイルを配置",
+      "pairingBody": "SideStoreの「書類」に、既存のものと置き換えて配置します。",
+      "optional": "必要に応じて",
+      "offerReinstall": "念のためSideStoreを再インストール",
+      "offerPairing": "ペアリングファイルをこのコンピュータのものに置き換え",
+      "hint": "1回の実行です。{device}を接続し、ロックを解除したままにしてください。",
+      "start": "SideStoreを修復"
+    },
+    "blocked": {
+      "title": "このApple IDではSideStoreを再インストールできません",
+      "body": "別のチームまたはApple IDが署名しているため、データが引き継がれません。上部のバーでそのApple IDを選んでから「もう一度確認」を押してください。"
+    },
+    "notInstalled": {
+      "title": "{device}にSideStoreがありません",
+      "body": "まず「インストール」ページからインストールしてください。",
+      "install": "SideStoreをインストール"
+    },
+    "fine": {
+      "title": "SideStoreは正常に動作しています",
+      "body": "修復するものはありません。それでもリフレッシュできない場合は、下のiPhoneで確認する2項目をチェックしてください。"
+    },
+    "run": {
+      "title": {
+        "running": "SideStoreを修復中",
+        "completed": "SideStoreを修復しました",
+        "failed": "SideStoreを修復できませんでした"
+      }
+    },
+    "done": {
+      "title": "{device}のSideStoreを修復しました。",
+      "open": "SideStoreを開いて、アプリをリフレッシュしてください。"
+    },
+    "open": "SideStoreを確認",
+    "checkingTag": "確認中…"
   }
 }

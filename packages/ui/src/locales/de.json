@@ -1018,6 +1018,9 @@
       "title": "Noch nicht von IPAForge verwaltet",
       "hint": "Vor dieser Version von IPAForge oder mit einem anderen Tool installiert",
       "found": "In {source} gefunden. „Erneuern“ installiert sie von dort, ihre Daten bleiben erhalten, und IPAForge erneuert sie von da an regelmäßig.",
+      "foundMany": "Gefunden in {source} und {count, plural, one {# weiteren Quelle} other {# weiteren Quellen}}. Erneuern installiert es aus der unten gewählten, seine Daten bleiben, und IPAForge erneuert es danach weiter.",
+      "pickSource": "Installieren aus",
+      "choice": "{source} · {version}",
       "how": "Füge ihre .ipa einmal unter „Vorladen“ hinzu, dann erneuert IPAForge sie von da an regelmäßig."
     },
     "auto": {
@@ -1314,5 +1317,129 @@
       "title": "{count, plural, one {{app} ist auf {device}.} other {{app} sind auf {device}.}}",
       "open": "Öffne jede App über den Home-Bildschirm."
     }
+  },
+  "repair": {
+    "title": "SideStore reparieren",
+    "description": "IPAForge prüft SideStore auf {device} und behebt, was es daran hindert, deine Apps selbst zu erneuern.",
+    "checkAgain": "Erneut prüfen",
+    "checking": "SideStore wird geprüft …",
+    "checks": "Prüfungen",
+    "failed": "SideStore konnte nicht geprüft werden: {reason}",
+    "failedBody": "Prüfe, ob das Gerät verbunden und entsperrt ist, und tippe dann auf „Erneut prüfen“.",
+    "ok": "OK",
+    "unknown": "Unklar",
+    "deviceFirst": "Zuerst {device} vorbereiten",
+    "device": {
+      "title": "{device} ist bereit",
+      "ok": "Entsperrt, vertraut und mit eingeschaltetem Entwicklermodus.",
+      "locked": "Es ist gesperrt. Entsperre es und tippe dann auf „Erneut prüfen“.",
+      "lockedTag": "Gesperrt",
+      "developerMode": "Der Entwicklermodus ist aus, daher öffnen sich SideStore und die damit installierten Apps nicht. Auf dem iPhone: Einstellungen › Datenschutz & Sicherheit › Entwicklermodus, dann neu starten.",
+      "developerModeTag": "Entwicklermodus aus"
+    },
+    "installed": {
+      "title": "SideStore ist installiert",
+      "missing": "SideStore ist nicht auf {device}.",
+      "missingTag": "Nicht installiert"
+    },
+    "signer": {
+      "title": "Es ist mit dem hier verwendeten Team signiert",
+      "ok": "Die Reparatur kann es neu installieren oder ihm ein neues Profil geben, ohne seine Daten zu verlieren.",
+      "otherTeam": "Ein anderes Team dieser Apple-ID hat es signiert. Eine Neuinstallation mit diesem Team würde ein zweites SideStore hinzufügen, ohne seine Daten und Apps.",
+      "otherTeamTag": "Anderes Team",
+      "otherAppleId": "Eine andere Apple-ID hat es signiert. Eine Neuinstallation mit dieser würde ein zweites SideStore hinzufügen, ohne seine Daten und Apps.",
+      "otherAppleIdTag": "Andere Apple-ID"
+    },
+    "version": {
+      "title": "SideStore ist aktuell",
+      "ok": "Version {version}, die neueste.",
+      "outdated": "Version {version}; {latest} ist verfügbar. Älteren Versionen können Korrekturen fürs Erneuern unter aktuellen iOS-Versionen fehlen.",
+      "outdatedTag": "{latest} verfügbar",
+      "unknown": "Version {version}. Der Katalog war zum Vergleich nicht erreichbar."
+    },
+    "expiry": {
+      "title": "SideStore ist nicht abgelaufen",
+      "ok": "{days, plural, one {Läuft in # Tag ab.} other {Läuft in # Tagen ab.}}",
+      "soon": "{days, plural, =0 {Läuft heute ab.} one {Läuft in # Tag ab.} other {Läuft in # Tagen ab.}} Ist es einmal abgelaufen, kann SideStore sich nicht mehr selbst erneuern.",
+      "soonTag": "Läuft bald ab",
+      "expired": "{days, plural, one {Vor # Tag abgelaufen.} other {Vor # Tagen abgelaufen.}} Es öffnet sich nicht und kann deine Apps nicht erneuern.",
+      "expiredTag": "Abgelaufen",
+      "unknown": "Das Gerät zeigt kein Profil dafür."
+    },
+    "signing": {
+      "title": "Das Zertifikat, mit dem es signiert wurde, ist gültig",
+      "ok": "Bei Apple noch gültig.",
+      "revoked": "Es wurde widerrufen oder ist abgelaufen. SideStore öffnet sich beim nächsten Start nicht mehr.",
+      "revokedTag": "Widerrufen",
+      "unknown": "Mit einem anderen Tool installiert, daher sieht IPAForge nicht, welches Zertifikat es signiert hat. Die Reparatur kann es zur Sicherheit neu installieren."
+    },
+    "own": {
+      "title": "SideStore kann Apps selbst signieren",
+      "ok": "Es enthält ein gültiges Zertifikat, um deine Apps zu erneuern.",
+      "missing": "Es enthält kein Zertifikat, daher verlangt es beim Erneuern eine Anmeldung oder scheitert.",
+      "missingTag": "Kein Zertifikat",
+      "other": "Das Zertifikat, das es bekommen hat, ist nicht mehr gültig. Vielleicht hat es selbst ein neueres erstellt; wenn das Erneuern in SideStore scheitert, installiere es neu.",
+      "otherTag": "Evtl. ersetzt"
+    },
+    "pairing": {
+      "title": "SideStore hat eine Kopplungsdatei",
+      "ok": "Vorhanden, und es ist die Kopplung dieses Computers mit {device}.",
+      "missing": "Fehlt: SideStore erreicht das Gerät nicht, um Apps zu installieren oder zu erneuern.",
+      "missingTag": "Fehlt",
+      "other": "Sie stammt von einem anderen Computer. Sie funktioniert, solange diese Kopplung gültig bleibt; „Vertrauen“ auf dem Gerät zurückzusetzen macht sie ungültig.",
+      "otherTag": "Anderer Computer"
+    },
+    "manual": {
+      "title": "Auf deinem iPhone · IPAForge kann das nicht prüfen",
+      "tag": "Selbst prüfen",
+      "vpn": {
+        "title": "Das VPN von SideStore ist beim Erneuern an",
+        "body": "Öffne LocalDevVPN und verbinde es, bevor du in SideStore erneuerst."
+      },
+      "anisette": {
+        "title": "SideStore erreicht seinen Anisette-Server",
+        "body": "Wähle in SideStore › Einstellungen › Anisette einen anderen Server, wenn beim Erneuern die Anmeldung scheitert."
+      }
+    },
+    "plan": {
+      "title": "Die Reparatur wird",
+      "reinstall": "SideStore neu installieren",
+      "reinstallBody": "Aus dem IPAForge-Katalog, signiert mit einem gültigen Zertifikat, das auch hineingelegt wird. Seine Daten und deine Apps bleiben.",
+      "profile": "SideStore ein neues Profil geben",
+      "profileBody": "Es wird nichts neu installiert.",
+      "pairing": "Die Kopplungsdatei dieses Computers ablegen",
+      "pairingBody": "In den Dokumenten von SideStore, anstelle der vorhandenen.",
+      "optional": "Außerdem, wenn du möchtest",
+      "offerReinstall": "SideStore zur Sicherheit neu installieren",
+      "offerPairing": "Die Kopplungsdatei durch die dieses Computers ersetzen",
+      "hint": "Ein Durchlauf. Lass {device} verbunden und entsperrt.",
+      "start": "SideStore reparieren"
+    },
+    "blocked": {
+      "title": "SideStore kann mit dieser Apple-ID nicht neu installiert werden",
+      "body": "Ein anderes Team oder eine andere Apple-ID hat es signiert, daher würden seine Daten nicht übernommen. Wähle diese Apple-ID oben aus und tippe dann auf „Erneut prüfen“."
+    },
+    "notInstalled": {
+      "title": "SideStore ist nicht auf {device}",
+      "body": "Installiere es zuerst auf der Seite „Installieren“.",
+      "install": "SideStore installieren"
+    },
+    "fine": {
+      "title": "SideStore funktioniert",
+      "body": "Nichts zu reparieren. Wenn es trotzdem nicht erneuern kann, prüfe die zwei Punkte auf deinem iPhone unten."
+    },
+    "run": {
+      "title": {
+        "running": "SideStore wird repariert",
+        "completed": "SideStore ist repariert",
+        "failed": "SideStore konnte nicht repariert werden"
+      }
+    },
+    "done": {
+      "title": "SideStore auf {device} ist repariert.",
+      "open": "Öffne SideStore und erneuere deine Apps."
+    },
+    "open": "SideStore prüfen",
+    "checkingTag": "Wird geprüft …"
   }
 }

@@ -9,6 +9,7 @@ import {
   versionSchema
 } from '@rpc/domain/protocol/common.ts'
 import {
+  checkSideStoreQuerySchema,
   installAppsInputSchema,
   installedAppsQuerySchema,
   installSideStoreInputSchema,
@@ -17,6 +18,7 @@ import {
   refreshAppsInputSchema,
   refreshPlanQuerySchema,
   removeAppInputSchema,
+  repairSideStoreInputSchema,
   signInInputSchema,
   teamQuerySchema
 } from '@rpc/domain/protocol/inputs.ts'
@@ -55,6 +57,8 @@ export const queryCallSchema = z.discriminatedUnion('method', [
   call('removeApp', z.tuple([removeAppInputSchema])),
   /** Asks Apple for the team's certificates, so it answers as slowly as Apple does. */
   call('refreshPlan', z.tuple([refreshPlanQuerySchema])),
+  /** Asks Apple for the team's certificates and reads SideStore's files on the device. */
+  call('checkSideStore', z.tuple([checkSideStoreQuerySchema])),
   /** Not a read, but a one-shot call answered like one. */
   call('signOut', z.tuple([textSchema]))
 ])
@@ -71,6 +75,10 @@ export const commandCallSchema = z.discriminatedUnion('command', [
   z.object({
     command: z.literal('refreshApps'),
     input: refreshAppsInputSchema
+  }),
+  z.object({
+    command: z.literal('repairSideStore'),
+    input: repairSideStoreInputSchema
   }),
   z.object({
     command: z.literal('placePairing'),

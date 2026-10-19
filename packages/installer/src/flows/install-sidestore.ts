@@ -46,9 +46,11 @@ const initialState = (
     pairingApp: VARIANTS[input.variant].pairingApp
   })
 
-export const installSideStoreFlow = (
+/** SideStore's install, from the device check to the pairing file: also what Repair SideStore runs to install it again. */
+export const sideStoreFlow = (
   runtime: FlowRuntime,
-  input: InstallSideStoreInput
+  input: InstallSideStoreInput,
+  pipelineId: string
 ): Flow<InstallState> => {
   const source: AppSource = compact({
     kind: 'catalog' as const,
@@ -58,7 +60,7 @@ export const installSideStoreFlow = (
 
   return {
     initial: initialState(input, source),
-    pipeline: pipeline<InstallState>(INSTALL_SIDESTORE, [
+    pipeline: pipeline<InstallState>(pipelineId, [
       devicePreflightStep(runtime),
       ...prepareAppSteps(runtime, source, 0),
       ...accountSteps(runtime),
@@ -68,3 +70,8 @@ export const installSideStoreFlow = (
     ])
   }
 }
+
+export const installSideStoreFlow = (
+  runtime: FlowRuntime,
+  input: InstallSideStoreInput
+): Flow<InstallState> => sideStoreFlow(runtime, input, INSTALL_SIDESTORE)

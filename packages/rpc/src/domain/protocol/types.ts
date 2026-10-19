@@ -8,6 +8,7 @@ import type {
   placePairingInputSchema,
   planInstallInputSchema,
   refreshAppsInputSchema,
+  repairSideStoreInputSchema,
   signInInputSchema
 } from '@rpc/domain/protocol/inputs.ts'
 import type {
@@ -44,6 +45,10 @@ export type RemoteInstallSideStoreInput = z.input<
 export type RemoteInstallAppsInput = z.input<typeof installAppsInputSchema>
 
 export type RemoteRefreshAppsInput = z.input<typeof refreshAppsInputSchema>
+
+export type RemoteRepairSideStoreInput = z.input<
+  typeof repairSideStoreInputSchema
+>
 
 export type RemotePlacePairingInput = z.input<typeof placePairingInputSchema>
 

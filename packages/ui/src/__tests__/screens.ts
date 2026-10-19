@@ -72,6 +72,16 @@ export const fillPreload = async () => {
 export const appsShown = () =>
   waitFor(() => expect(all('main ul li').length).toBeGreaterThanOrEqual(4))
 
+/** Repair SideStore with every result in (they come one by one), and the two to check on the iPhone. */
+export const repairShown = () =>
+  waitFor(
+    () => {
+      expect(all('main ul li').length).toBeGreaterThanOrEqual(9)
+      expect(all('main [data-checking]')).toHaveLength(0)
+    },
+    { timeout: 5000 }
+  )
+
 /** Preload's Sources tab, with the built-in sources listed. */
 export const showSources = async () => {
   const tab = await waitFor(() => {

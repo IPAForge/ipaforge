@@ -24,6 +24,7 @@ import { createFakeDeviceStates } from '@ui/services/engine/fake/fake-device-sta
 import { createFakeDeviceFeed } from '@ui/services/engine/fake/fake-devices.ts'
 import { fakeInstallSteps } from '@ui/services/engine/fake/fake-install-steps.ts'
 import { createFakeInstalled } from '@ui/services/engine/fake/fake-installed.ts'
+import { createFakeSideStore } from '@ui/services/engine/fake/fake-sidestore.ts'
 import { createFakeSources } from '@ui/services/engine/fake/fake-sources.ts'
 import {
   askPassword,
@@ -183,8 +184,13 @@ export const createFakeEngine = ({
 }: FakeEngineOptions = {}): Engine => {
   const world = createFakeWorld(scenario, delayMs, appleAnswer)
   const deviceStates = createFakeDeviceStates(scenario)
-  const { refreshed, updated, reinstalled, ...installed } =
-    createFakeInstalled(scenario)
+  const { refreshed, updated, reinstalled, ...installed } = createFakeInstalled(
+    scenario,
+    world.appleAnswer
+  )
+  const sideStore = createFakeSideStore(world, () =>
+    installed.installedApps({ udid: '', teamIds: ['any'] })
+  )
 
   // What a finished run did to the installed apps: refreshed ones get 7 more days, updated ones their version.
   const applied = <H extends RunHandle<unknown>>(
@@ -264,6 +270,24 @@ export const createFakeEngine = ({
       asRun(applied(appsRun(world, input, options as never), input)),
     refreshApps: (input, options) =>
       asRun(applied(appsRun(world, input, options as never), input)),
+    checkSideStore: sideStore.check,
+    repairSideStore: (input, options) => {
+      const handle = startScriptedRun<FakeInstallState>({
+        pipelineId: 'repairSideStore',
+        steps: sideStore.steps(world, input),
+        initial: { udid: input.udid, accountId: input.accountId },
+        options: options as never,
+        delayMs: world.delayMs
+      })
+
+      void handle.result.then((result) => {
+        if (result.status !== 'completed') return
+        sideStore.repaired(input)
+        refreshed([input.bundleId])
+      })
+
+      return asRun(handle)
+    },
     placePairing: () => asRun(pairingRun(world)),
     signIn: (input, options) =>
       asRun(signInRun(world, input, options as never)),

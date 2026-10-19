@@ -113,6 +113,14 @@ export type RunApp = {
 /** How a refresh treats an app: a new profile only, or installed again (its certificate changed, or it isn't marked). */
 export type RefreshKind = 'profile' | 'certificate' | 'unmarked'
 
+/** What Repair SideStore fixes: SideStore as installed, installed again, a new profile, the pairing file. */
+export type RepairOptions = {
+  readonly bundleId: string
+  readonly reinstall: boolean
+  readonly profile: boolean
+  readonly pairing: boolean
+}
+
 /** How an apps run started from the Apps page differs from a Preload one. */
 export type AppsRunOptions = {
   /** Refresh: installed apps (bundle ids) that get new profiles only, listed after `input.apps` in `apps`. */
@@ -123,7 +131,12 @@ export type AppsRunOptions = {
 
 /** What a run was asked to do: SideStore (the Install page) or a list of apps (the Preload page). */
 export type RunRequest =
-  | { readonly kind: 'sidestore'; readonly input: InstallSideStoreInput }
+  | {
+      readonly kind: 'sidestore'
+      readonly input: InstallSideStoreInput
+      /** Repair SideStore: the fixes to run instead of a fresh install (Install shows the run the same way). */
+      readonly repair?: RepairOptions | undefined
+    }
   | ({
       readonly kind: 'apps'
       readonly input: InstallAppsInput
@@ -153,6 +166,8 @@ export type ActiveRunStore = {
   getState: () => ActiveRun | undefined
   subscribe: (listener: () => void) => () => void
   start: (input: InstallSideStoreInput) => void
+  /** Repairs SideStore: the fixes in one run, shown like a SideStore install. */
+  startRepair: (input: InstallSideStoreInput, repair: RepairOptions) => void
   /** Installs the apps of the preload list in one run. */
   startApps: (
     input: InstallAppsInput,

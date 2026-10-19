@@ -26,7 +26,9 @@ export const DEFAULT_APP_ATTRIBUTES = [
   'SignerIdentity',
   'ApplicationType',
   // IPAForge's marker in an app it installed (its origin), read back by any computer.
-  'IPAForge'
+  'IPAForge',
+  // The certificate SideStore refreshes apps with (its serial number), when it was given one.
+  'ALTCertificateID'
 ] as const
 
 /** Empty strings count as missing. */

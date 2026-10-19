@@ -25,7 +25,7 @@ export const useRunTarget = (run: ActiveRun): RunTarget => {
 
   return run.kind === 'sidestore'
     ? {
-        kind: run.kind,
+        kind: run.repair ? 'repair' : run.kind,
         app: t(`install.variant.${run.input.variant}.title`),
         count: 1,
         channel: t(`install.channel.${run.input.channel ?? 'stable'}`),

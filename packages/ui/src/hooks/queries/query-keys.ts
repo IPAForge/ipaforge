@@ -25,6 +25,9 @@ export const queryKeys = {
   apps: ['installed-apps'] as const,
   installedApps: (udid: string | undefined, teamIds: readonly string[]) =>
     ['installed-apps', udid ?? null, teamIds.join(',')] as const,
+  /** Repair SideStore's check; under `apps`, so it's read again when a run ends. */
+  sideStoreCheck: (udid: string | undefined, accountId: string | undefined) =>
+    ['installed-apps', 'sidestore', udid ?? null, accountId ?? null] as const,
   recommendedChannel: (appId: string, iosVersion: string | undefined) =>
     ['catalog', appId, 'channel', iosVersion ?? null] as const,
   appIdQuota: (query: TeamQuery | undefined) =>

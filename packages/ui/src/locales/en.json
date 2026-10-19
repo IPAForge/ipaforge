@@ -1018,6 +1018,9 @@
       "title": "Not kept by IPAForge yet",
       "hint": "Installed before this version of IPAForge, or by another tool",
       "found": "Found in {source}. Refresh installs it from there, keeping its data, and IPAForge keeps it refreshed from then on.",
+      "foundMany": "Found in {source} and {count, plural, one {# other source} other {# other sources}}. Refresh installs it from the one picked below, keeping its data, and IPAForge keeps it refreshed from then on.",
+      "pickSource": "Install it from",
+      "choice": "{source} · {version}",
       "how": "Add its .ipa in Preload once, and IPAForge keeps it refreshed from then on."
     },
     "auto": {
@@ -1314,5 +1317,129 @@
       "title": "{count, plural, one {{app} is on {device}.} other {{app} are on {device}.}}",
       "open": "Open each app from the Home Screen."
     }
+  },
+  "repair": {
+    "title": "Repair SideStore",
+    "description": "IPAForge checks SideStore on {device} and fixes what keeps it from refreshing your apps by itself.",
+    "checkAgain": "Check again",
+    "checking": "Checking SideStore…",
+    "checks": "Checks",
+    "failed": "Couldn't check SideStore: {reason}",
+    "failedBody": "Check that the device is connected and unlocked, then press Check again.",
+    "ok": "OK",
+    "unknown": "Can't tell",
+    "deviceFirst": "Fix {device} first",
+    "device": {
+      "title": "{device} is ready",
+      "ok": "Unlocked, trusted and with Developer Mode on.",
+      "locked": "It's locked. Unlock it, then press Check again.",
+      "lockedTag": "Locked",
+      "developerMode": "Developer Mode is off, so SideStore and the apps it installs won't open. On the iPhone: Settings › Privacy & Security › Developer Mode, then restart it.",
+      "developerModeTag": "Developer Mode off"
+    },
+    "installed": {
+      "title": "SideStore is installed",
+      "missing": "SideStore isn't on {device}.",
+      "missingTag": "Not installed"
+    },
+    "signer": {
+      "title": "It's signed with the team you use here",
+      "ok": "Repair can install it again, or give it a new profile, without losing its data.",
+      "otherTeam": "Another of this Apple ID's teams signed it. Installing it again with this team would add a second SideStore, without its data or apps.",
+      "otherTeamTag": "Another team",
+      "otherAppleId": "Another Apple ID signed it. Installing it again with this one would add a second SideStore, without its data or apps.",
+      "otherAppleIdTag": "Another Apple ID"
+    },
+    "version": {
+      "title": "SideStore is up to date",
+      "ok": "Version {version}, the latest.",
+      "outdated": "Version {version}; {latest} is out. Older versions can miss fixes for refreshing on recent iOS.",
+      "outdatedTag": "{latest} available",
+      "unknown": "Version {version}. The catalog couldn't be reached to compare."
+    },
+    "expiry": {
+      "title": "SideStore hasn't expired",
+      "ok": "{days, plural, one {Expires in # day.} other {Expires in # days.}}",
+      "soon": "{days, plural, =0 {Expires today.} one {Expires in # day.} other {Expires in # days.}} Once it has expired, SideStore can't refresh itself.",
+      "soonTag": "Expires soon",
+      "expired": "{days, plural, one {Expired # day ago.} other {Expired # days ago.}} It won't open, so it can't refresh your apps.",
+      "expiredTag": "Expired",
+      "unknown": "The device shows no profile for it."
+    },
+    "signing": {
+      "title": "The certificate that signed it is valid",
+      "ok": "Still valid on Apple's side.",
+      "revoked": "It was revoked or has expired. SideStore stops opening at its next launch.",
+      "revokedTag": "Revoked",
+      "unknown": "Installed by another tool, so IPAForge can't see which certificate signed it. Repair can install it again to be sure."
+    },
+    "own": {
+      "title": "SideStore can sign apps by itself",
+      "ok": "It holds a valid certificate to refresh your apps with.",
+      "missing": "It holds no certificate, so its refreshes ask you to sign in, or fail.",
+      "missingTag": "No certificate",
+      "other": "The certificate it was given isn't valid any more. It may have replaced it with a newer one of its own; if refreshing fails in SideStore, install it again.",
+      "otherTag": "May have been replaced"
+    },
+    "pairing": {
+      "title": "SideStore has a pairing file",
+      "ok": "Present, and this computer's pairing with {device}.",
+      "missing": "Missing: SideStore can't reach the device to install or refresh apps.",
+      "missingTag": "Missing",
+      "other": "It's another computer's. It works while that pairing stays valid; resetting Trust on the device breaks it.",
+      "otherTag": "Another computer"
+    },
+    "manual": {
+      "title": "On your iPhone · IPAForge can't check these",
+      "tag": "Check yourself",
+      "vpn": {
+        "title": "SideStore's VPN is on when it refreshes",
+        "body": "Open LocalDevVPN and connect it before refreshing in SideStore."
+      },
+      "anisette": {
+        "title": "SideStore can reach its anisette server",
+        "body": "In SideStore › Settings › Anisette, pick another server if refreshing says it can't sign in."
+      }
+    },
+    "plan": {
+      "title": "Repair will",
+      "reinstall": "Install SideStore again",
+      "reinstallBody": "From the IPAForge catalog, signed with a valid certificate that's also put inside it. Its data and your apps stay.",
+      "profile": "Give SideStore a new profile",
+      "profileBody": "Nothing is installed again.",
+      "pairing": "Place this computer's pairing file",
+      "pairingBody": "In SideStore's Documents, replacing what's there.",
+      "optional": "Also, if you want",
+      "offerReinstall": "Install SideStore again, to be sure",
+      "offerPairing": "Replace the pairing file with this computer's",
+      "hint": "One run. Keep {device} connected and unlocked.",
+      "start": "Repair SideStore"
+    },
+    "blocked": {
+      "title": "SideStore can't be installed again with this Apple ID",
+      "body": "Another team or Apple ID signed it, so its data wouldn't carry over. Pick that Apple ID in the top bar, then press Check again."
+    },
+    "notInstalled": {
+      "title": "SideStore isn't on {device}",
+      "body": "Install it first, from the Install page.",
+      "install": "Install SideStore"
+    },
+    "fine": {
+      "title": "SideStore is working",
+      "body": "Nothing to repair. If it still can't refresh, check the two things on your iPhone below."
+    },
+    "run": {
+      "title": {
+        "running": "Repairing SideStore",
+        "completed": "SideStore is repaired",
+        "failed": "Couldn't repair SideStore"
+      }
+    },
+    "done": {
+      "title": "SideStore on {device} is repaired.",
+      "open": "Open SideStore and refresh your apps."
+    },
+    "open": "Check SideStore",
+    "checkingTag": "Checking…"
   }
 }

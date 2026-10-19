@@ -23,6 +23,10 @@ import {
   type RefreshAppsInput,
   refreshAppsFlow
 } from '@installer/flows/refresh-apps.ts'
+import {
+  type RepairSideStoreInput,
+  repairSideStoreFlow
+} from '@installer/flows/repair-sidestore.ts'
 import { signInFlow } from '@installer/flows/sign-in.ts'
 import type {
   InstallSideStoreInput,
@@ -75,6 +79,11 @@ export type Engine = EngineQueries & {
     input: RefreshAppsInput,
     options?: CommandOptions<InstallState>
   ): RunHandle<InstallState>
+  /** Repair SideStore: the fixes `checkSideStore` called for, in one run. */
+  repairSideStore(
+    input: RepairSideStoreInput,
+    options?: CommandOptions<InstallState>
+  ): RunHandle<InstallState>
 }
 
 export const createEngine = (input: InstallerDepsInput): Engine => {
@@ -93,6 +102,12 @@ export const createEngine = (input: InstallerDepsInput): Engine => {
       startRun(deps, (runtime) => installAppsFlow(runtime, command), options),
     refreshApps: (command, options) =>
       startRun(deps, (runtime) => refreshAppsFlow(runtime, command), options),
+    repairSideStore: (command, options) =>
+      startRun(
+        deps,
+        (runtime) => repairSideStoreFlow(runtime, command),
+        options
+      ),
     placePairing: (command, options) =>
       startRun(deps, (runtime) => placePairingFlow(runtime, command), options),
     signIn: (command, options) =>

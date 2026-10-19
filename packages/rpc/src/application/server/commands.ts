@@ -33,6 +33,8 @@ const commandStarters = (
       await toRefreshAppsInput(input, { resolveIpa, engine }, signal),
       typed(options)
     ),
+  repairSideStore: async (input, options) =>
+    engine.repairSideStore(compact(input), typed(options)),
   placePairing: async (input, options) =>
     engine.placePairing(compact(input), typed(options)),
   signIn: async (input, options) =>

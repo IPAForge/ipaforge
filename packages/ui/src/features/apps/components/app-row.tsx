@@ -5,6 +5,8 @@ import { AppIcon } from '@ui/components/app-icon.tsx'
 import { AppRunLine } from '@ui/features/apps/components/app-run-line.tsx'
 import { ExpiryLabel } from '@ui/features/apps/components/expiry-label.tsx'
 import type { AppRunState, AppView } from '@ui/features/apps/types.ts'
+import { CheckSideStoreButton } from '@ui/features/repair/components/check-sidestore-button.tsx'
+import { isSideStore } from '@ui/features/repair/utils/is-sidestore.ts'
 
 type AppRowProps = {
   view: AppView
@@ -80,6 +82,7 @@ export const AppRow = ({
                 {t('apps.refresh')}
               </Button>
             ) : null}
+            {isSideStore(app.bundleId) ? <CheckSideStoreButton /> : null}
             <Button
               size="sm"
               variant="tertiary"

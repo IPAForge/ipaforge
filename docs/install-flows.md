@@ -51,6 +51,17 @@ After each app is installed, the Engine remembers it (`InstalledStore`, desktop:
 - An app installed again from its kept IPA is `{ kind: "installed", bundleId }`: the rpc server asks the Engine for the app's kept IPA and record (`installedSource`); the flow checks it again and keeps its certificate trust (no question), and SideStore gets its pairing file as on its first install. The same bundle id and team make it an upgrade: the app keeps its data. An app without a kept IPA fails with `installer.kept_ipa_missing`.
 - `removeApp({ udid, bundleId })` uninstalls the app and forgets it.
 
+### Repair SideStore
+
+- **`checkSideStore({ udid, accountId, teamId? })`** reads, without changing anything:
+  - the device: locked (then nothing else is read: an app's container stays closed) and Developer Mode;
+  - SideStore among the user apps (`com.SideStore.SideStore` or `com.SideStore.SideStore.<TEAMID>`): its version, and `signedBy`: the team in use, another of the Apple ID's teams, or another Apple ID;
+  - its expiry, from its profile, and the latest catalog version on its channel (none when the catalog can't be reached);
+  - `signing`: the certificate in its IPAForge mark against the signing team's valid certificates (listed, not revoked, not expired), or `unknown` without a mark;
+  - `ownCertificate`: `ALTCertificateID` in its Info.plist (the serial of the certificate it refreshes with) against the same list: `valid`, `missing`, or `other` (it may have replaced it with one of its own);
+  - `pairing`: the `HostID` in its pairing file against this computer's pair record: `this-computer`, `other-computer` or `missing`.
+- **`repairSideStore({ udid, accountId, teamId?, channel?, bundleId, reinstall, profile, pairing })`** runs the fixes in one run. With `reinstall`, the SideStore install's steps (pipeline `repairSideStore`), which bring a certificate, a profile and the pairing file. Otherwise, a new profile (`profiles-0`, as Refresh does) and/or this computer's pairing file (`pairing`), replacing what's there.
+
 ### Place pairing file
 
 Opens the device and the account, finds the pairing apps on the device (SideStore, LiveContainer, StikDebug, StikStore), asks which ones should get this computer's pairing file, and writes it. Sideloaded copies count only when one of the account's teams signed them. With `keep-existing`, files that are already there are left alone.

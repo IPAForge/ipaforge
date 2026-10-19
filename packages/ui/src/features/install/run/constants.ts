@@ -8,11 +8,13 @@ import {
   type LucideIcon
 } from 'lucide-react'
 
-import type { InstallPhase } from '@ui/features/install/run/types.ts'
+import type {
+  InstallPhase,
+  TargetKind
+} from '@ui/features/install/run/types.ts'
 import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 import type {
   RefreshKind,
-  RunKind,
   RunStatus,
   StepState
 } from '@ui/state/active-run/types.ts'
@@ -36,8 +38,27 @@ export const runTitleKeys = {
     completed: 'preload.run.title.completed',
     failed: 'preload.run.title.failed',
     cancelled: 'install.run.title.cancelled'
+  },
+  repair: {
+    starting: 'repair.run.title.running',
+    running: 'repair.run.title.running',
+    waiting: 'repair.run.title.running',
+    answering: 'repair.run.title.running',
+    completed: 'repair.run.title.completed',
+    failed: 'repair.run.title.failed',
+    cancelled: 'install.run.title.cancelled'
   }
-} as const satisfies Record<RunKind, Record<RunStatus, TranslationKey>>
+} as const satisfies Record<TargetKind, Record<RunStatus, TranslationKey>>
+
+/** A finished run's words: its title and what to do on the device. */
+export const doneKeys = {
+  sidestore: { title: 'install.done.title', open: 'install.done.open' },
+  apps: { title: 'preload.done.title', open: 'preload.done.open' },
+  repair: { title: 'repair.done.title', open: 'repair.done.open' }
+} as const satisfies Record<
+  TargetKind,
+  { readonly title: TranslationKey; readonly open: TranslationKey }
+>
 
 /** The tints of an outcome box: the box itself and its title. */
 export const outcomeToneClasses = {

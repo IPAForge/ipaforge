@@ -38,7 +38,16 @@ export type RefreshPlan =
       readonly kind: 'source'
       readonly source: AppSource
       readonly from: string
+      /** Every source that lists it, this one first, when there's more than one to pick from. */
+      readonly choices?: readonly SourceChoice[]
     }
+
+/** A source an app can be installed again from: where, its name, and the version it would install. */
+export type SourceChoice = {
+  readonly source: AppSource
+  readonly from: string
+  readonly version: string
+}
 
 /** Where an app is in a run started from the Apps page. */
 export type AppRunState =

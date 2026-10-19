@@ -1,9 +1,11 @@
+import type { CheckSideStoreQuery } from '@installer/application/installed/check-sidestore.ts'
 import type { RefreshPlanQuery } from '@installer/application/installed/refresh-plan.ts'
 import type { FreeSlots } from '@installer/application/types.ts'
 import type {
   AppSource,
   InstalledApp,
-  RefreshDecision
+  RefreshDecision,
+  SideStoreCheck
 } from '@installer/domain/types.ts'
 import type {
   Checkpoint,
@@ -143,6 +145,11 @@ export type EngineQueries = {
   removeApp(input: RemoveAppInput): Promise<void>
   /** For each app to refresh: a new profile only (its certificate is still valid), or signed and installed again. */
   refreshPlan(query: RefreshPlanQuery): Promise<RefreshDecision[]>
+  /**
+   * Repair SideStore's check: the device's state and SideStore's (version, expiry, the certificates that signed it
+   * and that it holds, its pairing file). Asks Apple for the team's certificates.
+   */
+  checkSideStore(query: CheckSideStoreQuery): Promise<SideStoreCheck>
 }
 
 export type InstalledAppsQuery = {

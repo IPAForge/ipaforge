@@ -19,7 +19,19 @@ export const runLaunchers = {
     engine,
     request: Extract<RunRequest, { kind: 'sidestore' }>,
     options
-  ) => engine.installSideStore(request.input, options),
+  ) =>
+    request.repair
+      ? engine.repairSideStore(
+          compact({
+            udid: request.input.udid,
+            accountId: request.input.accountId,
+            teamId: request.input.teamId,
+            channel: request.input.channel,
+            ...request.repair
+          }),
+          options
+        )
+      : engine.installSideStore(request.input, options),
   // A refresh (some apps only getting new profiles) is its own command; the run looks the same.
   apps: (engine, request: Extract<RunRequest, { kind: 'apps' }>, options) =>
     request.profiles
@@ -59,5 +71,12 @@ export const patchedRequest = (
 /** What the log says about a run that starts: what it installs, never who or where. */
 export const runLogFields = (request: RunRequest) =>
   request.kind === 'sidestore'
-    ? { kind: request.kind, variant: request.input.variant }
+    ? compact({
+        kind: request.kind,
+        variant: request.input.variant,
+        // The fixes only: SideStore's bundle id carries the team.
+        reinstall: request.repair?.reinstall,
+        profile: request.repair?.profile,
+        pairing: request.repair?.pairing
+      })
     : { kind: request.kind, apps: request.apps.length }

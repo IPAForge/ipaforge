@@ -88,6 +88,19 @@ export const refreshPlanQuerySchema = z.object({
   bundleIds: z.array(textSchema)
 })
 
+export const checkSideStoreQuerySchema = z.object({ ...accountSchema, teamId })
+
+/** Repair SideStore: the fixes the check called for. */
+export const repairSideStoreInputSchema = z.object({
+  ...accountSchema,
+  teamId,
+  channel: channelSchema.optional(),
+  bundleId: textSchema,
+  reinstall: z.boolean(),
+  profile: z.boolean(),
+  pairing: z.boolean()
+})
+
 /** Refresh: new profiles for the apps in `profiles`, `apps` signed and installed again. */
 export const refreshAppsInputSchema = z.object({
   ...accountSchema,
