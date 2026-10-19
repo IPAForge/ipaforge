@@ -40,14 +40,15 @@ export const toAppSource = async (
 
   const file = await context.resolveIpa(source, signal)
 
-  return {
-    kind: 'file',
+  return compact({
+    kind: 'file' as const,
     file,
     origin:
       source.kind === 'url'
-        ? { kind: 'url', url: source.url }
-        : { kind: 'file', name: file.name }
-  }
+        ? { kind: 'url' as const, url: source.url }
+        : { kind: 'file' as const, name: file.name },
+    replaces: source.replaces
+  })
 }
 
 export const toPlanInstallInput = async (

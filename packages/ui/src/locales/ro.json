@@ -607,6 +607,10 @@
       "kept_ipa_missing": {
         "title": "Această aplicație nu poate fi reîmprospătată aici",
         "body": "IPAForge nu a instalat-o pe acest dispozitiv sau copia păstrată nu mai există. Adaugă fișierul .ipa în Preîncărcare ca s-o instalezi din nou."
+      },
+      "wrong_app": {
+        "title": "Acest link oferă o altă aplicație",
+        "body": "Nu este aplicația pe care o reîmprospătezi sau o actualizezi, așa că nu a fost instalată, iar aplicația și datele ei rămân neschimbate. Adaugă fișierul .ipa corect în Preîncărcare pentru a o reinstala."
       }
     },
     "rpc": {

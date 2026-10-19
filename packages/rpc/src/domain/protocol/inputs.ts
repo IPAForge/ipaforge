@@ -7,12 +7,20 @@ import { textSchema } from '@rpc/domain/protocol/common.ts'
 
 const channelSchema = z.enum(['stable', 'nightly'])
 
-const fileIpaSchema = z.object({ kind: z.literal('file'), path: textSchema })
+/** Refresh or Update: the original bundle id of the installed app the IPA must be (anything else is refused). */
+const replaces = textSchema.optional()
+
+const fileIpaSchema = z.object({
+  kind: z.literal('file'),
+  path: textSchema,
+  replaces
+})
 
 // Downloads go over HTTPS only, like the catalog's.
 const urlIpaSchema = z.object({
   kind: z.literal('url'),
-  url: z.url({ protocol: /^https$/ })
+  url: z.url({ protocol: /^https$/ }),
+  replaces
 })
 
 const catalogIpaSchema = z.object({

@@ -9,13 +9,20 @@ import type {
 
 type Origin = NonNullable<InstalledApp['marker']>['origin']
 
-/** The install source an app's origin points to (a file can't be fetched again). */
-const sourceOfOrigin = (origin: Origin): AppSource | undefined => {
+/**
+ * The install source an app's origin points to (a file can't be fetched again). The mark is read from the app, so a
+ * link in it may only bring back that same app (`replaces`).
+ */
+const sourceOfOrigin = (
+  origin: Origin,
+  originalBundleId: string
+): AppSource | undefined => {
   if (origin.kind === 'catalog')
     return origin.channel
       ? { kind: 'catalog', appId: origin.appId, channel: origin.channel }
       : { kind: 'catalog', appId: origin.appId }
-  if (origin.kind === 'url') return { kind: 'url', url: origin.url }
+  if (origin.kind === 'url')
+    return { kind: 'url', url: origin.url, replaces: originalBundleId }
 
   return undefined
 }
@@ -34,7 +41,10 @@ export const refreshPlan = (
 ): RefreshPlan | undefined => {
   if (app.record) return { kind: 'kept' }
   if (app.marker) {
-    const source = sourceOfOrigin(app.marker.origin)
+    const source = sourceOfOrigin(
+      app.marker.origin,
+      app.marker.originalBundleId
+    )
 
     if (source) return { kind: 'source', source, from: from ?? catalogName }
 

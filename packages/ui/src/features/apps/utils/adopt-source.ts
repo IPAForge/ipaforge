@@ -42,7 +42,12 @@ export const adoptSource = (
       from: catalogName
     }
 
-  for (const source of sources) {
+  // IPAForge's own sources first: a source you added is trusted with an app's data only when nothing else lists it.
+  const ordered = [...sources].sort(
+    (a, b) => Number(b.builtin) - Number(a.builtin)
+  )
+
+  for (const source of ordered) {
     const listed = source.apps.find(
       (candidate) => candidate.bundleId === original
     )
@@ -51,7 +56,7 @@ export const adoptSource = (
     if (latest)
       return {
         kind: 'source',
-        source: { kind: 'url', url: latest.downloadUrl },
+        source: { kind: 'url', url: latest.downloadUrl, replaces: original },
         from: source.sourceName
       }
   }

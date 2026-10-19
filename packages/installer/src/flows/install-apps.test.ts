@@ -58,6 +58,40 @@ describe('installApps', () => {
     expect(h.signer.calls.bundles).toBe(0)
   })
 
+  it('refuses a Refresh or Update download that is another app, before any Apple call', async () => {
+    const h = createHarness()
+    const wrong = await h.engine.installApps(
+      install([
+        {
+          kind: 'file',
+          file: ipaFile('other.ipa'),
+          replaces: 'com.example.other'
+        }
+      ]),
+      { onPrompt: scripted() }
+    ).result
+
+    expect(wrong.status).toBe('failed')
+    if (wrong.status !== 'failed') return
+    expect(wrong.failedStep).toBe('inspect-0')
+    expect(wrong.error.code).toBe(ErrorCode.WrongApp)
+    expect(h.apple.calls.created).toHaveLength(0)
+    expect(h.devices.calls.installs).toHaveLength(0)
+
+    const right = await h.engine.installApps(
+      install([
+        {
+          kind: 'file',
+          file: ipaFile('same.ipa'),
+          replaces: 'com.example.app'
+        }
+      ]),
+      { onPrompt: scripted() }
+    ).result
+
+    expect(right.status).toBe('completed')
+  })
+
   it('gives SideStore from the catalog the pairing file, wherever it is in the list', async () => {
     const h = createHarness()
     const handle = h.engine.installApps(

@@ -80,7 +80,8 @@ export const useAppActions = () => {
     const first = updates[0]
     const sourceOf = (view: AppView): AppSource => ({
       kind: 'url',
-      url: view.update?.downloadUrl ?? ''
+      url: view.update?.downloadUrl ?? '',
+      replaces: view.update?.replaces ?? view.app.bundleId
     })
 
     if (!(device && account && first)) return

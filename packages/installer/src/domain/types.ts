@@ -113,6 +113,11 @@ export type AppSource =
       readonly file: FileSource
       /** Where the file came from (a link, or a file the user picked), remembered with the installed app. */
       readonly origin?: AppOrigin
+      /**
+       * Refresh or Update: the original bundle id of the installed app this file must be. Anything else is refused,
+       * so a link (from an app's mark, or a source) can't put another app in its place, with its data.
+       */
+      readonly replaces?: string
     }
   | {
       /** An app installed before, signed again from its kept IPA (Refresh). */

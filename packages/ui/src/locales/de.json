@@ -607,6 +607,10 @@
       "kept_ipa_missing": {
         "title": "Diese App kann hier nicht erneuert werden",
         "body": "IPAForge hat sie nicht auf diesem Gerät installiert, oder ihre aufbewahrte Kopie fehlt. Füge ihre .ipa unter „Vorladen“ hinzu, um sie erneut zu installieren."
+      },
+      "wrong_app": {
+        "title": "Dieser Link liefert eine andere App",
+        "body": "Es ist nicht die App, die du erneuerst oder aktualisierst. Sie wurde nicht installiert, die App und ihre Daten bleiben unverändert. Füge die richtige .ipa unter „Vorladen“ hinzu, um sie neu zu installieren."
       }
     },
     "rpc": {

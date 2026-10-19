@@ -107,6 +107,7 @@ export const ErrorCode = {
   TeamRequired: 'installer.team_required',
   /** Refresh: the app wasn't installed by IPAForge here, or its kept IPA is gone; it has to be added again. */
   KeptIpaMissing: 'installer.kept_ipa_missing',
+  WrongApp: 'installer.wrong_app',
 
   // rpc
   /** A message between the Engine and the UI failed validation or refers to an unknown run or checkpoint. */

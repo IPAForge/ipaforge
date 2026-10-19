@@ -9,6 +9,8 @@ export type ExpiryTone = 'ok' | 'soon' | 'expired' | 'unknown'
 export type AppUpdate = {
   readonly version: string
   readonly downloadUrl: string
+  /** The installed app's original bundle id: the download must be that app. */
+  readonly replaces: string
 }
 
 /** An installed app as the Apps page shows it. */

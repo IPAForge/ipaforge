@@ -607,6 +607,10 @@
       "kept_ipa_missing": {
         "title": "This app can't be refreshed here",
         "body": "IPAForge didn't install it on this device, or its kept copy is gone. Add its .ipa in Preload to install it again."
+      },
+      "wrong_app": {
+        "title": "This link gives a different app",
+        "body": "It isn't the app you're refreshing or updating, so it wasn't installed and the app and its data stay as they are. Add the right .ipa in Preload to install it again."
       }
     },
     "rpc": {
