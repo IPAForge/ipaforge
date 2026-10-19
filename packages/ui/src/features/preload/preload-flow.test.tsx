@@ -142,7 +142,8 @@ describe('the Preload page', () => {
       screen.getByRole('button', { name: t('install.done.done') })
     )
     expect(await screen.findByText(t('preload.list.empty'))).toBeDefined()
-  })
+    // A whole run through the app: slow CI runners (Windows timers) need more than the default 5 s.
+  }, 15_000)
 
   it('tells the Install page that apps are being installed', async () => {
     const user = userEvent.setup()

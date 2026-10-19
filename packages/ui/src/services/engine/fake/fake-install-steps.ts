@@ -172,6 +172,8 @@ export const progressing: StepBody = async (_state, context) => {
 
 /** Fake time per progress tick, so the UI has a speed and a time left to show. */
 const TICK_MS = 1500
+/** Updates per install phase: the install sends as many in all as any other step (each one waits a timer tick). */
+const PHASE_TICKS = TICKS / 2
 const FAKE_BUNDLES = 3
 /** What the fake signs to: the IPA uncompressed, or about half of it compressed for Wi-Fi. */
 const signedSize = (wifi: boolean) => (wifi ? FAKE_IPA_SIZE : FAKE_IPA_SIZE * 2)
@@ -187,8 +189,7 @@ export const provisioning =
   (count: number): StepBody =>
   async (_state, context) => {
     const tasks = [
-      ['team', 2],
-      ['app-ids', count],
+      ['team', 1],
       ['profiles', count]
     ] as const
     const total = tasks.reduce((sum, [, requests]) => sum + requests, 0)
@@ -228,23 +229,21 @@ export const installing =
   async (_state, context) => {
     const total = signedSize(world.scenario === 'wifi')
     context.detail({ kind: 'install-phase', phase: 'uploading' })
-    for (let tick = 1; tick <= TICKS; tick++)
-      await context.progress((tick / TICKS) * 0.5, {
+    for (let tick = 1; tick <= PHASE_TICKS; tick++)
+      await context.progress((tick / PHASE_TICKS) * 0.5, {
         phase: 'uploading',
-        percent: Math.round((tick / TICKS) * 100),
-        received: Math.round((total * tick) / TICKS),
+        percent: Math.round((tick / PHASE_TICKS) * 100),
+        received: Math.round((total * tick) / PHASE_TICKS),
         total,
         elapsedMs: tick * TICK_MS
       })
     context.detail({ kind: 'install-phase', phase: 'installing' })
-    for (let tick = 1; tick <= TICKS; tick++)
-      await context.progress(0.5 + (tick / TICKS) * 0.5, {
+    for (let tick = 1; tick <= PHASE_TICKS; tick++)
+      await context.progress(0.5 + (tick / PHASE_TICKS) * 0.5, {
         phase: 'installing',
-        percent: Math.round((tick / TICKS) * 100),
+        percent: Math.round((tick / PHASE_TICKS) * 100),
         status:
-          INSTALLD_STATUSES[
-            Math.min(INSTALLD_STATUSES.length - 1, Math.floor(tick / 2))
-          ],
+          INSTALLD_STATUSES[Math.min(INSTALLD_STATUSES.length - 1, tick - 1)],
         elapsedMs: tick * TICK_MS
       })
     return undefined
