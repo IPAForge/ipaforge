@@ -178,7 +178,8 @@ describe('runs', () => {
     })
     expect(state.apps[0]).toEqual({
       kind: 'file',
-      file: { name: 'My App.ipa', size: IPA_BYTES.length }
+      file: { name: 'My App.ipa', size: IPA_BYTES.length },
+      origin: { kind: 'file', name: 'My App.ipa' }
     })
     expect(events).toContain('step-progress')
     expect(events).toContain('prompt')
@@ -258,6 +259,29 @@ describe('runs', () => {
       completed: [],
       fraction: 0
     })
+  })
+
+  it('plans a refresh, then refreshes profiles and installs the kept IPAs again', async () => {
+    const { client, control, resolveIpa } = setup()
+    const decisions = await client.refreshPlan({
+      ...ACCOUNT,
+      bundleIds: ['com.app.TEAM']
+    })
+    const handle = client.refreshApps({
+      ...ACCOUNT,
+      profiles: ['com.app.TEAM'],
+      apps: [{ kind: 'installed', bundleId: 'com.other.TEAM' }]
+    })
+    await nextPrompt(handle)
+    handle.cancel()
+    await handle.result
+
+    expect(decisions).toEqual([{ bundleId: 'com.app.TEAM', kind: 'profile' }])
+    expect(resolveIpa).not.toHaveBeenCalled()
+    expect(control.refreshInputs[0]?.profiles).toEqual(['com.app.TEAM'])
+    expect(control.refreshInputs[0]?.apps.map((app) => app.kind)).toEqual([
+      'installed'
+    ])
   })
 
   it('resolves every app of a preload, URLs included', async () => {

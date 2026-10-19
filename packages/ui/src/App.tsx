@@ -13,6 +13,8 @@ import { scopeServices } from '@ui/services/scope-services.ts'
 import { type UiServices, UiServicesContext } from '@ui/services/ui-services.ts'
 import { ActiveRunContext } from '@ui/state/active-run/active-run-context.ts'
 import { createActiveRunStore } from '@ui/state/active-run/active-run-store.ts'
+import { AutoRefreshContext } from '@ui/state/auto-refresh/auto-refresh-context.ts'
+import { createAutoRefreshStore } from '@ui/state/auto-refresh/auto-refresh-store.ts'
 import { LogViewContext } from '@ui/state/log-view/log-view-context.ts'
 import { createLogViewStore } from '@ui/state/log-view/log-view-store.ts'
 import { PreloadContext } from '@ui/state/preload/preload-context.ts'
@@ -45,18 +47,24 @@ export const App = ({ services, language, history }: AppProps) => {
   const [selection] = useState(() =>
     createSelectionStore(scoped.preferences, scoped.logger)
   )
-  // A run can add a session or find an Apple ID blocked on a device: refresh what the pickers show when it ends.
+  // A run can add a session, find an Apple ID blocked on a device, or install apps: refresh what the pickers and
+  // the Apps page show when it ends.
   const [activeRun] = useState(() =>
     createActiveRunStore({
       engine: scoped.engine,
       logger: scoped.logger,
-      onSettled: () =>
+      onSettled: () => {
         void queryClient.invalidateQueries({ queryKey: queryKeys.accounts })
+        void queryClient.invalidateQueries({ queryKey: queryKeys.apps })
+      }
     })
   )
 
   const [logView] = useState(createLogViewStore)
   const [preload] = useState(createPreloadStore)
+  const [autoRefresh] = useState(() =>
+    createAutoRefreshStore(scoped.preferences)
+  )
 
   return (
     <UiServicesContext value={scoped}>
@@ -65,13 +73,15 @@ export const App = ({ services, language, history }: AppProps) => {
         <SelectionContext value={selection}>
           <ActiveRunContext value={activeRun}>
             <PreloadContext value={preload}>
-              <LogViewContext value={logView}>
-                <LanguageProvider setup={language}>
-                  <ThemeProvider>
-                    <RouterProvider router={router} />
-                  </ThemeProvider>
-                </LanguageProvider>
-              </LogViewContext>
+              <AutoRefreshContext value={autoRefresh}>
+                <LogViewContext value={logView}>
+                  <LanguageProvider setup={language}>
+                    <ThemeProvider>
+                      <RouterProvider router={router} />
+                    </ThemeProvider>
+                  </LanguageProvider>
+                </LogViewContext>
+              </AutoRefreshContext>
             </PreloadContext>
           </ActiveRunContext>
         </SelectionContext>

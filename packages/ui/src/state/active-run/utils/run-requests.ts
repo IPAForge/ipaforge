@@ -20,8 +20,14 @@ export const runLaunchers = {
     request: Extract<RunRequest, { kind: 'sidestore' }>,
     options
   ) => engine.installSideStore(request.input, options),
+  // A refresh (some apps only getting new profiles) is its own command; the run looks the same.
   apps: (engine, request: Extract<RunRequest, { kind: 'apps' }>, options) =>
-    engine.installApps(request.input, options)
+    request.profiles
+      ? engine.refreshApps(
+          { ...request.input, profiles: [...request.profiles] },
+          options
+        )
+      : engine.installApps(request.input, options)
 } satisfies Record<RunKind, Launcher>
 
 export const launchRun = (

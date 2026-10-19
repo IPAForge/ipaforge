@@ -10,9 +10,13 @@ import {
 } from '@rpc/domain/protocol/common.ts'
 import {
   installAppsInputSchema,
+  installedAppsQuerySchema,
   installSideStoreInputSchema,
   placePairingInputSchema,
   planInstallInputSchema,
+  refreshAppsInputSchema,
+  refreshPlanQuerySchema,
+  removeAppInputSchema,
   signInInputSchema,
   teamQuerySchema
 } from '@rpc/domain/protocol/inputs.ts'
@@ -47,6 +51,10 @@ export const queryCallSchema = z.discriminatedUnion('method', [
   call('removeSource', z.tuple([textSchema])),
   call('setSourceEnabled', z.tuple([textSchema, z.boolean()])),
   call('refreshSources', z.tuple([textSchema.optional()])),
+  call('installedApps', z.tuple([installedAppsQuerySchema])),
+  call('removeApp', z.tuple([removeAppInputSchema])),
+  /** Asks Apple for the team's certificates, so it answers as slowly as Apple does. */
+  call('refreshPlan', z.tuple([refreshPlanQuerySchema])),
   /** Not a read, but a one-shot call answered like one. */
   call('signOut', z.tuple([textSchema]))
 ])
@@ -59,6 +67,10 @@ export const commandCallSchema = z.discriminatedUnion('command', [
   z.object({
     command: z.literal('installApps'),
     input: installAppsInputSchema
+  }),
+  z.object({
+    command: z.literal('refreshApps'),
+    input: refreshAppsInputSchema
   }),
   z.object({
     command: z.literal('placePairing'),

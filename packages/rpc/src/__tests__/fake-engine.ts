@@ -10,6 +10,7 @@ import {
   PromptKind,
   type PromptRequest,
   pipeline,
+  type RefreshAppsInput,
   type RunEvent,
   type RunHandle
 } from '@ipaforge/installer'
@@ -130,6 +131,7 @@ export type FakeControl = {
   }[]
   readonly planned: unknown[]
   readonly appInputs: InstallAppsInput[]
+  readonly refreshInputs: RefreshAppsInput[]
   readonly signIns: unknown[]
   readonly signedOut: string[]
   readonly paired: string[]
@@ -143,6 +145,7 @@ export const createFakeEngine = () => {
     runs: [],
     planned: [],
     appInputs: [],
+    refreshInputs: [],
     signIns: [],
     signedOut: [],
     paired: [],
@@ -203,6 +206,20 @@ export const createFakeEngine = () => {
       control.appInputs.push(input)
       return startRun(control, { apps: input.apps }, options)
     },
+    refreshApps: (
+      input: RefreshAppsInput,
+      options?: CommandOptions<FakeState>
+    ) => {
+      control.refreshInputs.push(input)
+      return startRun(control, { apps: input.apps }, options)
+    },
+    refreshPlan: async (query: { bundleIds: readonly string[] }) =>
+      query.bundleIds.map((bundleId) => ({ bundleId, kind: 'profile' })),
+    installedSource: async (_udid: string, bundleId: string) => ({
+      kind: 'installed',
+      file: { name: `${bundleId}.ipa` },
+      record: { bundleId }
+    }),
     installSideStore: (_input: unknown, options?: CommandOptions<FakeState>) =>
       startRun(
         control,

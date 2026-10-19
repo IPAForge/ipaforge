@@ -121,6 +121,15 @@ export type FakeApp = {
 export type FakeAppSource =
   | { readonly kind: 'catalog'; readonly appId: string }
   | { readonly kind: 'file'; readonly file: { readonly name: string } }
+  | { readonly kind: 'installed'; readonly file: { readonly name: string } }
+
+/** An app source as an Engine command gets it (the rpc server already resolved it). */
+export type FakeRunSource = Parameters<Engine['installApps']>[0]['apps'][number]
+
+/** An installed app as the fake Engine lists it. */
+export type FakeInstalledApp = Awaited<
+  ReturnType<Engine['installedApps']>
+>[number]
 
 /** An app source as the fake Engine lists it. */
 export type FakeSourceInfo = Awaited<ReturnType<Engine['listSources']>>[number]

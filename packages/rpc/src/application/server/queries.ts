@@ -23,14 +23,19 @@ const queryHandlers = (
   appIdQuota: ([query]) => engine.appIdQuota(compact(query)),
   listCertificates: ([query]) => engine.listCertificates(compact(query)),
   planInstall: async ([input], signal) =>
-    engine.planInstall(await toPlanInstallInput(input, resolveIpa, signal)),
+    engine.planInstall(
+      await toPlanInstallInput(input, { resolveIpa, engine }, signal)
+    ),
   listSources: () => engine.listSources(),
   sourceApps: () => engine.sourceApps(),
   checkSource: ([url]) => engine.checkSource(url),
   addSource: ([url]) => engine.addSource(url),
   removeSource: ([id]) => engine.removeSource(id),
   setSourceEnabled: ([id, enabled]) => engine.setSourceEnabled(id, enabled),
-  refreshSources: ([id]) => engine.refreshSources(id)
+  refreshSources: ([id]) => engine.refreshSources(id),
+  installedApps: ([query]) => engine.installedApps(query),
+  removeApp: ([input]) => engine.removeApp(input),
+  refreshPlan: ([query]) => engine.refreshPlan(compact(query))
 })
 
 export const createQueryRunner = (

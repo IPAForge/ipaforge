@@ -39,6 +39,18 @@ The signing certificate goes only into an app IPAForge has a reason to trust:
 - a catalog release whose download matched its published SHA-256;
 - a file you picked, only after you agree. If the IPA really contains SideStore (checked from its bundles, never from the bundle ID alone), IPAForge asks before sharing the certificate and its private key. If you decline, the app is installed without it.
 
+### Installed apps and Refresh
+
+After each app is installed, the Engine remembers it (`InstalledStore`, desktop: `<dataDir>/installed.json`): its installed and original bundle ids, name and version, where it came from (a catalog app, a link or a file) and the certificate trust it had. It keeps the app's original IPA too (`KeptIpaStore`, desktop: `<dataDir>/kept`), one per app and device.
+
+- `installedApps({ udid, teamIds })` reads the device: each profile signed by one of the teams names its app and expiry, installation_proxy says which of those apps are installed, and a record whose app is gone is forgotten with its IPA. Apps without a record were installed by another tool.
+- **The IPAForge mark.** Signing adds an `IPAForge` dictionary to the app's `Info.plist`: `Version`, `OriginalBundleID`, `Origin` (catalog app, link or file name) and `CertificateSerial`, the certificate that signed it. installation_proxy returns it with the app, so another computer signed in with the same Apple ID recognises the app as IPAForge's, knows where to install it again from, and which certificate it depends on.
+- **`refreshPlan({ udid, accountId, teamId?, bundleIds })`** decides, per app, how Refresh treats it. While the certificate in the app's mark is still valid for the team (listed, not revoked, not expired), the app only needs a new profile (`profile`). Otherwise it's installed again: `reinstall` with `reason: "certificate"` (revoked or replaced) or `"unmarked"` (no mark: installed before marks, or by another tool).
+- **`refreshApps({ udid, accountId, teamId?, profiles, apps })`** is Refresh, in one run. The apps in `apps` are signed and installed again, as in installApps (steps numbered from 0). Each bundle id in `profiles` gets a `profiles-N` step (numbered after them): a new profile from Apple for the app and its extensions, installed on the device, and the old ones removed. This is how SideStore refreshes: nothing is installed again, and it works for an app whose IPA this computer never had. With only profiles, the run skips the certificate and App ID steps.
+- A Refresh or Update from a link names the app it replaces (`replaces`, its original bundle id). The inspect step refuses any other app (`installer.wrong_app`) before any Apple call, so a link in an app's mark, or in a source, can't put another app in its place with its data.
+- An app installed again from its kept IPA is `{ kind: "installed", bundleId }`: the rpc server asks the Engine for the app's kept IPA and record (`installedSource`); the flow checks it again and keeps its certificate trust (no question), and SideStore gets its pairing file as on its first install. The same bundle id and team make it an upgrade: the app keeps its data. An app without a kept IPA fails with `installer.kept_ipa_missing`.
+- `removeApp({ udid, bundleId })` uninstalls the app and forgets it.
+
 ### Place pairing file
 
 Opens the device and the account, finds the pairing apps on the device (SideStore, LiveContainer, StikDebug, StikStore), asks which ones should get this computer's pairing file, and writes it. Sideloaded copies count only when one of the account's teams signed them. With `keep-existing`, files that are already there are left alone.

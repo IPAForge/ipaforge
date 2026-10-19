@@ -113,6 +113,28 @@ describe('readAltStoreSource', () => {
     expect(source?.skipped).toBe(5)
   })
 
+  it("keeps an app's tint as #rrggbb, with or without the #, and drops anything else", () => {
+    const tintOf = (tintColor: unknown) =>
+      readAltStoreSource({
+        name: 'Tints',
+        apps: [
+          {
+            name: 'App',
+            bundleIdentifier: 'com.example.app',
+            tintColor,
+            version: '1.0',
+            downloadURL: 'https://example.com/App.ipa'
+          }
+        ]
+      })?.apps[0]?.tint
+
+    expect(tintOf('8A28F7')).toBe('#8a28f7')
+    expect(tintOf('#1d9bf0')).toBe('#1d9bf0')
+    expect(tintOf('blue')).toBeUndefined()
+    expect(tintOf(0x1d9bf0)).toBeUndefined()
+    expect(tintOf(undefined)).toBeUndefined()
+  })
+
   it('is undefined for something that is not a source', () => {
     expect(readAltStoreSource({ apps: [] })).toBeUndefined()
     expect(readAltStoreSource({ name: 'x' })).toBeUndefined()

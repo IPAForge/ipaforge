@@ -44,8 +44,8 @@ UI to Engine, each with an `id` that its response echoes:
 
 | `type` | Fields | Engine call |
 |---|---|---|
-| `query` | `call: { method, args }` | `listDevices`, `deviceStatus`, `pairDevice` (waits for the Trust tap, within the request timeout), `listAccounts`, `listTeams`, `catalogApps`, `recommendedChannel`, `appIdQuota`, `listCertificates`, `planInstall`, the app sources (`listSources`, `sourceApps`, `checkSource` and `addSource`, both https only, `removeSource`, `setSourceEnabled`, `refreshSources`), and `signOut` (a one-shot call answered the same way) |
-| `start` | `runId`, `call: { command, input }`, `resume?` | `installSideStore`, `installApps`, `placePairing`, `signIn` |
+| `query` | `call: { method, args }` | `listDevices`, `deviceStatus`, `pairDevice` (waits for the Trust tap, within the request timeout), `listAccounts`, `listTeams`, `catalogApps`, `recommendedChannel`, `appIdQuota`, `listCertificates`, `planInstall`, the app sources (`listSources`, `sourceApps`, `checkSource` and `addSource`, both https only, `removeSource`, `setSourceEnabled`, `refreshSources`), the installed apps (`installedApps`, `removeApp`, `refreshPlan`, which asks Apple for the team's certificates), and `signOut` (a one-shot call answered the same way) |
+| `start` | `runId`, `call: { command, input }`, `resume?` | `installSideStore`, `installApps`, `refreshApps` (its `apps` named like installApps', its `profiles` bundle ids), `placePairing`, `signIn` |
 | `answer` | `runId`, `answer` | `handle.answer()` |
 | `decline` | `runId` | `handle.decline()` |
 | `cancel` | `runId` | `handle.cancel()` |
@@ -93,6 +93,7 @@ A `FileSource` cannot cross the channel, so the UI names an IPA instead:
 | `{ kind: "file", path }` | `resolveIpa`: the desktop opens the file where it is |
 | `{ kind: "url", url }` | `resolveIpa`: the desktop downloads it (HTTPS only) into the download cache |
 | `{ kind: "catalog", appId, channel? }` | Nobody: the flows download and verify catalog apps themselves |
+| `{ kind: "installed", bundleId }` | The Engine (`installedSource`): the app's kept IPA and record, for Refresh |
 
 The UI never sees the file system. To pick IPAs it sends `choose-ipas` and gets back `[{ path, name, size }]` from the host's own file dialog (`createRpcServer({ chooseIpas })`; the desktop app opens it in the main process, bound to the window); without a dialog, or when the user cancels, the answer is empty. A file dropped on the window gets its path from the preload's one function (see [User Interface](ui.md)).
 

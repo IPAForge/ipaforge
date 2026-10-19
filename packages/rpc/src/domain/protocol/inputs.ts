@@ -7,12 +7,20 @@ import { textSchema } from '@rpc/domain/protocol/common.ts'
 
 const channelSchema = z.enum(['stable', 'nightly'])
 
-const fileIpaSchema = z.object({ kind: z.literal('file'), path: textSchema })
+/** Refresh or Update: the original bundle id of the installed app the IPA must be (anything else is refused). */
+const replaces = textSchema.optional()
+
+const fileIpaSchema = z.object({
+  kind: z.literal('file'),
+  path: textSchema,
+  replaces
+})
 
 // Downloads go over HTTPS only, like the catalog's.
 const urlIpaSchema = z.object({
   kind: z.literal('url'),
-  url: z.url({ protocol: /^https$/ })
+  url: z.url({ protocol: /^https$/ }),
+  replaces
 })
 
 const catalogIpaSchema = z.object({
@@ -26,11 +34,28 @@ export const externalIpaSchema = z.discriminatedUnion('kind', [
   urlIpaSchema
 ])
 
+/** An app IPAForge installed before, signed again from its kept IPA (Refresh). */
+const installedIpaSchema = z.object({
+  kind: z.literal('installed'),
+  bundleId: textSchema
+})
+
 export const ipaSourceSchema = z.discriminatedUnion('kind', [
   fileIpaSchema,
   urlIpaSchema,
-  catalogIpaSchema
+  catalogIpaSchema,
+  installedIpaSchema
 ])
+
+export const installedAppsQuerySchema = z.object({
+  udid: textSchema,
+  teamIds: z.array(textSchema)
+})
+
+export const removeAppInputSchema = z.object({
+  udid: textSchema,
+  bundleId: textSchema
+})
 
 const teamId = textSchema.optional()
 
@@ -54,6 +79,20 @@ export const installSideStoreInputSchema = z.object({
 export const installAppsInputSchema = z.object({
   ...accountSchema,
   teamId,
+  apps: z.array(ipaSourceSchema)
+})
+
+export const refreshPlanQuerySchema = z.object({
+  ...accountSchema,
+  teamId,
+  bundleIds: z.array(textSchema)
+})
+
+/** Refresh: new profiles for the apps in `profiles`, `apps` signed and installed again. */
+export const refreshAppsInputSchema = z.object({
+  ...accountSchema,
+  teamId,
+  profiles: z.array(textSchema),
   apps: z.array(ipaSourceSchema)
 })
 

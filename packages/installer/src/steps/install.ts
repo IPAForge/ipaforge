@@ -1,11 +1,13 @@
 // Installs the signed app with progress. Two installd answers get special handling: a banned profile marks the
 // account as banned on this device (so the UI can offer another Apple ID), and a free-app-limit refusal (iOS
 // counted an app the profile check could not see) asks which listed app to remove, then installs once more. The
-// signed IPA is deleted when the step ends, success or not; a resumed run signs again.
+// signed IPA is deleted when the step ends, success or not; a resumed run signs again. An installed app is
+// remembered, with its original IPA, so the Apps page can refresh it.
 import {
   chooseAppToRemove,
   removeFreeApp
 } from '@installer/application/free-apps.ts'
+import { rememberInstalled } from '@installer/application/installed/remember.ts'
 import type { FlowRuntime } from '@installer/application/runtime.ts'
 import { StepLabel } from '@installer/domain/labels.ts'
 import { StepWeight } from '@installer/domain/step-weights.ts'
@@ -167,6 +169,8 @@ export const installStep = (
     } finally {
       await runtime.deps.scratch.delete(signed.key)
     }
+    await rememberInstalled(runtime, state, index)
+
     return updateJob(state, index, { installed: true })
   }
 })

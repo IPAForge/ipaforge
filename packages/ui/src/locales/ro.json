@@ -3,7 +3,7 @@
     "name": "IPAForge"
   },
   "shell": {
-    "skipToContent": "Salt la conținut",
+    "skipToContent": "Treci la conținut",
     "navigation": "Secțiuni",
     "credit": {
       "madeWith": "Făcut cu ❤️ și ☕ de {name}",
@@ -14,9 +14,9 @@
     "device": "Dispozitiv",
     "noDevice": "Niciunul",
     "deviceMenu": "Dispozitive",
-    "account": "ID Apple",
-    "notSignedIn": "Neconectat",
-    "accountMenu": "ID-uri Apple",
+    "account": "Apple ID",
+    "notSignedIn": "Neautentificat",
+    "accountMenu": "Apple ID-uri",
     "addAppleId": "Adaugă un Apple ID…",
     "noAccounts": "Niciun Apple ID încă.",
     "noDevicesHint": "Conectează un iPhone sau iPad prin cablu și deblochează-l.",
@@ -28,10 +28,11 @@
     },
     "install": "Instalare",
     "preload": "Preîncărcare",
+    "apps": "Aplicații",
     "devices": "Dispozitive",
     "accounts": "Conturi",
     "certificates": "Certificate",
-    "logs": "Jurnale",
+    "logs": "Jurnal",
     "settings": "Configurări",
     "installRunning": "O instalare este în curs"
   },
@@ -40,7 +41,7 @@
   },
   "install": {
     "title": "Instalează SideStore",
-    "description": "Semnat cu ID-ul tău Apple, apoi instalat prin USB.",
+    "description": "Semnat cu Apple ID-ul tău, apoi instalat prin USB.",
     "steps": {
       "device": "Verifică dispozitivul",
       "resolve": "Găsește versiunea",
@@ -54,18 +55,19 @@
       "app_ids": "Înregistrează App ID-urile",
       "free_apps": "Verifică limita de aplicații gratuite",
       "provision": "Obține profilurile de provizionare",
+      "refresh_profiles": "Obține profiluri noi",
       "sign": "Semnează aplicația",
       "install": "Instalează pe dispozitiv",
       "pairing": "Plasează fișierul de asociere",
       "remember": "Memorează această instalare"
     },
     "signInNeeded": {
-      "title": "Apple ID-ul tău are nevoie să te autentifici din nou",
+      "title": "Autentifică-te din nou cu Apple ID-ul tău",
       "body": "Sesiunea salvată pentru {appleId} a expirat. Poți instala în continuare: IPAForge îți cere parola când ajunge acolo."
     },
     "blocked": {
       "title": "Apple a blocat {appleId} pe {device}",
-      "body": "Aplicațiile semnate cu acest ID Apple nu se vor deschide pe acest dispozitiv. Folosește alt ID Apple.",
+      "body": "Aplicațiile semnate cu acest Apple ID nu se vor deschide pe acest dispozitiv. Folosește alt Apple ID.",
       "use": "Folosește {appleId}"
     },
     "home": {
@@ -76,11 +78,11 @@
     "variant": {
       "sidestore": {
         "title": "SideStore",
-        "description": "Reîmprospătează și instalează singur aplicații pe dispozitiv. Folosește 2 ID-uri de aplicație."
+        "description": "Reîmprospătează și instalează singur aplicații pe dispozitiv. Folosește 2 App ID-uri."
       },
       "livecontainer": {
         "title": "LiveContainer + SideStore",
-        "description": "Rulează multe aplicații într-una, peste limita de 3 aplicații. Folosește 5 ID-uri de aplicație."
+        "description": "Rulează multe aplicații într-una, peste limita de 3 aplicații. Folosește 5 App ID-uri."
       }
     },
     "channel": {
@@ -91,16 +93,16 @@
     },
     "plan": {
       "title": "Această instalare",
-      "waiting": "Apare după ce dispozitivul și ID-ul Apple sunt pregătite.",
+      "waiting": "Apare după ce dispozitivul și Apple ID-ul sunt pregătite.",
       "checking": "Se descarcă {app} și se verifică la Apple… Descărcarea se păstrează, iar instalarea o refolosește.",
       "unavailable": "Nu s-a putut verifica la Apple. Poți instala oricum: fiecare pas verifică din nou.",
-      "appIds": "ID-uri de aplicație",
-      "appIdsValue": "{created, plural, =0 {Toate cele {reused} sunt deja înregistrate} other {{reused, plural, =0 {{created} noi} other {{created} noi, {reused} refolosite}}}} · {left, plural, one {# rămas săptămâna asta} few {# rămase săptămâna asta} other {# rămase săptămâna asta}}",
+      "appIds": "App ID-uri",
+      "appIdsValue": "{created, plural, =0 {Toate cele {reused} sunt deja înregistrate} other {{reused, plural, =0 {{created} noi} other {{created} noi, {reused} refolosite}}}} · {left, plural, one {# rămas săptămâna aceasta} few {# rămase săptămâna aceasta} other {# rămase săptămâna aceasta}}",
       "nextSlot": "Următorul se eliberează pe {date}",
       "freeApps": "Aplicații gratuite pe dispozitiv",
       "freeAppsValue": "{used} din {limit} folosite",
-      "freeAppsRoom": "Este loc pentru aceasta",
-      "freeAppsFull": "Vei alege una de șters",
+      "freeAppsRoom": "Are loc și aceasta",
+      "freeAppsFull": "Vei alege una de eliminat",
       "noLimit": "Fără limită (echipă plătită)",
       "certificate": "Certificat",
       "certificateReused": "Refolosit",
@@ -113,9 +115,9 @@
       "noDevice": "Conectează întâi un dispozitiv.",
       "checking": "Se verifică dispozitivul…",
       "device": "Disponibil când dispozitivul este pregătit.",
-      "noAccount": "Adaugă întâi un ID Apple.",
-      "blocked": "Folosește întâi alt ID Apple.",
-      "appIds": "Nu au rămas destule ID-uri de aplicație săptămâna asta.",
+      "noAccount": "Adaugă întâi un Apple ID.",
+      "blocked": "Folosește întâi alt Apple ID.",
+      "appIds": "Nu au rămas destule App ID-uri săptămâna aceasta.",
       "ready": "Totul este pregătit."
     },
     "run": {
@@ -152,7 +154,7 @@
           "team": "Se verifică echipa",
           "appIds": "Se creează App ID-urile",
           "appGroup": "Se adaugă grupul de aplicații",
-          "profiles": "Se descarcă profilurile"
+          "profiles": "Se obțin profilurile"
         },
         "phase": {
           "unpacking": "Se dezarhivează aplicația",
@@ -161,8 +163,8 @@
         },
         "speed": "{speed}/s",
         "ios": "iOS o instalează",
-        "leftSeconds": "Cam {seconds} s rămase",
-        "leftMinutes": "{minutes, plural, one {Cam # min rămas} few {Cam # min rămase} other {Cam # min rămase}}"
+        "leftSeconds": "Mai sunt cam {seconds} s",
+        "leftMinutes": "{minutes, plural, one {Mai este cam # min} few {Mai sunt cam # min} other {Mai sunt cam # min}}"
       },
       "connection": {
         "usb": "USB",
@@ -181,7 +183,7 @@
         "device": "{model} · iOS {ios} · {connection}",
         "release": "{app} {version} · {channel}",
         "download": "{size} · suma de control verificată",
-        "downloadCached": "{size} · din memoria de descărcări",
+        "downloadCached": "{size} · din descărcările păstrate",
         "app": "{app} · {extensions, plural, =0 {fără extensii} one {# extensie} few {# extensii} other {# de extensii}}",
         "session": {
           "reused": "Sesiunea salvată a fost refolosită",
@@ -195,7 +197,7 @@
           "created": "S-a creat un certificat nou",
           "replaced": "S-a revocat unul și s-a creat un certificat nou"
         },
-        "removed": "S-a șters {app} · {used}",
+        "removed": "S-a eliminat {app} · {used}",
         "profiles": "{count, plural, one {# profil} few {# profiluri} other {# de profiluri}}",
         "signed": "{count, plural, one {# pachet semnat} few {# pachete semnate} other {# de pachete semnate}}",
         "signedCompressed": "{count, plural, one {# pachet semnat} few {# pachete semnate} other {# de pachete semnate}} · comprimat pentru Wi-Fi",
@@ -203,7 +205,7 @@
           "uploading": "Se încarcă pe dispozitiv",
           "installing": "Se instalează"
         },
-        "pairing": "Pus în {apps}",
+        "pairing": "Plasat în {apps}",
         "shared": "Certificat partajat",
         "notShared": "Certificat nepartajat"
       },
@@ -215,16 +217,16 @@
       "channel": "Canal",
       "device": "Dispozitiv",
       "deviceValue": "{name} · iOS {ios}",
-      "account": "ID Apple",
-      "appIds": "ID-uri de aplicație",
-      "appIdsValue": "{count, plural, one {# rămas săptămâna asta} few {# rămase săptămâna asta} other {# rămase săptămâna asta}}",
+      "account": "Apple ID",
+      "appIds": "App ID-uri",
+      "appIdsValue": "{count, plural, one {# rămas săptămâna aceasta} few {# rămase săptămâna aceasta} other {# rămase săptămâna aceasta}}",
       "freeApps": "Aplicații gratuite",
       "apps": "Aplicații"
     },
     "done": {
       "title": "{app} este pe {device}.",
       "trust": "Pe dispozitiv: Configurări › General › VPN și administrare dispozitiv › ai încredere în {appleId}.",
-      "open": "Deschide SideStore: fișierul de asociere și certificatul tău sunt deja înăuntru.",
+      "open": "Deschide SideStore: fișierul de asociere și certificatul tău sunt deja în ea.",
       "done": "Gata"
     },
     "cancelled": {
@@ -284,7 +286,7 @@
       },
       "not_paired": {
         "title": "Acest computer nu este încă de încredere",
-        "body": "Deblochează dispozitivul și apasă „Încredere” când te întreabă dacă ai încredere în acest computer."
+        "body": "Deblochează dispozitivul și atinge „Ai încredere” când te întreabă dacă ai încredere în acest computer."
       },
       "usbmuxd_unavailable": {
         "title": "Suportul pentru dispozitive nu rulează",
@@ -299,16 +301,16 @@
         "body": "Conexiunea s-a întrerupt. Reconectează cablul, deblochează dispozitivul și încearcă din nou."
       },
       "pairing_pending": {
-        "title": "Se așteaptă confirmarea încrederii",
-        "body": "Deblochează dispozitivul și apasă „Încredere” în mesajul afișat."
+        "title": "Se așteaptă „Ai încredere”",
+        "body": "Deblochează dispozitivul și atinge „Ai încredere” în mesajul afișat."
       },
       "pairing_denied": {
         "title": "Încrederea a fost refuzată",
-        "body": "Dispozitivul a refuzat să aibă încredere în acest computer. Asociază-l din nou și de data aceasta apasă „Încredere”."
+        "body": "Dispozitivul a refuzat să aibă încredere în acest computer. Asociază-l din nou și de data aceasta atinge „Ai încredere”."
       },
       "invalid_pair_record": {
         "title": "Asocierea nu mai este validă",
-        "body": "Dispozitivul nu mai acceptă asocierea cu acest computer. Deconectează-l, conectează-l din nou, deblochează-l și apasă „Încredere”."
+        "body": "Dispozitivul nu mai acceptă asocierea cu acest computer. Deconectează-l, conectează-l din nou, deblochează-l și atinge „Ai încredere”."
       },
       "service_unavailable": {
         "title": "Un serviciu al dispozitivului nu a pornit",
@@ -328,19 +330,19 @@
       },
       "timeout": {
         "title": "Dispozitivul nu mai răspunde",
-        "body": "Dispozitivul a răspuns prea greu. Deblochează-l, reconectează-l și încearcă din nou."
+        "body": "Dispozitivul a răspuns prea lent. Deblochează-l, reconectează-l și încearcă din nou."
       },
       "passcode_required": {
         "title": "Setează un cod de acces",
-        "body": "Este nevoie de un cod de acces pe dispozitiv. Setează unul din Configurări › Face ID și cod, apoi încearcă din nou."
+        "body": "Este nevoie de un cod de acces pe dispozitiv. Setează unul din Configurări › Face ID și cod de acces, apoi încearcă din nou."
       },
       "free_app_limit": {
         "title": "Prea multe aplicații instalate manual",
-        "body": "Cu un ID Apple gratuit pot fi active doar trei aplicații instalate manual pe un dispozitiv. Elimină una, apoi încearcă din nou."
+        "body": "Cu un Apple ID gratuit pot fi active doar trei aplicații instalate manual pe un dispozitiv. Elimină una, apoi încearcă din nou."
       },
       "profile_banned": {
-        "title": "Apple a blocat acest ID Apple pe dispozitiv",
-        "body": "Dispozitivul nu acceptă aplicații semnate cu acest ID Apple. O nouă încercare nu va ajuta: folosește alt ID Apple."
+        "title": "Apple a blocat acest Apple ID pe dispozitiv",
+        "body": "Dispozitivul nu acceptă aplicații semnate cu acest Apple ID. O nouă încercare nu va ajuta: folosește alt Apple ID."
       },
       "identity_invalid": {
         "title": "Certificatul de semnare nu mai este valid",
@@ -362,23 +364,23 @@
       },
       "app_id_quota": {
         "title": "Nu mai ai App ID-uri săptămâna aceasta",
-        "body": "Un ID Apple gratuit poate înregistra doar 10 App ID-uri la fiecare 7 zile. Așteaptă să se elibereze un loc sau folosește alt ID Apple."
+        "body": "Un Apple ID gratuit poate înregistra doar 10 App ID-uri la fiecare 7 zile. Așteaptă să se elibereze un loc sau folosește alt Apple ID."
       },
       "certificate_limit": {
         "title": "Prea multe certificate",
-        "body": "Acest ID Apple a atins limita de certificate de dezvoltare. Revocă unul sau folosește alt ID Apple."
+        "body": "Acest Apple ID a atins limita de certificate de dezvoltare. Revocă unul sau folosește alt Apple ID."
       },
       "invalid_credentials": {
-        "title": "ID Apple sau parolă greșită",
+        "title": "Apple ID sau parolă greșită",
         "body": "Apple nu a acceptat adresa de e-mail sau parola. Verifică-le și introdu din nou parola."
       },
       "account_locked": {
-        "title": "Acest ID Apple este blocat",
-        "body": "Apple a blocat acest cont din motive de securitate. Deblochează-l pe un dispozitiv Apple sau pe site-ul Apple ori folosește alt ID Apple."
+        "title": "Acest Apple ID este blocat",
+        "body": "Apple a blocat acest cont din motive de securitate. Deblochează-l pe un dispozitiv Apple sau pe site-ul Apple ori folosește alt Apple ID."
       },
       "account_refused": {
         "title": "Apple a refuzat autentificarea",
-        "body": "Apple nu permite deocamdată autentificarea cu acest ID Apple de aici. Așteaptă puțin, autentifică-te o dată pe un dispozitiv Apple sau folosește alt ID Apple."
+        "body": "Apple nu permite deocamdată autentificarea cu acest Apple ID de aici. Așteaptă puțin, autentifică-te o dată pe un dispozitiv Apple sau folosește alt Apple ID."
       },
       "client_rejected": {
         "title": "Apple a respins cererea de autentificare",
@@ -402,11 +404,11 @@
       },
       "two_factor_unsupported": {
         "title": "Această metodă de autentificare nu este acceptată",
-        "body": "Acest ID Apple folosește o metodă de autentificare cu doi factori pe care IPAForge nu o acceptă încă, de exemplu o cheie de securitate. Folosește alt ID Apple."
+        "body": "Acest Apple ID folosește o metodă de autentificare cu doi factori pe care IPAForge nu o acceptă încă, de exemplu o cheie de securitate. Folosește alt Apple ID."
       },
       "sms_unavailable": {
         "title": "Codurile prin SMS nu sunt disponibile",
-        "body": "Apple nu trimite codul prin SMS aici. Obține-l pe un dispozitiv de încredere sau folosește alt ID Apple."
+        "body": "Apple nu trimite codul prin SMS aici. Obține-l pe un dispozitiv de încredere sau folosește alt Apple ID."
       },
       "clock_skew": {
         "title": "Ceasul computerului este greșit",
@@ -418,19 +420,19 @@
       },
       "session_expired": {
         "title": "Sesiunea a expirat",
-        "body": "Autentifică-te din nou cu acest ID Apple. Dacă expiră des, verifică ceasul computerului."
+        "body": "Autentifică-te din nou cu acest Apple ID. Dacă expiră des, verifică ceasul computerului."
       },
       "account_not_found": {
-        "title": "ID-ul Apple nu a fost găsit",
-        "body": "IPAForge nu are o sesiune salvată pentru acest ID Apple. Autentifică-te din nou."
+        "title": "Apple ID-ul nu a fost găsit",
+        "body": "IPAForge nu are o sesiune salvată pentru acest Apple ID. Autentifică-te din nou."
       },
       "not_eligible": {
-        "title": "Acest ID Apple nu poate fi folosit pentru dezvoltare",
-        "body": "Apple nu permite acestui cont să semneze aplicații, de exemplu din cauza vârstei sau a termenilor. Folosește alt ID Apple."
+        "title": "Acest Apple ID nu poate fi folosit pentru dezvoltare",
+        "body": "Apple nu permite acestui cont să semneze aplicații, de exemplu din cauza vârstei sau a termenilor. Folosește alt Apple ID."
       },
       "email_unverified": {
         "title": "Verifică adresa de e-mail",
-        "body": "Apple cere mai întâi verificarea adresei de e-mail a acestui ID Apple. Verific-o, apoi încearcă din nou."
+        "body": "Apple cere mai întâi verificarea adresei de e-mail a acestui Apple ID. Verific-o, apoi încearcă din nou."
       },
       "team_agreement": {
         "title": "Acceptă acordul Apple",
@@ -438,15 +440,15 @@
       },
       "no_teams": {
         "title": "Nicio echipă de dezvoltare",
-        "body": "Acest ID Apple nu are încă o echipă de dezvoltare. Acceptă acordul pentru dezvoltatori Apple sau folosește alt ID Apple."
+        "body": "Acest Apple ID nu are încă o echipă de dezvoltare. Acceptă acordul pentru dezvoltatori Apple sau folosește alt Apple ID."
       },
       "device_limit": {
         "title": "Limita de dispozitive a fost atinsă",
-        "body": "Această echipă nu mai poate înregistra dispozitive. Alege altă echipă sau folosește alt ID Apple."
+        "body": "Această echipă nu mai poate înregistra dispozitive. Alege altă echipă sau folosește alt Apple ID."
       },
       "app_id_unavailable": {
         "title": "Acest App ID este ocupat",
-        "body": "O altă echipă folosește deja acest App ID. Alege altă echipă sau folosește alt ID Apple."
+        "body": "O altă echipă folosește deja acest App ID. Alege altă echipă sau folosește alt Apple ID."
       },
       "invalid_app_id_name": {
         "title": "Apple a respins numele App ID-ului",
@@ -522,7 +524,7 @@
       },
       "encrypted_binary": {
         "title": "Aplicația este criptată",
-        "body": "Acest IPA provine din App Store și este încă criptat, așa că nu poate fi resemnat. Alege un IPA decriptat."
+        "body": "Acest IPA provine din App Store și este încă criptat, așa că nu poate fi semnat din nou. Alege un IPA decriptat."
       },
       "unsupported_arch": {
         "title": "Format de aplicație neacceptat",
@@ -600,7 +602,15 @@
       },
       "team_required": {
         "title": "Alege o echipă",
-        "body": "Acest ID Apple face parte din mai multe echipe. Alege-o pe cea cu care să semnezi."
+        "body": "Acest Apple ID face parte din mai multe echipe. Alege-o pe cea cu care să semnezi."
+      },
+      "kept_ipa_missing": {
+        "title": "Această aplicație nu poate fi reîmprospătată aici",
+        "body": "IPAForge nu a instalat-o pe acest dispozitiv sau copia păstrată nu mai există. Adaugă fișierul .ipa în Preîncărcare ca s-o instalezi din nou."
+      },
+      "wrong_app": {
+        "title": "Acest link oferă o altă aplicație",
+        "body": "Nu este aplicația pe care o reîmprospătezi sau o actualizezi, așa că nu a fost instalată, iar aplicația și datele ei rămân neschimbate. Adaugă fișierul .ipa corect în Preîncărcare pentru a o reinstala."
       }
     },
     "rpc": {
@@ -614,7 +624,7 @@
       },
       "timeout": {
         "title": "Motorul nu a răspuns",
-        "body": "Motorul IPAForge a răspuns prea greu. Încearcă din nou și raportează problema dacă se repetă."
+        "body": "Motorul IPAForge a răspuns prea lent. Încearcă din nou și raportează problema dacă se repetă."
       }
     },
     "internal": {
@@ -639,7 +649,7 @@
     "use-trusted-device": "Folosește un dispozitiv de încredere",
     "sign-in-again": "Autentifică-te din nou",
     "sign-in-on-apple-device": "Autentifică-te pe un dispozitiv Apple",
-    "switch-account": "Folosește alt ID Apple",
+    "switch-account": "Folosește alt Apple ID",
     "verify-email": "Verifică adresa de e-mail",
     "accept-agreement": "Acceptă acordul Apple",
     "choose-team": "Alege o echipă",
@@ -661,8 +671,8 @@
     "report-issue": "Raportează problema",
     "or": "Sau",
     "switchAccount": {
-      "title": "Folosește alt ID Apple",
-      "body": "Instalarea începe din nou cu ID-ul Apple ales."
+      "title": "Folosește alt Apple ID",
+      "body": "Instalarea începe din nou cu Apple ID-ul ales."
     },
     "fix": {
       "copy": "Copiază",
@@ -685,20 +695,20 @@
         "how": "O nouă încercare cere un cod de verificare nou."
       },
       "useTrustedDevice": {
-        "how": "Când se cere codul, alege un dispozitiv de încredere în loc de mesaj text."
+        "how": "Când se cere codul, alege un dispozitiv de încredere în loc de SMS."
       },
       "signInAgain": {
         "how": "O nouă încercare cere parola pentru a te autentifica din nou."
       },
       "signInOnAppleDevice": {
-        "how": "Autentifică-te cu acest ID Apple pe un iPhone, iPad sau Mac, ori pe site-ul Apple, și urmează ce ți se cere:"
+        "how": "Autentifică-te cu acest Apple ID pe un iPhone, iPad sau Mac, ori pe site-ul Apple, și urmează ce ți se cere:"
       },
       "switchAccount": {
-        "how": "Alege unul dintre ID-urile Apple salvate. Instalarea începe din nou cu el.",
-        "button": "Alege un ID Apple…"
+        "how": "Alege unul dintre Apple ID-urile salvate. Instalarea începe din nou cu el.",
+        "button": "Alege un Apple ID…"
       },
       "verifyEmail": {
-        "how": "Confirmă adresa de e-mail a acestui ID Apple pe site-ul Apple:"
+        "how": "Verifică adresa de e-mail a acestui Apple ID pe site-ul Apple:"
       },
       "acceptAgreement": {
         "how": "Autentifică-te pe site-ul pentru dezvoltatori Apple și acceptă acordul afișat:"
@@ -707,11 +717,11 @@
         "how": "O nouă încercare întreabă ce certificat să fie revocat."
       },
       "waitForAppIdSlot": {
-        "how": "Apple eliberează fiecare ID de aplicație la 7 zile după creare. Instalează din nou când unul e liber sau folosește alt ID Apple.",
-        "next": "Următorul ID de aplicație se eliberează pe {date}."
+        "how": "Apple eliberează fiecare App ID la 7 zile după creare. Instalează din nou când unul e liber sau folosește alt Apple ID.",
+        "next": "Următorul App ID se eliberează pe {date}."
       },
       "chooseAppToRemove": {
-        "how": "O nouă încercare întreabă ce aplicație să fie ștearsă pentru a face loc."
+        "how": "O nouă încercare întreabă ce aplicație să fie eliminată pentru a face loc."
       },
       "unlockDevice": {
         "how": "Deblochează dispozitivul și ține-l deblocat până se termină instalarea."
@@ -720,14 +730,14 @@
         "button": "E activat, încearcă din nou"
       },
       "trustComputer": {
-        "how": "Deblochează dispozitivul. Când întreabă dacă are încredere în acest computer, atinge „Ai încredere” și introdu codul.",
+        "how": "Deblochează dispozitivul. Când întreabă dacă ai încredere în acest computer, atinge „Ai încredere” și introdu codul de acces.",
         "button": "Cere din nou pe dispozitiv"
       },
       "reconnectDevice": {
         "how": "Deconectează dispozitivul, conectează-l din nou și deblochează-l."
       },
       "setPasscode": {
-        "how": "Setează un cod pe dispozitiv în Configurări › Face ID și cod, apoi încearcă din nou."
+        "how": "Setează un cod de acces pe dispozitiv în Configurări › Face ID și cod de acces, apoi încearcă din nou."
       },
       "installDeviceSupport": {
         "how": "Pe Windows, instalează Apple Devices (sau iTunes) din Microsoft Store, apoi repornește IPAForge."
@@ -741,13 +751,13 @@
       },
       "open": "Deschide"
     },
-    "reportHint": "Deschide o problemă nouă pe GitHub cu diagnosticul completat. Nimic nu se trimite până nu o trimiți tu."
+    "reportHint": "Deschide un tichet nou pe GitHub, cu diagnosticul completat. Nu se trimite nimic până nu îl publici tu."
   },
   "devices": {
     "engine": {
-      "connecting": "Se conectează la Engine…",
-      "connected": "{count, plural, =0 {Engine conectat · niciun dispozitiv} one {Engine conectat · # dispozitiv} few {Engine conectat · # dispozitive} other {Engine conectat · # de dispozitive}}",
-      "failed": "Engine-ul nu poate fi accesat: {reason}"
+      "connecting": "Se conectează la motor…",
+      "connected": "{count, plural, =0 {Motor conectat · niciun dispozitiv} one {Motor conectat · # dispozitiv} few {Motor conectat · # dispozitive} other {Motor conectat · # de dispozitive}}",
+      "failed": "Motorul nu poate fi accesat: {reason}"
     },
     "description": "iPhone-urile și iPad-urile conectate la acest computer. Cel folosit apare în bara de sus.",
     "unknownDevice": "Dispozitiv necunoscut",
@@ -763,8 +773,8 @@
       "checking": "Se verifică…",
       "ready": "Pregătit",
       "locked": "Blocat",
-      "developerModeOff": "Modul dezvoltator oprit",
-      "notTrusted": "Neautorizat",
+      "developerModeOff": "Modul dezvoltator dezactivat",
+      "notTrusted": "Nu are încredere",
       "unavailable": "Dispozitivul nu poate fi citit",
       "notConnected": "Neconectat"
     },
@@ -788,29 +798,29 @@
       },
       "notConnected": {
         "title": "{name} nu este conectat",
-        "body": "Conectează-l din nou și va fi folosit automat, sau alege alt dispozitiv din bara de sus."
+        "body": "Conectează-l din nou și va fi folosit automat sau alege alt dispozitiv din bara de sus."
       },
       "notTrusted": {
-        "title": "Autorizează acest computer pe {name}",
-        "body": "Deblochează-l, atinge „Ai încredere” și introdu codul.",
+        "title": "Acordă încredere acestui computer pe {name}",
+        "body": "Deblochează-l, atinge „Ai încredere” și introdu codul de acces.",
         "action": "Cere din nou",
-        "waiting": "Se așteaptă confirmarea…",
-        "titleUnnamed": "Autorizează acest computer pe dispozitiv"
+        "waiting": "Se așteaptă „Ai încredere”…",
+        "titleUnnamed": "Acordă încredere acestui computer pe dispozitiv"
       },
       "locked": {
         "title": "Deblochează {name}",
         "body": "Trebuie să rămână deblocat cât timp se instalează aplicațiile."
       },
       "developerModeOff": {
-        "title": "Activează modul dezvoltator pe {name}",
+        "title": "Activează Modul dezvoltator pe {name}",
         "step1": "Configurări → Confidențialitate și securitate → Mod dezvoltator",
         "step2": "Activează-l și repornește când ți se cere",
-        "step3": "După repornire, atinge „Activează” și introdu codul"
+        "step3": "După repornire, atinge „Activează” și introdu codul de acces"
       },
       "unavailable": {
         "title": "{name} nu poate fi citit",
         "body": "Deconectează-l și conectează-l din nou. Dacă se repetă, repornește dispozitivul.",
-        "bodyWifi": "Este conectat prin Wi-Fi: trezește-l, deblochează-l și ține-l în aceeași rețea cu acest computer, apoi verifică din nou. Un cablu este mai sigur.",
+        "bodyWifi": "Este conectat prin Wi-Fi: trezește-l, deblochează-l și ține-l în aceeași rețea cu acest computer, apoi apasă „Verifică din nou”. Un cablu este mai sigur.",
         "reason": "Motiv: {reason}",
         "titleUnnamed": "Dispozitivul nu poate fi citit"
       }
@@ -834,8 +844,8 @@
       "title": "Unde să trimită Apple codul?",
       "body": "Alege cum primești codul de verificare.",
       "trustedDevice": "Un dispozitiv de încredere",
-      "trustedDeviceHint": "iPhone-ul, iPad-ul sau Mac-ul tău conectat la acest Apple ID",
-      "sms": "Mesaj text la {number}",
+      "trustedDeviceHint": "iPhone-ul, iPad-ul sau Mac-ul tău autentificat cu acest Apple ID",
+      "sms": "SMS la {number}",
       "smsHint": "Se pot aplica tarife SMS standard",
       "sending": "Se trimite codul…"
     },
@@ -848,7 +858,7 @@
       "checking": "Se verifică codul…",
       "deviceBody": "{length, plural, one {Introdu codul de # cifră afișat pe iPhone, iPad sau Mac.} few {Introdu codul de # cifre afișat pe iPhone, iPad sau Mac.} other {Introdu codul de # de cifre afișat pe iPhone, iPad sau Mac.}}",
       "smsBody": "{length, plural, one {Introdu codul de # cifră trimis la {number}.} few {Introdu codul de # cifre trimis la {number}.} other {Introdu codul de # de cifre trimis la {number}.}}",
-      "allowHint": "Ține-l deblocat și atinge Permite când întreabă despre autentificare.",
+      "allowHint": "Ține-l deblocat și atinge „Permite” când întreabă despre autentificare.",
       "noCode": "Nu ai primit un cod?",
       "resend": "Trimite un cod nou",
       "textTo": "SMS la {number}",
@@ -859,9 +869,9 @@
     "suggested": "Sugerat",
     "team": {
       "title": "Ce echipă semnează aplicația?",
-      "body": "Acest ID Apple aparține mai multor echipe. IPAForge ține minte alegerea ta pentru acest ID Apple.",
+      "body": "Acest Apple ID aparține mai multor echipe. IPAForge ține minte alegerea ta pentru acest Apple ID.",
       "free": "Gratuită: aplicațiile expiră după 7 zile, 3 aplicații pe dispozitiv",
-      "paid": "Plătită: aplicațiile durează un an, fără limită",
+      "paid": "Plătită: aplicațiile durează un an, fără limită de aplicații",
       "checking": "Se folosește această echipă…"
     },
     "revoke": {
@@ -878,10 +888,10 @@
       "revoking": "Se revocă certificatul…"
     },
     "remove": {
-      "title": "Ștergi o aplicație pentru a face loc?",
-      "body": "Un ID Apple gratuit poate avea {limit} aplicații pe un dispozitiv, așa că una trebuie ștearsă ca să încapă aceasta. O poți instala din nou mai târziu.",
-      "confirm": "Șterge și continuă",
-      "removing": "Se șterge aplicația…"
+      "title": "Elimini o aplicație pentru a face loc?",
+      "body": "Un Apple ID gratuit poate avea {limit} aplicații pe un dispozitiv, așa că una trebuie eliminată ca să încapă aceasta. O poți instala din nou mai târziu.",
+      "confirm": "Elimină și continuă",
+      "removing": "Se elimină aplicația…"
     },
     "share": {
       "title": "Partajezi certificatul de semnare cu „{app}”?",
@@ -897,8 +907,8 @@
       "available": "{count, plural, one {# aplicație de pe dispozitiv îl poate folosi} few {# aplicații de pe dispozitiv îl pot folosi} other {# de aplicații de pe dispozitiv îl pot folosi}}",
       "selectAll": "Selectează tot",
       "clearAll": "Debifează tot",
-      "place": "{count, plural, =0 {Alege o aplicație} one {Pune în # aplicație} few {Pune în # aplicații} other {Pune în # de aplicații}}",
-      "placing": "Se pune fișierul de asociere…",
+      "place": "{count, plural, =0 {Alege o aplicație} one {Plasează în # aplicație} few {Plasează în # aplicații} other {Plasează în # de aplicații}}",
+      "placing": "Se plasează fișierul de asociere…",
       "purpose": {
         "sidestore": "Reîmprospătează și instalează aplicații prin Wi-Fi",
         "livecontainer": "Rulează aplicațiile din el cu JIT",
@@ -919,7 +929,7 @@
       "body": "Autentificat ca {appleId}.",
       "close": "Gata"
     },
-    "rememberPassword": "Salvează parola în portchei-ul sistemului",
+    "rememberPassword": "Salvează parola în portcheiul sistemului",
     "rememberPasswordHint": "Permite IPAForge să se autentifice singur din nou când expiră sesiunea."
   },
   "accounts": {
@@ -927,10 +937,10 @@
     "list": "Apple ID-uri salvate",
     "empty": "Niciun Apple ID încă. Adaugă unul pentru a instala SideStore.",
     "notSaved": {
-      "title": "ID-urile Apple nu se salvează",
-      "body": "IPAForge nu poate folosi keychain-ul sistemului (poate accesul a fost refuzat), așa că ID-urile Apple sunt păstrate doar până închizi aplicația. Ca să le salvezi, deschide IPAForge din nou și permite accesul la keychain când ești întrebat."
+      "title": "Apple ID-urile nu se salvează",
+      "body": "IPAForge nu poate folosi portcheiul sistemului (poate accesul a fost refuzat), așa că Apple ID-urile sunt păstrate doar până închizi aplicația. Ca să le salvezi, deschide IPAForge din nou și permite accesul la portchei când ți se cere."
     },
-    "freeTeam": "{name} (gratuit)",
+    "freeTeam": "{name} (gratuită)",
     "withState": "{line} · {state}",
     "state": {
       "checking": "Se verifică…",
@@ -943,11 +953,83 @@
     "use": "Folosește",
     "signInAgain": "Autentifică-te din nou",
     "signOut": {
-      "action": "Deconectează",
+      "action": "Deconectează-te",
       "title": "Te deconectezi de la {appleId}?",
       "forgets": "IPAForge uită acest Apple ID, sesiunea lui și parola salvată.",
       "keeps": "Certificatele lui de semnare rămân pe acest computer, așa că o nouă autentificare le refolosește. Aplicațiile deja instalate funcționează până expiră.",
-      "confirm": "Deconectează"
+      "confirm": "Deconectează-te"
+    }
+  },
+  "apps": {
+    "description": "Aplicațiile instalate de IPAForge pe acest dispozitiv. Reîmprospătarea semnează din nou o aplicație înainte să expire, păstrându-i datele.",
+    "refreshAll": "{count, plural, =0 {Reîmprospătează toate} one {Reîmprospătează toate (#)} few {Reîmprospătează toate (#)} other {Reîmprospătează toate (#)}}",
+    "updateAll": "{count, plural, one {Actualizează toate (#)} few {Actualizează toate (#)} other {Actualizează toate (#)}}",
+    "refresh": "Reîmprospătează",
+    "update": "Actualizează",
+    "remove": "Elimină",
+    "removeApp": "Elimină {name}",
+    "updateTo": "Actualizare: {version}",
+    "from": "Din {source}",
+    "needsIpa": "Instalată de IPAForge dintr-un .ipa pe alt computer. Adaugă o dată acel .ipa în Preîncărcare ca s-o poți reîmprospăta aici.",
+    "thisDevice": "acest dispozitiv",
+    "badge": "{count, plural, one {# aplicație de reîmprospătat curând} few {# aplicații de reîmprospătat curând} other {# de aplicații de reîmprospătat curând}}",
+    "expiry": {
+      "in": "{days, plural, one {Expiră în # zi · {date}} few {Expiră în # zile · {date}} other {Expiră în # de zile · {date}}}",
+      "today": "Expiră azi",
+      "expired": "{days, plural, one {A expirat acum # zi · nu se deschide} few {A expirat acum # zile · nu se deschide} other {A expirat acum # de zile · nu se deschide}}",
+      "unknown": "Expirare necunoscută"
+    },
+    "run": {
+      "checking": "Se verifică la Apple…",
+      "waiting": "Își așteaptă rândul",
+      "done": "Gata"
+    },
+    "failed": {
+      "title": "Reîmprospătarea nu s-a încheiat: {reason}",
+      "details": "Arată detaliile",
+      "dismiss": "Închide"
+    },
+    "notConnected": {
+      "title": "Acest dispozitiv nu este conectat",
+      "body": "Conectează-l ca să-i vezi aplicațiile și să le reîmprospătezi sau actualizezi."
+    },
+    "expired": {
+      "title": "{count, plural, one {# aplicație a expirat} few {# aplicații au expirat} other {# de aplicații au expirat}}",
+      "body": "Nu se vor deschide până nu sunt reîmprospătate. Datele lor se păstrează.",
+      "refresh": "{count, plural, one {Reîmprospăteaz-o acum} few {Reîmprospătează-le acum} other {Reîmprospătează-le acum}}"
+    },
+    "facts": {
+      "next": "Următoarea care expiră",
+      "none": "Nimic încă",
+      "nextIn": "{days, plural, one {{name} · # zi} few {{name} · # zile} other {{name} · # de zile}}",
+      "nextExpired": "{name} · expirată",
+      "count": "Reîmprospătate periodic",
+      "apps": "{count, plural, one {# aplicație} few {# aplicații} other {# de aplicații}}",
+      "auto": "Reîmprospătare automată",
+      "autoOn": "{days, plural, one {Activă · cu # zi înainte} few {Activă · cu # zile înainte} other {Activă · cu # de zile înainte}}",
+      "autoOff": "Dezactivată"
+    },
+    "list": {
+      "title": "Instalate de IPAForge",
+      "count": "{count, plural, one {# aplicație · în ordinea expirării} few {# aplicații · în ordinea expirării} other {# de aplicații · în ordinea expirării}}",
+      "empty": "Nicio aplicație încă. Instalează SideStore sau preîncarcă aplicații și vor apărea aici."
+    },
+    "others": {
+      "title": "Încă nepăstrate de IPAForge",
+      "hint": "Instalate înainte de această versiune de IPAForge sau cu alt instrument",
+      "found": "Găsită în {source}. Reîmprospătarea o instalează de acolo, cu datele păstrate, iar IPAForge o reîmprospătează de acum înainte.",
+      "how": "Adaugă o dată fișierul .ipa în Preîncărcare, iar IPAForge o reîmprospătează de acum înainte."
+    },
+    "auto": {
+      "title": "Reîmprospătează aplicațiile automat",
+      "body": "Cât timp IPAForge e deschis și dispozitivul e conectat, aplicațiile se reîmprospătează singure înainte să expire.",
+      "toggle": "Reîmprospătează automat",
+      "when": "Reîmprospătează când o aplicație mai are",
+      "days": "{count, plural, one {# zi} few {# zile} other {# de zile}}"
+    },
+    "removeDialog": {
+      "title": "Elimini {name}?",
+      "body": "Este ștearsă de pe {device} împreună cu datele ei și eliberează un loc pentru aplicații gratuite. O poți instala din nou din Preîncărcare."
     }
   },
   "logs": {
@@ -988,12 +1070,12 @@
       "apple": "Apple",
       "catalog": "Catalog",
       "signing": "Semnare",
-      "engine": "Engine",
+      "engine": "Motor",
       "interface": "Interfață",
       "app": "Aplicație"
     },
     "filters": {
-      "showing": "Doar:",
+      "showing": "Se afișează doar:",
       "run": "Această instalare ({time})",
       "text": "„{text}”",
       "remove": "Elimină filtrul {filter}"
@@ -1009,7 +1091,7 @@
       "copy": "Copiază rândul"
     },
     "follow": {
-      "on": "Urmărește rândurile noi",
+      "on": "Se urmăresc rândurile noi",
       "off": "În pauză",
       "pause": "Pauză",
       "resume": "Urmărește"
@@ -1034,7 +1116,7 @@
       },
       "failed": {
         "title": "Jurnalul nu a putut fi citit",
-        "body": "Conexiunea cu Engine s-a închis, poate. Redeschide Jurnalul ca să încerci din nou."
+        "body": "Conexiunea cu motorul s-ar putea să se fi închis. Redeschide Jurnalul ca să încerci din nou."
       }
     },
     "export": {
@@ -1053,7 +1135,7 @@
   },
   "preload": {
     "title": "Preîncarcă aplicații",
-    "description": "Instalează propriile aplicații: semnate cu ID-ul tău Apple, instalate prin USB, una după alta.",
+    "description": "Instalează propriile aplicații: semnate cu Apple ID-ul tău, instalate prin USB, una după alta.",
     "tabs": {
       "label": "Preîncărcare",
       "apps": "Adaugă aplicații",
@@ -1113,7 +1195,7 @@
     "sources": {
       "description": "De unde ia „Răsfoiește aplicații” aplicațiile. Sursele integrate sunt întreținute de IPAForge; adaugă altele prin linkul lor (format AltStore).",
       "add": "Adaugă sursă…",
-      "refreshAll": "Reîmprospătează tot",
+      "refreshAll": "Reîmprospătează toate",
       "list": "Surse",
       "builtin": "Integrată · de încredere",
       "added": "Adăugată de tine",
@@ -1160,11 +1242,11 @@
       "empty": "Nicio aplicație încă. Trage fișiere .ipa aici, alege-le, adaugă un link sau alege una din „Răsfoiește aplicații”."
     },
     "row": {
-      "waiting": "Așteaptă dispozitivul și ID-ul Apple",
+      "waiting": "Așteaptă dispozitivul și Apple ID-ul",
       "checking": "Se verifică…",
       "downloading": "Se descarcă și se verifică…",
-      "appIds": "{count, plural, one {# ID de aplicație} few {# ID-uri de aplicație} other {# de ID-uri de aplicație}}{extensions, plural, =0 {} one { (aplicație + # extensie)} few { (aplicație + # extensii)} other { (aplicație + # de extensii)}}",
-      "updates": "Actualizează {from} → {to} · își păstrează datele",
+      "appIds": "{count, plural, one {# App ID} few {# App ID-uri} other {# de App ID-uri}}{extensions, plural, =0 {} one { (aplicație + # extensie)} few { (aplicație + # extensii)} other { (aplicație + # de extensii)}}",
+      "updates": "Actualizare {from} → {to} · datele se păstrează",
       "new": "Nouă pe dispozitiv",
       "pairing": "Primește fișierul de asociere și certificatul",
       "fromCatalog": "Din catalog · Stabil",
@@ -1182,7 +1264,7 @@
       "appIdsNoLimit": "{count, plural, one {# nou} few {# noi} other {# noi}}",
       "notEnough": "Nu sunt destule. Elimină o aplicație sau așteaptă. {next}",
       "freeApps": "{after} din {limit} după această instalare",
-      "freeAppsOver": "{used, plural, one {# este deja acolo.} few {# sunt deja acolo.} other {# sunt deja acolo.}} Instalarea va întreba ce aplicație să elimine, sau elimină una din această listă."
+      "freeAppsOver": "{used, plural, one {# este deja acolo.} few {# sunt deja acolo.} other {# sunt deja acolo.}} Instalarea va întreba ce aplicație să elimine; altfel, elimină una din această listă."
     },
     "install": "{count, plural, =0 {Instalează} one {Instalează # aplicație} few {Instalează # aplicații} other {Instalează # de aplicații}}",
     "clear": "Golește lista",
@@ -1215,7 +1297,12 @@
         "failed": "Nu s-au putut instala toate aplicațiile"
       },
       "backToPreload": "Înapoi la Preîncărcare",
-      "shared": "Acest dispozitiv și ID-ul tău Apple",
+      "shared": "Acest dispozitiv și Apple ID-ul tău",
+      "refresh": {
+        "profile": "Doar un profil nou, nimic nu se reinstalează",
+        "certificate": "Reinstalată: certificatul cu care a fost semnată nu mai este valid",
+        "unmarked": "Reinstalată: IPAForge nu poate ști ce certificat a semnat-o"
+      },
       "group": {
         "failed": "Eșuat",
         "done": "Gata",
@@ -1224,7 +1311,7 @@
       }
     },
     "done": {
-      "title": "{count, plural, one {{app} este pe {device}.} other {{app} sunt pe {device}.}}",
+      "title": "{count, plural, one {{app} este pe {device}.} few {{app} sunt pe {device}.} other {{app} sunt pe {device}.}}",
       "open": "Deschide fiecare aplicație de pe ecranul principal."
     }
   }

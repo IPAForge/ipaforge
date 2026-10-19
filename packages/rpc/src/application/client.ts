@@ -198,6 +198,17 @@ export const createEngineClient = (
     setSourceEnabled: (id, enabled) =>
       query({ method: 'setSourceEnabled', args: [id, enabled] }),
     refreshSources: (id) => query({ method: 'refreshSources', args: [id] }),
+    installedApps: (installedQuery) =>
+      query({
+        method: 'installedApps',
+        args: [{ ...installedQuery, teamIds: [...installedQuery.teamIds] }]
+      }),
+    removeApp: (input) => query({ method: 'removeApp', args: [input] }),
+    refreshPlan: (planQuery) =>
+      query({
+        method: 'refreshPlan',
+        args: [{ ...planQuery, bundleIds: [...planQuery.bundleIds] }]
+      }),
     signOut: (accountId) => query({ method: 'signOut', args: [accountId] }),
     listTeams: (accountId) => query({ method: 'listTeams', args: [accountId] }),
     catalogApps: () => query({ method: 'catalogApps', args: [] }),
@@ -212,6 +223,8 @@ export const createEngineClient = (
       start({ command: 'installSideStore', input }, options),
     installApps: (input, options) =>
       start({ command: 'installApps', input }, options),
+    refreshApps: (input, options) =>
+      start({ command: 'refreshApps', input }, options),
     placePairing: (input, options) =>
       start({ command: 'placePairing', input }, options),
     signIn: (input, options) => start({ command: 'signIn', input }, options),

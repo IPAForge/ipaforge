@@ -1,6 +1,7 @@
 import {
   BadgeCheck,
   Download,
+  LayoutGrid,
   PackagePlus,
   ScrollText,
   Settings,
@@ -39,6 +40,13 @@ export const sections = [
     path: '/preload',
     labelKey: 'nav.preload',
     icon: PackagePlus,
+    group: 'primary'
+  },
+  {
+    id: 'apps',
+    path: '/apps',
+    labelKey: 'nav.apps',
+    icon: LayoutGrid,
     group: 'primary'
   },
   {

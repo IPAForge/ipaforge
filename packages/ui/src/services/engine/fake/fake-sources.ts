@@ -15,13 +15,16 @@ const app = (
   bundleId: string,
   developer: string,
   subtitle: string,
-  versions: readonly [string, number][]
+  versions: readonly [string, number][],
+  /** The app's colour, as real sources give it. */
+  tint: string
 ): SourceApp => ({
   bundleId,
   name,
   developer,
   subtitle,
   description: `${name}: ${subtitle}`,
+  tint,
   versions: versions.map(([version, size]) => ({
     version,
     date: '2026-10-01',
@@ -40,7 +43,8 @@ const SIDESTORE_APPS = [
     [
       ['0.6.2', 28_873_303],
       ['0.5.10', 9_300_000]
-    ]
+    ],
+    '#7a3cf0'
   ),
   // Real sources have long names, and descriptions with links in them: they must wrap, never run out of the card.
   app(
@@ -48,7 +52,8 @@ const SIDESTORE_APPS = [
     'com.kdt.livecontainer.beta',
     'khanhduytran0',
     'Run iOS apps without actually installing them! More info: https://github.com/khanhduytran0/LiveContainer/releases/latest',
-    [['2.1.2', 91_750_400]]
+    [['2.1.2', 91_750_400]],
+    '#0b6e8a'
   )
 ]
 
@@ -61,28 +66,32 @@ const ADDED_APPS = [
     [
       ['2.1.0', 33_000_000],
       ['2.0.4', 32_000_000]
-    ]
+    ],
+    '#e65100'
   ),
   app(
     'Terminal X',
     'dev.example.terminal',
     'Example Studio',
     'A shell and SSH client.',
-    [['1.8.2', 21_000_000]]
+    [['1.8.2', 21_000_000]],
+    '#37474f'
   ),
   app(
     'Clips Pro',
     'dev.example.clips',
     'Clipboard Labs',
     'Keeps everything you copy.',
-    [['4.0.1', 6_000_000]]
+    [['4.0.1', 6_000_000]],
+    '#1d9bf0'
   ),
   app(
     'Feather',
     'kh.crysalis.feather',
     'khcrysalis',
     'Signs and installs apps on the device.',
-    [['2.4.0', 14_000_000]]
+    [['2.4.0', 14_000_000]],
+    '#c2185b'
   )
 ]
 

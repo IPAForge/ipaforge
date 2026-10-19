@@ -57,7 +57,7 @@ export const BrowseSection = ({
         </p>
       )
     return (
-      <div className="grid grid-cols-[repeat(auto-fill,minmax(14rem,1fr))] gap-3">
+      <div className="grid grid-cols-[repeat(auto-fill,minmax(min(100%,15.5rem),1fr))] gap-3">
         {browse.entries.map((entry) => (
           <BrowseCard
             key={entry.key}

@@ -48,6 +48,11 @@ export type InstallAppsCall = Extract<
   { command: 'installApps' }
 >['input']
 
+export type RefreshAppsCall = Extract<
+  CommandCall,
+  { command: 'refreshApps' }
+>['input']
+
 export type QueryHandlers = {
   readonly [C in QueryCall as C['method']]: (
     args: C['args'],

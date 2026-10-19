@@ -68,6 +68,10 @@ export const fillPreload = async () => {
   })
 }
 
+/** The Apps page with its installed apps and the apps of other tools. */
+export const appsShown = () =>
+  waitFor(() => expect(all('main ul li').length).toBeGreaterThanOrEqual(4))
+
 /** Preload's Sources tab, with the built-in sources listed. */
 export const showSources = async () => {
   const tab = await waitFor(() => {

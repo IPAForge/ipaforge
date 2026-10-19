@@ -10,6 +10,7 @@ import type { ComponentType } from 'react'
 import { compact } from '@ipaforge/kernel'
 import { AppShell } from '@ui/components/shell/app-shell.tsx'
 import { AccountsPage } from '@ui/features/accounts/accounts-page.tsx'
+import { AppsPage } from '@ui/features/apps/apps-page.tsx'
 import { CertificatesPage } from '@ui/features/certificates/certificates-page.tsx'
 import { DevicesPage } from '@ui/features/devices/devices-page.tsx'
 import { InstallPage } from '@ui/features/install/install-page.tsx'
@@ -22,6 +23,7 @@ import type { AppRouter, AppRouterOptions, SectionId } from '@ui/types.ts'
 const sectionPages = {
   install: InstallPage,
   preload: PreloadPage,
+  apps: AppsPage,
   devices: DevicesPage,
   accounts: AccountsPage,
   certificates: CertificatesPage,

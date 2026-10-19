@@ -28,6 +28,7 @@
     },
     "install": "Install",
     "preload": "Preload",
+    "apps": "Apps",
     "devices": "Devices",
     "accounts": "Accounts",
     "certificates": "Certificates",
@@ -54,6 +55,7 @@
       "app_ids": "Register App IDs",
       "free_apps": "Check the free app limit",
       "provision": "Get provisioning profiles",
+      "refresh_profiles": "Get new profiles",
       "sign": "Sign the app",
       "install": "Install on the device",
       "pairing": "Place the pairing file",
@@ -601,6 +603,14 @@
       "team_required": {
         "title": "Choose a team",
         "body": "This Apple ID belongs to several teams. Choose the one to sign with."
+      },
+      "kept_ipa_missing": {
+        "title": "This app can't be refreshed here",
+        "body": "IPAForge didn't install it on this device, or its kept copy is gone. Add its .ipa in Preload to install it again."
+      },
+      "wrong_app": {
+        "title": "This link gives a different app",
+        "body": "It isn't the app you're refreshing or updating, so it wasn't installed and the app and its data stay as they are. Add the right .ipa in Preload to install it again."
       }
     },
     "rpc": {
@@ -950,6 +960,78 @@
       "confirm": "Sign out"
     }
   },
+  "apps": {
+    "description": "The apps IPAForge installed on this device. Refresh signs one again before it expires, keeping its data.",
+    "refreshAll": "{count, plural, =0 {Refresh all} other {Refresh all (#)}}",
+    "updateAll": "{count, plural, other {Update all (#)}}",
+    "refresh": "Refresh",
+    "update": "Update",
+    "remove": "Remove",
+    "removeApp": "Remove {name}",
+    "updateTo": "Update: {version}",
+    "from": "From {source}",
+    "needsIpa": "Installed by IPAForge from an .ipa on another computer. Add that .ipa in Preload once to refresh it here.",
+    "thisDevice": "this device",
+    "badge": "{count, plural, one {# app to refresh soon} other {# apps to refresh soon}}",
+    "expiry": {
+      "in": "{days, plural, one {Expires in # day · {date}} other {Expires in # days · {date}}}",
+      "today": "Expires today",
+      "expired": "{days, plural, one {Expired # day ago · won't open} other {Expired # days ago · won't open}}",
+      "unknown": "Expiry unknown"
+    },
+    "run": {
+      "checking": "Checking with Apple…",
+      "waiting": "Waiting for its turn",
+      "done": "Done"
+    },
+    "failed": {
+      "title": "Refresh didn't finish: {reason}",
+      "details": "Show details",
+      "dismiss": "Dismiss"
+    },
+    "notConnected": {
+      "title": "This device isn't connected",
+      "body": "Connect it to see its apps, and to refresh or update them."
+    },
+    "expired": {
+      "title": "{count, plural, one {# app has expired} other {# apps have expired}}",
+      "body": "They won't open until they're refreshed. Their data is kept.",
+      "refresh": "{count, plural, one {Refresh it now} other {Refresh them now}}"
+    },
+    "facts": {
+      "next": "Next to expire",
+      "none": "Nothing yet",
+      "nextIn": "{days, plural, one {{name} · # day} other {{name} · # days}}",
+      "nextExpired": "{name} · expired",
+      "count": "Kept refreshed",
+      "apps": "{count, plural, one {# app} other {# apps}}",
+      "auto": "Automatic refresh",
+      "autoOn": "{days, plural, one {On · # day before} other {On · # days before}}",
+      "autoOff": "Off"
+    },
+    "list": {
+      "title": "Installed by IPAForge",
+      "count": "{count, plural, one {# app · soonest first} other {# apps · soonest first}}",
+      "empty": "No apps yet. Install SideStore, or preload apps, and they show here."
+    },
+    "others": {
+      "title": "Not kept by IPAForge yet",
+      "hint": "Installed before this version of IPAForge, or by another tool",
+      "found": "Found in {source}. Refresh installs it from there, keeping its data, and IPAForge keeps it refreshed from then on.",
+      "how": "Add its .ipa in Preload once, and IPAForge keeps it refreshed from then on."
+    },
+    "auto": {
+      "title": "Refresh apps automatically",
+      "body": "While IPAForge is open and the device is connected, apps are refreshed by themselves before they expire.",
+      "toggle": "Refresh automatically",
+      "when": "Refresh when an app has",
+      "days": "{count, plural, one {# day left} other {# days left}}"
+    },
+    "removeDialog": {
+      "title": "Remove {name}?",
+      "body": "It's deleted from {device} with its data, and frees a free-app slot. You can install it again from Preload."
+    }
+  },
   "logs": {
     "title": "Logs",
     "lede": "What IPAForge did, line by line. Open it from anywhere with",
@@ -1216,6 +1298,11 @@
       },
       "backToPreload": "Back to Preload",
       "shared": "This device and your Apple ID",
+      "refresh": {
+        "profile": "New profile only, nothing installed again",
+        "certificate": "Installed again: the certificate that signed it is no longer valid",
+        "unmarked": "Installed again: IPAForge can't tell which certificate signed it"
+      },
       "group": {
         "failed": "Failed",
         "done": "Done",

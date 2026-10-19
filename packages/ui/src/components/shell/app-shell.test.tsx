@@ -51,14 +51,15 @@ describe('AppShell', () => {
     )
   })
 
-  it('puts Install and Preload first, then the Manage group after a separator', async () => {
+  it('puts Install, Preload and Apps first, then the Manage group after a separator', async () => {
     await renderApp('/install')
     const nav = await findSidebar()
     const [primary, manage] = within(nav).getAllByRole('list')
 
     expect(linkLabels(primary as HTMLElement)).toEqual([
       t('nav.install'),
-      t('nav.preload')
+      t('nav.preload'),
+      t('nav.apps')
     ])
     expect(within(nav).getByRole('list', { name: t('nav.group.manage') })).toBe(
       manage

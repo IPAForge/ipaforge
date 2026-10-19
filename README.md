@@ -29,6 +29,7 @@ Sideloading tools tend to fail in a few recurring ways. IPAForge is designed aro
 ## Features
 
 - **One-click SideStore.** Install SideStore, or LiveContainer with SideStore, from the Stable or Nightly channel. The pairing file and signing certificate are placed automatically.
+- **Keep apps working.** The Apps page lists what IPAForge installed, with when each app expires, and refreshes them (signed again, data kept) with one press or by itself before they expire. It updates them from their source too.
 - **Preload apps.** Drop .ipa files, choose them, add a link, or browse apps from the catalog (LiveContainer, StikDebug, Feather…), SideStore's source and any AltStore-format source you add. Each app is checked before anything changes: its version, the App IDs it needs, whether the device can run it, and whether it updates one already installed. Then they install in one run.
 - **Clear install plan.** Before anything changes, IPAForge shows what the install uses: App IDs and how many are left this week, free-app slots on the device, whether the certificate is reused, and the team.
 - **Live progress.** Every step reports what it did, for example the release it found, whether a saved session was reused, or how many App IDs it registered.

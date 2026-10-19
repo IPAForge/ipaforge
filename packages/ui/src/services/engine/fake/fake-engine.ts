@@ -23,6 +23,7 @@ import {
 import { createFakeDeviceStates } from '@ui/services/engine/fake/fake-device-states.ts'
 import { createFakeDeviceFeed } from '@ui/services/engine/fake/fake-devices.ts'
 import { fakeInstallSteps } from '@ui/services/engine/fake/fake-install-steps.ts'
+import { createFakeInstalled } from '@ui/services/engine/fake/fake-installed.ts'
 import { createFakeSources } from '@ui/services/engine/fake/fake-sources.ts'
 import {
   askPassword,
@@ -40,6 +41,7 @@ import type {
   FakeAppSource,
   FakeEngineOptions,
   FakeInstallState,
+  FakeRunSource,
   FakeSignInState,
   TeamQuery
 } from '@ui/services/engine/fake/types.ts'
@@ -71,21 +73,23 @@ const installRun = (
     delayMs: world.delayMs
   })
 
-/** The Preload page's apps, in order, as the fake knows them. */
+/** The Preload page's apps, in order, as the fake knows them (and for a refresh, the apps getting new profiles). */
 const appsRun = (
   world: FakeWorld,
   input: {
     readonly udid: string
     readonly accountId: string
     readonly apps: readonly unknown[]
+    readonly profiles?: readonly string[]
   },
   options: CommandOptions<FakeInstallState> | undefined
 ) =>
   startScriptedRun<FakeInstallState>({
-    pipelineId: 'installApps',
+    pipelineId: input.profiles ? 'refreshApps' : 'installApps',
     steps: fakeAppsSteps(
       world,
-      input.apps.map((source) => fakeAppFor(source as FakeAppSource))
+      input.apps.map((source) => fakeAppFor(source as FakeAppSource)),
+      input.profiles?.length
     ),
     initial: { udid: input.udid, accountId: input.accountId },
     options,
@@ -179,6 +183,39 @@ export const createFakeEngine = ({
 }: FakeEngineOptions = {}): Engine => {
   const world = createFakeWorld(scenario, delayMs, appleAnswer)
   const deviceStates = createFakeDeviceStates(scenario)
+  const { refreshed, updated, reinstalled, ...installed } =
+    createFakeInstalled(scenario)
+
+  // What a finished run did to the installed apps: refreshed ones get 7 more days, updated ones their version.
+  const applied = <H extends RunHandle<unknown>>(
+    handle: H,
+    input: {
+      readonly apps: readonly FakeRunSource[]
+      readonly profiles?: readonly string[]
+    }
+  ): H => {
+    void handle.result.then((result) => {
+      if (result.status !== 'completed') return
+      refreshed([
+        ...(input.profiles ?? []),
+        ...input.apps.flatMap((app) =>
+          app.kind === 'installed' ? [app.record.bundleId] : []
+        )
+      ])
+      reinstalled(
+        input.apps.flatMap((app) => (app.kind === 'catalog' ? [app.appId] : []))
+      )
+      updated(
+        input.apps.flatMap((app) =>
+          app.kind === 'file' && app.origin?.kind === 'url'
+            ? [app.origin.url]
+            : []
+        )
+      )
+    })
+
+    return handle
+  }
 
   return {
     listDevices: async () => devices.list(),
@@ -186,6 +223,7 @@ export const createFakeEngine = ({
       devices.watch(listener, options?.signal),
     deviceStatus: deviceStates.status,
     pairDevice: deviceStates.pair,
+    ...installed,
     ...createFakeSources(
       scenario,
       () => new Promise<void>((resolve) => setTimeout(resolve, delayMs))
@@ -223,7 +261,9 @@ export const createFakeEngine = ({
     installSideStore: (input, options) =>
       asRun(installRun(world, input, options as never)),
     installApps: (input, options) =>
-      asRun(appsRun(world, input, options as never)),
+      asRun(applied(appsRun(world, input, options as never), input)),
+    refreshApps: (input, options) =>
+      asRun(applied(appsRun(world, input, options as never), input)),
     placePairing: () => asRun(pairingRun(world)),
     signIn: (input, options) =>
       asRun(signInRun(world, input, options as never)),

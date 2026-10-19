@@ -101,14 +101,90 @@ export type PromptAnswer<K extends PromptKind> = Prompts[K]['answer']
 // The state install flows share. It holds data only: open devices and Apple sessions live in the run's
 // FlowRuntime, and private keys stay in the SecretStore, so a checkpoint never carries a secret.
 
-/** Where an app comes from: a catalog app (checksum-verified download) or a file the user picked. */
+/** Where an app comes from: a catalog app (checksum-verified download), a file, or an app installed before. */
 export type AppSource =
   | {
       readonly kind: 'catalog'
       readonly appId: string
       readonly channel?: Channel
     }
-  | { readonly kind: 'file'; readonly file: FileSource }
+  | {
+      readonly kind: 'file'
+      readonly file: FileSource
+      /** Where the file came from (a link, or a file the user picked), remembered with the installed app. */
+      readonly origin?: AppOrigin
+      /**
+       * Refresh or Update: the original bundle id of the installed app this file must be. Anything else is refused,
+       * so a link (from an app's mark, or a source) can't put another app in its place, with its data.
+       */
+      readonly replaces?: string
+    }
+  | {
+      /** An app installed before, signed again from its kept IPA (Refresh). */
+      readonly kind: 'installed'
+      readonly file: FileSource
+      readonly record: InstalledRecord
+    }
+
+/** Where an installed app first came from, as it's remembered (for Refresh, and to say so). */
+export type AppOrigin =
+  | {
+      readonly kind: 'catalog'
+      readonly appId: string
+      readonly channel?: Channel
+    }
+  | { readonly kind: 'url'; readonly url: string }
+  | { readonly kind: 'file'; readonly name: string }
+
+/** An app the Engine installed on a device, remembered so it can be refreshed before it expires. */
+export type InstalledRecord = {
+  readonly udid: string
+  /** As installed (after sideload renaming). */
+  readonly bundleId: string
+  /** As the IPA has it. */
+  readonly originalBundleId: string
+  readonly name: string
+  readonly version?: string
+  readonly origin: AppOrigin
+  /** The certificate was shared with it (checksum-verified catalog release, or the user agreed). */
+  readonly trust?: CertificateTrust
+  /** ISO 8601. */
+  readonly installedAt: string
+  /** Its original IPA in the kept-IPA store. */
+  readonly keptKey: string
+}
+
+/** IPAForge's mark on an app it installed, read from the app on the device (so any computer knows it). */
+export type AppMarker = {
+  readonly originalBundleId: string
+  readonly origin: AppOrigin
+  /** The development certificate that signed it: while that's valid, a new profile is all a refresh needs. */
+  readonly certificateSerial?: string
+}
+
+/** How an app is refreshed: a new profile only (its certificate is still valid), or signed and installed again. */
+export type RefreshDecision =
+  | { readonly bundleId: string; readonly kind: 'profile' }
+  | {
+      readonly bundleId: string
+      readonly kind: 'reinstall'
+      /** Its certificate was revoked or replaced, or it carries no IPAForge mark saying which one signed it. */
+      readonly reason: 'certificate' | 'unmarked'
+    }
+
+/** An app on the device signed with one of the user's teams, as the Apps page lists it. */
+export type InstalledApp = {
+  readonly bundleId: string
+  readonly name: string
+  readonly version?: string
+  readonly teamId: string
+  /** When its profile expires, and with it the app; undefined when the device shows no profile for it. */
+  readonly expiresAt?: Date
+  /** Installed by IPAForge on this computer, which keeps its IPA: it can be refreshed from that copy. */
+  readonly record?: InstalledRecord
+  /** Installed by IPAForge (on this computer or another): where it came from, read from the app itself. */
+  readonly marker?: AppMarker
+}
 
 /** One app moving through a flow; each step fills in what it produced. */
 /** A signed IPA in the scratch store. */

@@ -24,6 +24,10 @@ export type SourceApps = Resolved<'sourceApps'>[number]
 export type SourceApp = SourceApps['apps'][number]
 export type SourceAppVersion = SourceApp['versions'][number]
 export type SourcePreview = Resolved<'checkSource'>
+export type InstalledApp = Resolved<'installedApps'>[number]
+
+/** What a refresh does to an installed app: a new profile only, or installed again and why. */
+export type RefreshDecision = Resolved<'refreshPlan'>[number]
 export type Channel = Resolved<'recommendedChannel'>
 export type AppIdUsage = Resolved<'appIdQuota'>
 export type TeamCertificates = Resolved<'listCertificates'>

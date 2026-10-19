@@ -3,7 +3,10 @@ import { useTranslation } from 'react-i18next'
 
 import { AppIcon } from '@ui/components/app-icon.tsx'
 import { StepRow } from '@ui/features/install/run/components/step-row.tsx'
-import { groupStateText } from '@ui/features/install/run/constants.ts'
+import {
+  groupStateText,
+  refreshNoteKeys
+} from '@ui/features/install/run/constants.ts'
 import type { AppStepGroup as Group } from '@ui/features/install/run/types.ts'
 import { groupState } from '@ui/features/install/run/utils/group-steps.ts'
 
@@ -24,6 +27,11 @@ export const AppStepGroup = ({ group }: AppStepGroupProps) => {
           <h2 className="min-w-0 flex-1 font-semibold">{title}</h2>
           <span className={`text-xs ${state.className}`}>{t(state.key)}</span>
         </div>
+        {app?.refresh ? (
+          <p className="text-muted text-xs">
+            {t(refreshNoteKeys[app.refresh])}
+          </p>
+        ) : null}
         <ol aria-label={title} className="flex flex-col gap-0.5">
           {steps.map((step) => (
             <StepRow key={step.id} step={step} appName={app?.name ?? ''} />
