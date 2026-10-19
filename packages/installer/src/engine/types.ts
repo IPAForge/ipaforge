@@ -1,4 +1,5 @@
 import type { CatalogRelease } from '@installer/application/catalog-releases.ts'
+import type { DeviceApps } from '@installer/application/device-apps.ts'
 import type { CheckSideStoreQuery } from '@installer/application/installed/check-sidestore.ts'
 import type { RefreshPlanQuery } from '@installer/application/installed/refresh-plan.ts'
 import type { FreeSlots } from '@installer/application/types.ts'
@@ -153,6 +154,10 @@ export type EngineQueries = {
   checkSideStore(query: CheckSideStoreQuery): Promise<SideStoreCheck>
   /** A catalog app's latest release on each of its channels (its details): version, .ipa link, size and date. */
   catalogReleases(appId: string): Promise<CatalogRelease[]>
+  /** What the on-device checklist needs about the device's apps (LocalDevVPN installed). */
+  deviceApps(udid: string): Promise<DeviceApps>
+  /** Makes the Developer Mode switch appear in the device's Settings. */
+  revealDeveloperMode(udid: string): Promise<void>
 }
 
 export type InstalledAppsQuery = {

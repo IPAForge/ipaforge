@@ -69,6 +69,10 @@ export const fillPreload = async () => {
   })
 }
 
+/** The Devices page with its checklist open (LocalDevVPN to install, so with its QR code). */
+export const checklistShown = () =>
+  waitFor(() => expect(all('main svg[role="img"]')).toHaveLength(1))
+
 /** The Apps page with its installed apps and the apps of other tools. */
 export const appsShown = () =>
   waitFor(() => expect(all('main ul li').length).toBeGreaterThanOrEqual(4))

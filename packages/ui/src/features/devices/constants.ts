@@ -23,7 +23,8 @@ export const deviceTone = {
 /** The state's words on a device card, in its tone's colour. */
 export const deviceStateClasses = {
   checking: 'text-muted',
-  ready: 'text-success',
+  // The darker text shade: plain success green misses WCAG AA contrast on a card.
+  ready: 'text-success-soft-foreground',
   locked: 'text-warning-soft-foreground',
   developerModeOff: 'text-warning-soft-foreground',
   notTrusted: 'text-danger-soft-foreground',

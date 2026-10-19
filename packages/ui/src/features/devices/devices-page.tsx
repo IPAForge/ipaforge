@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { PageHeader } from '@ui/components/page-header.tsx'
+import { DeviceChecklist } from '@ui/features/devices/checklist/components/device-checklist.tsx'
 import { DeviceCard } from '@ui/features/devices/components/device-card.tsx'
 import { EngineStatus } from '@ui/features/devices/components/engine-status.tsx'
 import { useRefreshDeviceStatus } from '@ui/hooks/queries/use-device-status.ts'
@@ -29,13 +30,15 @@ export const DevicesPage = () => {
       <PageHeader titleKey="nav.devices" descriptionKey="devices.description" />
       <EngineStatus />
       {devices.map((device) => (
-        <DeviceCard
-          key={device.udid}
-          udid={device.udid}
-          device={device}
-          isInUse={device.udid === inUse?.udid}
-          onUse={onUse}
-        />
+        <div key={device.udid} className="flex flex-col gap-3">
+          <DeviceCard
+            udid={device.udid}
+            device={device}
+            isInUse={device.udid === inUse?.udid}
+            onUse={onUse}
+          />
+          <DeviceChecklist udid={device.udid} device={device} />
+        </div>
       ))}
       {inUse && !inUse.isConnected ? (
         <DeviceCard

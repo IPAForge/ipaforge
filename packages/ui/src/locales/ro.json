@@ -1470,5 +1470,86 @@
     "back": "Înapoi",
     "done": "Gata",
     "offer": "{count, plural, one {Adaugă și în SideStore sursa adăugată aici, ca să-i arate aplicațiile pe iPhone.} few {Adaugă și în SideStore cele # surse adăugate aici, ca să le arate aplicațiile pe iPhone.} other {Adaugă și în SideStore cele # de surse adăugate aici, ca să le arate aplicațiile pe iPhone.}}"
+  },
+  "checklist": {
+    "title": "Pe {device} · iOS {ios}",
+    "setUp": "{device} e configurat · iOS {ios}",
+    "show": "Arată lista",
+    "hide": "Ascunde",
+    "allSet": "Totul e gata",
+    "progress": "{left, plural, one {# pas de făcut} few {# pași de făcut} other {# de pași de făcut}} · {done} din {total} făcuți",
+    "group": {
+      "before": "Înainte de instalare",
+      "after": "După instalare",
+      "sidestore": "Pentru SideStore"
+    },
+    "onPhone": "Pe iPhone",
+    "tickedTag": "Făcut pe iPhone",
+    "tick": "Am făcut asta",
+    "notNeeded": "Nu e nevoie pe acest iOS",
+    "cable": {
+      "title": "Conectează {device} la acest computer",
+      "connected": "Conectat",
+      "none": "Neconectat",
+      "how": "Prima dată prin cablu; apoi merge și prin Wi-Fi, cât timp ambele sunt în aceeași rețea."
+    },
+    "unlock": {
+      "title": "Deblochează-l",
+      "locked": "Blocat",
+      "unlocked": "Deblocat",
+      "how": "Ține-l deblocat cât timp IPAForge instalează."
+    },
+    "trust": {
+      "title": "Ai încredere în acest computer",
+      "trusted": "De încredere",
+      "notYet": "Încă nu",
+      "step1": "Deblochează {device}.",
+      "step2": "Atinge Încredere când întreabă de acest computer.",
+      "step3": "Introdu codul.",
+      "again": "Întreabă din nou"
+    },
+    "passcode": {
+      "title": "Setează un cod",
+      "how": "SideStore reîmprospătează prin Wi-Fi, ceea ce iOS permite doar cu un cod: Configurări › Face ID și cod."
+    },
+    "devmode": {
+      "title": "Activează Mod dezvoltator",
+      "on": "Activ",
+      "off": "Dezactivat",
+      "step1": "Configurări › Confidențialitate și securitate › Mod dezvoltator (dacă nu apare, apasă Arată opțiunea).",
+      "step2": "Activează-l și repornește {device}.",
+      "step3": "După repornire, atinge Activează și introdu codul.",
+      "reveal": "Arată opțiunea",
+      "revealed": "Acum e în Configurări › Confidențialitate și securitate."
+    },
+    "developer": {
+      "title": "Ai încredere în Apple ID-ul tău ca dezvoltator",
+      "later": "După prima instalare",
+      "step1": "Configurări › General › VPN și gestionarea dispozitivului.",
+      "step2": "La Aplicație dezvoltator, atinge {appleId}.",
+      "step3": "Atinge Încredere. iPhone-ul are nevoie de internet pentru asta."
+    },
+    "vpn": {
+      "title": "Instalează LocalDevVPN",
+      "installed": "Instalat",
+      "notInstalled": "Neinstalat",
+      "how": "SideStore comunică cu iPhone-ul prin acest VPN local; nimic nu părăsește telefonul. E gratuit în App Store.",
+      "qrLabel": "Codul QR al paginii LocalDevVPN din App Store",
+      "scan": "Scanează-l cu Camera sau caută „LocalDevVPN” în App Store."
+    },
+    "vpnOn": {
+      "title": "Conectează LocalDevVPN când SideStore reîmprospătează",
+      "tag": "De fiecare dată",
+      "later": "După ce îl instalezi",
+      "how": "Deschide LocalDevVPN și atinge Conectează, sau lasă SideStore să-l pornească: întreabă prima dată."
+    },
+    "repair": {
+      "title": "SideStore se poate reîmprospăta singur",
+      "tag": "Verificat în Reparare",
+      "how": "Certificatul, fișierul de asociere și expirarea lui."
+    },
+    "notice": "{count, plural, one {# pas de făcut pe {device}} few {# pași de făcut pe {device}} other {# de pași de făcut pe {device}}}",
+    "noticeBody": "Ca instalarea și reîmprospătarea să meargă fără probleme.",
+    "showChecklist": "Arată lista"
   }
 }

@@ -139,7 +139,8 @@ export const fakeDevices = (options: FakeDeviceOptions = {}) => {
     uninstalled: [] as string[],
     removedProfiles: [] as string[],
     installedProfiles: [] as Uint8Array[],
-    placed: [] as AppFileTarget[][]
+    placed: [] as AppFileTarget[][],
+    revealed: 0
   }
   const files = options.files ?? new Map<string, Uint8Array>()
   const fileKey = (target: AppFileTarget) => `${target.bundleId}/${target.path}`
@@ -217,6 +218,9 @@ export const fakeDevices = (options: FakeDeviceOptions = {}) => {
       return data
     },
     listApps: async () => [...installed.values()],
+    revealDeveloperMode: async () => {
+      calls.revealed++
+    },
     close: async () => {
       calls.closed++
     }

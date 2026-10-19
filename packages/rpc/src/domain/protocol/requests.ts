@@ -35,6 +35,9 @@ const call = <M extends string, A extends z.ZodTuple>(method: M, args: A) =>
 export const queryCallSchema = z.discriminatedUnion('method', [
   call('listDevices', z.tuple([])),
   call('deviceStatus', z.tuple([textSchema])),
+  call('deviceApps', z.tuple([textSchema])),
+  /** Not a read: makes the Developer Mode switch appear in the device's Settings. */
+  call('revealDeveloperMode', z.tuple([textSchema])),
   /** Waits for the Trust tap on the device, so it can take as long as the user does. */
   call('pairDevice', z.tuple([textSchema])),
   call('listAccounts', z.tuple([])),

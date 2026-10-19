@@ -20,6 +20,7 @@ export const fakeScenarioIds = [
   'no-apps',
   'source-offline',
   'sources-added',
+  'checklist-todo',
   'sidestore-broken',
   'sidestore-unknown',
   'sidestore-other-team',

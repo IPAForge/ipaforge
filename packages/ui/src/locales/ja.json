@@ -1470,5 +1470,86 @@
     "back": "戻る",
     "done": "完了",
     "offer": "{count, plural, other {ここで追加した#件のソースもSideStoreに追加すると、iPhoneでそのアプリが表示されます。}}"
+  },
+  "checklist": {
+    "title": "{device} · iOS {ios}",
+    "setUp": "{device}のセットアップ完了 · iOS {ios}",
+    "show": "チェックリストを表示",
+    "hide": "隠す",
+    "allSet": "すべて完了",
+    "progress": "{left, plural, other {残り#件}} · {total}件中{done}件完了",
+    "group": {
+      "before": "インストール前",
+      "after": "インストール後",
+      "sidestore": "SideStore用"
+    },
+    "onPhone": "iPhoneで確認",
+    "tickedTag": "iPhoneで完了",
+    "tick": "完了した",
+    "notNeeded": "このiOSでは不要",
+    "cable": {
+      "title": "{device}をこのコンピュータに接続",
+      "connected": "接続済み",
+      "none": "未接続",
+      "how": "最初はケーブルで接続してください。その後は同じネットワーク上ならWi-Fiでも使えます。"
+    },
+    "unlock": {
+      "title": "ロックを解除",
+      "locked": "ロック中",
+      "unlocked": "ロック解除済み",
+      "how": "IPAForgeがインストールする間はロックを解除しておいてください。"
+    },
+    "trust": {
+      "title": "このコンピュータを信頼",
+      "trusted": "信頼済み",
+      "notYet": "未設定",
+      "step1": "{device}のロックを解除します。",
+      "step2": "このコンピュータについて尋ねられたら「信頼」をタップします。",
+      "step3": "パスコードを入力します。",
+      "again": "もう一度確認"
+    },
+    "passcode": {
+      "title": "パスコードを設定",
+      "how": "SideStoreはWi-Fiでリフレッシュしますが、iOSはパスコードがある場合のみ許可します。「設定」›「Face IDとパスコード」。"
+    },
+    "devmode": {
+      "title": "デベロッパモードをオン",
+      "on": "オン",
+      "off": "オフ",
+      "step1": "「設定」›「プライバシーとセキュリティ」›「デベロッパモード」(見つからない場合は「項目を表示」を押してください)。",
+      "step2": "オンにして{device}を再起動します。",
+      "step3": "再起動後に「オンにする」をタップし、パスコードを入力します。",
+      "reveal": "項目を表示",
+      "revealed": "「設定」›「プライバシーとセキュリティ」に表示されました。"
+    },
+    "developer": {
+      "title": "Apple IDをデベロッパとして信頼",
+      "later": "最初のインストール後",
+      "step1": "「設定」›「一般」›「VPNとデバイス管理」。",
+      "step2": "「デベロッパApp」で{appleId}をタップします。",
+      "step3": "「信頼」をタップします。iPhoneにインターネット接続が必要です。"
+    },
+    "vpn": {
+      "title": "LocalDevVPNをインストール",
+      "installed": "インストール済み",
+      "notInstalled": "未インストール",
+      "how": "SideStoreはこのローカルVPNを通じてiPhoneと通信します。データは端末の外に出ません。App Storeで無料です。",
+      "qrLabel": "LocalDevVPNのApp StoreページのQRコード",
+      "scan": "カメラでスキャンするか、App Storeで「LocalDevVPN」を検索してください。"
+    },
+    "vpnOn": {
+      "title": "SideStoreがリフレッシュするときはLocalDevVPNに接続",
+      "tag": "毎回",
+      "later": "インストール後",
+      "how": "LocalDevVPNを開いて「接続」をタップするか、SideStoreにオンにさせます(最初に確認されます)。"
+    },
+    "repair": {
+      "title": "SideStoreが自分でリフレッシュできる",
+      "tag": "「修復」で確認",
+      "how": "証明書、ペアリングファイル、有効期限。"
+    },
+    "notice": "{count, plural, other {{device}で残り#件}}",
+    "noticeBody": "インストールとリフレッシュをスムーズに行うためです。",
+    "showChecklist": "チェックリストを表示"
   }
 }
