@@ -65,6 +65,10 @@ const signOptions = (
       deviceUdid: request.deviceUdid
     }),
     additions: request.additions,
+    archive:
+      request.compressionLevel === undefined
+        ? undefined
+        : { compressionLevel: request.compressionLevel },
     onProgress:
       request.onProgress &&
       ((event: SignerProgress) =>

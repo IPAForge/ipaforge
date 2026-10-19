@@ -1,4 +1,5 @@
 import { modelName } from '@ui/features/devices/utils/model-name.ts'
+import { connectionKeys } from '@ui/features/install/run/constants.ts'
 import type { StepReportTexts } from '@ui/features/install/run/types.ts'
 
 /**
@@ -9,7 +10,8 @@ export const stepReportTexts: StepReportTexts = {
   device: (report, { t }) =>
     t('install.run.report.device', {
       model: modelName(report.productType),
-      ios: report.iosVersion
+      ios: report.iosVersion,
+      connection: t(connectionKeys[report.connection])
     }),
   release: (report, { t, appName }) =>
     t('install.run.report.release', {
@@ -59,7 +61,12 @@ export const stepReportTexts: StepReportTexts = {
   profiles: (report, { t }) =>
     t('install.run.report.profiles', { count: report.count }),
   signed: (report, { t }) =>
-    t('install.run.report.signed', { count: report.bundles }),
+    t(
+      report.compressed
+        ? 'install.run.report.signedCompressed'
+        : 'install.run.report.signed',
+      { count: report.bundles }
+    ),
   'install-phase': (report, { t }) =>
     t(`install.run.report.phase.${report.phase}`),
   pairing: (report, { t, list }) =>

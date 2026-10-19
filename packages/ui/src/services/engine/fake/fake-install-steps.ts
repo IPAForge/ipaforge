@@ -65,18 +65,21 @@ export const download =
     return undefined
   }
 
-export const checkDevice: StepBody = async (state, context) => {
-  if (state.udid !== FAKE_IPHONE)
-    throw new IPAForgeError(ErrorCode.DeviceNotPaired, {
-      data: { udid: state.udid }
+export const checkDevice =
+  (world: FakeWorld): StepBody =>
+  async (state, context) => {
+    if (state.udid !== FAKE_IPHONE)
+      throw new IPAForgeError(ErrorCode.DeviceNotPaired, {
+        data: { udid: state.udid }
+      })
+    context.detail({
+      kind: 'device',
+      productType: fakeIphoneCheck.info.productType,
+      iosVersion: fakeIphoneCheck.info.productVersion,
+      connection: world.scenario === 'wifi' ? 'network' : 'usb'
     })
-  context.detail({
-    kind: 'device',
-    productType: fakeIphoneCheck.info.productType,
-    iosVersion: fakeIphoneCheck.info.productVersion
-  })
-  return undefined
-}
+    return undefined
+  }
 
 /** A step that only reports what it did. */
 export const reporting =
@@ -167,6 +170,85 @@ export const progressing: StepBody = async (_state, context) => {
   return undefined
 }
 
+/** Fake time per progress tick, so the UI has a speed and a time left to show. */
+const TICK_MS = 1500
+/** Updates per install phase: the install sends as many in all as any other step (each one waits a timer tick). */
+const PHASE_TICKS = TICKS / 2
+const FAKE_BUNDLES = 3
+/** What the fake signs to: the IPA uncompressed, or about half of it compressed for Wi-Fi. */
+const signedSize = (wifi: boolean) => (wifi ? FAKE_IPA_SIZE : FAKE_IPA_SIZE * 2)
+const INSTALLD_STATUSES = [
+  'ExtractingPackage',
+  'InspectingPackage',
+  'VerifyingApplication',
+  'InstallingApplication'
+]
+
+/** Provisions, reporting each request to Apple as the real step does; `count` profiles at the end. */
+export const provisioning =
+  (count: number): StepBody =>
+  async (_state, context) => {
+    const tasks = [
+      ['team', 1],
+      ['profiles', count]
+    ] as const
+    const total = tasks.reduce((sum, [, requests]) => sum + requests, 0)
+    let done = 0
+
+    for (const [task, requests] of tasks)
+      for (let request = 1; request <= requests; request++) {
+        done += 1
+        await context.progress(done / total, {
+          phase: 'provisioning',
+          task,
+          done: request,
+          total: requests,
+          elapsedMs: done * TICK_MS
+        })
+      }
+    context.detail({ kind: 'profiles', count })
+    return undefined
+  }
+
+/** Signs, compressed when the device is on Wi-Fi. */
+export const signing =
+  (world: FakeWorld): StepBody =>
+  async (_state, context) => {
+    await ticking()(context)
+    context.detail({
+      kind: 'signed',
+      bundles: FAKE_BUNDLES,
+      compressed: world.scenario === 'wifi'
+    })
+    return undefined
+  }
+
+/** Sends the app to the device (bytes and time), then installd installs it (its percent and phase). */
+export const installing =
+  (world: FakeWorld): StepBody =>
+  async (_state, context) => {
+    const total = signedSize(world.scenario === 'wifi')
+    context.detail({ kind: 'install-phase', phase: 'uploading' })
+    for (let tick = 1; tick <= PHASE_TICKS; tick++)
+      await context.progress((tick / PHASE_TICKS) * 0.5, {
+        phase: 'uploading',
+        percent: Math.round((tick / PHASE_TICKS) * 100),
+        received: Math.round((total * tick) / PHASE_TICKS),
+        total,
+        elapsedMs: tick * TICK_MS
+      })
+    context.detail({ kind: 'install-phase', phase: 'installing' })
+    for (let tick = 1; tick <= PHASE_TICKS; tick++)
+      await context.progress(0.5 + (tick / PHASE_TICKS) * 0.5, {
+        phase: 'installing',
+        percent: Math.round((tick / PHASE_TICKS) * 100),
+        status:
+          INSTALLD_STATUSES[Math.min(INSTALLD_STATUSES.length - 1, tick - 1)],
+        elapsedMs: tick * TICK_MS
+      })
+    return undefined
+  }
+
 /** A step that first plays the scenario's failure, if it is this one. */
 export const step = (
   world: FakeWorld,
@@ -189,7 +271,7 @@ export const step = (
 export const fakeInstallSteps = (
   world: FakeWorld
 ): ScriptedStep<FakeInstallState>[] => [
-  step(world, 'device', StepLabel.device, 1, checkDevice),
+  step(world, 'device', StepLabel.device, 1, checkDevice(world)),
   step(
     world,
     'resolve-0',
@@ -235,15 +317,9 @@ export const fakeInstallSteps = (
     freeApps(world),
     (state) => state.isFreeTeam === false
   ),
-  step(
-    world,
-    'provision-0',
-    StepLabel.provision,
-    2,
-    reporting({ kind: 'profiles', count: 2 })
-  ),
-  step(world, 'sign-0', StepLabel.sign, 4, progressing),
-  step(world, 'install-0', StepLabel.install, 6, progressing),
+  step(world, 'provision-0', StepLabel.provision, 2, provisioning(2)),
+  step(world, 'sign-0', StepLabel.sign, 4, signing(world)),
+  step(world, 'install-0', StepLabel.install, 6, installing(world)),
   step(
     world,
     'pairing',

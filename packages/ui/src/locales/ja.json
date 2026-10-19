@@ -143,13 +143,42 @@
         "received": "{received}",
         "retrying": "接続が切れました。{seconds, plural, other {# 秒後}}に再試行します（{attempt} 回目）"
       },
+      "live": {
+        "header": "{percent} · {left}",
+        "installing": "{fraction, number, percent} · {phase}",
+        "count": "{done} / {total}",
+        "task": {
+          "line": "{task} · {count}",
+          "team": "チームを確認中",
+          "appIds": "App ID を作成中",
+          "appGroup": "App グループを追加中",
+          "profiles": "プロファイルを取得中"
+        },
+        "phase": {
+          "unpacking": "アプリを展開中",
+          "checking": "アプリを確認中",
+          "installing": "インストール中"
+        },
+        "speed": "{speed}/秒",
+        "ios": "iOS がインストール中",
+        "leftSeconds": "残り約 {seconds} 秒",
+        "leftMinutes": "{minutes, plural, other {残り約 # 分}}"
+      },
+      "connection": {
+        "usb": "USB",
+        "network": "Wi-Fi"
+      },
+      "wifi": {
+        "title": "このデバイスは Wi-Fi で接続されています",
+        "body": "大きなアプリはケーブルで接続するとずっと速くインストールできます。Wi-Fi では、時間を節約するために IPAForge が圧縮して送信します。"
+      },
       "unsupportedPrompt": {
         "title": "このステップには回答が必要です",
         "body": "このバージョンでは表示できない質問への回答が必要です。インストールを中止して IPAForge をアップデートしてください。"
       },
       "backToInstall": "インストールに戻る",
       "report": {
-        "device": "{model} · iOS {ios}",
+        "device": "{model} · iOS {ios} · {connection}",
         "release": "{app} {version} · {channel}",
         "download": "{size} · チェックサム確認済み",
         "downloadCached": "{size} · ダウンロードキャッシュから",
@@ -169,6 +198,7 @@
         "removed": "{app} を削除 · {used}",
         "profiles": "{count, plural, other {プロファイル # 個}}",
         "signed": "{count, plural, other {# 個のバンドルに署名}}",
+        "signedCompressed": "{count, plural, other {# 個のバンドルに署名}} · Wi-Fi 用に圧縮",
         "phase": {
           "uploading": "デバイスへ転送中",
           "installing": "インストール中"

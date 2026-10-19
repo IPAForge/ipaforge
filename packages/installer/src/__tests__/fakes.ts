@@ -91,6 +91,8 @@ export const memoryScratch = (): ScratchStore & {
 // --- device -------------------------------------------------------------------------------------------------
 
 export type FakeDeviceOptions = {
+  /** How the device is reached (default `usb`). */
+  connection?: 'usb' | 'network'
   locked?: boolean
   developerMode?: DeviceCheck['developerMode']
   profiles?: DeviceProfile[]
@@ -133,6 +135,11 @@ export const fakeDevices = (options: FakeDeviceOptions = {}) => {
     placed: [] as AppFileTarget[][]
   }
   const handle = {
+    device: {
+      udid: UDID,
+      deviceId: 1,
+      connectionType: options.connection ?? ('usb' as const)
+    },
     check: async (): Promise<DeviceCheck> => ({
       info: {
         udid: UDID,
@@ -147,12 +154,23 @@ export const fakeDevices = (options: FakeDeviceOptions = {}) => {
       activated: true
     }),
     installIpa: async (file: FileSource, install?: InstallIpaOptions) => {
-      install?.onProgress?.({ stage: 'uploading', percent: 0 })
-      install?.onProgress?.({ stage: 'uploading', percent: 50 })
+      install?.onProgress?.({ stage: 'uploading', percent: 0, stagePercent: 0 })
+      install?.onProgress?.({
+        stage: 'uploading',
+        percent: 50,
+        stagePercent: 100,
+        sent: 2,
+        total: 2
+      })
       const error = installErrors.shift()
       if (error) throw error
-      install?.onProgress?.({ stage: 'installing', percent: 75 })
-      install?.onProgress?.({ stage: 'done', percent: 100 })
+      install?.onProgress?.({
+        stage: 'installing',
+        percent: 75,
+        stagePercent: 50,
+        status: 'VerifyingApplication'
+      })
+      install?.onProgress?.({ stage: 'done', percent: 100, stagePercent: 100 })
       calls.installs.push(file)
     },
     uninstall: async (bundleId: string) => {
@@ -355,6 +373,13 @@ export const fakeApple = (options: FakeAppleOptions = {}) => {
     }),
     provisionApp: async (request: ProvisionRequest) => {
       calls.provisioned.push(request)
+      request.onProgress?.({ task: 'team', done: 2, total: 2, fraction: 0.5 })
+      request.onProgress?.({
+        task: 'profiles',
+        done: request.bundles.length,
+        total: request.bundles.length,
+        fraction: 1
+      })
       return {
         appIds: new Map(),
         profiles: new Map(

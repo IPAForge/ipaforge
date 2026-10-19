@@ -53,7 +53,7 @@ Each step tells the UI what it did, with `context.detail(detail)` (a `step-detai
 
 | Step | Detail |
 |---|---|
-| `device` | the model and iOS version |
+| `device` | the model, the iOS version, and the connection (USB or Wi-Fi) |
 | `resolve-N` | the release version and channel |
 | `download-N` | the size, and whether it came from the download cache |
 | `inspect-N` | the app's name, version and number of extensions |
@@ -64,8 +64,21 @@ Each step tells the UI what it did, with `context.detail(detail)` (a `step-detai
 | `app-ids` | how many are created and reused, and how many are left this week |
 | `free-apps-N` | the free apps on the device and the limit, and the app removed to make room |
 | `provision-N` | the number of profiles |
-| `sign-N` | the number of bundles signed |
+| `sign-N` | the number of bundles signed, and whether the IPA was compressed (over Wi-Fi) |
 | `install-N` | uploading, then installing |
+
+While they run, steps also report how far they are (`step-progress` with a detail):
+
+| Step | Progress detail |
+|---|---|
+| `download-N` | `received`, `total` and `elapsedMs` |
+| `provision-N` | `phase: "provisioning"`, the `task` (`team`, `app-ids`, `app-group`, `profiles`), its requests `done` of `total`, and `elapsedMs`; reported after each request to Apple |
+| `install-N`, uploading | `phase: "uploading"`, its own `percent`, `received` (bytes sent), `total` and `elapsedMs` |
+| `install-N`, installing | `phase: "installing"`, installd's own `percent` and `status` (`VerifyingApplication`, `InstallingApplication`…) and `elapsedMs` |
+
+The UI turns them into a bar with the bytes, the speed and the time left, the provisioning task with its count ("Getting profiles · 2 of 5"), or iOS's percent and phase.
+
+**USB or Wi-Fi.** A device on both is used over USB (usbmuxd lists it twice; the cable is several times faster). Over Wi-Fi the signed IPA is written compressed (`wifiCompressionLevel`, deflate 6), usually less than half the bytes to send; over USB it stays stored (uncompressed), which is quicker to write.
 | `pairing` / `place` | the apps that got the pairing file |
 | `certificate-sharing-N` | whether the certificate was shared |
 

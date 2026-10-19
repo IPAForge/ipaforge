@@ -3,6 +3,7 @@ import { RunHeader } from '@ui/features/install/run/components/run-header.tsx'
 import { RunOutcome } from '@ui/features/install/run/components/run-outcome.tsx'
 import { RunSummary } from '@ui/features/install/run/components/run-summary.tsx'
 import { StepList } from '@ui/features/install/run/components/step-list.tsx'
+import { WifiNotice } from '@ui/features/install/run/components/wifi-notice.tsx'
 import { useRunPlan } from '@ui/features/install/run/hooks/use-run-plan.ts'
 import { useRunTarget } from '@ui/features/install/run/hooks/use-run-target.ts'
 import type { ActiveRun } from '@ui/state/active-run/types.ts'
@@ -21,6 +22,7 @@ export const RunView = ({ run }: RunViewProps) => {
     <div className="flex w-full flex-col gap-5">
       <RunHeader view={run.view} target={target} />
       <RunSummary target={target} accountId={run.input.accountId} plan={plan} />
+      <WifiNotice view={run.view} />
       <RunOutcome run={run} target={target} />
       {run.kind === 'apps' ? (
         <AppStepGroups steps={run.view.steps} apps={run.apps} />

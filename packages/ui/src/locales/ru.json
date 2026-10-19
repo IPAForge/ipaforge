@@ -143,13 +143,42 @@
         "received": "{received}",
         "retrying": "Соединение прервалось. Повтор через {seconds, plural, one {# секунду} few {# секунды} many {# секунд} other {# секунды}} (попытка {attempt})"
       },
+      "live": {
+        "header": "{percent} · {left}",
+        "installing": "{fraction, number, percent} · {phase}",
+        "count": "{done} из {total}",
+        "task": {
+          "line": "{task} · {count}",
+          "team": "Проверка команды",
+          "appIds": "Создание App ID",
+          "appGroup": "Добавление группы приложений",
+          "profiles": "Получение профилей"
+        },
+        "phase": {
+          "unpacking": "Распаковка приложения",
+          "checking": "Проверка приложения",
+          "installing": "Установка"
+        },
+        "speed": "{speed}/с",
+        "ios": "iOS устанавливает его",
+        "leftSeconds": "Осталось около {seconds} с",
+        "leftMinutes": "{minutes, plural, one {Осталось около # мин} few {Осталось около # мин} many {Осталось около # мин} other {Осталось около # мин}}"
+      },
+      "connection": {
+        "usb": "USB",
+        "network": "Wi-Fi"
+      },
+      "wifi": {
+        "title": "Устройство подключено по Wi-Fi",
+        "body": "С кабелем большие приложения устанавливаются гораздо быстрее. По Wi-Fi IPAForge отправляет их сжатыми, чтобы сэкономить время."
+      },
       "unsupportedPrompt": {
         "title": "Этому шагу нужен ответ",
         "body": "IPAForge нужен ответ на вопрос, который эта версия не умеет показать. Отмените установку и обновите IPAForge."
       },
       "backToInstall": "Назад к установке",
       "report": {
-        "device": "{model} · iOS {ios}",
+        "device": "{model} · iOS {ios} · {connection}",
         "release": "{app} {version} · {channel}",
         "download": "{size} · контрольная сумма проверена",
         "downloadCached": "{size} · из кэша загрузок",
@@ -169,6 +198,7 @@
         "removed": "Удалено: {app} · {used}",
         "profiles": "{count, plural, one {# профиль} few {# профиля} many {# профилей} other {# профиля}}",
         "signed": "{count, plural, one {# пакет подписан} few {# пакета подписано} many {# пакетов подписано} other {# пакета подписано}}",
+        "signedCompressed": "{count, plural, one {Подписан # пакет} few {Подписано # пакета} many {Подписано # пакетов} other {Подписано # пакета}} · сжато для Wi-Fi",
         "phase": {
           "uploading": "Передача на устройство",
           "installing": "Установка"

@@ -18,6 +18,8 @@ export type SignRequest = {
   readonly appGroups: ReadonlyMap<string, string>
   readonly deviceUdid: string
   readonly additions?: BundleAdditions
+  /** Deflate level of the signed IPA, 0–9 (default 0: stored, fastest to write). */
+  readonly compressionLevel?: number
   /** 0–1. */
   readonly onProgress?: (fraction: number) => void
   readonly signal?: AbortSignal

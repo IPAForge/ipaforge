@@ -143,13 +143,42 @@
         "received": "{received}",
         "retrying": "Connection dropped. Trying again in {seconds, plural, one {# second} other {# seconds}} (attempt {attempt})"
       },
+      "live": {
+        "header": "{percent} · {left}",
+        "installing": "{fraction, number, percent} · {phase}",
+        "count": "{done} of {total}",
+        "task": {
+          "line": "{task} · {count}",
+          "team": "Checking the team",
+          "appIds": "Making App IDs",
+          "appGroup": "Adding the app group",
+          "profiles": "Getting profiles"
+        },
+        "phase": {
+          "unpacking": "Unpacking the app",
+          "checking": "Checking the app",
+          "installing": "Installing"
+        },
+        "speed": "{speed}/s",
+        "ios": "iOS is installing it",
+        "leftSeconds": "About {seconds} s left",
+        "leftMinutes": "{minutes, plural, one {About # min left} other {About # min left}}"
+      },
+      "connection": {
+        "usb": "USB",
+        "network": "Wi-Fi"
+      },
+      "wifi": {
+        "title": "This device is connected over Wi-Fi",
+        "body": "Large apps install much faster with a cable. Over Wi-Fi, IPAForge sends them compressed to save time."
+      },
       "unsupportedPrompt": {
         "title": "This step needs an answer",
         "body": "IPAForge needs an answer to a question this version can’t show. Cancel the install and update IPAForge."
       },
       "backToInstall": "Back to Install",
       "report": {
-        "device": "{model} · iOS {ios}",
+        "device": "{model} · iOS {ios} · {connection}",
         "release": "{app} {version} · {channel}",
         "download": "{size} · checksum verified",
         "downloadCached": "{size} · from the download cache",
@@ -169,6 +198,7 @@
         "removed": "Removed {app} · {used}",
         "profiles": "{count, plural, one {# profile} other {# profiles}}",
         "signed": "{count, plural, one {# bundle signed} other {# bundles signed}}",
+        "signedCompressed": "{count, plural, one {# bundle signed} other {# bundles signed}} · compressed for Wi-Fi",
         "phase": {
           "uploading": "Uploading to the device",
           "installing": "Installing"

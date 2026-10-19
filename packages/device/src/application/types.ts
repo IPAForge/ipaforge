@@ -37,7 +37,13 @@ export type InstallIpaProgress = {
   readonly stage: InstallStage
   /** 0–100 across the whole install (upload is the first half). */
   readonly percent: number
+  /** 0–100 within the current stage: the upload's bytes, or installd's own percent. */
+  readonly stagePercent: number
+  /** installd's phase (`VerifyingApplication`, `InstallingApplication`…). */
   readonly status?: string
+  /** While uploading: bytes sent so far, and the IPA's size. */
+  readonly sent?: number
+  readonly total?: number
 }
 
 export type InstallIpaOptions = {

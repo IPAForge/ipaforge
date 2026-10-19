@@ -8,10 +8,12 @@ import {
   chooseTeam,
   download,
   freeApps,
-  progressing,
+  installing,
+  provisioning,
   quick,
   reporting,
   signIn,
+  signing,
   step
 } from '@ui/services/engine/fake/fake-install-steps.ts'
 import type { FakeWorld } from '@ui/services/engine/fake/fake-world.ts'
@@ -74,10 +76,10 @@ const installSteps = (
     `provision-${index}`,
     StepLabel.provision,
     2,
-    reporting({ kind: 'profiles', count: app.extensions + 1 })
+    provisioning(app.extensions + 1)
   ),
-  step(world, `sign-${index}`, StepLabel.sign, 4, progressing),
-  step(world, `install-${index}`, StepLabel.install, 6, progressing)
+  step(world, `sign-${index}`, StepLabel.sign, 4, signing(world)),
+  step(world, `install-${index}`, StepLabel.install, 6, installing(world))
 ]
 
 export const fakeAppsSteps = (
@@ -87,7 +89,7 @@ export const fakeAppsSteps = (
   const newIds = apps.reduce((total, app) => total + app.extensions + 1, 0)
 
   return [
-    step(world, 'device', StepLabel.device, 1, checkDevice),
+    step(world, 'device', StepLabel.device, 1, checkDevice(world)),
     ...apps.flatMap((app, index) => prepareSteps(world, app, index)),
     step(world, 'sign-in', StepLabel.signIn, 1, signIn(world)),
     step(world, 'team', StepLabel.team, 1, chooseTeam(world)),

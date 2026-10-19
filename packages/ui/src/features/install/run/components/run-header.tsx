@@ -2,16 +2,24 @@ import { Chip, ProgressBar } from '@heroui/react'
 import { useTranslation } from 'react-i18next'
 
 import { runTitleKeys } from '@ui/features/install/run/constants.ts'
+import { useRunTimeLeft } from '@ui/features/install/run/hooks/use-run-time-left.ts'
+import { useTimeLeft } from '@ui/features/install/run/hooks/use-time-left.ts'
 import type { RunTarget } from '@ui/features/install/run/types.ts'
 import { overallPercent } from '@ui/state/active-run/run-view.ts'
 import type { RunView } from '@ui/state/active-run/types.ts'
 
 type RunHeaderProps = { view: RunView; target: RunTarget }
 
-/** The run's title, what it installs where, and the overall progress from the Engine. */
+/** The run's title, what it installs where, and the overall progress from the Engine, with the time left. */
 export const RunHeader = ({ view, target }: RunHeaderProps) => {
   const { t } = useTranslation()
+  const timeLeft = useTimeLeft()
+  const secondsLeft = useRunTimeLeft(view)
   const percent = t('install.run.percent', { fraction: view.fraction })
+  const chip =
+    secondsLeft === undefined
+      ? percent
+      : t('install.run.live.header', { percent, left: timeLeft(secondsLeft) })
 
   return (
     <div className="flex flex-col gap-3">
@@ -36,7 +44,9 @@ export const RunHeader = ({ view, target }: RunHeaderProps) => {
                 })}
           </p>
         </div>
-        <Chip size="sm">{percent}</Chip>
+        <Chip size="sm" className="tabular-nums">
+          {chip}
+        </Chip>
       </div>
       <ProgressBar
         aria-label={t('install.run.progress')}

@@ -29,7 +29,7 @@ IPAForge uses the pairing the operating system already made. When the user taps 
 |---|---|
 | Device identity, iOS version, passcode, Developer Mode, activation | lockdownd, AMFI |
 | Reveal the Developer Mode toggle in Settings (never enables it silently) | `com.apple.amfi.lockdown` |
-| Install (with progress), upgrade, uninstall, list apps | AFC upload to `PublicStaging` + `installation_proxy` |
+| Install (with progress: bytes sent while uploading, then installd's percent and phase), upgrade, uninstall, list apps | AFC upload to `PublicStaging` + `installation_proxy` |
 | List, install and remove provisioning profiles; remove expired ones and ones for apps that are gone | `misagent` |
 | Read and write files in an app's container or Documents folder | `house_arrest` + AFC |
 | Place the pairing file into SideStore, LiveContainer + SideStore, StikDebug, StikStore | `house_arrest` + AFC, after enabling Wi-Fi debugging |

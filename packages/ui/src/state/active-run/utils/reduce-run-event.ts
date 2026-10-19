@@ -3,8 +3,8 @@
 import type { RunEvent } from '@ipaforge/rpc'
 import type { RunEventHandlers, RunView } from '@ui/state/active-run/types.ts'
 import {
-  bytesDetail,
   plannedSteps,
+  progressDetail,
   updateStep,
   withStepsIn
 } from '@ui/state/active-run/utils/steps.ts'
@@ -24,7 +24,7 @@ const runEventHandlers = {
   'step-progress': (view, event) =>
     updateStep(view, event.stepId, (step) => ({
       fraction: event.fraction,
-      detail: bytesDetail(event.detail) ?? step.detail
+      detail: progressDetail(event.detail, event.fraction) ?? step.detail
     })),
   'step-retrying': (view, event) =>
     updateStep(view, event.stepId, () => ({

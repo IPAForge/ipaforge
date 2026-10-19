@@ -143,13 +143,42 @@
         "received": "{received}",
         "retrying": "انقطع الاتصال. إعادة المحاولة بعد {seconds, plural, zero {# ثانية} one {ثانية واحدة} two {ثانيتين} few {# ثوانٍ} many {# ثانية} other {# ثانية}} (المحاولة {attempt})"
       },
+      "live": {
+        "header": "{percent} · {left}",
+        "installing": "{fraction, number, percent} · {phase}",
+        "count": "{done} من {total}",
+        "task": {
+          "line": "{task} · {count}",
+          "team": "جارٍ التحقق من الفريق",
+          "appIds": "جارٍ إنشاء معرّفات التطبيقات",
+          "appGroup": "جارٍ إضافة مجموعة التطبيقات",
+          "profiles": "جارٍ جلب الملفات الشخصية"
+        },
+        "phase": {
+          "unpacking": "جارٍ فك ضغط التطبيق",
+          "checking": "جارٍ فحص التطبيق",
+          "installing": "جارٍ التثبيت"
+        },
+        "speed": "{speed}/ث",
+        "ios": "يقوم iOS بتثبيته",
+        "leftSeconds": "يتبقى نحو {seconds} ث",
+        "leftMinutes": "{minutes, plural, zero {يتبقى أقل من دقيقة} one {يتبقى نحو دقيقة} two {يتبقى نحو دقيقتين} few {يتبقى نحو # دقائق} many {يتبقى نحو # دقيقة} other {يتبقى نحو # دقيقة}}"
+      },
+      "connection": {
+        "usb": "USB",
+        "network": "Wi-Fi"
+      },
+      "wifi": {
+        "title": "هذا الجهاز متصل عبر Wi-Fi",
+        "body": "تُثبَّت التطبيقات الكبيرة أسرع بكثير عبر كابل. عبر Wi-Fi، يرسلها IPAForge مضغوطة لتوفير الوقت."
+      },
       "unsupportedPrompt": {
         "title": "تحتاج هذه الخطوة إلى إجابة",
         "body": "يحتاج IPAForge إلى إجابة عن سؤال لا يستطيع هذا الإصدار عرضه. ألغِ التثبيت وحدّث IPAForge."
       },
       "backToInstall": "العودة إلى التثبيت",
       "report": {
-        "device": "{model} · iOS {ios}",
+        "device": "{model} · iOS {ios} · {connection}",
         "release": "{app} {version} · {channel}",
         "download": "{size} · تم التحقق من المجموع",
         "downloadCached": "{size} · من ذاكرة التنزيلات",
@@ -169,6 +198,7 @@
         "removed": "أُزيل {app} · {used}",
         "profiles": "{count, plural, zero {لا ملفات تعريف} one {ملف تعريف واحد} two {ملفا تعريف} few {# ملفات تعريف} many {# ملف تعريف} other {# ملف تعريف}}",
         "signed": "{count, plural, zero {لم توقَّع حزم} one {وُقّعت حزمة واحدة} two {وُقّعت حزمتان} few {وُقّعت # حزم} many {وُقّعت # حزمة} other {وُقّعت # حزمة}}",
+        "signedCompressed": "{count, plural, zero {لم توقَّع أي حزمة} one {وُقّعت حزمة واحدة} two {وُقّعت حزمتان} few {وُقّعت # حزم} many {وُقّعت # حزمة} other {وُقّعت # حزمة}} · مضغوط لـ Wi-Fi",
         "phase": {
           "uploading": "جارٍ الرفع إلى الجهاز",
           "installing": "جارٍ التثبيت"

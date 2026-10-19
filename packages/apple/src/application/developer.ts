@@ -50,8 +50,10 @@ export type {
   BundleRequest,
   CertificateIdentity,
   EnsureCertificateOptions,
+  ProvisionProgress,
   ProvisionRequest,
-  ProvisionResult
+  ProvisionResult,
+  ProvisionTask
 } from '@apple/application/developer/types.ts'
 
 export type DeveloperServices = {

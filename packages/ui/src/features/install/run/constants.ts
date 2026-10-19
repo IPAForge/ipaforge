@@ -8,6 +8,7 @@ import {
   type LucideIcon
 } from 'lucide-react'
 
+import type { InstallPhase } from '@ui/features/install/run/types.ts'
 import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 import type {
   RunKind,
@@ -85,3 +86,40 @@ export const groupStateText = {
   string,
   { readonly key: TranslationKey; readonly className: string }
 >
+
+/** installd's phase names, as the three things the user sees; an unknown one counts as installing. */
+export const installdPhases: Readonly<Record<string, InstallPhase>> = {
+  CreatingStagingDirectory: 'unpacking',
+  ExtractingPackage: 'unpacking',
+  TakingInstallLock: 'unpacking',
+  InspectingPackage: 'checking',
+  PreflightingApplication: 'checking',
+  VerifyingApplication: 'checking',
+  InstallingEmbeddedProfile: 'installing',
+  CreatingContainer: 'installing',
+  InstallingApplication: 'installing',
+  PostflightingApplication: 'installing',
+  SandboxingApplication: 'installing',
+  GeneratingApplicationMap: 'installing'
+}
+
+/** What each install phase is called. */
+export const installPhaseKeys = {
+  unpacking: 'install.run.live.phase.unpacking',
+  checking: 'install.run.live.phase.checking',
+  installing: 'install.run.live.phase.installing'
+} as const satisfies Record<InstallPhase, TranslationKey>
+
+/** How the device is reached, in words. */
+export const connectionKeys = {
+  usb: 'install.run.connection.usb',
+  network: 'install.run.connection.network'
+} as const satisfies Record<'usb' | 'network', TranslationKey>
+
+/** What each provisioning task is called while it runs; an unknown one shows its count only. */
+export const provisionTaskKeys: Readonly<Record<string, TranslationKey>> = {
+  team: 'install.run.live.task.team',
+  'app-ids': 'install.run.live.task.appIds',
+  'app-group': 'install.run.live.task.appGroup',
+  profiles: 'install.run.live.task.profiles'
+}

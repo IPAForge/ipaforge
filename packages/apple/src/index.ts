@@ -6,8 +6,10 @@ export type {
   CertificateIdentity,
   DeveloperServices,
   EnsureCertificateOptions,
+  ProvisionProgress,
   ProvisionRequest,
-  ProvisionResult
+  ProvisionResult,
+  ProvisionTask
 } from '@apple/application/developer.ts'
 export { assertPreflight } from '@apple/application/preflight.ts'
 export type {

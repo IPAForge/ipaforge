@@ -143,13 +143,42 @@
         "received": "{received}",
         "retrying": "Verbindung unterbrochen. Neuer Versuch in {seconds, plural, one {# Sekunde} other {# Sekunden}} (Versuch {attempt})"
       },
+      "live": {
+        "header": "{percent} · {left}",
+        "installing": "{fraction, number, percent} · {phase}",
+        "count": "{done} von {total}",
+        "task": {
+          "line": "{task} · {count}",
+          "team": "Team wird geprüft",
+          "appIds": "App-IDs werden erstellt",
+          "appGroup": "App-Gruppe wird hinzugefügt",
+          "profiles": "Profile werden geladen"
+        },
+        "phase": {
+          "unpacking": "App wird entpackt",
+          "checking": "App wird geprüft",
+          "installing": "Wird installiert"
+        },
+        "speed": "{speed}/s",
+        "ios": "iOS installiert sie",
+        "leftSeconds": "Noch etwa {seconds} s",
+        "leftMinutes": "{minutes, plural, one {Noch etwa # Min.} other {Noch etwa # Min.}}"
+      },
+      "connection": {
+        "usb": "USB",
+        "network": "WLAN"
+      },
+      "wifi": {
+        "title": "Dieses Gerät ist über WLAN verbunden",
+        "body": "Große Apps installieren sich mit einem Kabel viel schneller. Über WLAN sendet IPAForge sie komprimiert, um Zeit zu sparen."
+      },
       "unsupportedPrompt": {
         "title": "Dieser Schritt braucht eine Antwort",
         "body": "IPAForge braucht eine Antwort auf eine Frage, die diese Version nicht anzeigen kann. Brich die Installation ab und aktualisiere IPAForge."
       },
       "backToInstall": "Zurück zur Installation",
       "report": {
-        "device": "{model} · iOS {ios}",
+        "device": "{model} · iOS {ios} · {connection}",
         "release": "{app} {version} · {channel}",
         "download": "{size} · Prüfsumme geprüft",
         "downloadCached": "{size} · aus dem Download-Cache",
@@ -169,6 +198,7 @@
         "removed": "{app} entfernt · {used}",
         "profiles": "{count, plural, one {# Profil} other {# Profile}}",
         "signed": "{count, plural, one {# Bundle signiert} other {# Bundles signiert}}",
+        "signedCompressed": "{count, plural, one {# Bundle signiert} other {# Bundles signiert}} · für WLAN komprimiert",
         "phase": {
           "uploading": "Wird auf das Gerät übertragen",
           "installing": "Wird installiert"
