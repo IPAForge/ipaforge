@@ -36,6 +36,23 @@ describe('concreteKeychainGroups', () => {
     expect(result?.dropped).toEqual([])
   })
 
+  it("moves an extension's groups too when it doesn't name its team (LiveContainer's LiveProcess)", () => {
+    // LiveProcess.appex in LiveContainer 3.8.0: the main app's shared groups, but no application-identifier and no
+    // team-identifier of its own. The old team comes from the groups themselves.
+    const declared = [`${OLD_TEAM}.${SHARED}`, ...numbered(`${OLD_TEAM}.`, 127)]
+    const result = concreteKeychainGroups(
+      profile(`${NEW_TEAM}.*`),
+      createDict([['keychain-access-groups', declared]]),
+      NEW_TEAM
+    )
+
+    expect(result?.groups).toEqual([
+      `${NEW_TEAM}.${SHARED}`,
+      ...numbered(`${NEW_TEAM}.`, 127)
+    ])
+    expect(result?.dropped).toEqual([])
+  })
+
   it('expands an unexpanded $(AppIdentifierPrefix)', () => {
     const result = concreteKeychainGroups(
       profile(`${NEW_TEAM}.*`),

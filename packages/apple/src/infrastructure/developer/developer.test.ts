@@ -134,7 +134,7 @@ describe('developer client', () => {
 describe('response parsing', () => {
   const skip = () => {}
 
-  it('clamps negative and missing App ID quantities to zero', () => {
+  it('clamps negative and missing App ID quantities to zero, saying a negative one is unreliable', () => {
     expect(
       toAppIds(
         createDict([
@@ -146,9 +146,12 @@ describe('response parsing', () => {
       ).quota
     ).toEqual({
       max: 10,
+      available: 0,
+      isUnreliable: true
+    })
+    expect(toAppIds(createDict([['appIds', []]]), skip).quota).toEqual({
       available: 0
     })
-    expect(toAppIds(createDict([['appIds', []]]), skip).quota.available).toBe(0)
   })
 
   it('skips malformed entries instead of failing the list', () => {

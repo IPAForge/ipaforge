@@ -27,6 +27,7 @@ export const runLaunchers = {
             accountId: request.input.accountId,
             teamId: request.input.teamId,
             channel: request.input.channel,
+            tryAnyway: request.input.tryAnyway,
             ...request.repair
           }),
           options
@@ -56,16 +57,19 @@ export const launchRun = (
 /** The same request started again with another Apple ID, or (SideStore only) the other channel. */
 export const patchedRequest = (
   request: RunRequest,
-  { accountId, channel }: RestartPatch
+  { accountId, channel, tryAnyway }: RestartPatch
 ): RunRequest =>
   request.kind === 'sidestore'
     ? {
         ...request,
-        input: { ...request.input, ...compact({ accountId, channel }) }
+        input: {
+          ...request.input,
+          ...compact({ accountId, channel, tryAnyway })
+        }
       }
     : {
         ...request,
-        input: { ...request.input, ...compact({ accountId }) }
+        input: { ...request.input, ...compact({ accountId, tryAnyway }) }
       }
 
 /** What the log says about a run that starts: what it installs, never who or where. */

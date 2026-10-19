@@ -137,6 +137,8 @@ Declining a prompt ends the run with `installer.prompt_cancelled`.
 
 `engine.classify(error)` turns any failure into an `ErrorCode` and a list of recovery actions, such as `switch-account`, `revoke-certificate`, `enable-developer-mode`, `unlock-device`, `choose-app-to-remove`, `change-anisette-server` or `retry`. The catalogue is data (`packages/installer/src/diagnostics/catalogue.ts`), built from [the failure catalogue](design/failure-catalogue.md), and covers every code. Errors from outside IPAForge still get a code (`internal.unexpected`). When Apple bans the account's profiles on a device (`device.profile_banned`), the account is marked as banned there and the only recovery offered is another Apple ID.
 
+**No App IDs left, but Apple's count was negative.** Apple sometimes reports a negative number of App IDs left. IPAForge counts that as none (the quota is `isUnreliable`), and `apple.app_id_quota` says `unreliable: true`. Its recovery then offers **Try anyway** first: the run starts again with `tryAnyway`, and both checks (the run's budget and the provisioning) let the App IDs through to Apple, which creates them or refuses with the real limit.
+
 A failed or cancelled run returns a checkpoint. Passing it back as `resume` skips the finished steps. The device and the Apple session are opened again as needed.
 
 ## Watching devices

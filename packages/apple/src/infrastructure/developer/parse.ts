@@ -191,7 +191,9 @@ export const toAppIds = (
     quota: compact({
       max: max.success ? max.data : undefined,
       // Apple sometimes reports a negative or missing quantity; never let that turn into "plenty".
-      available: available.success ? Math.max(0, available.data) : 0
+      available: available.success ? Math.max(0, available.data) : 0,
+      // A negative count is Apple's own glitch: it's said, so the user can still try.
+      isUnreliable: available.success && available.data < 0 ? true : undefined
     })
   }
 }

@@ -59,6 +59,9 @@ export const removeAppInputSchema = z.object({
 
 const teamId = textSchema.optional()
 
+/** Try anyway: create App IDs though Apple's (negative) count says none are left. */
+const tryAnyway = z.boolean().optional()
+
 const accountSchema = { udid: textSchema, accountId: textSchema }
 
 export const teamQuerySchema = z.object({ accountId: textSchema, teamId })
@@ -73,13 +76,15 @@ export const installSideStoreInputSchema = z.object({
   ...accountSchema,
   teamId,
   channel: channelSchema.optional(),
-  variant: z.enum(['sidestore', 'livecontainer'])
+  variant: z.enum(['sidestore', 'livecontainer']),
+  tryAnyway
 })
 
 export const installAppsInputSchema = z.object({
   ...accountSchema,
   teamId,
-  apps: z.array(ipaSourceSchema)
+  apps: z.array(ipaSourceSchema),
+  tryAnyway
 })
 
 export const refreshPlanQuerySchema = z.object({
@@ -98,7 +103,8 @@ export const repairSideStoreInputSchema = z.object({
   bundleId: textSchema,
   reinstall: z.boolean(),
   profile: z.boolean(),
-  pairing: z.boolean()
+  pairing: z.boolean(),
+  tryAnyway
 })
 
 /** Refresh: new profiles for the apps in `profiles`, `apps` signed and installed again. */
@@ -106,7 +112,8 @@ export const refreshAppsInputSchema = z.object({
   ...accountSchema,
   teamId,
   profiles: z.array(textSchema),
-  apps: z.array(ipaSourceSchema)
+  apps: z.array(ipaSourceSchema),
+  tryAnyway
 })
 
 export const placePairingInputSchema = z.object({

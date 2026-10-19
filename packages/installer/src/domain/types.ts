@@ -264,6 +264,8 @@ export type InstallState = AccountState & {
   /** Pairing-app id (`PAIRING_APPS`) whose pairing file goes into the first app once installed. */
   readonly pairingApp?: string
   readonly pairingPlaced?: readonly AppFileTarget[]
+  /** Create App IDs even though Apple's count says none are left, when that count was negative (Try anyway). */
+  readonly tryAnyway?: boolean
 }
 
 /**

@@ -49,13 +49,15 @@ type Counter = ReturnType<typeof progressCounter>
 
 const TEAM_REQUESTS = 2
 
-const assertEnoughAppIds = (plan: AppIdPlan): void => {
-  if (plan.enough) return
+const assertEnoughAppIds = (plan: AppIdPlan, tryAnyway: boolean): void => {
+  // Apple's count was negative and the user asked to try: Apple says itself whether it creates them.
+  if (plan.enough || (tryAnyway && plan.isUnreliable)) return
   throw new IPAForgeError(ErrorCode.AppIdQuotaExceeded, {
     data: compact({
       needed: plan.create.length,
       available: plan.available,
-      nextSlotAt: plan.nextSlotAt?.toISOString()
+      nextSlotAt: plan.nextSlotAt?.toISOString(),
+      unreliable: plan.isUnreliable
     })
   })
 }
@@ -138,7 +140,7 @@ export const provisionApp = async (
     ctx.deps.clock.now()
   )
 
-  assertEnoughAppIds(plan)
+  assertEnoughAppIds(plan, request.tryAnyway ?? false)
   // Every request from here: App IDs to make, the app group and its assignments, and one profile per bundle.
   counter.expect(
     TEAM_REQUESTS +

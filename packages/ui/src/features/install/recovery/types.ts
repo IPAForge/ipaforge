@@ -13,6 +13,7 @@ export type FixKind =
   | 'pair'
   | 'account'
   | 'channel'
+  | 'tryAnyway'
   | 'info'
   | 'later'
 

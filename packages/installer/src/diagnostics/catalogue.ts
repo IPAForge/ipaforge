@@ -40,7 +40,7 @@ export const RECOVERY_CATALOGUE = {
     R.Retry
   ],
   'apple.anisette_not_provisioned': [R.ChangeAnisetteServer, R.Retry],
-  'apple.app_id_quota': [R.WaitForAppIdSlot, R.SwitchAccount],
+  'apple.app_id_quota': [R.WaitForAppIdSlot, R.TryAnyway, R.SwitchAccount],
   'apple.certificate_limit': [R.RevokeCertificate, R.SwitchAccount],
   'apple.invalid_credentials': [R.ReEnterPassword],
   'apple.account_locked': [R.SignInOnAppleDevice, R.SwitchAccount],

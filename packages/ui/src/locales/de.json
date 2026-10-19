@@ -655,6 +655,7 @@
     "choose-team": "Team auswählen",
     "revoke-certificate": "Zertifikat widerrufen",
     "wait-for-app-id-slot": "Auf eine freie App-ID warten",
+    "try-anyway": "Trotzdem versuchen",
     "choose-app-to-remove": "App zum Entfernen auswählen",
     "unlock-device": "Gerät entsperren",
     "enable-developer-mode": "Entwicklermodus aktivieren",
@@ -749,7 +750,10 @@
         "how": "Der Build des anderen Kanals funktioniert vielleicht auf diesem Gerät.",
         "button": "Aus {channel} installieren"
       },
-      "open": "Öffnen"
+      "open": "Öffnen",
+      "tryAnyway": {
+        "how": "Apple hat eine negative Zahl freier App-IDs gemeldet – ein bekannter Fehler auf Apples Seite; die echte Zahl kann höher sein. „Trotzdem versuchen“ bittet Apple, sie anzulegen; ist das Limit wirklich erreicht, sagt Apple das."
+      }
     },
     "reportHint": "Öffnet ein neues GitHub-Issue mit der Diagnose. Nichts wird gesendet, bevor du es abschickst."
   },
@@ -1021,6 +1025,7 @@
       "foundMany": "Gefunden in {source} und {count, plural, one {# weiteren Quelle} other {# weiteren Quellen}}. Erneuern installiert es aus der unten gewählten, seine Daten bleiben, und IPAForge erneuert es danach weiter.",
       "pickSource": "Installieren aus",
       "choice": "{source} · {version}",
+      "choiceOlder": "{source} · {version} (älter als installiert)",
       "how": "Füge ihre .ipa einmal unter „Vorladen“ hinzu, dann erneuert IPAForge sie von da an regelmäßig."
     },
     "auto": {

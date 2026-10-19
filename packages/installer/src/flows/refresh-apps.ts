@@ -32,6 +32,8 @@ export type RefreshAppsInput = {
   readonly profiles: readonly string[]
   /** Apps to sign and install again. */
   readonly apps: readonly AppSource[]
+  /** Create App IDs even though Apple's count says none are left, when that count was negative (Try anyway). */
+  readonly tryAnyway?: boolean
 }
 
 export const REFRESH_APPS = 'refreshApps'
@@ -82,6 +84,7 @@ export const refreshAppsFlow = (
       udid: input.udid,
       accountId: input.accountId,
       teamId: input.teamId,
+      tryAnyway: input.tryAnyway,
       apps: input.apps.map(jobFor)
     }),
     pipeline: pipeline<InstallState>(REFRESH_APPS, [

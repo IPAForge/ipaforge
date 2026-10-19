@@ -26,7 +26,8 @@ export const DEFAULT_DEVICE_CONFIG: DeviceConfig = {
   pairingPollIntervalMs: 1000,
   osPairingTimeoutMs: 60_000,
   pairingTimeoutMs: 120_000,
-  afcWriteChunkBytes: 64 * 1024,
+  // Measured on an iPhone over Wi-Fi (device-probe afc-speed): 64 KiB 2.7 MiB/s, 256 KiB 4.7, 1 MiB 6.4, 4 MiB 6.7.
+  afcWriteChunkBytes: 1024 * 1024,
   afcReadChunkBytes: 1024 * 1024
 }
 

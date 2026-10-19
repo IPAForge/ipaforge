@@ -1,4 +1,5 @@
 import { afcCheckCommand } from '@desktop/probes/device/commands/afc-check.ts'
+import { afcSpeedCommand } from '@desktop/probes/device/commands/afc-speed.ts'
 import {
   appsCommand,
   infoCommand,
@@ -26,6 +27,7 @@ export const deviceCommands = (probe: DeviceProbe): ProbeCommands => ({
   targets: targetsCommand(probe),
   'pairing-status': pairingStatusCommand(probe),
   'afc-check': afcCheckCommand(probe),
+  'afc-speed': afcSpeedCommand(probe),
   place: placeCommand(probe),
   'reveal-devmode': revealDevModeCommand(probe)
 })

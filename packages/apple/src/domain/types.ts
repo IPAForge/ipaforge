@@ -123,6 +123,8 @@ export type AppIdQuota = {
   readonly max?: number
   /** Never negative (Apple sometimes reports negative numbers). */
   readonly available: number
+  /** Apple reported a negative number left: its count can't be trusted (it may still create App IDs). */
+  readonly isUnreliable?: boolean
 }
 
 export type AppGroup = {
@@ -151,6 +153,8 @@ export type AppIdPlan = {
   readonly enough: boolean
   /** When the earliest existing App ID expires (frees a slot), if known. */
   readonly nextSlotAt?: Date
+  /** Apple's count was negative, so "not enough" may be wrong. */
+  readonly isUnreliable?: boolean
 }
 
 /** A signed-in Apple ID. Secret: whoever holds it can act as the user towards Apple. */

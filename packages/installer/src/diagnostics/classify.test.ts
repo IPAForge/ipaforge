@@ -30,7 +30,10 @@ describe('classify', () => {
       ErrorCode.AnisetteUnavailable,
       ['change-anisette-server', 'check-network', 'retry']
     ],
-    [ErrorCode.AppIdQuotaExceeded, ['wait-for-app-id-slot', 'switch-account']]
+    [
+      ErrorCode.AppIdQuotaExceeded,
+      ['wait-for-app-id-slot', 'try-anyway', 'switch-account']
+    ]
   ])('maps %s to its recovery', (code, recovery) => {
     expect(classify(new IPAForgeError(code))).toEqual({ code, recovery })
   })

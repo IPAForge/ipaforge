@@ -6,14 +6,22 @@ import type { RunKind } from '@ui/state/active-run/types.ts'
 /**
  * The fixes to show for a failure, in the Engine's order: those whose screen comes later are left out, so is
  * another channel for a run without one (apps), and Try again isn't offered twice when the first fix already
- * continues the run.
+ * continues the run. Try anyway shows only when Apple's App ID count was negative, as the first fix.
  */
 export const recoveryFixes = (
   actions: readonly RecoveryAction[],
-  kind: RunKind = 'sidestore'
+  kind: RunKind = 'sidestore',
+  isCountUnreliable = false
 ): RecoveryFixes => {
   const hidden = kind === 'apps' ? ['later', 'channel'] : ['later']
-  const shown = actions.filter((action) => !hidden.includes(fixes[action].kind))
+  // Try anyway only when Apple's App ID count was negative, and then first: the count is what's wrong.
+  const ordered = isCountUnreliable
+    ? [
+        ...actions.filter((action) => fixes[action].kind === 'tryAnyway'),
+        ...actions.filter((action) => fixes[action].kind !== 'tryAnyway')
+      ]
+    : actions.filter((action) => fixes[action].kind !== 'tryAnyway')
+  const shown = ordered.filter((action) => !hidden.includes(fixes[action].kind))
   const [first, ...rest] = shown
   const others =
     first && fixes[first].kind === 'resume'

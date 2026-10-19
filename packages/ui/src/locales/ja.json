@@ -655,6 +655,7 @@
     "choose-team": "チームを選択",
     "revoke-certificate": "証明書を失効",
     "wait-for-app-id-slot": "App IDの空きを待つ",
+    "try-anyway": "それでも試す",
     "choose-app-to-remove": "削除するアプリを選択",
     "unlock-device": "デバイスのロックを解除",
     "enable-developer-mode": "デベロッパモードをオンにする",
@@ -749,7 +750,10 @@
         "how": "もう一方のチャンネルのビルドならこのデバイスで動くかもしれません。",
         "button": "{channel}からインストール"
       },
-      "open": "開く"
+      "open": "開く",
+      "tryAnyway": {
+        "how": "Appleが残りのApp ID数を負の値で返しました。これはApple側の既知の不具合で、実際にはもっと残っている可能性があります。「それでも試す」でAppleに作成を依頼します。本当に上限に達している場合はAppleがそう返します。"
+      }
     },
     "reportHint": "診断情報を記入した新しいGitHub Issueを開きます。送信するまで何も送られません。"
   },
@@ -1021,6 +1025,7 @@
       "foundMany": "{source}とほか{count, plural, other {#件}}のソースで見つかりました。リフレッシュでは下で選んだソースからインストールし、データはそのまま残ります。以後はIPAForgeがリフレッシュを続けます。",
       "pickSource": "インストール元",
       "choice": "{source} · {version}",
+      "choiceOlder": "{source} · {version}(インストール済みより古い)",
       "how": "「プリロード」でその.ipaを一度追加すると、以後はIPAForgeがリフレッシュを管理します。"
     },
     "auto": {

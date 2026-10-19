@@ -655,6 +655,7 @@
     "choose-team": "Choose a team",
     "revoke-certificate": "Revoke a certificate",
     "wait-for-app-id-slot": "Wait for a free App ID",
+    "try-anyway": "Try anyway",
     "choose-app-to-remove": "Choose an app to remove",
     "unlock-device": "Unlock the device",
     "enable-developer-mode": "Turn on Developer Mode",
@@ -749,7 +750,10 @@
         "how": "The other channel’s build may work on this device.",
         "button": "Install from {channel}"
       },
-      "open": "Open"
+      "open": "Open",
+      "tryAnyway": {
+        "how": "Apple reported a negative number of App IDs left, which is a known glitch on its side: the real number may be higher. Try anyway asks Apple to create them; if it really is at the limit, it says so."
+      }
     },
     "reportHint": "Opens a new GitHub issue with the diagnostics filled in. Nothing is sent until you submit it."
   },
@@ -1021,6 +1025,7 @@
       "foundMany": "Found in {source} and {count, plural, one {# other source} other {# other sources}}. Refresh installs it from the one picked below, keeping its data, and IPAForge keeps it refreshed from then on.",
       "pickSource": "Install it from",
       "choice": "{source} · {version}",
+      "choiceOlder": "{source} · {version} (older than installed)",
       "how": "Add its .ipa in Preload once, and IPAForge keeps it refreshed from then on."
     },
     "auto": {

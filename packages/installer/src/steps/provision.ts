@@ -32,6 +32,7 @@ export const provisionStep = (
         device: { udid: device.udid, name: device.name },
         bundles: identity.bundles,
         appGroup: identity.appGroup,
+        tryAnyway: state.tryAnyway,
         // Each request to Apple as it finishes: what it was part of, so the UI can say "Getting profiles · 2 of 5".
         onProgress: ({ task, done, total, fraction }: ProvisionProgress) =>
           context.progress(fraction, {

@@ -13,6 +13,8 @@ export type InstallSideStoreInput = {
   /** Default: the channel the catalog recommends for the device's iOS version. */
   readonly channel?: Channel
   readonly variant: SideStoreVariant
+  /** Create App IDs even though Apple's count says none are left, when that count was negative (Try anyway). */
+  readonly tryAnyway?: boolean
 }
 
 /** `replace` rewrites every file; `keep-existing` only writes the files an app does not have yet. */

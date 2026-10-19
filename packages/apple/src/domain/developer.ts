@@ -67,7 +67,8 @@ export const planAppIds = (
     create,
     available: quota.available,
     enough: create.length <= quota.available,
-    nextSlotAt
+    nextSlotAt,
+    isUnreliable: quota.isUnreliable
   })
 }
 
