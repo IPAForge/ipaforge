@@ -459,6 +459,18 @@
       "rate_limited": {
         "title": "Prea multe cereri către GitHub",
         "body": "GitHub limitează descărcările deocamdată. Așteaptă câteva minute și încearcă din nou."
+      },
+      "app_source_unreachable": {
+        "title": "Sursa nu a putut fi accesată",
+        "body": "Verifică linkul și conexiunea la internet, apoi încearcă din nou."
+      },
+      "app_source_invalid": {
+        "title": "Acest link nu este o sursă de aplicații",
+        "body": "Nu listează aplicații în format AltStore. Verifică linkul sau adaugă în schimb fișierul .ipa al aplicației."
+      },
+      "app_source_exists": {
+        "title": "Această sursă este deja adăugată",
+        "body": "Aplicațiile ei sunt deja în „Răsfoiește aplicații”."
       }
     },
     "plist": {
@@ -1012,6 +1024,11 @@
   "preload": {
     "title": "Preîncarcă aplicații",
     "description": "Instalează propriile aplicații: semnate cu ID-ul tău Apple, instalate prin USB, una după alta.",
+    "tabs": {
+      "label": "Preîncărcare",
+      "apps": "Adaugă aplicații",
+      "sources": "Surse"
+    },
     "add": {
       "drop": "Trage fișiere .ipa aici",
       "or": "sau",
@@ -1019,8 +1036,6 @@
       "link": "Adaugă dintr-un link…"
     },
     "catalog": {
-      "title": "Din catalog",
-      "hint": "Cele mai noi versiuni, verificate cu suma de control publicată",
       "recommended": "Recomandat",
       "added": "Adăugat",
       "add": "Adaugă",
@@ -1030,10 +1045,89 @@
       "stikdebug": "Activează JIT pentru aplicațiile care au nevoie, pe dispozitiv.",
       "feather": "Semnează și instalează aplicații pe dispozitiv cu certificatul tău."
     },
+    "browse": {
+      "title": "Răsfoiește aplicații",
+      "count": "{apps, plural, one {# aplicație} few {# aplicații} other {# de aplicații}} din {sources, plural, one {# sursă} few {# surse} other {# de surse}}",
+      "source": "Sursă",
+      "allSources": "Toate sursele",
+      "search": "Caută aplicații",
+      "manage": "Gestionează sursele",
+      "noMatch": "Nicio aplicație nu corespunde cu „{query}”.",
+      "allOff": "Toate sursele sunt dezactivate. Activează una în Surse.",
+      "loading": "Se citesc sursele…",
+      "catalogLine": "Cea mai nouă versiune · verificată cu suma de control",
+      "version": "{version} · {size}",
+      "from": "{name}, și în {others}",
+      "details": "Detalii despre {name}",
+      "notRefreshed": {
+        "title": "{name} nu a putut fi reîmprospătată",
+        "body": "Se afișează aplicațiile de la ultima reîmprospătare, {when}.",
+        "retry": "Încearcă din nou"
+      }
+    },
+    "detail": {
+      "version": "Versiune",
+      "latest": "{version} (cea mai nouă)",
+      "size": "Dimensiune",
+      "needs": "Necesită",
+      "needsIos": "iOS {version}",
+      "anyIos": "Orice iOS",
+      "from": "Din",
+      "builtin": "Integrată · de încredere",
+      "added": "O sursă adăugată de tine",
+      "untrusted": "Dintr-o sursă adăugată de tine: IPAForge nu îi verifică aplicațiile.",
+      "add": "Adaugă în listă",
+      "inList": "În listă",
+      "close": "Închide"
+    },
+    "sources": {
+      "description": "De unde ia „Răsfoiește aplicații” aplicațiile. Sursele integrate sunt întreținute de IPAForge; adaugă altele prin linkul lor (format AltStore).",
+      "add": "Adaugă sursă…",
+      "refreshAll": "Reîmprospătează tot",
+      "list": "Surse",
+      "builtin": "Integrată · de încredere",
+      "added": "Adăugată de tine",
+      "catalogName": "Catalogul IPAForge",
+      "apps": "{count, plural, one {# aplicație} few {# aplicații} other {# de aplicații}}",
+      "updated": "actualizată {when}",
+      "notRead": "Necitită încă",
+      "skipped": "{count, plural, one {# omisă (nu e .ipa)} few {# omise (nu sunt .ipa)} other {# omise (nu sunt .ipa)}}",
+      "failed": "Nu a putut fi accesată.",
+      "failedCopy": "Se afișează ultima copie, din {when}.",
+      "refreshing": "Se reîmprospătează…",
+      "show": "Arată aplicațiile din {name}",
+      "refresh": "Reîmprospătează {name}",
+      "remove": "Elimină {name}",
+      "on": "Activată",
+      "off": "Dezactivată",
+      "note": "IPAForge nu verifică aplicațiile din sursele pe care le adaugi. Adaugă doar surse în care ai încredere."
+    },
+    "addSource": {
+      "title": "Adaugă o sursă",
+      "label": "Linkul sursei",
+      "placeholder": "https://example.com/apps.json",
+      "hint": "O sursă în format AltStore, cum citește SideStore. De obicei se termină în .json.",
+      "check": "Verifică",
+      "checking": "Se verifică sursa…",
+      "notLink": "Introdu un link care începe cu https://",
+      "notHttps": "Folosește un link https://: IPAForge citește surse doar printr-o conexiune securizată.",
+      "previewTitle": "Adaugi această sursă?",
+      "includes": "{count, plural, one {# aplicație, printre care:} few {# aplicații, printre care:} other {# de aplicații, printre care:}}",
+      "skipped": "{count, plural, one {Încă # omisă: descărcarea ei nu e un .ipa.} few {Încă # omise: descărcarea lor nu e un .ipa.} other {Încă # omise: descărcarea lor nu e un .ipa.}}",
+      "warningTitle": "Adaugă doar surse în care ai încredere",
+      "warningBody": "IPAForge nu verifică aplicațiile din sursele pe care le adaugi. Fiecare aplicație este totuși verificată înainte de instalare.",
+      "back": "Înapoi",
+      "confirm": "Adaugă sursa"
+    },
+    "removeSource": {
+      "title": "Elimini {name}?",
+      "body": "Aplicațiile ei dispar din „Răsfoiește aplicații”. Aplicațiile instalate din ea rămân pe dispozitiv, iar cele din lista De instalat rămân și ele acolo.",
+      "confirm": "Elimină"
+    },
     "list": {
       "title": "De instalat",
       "count": "{count, plural, one {# aplicație} few {# aplicații} other {# de aplicații}}",
-      "empty": "Nicio aplicație încă. Trage fișiere .ipa aici, alege-le, adaugă un link sau alege din catalog."
+      "empty": "Nicio aplicație încă. Trage fișiere .ipa aici, alege-le, adaugă un link sau alege una din „Răsfoiește aplicații”."
     },
     "row": {
       "waiting": "Așteaptă dispozitivul și ID-ul Apple",
@@ -1045,7 +1139,8 @@
       "pairing": "Primește fișierul de asociere și certificatul",
       "fromCatalog": "Din catalog · Stabil",
       "remove": "Elimină {name}",
-      "cannot": "Nu poate fi instalată."
+      "cannot": "Nu poate fi instalată.",
+      "fromSource": "Din {name}"
     },
     "problem": {
       "notIpa": "Doar fișierele .ipa pot fi instalate.",

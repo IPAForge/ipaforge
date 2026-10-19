@@ -15,7 +15,7 @@ IPAForge is an open-source desktop tool (Windows, macOS, Linux) for installing S
 
 ## Project Structure
 
-> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `packages/rpc`, `packages/ui` (palettes, top bar and sidebar shell, routes, i18n with six languages, Engine query hooks and the device feed, Apple ID sign-in and the Accounts page, the device picker and Devices page, the install home, the install run with its questions, step details and recovery box (`state/active-run`, `state/selection`), the log viewer (`features/logs`, `state/log-view`), the Preload page (`features/preload`, `state/preload`); runs in a browser on a fake Engine via its own Vite config), `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, the RPC transport and IPA resolver, maintainer probes, and the Electron shell: one hardened window rendering `@ipaforge/ui`, connected to the Engine in main over a MessagePort), `fixtures/signer`, `scripts/`, `.github/workflows/`.
+> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `packages/rpc`, `packages/ui` (palettes, top bar and sidebar shell, routes, i18n with six languages, Engine query hooks and the device feed, Apple ID sign-in and the Accounts page, the device picker and Devices page, the install home, the install run with its questions, step details and recovery box (`state/active-run`, `state/selection`), the log viewer (`features/logs`, `state/log-view`), the Preload page with Browse apps and the Sources tab (`features/preload`, `state/preload`); runs in a browser on a fake Engine via its own Vite config), `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, the RPC transport and IPA resolver, maintainer probes, and the Electron shell: one hardened window rendering `@ipaforge/ui`, connected to the Engine in main over a MessagePort), `fixtures/signer`, `scripts/`, `.github/workflows/`.
 
 ```
 ipaforge/
@@ -24,7 +24,7 @@ ipaforge/
 │   ├── signer/       # Mach-O code signing (CodeDirectory, CodeResources, entitlements, CMS, fat, bundles, IPA)
 │   ├── device/       # usbmux, lockdown, pairing, AFC, house_arrest, installation_proxy
 │   ├── apple/        # GSA auth + 2FA, anisette provider chain, developer services API
-│   ├── catalog/      # release sources (GitHub API), downloads, cache
+│   ├── catalog/      # release sources (GitHub API), downloads, cache, AltStore-format app sources
 │   ├── installer/    # pipelines/flows, diagnostics, Engine facade
 │   ├── rpc/          # typed Engine ⇄ UI RPC (Electron IPC)
 │   └── ui/           # shared React app (features, theme palettes, i18n)

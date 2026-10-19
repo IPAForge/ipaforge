@@ -4,3 +4,13 @@
 
 /* Scan the UI sources for utility classes wherever the host's Vite root is. */
 @source "./";
+
+/*
+ * Text never runs out of its box: a long word or link (an app's name, a URL in a source's description) wraps where
+ * it has to, everywhere. `anywhere` (unlike `break-word`) also lets flex and grid items shrink below such a word.
+ */
+@layer base {
+  body {
+    overflow-wrap: anywhere;
+  }
+}

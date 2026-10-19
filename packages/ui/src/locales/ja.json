@@ -459,6 +459,18 @@
       "rate_limited": {
         "title": "GitHubへのリクエストが多すぎます",
         "body": "GitHubが現在ダウンロードを制限しています。数分待ってから、もう一度お試しください。"
+      },
+      "app_source_unreachable": {
+        "title": "このソースに接続できませんでした",
+        "body": "リンクとインターネット接続を確認して、もう一度お試しください。"
+      },
+      "app_source_invalid": {
+        "title": "このリンクはAppソースではありません",
+        "body": "AltStore形式のAppが含まれていません。リンクを確認するか、代わりにAppの.ipaファイルを追加してください。"
+      },
+      "app_source_exists": {
+        "title": "このソースはすでに追加されています",
+        "body": "そのAppはすでに「アプリを探す」にあります。"
       }
     },
     "plist": {
@@ -1012,6 +1024,11 @@
   "preload": {
     "title": "アプリのプリロード",
     "description": "自分のアプリをインストールします。Apple ID で署名し、USB 経由で 1 つずつインストールします。",
+    "tabs": {
+      "label": "プリロード",
+      "apps": "アプリを追加",
+      "sources": "ソース"
+    },
     "add": {
       "drop": ".ipa ファイルをここにドロップ",
       "or": "または",
@@ -1019,8 +1036,6 @@
       "link": "リンクから追加…"
     },
     "catalog": {
-      "title": "カタログから",
-      "hint": "最新リリース。公開されたチェックサムで検証済み",
       "recommended": "おすすめ",
       "added": "追加済み",
       "add": "追加",
@@ -1030,10 +1045,89 @@
       "stikdebug": "必要なアプリの JIT をデバイス上で有効にします。",
       "feather": "あなたの証明書でアプリをデバイス上で署名・インストールします。"
     },
+    "browse": {
+      "title": "アプリを探す",
+      "count": "{sources, plural, other {# 個のソース}}から{apps, plural, other {# 個のアプリ}}",
+      "source": "ソース",
+      "allSources": "すべてのソース",
+      "search": "アプリを検索",
+      "manage": "ソースを管理",
+      "noMatch": "「{query}」に一致するアプリはありません。",
+      "allOff": "すべてのソースがオフです。「ソース」でいずれかをオンにしてください。",
+      "loading": "ソースを読み込み中…",
+      "catalogLine": "最新リリース · チェックサムで検証済み",
+      "version": "{version} · {size}",
+      "from": "{name}（{others} にもあります）",
+      "details": "{name} の詳細",
+      "notRefreshed": {
+        "title": "{name} を更新できませんでした",
+        "body": "前回の更新({when})のアプリを表示しています。",
+        "retry": "再試行"
+      }
+    },
+    "detail": {
+      "version": "バージョン",
+      "latest": "{version}(最新)",
+      "size": "サイズ",
+      "needs": "必要条件",
+      "needsIos": "iOS {version}",
+      "anyIos": "すべての iOS",
+      "from": "提供元",
+      "builtin": "内蔵 · 信頼済み",
+      "added": "あなたが追加したソース",
+      "untrusted": "あなたが追加したソースのアプリです。IPAForge はそのアプリを審査していません。",
+      "add": "リストに追加",
+      "inList": "リストにあります",
+      "close": "閉じる"
+    },
+    "sources": {
+      "description": "「アプリを探す」がアプリを見つける場所です。内蔵ソースは IPAForge が管理します。ほかのソースはリンクで追加できます(AltStore 形式)。",
+      "add": "ソースを追加…",
+      "refreshAll": "すべて更新",
+      "list": "ソース",
+      "builtin": "内蔵 · 信頼済み",
+      "added": "自分で追加",
+      "catalogName": "IPAForge カタログ",
+      "apps": "{count, plural, other {# 個のアプリ}}",
+      "updated": "{when}に更新",
+      "notRead": "まだ読み込まれていません",
+      "skipped": "{count, plural, other {# 個をスキップ(.ipa ではない)}}",
+      "failed": "接続できませんでした。",
+      "failedCopy": "{when}の最後のコピーを表示しています。",
+      "refreshing": "更新中…",
+      "show": "{name} のアプリを表示",
+      "refresh": "{name} を更新",
+      "remove": "{name} を削除",
+      "on": "オン",
+      "off": "オフ",
+      "note": "IPAForge は追加したソースのアプリを審査しません。信頼できるソースだけを追加してください。"
+    },
+    "addSource": {
+      "title": "ソースを追加",
+      "label": "ソースのリンク",
+      "placeholder": "https://example.com/apps.json",
+      "hint": "SideStore が読み込む AltStore 形式のソース。通常は .json で終わります。",
+      "check": "確認",
+      "checking": "ソースを確認中…",
+      "notLink": "https:// で始まるリンクを入力してください",
+      "notHttps": "https:// のリンクを使ってください。IPAForge は安全な接続でのみソースを読み込みます。",
+      "previewTitle": "このソースを追加しますか?",
+      "includes": "{count, plural, other {# 個のアプリ(以下を含む):}}",
+      "skipped": "{count, plural, other {ほかに # 個を除外しました(ダウンロードが .ipa ではありません)。}}",
+      "warningTitle": "信頼できるソースだけを追加してください",
+      "warningBody": "IPAForge は追加したソースのアプリを審査しません。ただし、各アプリはインストール前に確認されます。",
+      "back": "戻る",
+      "confirm": "ソースを追加"
+    },
+    "removeSource": {
+      "title": "{name} を削除しますか?",
+      "body": "そのアプリは「アプリを探す」から消えます。そこからインストールしたアプリはデバイスに残り、「インストールするアプリ」リストのアプリもそのまま残ります。",
+      "confirm": "削除"
+    },
     "list": {
       "title": "インストールするアプリ",
       "count": "{count, plural, other {# 個のアプリ}}",
-      "empty": "まだアプリがありません。.ipa ファイルをここにドロップするか、選択するか、リンクを追加するか、カタログから選んでください。"
+      "empty": "まだアプリがありません。.ipa ファイルをここにドロップするか、選択するか、リンクを追加するか、「アプリを探す」から選んでください。"
     },
     "row": {
       "waiting": "デバイスと Apple ID を待っています",
@@ -1045,7 +1139,8 @@
       "pairing": "ペアリングファイルと証明書を受け取ります",
       "fromCatalog": "カタログから · 安定版",
       "remove": "{name} を削除",
-      "cannot": "インストールできません。"
+      "cannot": "インストールできません。",
+      "fromSource": "{name} から"
     },
     "problem": {
       "notIpa": "インストールできるのは .ipa ファイルのみです。",

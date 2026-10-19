@@ -44,7 +44,7 @@ UI to Engine, each with an `id` that its response echoes:
 
 | `type` | Fields | Engine call |
 |---|---|---|
-| `query` | `call: { method, args }` | `listDevices`, `deviceStatus`, `pairDevice` (waits for the Trust tap, within the request timeout), `listAccounts`, `listTeams`, `catalogApps`, `recommendedChannel`, `appIdQuota`, `listCertificates`, `planInstall`, and `signOut` (a one-shot call answered the same way) |
+| `query` | `call: { method, args }` | `listDevices`, `deviceStatus`, `pairDevice` (waits for the Trust tap, within the request timeout), `listAccounts`, `listTeams`, `catalogApps`, `recommendedChannel`, `appIdQuota`, `listCertificates`, `planInstall`, the app sources (`listSources`, `sourceApps`, `checkSource` and `addSource`, both https only, `removeSource`, `setSourceEnabled`, `refreshSources`), and `signOut` (a one-shot call answered the same way) |
 | `start` | `runId`, `call: { command, input }`, `resume?` | `installSideStore`, `installApps`, `placePairing`, `signIn` |
 | `answer` | `runId`, `answer` | `handle.answer()` |
 | `decline` | `runId` | `handle.decline()` |

@@ -29,7 +29,7 @@ Sideloading tools tend to fail in a few recurring ways. IPAForge is designed aro
 ## Features
 
 - **One-click SideStore.** Install SideStore, or LiveContainer with SideStore, from the Stable or Nightly channel. The pairing file and signing certificate are placed automatically.
-- **Preload apps.** Drop .ipa files, choose them, add a link, or pick from the catalog (LiveContainer, StikDebug, Feather…). Each app is checked before anything changes: its version, the App IDs it needs, whether the device can run it, and whether it updates one already installed. Then they install in one run.
+- **Preload apps.** Drop .ipa files, choose them, add a link, or browse apps from the catalog (LiveContainer, StikDebug, Feather…), SideStore's source and any AltStore-format source you add. Each app is checked before anything changes: its version, the App IDs it needs, whether the device can run it, and whether it updates one already installed. Then they install in one run.
 - **Clear install plan.** Before anything changes, IPAForge shows what the install uses: App IDs and how many are left this week, free-app slots on the device, whether the certificate is reused, and the team.
 - **Live progress.** Every step reports what it did, for example the release it found, whether a saved session was reused, or how many App IDs it registered.
 - **Recovery, not dead ends.** Failures lead to a screen with the fixes that apply, such as continuing from where the run stopped or switching Apple ID. Diagnostics can be copied, and an issue report opens pre-filled.
@@ -48,7 +48,7 @@ Coming next: app sources and updates (browse trusted sources, update every insta
 | Device communication | `@ipaforge/device` | ✅ Complete: usbmux, lockdown, pairing, AFC, house_arrest, installation_proxy, misagent |
 | Apple account | `@ipaforge/apple` | ✅ Complete: sign-in with two-factor authentication, anisette with fallback, saved accounts |
 | Developer services | `@ipaforge/apple` | ✅ Complete: teams, certificates, App IDs, app groups, devices, provisioning profiles |
-| Release catalog | `@ipaforge/catalog` | ✅ Complete: GitHub release resolution, mirrors, verified downloads, cache |
+| Release catalog | `@ipaforge/catalog` | ✅ Complete: GitHub release resolution, mirrors, verified downloads, cache, AltStore-format app sources |
 | Install engine | `@ipaforge/installer` | ✅ Complete: resumable pipelines, install flows, free-app limit, error catalogue |
 | Engine ⇄ UI protocol | `@ipaforge/rpc` | ✅ Complete: typed, validated messages over Electron IPC |
 | User interface | `@ipaforge/ui` | ✅ Foundation complete: accounts, devices, the install run with its questions, step details, recovery and the log viewer, in six languages, checked by screenshot and WCAG 2.2 AA tests; onboarding and preloading come next |

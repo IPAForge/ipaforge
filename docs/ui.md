@@ -141,12 +141,24 @@ To add a palette, add its id to `paletteIds`, add its tokens to `palettes.ts` an
     - Try again isn't offered twice when the first fix already continues the run;
     - where the run continues from, **Copy diagnostics** (the code, step, app version, install choice and device model, never an Apple ID, name or serial), **Back to Install** (to choose another app, channel or Apple ID; the cancelled box has it too), **Show logs** (Logs with only this run's lines, from when it started to when it ended), and **Report the problem**, which opens a new GitHub issue in the browser with the title and diagnostics filled in (`utils/issue-url.ts`); nothing is sent until the user submits it there.
 
-**Preload** (`features/preload/`) installs your own apps, from four places:
+**Preload** (`features/preload/`) installs your own apps. It has two tabs, **Add apps** and **Sources**. Apps come from four places:
 
 - **Drop .ipa files** anywhere on the window (the drop zone lights up). A file that isn't an .ipa is listed as such, never sent to the Engine.
 - **Choose files…** opens the host's file dialog (`engine.chooseIpas()`; in the desktop app the main process opens it).
 - **Add from a link…**: a direct https link to an .ipa, which the Engine downloads first.
-- **From the catalog**: every app the catalog lists (SideStore, LiveContainer + SideStore, LiveContainer, StikDebug, Feather), with what each is for; releases come from GitHub, checked against their published SHA-256.
+- **Browse apps**: the apps of every source that's on, one card each, laid out the same way (name, what it's for, the latest version and size, then **Add** and where it comes from).
+  - **Sources:** the IPAForge catalog (SideStore, LiveContainer + SideStore, LiveContainer, StikDebug, Feather; releases from GitHub, checked against their published SHA-256) and the AltStore-format app sources.
+  - **One card per app:** the same app in two sources shows once, from the first (built-in sources come first), and its tag says how many others have it ("IPAForge catalog +1"; hover for their names).
+  - **Filter and search:** a source filter (All sources, or one) and a search on name, developer and subtitle. **Manage sources** opens the Sources tab.
+  - **Details:** a source app's name opens them: its description, developer, a version picker (the latest, or an older one), size, the iOS it needs, and its source. A source the user added says that IPAForge doesn't review its apps.
+  - **Adding:** a source app is added by its version's download link (`{ kind: "url" }`) and its row says "From <source>"; a catalog app by its id.
+  - **A source that can't be read:** Browse apps shows a warning with **Try again**, and keeps showing that source's apps from its last good copy.
+
+**Sources** lists every app source:
+- **Built in and trusted:** the IPAForge catalog and SideStore's official source. They can be turned off, but not removed.
+- **Added by you:** any other source. Each can be turned on or off, refreshed (AltStore sources) or removed; removing asks first.
+- **Status line:** each source shows how many apps it has, when it was last read, how many apps were left out (no https `.ipa` download), or that its last refresh failed.
+- **Add source…:** paste a link, then **Check**. The Engine reads it without saving it (`checkSource`), and the dialog shows a preview: the source's name, how many apps, a few of them, what was left out, and a warning to add only sources you trust. **Add source** then saves it. A link that isn't https is refused in the dialog; one the Engine can't reach, that isn't a source, or that's already added gets its error's title. Each change refreshes the list and Browse apps (the `sources` query keys).
 
 The list (`state/preload/`, kept while you visit other sections) asks the Engine's `planInstall` for each app once the device and the Apple ID are ready, and shows what it says:
 
@@ -162,7 +174,7 @@ The list (`state/preload/`, kept while you visit other sections) asks the Engine
 
 It starts `engine.installApps` with the ready apps. The run is the same run view as Install (one run at a time, in `state/active-run/`, which holds either kind; the other page says an install is running and links to it), with the steps grouped by app: the device and Apple ID steps first, then each app's own. **Done** empties the list.
 
-The browser dev host's fake Engine plays it too: its file dialog picks `MyGame.ipa`, a link "downloads" for a moment, StikDebug is on the device in an older version, and names decide the problems (a name with `Encrypted`, `Future` or `NotAnApp` in it).
+The browser dev host's fake Engine plays it too: its file dialog picks `MyGame.ipa`, a link "downloads" for a moment, StikDebug is on the device in an older version, and names decide the problems (a name with `Encrypted`, `Future` or `NotAnApp` in it). Its sources: the catalog and SideStore's source built in, and any https link added as "Example Community Repo"; a link containing `unreachable` or `notsource` fails that way, and `skipped` leaves two apps out. The `source-offline` scenario makes SideStore's source fail to refresh.
 
 **Manage → Accounts** (`features/accounts/`) lists the saved Apple IDs with their teams and state, marks the one **in use**, and offers **Use**, **Sign in again** (only for an expired session; it opens sign-in with the Apple ID filled in) and **Sign out**. Signing out asks first, in a dialog that says what IPAForge forgets (the Apple ID, its session, its saved password) and what it keeps (its signing certificates, so signing in again reuses them; installed apps keep working until they expire). Signing out the Apple ID in use hands its place to the next saved one. An **Add Apple ID** button opens sign-in.
 

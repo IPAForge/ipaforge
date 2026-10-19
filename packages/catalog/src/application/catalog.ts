@@ -2,9 +2,11 @@
 import { downloadRelease } from '@catalog/application/download.ts'
 import { createManifestSource } from '@catalog/application/manifest-source.ts'
 import { resolveRelease } from '@catalog/application/resolve.ts'
+import { createSources } from '@catalog/application/sources.ts'
 import type {
   DownloadOptions,
-  DownloadResult
+  DownloadResult,
+  Sources
 } from '@catalog/application/types.ts'
 import { resolveCatalogDeps } from '@catalog/deps.ts'
 import { recommendedChannel } from '@catalog/domain/manifest.ts'
@@ -16,7 +18,9 @@ import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 export type {
   DownloadOptions,
   DownloadProgress,
-  DownloadResult
+  DownloadResult,
+  SourcePreview,
+  Sources
 } from '@catalog/application/types.ts'
 
 export type Catalog = {
@@ -35,6 +39,8 @@ export type Catalog = {
     release: ResolvedRelease,
     options?: DownloadOptions
   ): Promise<DownloadResult>
+  /** App sources: the built-in ones and those the user added. */
+  readonly sources: Sources
 }
 
 export const createCatalog = (input: CatalogDepsInput): Catalog => {
@@ -60,6 +66,7 @@ export const createCatalog = (input: CatalogDepsInput): Catalog => {
       recommendedChannel(await app(appId), iosVersion),
     resolve: async (appId, channel, signal) =>
       resolveRelease(deps, await app(appId), channel, signal),
-    download: (release, options) => downloadRelease(deps, release, options)
+    download: (release, options) => downloadRelease(deps, release, options),
+    sources: createSources(deps, manifest)
   }
 }

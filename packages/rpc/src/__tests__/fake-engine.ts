@@ -164,6 +164,25 @@ export const createFakeEngine = () => {
     },
     listAccounts: async () => [{ id: 'acct', appleId: 'someone@example.com' }],
     canSaveAccounts: async () => true,
+    listSources: async () => [],
+    sourceApps: async () => [],
+    checkSource: async (url: string) => ({
+      url,
+      content: { name: 'Source', apps: [], skipped: 0 }
+    }),
+    addSource: async (url: string) => ({
+      id: url,
+      kind: 'altstore' as const,
+      url,
+      builtin: false,
+      enabled: true,
+      name: 'Source',
+      appCount: 0,
+      skipped: 0
+    }),
+    removeSource: async () => undefined,
+    setSourceEnabled: async () => undefined,
+    refreshSources: async () => [],
     listTeams: async () => TEAMS,
     catalogApps: async () => [],
     recommendedChannel: async (appId: string, iosVersion?: string) =>

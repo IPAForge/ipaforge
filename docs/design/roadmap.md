@@ -84,7 +84,8 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
     - [x] switching to another Apple ID when one is banned: the Install notice (#45) and the recovery picker (#54)
     - [x] 8-1: the preload picker: drop or choose IPAs, add a link, or pick from the catalog (now with LiveContainer, StikDebug and Feather, release names with a `*` wildcard), each app checked by the Engine when added, the list added up against App IDs and free-app slots, one run with the steps grouped by app; SideStore installed this way gets its pairing file too (#59)
     - [x] fix: the trusted-device code is always asked for (Apple answers `hsc 409` with `au = trustedDeviceSecondaryAuth` and sends nothing until asked), the code step comes straight away, with Send a new code and Text a number instead (#60)
-    - [ ] 8-1b: app sources and updates: AltStore-format sources (the developers' own, SideStore's Team Picks) to browse in the picker, and "Update all" for the apps on the device that have a newer version
+    - [x] 8-1b: app sources: AltStore-format sources read by the catalog (lenient parsing, https `.ipa` downloads only, a last good copy kept per source), the IPAForge catalog and SideStore's source built in and trusted, others added by link with a preview; Preload gets two tabs, Add apps (Browse apps: every source's apps, each once, with a source filter, search and details with a version picker) and Sources (add, turn off, refresh, remove) (#66)
+    - [ ] 8-1c: the **Apps** section: the apps installed on the device with their expiry, refresh from IPAForge, and updates from their source ("Update all"), later refreshing automatically
     - [ ] source deep links and a QR code for SideStore
     - [ ] the on-device checklist per iOS version (unlock, Trust and Developer Mode steps exist; a full checklist doesn't)
     - [ ] the "Repair SideStore" wizard

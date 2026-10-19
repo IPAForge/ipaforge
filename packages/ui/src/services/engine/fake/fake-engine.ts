@@ -23,6 +23,7 @@ import {
 import { createFakeDeviceStates } from '@ui/services/engine/fake/fake-device-states.ts'
 import { createFakeDeviceFeed } from '@ui/services/engine/fake/fake-devices.ts'
 import { fakeInstallSteps } from '@ui/services/engine/fake/fake-install-steps.ts'
+import { createFakeSources } from '@ui/services/engine/fake/fake-sources.ts'
 import {
   askPassword,
   completeTwoFactor
@@ -185,6 +186,10 @@ export const createFakeEngine = ({
       devices.watch(listener, options?.signal),
     deviceStatus: deviceStates.status,
     pairDevice: deviceStates.pair,
+    ...createFakeSources(
+      scenario,
+      () => new Promise<void>((resolve) => setTimeout(resolve, delayMs))
+    ),
     listAccounts: async () => world.accounts,
     canSaveAccounts: async () => world.scenario !== 'no-keychain',
     signOut: async (accountId) => forgetAccount(world, accountId),
