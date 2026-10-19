@@ -86,10 +86,11 @@ export const listInstalledApps = async (
       .flatMap((app) => {
         const profile = profiles.get(app.bundleId)
         const record = recordOf.get(app.bundleId)
-        const marker = readMarker(app.raw)
         const teamId = profile?.teamId
 
         if (!teamId) return []
+
+        const marker = readMarker(app.raw, { bundleId: app.bundleId, teamId })
 
         return [
           compact({

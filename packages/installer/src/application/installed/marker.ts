@@ -91,8 +91,15 @@ const readOrigin = (dict: PlistDict): AppOrigin | undefined => {
   return undefined
 }
 
-/** IPAForge's mark on an installed app (its Info.plist as the device returned it), if it has one. */
-export const readMarker = (raw: PlistDict): AppMarker | undefined => {
+/**
+ * IPAForge's mark on an installed app (its Info.plist as the device returned it), if it has one. The mark comes from
+ * the app itself, so it counts only when it names the app it's in: installed as its original bundle id plus the team
+ * (as IPAForge names sideloaded apps). A mark claiming another app is ignored.
+ */
+export const readMarker = (
+  raw: PlistDict,
+  installed: { readonly bundleId: string; readonly teamId: string }
+): AppMarker | undefined => {
   const marker: PlistValue | undefined = raw[MARKER_KEY]
 
   if (!isPlistDict(marker)) return undefined
@@ -103,6 +110,8 @@ export const readMarker = (raw: PlistDict): AppMarker | undefined => {
     : undefined
 
   if (!(originalBundleId && origin)) return undefined
+  if (installed.bundleId !== `${originalBundleId}.${installed.teamId}`)
+    return undefined
 
   const certificateSerial = text(marker, 'CertificateSerial')
 

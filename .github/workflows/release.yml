@@ -1,7 +1,7 @@
 name: Release
 
 # Builds the installers on macOS, Windows and Linux and publishes them as a GitHub release when a version tag is
-# pushed (v0.1.0-alpha.2). A tag with a pre-release part (-alpha, -beta, -rc) becomes a pre-release. The release
+# pushed (v0.1.0-alpha.3). A tag with a pre-release part (-alpha, -beta, -rc) becomes a pre-release. The release
 # notes come from docs/releases/<version>.md. Every file gets a Sigstore signature (<file>.sigstore.json) made with
 # this workflow's GitHub identity, so anyone can check it was built here from that tag. The macOS app is signed with
 # IPAForge's self-signed certificate (secrets MAC_CODESIGN_P12 and MAC_CODESIGN_PASSWORD), so the keychain
