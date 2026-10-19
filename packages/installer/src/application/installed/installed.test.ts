@@ -167,7 +167,12 @@ describe('installed apps', () => {
       ?.additions?.(bundlesFor('com.example.app'))
       .find((addition) => addition.bundlePath === '')
 
-    expect(readMarker(main?.infoPlist ?? createDict())).toEqual({
+    expect(
+      readMarker(main?.infoPlist ?? createDict(), {
+        bundleId: APP,
+        teamId: FREE_TEAM.id
+      })
+    ).toEqual({
       originalBundleId: 'com.example.app',
       origin: { kind: 'url', url: 'https://example.com/one.ipa' },
       // The certificate that signed it: what decides whether a refresh needs only new profiles.
@@ -204,5 +209,31 @@ describe('installed apps', () => {
       origin: { kind: 'catalog', appId: 'sidestore', channel: 'stable' },
       certificateSerial: 'SERIAL1'
     })
+  })
+
+  it('ignores a mark that claims another app than the one it is in', async () => {
+    const forged = {
+      ...installedApp(APP, 'App'),
+      raw: createDict([
+        [
+          MARKER_KEY,
+          markerFor(
+            'com.SideStore.SideStore',
+            { kind: 'url', url: 'https://example.com/SideStore.ipa' },
+            'SERIAL1'
+          )
+        ]
+      ])
+    }
+    const harness = createHarness({
+      device: { ...deviceWith(APP), installed: new Map([[APP, forged]]) }
+    })
+
+    const [app] = await harness.engine.installedApps({
+      udid: UDID,
+      teamIds: [FREE_TEAM.id]
+    })
+
+    expect(app?.marker).toBeUndefined()
   })
 })

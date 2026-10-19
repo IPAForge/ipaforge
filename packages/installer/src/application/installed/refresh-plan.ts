@@ -45,7 +45,9 @@ export const planRefresh = async (
 
     return query.bundleIds.map((bundleId): RefreshDecision => {
       const app = apps.get(bundleId)
-      const serial = app ? readMarker(app.raw)?.certificateSerial : undefined
+      const serial = app
+        ? readMarker(app.raw, { bundleId, teamId: team.id })?.certificateSerial
+        : undefined
 
       if (!serial) return { bundleId, kind: 'reinstall', reason: 'unmarked' }
       if (!valid.has(serial.toUpperCase()))
