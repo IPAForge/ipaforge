@@ -41,6 +41,8 @@ export const queryCallSchema = z.discriminatedUnion('method', [
   call('canSaveAccounts', z.tuple([])),
   call('listTeams', z.tuple([textSchema])),
   call('catalogApps', z.tuple([])),
+  /** Looks each channel's release up on GitHub, so it answers as slowly as GitHub does. */
+  call('catalogReleases', z.tuple([textSchema])),
   call('recommendedChannel', z.tuple([textSchema, textSchema.optional()])),
   call('appIdQuota', z.tuple([teamQuerySchema])),
   call('listCertificates', z.tuple([teamQuerySchema])),

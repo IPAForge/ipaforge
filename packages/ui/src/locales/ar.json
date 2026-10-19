@@ -1193,7 +1193,9 @@
       "untrusted": "من مصدر أضفته أنت: لا يراجع IPAForge تطبيقاته.",
       "add": "إضافة إلى القائمة",
       "inList": "في القائمة",
-      "close": "إغلاق"
+      "close": "إغلاق",
+      "loadingReleases": "جارٍ البحث عن الإصدارات…",
+      "noReleases": "تعذّر قراءة الإصدارات الآن. تحقق من الاتصال وافتحه مجددًا."
     },
     "sources": {
       "description": "من أين يجد «تصفّح التطبيقات» التطبيقات. يتولى IPAForge المصادر المدمجة؛ وأضف غيرها عبر رابطها (بتنسيق AltStore).",
@@ -1215,7 +1217,9 @@
       "remove": "إزالة {name}",
       "on": "مفعّل",
       "off": "متوقف",
-      "note": "لا يراجع IPAForge التطبيقات في المصادر التي تضيفها. أضف فقط المصادر التي تثق بها."
+      "note": "لا يراجع IPAForge التطبيقات في المصادر التي تضيفها. أضف فقط المصادر التي تثق بها.",
+      "refreshOne": "تحديث",
+      "removeOne": "إزالة"
     },
     "addSource": {
       "title": "إضافة مصدر",
@@ -1441,5 +1445,30 @@
     },
     "open": "افحص SideStore",
     "checkingTag": "جارٍ الفحص…"
+  },
+  "sidestore": {
+    "addSource": "أضف إلى SideStore",
+    "addAll": "أضف الكل إلى SideStore",
+    "install": "ثبّت باستخدام SideStore",
+    "sourceTitle": "أضف {name} إلى SideStore",
+    "sourceBody": "سيعرض SideStore تطبيقاته أيضًا ويحدّثها على iPhone. ولا يراجع SideStore أيضًا تطبيقات المصادر: أضف فقط المصادر التي تثق بها.",
+    "installTitle": "ثبّت {name} باستخدام SideStore",
+    "installBody": "ينزّل SideStore ‏{name} {version} ويوقّعه بمعرّف Apple الخاص بك ويثبّته على iPhone نفسه. مع معرّف Apple مجاني يُحتسب ضمن التطبيقات الثلاثة. ويظهر في التطبيقات بعد أن يجدّده IPAForge.",
+    "qrLabel": "رمز QR للرابط أدناه",
+    "steps": {
+      "camera": "افتح الكاميرا على {device} ووجّهها نحو الرمز.",
+      "banner": "اضغط على الشعار لفتح SideStore.",
+      "addSource": "يسألك SideStore عن إضافة المصدر: اضغط «إضافة».",
+      "install": "يسألك SideStore عن تثبيت التطبيق: اضغط «تثبيت»."
+    },
+    "onPhone": "على iPhone نفسه، يفتح الرابط SideStore أيضًا (إذا لُصق في Safari أو أُرسل في الرسائل).",
+    "copy": "نسخ",
+    "copied": "تم النسخ",
+    "previous": "السابق",
+    "next": "التالي",
+    "step": "المصدر {at} من {count}",
+    "back": "رجوع",
+    "done": "تم",
+    "offer": "{count, plural, zero {أضف المصادر التي أضفتها هنا إلى SideStore أيضًا.} one {أضف المصدر الذي أضفته هنا إلى SideStore أيضًا، ليعرض تطبيقاته على iPhone.} two {أضف المصدرين اللذين أضفتهما هنا إلى SideStore أيضًا، ليعرض تطبيقاتهما على iPhone.} few {أضف المصادر الـ# التي أضفتها هنا إلى SideStore أيضًا، ليعرض تطبيقاتها على iPhone.} many {أضف الـ# مصدرًا التي أضفتها هنا إلى SideStore أيضًا، ليعرض تطبيقاتها على iPhone.} other {أضف الـ# مصدر التي أضفتها هنا إلى SideStore أيضًا، ليعرض تطبيقاتها على iPhone.}}"
   }
 }

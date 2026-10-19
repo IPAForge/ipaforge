@@ -1,3 +1,4 @@
+import type { CatalogRelease } from '@installer/application/catalog-releases.ts'
 import type { CheckSideStoreQuery } from '@installer/application/installed/check-sidestore.ts'
 import type { RefreshPlanQuery } from '@installer/application/installed/refresh-plan.ts'
 import type { FreeSlots } from '@installer/application/types.ts'
@@ -150,6 +151,8 @@ export type EngineQueries = {
    * and that it holds, its pairing file). Asks Apple for the team's certificates.
    */
   checkSideStore(query: CheckSideStoreQuery): Promise<SideStoreCheck>
+  /** A catalog app's latest release on each of its channels (its details): version, .ipa link, size and date. */
+  catalogReleases(appId: string): Promise<CatalogRelease[]>
 }
 
 export type InstalledAppsQuery = {

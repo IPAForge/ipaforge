@@ -1,6 +1,7 @@
 // App sources for the fake Engine: the IPAForge catalog and SideStore built in, and links added by hand. A link with
 // "unreachable" or "notsource" in it fails that way, and "skipped" leaves two apps out, so every case can be tried.
-// Scenario `source-offline` makes SideStore's source fail to refresh (its last copy is still shown).
+// Scenario `source-offline` makes SideStore's source fail to refresh (its last copy is still shown); `sources-added`
+// starts with a source added by hand.
 import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 import type { Engine } from '@ipaforge/rpc'
 import { fakeCatalogApps } from '@ui/services/engine/fake/fake-data.ts'
@@ -97,6 +98,9 @@ const ADDED_APPS = [
 
 const SIDESTORE_URL = 'https://apps.sidestore.io'
 
+/** The source scenario `sources-added` starts with, as if added by hand. */
+const ADDED_URL = 'https://example.com/apps.json'
+
 export const createFakeSources = (
   scenario: string,
   wait: () => Promise<void>
@@ -130,7 +134,20 @@ export const createFakeSources = (
       name: 'SideStore Official',
       apps: SIDESTORE_APPS,
       skipped: 0
-    }
+    },
+    ...(scenario === 'sources-added'
+      ? [
+          {
+            id: ADDED_URL,
+            url: ADDED_URL,
+            builtin: false,
+            enabled: true,
+            name: 'Example Community Repo',
+            apps: ADDED_APPS,
+            skipped: 0
+          }
+        ]
+      : [])
   ]
 
   const info = (entry: Entry): SourceInfo => ({

@@ -30,3 +30,9 @@ export const PREVIEW_APPS = 4
 
 /** Preload's tab keys (React Aria keys, not DOM ids). */
 export const PreloadTabKey = { apps: 'apps', sources: 'sources' } as const
+
+/** SideStore itself (alone, or inside LiveContainer): no Install with SideStore, since SideStore can't install itself. */
+export const SIDESTORE_CATALOG_APPS: ReadonlySet<string> = new Set([
+  'sidestore',
+  'livecontainer-sidestore'
+])

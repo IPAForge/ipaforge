@@ -26,6 +26,9 @@ export type SourceAppVersion = SourceApp['versions'][number]
 export type SourcePreview = Resolved<'checkSource'>
 export type InstalledApp = Resolved<'installedApps'>[number]
 
+/** A catalog app's latest release on one channel. */
+export type CatalogRelease = Resolved<'catalogReleases'>[number]
+
 /** Repair SideStore's check: the device's state and SideStore's health. */
 export type SideStoreCheck = Resolved<'checkSideStore'>
 

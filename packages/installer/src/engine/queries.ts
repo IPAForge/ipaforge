@@ -1,5 +1,6 @@
 // Read-only questions the UI asks between runs. They never prompt: an account that needs signing in again fails
 // with `apple.session_expired`, an open team choice with `installer.team_required`.
+import { catalogReleases } from '@installer/application/catalog-releases.ts'
 import { checkSideStore } from '@installer/application/installed/check-sidestore.ts'
 import { listInstalledApps } from '@installer/application/installed/list-installed.ts'
 import { planRefresh } from '@installer/application/installed/refresh-plan.ts'
@@ -75,5 +76,6 @@ export const createEngineQueries = (deps: InstallerDeps): EngineQueries => ({
   installedApps: ({ udid, teamIds }) => listInstalledApps(deps, udid, teamIds),
   removeApp: ({ udid, bundleId }) => removeInstalledApp(deps, udid, bundleId),
   refreshPlan: (query) => planRefresh(deps, query),
-  checkSideStore: (query) => checkSideStore(deps, query)
+  checkSideStore: (query) => checkSideStore(deps, query),
+  catalogReleases: (appId) => catalogReleases(deps, appId)
 })

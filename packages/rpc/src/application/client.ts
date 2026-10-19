@@ -214,6 +214,8 @@ export const createEngineClient = (
     signOut: (accountId) => query({ method: 'signOut', args: [accountId] }),
     listTeams: (accountId) => query({ method: 'listTeams', args: [accountId] }),
     catalogApps: () => query({ method: 'catalogApps', args: [] }),
+    catalogReleases: (appId) =>
+      query({ method: 'catalogReleases', args: [appId] }),
     recommendedChannel: (appId, iosVersion) =>
       query({ method: 'recommendedChannel', args: [appId, iosVersion] }),
     appIdQuota: (teamQuery) =>

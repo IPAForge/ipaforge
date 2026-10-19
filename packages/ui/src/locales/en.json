@@ -1193,7 +1193,9 @@
       "untrusted": "From a source you added: IPAForge doesn't review its apps.",
       "add": "Add to the list",
       "inList": "In the list",
-      "close": "Close"
+      "close": "Close",
+      "loadingReleases": "Looking up its releases…",
+      "noReleases": "Its releases can't be read right now. Check the connection and open it again."
     },
     "sources": {
       "description": "Where Browse apps finds apps. Built-in sources are kept by IPAForge; add others by their link (AltStore format).",
@@ -1215,7 +1217,9 @@
       "remove": "Remove {name}",
       "on": "On",
       "off": "Off",
-      "note": "IPAForge doesn't review apps in sources you add. Add only sources you trust."
+      "note": "IPAForge doesn't review apps in sources you add. Add only sources you trust.",
+      "refreshOne": "Refresh",
+      "removeOne": "Remove"
     },
     "addSource": {
       "title": "Add a source",
@@ -1441,5 +1445,30 @@
     },
     "open": "Check SideStore",
     "checkingTag": "Checking…"
+  },
+  "sidestore": {
+    "addSource": "Add to SideStore",
+    "addAll": "Add all to SideStore",
+    "install": "Install with SideStore",
+    "sourceTitle": "Add {name} to SideStore",
+    "sourceBody": "SideStore shows its apps too, and keeps them up to date on the iPhone. SideStore doesn't review the apps in a source either: add only sources you trust.",
+    "installTitle": "Install {name} with SideStore",
+    "installBody": "SideStore downloads {name} {version}, signs it with your Apple ID and installs it on the iPhone itself. On a free Apple ID it counts toward the 3 apps. It shows in Apps once IPAForge refreshes it.",
+    "qrLabel": "QR code of the link below",
+    "steps": {
+      "camera": "Open the Camera on {device} and point it at the code.",
+      "banner": "Tap the banner to open SideStore.",
+      "addSource": "SideStore asks to add the source: tap Add.",
+      "install": "SideStore asks to install the app: tap Install."
+    },
+    "onPhone": "On the iPhone itself, the link opens SideStore too (pasted in Safari, or sent in Messages).",
+    "copy": "Copy",
+    "copied": "Copied",
+    "previous": "Previous",
+    "next": "Next",
+    "step": "Source {at} of {count}",
+    "back": "Back",
+    "done": "Done",
+    "offer": "{count, plural, one {Add the source you added here to SideStore too, so it shows its apps on the iPhone.} other {Add the # sources you added here to SideStore too, so it shows their apps on the iPhone.}}"
   }
 }

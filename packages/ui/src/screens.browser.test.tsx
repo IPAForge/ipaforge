@@ -10,6 +10,7 @@ import {
   clippedTranslations,
   fillPreload,
   logsShown,
+  openAddAllToSideStore,
   planShown,
   pressInstall,
   recoveryShown,
@@ -41,6 +42,11 @@ const screens = {
   'preload-sources': async (options: ScreenOptions) => {
     await renderScreen('/preload', options)
     await showSources()
+  },
+  'sidestore-qr': async (options: ScreenOptions) => {
+    await renderScreen('/preload', { ...options, scenario: 'sources-added' })
+    await showSources()
+    await openAddAllToSideStore()
   },
   apps: async (options: ScreenOptions) => {
     await renderScreen('/apps', options)
