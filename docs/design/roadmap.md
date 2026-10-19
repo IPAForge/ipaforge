@@ -97,6 +97,7 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
   - progress:
     - [x] alpha installers with electron-builder: macOS DMG (Apple silicon and Intel, ad-hoc signed), Windows NSIS (x64), Linux AppImage (x64, arm64), deb and rpm; a release workflow that builds them on a version tag and publishes a GitHub release (a pre-release for `-alpha`/`-beta`/`-rc`) with checksums and the notes in `docs/releases/` (#61)
     - [x] the macOS build is signed on pull requests too and its signature checked in CI; the window opens before the keychain is touched, which happens on first use; Accounts says when Apple IDs can't be saved; a credit at the foot of the sidebar; every workflow action pinned to a commit (#62)
+    - [x] release files like other sideloaders ship: macOS `.zip` per architecture, Windows `.msi`, Linux deb and rpm for arm64 too, update metadata (`latest*.yml`, blockmaps), and a keyless Sigstore signature for every file, checked on pull requests before publishing (#63)
     - [ ] code signing: Windows certificate, Apple Developer ID with notarisation and the hardened runtime
     - [ ] auto-update
   - trust certificates installed in the OS (company proxies, self-hosted anisette servers with their own CA) for anisette and Apple requests, alongside Node's bundled roots and Apple's (`tls.getCACertificates('system')`)
