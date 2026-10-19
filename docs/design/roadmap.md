@@ -99,6 +99,7 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
     - [x] the macOS build is signed on pull requests too and its signature checked in CI; the window opens before the keychain is touched, which happens on first use; Accounts says when Apple IDs can't be saved; a credit at the foot of the sidebar; every workflow action pinned to a commit (#62)
     - [x] release files like other sideloaders ship: macOS `.zip` per architecture, Windows `.msi`, Linux deb and rpm for arm64 too, update metadata (`latest*.yml`, blockmaps), and a keyless Sigstore signature for every file, checked on pull requests before publishing (#63)
     - [x] the macOS app signed with IPAForge's own self-signed certificate (afterSign hook, certificate in repository secrets, its SHA-1 pinned and checked in CI), so the keychain trusts every version; step-by-step first-open instructions (#64)
+    - [x] release 0.1.0-alpha.2: the first release with the self-signed macOS app, the extra installers and Sigstore signatures (#65)
     - [ ] code signing: Windows certificate, Apple Developer ID with notarisation and the hardened runtime
     - [ ] auto-update
   - trust certificates installed in the OS (company proxies, self-hosted anisette servers with their own CA) for anisette and Apple requests, alongside Node's bundled roots and Apple's (`tls.getCACertificates('system')`)
