@@ -1,6 +1,8 @@
 # Installers for the alpha: `pnpm --filter @ipaforge/desktop dist` on each system (CI: .github/workflows/release.yml).
 # Everything the app runs is bundled into out/ by electron-vite, so no node_modules are packaged.
-# Not signed yet (Phase 9): macOS gets an ad-hoc signature so Apple silicon runs it; Windows shows SmartScreen.
+# macOS: ad-hoc signed here, then re-signed in the release workflow with IPAForge's self-signed certificate
+# (build/after-sign.mjs), so the keychain recognises every version. Not notarised: Gatekeeper asks on first open.
+# Windows is not code-signed yet: SmartScreen asks.
 appId: io.github.sirready.ipaforge
 productName: IPAForge
 copyright: Copyright © 2026 Dan Motpan and IPAForge contributors
@@ -15,6 +17,8 @@ npmRebuild: false
 artifactName: ${productName}-${version}-${os}-${arch}.${ext}
 # Where updates will come from. Nothing is uploaded from here (`--publish never`); it makes electron-builder write
 # the update metadata (latest.yml, latest-mac.yml, latest-linux*.yml) the release workflow attaches.
+afterSign: build/after-sign.mjs
+
 publish:
   provider: github
   owner: SirReaDy
@@ -30,7 +34,7 @@ mac:
     # The zipped app is what an update downloads.
     - target: zip
       arch: [arm64, x64]
-  # Ad-hoc ("-"): no Apple Developer ID yet. Gatekeeper still asks on first open.
+  # Ad-hoc ("-"): no Apple Developer ID yet. The release workflow's certificate replaces it (afterSign).
   identity: '-'
   hardenedRuntime: false
   notarize: false

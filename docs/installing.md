@@ -30,14 +30,24 @@ cosign verify-blob IPAForge-<version>-mac-arm64.dmg \
 
 This is not code signing: your system still warns about an unsigned app (below).
 
-### Alpha builds aren't signed yet
+### Opening IPAForge the first time
 
-Code signing (a Windows certificate, Apple notarisation) comes before the first beta. Until then, your system warns the first time you open IPAForge:
+IPAForge isn't notarised by Apple or signed with a Windows certificate yet, so your system asks once before it opens a new download.
 
-- **macOS** says Apple can't check it for malicious software. Click **Done**, then open **System Settings › Privacy & Security**, scroll to *"IPAForge" was blocked* and click **Open Anyway**. From Terminal, `xattr -dr com.apple.quarantine /Applications/IPAForge.app` does the same.
-- **Windows** SmartScreen says it protected your PC: click **More info › Run anyway**.
-- **The macOS keychain:** saved Apple IDs are encrypted with a key kept in one keychain item of IPAForge's own, *IPAForge Safe Storage* (Chrome, VS Code and Slack keep theirs the same way). After an update, macOS may ask for your login password before IPAForge reads it: click **Always Allow**. With **Deny**, IPAForge works but keeps Apple IDs only until it quits, and **Accounts** says so.
-- **Linux** doesn't check signatures; make the AppImage executable (below).
+**macOS**
+
+1. Open the DMG and drag **IPAForge** into **Applications**.
+2. Open IPAForge. macOS says *"IPAForge" Not Opened* because Apple can't check it. Click **Done** (not *Move to Bin*).
+3. Open **System Settings › Privacy & Security** and scroll down to **Security**. Next to *"IPAForge" was blocked to protect your Mac*, click **Open Anyway**, then confirm with your password or Touch ID.
+4. IPAForge opens, and from then on it opens normally. Each new version you download asks once again.
+
+From Terminal, `xattr -dr com.apple.quarantine /Applications/IPAForge.app` skips steps 2 and 3.
+
+**The keychain.** The first time you sign in, macOS asks whether IPAForge may use *IPAForge Safe Storage*, the keychain item of its own that protects your saved Apple IDs (Chrome, VS Code and Slack keep theirs the same way). Click **Always Allow**. Every IPAForge release is signed with the same IPAForge certificate, so updates don't ask again. With **Deny**, IPAForge still works but keeps Apple IDs only until it quits, and **Accounts** says so.
+
+**Windows.** SmartScreen says it protected your PC: click **More info › Run anyway**.
+
+**Linux** doesn't check signatures; make the AppImage executable (below).
 
 The app doesn't update itself yet: download the next build from the Releases page.
 

@@ -3,8 +3,10 @@ name: Release
 # Builds the installers on macOS, Windows and Linux and publishes them as a GitHub release when a version tag is
 # pushed (v0.1.0-alpha.1). A tag with a pre-release part (-alpha, -beta, -rc) becomes a pre-release. The release
 # notes come from docs/releases/<version>.md. Every file gets a Sigstore signature (<file>.sigstore.json) made with
-# this workflow's GitHub identity, so anyone can check it was built here from that tag. A pull request that changes the packaging builds them too, without
-# publishing, so a release never finds out first.
+# this workflow's GitHub identity, so anyone can check it was built here from that tag. The macOS app is signed with
+# IPAForge's self-signed certificate (secrets MAC_CODESIGN_P12 and MAC_CODESIGN_PASSWORD), so the keychain
+# recognises every version. A pull request that changes the packaging builds them too, without publishing, so a
+# release never finds out first.
 on:
   push:
     tags: ['v*']
@@ -38,6 +40,10 @@ jobs:
           - os: ubuntu-latest
             target: --linux
     runs-on: ${{ matrix.os }}
+    env:
+      HAVE_MAC_CERTIFICATE: ${{ secrets.MAC_CODESIGN_P12 != '' }}
+      # The certificate's SHA-1: a different one would make the keychain ask every user again.
+      MAC_CERTIFICATE_SHA1: 72fc71d719dcb0c2bf3caf939a41d6c3afb1da63
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
       - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
@@ -54,6 +60,25 @@ jobs:
       - if: runner.os == 'Linux'
         run: sudo apt-get update && sudo apt-get install -y rpm
       - run: pnpm install --frozen-lockfile
+      - name: The macOS signing certificate
+        if: runner.os == 'macOS' && env.HAVE_MAC_CERTIFICATE == 'true'
+        env:
+          MAC_CODESIGN_P12: ${{ secrets.MAC_CODESIGN_P12 }}
+          MAC_CODESIGN_PASSWORD: ${{ secrets.MAC_CODESIGN_PASSWORD }}
+        run: |
+          keychain="$RUNNER_TEMP/codesign.keychain-db"
+          password="$(openssl rand -hex 16)"
+          security create-keychain -p "$password" "$keychain"
+          security set-keychain-settings -lut 3600 "$keychain"
+          security unlock-keychain -p "$password" "$keychain"
+          echo "$MAC_CODESIGN_P12" | base64 --decode > "$RUNNER_TEMP/codesign.p12"
+          security import "$RUNNER_TEMP/codesign.p12" -k "$keychain" -P "$MAC_CODESIGN_PASSWORD" -T /usr/bin/codesign
+          rm "$RUNNER_TEMP/codesign.p12"
+          security set-key-partition-list -S apple-tool:,apple: -s -k "$password" "$keychain" > /dev/null
+          # codesign finds an identity only in a keychain on the search list.
+          security list-keychains -d user -s "$keychain" $(security list-keychains -d user | tr -d '"')
+          security find-identity -p codesigning "$keychain" | grep -qi "$MAC_CERTIFICATE_SHA1"
+          echo "IPAFORGE_CODESIGN_HASH=$MAC_CERTIFICATE_SHA1" >> "$GITHUB_ENV"
       - run: pnpm --filter @ipaforge/desktop exec electron-vite build
       - run: pnpm --filter @ipaforge/desktop exec electron-builder ${{ matrix.target }} --publish never
         env:
@@ -67,6 +92,9 @@ jobs:
             mount="$(hdiutil attach -nobrowse -readonly "$dmg" | tail -1 | cut -f3)"
             codesign --verify --deep --strict --verbose=2 "$mount/IPAForge.app"
             codesign -dv "$mount/IPAForge.app" 2>&1 | grep -q '^Identifier=io.github.sirready.ipaforge$'
+            if [ "$HAVE_MAC_CERTIFICATE" = true ]; then
+              codesign -d -r- "$mount/IPAForge.app" 2>&1 | grep -qi "certificate root = H\"$MAC_CERTIFICATE_SHA1\""
+            fi
             hdiutil detach "$mount"
           done
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2

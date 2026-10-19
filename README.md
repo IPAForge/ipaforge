@@ -13,7 +13,7 @@ IPAForge is an open-source desktop app for installing [SideStore](https://github
 The engine is written entirely in TypeScript, with no native helpers or bundled command-line tools. The desktop app is built with Electron.
 
 > [!NOTE]
-> **Alpha.** The engine is complete, and the first test builds for macOS, Windows and Linux are on the [Releases page](https://github.com/SirReaDy/ipaforge/releases) (not signed yet; [how to open them](docs/installing.md#alpha-builds-arent-signed-yet)). See [Project status](#project-status) and the [Roadmap](docs/roadmap.md).
+> **Alpha.** The engine is complete, and the first test builds for macOS, Windows and Linux are on the [Releases page](https://github.com/SirReaDy/ipaforge/releases) (not notarised yet; [how to open them the first time](docs/installing.md#opening-ipaforge-the-first-time)). See [Project status](#project-status) and the [Roadmap](docs/roadmap.md).
 
 ## Why IPAForge
 
