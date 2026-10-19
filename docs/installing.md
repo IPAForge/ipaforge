@@ -28,7 +28,21 @@ cosign verify-blob IPAForge-<version>-mac-arm64.dmg \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com
 ```
 
-This is not code signing: your system still warns about an unsigned app (below).
+The macOS app itself is signed with IPAForge's own certificate. To check the app you installed:
+
+```sh
+codesign -d -r- /Applications/IPAForge.app
+```
+
+It must print exactly:
+
+```
+designated => identifier "io.github.sirready.ipaforge" and certificate root = H"72fc71d719dcb0c2bf3caf939a41d6c3afb1da63"
+```
+
+(The certificate's SHA-256 fingerprint is `34:91:A0:2E:C9:E5:2B:B7:A1:70:73:12:BA:B2:91:D8:9B:75:D8:A9:5B:B3:01:F4:50:3A:CB:4D:9D:67:DE:BD`.)
+
+Neither check replaces Apple's notarisation, so your system still asks before the first open (below).
 
 ### Opening IPAForge the first time
 

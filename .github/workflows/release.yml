@@ -40,9 +40,18 @@ jobs:
           - os: ubuntu-latest
             target: --linux
     runs-on: ${{ matrix.os }}
+    # macOS signing certificate, from two repository secrets (Settings › Secrets and variables › Actions):
+    #   MAC_CODESIGN_P12       the self-signed "IPAForge Self-Signed Code Signing" certificate with its private key,
+    #                          a .p12 file encoded with `base64 -i ipaforge-codesign.p12` (RSA 3072, valid until 2036)
+    #   MAC_CODESIGN_PASSWORD  the .p12's password
+    # The maintainer keeps the .p12 and its password offline; GitHub never shows a secret's value. To set them again:
+    #   base64 -i ipaforge-codesign.p12 | gh secret set MAC_CODESIGN_P12
+    #   gh secret set MAC_CODESIGN_PASSWORD < p12-password.txt
+    # Without them (forks) the app stays ad-hoc signed. Don't replace the certificate: its fingerprint below is what
+    # every user's keychain trusts, and a new one would make it ask everyone again.
     env:
       HAVE_MAC_CERTIFICATE: ${{ secrets.MAC_CODESIGN_P12 != '' }}
-      # The certificate's SHA-1: a different one would make the keychain ask every user again.
+      # The certificate's SHA-1, as codesign reports it in the app's designated requirement.
       MAC_CERTIFICATE_SHA1: 72fc71d719dcb0c2bf3caf939a41d6c3afb1da63
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
