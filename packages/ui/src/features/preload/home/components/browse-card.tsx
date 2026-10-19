@@ -61,23 +61,19 @@ export const BrowseCard = ({
   return (
     <article
       aria-label={entry.name}
-      className="flex h-full min-w-0 flex-col gap-3 rounded-2xl border border-border bg-surface p-4 transition-colors hover:border-accent/40"
+      className={`relative flex h-full min-w-0 flex-col gap-3 rounded-2xl border border-border bg-surface p-4 transition-colors hover:border-accent/50 hover:bg-surface-secondary/40`}
     >
       <div className="flex min-w-0 items-start gap-3">
         <AppIcon name={entry.name} tint={entry.sourceApp?.tint} />
         <div className="flex min-w-0 flex-col gap-0.5">
-          {entry.sourceApp ? (
-            <button
-              type="button"
-              className="line-clamp-2 cursor-pointer text-start font-semibold hover:underline focus-visible:rounded focus-visible:outline-2 focus-visible:outline-focus"
-              onClick={onDetailsPress}
-              aria-label={t('preload.browse.details', { name: entry.name })}
-            >
-              {entry.name}
-            </button>
-          ) : (
-            <span className="line-clamp-2 font-semibold">{entry.name}</span>
-          )}
+          <button
+            type="button"
+            className="line-clamp-2 cursor-pointer text-start font-semibold outline-none after:absolute after:inset-0 after:rounded-2xl focus-visible:after:outline-2 focus-visible:after:outline-focus"
+            onClick={onDetailsPress}
+            aria-label={t('preload.browse.details', { name: entry.name })}
+          >
+            {entry.name}
+          </button>
           <span className="flex min-w-0 flex-wrap items-center gap-x-2 gap-y-1 text-muted text-xs">
             {entry.sourceApp?.developer ? (
               <span className="truncate">{entry.sourceApp.developer}</span>
@@ -93,7 +89,7 @@ export const BrowseCard = ({
       <p className="line-clamp-2 min-h-[2lh] text-muted text-sm">
         {description}
       </p>
-      <div className="mt-auto flex items-center justify-between gap-3 border-border border-t pt-3">
+      <div className="relative mt-auto flex items-center justify-between gap-3 border-border border-t pt-3">
         <div className="flex min-w-0 flex-col text-xs">
           <span className="tabular-nums">{meta}</span>
           <span

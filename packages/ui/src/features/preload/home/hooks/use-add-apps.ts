@@ -6,7 +6,7 @@ import { itemFromFile } from '@ui/features/preload/home/utils/item-from-file.ts'
 import { useEngine } from '@ui/hooks/use-engine.ts'
 import { usePreloadList } from '@ui/hooks/use-preload-list.ts'
 import { useUiServices } from '@ui/hooks/use-ui-services.ts'
-import type { SourceAppVersion } from '@ui/services/engine/types.ts'
+import type { Channel, SourceAppVersion } from '@ui/services/engine/types.ts'
 
 /** The four ways to add apps: dropped files, the host's file dialog, a link, and Browse apps. */
 export const useAddApps = () => {
@@ -41,12 +41,24 @@ export const useAddApps = () => {
   const addLink = (url: string) =>
     add([{ label: linkLabel(url), source: { kind: 'url', url: url.trim() } }])
 
-  /** An app from Browse apps: a catalog app by id, an app source's version by its download link. */
-  const addBrowsed = (entry: BrowseEntry, version?: SourceAppVersion) => {
+  /** An app from Browse apps: a catalog app by id (on the channel picked in its details), a source's version by link. */
+  const addBrowsed = (
+    entry: BrowseEntry,
+    version?: SourceAppVersion,
+    channel?: Channel
+  ) => {
     if (entry.catalogApp) {
       const { id, name } = entry.catalogApp
 
-      add([{ label: name, appId: id, source: { kind: 'catalog', appId: id } }])
+      add([
+        {
+          label: name,
+          appId: id,
+          source: channel
+            ? { kind: 'catalog', appId: id, channel }
+            : { kind: 'catalog', appId: id }
+        }
+      ])
       return
     }
     const picked = version ?? entry.sourceApp?.versions[0]

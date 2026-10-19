@@ -4,12 +4,13 @@ import { useTranslation } from 'react-i18next'
 import { OutcomeBox } from '@ui/features/install/run/components/outcome-box.tsx'
 import { doneKeys } from '@ui/features/install/run/constants.ts'
 import type { RunTarget } from '@ui/features/install/run/types.ts'
+import { OfferSourcesToSideStore } from '@ui/features/preload/sidestore/components/offer-sources-to-sidestore.tsx'
 import { usePreloadList } from '@ui/hooks/use-preload-list.ts'
 import { useRun } from '@ui/hooks/use-run.ts'
 
 type DoneProps = { target: RunTarget }
 
-/** A finished run: what to do on the device before the app (or apps) open. */
+/** A finished run: what to do on the device before the app (or apps) open; after SideStore, your sources for it. */
 export const Done = ({ target }: DoneProps) => {
   const { t } = useTranslation()
   const { dismiss } = useRun()
@@ -34,6 +35,7 @@ export const Done = ({ target }: DoneProps) => {
         <li>{t('install.done.trust', { appleId: target.appleId })}</li>
         <li>{t(doneKeys[target.kind].open)}</li>
       </ol>
+      {target.kind === 'sidestore' ? <OfferSourcesToSideStore /> : null}
     </OutcomeBox>
   )
 }

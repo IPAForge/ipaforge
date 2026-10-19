@@ -1193,7 +1193,9 @@
       "untrusted": "Dintr-o sursă adăugată de tine: IPAForge nu îi verifică aplicațiile.",
       "add": "Adaugă în listă",
       "inList": "În listă",
-      "close": "Închide"
+      "close": "Închide",
+      "loadingReleases": "Se caută versiunile…",
+      "noReleases": "Versiunile nu pot fi citite acum. Verifică conexiunea și deschide din nou."
     },
     "sources": {
       "description": "De unde ia „Răsfoiește aplicații” aplicațiile. Sursele integrate sunt întreținute de IPAForge; adaugă altele prin linkul lor (format AltStore).",
@@ -1215,7 +1217,9 @@
       "remove": "Elimină {name}",
       "on": "Activată",
       "off": "Dezactivată",
-      "note": "IPAForge nu verifică aplicațiile din sursele pe care le adaugi. Adaugă doar surse în care ai încredere."
+      "note": "IPAForge nu verifică aplicațiile din sursele pe care le adaugi. Adaugă doar surse în care ai încredere.",
+      "refreshOne": "Reîmprospătează",
+      "removeOne": "Elimină"
     },
     "addSource": {
       "title": "Adaugă o sursă",
@@ -1441,5 +1445,30 @@
     },
     "open": "Verifică SideStore",
     "checkingTag": "Se verifică…"
+  },
+  "sidestore": {
+    "addSource": "Adaugă în SideStore",
+    "addAll": "Adaugă-le pe toate în SideStore",
+    "install": "Instalează cu SideStore",
+    "sourceTitle": "Adaugă {name} în SideStore",
+    "sourceBody": "SideStore îi va arăta și aplicațiile și le va ține la zi pe iPhone. Nici SideStore nu verifică aplicațiile dintr-o sursă: adaugă doar surse în care ai încredere.",
+    "installTitle": "Instalează {name} cu SideStore",
+    "installBody": "SideStore descarcă {name} {version}, îl semnează cu Apple ID-ul tău și îl instalează direct pe iPhone. Cu un Apple ID gratuit, intră în cele 3 aplicații. Apare în Aplicații după ce IPAForge îl reîmprospătează.",
+    "qrLabel": "Codul QR al linkului de mai jos",
+    "steps": {
+      "camera": "Deschide Camera pe {device} și îndreapt-o spre cod.",
+      "banner": "Atinge bannerul ca să deschizi SideStore.",
+      "addSource": "SideStore întreabă dacă adaugă sursa: atinge Adaugă.",
+      "install": "SideStore întreabă dacă instalează aplicația: atinge Instalează."
+    },
+    "onPhone": "Pe iPhone, linkul deschide și el SideStore (lipit în Safari sau trimis în Mesaje).",
+    "copy": "Copiază",
+    "copied": "Copiat",
+    "previous": "Înapoi",
+    "next": "Următoarea",
+    "step": "Sursa {at} din {count}",
+    "back": "Înapoi",
+    "done": "Gata",
+    "offer": "{count, plural, one {Adaugă și în SideStore sursa adăugată aici, ca să-i arate aplicațiile pe iPhone.} few {Adaugă și în SideStore cele # surse adăugate aici, ca să le arate aplicațiile pe iPhone.} other {Adaugă și în SideStore cele # de surse adăugate aici, ca să le arate aplicațiile pe iPhone.}}"
   }
 }

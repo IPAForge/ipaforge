@@ -54,7 +54,8 @@ export const pressInstall = async () => {
 /** Fills the Preload list (StikDebug from the catalog, a chosen file) and waits until both are read. */
 export const fillPreload = async () => {
   const add = await waitFor(() => {
-    const button = document.querySelector('main article button')
+    // A card's Add (a HeroUI button); its name is a plain button that opens the details.
+    const button = document.querySelector('main article button.button')
     if (!(button instanceof HTMLElement)) throw new Error('no catalog yet')
     return button
   })
@@ -92,7 +93,26 @@ export const showSources = async () => {
   })
 
   tab.click()
-  await waitFor(() => expect(all('main ul li')).toHaveLength(2))
+  await waitFor(() =>
+    expect(all('main ul li').length).toBeGreaterThanOrEqual(2)
+  )
+}
+
+/** Add all to SideStore (the first button with a QR code icon, above the rows), open with its code. */
+export const openAddAllToSideStore = async () => {
+  const button = await waitFor(() => {
+    const found = document
+      .querySelector('main button svg.lucide-qr-code')
+      ?.closest('button')
+
+    if (!found) throw new Error('no Add all to SideStore yet')
+    return found
+  })
+
+  button.click()
+  await waitFor(() =>
+    expect(all('[role="dialog"] svg[role="img"]')).toHaveLength(1)
+  )
 }
 
 /** The box a piece of text has to stay inside: its card, row, dialog, notice or page region. */

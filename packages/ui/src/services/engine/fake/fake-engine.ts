@@ -242,6 +242,20 @@ export const createFakeEngine = ({
       return teamsFor(world, accountId)
     },
     catalogApps: async () => fakeCatalogApps,
+    // Each channel the app has, as GitHub would answer: a version, the asset's link, its size and date.
+    catalogReleases: async (appId) => {
+      const app = fakeCatalogApps.find((candidate) => candidate.id === appId)
+
+      return (['stable', 'nightly'] as const)
+        .filter((channel) => app?.channels[channel])
+        .map((channel) => ({
+          channel,
+          version: channel === 'stable' ? '1.4.0' : 'nightly-20261018',
+          downloadUrl: `https://example.com/${appId}/${channel}/${appId}.ipa`,
+          size: 24_000_000,
+          publishedAt: new Date('2026-10-12T10:00:00Z')
+        }))
+    },
     recommendedChannel: async () => 'stable',
     appIdQuota: async (query) => ({
       team: teamOf(world, query),

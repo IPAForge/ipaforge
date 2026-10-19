@@ -1193,7 +1193,9 @@
       "untrusted": "あなたが追加したソースのアプリです。IPAForgeはそのアプリを審査していません。",
       "add": "リストに追加",
       "inList": "リストにあります",
-      "close": "閉じる"
+      "close": "閉じる",
+      "loadingReleases": "リリースを検索中…",
+      "noReleases": "現在リリースを読み込めません。接続を確認して、もう一度開いてください。"
     },
     "sources": {
       "description": "「アプリを探す」がアプリを見つける場所です。内蔵ソースはIPAForgeが管理します。ほかのソースはリンクで追加できます（AltStore形式）。",
@@ -1215,7 +1217,9 @@
       "remove": "{name}を削除",
       "on": "オン",
       "off": "オフ",
-      "note": "IPAForgeは追加したソースのアプリを審査しません。信頼できるソースだけを追加してください。"
+      "note": "IPAForgeは追加したソースのアプリを審査しません。信頼できるソースだけを追加してください。",
+      "refreshOne": "再読み込み",
+      "removeOne": "削除"
     },
     "addSource": {
       "title": "ソースを追加",
@@ -1441,5 +1445,30 @@
     },
     "open": "SideStoreを確認",
     "checkingTag": "確認中…"
+  },
+  "sidestore": {
+    "addSource": "SideStoreに追加",
+    "addAll": "すべてSideStoreに追加",
+    "install": "SideStoreでインストール",
+    "sourceTitle": "{name}をSideStoreに追加",
+    "sourceBody": "SideStoreでもそのアプリが表示され、iPhone上で最新に保たれます。SideStoreもソース内のアプリを審査しません。信頼できるソースだけを追加してください。",
+    "installTitle": "{name}をSideStoreでインストール",
+    "installBody": "SideStoreが{name} {version}をダウンロードし、Apple IDで署名して、iPhone上で直接インストールします。無料のApple IDでは3つのアプリに数えられます。IPAForgeがリフレッシュすると「アプリ」に表示されます。",
+    "qrLabel": "下のリンクのQRコード",
+    "steps": {
+      "camera": "{device}でカメラを開き、コードに向けてください。",
+      "banner": "バナーをタップしてSideStoreを開きます。",
+      "addSource": "SideStoreがソースを追加するか尋ねます。「追加」をタップしてください。",
+      "install": "SideStoreがアプリをインストールするか尋ねます。「インストール」をタップしてください。"
+    },
+    "onPhone": "iPhone上でも、このリンクからSideStoreを開けます(Safariに貼り付けるか、メッセージで送信)。",
+    "copy": "コピー",
+    "copied": "コピーしました",
+    "previous": "前へ",
+    "next": "次へ",
+    "step": "ソース {at}/{count}",
+    "back": "戻る",
+    "done": "完了",
+    "offer": "{count, plural, other {ここで追加した#件のソースもSideStoreに追加すると、iPhoneでそのアプリが表示されます。}}"
   }
 }

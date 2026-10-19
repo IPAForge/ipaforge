@@ -1193,7 +1193,9 @@
       "untrusted": "Aus einer von dir hinzugefügten Quelle: IPAForge prüft ihre Apps nicht.",
       "add": "Zur Liste hinzufügen",
       "inList": "In der Liste",
-      "close": "Schließen"
+      "close": "Schließen",
+      "loadingReleases": "Releases werden gesucht …",
+      "noReleases": "Die Releases können gerade nicht gelesen werden. Prüfe die Verbindung und öffne es erneut."
     },
     "sources": {
       "description": "Wo „Apps durchsuchen“ Apps findet. Integrierte Quellen pflegt IPAForge; weitere fügst du über ihren Link hinzu (AltStore-Format).",
@@ -1215,7 +1217,9 @@
       "remove": "{name} entfernen",
       "on": "Ein",
       "off": "Aus",
-      "note": "IPAForge prüft keine Apps in Quellen, die du hinzufügst. Füge nur Quellen hinzu, denen du vertraust."
+      "note": "IPAForge prüft keine Apps in Quellen, die du hinzufügst. Füge nur Quellen hinzu, denen du vertraust.",
+      "refreshOne": "Aktualisieren",
+      "removeOne": "Entfernen"
     },
     "addSource": {
       "title": "Quelle hinzufügen",
@@ -1441,5 +1445,30 @@
     },
     "open": "SideStore prüfen",
     "checkingTag": "Wird geprüft …"
+  },
+  "sidestore": {
+    "addSource": "Zu SideStore hinzufügen",
+    "addAll": "Alle zu SideStore hinzufügen",
+    "install": "Mit SideStore installieren",
+    "sourceTitle": "{name} zu SideStore hinzufügen",
+    "sourceBody": "SideStore zeigt dann auch ihre Apps und hält sie auf dem iPhone aktuell. Auch SideStore prüft die Apps einer Quelle nicht: Füge nur Quellen hinzu, denen du vertraust.",
+    "installTitle": "{name} mit SideStore installieren",
+    "installBody": "SideStore lädt {name} {version} herunter, signiert es mit deiner Apple-ID und installiert es direkt auf dem iPhone. Bei einer kostenlosen Apple-ID zählt es zu den 3 Apps. Unter „Apps“ erscheint es, sobald IPAForge es erneuert.",
+    "qrLabel": "QR-Code des Links unten",
+    "steps": {
+      "camera": "Öffne die Kamera auf {device} und richte sie auf den Code.",
+      "banner": "Tippe auf das Banner, um SideStore zu öffnen.",
+      "addSource": "SideStore fragt, ob die Quelle hinzugefügt werden soll: Tippe auf „Hinzufügen“.",
+      "install": "SideStore fragt, ob die App installiert werden soll: Tippe auf „Installieren“."
+    },
+    "onPhone": "Auf dem iPhone selbst öffnet der Link SideStore ebenfalls (in Safari eingefügt oder per Nachricht gesendet).",
+    "copy": "Kopieren",
+    "copied": "Kopiert",
+    "previous": "Zurück",
+    "next": "Weiter",
+    "step": "Quelle {at} von {count}",
+    "back": "Zurück",
+    "done": "Fertig",
+    "offer": "{count, plural, one {Füge die hier hinzugefügte Quelle auch zu SideStore hinzu, damit es ihre Apps auf dem iPhone zeigt.} other {Füge die # hier hinzugefügten Quellen auch zu SideStore hinzu, damit es ihre Apps auf dem iPhone zeigt.}}"
   }
 }

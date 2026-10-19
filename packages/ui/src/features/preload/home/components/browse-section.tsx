@@ -4,17 +4,22 @@ import { useTranslation } from 'react-i18next'
 
 import { BrowseCard } from '@ui/features/preload/home/components/browse-card.tsx'
 import { BrowseToolbar } from '@ui/features/preload/home/components/browse-toolbar.tsx'
+import { CatalogAppDialog } from '@ui/features/preload/home/components/catalog-app-dialog.tsx'
 import { NotRefreshedNotice } from '@ui/features/preload/home/components/not-refreshed-notice.tsx'
 import { SourceAppDialog } from '@ui/features/preload/home/components/source-app-dialog.tsx'
 import { useBrowse } from '@ui/features/preload/home/hooks/use-browse.ts'
 import { useSourceName } from '@ui/features/preload/home/hooks/use-source-name.ts'
 import type { BrowseEntry } from '@ui/features/preload/home/types.ts'
-import type { SourceAppVersion } from '@ui/services/engine/types.ts'
+import type { Channel, SourceAppVersion } from '@ui/services/engine/types.ts'
 import type { PreloadItem } from '@ui/state/preload/types.ts'
 
 type BrowseSectionProps = {
   items: readonly PreloadItem[]
-  onAdd: (entry: BrowseEntry, version?: SourceAppVersion) => void
+  onAdd: (
+    entry: BrowseEntry,
+    version?: SourceAppVersion,
+    channel?: Channel
+  ) => void
   onManage: () => void
 }
 
@@ -99,7 +104,15 @@ export const BrowseSection = ({
         />
       ))}
       {body()}
-      {details ? (
+      {details?.catalogApp ? (
+        <CatalogAppDialog
+          entry={details}
+          isAdded={isAdded(details)}
+          onAdd={onAdd}
+          onClose={onCloseDetails}
+        />
+      ) : null}
+      {details && !details.catalogApp ? (
         <SourceAppDialog
           entry={details}
           isAdded={isAdded(details)}

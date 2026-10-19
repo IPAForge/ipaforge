@@ -18,6 +18,7 @@ const queryHandlers = (
   signOut: ([accountId]) => engine.signOut(accountId),
   listTeams: ([accountId]) => engine.listTeams(accountId),
   catalogApps: () => engine.catalogApps(),
+  catalogReleases: ([appId]) => engine.catalogReleases(appId),
   recommendedChannel: ([appId, iosVersion]) =>
     engine.recommendedChannel(appId, iosVersion),
   appIdQuota: ([query]) => engine.appIdQuota(compact(query)),
