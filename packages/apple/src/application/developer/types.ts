@@ -32,6 +32,8 @@ export type ProvisionRequest = {
   readonly bundles: readonly BundleRequest[]
   /** App group to register and assign to every bundle (e.g. `group.com.SideStore.SideStore.ABCDE12345`). */
   readonly appGroup?: string
+  /** Create the App IDs even though Apple's count says none are left, when that count was negative. */
+  readonly tryAnyway?: boolean
   /** Called after each request to Apple, with what it was part of and how many of all are done. */
   readonly onProgress?: (progress: ProvisionProgress) => void
 }

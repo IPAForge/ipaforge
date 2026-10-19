@@ -35,10 +35,10 @@ export const SourcePicker = ({
       <Select.Popover>
         <ListBox>
           {choices.map((choice, index) => {
-            const label = t('apps.others.choice', {
-              source: choice.from,
-              version: choice.version
-            })
+            const label = t(
+              choice.isOlder ? 'apps.others.choiceOlder' : 'apps.others.choice',
+              { source: choice.from, version: choice.version }
+            )
 
             return (
               <ListBox.Item

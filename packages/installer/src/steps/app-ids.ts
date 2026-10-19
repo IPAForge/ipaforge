@@ -31,7 +31,7 @@ export const appIdsStep = (runtime: FlowRuntime): Step<InstallState> => ({
       team,
       plannedIdentifiers(apps.map((job) => job.identity))
     )
-    assertAppIdBudget(plan)
+    assertAppIdBudget(plan, state.tryAnyway)
     context.detail({
       kind: 'app-ids',
       created: plan.create.length,

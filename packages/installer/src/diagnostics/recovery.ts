@@ -16,6 +16,8 @@ export const RecoveryAction = {
   ChooseTeam: 'choose-team',
   RevokeCertificate: 'revoke-certificate',
   WaitForAppIdSlot: 'wait-for-app-id-slot',
+  /** Apple's App ID count was negative: ask Apple to create them anyway (shown only then). */
+  TryAnyway: 'try-anyway',
   ChooseAppToRemove: 'choose-app-to-remove',
   UnlockDevice: 'unlock-device',
   EnableDeveloperMode: 'enable-developer-mode',

@@ -74,4 +74,34 @@ describe('adoptSource', () => {
 
     expect(plan).toMatchObject({ from: 'SideStore' })
   })
+
+  it('never picks a source older than the version on the device first, and labels it', () => {
+    const plan = adoptSource(
+      { ...app, version: '21.41.5' },
+      [],
+      [source('foxster', ['21.09.2']), source('driftywinds', ['21.41.5'])],
+      'IPAForge catalog'
+    )
+
+    expect(plan).toMatchObject({ from: 'driftywinds' })
+    expect(
+      plan?.kind === 'source'
+        ? plan.choices?.map((choice) => [choice.from, choice.isOlder ?? false])
+        : []
+    ).toEqual([
+      ['driftywinds', false],
+      ['foxster', true]
+    ])
+  })
+
+  it('shows a single older source as a choice, so its label is seen', () => {
+    const plan = adoptSource(
+      { ...app, version: '21.41.5' },
+      [],
+      [source('foxster', ['21.09.2'])],
+      'IPAForge catalog'
+    )
+
+    expect(plan?.kind === 'source' ? plan.choices : undefined).toHaveLength(1)
+  })
 })

@@ -28,3 +28,21 @@ describe('recoveryFixes', () => {
     })
   })
 })
+
+describe('Try anyway', () => {
+  const quota = [
+    'wait-for-app-id-slot',
+    'try-anyway',
+    'switch-account'
+  ] as const
+
+  it("isn't offered when Apple's App ID count was real", () => {
+    const { first, others } = recoveryFixes(quota, 'sidestore')
+
+    expect([first, ...others]).not.toContain('try-anyway')
+  })
+
+  it('comes first when Apple reported a negative count', () => {
+    expect(recoveryFixes(quota, 'sidestore', true).first).toBe('try-anyway')
+  })
+})

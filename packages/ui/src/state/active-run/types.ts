@@ -160,6 +160,8 @@ export type SideStoreRun = Extract<ActiveRun, { kind: 'sidestore' }>
 export type RestartPatch = {
   readonly accountId?: string
   readonly channel?: Channel
+  /** Create App IDs though Apple's (negative) count says none are left. */
+  readonly tryAnyway?: boolean
 }
 
 export type ActiveRunStore = {

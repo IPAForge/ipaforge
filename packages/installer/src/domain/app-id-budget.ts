@@ -12,14 +12,18 @@ export const plannedIdentifiers = (
   )
 ]
 
-/** `apple.app_id_quota` with how many are needed and when the next slot frees up, unless the plan fits. */
-export const assertAppIdBudget = (plan: AppIdPlan): void => {
-  if (plan.enough) return
+/**
+ * `apple.app_id_quota` with how many are needed and when the next slot frees up, unless the plan fits, or Apple's
+ * count was negative (`unreliable`) and the user asked to try anyway.
+ */
+export const assertAppIdBudget = (plan: AppIdPlan, tryAnyway = false): void => {
+  if (plan.enough || (tryAnyway && plan.isUnreliable)) return
   throw new IPAForgeError(ErrorCode.AppIdQuotaExceeded, {
     data: compact({
       needed: plan.create.length,
       available: plan.available,
-      nextSlotAt: plan.nextSlotAt?.toISOString()
+      nextSlotAt: plan.nextSlotAt?.toISOString(),
+      unreliable: plan.isUnreliable
     })
   })
 }

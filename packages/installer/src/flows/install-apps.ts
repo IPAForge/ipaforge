@@ -25,6 +25,8 @@ export type InstallAppsInput = {
   readonly accountId: string
   readonly teamId?: string
   readonly apps: readonly AppSource[]
+  /** Create App IDs even though Apple's count says none are left, when that count was negative (Try anyway). */
+  readonly tryAnyway?: boolean
 }
 
 export const INSTALL_APPS = 'installApps'
@@ -77,6 +79,7 @@ export const installAppsFlow = (
       udid: input.udid,
       accountId: input.accountId,
       teamId: input.teamId,
+      tryAnyway: input.tryAnyway,
       apps: input.apps.map(jobFor)
     }),
     pipeline: pipeline<InstallState>(INSTALL_APPS, [

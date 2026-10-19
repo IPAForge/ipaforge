@@ -10,6 +10,7 @@
 //   pnpm --filter @ipaforge/desktop device-probe pairing-status <TEAMID...>   (which pairing files exist, read-only)
 //   pnpm --filter @ipaforge/desktop device-probe place <TEAMID...> --yes [--only-missing]   (writes this Mac's pairing file)
 //   pnpm --filter @ipaforge/desktop device-probe afc-check   (writes, reads back and deletes a file in PublicStaging)
+//   pnpm --filter @ipaforge/desktop device-probe afc-speed [--mb 32]   (times AFC writes with each chunk size)
 //   pnpm --filter @ipaforge/desktop device-probe reveal-devmode
 //
 // `pair` (and any command on a device without a pair record) waits for the OS to pair: unlock the device and tap

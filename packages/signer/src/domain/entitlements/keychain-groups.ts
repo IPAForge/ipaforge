@@ -19,14 +19,28 @@ export type KeychainGroups = {
   readonly dropped: readonly string[]
 }
 
-/** The team the executable was signed for: its team identifier, else its application-identifier prefix. */
-const originalTeamId = (entitlements: PlistDict): string | undefined =>
+/** An Apple team id: ten capital letters or digits, then the dot that starts a group's own name. */
+const TEAM_PREFIX = /^([A-Z0-9]{10})\./
+
+/**
+ * The team the executable was signed for: its team identifier, else its application-identifier prefix, else the
+ * team its groups start with. An extension can declare its app's groups without naming a team of its own
+ * (LiveContainer's LiveProcess does), and its groups still have to move with the app's.
+ */
+const originalTeamId = (
+  entitlements: PlistDict,
+  groups: readonly string[]
+): string | undefined =>
   stringAt(entitlements, TEAM_IDENTIFIER) ??
-  stringAt(entitlements, APPLICATION_IDENTIFIER)?.split('.')[0]
+  stringAt(entitlements, APPLICATION_IDENTIFIER)?.split('.')[0] ??
+  groups.map((group) => TEAM_PREFIX.exec(group)?.[1]).find(Boolean)
 
 /** Prefixes that stand for the old team: the unexpanded Xcode variable and `<OLDTEAM>.`. */
-const oldTeamPrefixes = (entitlements: PlistDict): string[] => {
-  const team = originalTeamId(entitlements)
+const oldTeamPrefixes = (
+  entitlements: PlistDict,
+  groups: readonly string[]
+): string[] => {
+  const team = originalTeamId(entitlements, groups)
 
   return team
     ? [APP_IDENTIFIER_PREFIX_VARIABLE, `${team}.`]
@@ -60,7 +74,7 @@ export const concreteKeychainGroups = (
   if (!original || requested.length === 0 || !patterns.some(isWildcard))
     return undefined
 
-  const prefixes = oldTeamPrefixes(original)
+  const prefixes = oldTeamPrefixes(original, requested)
   const allowed = new Set<string>()
   const dropped: string[] = []
   for (const group of requested) {

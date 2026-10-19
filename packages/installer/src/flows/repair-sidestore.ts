@@ -29,6 +29,8 @@ export type RepairSideStoreInput = {
   readonly profile: boolean
   /** Place this computer's pairing file. */
   readonly pairing: boolean
+  /** Create App IDs even though Apple's count says none are left, when that count was negative (Try anyway). */
+  readonly tryAnyway?: boolean
 }
 
 export const REPAIR_SIDESTORE = 'repairSideStore'
@@ -45,6 +47,7 @@ export const repairSideStoreFlow = (
         accountId: input.accountId,
         teamId: input.teamId,
         channel: input.channel,
+        tryAnyway: input.tryAnyway,
         variant: 'sidestore' as const
       }),
       REPAIR_SIDESTORE

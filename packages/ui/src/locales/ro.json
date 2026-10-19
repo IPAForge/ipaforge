@@ -655,6 +655,7 @@
     "choose-team": "Alege o echipă",
     "revoke-certificate": "Revocă un certificat",
     "wait-for-app-id-slot": "Așteaptă un App ID liber",
+    "try-anyway": "Încearcă oricum",
     "choose-app-to-remove": "Alege o aplicație de eliminat",
     "unlock-device": "Deblochează dispozitivul",
     "enable-developer-mode": "Activează Modul dezvoltator",
@@ -749,7 +750,10 @@
         "how": "Versiunea din celălalt canal poate funcționa pe acest dispozitiv.",
         "button": "Instalează din {channel}"
       },
-      "open": "Deschide"
+      "open": "Deschide",
+      "tryAnyway": {
+        "how": "Apple a raportat un număr negativ de App ID-uri rămase, o eroare cunoscută a Apple: numărul real poate fi mai mare. „Încearcă oricum” îi cere Apple să le creeze; dacă limita e chiar atinsă, Apple spune asta."
+      }
     },
     "reportHint": "Deschide un tichet nou pe GitHub, cu diagnosticul completat. Nu se trimite nimic până nu îl publici tu."
   },
@@ -1021,6 +1025,7 @@
       "foundMany": "Găsită în {source} și în {count, plural, one {încă # sursă} few {încă # surse} other {încă # de surse}}. Reîmprospătarea o instalează din cea aleasă mai jos, păstrându-i datele, iar IPAForge o reîmprospătează de acum înainte.",
       "pickSource": "Instalează din",
       "choice": "{source} · {version}",
+      "choiceOlder": "{source} · {version} (mai veche decât cea instalată)",
       "how": "Adaugă o dată fișierul .ipa în Preîncărcare, iar IPAForge o reîmprospătează de acum înainte."
     },
     "auto": {

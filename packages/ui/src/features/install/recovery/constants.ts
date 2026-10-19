@@ -86,6 +86,11 @@ export const fixes = {
     kind: 'info',
     howKey: 'recovery.fix.waitForAppIdSlot.how'
   },
+  [R.TryAnyway]: {
+    kind: 'tryAnyway',
+    howKey: 'recovery.fix.tryAnyway.how',
+    buttonKey: 'recovery.try-anyway'
+  },
   [R.ChooseAppToRemove]: {
     kind: 'resume',
     howKey: 'recovery.fix.chooseAppToRemove.how',

@@ -200,7 +200,7 @@ The golden inputs and Apple outputs live in `fixtures/signer/` ([README](../fixt
 | Each extension gets its own profile and entitlements | Otherwise installd reports "invalid entitlements" or "no valid provisioning profile" |
 | Extension IDs must start with the app's ID | installd rejects them otherwise (`signer.extension_prefix`) |
 | The app's `ALTAppGroups` is written into every extension and watch app | Extensions look up the shared app group at runtime |
-| Concrete keychain groups are kept under the new team | When a profile grants `<TEAMID>.*`, the executable's own `keychain-access-groups` are re-prefixed with the team and signed if the profile allows them; anything dropped is logged |
+| Concrete keychain groups are kept under the new team | When a profile grants `<TEAMID>.*`, the executable's own `keychain-access-groups` are re-prefixed with the team and signed if the profile allows them; anything dropped is logged. The old team comes from the executable's team identifier or application-identifier, else from its groups' own prefix: an extension may declare its app's groups without naming a team (LiveContainer's LiveProcess does), and they move with the app's |
 | Team ID is written into every binary | Mixed or missing team IDs crash the app at launch |
 | Encrypted (App Store) binaries are refused | FairPlay-encrypted apps cannot be re-signed; you need a decrypted IPA |
 | 16 KB code pages for iOS 16+, SHA-1 + SHA-256 below iOS 11 | Matches Apple `codesign` 26 |

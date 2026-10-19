@@ -42,6 +42,7 @@ const initialState = (
     udid: input.udid,
     accountId: input.accountId,
     teamId: input.teamId,
+    tryAnyway: input.tryAnyway,
     apps: [{ source }],
     pairingApp: VARIANTS[input.variant].pairingApp
   })

@@ -1,4 +1,5 @@
 import type { RefreshPlan, SourceChoice } from '@ui/features/apps/types.ts'
+import { isNewerVersion } from '@ui/features/apps/utils/is-newer-version.ts'
 import type {
   CatalogApp,
   InstalledApp,
@@ -43,8 +44,12 @@ export const adoptSource = (
       from: catalogName
     }
 
-  // Every source listing it, with its newest version: first the ones that also list the version on the device (the
-  // app most likely came from one of those), then IPAForge's own sources, then the ones the user added.
+  // A source whose newest version is older than the one on the device would put an older app in its place.
+  const isOlder = (version: string) =>
+    app.version !== undefined && isNewerVersion(app.version, version)
+  // Every source listing it, with its newest version. Never one older than the device's first; then the ones that
+  // also list the version on the device (the app most likely came from one of those), then IPAForge's own sources,
+  // then the ones the user added.
   const choices: SourceChoice[] = sources
     .flatMap((source) => {
       const listed = source.apps.find(
@@ -63,7 +68,8 @@ export const adoptSource = (
               replaces: original
             },
             from: source.sourceName,
-            version: latest.version
+            version: latest.version,
+            ...(isOlder(latest.version) ? { isOlder: true } : {})
           },
           listsInstalled: listed.versions.some(
             (version) => version.version === app.version
@@ -74,6 +80,7 @@ export const adoptSource = (
     })
     .sort(
       (a, b) =>
+        Number(Boolean(a.choice.isOlder)) - Number(Boolean(b.choice.isOlder)) ||
         Number(b.listsInstalled) - Number(a.listsInstalled) ||
         Number(b.builtin) - Number(a.builtin)
     )
@@ -86,6 +93,7 @@ export const adoptSource = (
     kind: 'source',
     source: first.source,
     from: first.from,
-    ...(choices.length > 1 ? { choices } : {})
+    // A single older source is shown as a choice too, so its "older than installed" is seen before Refresh.
+    ...(choices.length > 1 || first.isOlder ? { choices } : {})
   }
 }

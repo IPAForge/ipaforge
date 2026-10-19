@@ -71,6 +71,7 @@ pnpm --filter @ipaforge/desktop device-probe info              # identity and ch
 pnpm --filter @ipaforge/desktop device-probe pair [--own]      # wait for the OS pairing (tap Trust); --own pairs with IPAForge's own record
 pnpm --filter @ipaforge/desktop device-probe apps | profiles   # read-only
 pnpm --filter @ipaforge/desktop device-probe pairing-status <TEAMID...>
+pnpm --filter @ipaforge/desktop device-probe afc-speed [--mb 32]   # times AFC writes per chunk size (written, then deleted)
 IPAFORGE_DEVICE=1 pnpm vitest run apps/desktop/src/main/adapters/device.hardware.test.ts
 ```
 

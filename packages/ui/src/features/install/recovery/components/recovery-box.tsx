@@ -43,7 +43,8 @@ export const RecoveryBox = ({ run, failure, target }: RecoveryBoxProps) => {
   const { code } = failure.error
   const { first, others } = recoveryFixes(
     engine.classify(failure.error).recovery,
-    run.kind
+    run.kind,
+    failure.error.data?.unreliable === true
   )
   const label = stepLabel(run, failure.stepId)
   const diagnostics = useDiagnostics(run, failure, target)
