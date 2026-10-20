@@ -135,6 +135,10 @@ The workflow checks that the tag matches the version, builds the installers on m
 
 The macOS app is signed with IPAForge's self-signed certificate (secrets `MAC_CODESIGN_P12` and `MAC_CODESIGN_PASSWORD`; `apps/desktop/build/after-sign.mjs`). Keep using the same certificate: its SHA-1 is pinned in the workflow, and a new one would make every user's keychain ask again. Local builds and forks stay ad-hoc signed. A version with a pre-release part (`-alpha`, `-beta`, `-rc`) is published as a pre-release. To try the installers locally: `pnpm --filter @ipaforge/desktop dist` (this system only; output in `apps/desktop/release/`).
 
+### The website
+
+[ipaforge.com](https://ipaforge.com) is built in its own repository (`IPAForge/ipaforge.github.io`) from this one's `docs/installing.md`, `docs/releases/` and the error texts in `packages/ui/src/locales/en.json`. It rebuilds by itself: a change to those on `main` runs `.github/workflows/website.yml`, and a published release asks from `release.yml`'s last step. Both send the site repository a `repository_dispatch` event with the secret `SITE_DISPATCH_TOKEN`: a fine-grained token, resource owner IPAForge, for `IPAForge/ipaforge.github.io` only, with Contents read and write. Without it they log a warning and the site waits for its own next change, or a manual run of its Deploy workflow.
+
 ## Clean-room policy
 
 Use public specs and permissively licensed projects (libimobiledevice docs, SideStore, rcodesign, zsign) as **references**. Never copy code from other sideloading tools, from GPL/AGPL projects (e.g. ldid) or from proprietary-licensed ones (e.g. ipa-resign).
