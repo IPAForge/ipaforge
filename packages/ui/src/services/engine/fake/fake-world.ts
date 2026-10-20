@@ -24,6 +24,8 @@ export type FakeWorld = {
   readonly failed: Set<string>
   /** Accounts whose password was saved at sign-in: an expired session is renewed with it, without asking. */
   readonly savedPasswords: Set<string>
+  /** Accounts with a saved password that Apple wants a code for: signing in again asks only for the code. */
+  readonly codeNeeded: Set<string>
 }
 
 /** `studio@` as Apple blocked it on the fake iPhone. */
@@ -38,13 +40,13 @@ const bannedOnIphone = (account: Account): Account =>
 /**
  * The saved Apple IDs: one with a single team and one with two (`studio@`). The `accounts` scenario adds one
  * whose session expired and has Apple block `studio@` on the fake iPhone (`devices` blocks it too);
- * `no-accounts` starts with none.
+ * `code-needed` has the same accounts, the expired one with a saved password; `no-accounts` starts with none.
  */
 const accountsFor = (scenario: FakeScenarioId): Account[] => {
   if (scenario === 'no-accounts') return []
   const accounts = fakeAccounts()
   if (scenario === 'devices') return accounts.map(bannedOnIphone)
-  if (scenario !== 'accounts') return accounts
+  if (scenario !== 'accounts' && scenario !== 'code-needed') return accounts
   return [...accounts.map(bannedOnIphone), EXPIRED_ACCOUNT]
 }
 
@@ -80,7 +82,8 @@ export const createFakeWorld = (
             .map((account) => account.id)
     ),
     failed: new Set(),
-    savedPasswords: new Set()
+    savedPasswords: new Set(),
+    codeNeeded: new Set(scenario === 'code-needed' ? [EXPIRED_ACCOUNT.id] : [])
   }
 }
 

@@ -19,12 +19,24 @@ describe('recoveryFixes', () => {
   })
 
   it('leaves out fixes whose screen comes later', () => {
-    expect(
-      recoveryFixes(['change-anisette-server', 'check-network', 'retry'])
-    ).toEqual({ first: 'check-network', others: [] })
+    expect(recoveryFixes(['choose-team', 'check-network', 'retry'])).toEqual({
+      first: 'check-network',
+      others: []
+    })
     expect(recoveryFixes(['update-ipaforge', 'report-issue'])).toEqual({
       first: undefined,
       others: []
+    })
+  })
+})
+
+describe('anisette server failures', () => {
+  it('first open the anisette servers in Settings, keeping Try again', () => {
+    expect(
+      recoveryFixes(['change-anisette-server', 'check-network', 'retry'])
+    ).toEqual({
+      first: 'change-anisette-server',
+      others: ['check-network', 'retry']
     })
   })
 })

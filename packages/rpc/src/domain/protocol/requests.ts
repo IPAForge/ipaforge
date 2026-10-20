@@ -9,6 +9,9 @@ import {
   versionSchema
 } from '@rpc/domain/protocol/common.ts'
 import {
+  anisetteAddressSchema,
+  anisetteChoiceSchema,
+  anisetteServerInputSchema,
   checkSideStoreQuerySchema,
   installAppsInputSchema,
   installedAppsQuerySchema,
@@ -65,7 +68,19 @@ export const queryCallSchema = z.discriminatedUnion('method', [
   /** Asks Apple for the team's certificates and reads SideStore's files on the device. */
   call('checkSideStore', z.tuple([checkSideStoreQuerySchema])),
   /** Not a read, but a one-shot call answered like one. */
-  call('signOut', z.tuple([textSchema]))
+  call('signOut', z.tuple([textSchema])),
+  /** Fetches SideStore's list when it is old, so it can take a few seconds. */
+  call('anisetteServers', z.tuple([])),
+  call('chooseAnisetteServer', z.tuple([anisetteChoiceSchema])),
+  call('addAnisetteServer', z.tuple([anisetteServerInputSchema])),
+  call(
+    'updateAnisetteServer',
+    z.tuple([anisetteAddressSchema, anisetteServerInputSchema])
+  ),
+  call('removeAnisetteServer', z.tuple([anisetteAddressSchema])),
+  /** Waits for the server's answer, up to the health check's timeout. */
+  call('testAnisetteServer', z.tuple([z.string().min(1).max(2048)])),
+  call('updateAnisetteServerList', z.tuple([]))
 ])
 
 export const commandCallSchema = z.discriminatedUnion('command', [

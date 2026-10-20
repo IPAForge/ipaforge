@@ -122,8 +122,33 @@ export const placePairingInputSchema = z.object({
   overwrite: z.enum(['replace', 'keep-existing']).optional()
 })
 
+const MAX_SERVER_NAME_LENGTH = 80
+
+/** An anisette server's address: http allowed, for a server the user runs themselves. */
+export const anisetteAddressSchema = z.url({ protocol: /^https?$/ })
+
+const anisetteServerSchema = z.object({
+  name: textSchema.max(MAX_SERVER_NAME_LENGTH),
+  address: anisetteAddressSchema
+})
+
+/** A server the user adds or edits; the Engine checks the name and address again. */
+export const anisetteServerInputSchema = z.object({
+  name: z.string().max(MAX_SERVER_NAME_LENGTH),
+  address: z.string().max(2048)
+})
+
+export const anisetteChoiceSchema = z.discriminatedUnion('mode', [
+  z.object({ mode: z.literal('automatic') }),
+  z.object({
+    mode: z.literal('chosen'),
+    server: anisetteServerSchema.optional()
+  })
+])
+
 /** The password and any second factor come later, as prompt answers, so they never sit in the run's input. */
 export const signInInputSchema = z.object({
   appleId: textSchema,
-  rememberPassword: z.boolean().optional()
+  rememberPassword: z.boolean().optional(),
+  accountId: textSchema.optional()
 })

@@ -4,7 +4,8 @@
 // on. A package that can't update itself only says which file to download.
 import {
   CHECK_TIMEOUT_MS,
-  INSTALL_DELAY_MS
+  INSTALL_DELAY_MS,
+  NATIVE_BUILD_URL
 } from '@desktop/main/updates/constants.ts'
 import {
   manualUpdate,
@@ -17,7 +18,6 @@ import type {
 } from '@desktop/main/updates/types.ts'
 import type { UpdateState } from '@ipaforge/rpc'
 
-const IDLE: UpdateState = { phase: 'idle' }
 const MAX_REASON_LENGTH = 500
 
 const reasonOf = (error: unknown): string =>
@@ -41,11 +41,16 @@ export const createUpdateService = ({
   verifier,
   kind,
   arch,
+  translated = false,
   logger,
   checkTimeoutMs = CHECK_TIMEOUT_MS,
   installDelayMs = INSTALL_DELAY_MS
 }: UpdateServiceDeps): UpdateService => {
   const log = logger.child({ scope: 'updates' })
+  // Done; an Intel build on Apple silicon also says where the faster one is.
+  const IDLE: UpdateState = translated
+    ? { phase: 'idle', nativeBuild: { url: NATIVE_BUILD_URL } }
+    : { phase: 'idle' }
   const listeners = new Set<(state: UpdateState) => void>()
   let state: UpdateState = updater ? { phase: 'checking' } : IDLE
   let isRunning = false

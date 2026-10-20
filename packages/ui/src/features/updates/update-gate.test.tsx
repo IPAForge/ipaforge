@@ -1,10 +1,12 @@
 import { screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { UpdateState } from '@ipaforge/rpc'
 import { t } from '@ui/__tests__/test-i18n.ts'
 import { renderApp } from '@ui/__tests__/test-services.tsx'
+import { createFakeEngine } from '@ui/services/engine/fake/fake-engine.ts'
+import { createFakeEngineClient } from '@ui/services/engine/fake/fake-engine-client.ts'
 import { createFixedUpdateSource } from '@ui/services/updates/fixed-update-source.ts'
 
 const NEXT = '0.1.0-alpha.99'
@@ -54,6 +56,45 @@ describe('UpdateGate', () => {
     expect(screen.queryByText(t('updates.checking.title'))).toBeNull()
     expect(await screen.findByText(t('updates.checking.title'))).toBeDefined()
     expect(sidebar()).toBeNull()
+  })
+
+  it('on an Apple silicon Mac running the Intel build, says so and opens the Apple silicon download', async () => {
+    const user = userEvent.setup()
+    const url = 'https://github.com/IPAForge/ipaforge/releases/latest'
+    const { links } = await renderWith({
+      phase: 'idle',
+      nativeBuild: { url }
+    })
+
+    const dialog = await screen.findByRole('alertdialog', {
+      name: t('updates.nativeBuild.title')
+    })
+    expect(dialog.textContent).toContain(t('updates.nativeBuild.body'))
+    expect(sidebar()).not.toBeNull()
+    await user.click(
+      screen.getByRole('button', { name: t('updates.nativeBuild.download') })
+    )
+    expect(links.opened).toEqual([url])
+    await waitFor(() => expect(screen.queryByRole('alertdialog')).toBeNull())
+  })
+
+  it('asks the Engine nothing while it checks: no devices, no Apple IDs', async () => {
+    const fake = createFakeEngine({ delayMs: 0, appleDelayMs: 0 })
+    const watchDevices = vi.fn(fake.watchDevices)
+    const listAccounts = vi.fn(fake.listAccounts)
+    const engine = createFakeEngineClient({
+      delayMs: 0,
+      appleDelayMs: 0,
+      overrides: { watchDevices, listAccounts }
+    })
+    await renderApp('/install', {
+      engine,
+      updates: createFixedUpdateSource({ phase: 'checking' })
+    })
+
+    expect(await screen.findByText(t('updates.checking.title'))).toBeDefined()
+    expect(watchDevices).not.toHaveBeenCalled()
+    expect(listAccounts).not.toHaveBeenCalled()
   })
 
   it('after a failed update: tries again, opens the release page, or goes on with this version', async () => {

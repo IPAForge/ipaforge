@@ -7,6 +7,7 @@ import { PromptKind } from '@installer/domain/prompts.ts'
 import type { StepContext } from '@installer/pipeline/types.ts'
 import type { InstallerDeps } from '@installer/types.ts'
 import type { AppleSession, SavedAccount, SignInResult } from '@ipaforge/apple'
+import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 const finish = async (
   deps: InstallerDeps,
@@ -62,9 +63,27 @@ export const signInAccount = async (
     }
   if (resumed.kind === 'two_factor')
     return { session: await finish(deps, context, resumed), how: 'renewed' }
+  // An interactive resume never stops at "needs a code"; asking for the password covers the remaining case.
   const result = await signInWithPassword(deps, context, resumed.appleId)
 
   return { session: await finish(deps, context, result), how: 'signed-in' }
+}
+
+/** Signs a saved account in again: what it still has (session, password) first, then prompts for the rest. */
+export const signInSavedAccount = async (
+  deps: InstallerDeps,
+  context: StepContext,
+  accountId: string
+): Promise<SavedAccount> => {
+  await signInAccount(deps, context, accountId)
+  const account = (await deps.apple.accounts.list()).find(
+    (candidate) => candidate.id === accountId
+  )
+  if (!account)
+    throw new IPAForgeError(ErrorCode.AccountNotFound, {
+      data: { id: accountId }
+    })
+  return account
 }
 
 /**

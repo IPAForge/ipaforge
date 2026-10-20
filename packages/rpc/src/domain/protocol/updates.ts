@@ -21,8 +21,12 @@ export const manualPackageSchema = z.enum(['msi', 'deb', 'rpm', 'other'])
  * a failure) the app waits behind the update screen.
  */
 export const updateStateSchema = z.discriminatedUnion('phase', [
-  // Nothing to do: up to date, offline, or no updater (a browser, a development build).
-  z.object({ phase: z.literal('idle') }),
+  // Nothing to do: up to date, offline, or no updater (a browser, a development build). `nativeBuild`: this is
+  // the Intel build running translated on Apple silicon (slow), and where the Apple silicon one is.
+  z.object({
+    phase: z.literal('idle'),
+    nativeBuild: z.object({ url: linkSchema }).optional()
+  }),
   z.object({ phase: z.literal('checking') }),
   // Bytes so far and in all (0 until the first progress report).
   z.object({

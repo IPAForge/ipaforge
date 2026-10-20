@@ -257,6 +257,73 @@
       "system": "System ({language})",
       "hint": "IPAForge verwendet die Systemsprache, solange du hier keine andere auswählst.",
       "draft": "Entwurf"
+    },
+    "anisette": {
+      "title": "Anisette-Server",
+      "hint": "Für die Anmeldung bei Apple braucht es einen Anisette-Server, der Apple sagt, welcher Computer sich anmeldet. IPAForge nimmt selbst einen, der funktioniert; wähle hier einen bestimmten Server oder füge deinen eigenen hinzu.",
+      "add": "Server hinzufügen",
+      "loading": "Server werden geladen…",
+      "modeLabel": "Wie IPAForge einen Server wählt",
+      "mode": {
+        "automatic": "Automatisch",
+        "chosen": "Server wählen"
+      },
+      "modeHint": {
+        "automatic": "Probiert die Server in dieser Reihenfolge und nimmt den nächsten, wenn einer ausfällt.",
+        "chosen": "Nutzt immer {name}.",
+        "none": "Wähle den Server, den IPAForge immer nutzen soll."
+      },
+      "noneChosen": "Noch kein Server gewählt: bis du einen wählst, entscheidet IPAForge selbst.",
+      "chosenDown": "{name} antwortet nicht. Die Anmeldung klappt erst wieder, wenn er zurück ist, du einen anderen Server wählst oder auf Automatisch wechselst.",
+      "count": "{count, plural, one {# Server} other {# Server}}",
+      "sources": "{custom, plural, =0 {} other {# von dir hinzugefügt, }}{list} aus der Liste von SideStore, {backup} als Reserve ·",
+      "listUpdated": "Liste von SideStore aktualisiert {ago}",
+      "listNever": "Liste von SideStore noch nicht geladen",
+      "updateList": "Liste aktualisieren",
+      "updating": "Wird aktualisiert…",
+      "testAll": "Alle testen",
+      "testing": "Wird getestet…",
+      "group": {
+        "custom": "Von dir hinzugefügt · zuerst genutzt",
+        "list": "Aus der Liste von SideStore",
+        "backup": "Reserve · nur wenn die Liste von SideStore nicht erreichbar ist oder keiner davon antwortet"
+      },
+      "tag": {
+        "custom": "Von dir hinzugefügt",
+        "inUse": "In Gebrauch",
+        "chosen": "Gewählt"
+      },
+      "position": "Als Nummer {position} probiert",
+      "use": "{name} nutzen",
+      "chooseLabel": "Zu nutzender Server",
+      "status": {
+        "untested": "Nicht getestet",
+        "testing": "Wird getestet…",
+        "ok": "Funktioniert · {ms} ms",
+        "bad": "Antwortet nicht"
+      },
+      "test": "Testen",
+      "testOne": "{name} testen",
+      "edit": "{name} bearbeiten",
+      "remove": "{name} entfernen",
+      "confirmRemove": "{name} entfernen?",
+      "removeYes": "Entfernen",
+      "skipped": "Aus der Liste von SideStore nicht genutzt: {names} (kein HTTPS). Einen HTTP-Server kannst du selbst hinzufügen, etwa einen auf deinem eigenen Computer.",
+      "dialog": {
+        "addTitle": "Anisette-Server hinzufügen",
+        "editTitle": "Server bearbeiten",
+        "body": "Jeder Anisette-Server mit dem üblichen Protokoll funktioniert: ein öffentlicher oder einer, den du selbst betreibst.",
+        "name": "Name",
+        "namePlaceholder": "Mein Server",
+        "address": "Adresse",
+        "addressPlaceholder": "https://anisette.my-server.net",
+        "addressHint": "https:// oder, für einen eigenen Server, http://",
+        "nameMissing": "Gib ihm einen Namen.",
+        "addressInvalid": "Gib eine Adresse ein, die mit https:// oder http:// beginnt.",
+        "exists": "Dieser Server ist schon in der Liste.",
+        "stillAdd": "Du kannst ihn trotzdem hinzufügen.",
+        "save": "Speichern"
+      }
     }
   },
   "theme": {
@@ -465,6 +532,14 @@
       "developer_request_failed": {
         "title": "Fehler bei den Entwicklerdiensten von Apple",
         "body": "Eine Anfrage an die Entwicklerdienste von Apple ist fehlgeschlagen. Versuche es erneut und melde das Problem, wenn es weiter auftritt."
+      },
+      "anisette_server_invalid": {
+        "title": "Dieser Anisette-Server kann nicht genutzt werden",
+        "body": "Prüfe Name und Adresse: Die Adresse beginnt mit https:// oder http://."
+      },
+      "anisette_server_exists": {
+        "title": "Dieser Anisette-Server ist schon in der Liste",
+        "body": "Wähle ihn stattdessen in den Einstellungen aus der Liste."
       }
     },
     "catalog": {
@@ -753,6 +828,10 @@
       "open": "Öffnen",
       "tryAnyway": {
         "how": "Apple hat eine negative Zahl freier App-IDs gemeldet – ein bekannter Fehler auf Apples Seite; die echte Zahl kann höher sein. „Trotzdem versuchen“ bittet Apple, sie anzulegen; ist das Limit wirklich erreicht, sagt Apple das."
+      },
+      "changeAnisetteServer": {
+        "how": "Öffne die Einstellungen, teste die Anisette-Server und wähle einen, der funktioniert, oder wechsle zurück zu Automatisch.",
+        "button": "Anisette-Server öffnen"
       }
     },
     "reportHint": "Öffnet ein neues GitHub-Issue mit der Diagnose. Nichts wird gesendet, bevor du es abschickst."
@@ -934,7 +1013,12 @@
       "close": "Fertig"
     },
     "rememberPassword": "Mein Passwort im Schlüsselbund des Systems speichern",
-    "rememberPasswordHint": "Damit kann sich IPAForge selbst erneut anmelden, wenn die Sitzung abläuft."
+    "rememberPasswordHint": "Damit kann sich IPAForge selbst erneut anmelden, wenn die Sitzung abläuft.",
+    "resuming": {
+      "title": "Erneut anmelden",
+      "body": "Anmeldung bei {appleId} mit dem, was IPAForge gespeichert hat…",
+      "cancel": "Abbrechen"
+    }
   },
   "accounts": {
     "description": "Die Apple-IDs, mit denen IPAForge Apps signiert. Die verwendete steht in der oberen Leiste.",
@@ -1586,6 +1670,13 @@
       "body": "Diese Kopie wurde aus {package, select, msi {einem .msi-Installer} deb {einem .deb-Paket} rpm {einem .rpm-Paket} other {einem Paket}} installiert, das sich nicht selbst aktualisieren kann. Lade die neue Version und installiere sie über diese: Deine Apple-IDs, Apps und Einstellungen bleiben erhalten.",
       "download": "{version} laden",
       "later": "Später"
+    },
+    "nativeBuild": {
+      "title": "Das ist die Intel-Version",
+      "body": "Dein Mac hat Apple Silicon, daher läuft diese IPAForge-Kopie über Rosetta und alles ist langsamer. Lade die Apple-Silicon-Version und installiere sie über diese; Apple-IDs, Geräte und Apps bleiben erhalten.",
+      "file": "IPAForge-…-mac-arm64.dmg",
+      "later": "Später",
+      "download": "Für Apple Silicon laden"
     }
   },
   "whatsNew": {

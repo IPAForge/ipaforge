@@ -27,45 +27,31 @@ Sideloading tools tend to fail in a few recurring ways. IPAForge is designed aro
 
 | Common failure | How IPAForge handles it |
 |---|---|
-| Apple ID sign-in errors (`-80045`) | Anisette servers are health-checked and fall back automatically; macOS uses native anisette |
+| Apple ID sign-in errors (`-80045`) | Anisette servers come from SideStore's up-to-date list and fall back automatically, or you choose or add your own in Settings |
 | `HTTP 404` when downloading SideStore or LiveContainer | Releases are resolved through the GitHub API from a catalog that can be updated remotely, never from hard-coded URLs |
 | "Unable to verify app" after installing | The signer matches Apple `codesign` byte for byte, and each extension gets the entitlements from its own profile |
 | Errors that don't say what to do | Every failure has a stable error code, a plain-language explanation and the fixes that apply |
 
 ## Features
 
-- **One-click SideStore.** Install SideStore, or LiveContainer with SideStore, from the Stable or Nightly channel. The pairing file and signing certificate are placed automatically.
-- **Keep apps working.** The Apps page lists what IPAForge installed, with when each app expires, and refreshes them (signed again, data kept) with one press or by itself before they expire. It updates them from their source too.
-- **Preload apps.** Drop .ipa files, choose them, add a link, or browse apps from the catalog (LiveContainer, StikDebug, Feather…), SideStore's source and any AltStore-format source you add. Each app is checked before anything changes: its version, the App IDs it needs, whether the device can run it, and whether it updates one already installed. Then they install in one run.
-- **Repair SideStore.** IPAForge checks, line by line, what keeps SideStore from refreshing your apps by itself (who signed it, its certificate, its pairing file, when it expires) and fixes it in one go.
-- **SideStore links and QR codes.** Add a source to SideStore on the iPhone, or have SideStore install an app, by scanning a code.
-- **A checklist for each device.** What it needs for its iOS version (Trust, a passcode, Developer Mode, trusting your Apple ID, LocalDevVPN for SideStore), ticked as you go.
-- **Clear install plan.** Before anything changes, IPAForge shows what the install uses: App IDs and how many are left this week, free-app slots on the device, whether the certificate is reused, and the team.
-- **Live progress.** Every step reports what it did, for example the release it found, whether a saved session was reused, or how many App IDs it registered.
-- **Recovery, not dead ends.** Failures lead to a screen with the fixes that apply, such as continuing from where the run stopped or switching Apple ID. Diagnostics can be copied, and an issue report opens pre-filled.
-- **Multiple Apple IDs.** Saved in the system keychain, with free and paid teams, and a quick switch when one is blocked on a device.
+- **One-click SideStore.** SideStore, or LiveContainer with SideStore, Stable or Nightly. The pairing file and certificate are placed for you.
+- **Preload your apps.** Drop .ipa files, paste a link, or browse the catalog, SideStore's source and any AltStore-format source you add. Each app is checked before anything changes, then they all install in one run.
+- **Apps that don't expire.** See when each app expires. Refresh works like SideStore's: a new profile while your certificate is valid, nothing reinstalled. IPAForge can refresh them by itself before they expire.
+- **Repair SideStore.** Checks what keeps SideStore from refreshing by itself, line by line, and fixes it in one go.
+- **QR codes for SideStore.** Add a source to SideStore on your iPhone, or have SideStore install an app, by scanning a code.
+- **A checklist for each iPhone.** Trust, passcode, Developer Mode, trusting your Apple ID, LocalDevVPN: what your iOS version needs, ticked as you go.
+- **Recovery, not dead ends.** Every failure has a screen with the fixes that apply, copyable diagnostics and a pre-filled bug report.
+- **Live progress.** Every step shows what it's doing: speed and time left while sending the app, Apple's steps, and iOS's own install progress, over USB or Wi-Fi.
+- **Logs you can share.** Every step IPAForge took, with search and filters, saved to a file to attach to a bug report.
+- **Several Apple IDs.** Two-factor sign-in with a code on your devices or by text. Kept in your system keychain, free and paid teams, with a quick switch when Apple blocks one on a device.
+- **Anisette servers your way.** IPAForge picks a working server by itself from SideStore's list, with its own servers as a backup. Or choose one, add your own (a server on your computer included), and test each one.
 - **Works within Apple's limits.** The App ID quota, the three-app limit for free accounts and certificate limits are checked before any change, and each is explained.
-- **Your language.** The language follows the system, and right-to-left languages are supported. Six languages today, every language iOS supports by 1.0.
-- **Themes.** Six colour palettes, each with light and dark variants.
-- **Updates itself.** IPAForge checks for a new version when it opens and installs it, each update checked against its release's Sigstore signature first. **What's new** says what changed, in plain words.
+- **Updates itself.** A new version installs when IPAForge opens, after its release signature checks out, and What's new tells you what changed.
+- **Your language, your look.** Six languages, right to left included, and six colour themes in light and dark.
+
+Sideload signing has been verified against real devices and Apple accounts: Apple's own `codesign --verify --deep --strict` accepts the output, including a full SideStore build signed in about half a second. Details: [Code Signing](docs/signing.md).
 
 Coming next: guided onboarding, management tools for certificates and App IDs, and wireless pairing with the iOS 17+ remote pairing file. Installing over Wi-Fi to a device paired before already works.
-
-## Project status
-
-| Component | Package | Status |
-|---|---|---|
-| Code signing | `@ipaforge/signer` | ✅ Complete: matches Apple `codesign` on golden fixtures, verified with a real Apple Development certificate |
-| Device communication | `@ipaforge/device` | ✅ Complete: usbmux, lockdown, pairing, AFC, house_arrest, installation_proxy, misagent |
-| Apple account | `@ipaforge/apple` | ✅ Complete: sign-in with two-factor authentication, anisette with fallback, saved accounts |
-| Developer services | `@ipaforge/apple` | ✅ Complete: teams, certificates, App IDs, app groups, devices, provisioning profiles |
-| Release catalog | `@ipaforge/catalog` | ✅ Complete: GitHub release resolution, mirrors, verified downloads, cache, AltStore-format app sources |
-| Install engine | `@ipaforge/installer` | ✅ Complete: resumable pipelines, install flows, free-app limit, error catalogue |
-| Engine ⇄ UI protocol | `@ipaforge/rpc` | ✅ Complete: typed, validated messages over Electron IPC, and the update channel |
-| User interface | `@ipaforge/ui` | ✅ Install and preload complete: accounts, devices with their checklist, the install run with its questions, step details and recovery, Preload with app sources, Apps with refresh, Repair SideStore, the log viewer, and What's new, in six languages, checked by screenshot and WCAG 2.2 AA tests; onboarding comes next |
-| Desktop app | `apps/desktop` | ✅ Complete: installers for macOS (DMG, zip), Windows (NSIS, MSI) and Linux (AppImage, deb, rpm), built, Sigstore-signed and published by CI on a version tag; updates itself, checking each update's signature. Windows code signing and Apple notarisation come with 1.0 |
-
-Sideload signing has been verified against real devices and Apple accounts. Apple's own `codesign --verify --deep --strict` accepts the output, including a full SideStore build signed in about half a second. Details: [Code Signing](docs/signing.md).
 
 ## Requirements
 

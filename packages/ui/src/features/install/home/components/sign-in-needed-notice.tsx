@@ -7,8 +7,8 @@ import { SignInDialog } from '@ui/features/accounts/sign-in/sign-in-dialog.tsx'
 import { useActiveAccount, useDevicesInUse } from '@ui/hooks/use-selection.ts'
 
 /**
- * Says when the Apple ID in use needs signing in again, with a way to do it now. It does not block installing:
- * the run's sign-in step asks for the password itself.
+ * Says when the Apple ID in use needs signing in again, with a way to do it now: with what IPAForge saved, so it
+ * asks only for what's missing (usually the code). It does not block installing: the run's sign-in step asks too.
  */
 export const SignInNeededNotice = () => {
   const { t } = useTranslation()
@@ -23,6 +23,7 @@ export const SignInNeededNotice = () => {
     isSigningIn && account ? (
       <SignInDialog
         appleId={account.appleId}
+        accountId={account.id}
         onClose={onClose}
         onSignedIn={onSignedIn}
       />

@@ -17,6 +17,10 @@ import type {
   PromptRequest
 } from '@installer/pipeline/types.ts'
 import type {
+  AnisetteChoice,
+  AnisetteOverview,
+  AnisetteServerInput,
+  AnisetteServerTest,
   AppId,
   AppIdPlan,
   AppIdQuota,
@@ -158,6 +162,21 @@ export type EngineQueries = {
   deviceApps(udid: string): Promise<DeviceApps>
   /** Makes the Developer Mode switch appear in the device's Settings. */
   revealDeveloperMode(udid: string): Promise<void>
+  /** The anisette servers in the order Automatic tries them, the choice, and SideStore's list's age. */
+  anisetteServers(): Promise<AnisetteOverview>
+  /** Automatic, or always one server of the list. Each change below returns the servers after it. */
+  chooseAnisetteServer(choice: AnisetteChoice): Promise<AnisetteOverview>
+  /** Adds a server, used first (and chosen when the user picks servers). */
+  addAnisetteServer(input: AnisetteServerInput): Promise<AnisetteOverview>
+  updateAnisetteServer(
+    address: string,
+    input: AnisetteServerInput
+  ): Promise<AnisetteOverview>
+  removeAnisetteServer(address: string): Promise<AnisetteOverview>
+  /** Whether a server answers and how fast: one in the list, or an address being added. */
+  testAnisetteServer(address: string): Promise<AnisetteServerTest>
+  /** Fetches SideStore's list of servers now. */
+  updateAnisetteServerList(): Promise<AnisetteOverview>
 }
 
 export type InstalledAppsQuery = {

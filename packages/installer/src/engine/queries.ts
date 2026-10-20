@@ -83,5 +83,13 @@ export const createEngineQueries = (deps: InstallerDeps): EngineQueries => ({
   checkSideStore: (query) => checkSideStore(deps, query),
   catalogReleases: (appId) => catalogReleases(deps, appId),
   deviceApps: (udid) => deviceApps(deps, udid),
-  revealDeveloperMode: (udid) => revealDeveloperMode(deps, udid)
+  revealDeveloperMode: (udid) => revealDeveloperMode(deps, udid),
+  anisetteServers: () => deps.apple.anisette.overview(),
+  chooseAnisetteServer: (choice) => deps.apple.anisette.choose(choice),
+  addAnisetteServer: (input) => deps.apple.anisette.addServer(input),
+  updateAnisetteServer: (address, input) =>
+    deps.apple.anisette.updateServer(address, input),
+  removeAnisetteServer: (address) => deps.apple.anisette.removeServer(address),
+  testAnisetteServer: (address) => deps.apple.anisette.test(address),
+  updateAnisetteServerList: () => deps.apple.anisette.updateList()
 })

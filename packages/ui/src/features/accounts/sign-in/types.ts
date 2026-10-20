@@ -20,12 +20,16 @@ export type SignInState =
       readonly count: number
       readonly isPending: boolean
     }
+  /** "Sign in again": signing in with what the account has saved, before Apple asks for anything. */
+  | { readonly phase: 'resuming' }
   | { readonly phase: 'signed-in'; readonly account: Account }
 
 export type UseSignIn = {
   readonly state: SignInState
   /** `rememberPassword`: save the password in the system keychain, to renew an expired session without asking. */
   start: (appleId: string, password: string, rememberPassword: boolean) => void
+  /** "Sign in again" for a saved account: its saved session or password first; asks only for what's missing. */
+  resume: (appleId: string, accountId: string) => void
   answer: (answer: unknown) => void
   decline: () => void
 }

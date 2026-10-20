@@ -25,6 +25,10 @@ export type SourceApp = SourceApps['apps'][number]
 export type SourceAppVersion = SourceApp['versions'][number]
 export type SourcePreview = Resolved<'checkSource'>
 export type InstalledApp = Resolved<'installedApps'>[number]
+export type AnisetteOverview = Resolved<'anisetteServers'>
+export type AnisetteServerEntry = AnisetteOverview['servers'][number]
+export type AnisetteChoice = AnisetteOverview['choice']
+export type AnisetteServerTest = Resolved<'testAnisetteServer'>
 
 /** A catalog app's latest release on one channel. */
 export type CatalogRelease = Resolved<'catalogReleases'>[number]

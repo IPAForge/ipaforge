@@ -56,6 +56,8 @@ export type UpdateServiceDeps = {
   readonly kind: InstallKind
   /** `process.arch`, to name the right file for a package that can't update itself. */
   readonly arch: string
+  /** The Intel build running under Rosetta on Apple silicon (Electron's `app.runningUnderARM64Translation`). */
+  readonly translated?: boolean
   readonly logger: Logger
   readonly checkTimeoutMs?: number
   readonly installDelayMs?: number

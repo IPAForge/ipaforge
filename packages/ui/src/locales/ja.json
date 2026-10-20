@@ -257,6 +257,73 @@
       "system": "システム（{language}）",
       "hint": "ここで言語を選ばない限り、IPAForgeはシステムの言語に従います。",
       "draft": "下書き"
+    },
+    "anisette": {
+      "title": "anisette サーバー",
+      "hint": "Apple へのサインインには anisette サーバーが必要です。どのコンピュータがサインインしているかを Apple に伝えます。IPAForge は動作するサーバーを自動で使います。特定のサーバーを使いたい場合はここで選ぶか、自分のサーバーを追加してください。",
+      "add": "サーバーを追加",
+      "loading": "サーバーを読み込んでいます…",
+      "modeLabel": "IPAForge のサーバーの選び方",
+      "mode": {
+        "automatic": "自動",
+        "chosen": "サーバーを選ぶ"
+      },
+      "modeHint": {
+        "automatic": "この順番でサーバーを試し、失敗したら次へ進みます。",
+        "chosen": "常に {name} を使います。",
+        "none": "IPAForge が常に使うサーバーを選んでください。"
+      },
+      "noneChosen": "まだサーバーが選ばれていません。選ぶまでは IPAForge が自動で選びます。",
+      "chosenDown": "{name} が応答しません。復旧するか、別のサーバーを選ぶか、自動に戻すまでサインインできません。",
+      "count": "{count, plural, other {# 台のサーバー}}",
+      "sources": "{custom, plural, =0 {} other {追加したもの # 台、}}SideStore のリストから {list} 台、予備 {backup} 台 ·",
+      "listUpdated": "SideStore のリストを{ago}に更新",
+      "listNever": "SideStore のリストはまだ取得していません",
+      "updateList": "リストを更新",
+      "updating": "更新中…",
+      "testAll": "すべてテスト",
+      "testing": "テスト中…",
+      "group": {
+        "custom": "追加したもの · 最初に使用",
+        "list": "SideStore のリストから",
+        "backup": "予備 · SideStore のリストに接続できないか、どれも応答しないときだけ"
+      },
+      "tag": {
+        "custom": "追加したもの",
+        "inUse": "使用中",
+        "chosen": "選択中"
+      },
+      "position": "{position} 番目に試行",
+      "use": "{name} を使う",
+      "chooseLabel": "使用するサーバー",
+      "status": {
+        "untested": "未テスト",
+        "testing": "テスト中…",
+        "ok": "動作中 · {ms} ms",
+        "bad": "応答なし"
+      },
+      "test": "テスト",
+      "testOne": "{name} をテスト",
+      "edit": "{name} を編集",
+      "remove": "{name} を削除",
+      "confirmRemove": "{name} を削除しますか？",
+      "removeYes": "削除",
+      "skipped": "SideStore のリストから使用しないもの: {names}（HTTPS なし）。自分のコンピュータ上のサーバーなど、HTTP のサーバーは自分で追加できます。",
+      "dialog": {
+        "addTitle": "anisette サーバーを追加",
+        "editTitle": "サーバーを編集",
+        "body": "通常のプロトコルに対応した anisette サーバーなら使えます。公開サーバーでも、自分で動かしているサーバーでも構いません。",
+        "name": "名前",
+        "namePlaceholder": "自分のサーバー",
+        "address": "アドレス",
+        "addressPlaceholder": "https://anisette.my-server.net",
+        "addressHint": "https:// または、自分で動かすサーバーなら http://",
+        "nameMissing": "名前を付けてください。",
+        "addressInvalid": "https:// または http:// で始まるアドレスを入力してください。",
+        "exists": "このサーバーはすでにリストにあります。",
+        "stillAdd": "それでも追加できます。",
+        "save": "保存"
+      }
     }
   },
   "theme": {
@@ -465,6 +532,14 @@
       "developer_request_failed": {
         "title": "Appleのデベロッパサービスでエラーが発生しました",
         "body": "Appleのデベロッパサービスへのリクエストに失敗しました。もう一度試し、続く場合は問題を報告してください。"
+      },
+      "anisette_server_invalid": {
+        "title": "この anisette サーバーは使えません",
+        "body": "名前とアドレスを確認してください。アドレスは https:// または http:// で始まります。"
+      },
+      "anisette_server_exists": {
+        "title": "この anisette サーバーはすでにリストにあります",
+        "body": "代わりに設定のリストから選んでください。"
       }
     },
     "catalog": {
@@ -753,6 +828,10 @@
       "open": "開く",
       "tryAnyway": {
         "how": "Appleが残りのApp ID数を負の値で返しました。これはApple側の既知の不具合で、実際にはもっと残っている可能性があります。「それでも試す」でAppleに作成を依頼します。本当に上限に達している場合はAppleがそう返します。"
+      },
+      "changeAnisetteServer": {
+        "how": "設定を開いて anisette サーバーをテストし、動作するものを選ぶか、自動に戻してください。",
+        "button": "anisette サーバーを開く"
       }
     },
     "reportHint": "診断情報を記入した新しいGitHub Issueを開きます。送信するまで何も送られません。"
@@ -934,7 +1013,12 @@
       "close": "完了"
     },
     "rememberPassword": "パスワードをシステムのキーチェーンに保存する",
-    "rememberPasswordHint": "セッションの期限が切れたとき、IPAForgeが自動でサインインし直せます。"
+    "rememberPasswordHint": "セッションの期限が切れたとき、IPAForgeが自動でサインインし直せます。",
+    "resuming": {
+      "title": "もう一度サインイン",
+      "body": "IPAForge が保存した情報で {appleId} にサインインしています…",
+      "cancel": "キャンセル"
+    }
   },
   "accounts": {
     "description": "IPAForgeがアプリの署名に使うApple ID。使用中のものは上部のバーに表示されます。",
@@ -1586,6 +1670,13 @@
       "body": "このコピーは自動でアップデートできない{package, select, msi {.msi インストーラー} deb {.deb パッケージ} rpm {.rpm パッケージ} other {パッケージ}}からインストールされています。新しいバージョンをダウンロードして、このバージョンの上からインストールしてください。Apple ID、アプリ、設定はそのまま残ります。",
       "download": "{version} をダウンロード",
       "later": "あとで"
+    },
+    "nativeBuild": {
+      "title": "これは Intel 版です",
+      "body": "この Mac は Apple シリコンを搭載しているため、この IPAForge は Rosetta 経由で動作し、すべてが遅くなります。Apple シリコン版をダウンロードして上書きインストールしてください。Apple ID、デバイス、App はそのまま残ります。",
+      "file": "IPAForge-…-mac-arm64.dmg",
+      "later": "後で",
+      "download": "Apple シリコン版をダウンロード"
     }
   },
   "whatsNew": {

@@ -20,6 +20,12 @@ describe('validateServerUrl', () => {
     expect(validateServerUrl('not a url').ok).toBe(false)
   })
 
+  it('rejects an address with a user name or password, which would be saved and logged', () => {
+    expect(validateServerUrl('https://me:secret@ani.own-server.net').ok).toBe(
+      false
+    )
+  })
+
   it('handles a long run of slashes inside the path quickly', () => {
     const path = `${'/'.repeat(100_000)}x`
     const result = validateServerUrl(`https://ani.sidestore.io${path}`)

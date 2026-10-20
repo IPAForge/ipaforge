@@ -201,6 +201,19 @@ export const createEngineClient = (
     setSourceEnabled: (id, enabled) =>
       query({ method: 'setSourceEnabled', args: [id, enabled] }),
     refreshSources: (id) => query({ method: 'refreshSources', args: [id] }),
+    anisetteServers: () => query({ method: 'anisetteServers', args: [] }),
+    chooseAnisetteServer: (choice) =>
+      query({ method: 'chooseAnisetteServer', args: [choice] }),
+    addAnisetteServer: (input) =>
+      query({ method: 'addAnisetteServer', args: [input] }),
+    updateAnisetteServer: (address, input) =>
+      query({ method: 'updateAnisetteServer', args: [address, input] }),
+    removeAnisetteServer: (address) =>
+      query({ method: 'removeAnisetteServer', args: [address] }),
+    testAnisetteServer: (address) =>
+      query({ method: 'testAnisetteServer', args: [address] }),
+    updateAnisetteServerList: () =>
+      query({ method: 'updateAnisetteServerList', args: [] }),
     installedApps: (installedQuery) =>
       query({
         method: 'installedApps',
