@@ -44,7 +44,7 @@ packages/ui/
     ├── styles.css      # the only stylesheet: Tailwind, then HeroUI
     ├── index.ts        # public API
     ├── components/     # the shell (app-shell, top-bar, sidebar, …) and shared pieces
-    ├── features/       # one folder per section: install, preload, apps, devices, accounts, certificates, logs, settings;
+    ├── features/       # one folder per section: install, preload, apps, devices, accounts, developer, logs, settings;
     │                   #   and repair (Repair SideStore), updates (the update screen), whats-new (What's new, the changelog);
     │                   #   the page at its root, then components/, hooks/, utils/, constants.ts, types.ts as needed
     ├── state/          # stores kept outside components: active-run/ (the install run), selection/ (device and Apple ID in use),
