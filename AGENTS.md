@@ -67,7 +67,8 @@ ipaforge/
 | `apps/desktop/src/renderer/engine-port.ts` | Renderer: receives the ports and wraps each in a `Transport` for `createEngineClient` and `createUpdateClient` |
 | `apps/desktop/src/renderer/main.tsx` | Electron renderer: connects the `EngineClient` and the update client, then mounts `@ipaforge/ui` with the browser services and a hash history |
 | `apps/desktop/electron-builder.yml` | Installers (DMG and zip, NSIS and MSI, AppImage, deb, rpm) and the update metadata: `pnpm --filter @ipaforge/desktop dist` |
-| `.github/workflows/release.yml` | On a `v*` tag: builds the installers on all three systems and publishes the GitHub release (notes from `docs/releases/<version>.md`) |
+| `.github/workflows/release.yml` | On a `v*` tag: builds the installers on all three systems and publishes the GitHub release (notes from `docs/releases/<version>.md`), then asks ipaforge.com to rebuild |
+| `.github/workflows/website.yml` | A change on `main` to what ipaforge.com is built from (install guide, release notes, error texts) asks the site repository to rebuild (`SITE_DISPATCH_TOKEN`) |
 | `apps/desktop/electron.vite.config.ts` | electron-vite builds for main, preload and renderer (`pnpm --filter @ipaforge/desktop dev` / `build`) |
 | `packages/ui/src/services/engine/fake/fake-engine.ts` | The fake Engine the browser dev host and UI tests use (`?scenario=` in dev) |
 | `packages/installer/src/application/device-watch.ts` | The device feed (usbmuxd `Listen`, reconnect, fallback polling) behind `engine.watchDevices` |

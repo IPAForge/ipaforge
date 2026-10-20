@@ -176,3 +176,15 @@ jobs:
               --notes-file "$notes" \
               $prerelease
           fi
+      # ipaforge.com shows the latest version and its notes: ask it to rebuild (SITE_DISPATCH_TOKEN, see
+      # website.yml). A release published with this workflow's token starts no other workflow, so it's asked here.
+      - name: Ask ipaforge.com to rebuild
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ secrets.SITE_DISPATCH_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::warning::SITE_DISPATCH_TOKEN is not set: ipaforge.com was not asked to rebuild."
+            exit 0
+          fi
+          gh api repos/IPAForge/ipaforge.github.io/dispatches -f event_type=app-released

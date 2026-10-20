@@ -1,0 +1,32 @@
+# Keeps ipaforge.com up to date: the site is built from this repository's install guide, release notes and error
+# texts, so a change to them on main asks the site repository to rebuild (a release asks too, from release.yml:
+# a release published with the workflow's own token starts no other workflow). That needs SITE_DISPATCH_TOKEN, a
+# fine-grained token allowed to write the contents of IPAForge/ipaforge.github.io (only that repository); without
+# it the run says so and does nothing.
+name: Website
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - docs/installing.md
+      - docs/releases/**
+      - packages/ui/src/locales/en.json
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  rebuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ask ipaforge.com to rebuild
+        env:
+          GH_TOKEN: ${{ secrets.SITE_DISPATCH_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then
+            echo "::warning::SITE_DISPATCH_TOKEN is not set: ipaforge.com was not asked to rebuild."
+            exit 0
+          fi
+          gh api repos/IPAForge/ipaforge.github.io/dispatches -f event_type=app-docs-changed
+          echo "Asked ipaforge.com to rebuild."
