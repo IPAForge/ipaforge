@@ -18,6 +18,8 @@ export type AppView = {
   readonly app: InstalledApp
   /** Days until it expires (negative once expired); undefined without a profile. */
   readonly daysLeft: number | undefined
+  /** The days shown: calendar days until it expires, as SideStore counts them (`calendarDaysLeft`). */
+  readonly daysShown: number | undefined
   readonly tone: ExpiryTone
   /** Where it came from, in words. */
   readonly from: string | undefined

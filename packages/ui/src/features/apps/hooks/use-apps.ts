@@ -2,7 +2,11 @@ import { useTranslation } from 'react-i18next'
 
 import type { AppView } from '@ui/features/apps/types.ts'
 import { appUpdate } from '@ui/features/apps/utils/app-update.ts'
-import { daysLeft, expiryTone } from '@ui/features/apps/utils/expiry.ts'
+import {
+  calendarDaysLeft,
+  daysLeft,
+  expiryTone
+} from '@ui/features/apps/utils/expiry.ts'
 import { originText } from '@ui/features/apps/utils/origin-text.ts'
 import { refreshPlan } from '@ui/features/apps/utils/refresh-plan.ts'
 import { useCatalogApps } from '@ui/hooks/queries/use-catalog-apps.ts'
@@ -44,6 +48,7 @@ export const useApps = () => {
     return {
       app,
       daysLeft: days,
+      daysShown: calendarDaysLeft(app.expiresAt, now),
       tone: expiryTone(days, settings.daysBefore),
       from,
       update: appUpdate(app, sources),

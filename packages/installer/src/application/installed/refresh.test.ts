@@ -1,5 +1,6 @@
 // Refresh the way SideStore does it: an app whose certificate is still valid gets new profiles only (nothing is
-// reinstalled); one whose certificate was revoked or replaced, or that carries no IPAForge mark, is installed again.
+// reinstalled); one whose certificate was revoked or replaced, or that carries no IPAForge mark, is installed again,
+// and so is SideStore, which shows the expiry of the profile inside its own files.
 import { describe, expect, it, vi } from 'vitest'
 
 import {
@@ -26,17 +27,14 @@ const WIDGET = `${APP}.widget`
 const VALID = 'AAAA01'
 const REVOKED = 'BBBB02'
 
-const marked = (serial?: string): PlistDict =>
-  createDict([
-    [
-      MARKER_KEY,
-      markerFor(
-        'com.example.app',
-        { kind: 'url', url: 'https://x.com/a.ipa' },
-        serial
-      )
-    ]
-  ])
+const marked = (
+  serial?: string,
+  origin: Parameters<typeof markerFor>[1] = {
+    kind: 'url',
+    url: 'https://x.com/a.ipa'
+  }
+): PlistDict =>
+  createDict([[MARKER_KEY, markerFor('com.example.app', origin, serial)]])
 
 /** A device with the app (and its widget's profile), marked as signed with `serial`. */
 const harnessWith = (raw: PlistDict) =>
@@ -82,6 +80,31 @@ describe('refresh plan', () => {
         bundleIds: [APP]
       })
     ).toEqual([{ bundleId: APP, kind: 'reinstall', reason: 'unmarked' }])
+  })
+
+  it('installs SideStore again, alone or in LiveContainer, so its own screen shows the new date', async () => {
+    for (const appId of ['sidestore', 'livecontainer-sidestore'])
+      expect(
+        await harnessWith(
+          marked(VALID, { kind: 'catalog', appId })
+        ).engine.refreshPlan({
+          udid: UDID,
+          accountId: ACCOUNT,
+          bundleIds: [APP]
+        })
+      ).toEqual([{ bundleId: APP, kind: 'reinstall', reason: 'sidestore' }])
+  })
+
+  it('gives another catalog app a new profile only', async () => {
+    expect(
+      await harnessWith(
+        marked(VALID, { kind: 'catalog', appId: 'livecontainer' })
+      ).engine.refreshPlan({
+        udid: UDID,
+        accountId: ACCOUNT,
+        bundleIds: [APP]
+      })
+    ).toEqual([{ bundleId: APP, kind: 'profile' }])
   })
 })
 

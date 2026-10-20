@@ -1397,7 +1397,8 @@
       "refresh": {
         "profile": "Doar un profil nou, nimic nu se reinstalează",
         "certificate": "Reinstalată: certificatul cu care a fost semnată nu mai este valid",
-        "unmarked": "Reinstalată: IPAForge nu poate ști ce certificat a semnat-o"
+        "unmarked": "Reinstalată: IPAForge nu poate ști ce certificat a semnat-o",
+        "sidestore": "Instalat din nou, cu datele păstrate, ca SideStore să arate singur noua dată"
       },
       "group": {
         "failed": "Eșuat",

@@ -168,8 +168,12 @@ export type RefreshDecision =
   | {
       readonly bundleId: string
       readonly kind: 'reinstall'
-      /** Its certificate was revoked or replaced, or it carries no IPAForge mark saying which one signed it. */
-      readonly reason: 'certificate' | 'unmarked'
+      /**
+       * Its certificate was revoked or replaced, it carries no IPAForge mark saying which one signed it, or it is
+       * SideStore, which shows the expiry of the profile inside its own files (a new profile alone leaves its date
+       * as it was).
+       */
+      readonly reason: 'certificate' | 'unmarked' | 'sidestore'
     }
 
 /** An app on the device signed with one of the user's teams, as the Apps page lists it. */

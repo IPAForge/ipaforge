@@ -1397,7 +1397,8 @@
       "refresh": {
         "profile": "Nur ein neues Profil, nichts wird neu installiert",
         "certificate": "Neu installiert: Das Zertifikat, mit dem sie signiert wurde, ist nicht mehr gültig",
-        "unmarked": "Neu installiert: IPAForge kann nicht erkennen, welches Zertifikat sie signiert hat"
+        "unmarked": "Neu installiert: IPAForge kann nicht erkennen, welches Zertifikat sie signiert hat",
+        "sidestore": "Erneut installiert, Daten bleiben erhalten, damit SideStore selbst das neue Datum zeigt"
       },
       "group": {
         "failed": "Fehlgeschlagen",

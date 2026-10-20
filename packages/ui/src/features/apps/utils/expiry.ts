@@ -9,6 +9,22 @@ export const daysLeft = (
 ): number | undefined =>
   expiresAt ? (expiresAt.getTime() - now.getTime()) / DAY_MS : undefined
 
+const startOfDay = (date: Date): number =>
+  new Date(date.getFullYear(), date.getMonth(), date.getDate()).getTime()
+
+/**
+ * Calendar days from `now` to `expiresAt` in local time, the hour ignored, as SideStore counts them: a profile
+ * made today for 7 days says 7, one ending later today says 0 (negative once past days). Rounded, so a daylight
+ * saving change in between doesn't make a day 23 or 25 hours long.
+ */
+export const calendarDaysLeft = (
+  expiresAt: Date | undefined,
+  now: Date
+): number | undefined =>
+  expiresAt
+    ? Math.round((startOfDay(expiresAt) - startOfDay(now)) / DAY_MS)
+    : undefined
+
 /** Expired, inside the refresh window (`daysBefore`), fine, or unknown. */
 export const expiryTone = (
   days: number | undefined,

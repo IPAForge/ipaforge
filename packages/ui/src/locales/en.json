@@ -1397,7 +1397,8 @@
       "refresh": {
         "profile": "New profile only, nothing installed again",
         "certificate": "Installed again: the certificate that signed it is no longer valid",
-        "unmarked": "Installed again: IPAForge can't tell which certificate signed it"
+        "unmarked": "Installed again: IPAForge can't tell which certificate signed it",
+        "sidestore": "Installed again, its data kept, so SideStore itself shows the new date"
       },
       "group": {
         "failed": "Failed",

@@ -13,21 +13,17 @@ type ExpiryLabelProps = { view: AppView }
 export const ExpiryLabel = ({ view }: ExpiryLabelProps) => {
   const { t } = useTranslation()
   const { date } = useFormat()
-  const { daysLeft, tone } = view
+  const { daysLeft, daysShown, tone } = view
   const expiresAt = view.app.expiresAt
 
   const words = () => {
-    if (daysLeft === undefined || !expiresAt) return t('apps.expiry.unknown')
+    if (daysLeft === undefined || daysShown === undefined || !expiresAt)
+      return t('apps.expiry.unknown')
     if (daysLeft <= 0)
-      return t('apps.expiry.expired', {
-        days: Math.max(1, Math.round(-daysLeft))
-      })
-    if (daysLeft < 1) return t('apps.expiry.today')
+      return t('apps.expiry.expired', { days: Math.max(1, -daysShown) })
+    if (daysShown <= 0) return t('apps.expiry.today')
 
-    return t('apps.expiry.in', {
-      days: Math.floor(daysLeft),
-      date: date(expiresAt)
-    })
+    return t('apps.expiry.in', { days: daysShown, date: date(expiresAt) })
   }
 
   return (

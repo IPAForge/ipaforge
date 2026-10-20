@@ -9,6 +9,9 @@ import type { Engine } from '@ipaforge/rpc'
 import type { FakeInstalledApp } from '@ui/services/engine/fake/types.ts'
 
 const DAY_MS = 24 * 60 * 60 * 1000
+
+/** The catalog apps that are SideStore, alone or inside LiveContainer. */
+const SIDESTORE_CATALOG_IDS = ['sidestore', 'livecontainer-sidestore']
 const TEAM = 'FAKETEAM01'
 const LIFETIME_DAYS = 7
 const CERTIFICATE = 'FAKECERT01'
@@ -188,20 +191,32 @@ export const createFakeInstalled = (
         record: app.record
       }
     },
-    // The fake team's certificate is always valid: a mark naming it is enough for a new profile.
+    // The fake team's certificate is always valid: a mark naming it is enough for a new profile, except for
+    // SideStore, installed again so its own screen shows the new date (as the Engine does).
     refreshPlan: async ({ bundleIds }) => {
       await appleAnswer()
 
-      return bundleIds.map((bundleId) =>
-        apps.find((app) => app.bundleId === bundleId)?.marker
-          ?.certificateSerial === CERTIFICATE
-          ? { bundleId, kind: 'profile' as const }
-          : {
-              bundleId,
-              kind: 'reinstall' as const,
-              reason: 'unmarked' as const
-            }
-      )
+      return bundleIds.map((bundleId) => {
+        const marker = apps.find((app) => app.bundleId === bundleId)?.marker
+
+        if (marker?.certificateSerial !== CERTIFICATE)
+          return {
+            bundleId,
+            kind: 'reinstall' as const,
+            reason: 'unmarked' as const
+          }
+        if (
+          marker.origin.kind === 'catalog' &&
+          SIDESTORE_CATALOG_IDS.includes(marker.origin.appId)
+        )
+          return {
+            bundleId,
+            kind: 'reinstall' as const,
+            reason: 'sidestore' as const
+          }
+
+        return { bundleId, kind: 'profile' as const }
+      })
     },
     refreshed: (bundleIds) => {
       apps = apps.map((app) =>
