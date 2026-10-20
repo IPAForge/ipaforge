@@ -182,8 +182,16 @@ const holdApple = () => {
   return { appleAnswer, release }
 }
 
-/** Records whether the Apple ID/password form is ever on screen from now on. */
-const watchForForm = () => {
+/**
+ * Records whether the Apple ID/password form is ever on screen from now on. It first waits for the form that was
+ * just replaced to finish leaving (its closing animation keeps it in the page a moment on a slow machine).
+ */
+const watchForForm = async () => {
+  await waitFor(() =>
+    expect(
+      screen.queryByRole('heading', { name: t('signIn.title') })
+    ).toBeNull()
+  )
   let seen = false
   const check = () => {
     if (screen.queryByRole('heading', { name: t('signIn.title') })) seen = true
@@ -233,7 +241,7 @@ describe('Add Apple ID, while Apple answers', () => {
     await submitForm(user)
     await apple.release()
     await apple.release()
-    const form = watchForForm()
+    const form = await watchForForm()
     const code = await screen.findByRole('dialog', {
       name: t('prompts.code.title')
     })
@@ -261,7 +269,7 @@ describe('Add Apple ID, while Apple answers', () => {
     await submitForm(user)
     await apple.release()
     await apple.release()
-    const form = watchForForm()
+    const form = await watchForForm()
     await enterCode(user, '123456')
 
     const code = screen.getByRole('dialog', { name: t('prompts.code.title') })
@@ -288,7 +296,7 @@ describe('Add Apple ID, while Apple answers', () => {
     await submitForm(user)
     await apple.release()
     await apple.release()
-    const form = watchForForm()
+    const form = await watchForForm()
     await enterCode(user, '000000')
     await apple.release()
 
