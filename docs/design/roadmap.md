@@ -113,7 +113,8 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
   - later: signing in with a security key (today detected and explained, not completed)
   - export signed IPAs (save the signed `.ipa` instead of installing it)
   - delete a pairing file from an app
-- [ ] **11. Wireless and remote pairing**: Wi-Fi device discovery and install, the iOS 17+ remote-pairing (RP) file for SideStore, and handling for a device that is visible over both USB and network
+- [ ] **11. Wireless and remote pairing**: pairing over Wi-Fi and finding devices beyond those usbmuxd lists, and the iOS 17+ remote-pairing (RP) file for SideStore
+  - already in: installing over Wi-Fi to a device usbmuxd sees on the network (compressed, 1 MiB AFC writes), and a device seen over both USB and Wi-Fi listed once
   - priority, iOS 17.4 and later: create the remote pairing (RPPairing) over USB through the lockdown service `com.apple.dt.remotepairingdeviced.lockdown` (JSON messages framed with the `RPPairing` magic and a 2-byte big-endian length, no tunnel), with a new Ed25519 identity and one host label per device, kept per device; skipped below iOS 17.4
   - give SideStore one plist that merges the lockdown pair record with the RPPairing keys, written as `ALTPairingFile.mobiledevicepairing`, `PairingFile_RemoteRP.plist` and `PairingFile_Lockdown.plist` in `Documents/`; read the lockdown record fresh from usbmuxd each time, since it expires
   - later: install over Wi-Fi or an RSD tunnel, and Apple Watch, Vision Pro and Apple TV as targets
