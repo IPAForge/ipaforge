@@ -31,7 +31,7 @@
     "apps": "アプリ",
     "devices": "デバイス",
     "accounts": "アカウント",
-    "certificates": "証明書",
+    "developer": "デベロッパーポータル",
     "logs": "ログ",
     "settings": "設定",
     "installRunning": "インストール中"
@@ -1716,6 +1716,101 @@
       "lede": "IPAForge で変わったことすべて。新しい順。",
       "current": "このバージョン",
       "release": "GitHub のリリース"
+    }
+  },
+  "portal": {
+    "description": "Apple IDのチームがAppleに持っているものと、デバイス上のプロファイル。",
+    "tabsLabel": "チームが持っているもの",
+    "tabs": {
+      "certificates": "証明書",
+      "appIds": "App ID",
+      "profiles": "プロファイル",
+      "groups": "App Group",
+      "devices": "登録済みデバイス"
+    },
+    "team": {
+      "pick": "チーム",
+      "free": "{name}（無料）",
+      "paid": "{name}（有料）"
+    },
+    "refresh": "更新",
+    "reading": "Appleから読み込み中…",
+    "noAccount": {
+      "title": "Apple IDがまだありません",
+      "body": "アカウントでApple IDにサインインすると、そのチームが持っているものを確認できます。"
+    },
+    "expired": "期限切れ",
+    "expires": "{date}に期限切れ",
+    "expiredOn": "{date}に期限切れ",
+    "certificates": {
+      "hint": "証明書はインストールするアプリに署名します。取り消すと、それで署名されたアプリは署名し直すまで開けなくなります。",
+      "usedFree": "{max}個中{count}個使用（無料チームは{max}個まで）",
+      "usedPaid": "{count, plural, other {#個の証明書}}",
+      "maker": {
+        "thisComputer": "このコンピュータのIPAForge",
+        "ipaforge": "別のコンピュータのIPAForge",
+        "sidestore": "SideStore",
+        "machine": "「{machine}」（通常はXcode）",
+        "unknown": "不明なツール"
+      },
+      "thisComputer": "このコンピュータ",
+      "signs": "{device}の{apps}に署名",
+      "signsNothing": "{device}では何も署名していません",
+      "revoke": "取り消す",
+      "revokeOne": "{name}を取り消す",
+      "empty": "チームにはまだ証明書がありません。IPAForgeが最初のインストール時に作成します。"
+    },
+    "revokeDialog": {
+      "title": "この証明書を取り消しますか？",
+      "apps": "次のアプリは署名し直すまで{device}で開けなくなります（アプリの「更新」で署名し直せます）：",
+      "none": "{device}にはこれで署名されたものはありません。",
+      "noDevice": "デバイスを接続すると、この証明書が署名しているアプリを確認できます。",
+      "thisComputer": "IPAForgeは次のインストールまたは更新時に新しいものを作成します。",
+      "sidestore": "SideStoreが自分で更新するために作成したものです。次にSideStoreでサインインすると新しいものを作成します。",
+      "machine": "そのコンピュータのXcodeが次の署名時に新しいものを作成します。"
+    },
+    "appIds": {
+      "hintFree": "インストールするアプリと拡張機能ごとに1つ必要です。無料チームは7日間に10個まで登録でき、各IDは作成から7日間カウントされます。",
+      "hintPaid": "インストールするアプリと拡張機能ごとに1つ必要です。有料チームには週ごとの上限がありません。",
+      "left": "{count, plural, other {今週あと#個}}",
+      "leftAndNext": "{left} · 次の空きは{date}",
+      "countsUntil": "{date}までカウント",
+      "unused": "未使用",
+      "delete": "削除",
+      "deleteOne": "{name}を削除",
+      "empty": "チームにはまだApp IDがありません。"
+    },
+    "deleteDialog": {
+      "title": "このApp IDを削除しますか？",
+      "free": "無料チームでは期限が切れるまで週10個の枠にカウントされ続けます。削除しても枠は早く戻りません。",
+      "paid": "後で再登録できます。"
+    },
+    "profiles": {
+      "title": "{device}のプロビジョニングプロファイル",
+      "hint": "プロファイルは1つのアプリ（または拡張機能）をこのデバイスで動かします。更新すると新しいものになります。期限切れや未使用のものは削除して問題ありません。",
+      "noDevice": "デバイスを接続すると、プロビジョニングプロファイルを確認できます。",
+      "noApp": "使用しているアプリはありません",
+      "otherTeam": "別のチーム",
+      "remove": "削除",
+      "removeOne": "{name}のプロファイルを削除",
+      "removeUnused": "未使用のものを削除",
+      "empty": "このデバイスにはプロビジョニングプロファイルがありません。"
+    },
+    "removeDialog": {
+      "title": "{count, plural, other {#個のプロファイルを削除しますか？}}",
+      "body": "{count, plural, other {{device}から削除されます。そこにあるアプリには不要です。}}"
+    },
+    "groups": {
+      "hint": "同じグループのアプリはファイルを共有します（例：SideStoreとそのウィジェット）。アプリが必要とするとIPAForgeが作成します。",
+      "empty": "チームにはまだApp Groupがありません。"
+    },
+    "devices": {
+      "hintFree": "署名したアプリはこれらのデバイスでのみ動きます。",
+      "hintPaid": "署名したアプリはこれらのデバイスでのみ動きます。有料チームは年に100台まで登録でき、削除はAppleのデベロッパサイトで年に1回行えます。",
+      "used": "今年{max}台中{count}台",
+      "connected": "接続中",
+      "unnamed": "名前のないデバイス",
+      "empty": "まだデバイスが登録されていません。最初のインストール時にIPAForgeが登録します。"
     }
   }
 }

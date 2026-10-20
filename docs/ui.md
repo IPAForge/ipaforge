@@ -44,7 +44,7 @@ packages/ui/
     ├── styles.css      # the only stylesheet: Tailwind, then HeroUI
     ├── index.ts        # public API
     ├── components/     # the shell (app-shell, top-bar, sidebar, …) and shared pieces
-    ├── features/       # one folder per section: install, preload, apps, devices, accounts, certificates, logs, settings;
+    ├── features/       # one folder per section: install, preload, apps, devices, accounts, developer, logs, settings;
     │                   #   and repair (Repair SideStore), updates (the update screen), whats-new (What's new, the changelog);
     │                   #   the page at its root, then components/, hooks/, utils/, constants.ts, types.ts as needed
     ├── state/          # stores kept outside components: active-run/ (the install run), selection/ (device and Apple ID in use),
@@ -80,7 +80,7 @@ The package exports `App`, the service types and factories, the palettes and the
 
 ## Engine queries
 
-Components reach the Engine only through the TanStack Query hooks in `src/hooks/queries/`: `useDevices` (one entry per device), `useDeviceStatus`, `useAccounts`, `useTeams`, `useCatalogApps`, `useRecommendedChannel`, `useAppIdQuota`, `useCertificates` and `usePlanInstall`, plus the mutation `useSignOut` (`use-sign-out.ts`). Their cache keys live in one module, `query-keys.ts`, with every account query under `['accounts', …]` so one invalidation refreshes them all. A hook whose input is not known yet (no device picked) waits instead of asking. Failures arrive as `IPAForgeError`s with their code.
+Components reach the Engine only through the TanStack Query hooks in `src/hooks/queries/`: `useDevices` (one entry per device), `useDeviceStatus`, `useAccounts`, `useTeams`, `useCatalogApps`, `useRecommendedChannel`, `useAppIdQuota`, `useCertificates`, `useAppGroups`, `useRegisteredDevices`, `useDeviceProfiles` and `usePlanInstall`, plus the mutations `useSignOut` (`use-sign-out.ts`) and the Developer Portal's `usePortalActions` (revoke, delete an App ID, remove profiles). Their cache keys live in one module, `query-keys.ts`, with every account query under `['accounts', …]` so one invalidation refreshes them all. A hook whose input is not known yet (no device picked) waits instead of asking. Failures arrive as `IPAForgeError`s with their code.
 
 ### Live data: push, not polling
 
@@ -131,7 +131,7 @@ To add a palette, add its id to `paletteIds`, add its tokens to `palettes.ts` an
   Each step stays on screen while Apple works on its answer: the form (read-only, **Sign in** busy, "Signing in…") until the password is checked, the method choice, when there is one (the chosen option busy, "Sending the code…") until the code is sent, the code step (**Verify** busy, the code locked, "Checking the code…", or "Sending a new code…") until Apple answers. The next step replaces it only when the Engine asks it or the run ends; the waiting text is announced through an `aria-live` region. In the browser dev host the fake Apple takes about 600 ms per answer, so these states show.
 
   A failure (wrong password, the anisette server down…) shows its code's translated title and body under the form. The question dialogs (`components/prompts/`) are shared with the install run.
-- A **sidebar** (`nav`) on the start edge. **Install** and **Preload** come first; after a separator, a **Manage** group holds **Devices**, **Accounts**, **Certificates**, **Logs** and **Settings**. The current section has `aria-current="page"`, and the highlight is styled from that attribute.
+- A **sidebar** (`nav`) on the start edge. **Install** and **Preload** come first; after a separator, a **Manage** group holds **Devices**, **Accounts**, **Developer Portal**, **Logs** and **Settings**. The current section has `aria-current="page"`, and the highlight is styled from that attribute.
 - The current page in `main`. **Install** is the home page.
 
   The **Install** page (`features/install/`), before a run, shows:
@@ -218,6 +218,15 @@ The first Tab stop is a **Skip to content** link, which is visible only when foc
 - **Not kept by IPAForge yet:** apps signed with the same teams before this version of IPAForge or by another tool. Refresh installs one again from the IPAForge catalog or a source that lists it (keeping its data); with nothing listing it, adding its `.ipa` in Preload lets IPAForge refresh it. When several sources list it, never one whose newest version is older than the device's first (it shows as "older than installed", and so does a single such source, in the picker), then the one that also lists the version on the device (the app most likely came from it), then IPAForge's own; the row says so ("Found in X and 1 other source") with a picker of each source and the version it would install (`utils/adopt-source.ts`).
 - **Refresh apps automatically** (on by default, 2 days before; 1, 2 or 3; `state/auto-refresh/`, saved with the UI preferences): while IPAForge is open, the device connected and no install running, the apps inside the window are refreshed in one run (`features/apps/hooks/use-auto-refresh.ts`, mounted by the shell). No polling: one timer wakes it when the next app enters the window, and each app is tried once per expiry date.
 - The sidebar's **Apps** shows how many apps are due. The fake Engine has installed apps too (scenarios `apps-due`, `apps-expired`, `no-apps`).
+
+**Developer Portal** (`features/developer/`, at `/developer`) shows what the Apple ID in use holds at Apple for one of its teams (the first; a picker when it has several), and the provisioning profiles on the device in use. A bar names the team and the Apple ID, with **Refresh**: Apple's data is read when the page opens and when asked, never in the background. Five tabs, each with how many it holds (`components/page-tabs.tsx`, the small pill switch Preload uses too):
+- **Certificates** (`listCertificates`): who made each (IPAForge on this computer, tagged "This computer's" because its key is kept here; IPAForge elsewhere; SideStore; a named computer, usually Xcode), when it expires, and which apps on the device it signs (their IPAForge mark names its serial). A free team's "2 of 2 used". **Revoke** (`revokeCertificate`) asks first, listing the apps that stop opening and what the certificate's maker does next.
+- **App IDs** (`appIdQuota`): the app on the device each belongs to (it or one of its extensions), or **Unused**, and on a free team when it stops counting, with "N left this week · next one frees on …". **Delete** (`deleteAppId`), for unused ones only, says that on a free team deleting doesn't give the slot back sooner.
+- **Profiles** (`deviceProfiles`): every profile on the device, with the app it lets run, **Expired**, **Unused** and **Another team** (not one of this Apple ID's). **Remove** (one) and **Remove unused** (`removeDeviceProfiles`) take only expired or unused ones.
+- **App Groups** (`appGroups`): a list only; Apple doesn't say which App IDs use each.
+- **Registered devices** (`registeredDevices`): name and UDID, the connected one tagged; a paid team's "N of 100 this year".
+
+Without an Apple ID it says to sign in on Accounts; when the Apple ID needs signing in again, the notice from Install is shown and the tabs wait. The fake Engine plays a free team with two certificates, seven App IDs (one unused) and an expired, unused profile (`services/engine/fake/fake-portal.ts`).
 
 **Repair SideStore** (`features/repair/`, at `/apps/sidestore`; the sidebar keeps **Apps** highlighted) checks what keeps SideStore on the device in use from refreshing apps by itself (`engine.checkSideStore`) and fixes it in one run.
 - **Where it opens from:** **Check SideStore** on SideStore's row in Apps (in either list: installed by IPAForge, or by another tool), next to Refresh.

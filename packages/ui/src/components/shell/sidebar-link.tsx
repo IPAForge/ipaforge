@@ -21,7 +21,7 @@ export const SidebarLink = ({ section }: SidebarLinkProps) => {
   return (
     <Link to={section.path} className={LINK_CLASSES}>
       <Icon aria-hidden="true" className="size-4 shrink-0" />
-      <span className="truncate">{t(section.labelKey)}</span>
+      <span className="min-w-0 break-words">{t(section.labelKey)}</span>
       {isRunning ? <RunningBadge /> : null}
       {section.id === 'apps' && !isRunning ? <AppsBadge /> : null}
     </Link>

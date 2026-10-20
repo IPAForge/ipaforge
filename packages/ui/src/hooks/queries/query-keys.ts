@@ -38,6 +38,13 @@ export const queryKeys = {
     query ? ([...teamKey(query), 'appIdQuota'] as const) : ['idle'],
   certificates: (query: TeamQuery | undefined) =>
     query ? ([...teamKey(query), 'certificates'] as const) : ['idle'],
+  appGroups: (query: TeamQuery | undefined) =>
+    query ? ([...teamKey(query), 'appGroups'] as const) : ['idle'],
+  registeredDevices: (query: TeamQuery | undefined) =>
+    query ? ([...teamKey(query), 'registeredDevices'] as const) : ['idle'],
+  /** The provisioning profiles on a device; under `apps`, so a run ending reads them again. */
+  deviceProfiles: (udid: string | undefined) =>
+    ['installed-apps', 'profiles', udid ?? null] as const,
   planInstall: (input: RemotePlanInstallInput | undefined) =>
     ['plan', input ?? null] as const,
   /** The anisette servers, the choice and SideStore's list's age (Settings). */

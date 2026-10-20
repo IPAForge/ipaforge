@@ -192,6 +192,23 @@ export const createFakeEngine = () => {
       latencyMs: 120
     }),
     updateAnisetteServerList: async () => ANISETTE,
+    revokeCertificate: async () => undefined,
+    deleteAppId: async () => undefined,
+    appGroups: async () => ({ team: TEAMS[0], groups: [] }),
+    registeredDevices: async () => ({
+      team: TEAMS[0],
+      devices: [{ udid: 'UDID1', name: 'iPhone' }]
+    }),
+    deviceProfiles: async () => [
+      {
+        uuid: 'P1',
+        name: 'Profile',
+        bundleId: 'com.example.app',
+        expiresAt: new Date('2026-11-01T00:00:00Z'),
+        isUsed: true
+      }
+    ],
+    removeDeviceProfiles: async () => undefined,
     listSources: async () => [],
     sourceApps: async () => [],
     checkSource: async (url: string) => ({

@@ -12,7 +12,7 @@ import { DeviceFeed } from '@ui/components/device-feed.tsx'
 import { AppShell } from '@ui/components/shell/app-shell.tsx'
 import { AccountsPage } from '@ui/features/accounts/accounts-page.tsx'
 import { AppsPage } from '@ui/features/apps/apps-page.tsx'
-import { CertificatesPage } from '@ui/features/certificates/certificates-page.tsx'
+import { DeveloperPage } from '@ui/features/developer/developer-page.tsx'
 import { DevicesPage } from '@ui/features/devices/devices-page.tsx'
 import { InstallPage } from '@ui/features/install/install-page.tsx'
 import { LogsPage } from '@ui/features/logs/logs-page.tsx'
@@ -32,7 +32,7 @@ const sectionPages = {
   apps: AppsPage,
   devices: DevicesPage,
   accounts: AccountsPage,
-  certificates: CertificatesPage,
+  developer: DeveloperPage,
   logs: LogsPage,
   settings: SettingsPage
 } as const satisfies Readonly<Record<SectionId, ComponentType>>

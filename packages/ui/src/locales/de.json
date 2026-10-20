@@ -31,7 +31,7 @@
     "apps": "Apps",
     "devices": "Geräte",
     "accounts": "Accounts",
-    "certificates": "Zertifikate",
+    "developer": "Entwicklerportal",
     "logs": "Protokoll",
     "settings": "Einstellungen",
     "installRunning": "Eine Installation läuft"
@@ -1716,6 +1716,101 @@
       "lede": "Alles, was sich in IPAForge geändert hat, das Neueste zuerst.",
       "current": "Diese Version",
       "release": "Release auf GitHub"
+    }
+  },
+  "portal": {
+    "description": "Was das Team deiner Apple-ID bei Apple hat, und die Profile auf deinem Gerät.",
+    "tabsLabel": "Was das Team hat",
+    "tabs": {
+      "certificates": "Zertifikate",
+      "appIds": "App-IDs",
+      "profiles": "Profile",
+      "groups": "App-Gruppen",
+      "devices": "Registrierte Geräte"
+    },
+    "team": {
+      "pick": "Team",
+      "free": "{name} (kostenlos)",
+      "paid": "{name} (bezahlt)"
+    },
+    "refresh": "Aktualisieren",
+    "reading": "Wird von Apple gelesen…",
+    "noAccount": {
+      "title": "Noch keine Apple-ID",
+      "body": "Melde dich unter Konten mit einer Apple-ID an, um zu sehen, was ihr Team hat."
+    },
+    "expired": "Abgelaufen",
+    "expires": "Läuft ab am {date}",
+    "expiredOn": "Abgelaufen am {date}",
+    "certificates": {
+      "hint": "Ein Zertifikat signiert die Apps, die du installierst. Wird eines widerrufen, öffnet sich keine damit signierte App mehr, bis sie neu signiert ist.",
+      "usedFree": "{count} von {max} belegt (kostenlose Teams haben höchstens {max})",
+      "usedPaid": "{count, plural, one {# Zertifikat} other {# Zertifikate}}",
+      "maker": {
+        "thisComputer": "IPAForge auf diesem Computer",
+        "ipaforge": "IPAForge auf einem anderen Computer",
+        "sidestore": "SideStore",
+        "machine": "„{machine}“ (meist Xcode)",
+        "unknown": "Ein unbekanntes Programm"
+      },
+      "thisComputer": "Von diesem Computer",
+      "signs": "Signiert {apps} auf {device}",
+      "signsNothing": "Signiert nichts auf {device}",
+      "revoke": "Widerrufen",
+      "revokeOne": "{name} widerrufen",
+      "empty": "Das Team hat noch keine Zertifikate. IPAForge erstellt eines bei der ersten Installation."
+    },
+    "revokeDialog": {
+      "title": "Dieses Zertifikat widerrufen?",
+      "apps": "Diese Apps öffnen sich auf {device} nicht mehr, bis sie neu signiert sind (Aktualisieren unter Apps erledigt das):",
+      "none": "Auf {device} ist nichts damit signiert.",
+      "noDevice": "Schließe dein Gerät an, um zu sehen, welche seiner Apps dieses Zertifikat signiert.",
+      "thisComputer": "IPAForge erstellt beim nächsten Installieren oder Aktualisieren ein neues.",
+      "sidestore": "SideStore hat es erstellt, um selbst zu aktualisieren: Es erstellt ein neues, wenn du dich dort das nächste Mal anmeldest.",
+      "machine": "Xcode auf jenem Computer erstellt beim nächsten Signieren ein neues."
+    },
+    "appIds": {
+      "hintFree": "Jede App und Erweiterung, die du installierst, braucht eine. Kostenlose Teams können 10 in 7 Tagen registrieren; jede zählt 7 Tage lang ab ihrer Erstellung.",
+      "hintPaid": "Jede App und Erweiterung, die du installierst, braucht eine. Bezahlte Teams haben kein Wochenlimit.",
+      "left": "{count, plural, one {# übrig diese Woche} other {# übrig diese Woche}}",
+      "leftAndNext": "{left} · die nächste wird am {date} frei",
+      "countsUntil": "Zählt bis {date}",
+      "unused": "Unbenutzt",
+      "delete": "Löschen",
+      "deleteOne": "{name} löschen",
+      "empty": "Das Team hat noch keine App-IDs."
+    },
+    "deleteDialog": {
+      "title": "Diese App-ID löschen?",
+      "free": "In einem kostenlosen Team zählt sie bis zu ihrem Ablauf weiter zu den 10 pro Woche: Löschen gibt den Platz nicht früher frei.",
+      "paid": "Sie kann später wieder registriert werden."
+    },
+    "profiles": {
+      "title": "Bereitstellungsprofile auf {device}",
+      "hint": "Ein Profil lässt eine App (oder Erweiterung) auf diesem Gerät laufen. Aktualisieren gibt einer App ein neues; ein abgelaufenes oder unbenutztes kann sicher entfernt werden.",
+      "noDevice": "Schließe dein Gerät an, um seine Bereitstellungsprofile zu sehen.",
+      "noApp": "Keine App nutzt es",
+      "otherTeam": "Anderes Team",
+      "remove": "Entfernen",
+      "removeOne": "Das Profil von {name} entfernen",
+      "removeUnused": "Unbenutzte entfernen",
+      "empty": "Auf diesem Gerät gibt es keine Bereitstellungsprofile."
+    },
+    "removeDialog": {
+      "title": "{count, plural, one {Dieses Profil entfernen?} other {# Profile entfernen?}}",
+      "body": "{count, plural, one {Es wird von {device} entfernt. Keine App dort braucht es.} other {Sie werden von {device} entfernt. Keine App dort braucht sie.}}"
+    },
+    "groups": {
+      "hint": "Apps in derselben Gruppe teilen Dateien (zum Beispiel SideStore und sein Widget). IPAForge erstellt sie, wenn eine App eine braucht.",
+      "empty": "Das Team hat noch keine App-Gruppen."
+    },
+    "devices": {
+      "hintFree": "Signierte Apps laufen nur auf diesen Geräten.",
+      "hintPaid": "Signierte Apps laufen nur auf diesen Geräten. Bezahlte Teams können 100 pro Jahr registrieren; entfernt wird eines auf Apples Entwickler-Website, einmal im Jahr.",
+      "used": "{count} von {max} in diesem Jahr",
+      "connected": "Verbunden",
+      "unnamed": "Gerät ohne Namen",
+      "empty": "Noch keine Geräte registriert. IPAForge registriert deines bei der ersten Installation."
     }
   }
 }

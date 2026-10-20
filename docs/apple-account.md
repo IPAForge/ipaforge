@@ -67,6 +67,8 @@ After sign-in, IPAForge uses the same developer API Xcode uses, through `apple.d
 
 `provisionApp` does all of this in one call and returns the profiles the signer needs.
 
+The **Developer Portal** page shows what the team holds: its certificates (who made each, which apps on your device each signs, and **Revoke**), its App IDs (which app uses each, **Delete** for unused ones, and the weekly limit on a free team), the provisioning profiles on your device (**Remove** for expired or unused ones), its app groups and its registered devices. On a free team, deleting an App ID doesn't give its slot back before it expires. Removing a registered device is done on Apple's developer site, once a year, for paid teams only.
+
 ## Errors you may see
 
 | Code | Meaning | What to do |

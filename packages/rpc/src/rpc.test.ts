@@ -135,6 +135,27 @@ describe('queries', () => {
     ).rejects.toMatchObject({ code: ErrorCode.InvalidRpcMessage })
   })
 
+  it('reads and changes what a team holds through the Engine (Developer Portal)', async () => {
+    const { client } = setup()
+    const query = { accountId: 'acct' }
+
+    await client.revokeCertificate(query, 'AA')
+    await client.deleteAppId(query, 'APPID1')
+    expect((await client.appGroups(query)).groups).toEqual([])
+    expect((await client.registeredDevices(query)).devices).toEqual([
+      { udid: 'UDID1', name: 'iPhone' }
+    ])
+    const [profile] = await client.deviceProfiles('UDID1')
+    expect(profile?.expiresAt).toBeInstanceOf(Date)
+    await client.removeDeviceProfiles('UDID1', ['P1'])
+    await expect(
+      client.removeDeviceProfiles(
+        'UDID1',
+        Array.from({ length: 501 }, (_, index) => `P${index}`)
+      )
+    ).rejects.toMatchObject({ code: ErrorCode.InvalidRpcMessage })
+  })
+
   it('manages app sources through the Engine, over https only', async () => {
     const { client } = setup()
     const url = 'https://example.com/apps.json'

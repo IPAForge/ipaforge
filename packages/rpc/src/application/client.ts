@@ -214,6 +214,16 @@ export const createEngineClient = (
       query({ method: 'testAnisetteServer', args: [address] }),
     updateAnisetteServerList: () =>
       query({ method: 'updateAnisetteServerList', args: [] }),
+    revokeCertificate: (teamQuery, serialNumber) =>
+      query({ method: 'revokeCertificate', args: [teamQuery, serialNumber] }),
+    deleteAppId: (teamQuery, appIdId) =>
+      query({ method: 'deleteAppId', args: [teamQuery, appIdId] }),
+    appGroups: (teamQuery) => query({ method: 'appGroups', args: [teamQuery] }),
+    registeredDevices: (teamQuery) =>
+      query({ method: 'registeredDevices', args: [teamQuery] }),
+    deviceProfiles: (udid) => query({ method: 'deviceProfiles', args: [udid] }),
+    removeDeviceProfiles: (udid, uuids) =>
+      query({ method: 'removeDeviceProfiles', args: [udid, [...uuids]] }),
     installedApps: (installedQuery) =>
       query({
         method: 'installedApps',

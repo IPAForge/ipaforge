@@ -31,7 +31,7 @@
     "apps": "Apps",
     "devices": "Devices",
     "accounts": "Accounts",
-    "certificates": "Certificates",
+    "developer": "Developer Portal",
     "logs": "Logs",
     "settings": "Settings",
     "installRunning": "An install is running"
@@ -1716,6 +1716,101 @@
       "lede": "Everything that changed in IPAForge, newest first.",
       "current": "This version",
       "release": "Release on GitHub"
+    }
+  },
+  "portal": {
+    "description": "What your Apple ID’s team holds at Apple, and the profiles on your device.",
+    "tabsLabel": "What the team holds",
+    "tabs": {
+      "certificates": "Certificates",
+      "appIds": "App IDs",
+      "profiles": "Profiles",
+      "groups": "App Groups",
+      "devices": "Registered devices"
+    },
+    "team": {
+      "pick": "Team",
+      "free": "{name} (free)",
+      "paid": "{name} (paid)"
+    },
+    "refresh": "Refresh",
+    "reading": "Reading from Apple…",
+    "noAccount": {
+      "title": "No Apple ID yet",
+      "body": "Sign in with an Apple ID on Accounts to see what its team holds."
+    },
+    "expired": "Expired",
+    "expires": "Expires {date}",
+    "expiredOn": "Expired {date}",
+    "certificates": {
+      "hint": "A certificate signs the apps you install. Revoking one stops every app it signed from opening, until they’re signed again.",
+      "usedFree": "{count} of {max} used (free teams can hold {max})",
+      "usedPaid": "{count, plural, one {# certificate} other {# certificates}}",
+      "maker": {
+        "thisComputer": "IPAForge on this computer",
+        "ipaforge": "IPAForge on another computer",
+        "sidestore": "SideStore",
+        "machine": "“{machine}” (usually Xcode)",
+        "unknown": "An unknown tool"
+      },
+      "thisComputer": "This computer’s",
+      "signs": "Signs {apps} on {device}",
+      "signsNothing": "Signs nothing on {device}",
+      "revoke": "Revoke",
+      "revokeOne": "Revoke {name}",
+      "empty": "The team has no certificates yet. IPAForge makes one the first time it installs."
+    },
+    "revokeDialog": {
+      "title": "Revoke this certificate?",
+      "apps": "These stop opening on {device} until they’re signed again (Refresh on Apps does it):",
+      "none": "Nothing on {device} is signed with it.",
+      "noDevice": "Connect your device to see which of its apps this certificate signs.",
+      "thisComputer": "IPAForge makes a new one the next time it installs or refreshes.",
+      "sidestore": "SideStore made it to refresh by itself: it makes a new one the next time you sign in there.",
+      "machine": "Xcode on that computer makes a new one the next time it signs."
+    },
+    "appIds": {
+      "hintFree": "Each app and extension you install needs one. Free teams can register 10 in 7 days; each counts for 7 days after it’s made.",
+      "hintPaid": "Each app and extension you install needs one. Paid teams have no weekly limit.",
+      "left": "{count, plural, one {# left this week} other {# left this week}}",
+      "leftAndNext": "{left} · next one frees on {date}",
+      "countsUntil": "Counts until {date}",
+      "unused": "Unused",
+      "delete": "Delete",
+      "deleteOne": "Delete {name}",
+      "empty": "The team has no App IDs yet."
+    },
+    "deleteDialog": {
+      "title": "Delete this App ID?",
+      "free": "On a free team it still counts against the 10 a week until it expires: deleting it doesn’t give the slot back sooner.",
+      "paid": "It can be registered again later."
+    },
+    "profiles": {
+      "title": "Provisioning profiles on {device}",
+      "hint": "A profile lets one app (or extension) run on this device. Refresh gives an app a new one; an expired or unused one is safe to remove.",
+      "noDevice": "Connect your device to see its provisioning profiles.",
+      "noApp": "No app uses it",
+      "otherTeam": "Another team",
+      "remove": "Remove",
+      "removeOne": "Remove the profile of {name}",
+      "removeUnused": "Remove unused",
+      "empty": "There are no provisioning profiles on this device."
+    },
+    "removeDialog": {
+      "title": "{count, plural, one {Remove this profile?} other {Remove # profiles?}}",
+      "body": "{count, plural, one {It’s removed from {device}. No app there needs it.} other {They’re removed from {device}. No app there needs them.}}"
+    },
+    "groups": {
+      "hint": "Apps in the same group share files (SideStore and its widget, for example). IPAForge makes them when an app needs one.",
+      "empty": "The team has no app groups yet."
+    },
+    "devices": {
+      "hintFree": "Apps you sign run only on these.",
+      "hintPaid": "Apps you sign run only on these. Paid teams can register 100 a year; removing one is done on Apple’s developer site, once a year.",
+      "used": "{count} of {max} this year",
+      "connected": "Connected",
+      "unnamed": "Unnamed device",
+      "empty": "No devices are registered yet. IPAForge registers yours the first time it installs."
     }
   }
 }

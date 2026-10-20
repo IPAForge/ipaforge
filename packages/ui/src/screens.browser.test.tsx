@@ -9,6 +9,7 @@ import {
   appsShown,
   checklistShown,
   clippedTranslations,
+  developerShown,
   fillPreload,
   logsShown,
   openAddAllToSideStore,
@@ -61,6 +62,10 @@ const screens = {
   apps: async (options: ScreenOptions) => {
     await renderScreen('/apps', options)
     await appsShown()
+  },
+  developer: async (options: ScreenOptions) => {
+    await renderScreen('/developer', options)
+    await developerShown()
   },
   repair: async (options: ScreenOptions) => {
     await renderScreen('/apps/sidestore', {
