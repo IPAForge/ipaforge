@@ -22,7 +22,11 @@ export type {
   PairMethod,
   PairOptions,
   PairRecordStore,
+  PlacedPairing,
   PlacePairingOptions,
+  RemotePairingOptions,
+  RemotePairingResult,
+  RemotePairingState,
   StartServiceOptions
 } from '@device/application/types.ts'
 export { realSleep } from '@device/deps.ts'
@@ -52,7 +56,9 @@ export type { PairRecord } from '@device/domain/pairing/types.ts'
 export {
   findPairingApps,
   matchesBundleId,
-  PAIRING_APPS
+  PAIRING_APPS,
+  remotePairingTargets,
+  supportsRemotePairing
 } from '@device/domain/pairing-apps.ts'
 export type {
   Connection,
@@ -64,6 +70,11 @@ export {
   staleProfiles,
   summarizeProfile
 } from '@device/domain/profiles.ts'
+export {
+  remotePairingFile,
+  remotePairingSecretKey
+} from '@device/domain/remote-pairing/record.ts'
+export type { RemotePairingRecord } from '@device/domain/remote-pairing/types.ts'
 export type {
   ConnectionType,
   DeviceEvent,

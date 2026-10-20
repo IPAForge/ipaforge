@@ -25,9 +25,10 @@ const withoutCovered = (fixes: readonly Fix[]): Fix[] =>
 
 /**
  * What Repair runs for the checks. Needed: installing SideStore again when its signing certificate was revoked or
- * it holds none; a new profile when it expired or is about to; the pairing file when it's missing. Offered: installing
- * it again when the signing certificate can't be told, the one it holds may have been replaced, or it's out of
- * date; replacing another computer's pairing file. Signed by another team or Apple ID, it can't be installed again
+ * it holds none; a new profile when it expired or is about to; the pairing file when it's missing, or when the
+ * device no longer accepts its remote pairing. Offered: installing it again when the signing certificate can't be
+ * told, the one it holds may have been replaced, or it's out of date; replacing another computer's pairing file, or
+ * adding the remote pairing (iOS 17.4 and later) when it has none or another computer's. Signed by another team or Apple ID, it can't be installed again
  * (nor get a profile) with this one: a second SideStore would appear, without its data.
  */
 export const repairPlan = (health: SideStoreHealth, now: Date): RepairPlan => {
@@ -36,7 +37,9 @@ export const repairPlan = (health: SideStoreHealth, now: Date): RepairPlan => {
   const required = withoutCovered([
     ...(needsReinstall ? (['reinstall'] as const) : []),
     ...(isExpiring(health, now) ? (['profile'] as const) : []),
-    ...(health.pairing === 'missing' ? (['pairing'] as const) : [])
+    ...(health.pairing === 'missing' || health.remotePairing === 'rejected'
+      ? (['pairing'] as const)
+      : [])
   ])
   const offersReinstall =
     !required.includes('reinstall') &&
@@ -44,7 +47,10 @@ export const repairPlan = (health: SideStoreHealth, now: Date): RepairPlan => {
       health.ownCertificate === 'other' ||
       isOutdated(health))
   const offersPairing =
-    !required.includes('reinstall') && health.pairing === 'other-computer'
+    !(required.includes('reinstall') || required.includes('pairing')) &&
+    (health.pairing === 'other-computer' ||
+      health.remotePairing === 'missing' ||
+      health.remotePairing === 'other-computer')
   const optional: Fix[] = [
     ...(offersReinstall ? (['reinstall'] as const) : []),
     ...(offersPairing ? (['pairing'] as const) : [])

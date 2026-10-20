@@ -207,7 +207,8 @@
         },
         "pairing": "Placed in {apps}",
         "shared": "Certificate shared",
-        "notShared": "Certificate not shared"
+        "notShared": "Certificate not shared",
+        "pairingRemote": "Placed in {apps} · with remote pairing for iOS 17.4 and later"
       },
       "subtitleApps": "{device} · {appleId}"
     },
@@ -1537,7 +1538,19 @@
       "open": "Open SideStore and refresh your apps."
     },
     "open": "Check SideStore",
-    "checkingTag": "Checking…"
+    "checkingTag": "Checking…",
+    "remote": {
+      "title": "Remote pairing for iOS 17.4 and later",
+      "ok": "Present, and {device} accepts it.",
+      "missing": "Missing: SideStore can only use the classic pairing. Placing this computer's pairing file adds it.",
+      "missingTag": "Missing",
+      "rejected": "{device} no longer accepts it (its Trust was reset). Placing this computer's pairing file makes a new one.",
+      "rejectedTag": "Not accepted",
+      "other": "It's another computer's, so IPAForge can't check it. Placing this computer's pairing file replaces it.",
+      "otherTag": "Another computer",
+      "notNeeded": "Not needed below iOS 17.4.",
+      "notNeededTag": "Not needed"
+    }
   },
   "sidestore": {
     "addSource": "Add to SideStore",

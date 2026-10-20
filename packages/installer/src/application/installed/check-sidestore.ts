@@ -1,6 +1,7 @@
 // Repair SideStore's check: what keeps SideStore on a device from refreshing apps by itself. It reads the device (its
 // lock and Developer Mode, the installed SideStore with its profile, IPAForge mark and the certificate inside it,
-// and the pairing file in its Documents) and asks Apple which of the team's certificates still sign.
+// and the pairing files in its Documents, the remote one checked with the device) and asks Apple which of the team's
+// certificates still sign.
 import { listInstalledApps } from '@installer/application/installed/list-installed.ts'
 import { validCertificateSerials } from '@installer/application/installed/valid-certificates.ts'
 import { createFlowRuntime } from '@installer/application/runtime.ts'
@@ -18,7 +19,12 @@ import {
 import type { InstallerDeps } from '@installer/types.ts'
 import type { DeveloperServices, Team } from '@ipaforge/apple'
 import type { Channel } from '@ipaforge/catalog'
-import { type DeviceHandle, PAIRING_APPS } from '@ipaforge/device'
+import {
+  type DeviceHandle,
+  PAIRING_APPS,
+  parseVersion,
+  supportsRemotePairing
+} from '@ipaforge/device'
 import { compact, isPlistDict, parsePlist, stringAt } from '@ipaforge/kernel'
 
 export type CheckSideStoreQuery = {
@@ -59,6 +65,35 @@ const pairingOf = async (
   return hostId?.toUpperCase() === handle.pairRecord.hostId.toUpperCase()
     ? 'this-computer'
     : 'other-computer'
+}
+
+/** The remote pairing file in SideStore's Documents: whether it is this computer's, and the device accepts it. */
+const remotePairingOf = async (
+  handle: DeviceHandle,
+  bundleId: string,
+  iosVersion: string | undefined
+): Promise<SideStoreHealth['remotePairing']> => {
+  if (!supportsRemotePairing(parseVersion(iosVersion ?? '0')))
+    return 'not-needed'
+  const paths =
+    PAIRING_APPS.find((app) => app.id === SIDESTORE_APP_ID)?.remoteFiles ?? []
+  const targets = paths.map((path) => ({ bundleId, path }))
+  const [present] = (await handle.appFileStatus(targets)).filter(
+    (status) => status.exists
+  )
+
+  if (!present) return 'missing'
+
+  const file = parsePlist(await handle.readAppFile(present.target))
+  const identifier = isPlistDict(file)
+    ? stringAt(file, 'identifier')
+    : undefined
+  const saved = await handle.checkRemotePairing()
+
+  if (saved.state === 'missing' || saved.identifier !== identifier)
+    return 'other-computer'
+
+  return saved.state
 }
 
 /** The latest version on SideStore's channel; undefined when the catalog can't be reached. */
@@ -138,7 +173,7 @@ export const checkSideStore = async (
   const handle = await deps.devices.open(query.udid, { autoPair: false })
 
   try {
-    const { locked, developerMode } = await handle.check()
+    const { locked, developerMode, info } = await handle.check()
 
     // A locked device keeps its apps' containers closed: there's nothing more to read until it's unlocked.
     if (locked) return { locked, developerMode }
@@ -175,7 +210,12 @@ export const checkSideStore = async (
           stringAt(installed.raw, CERTIFICATE_ID_KEY),
           valid
         ),
-        pairing: await pairingOf(handle, installed.bundleId)
+        pairing: await pairingOf(handle, installed.bundleId),
+        remotePairing: await remotePairingOf(
+          handle,
+          installed.bundleId,
+          info.productVersion
+        )
       })
     }
   } finally {

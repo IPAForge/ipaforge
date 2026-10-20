@@ -14,6 +14,7 @@ import {
   placeCommand,
   targetsCommand
 } from '@desktop/probes/device/commands/pairing-file.ts'
+import { remotePairCommand } from '@desktop/probes/device/commands/remote-pairing.ts'
 import type { DeviceProbe } from '@desktop/probes/device/context.ts'
 import type { ProbeCommands } from '@desktop/probes/shared/types.ts'
 
@@ -29,5 +30,6 @@ export const deviceCommands = (probe: DeviceProbe): ProbeCommands => ({
   'afc-check': afcCheckCommand(probe),
   'afc-speed': afcSpeedCommand(probe),
   place: placeCommand(probe),
-  'reveal-devmode': revealDevModeCommand(probe)
+  'reveal-devmode': revealDevModeCommand(probe),
+  'rp-pair': remotePairCommand(probe)
 })

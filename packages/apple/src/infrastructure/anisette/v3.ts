@@ -64,13 +64,16 @@ const json = (bytes: Uint8Array): unknown => JSON.parse(utf8Decode(bytes))
 const toWebSocketUrl = (address: string, path: string): string =>
   `${trimEndChar(address.replace(/^http/, 'ws'), '/')}${path}`
 
+/** `retry: false` for a health check: one request, so a server that answers with an error says so at once. */
 export const fetchClientInfo = async (
   deps: AppleDeps,
   server: AnisetteServer,
-  timeoutMs = deps.config.timeouts.requestMs
+  timeoutMs = deps.config.timeouts.requestMs,
+  retry = true
 ): Promise<ClientIdentity> => {
   const response = await fetchApple(deps, `${server.address}/v3/client_info`, {
-    timeoutMs
+    timeoutMs,
+    retryTransient: retry
   })
   const parsed = clientInfoSchema.parse(json(response.body))
 

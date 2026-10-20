@@ -12,6 +12,7 @@
 //   pnpm --filter @ipaforge/desktop device-probe afc-check   (writes, reads back and deletes a file in PublicStaging)
 //   pnpm --filter @ipaforge/desktop device-probe afc-speed [--mb 32]   (times AFC writes with each chunk size)
 //   pnpm --filter @ipaforge/desktop device-probe reveal-devmode
+//   pnpm --filter @ipaforge/desktop device-probe rp-pair   (iOS 17.4+: makes a remote pairing, then verifies it)
 //
 // `pair` (and any command on a device without a pair record) waits for the OS to pair: unlock the device and tap
 // Trust, and the OS stores its record in usbmuxd. If none appears within the timeout, or with --own, IPAForge pairs

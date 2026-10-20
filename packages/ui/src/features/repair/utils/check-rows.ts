@@ -1,6 +1,9 @@
 import { calendarDaysLeft, daysLeft } from '@ui/features/apps/utils/expiry.ts'
 import { isNewerVersion } from '@ui/features/apps/utils/is-newer-version.ts'
-import { EXPIRES_SOON_DAYS } from '@ui/features/repair/constants.ts'
+import {
+  EXPIRES_SOON_DAYS,
+  remotePairingRows
+} from '@ui/features/repair/constants.ts'
 import type { CheckRow } from '@ui/features/repair/types.ts'
 import type {
   SideStoreCheck,
@@ -214,9 +217,20 @@ const pairingRow = (health: SideStoreHealth, device: string): CheckRow => {
   }
 }
 
+/** The remote pairing (iOS 17.4 and later) SideStore can use instead of the classic one. */
+const remotePairingRow = (
+  health: SideStoreHealth,
+  device: string
+): CheckRow => ({
+  id: 'remote-pairing',
+  titleKey: 'repair.remote.title',
+  values: { device },
+  ...remotePairingRows[health.remotePairing]
+})
+
 /**
  * The checks in words, one line each: the device first; when SideStore is there, who signed it, its version and
- * expiry, the certificates that signed it and that it holds, and its pairing file. A locked device shows only its
+ * expiry, the certificates that signed it and that it holds, and its pairing files (classic and remote). A locked device shows only its
  * own line: nothing else can be read until it's unlocked.
  */
 export const checkRows = (
@@ -250,6 +264,7 @@ export const checkRows = (
     expiryRow(health, now),
     signingRow(health),
     ownCertificateRow(health),
-    pairingRow(health, device)
+    pairingRow(health, device),
+    remotePairingRow(health, device)
   ]
 }

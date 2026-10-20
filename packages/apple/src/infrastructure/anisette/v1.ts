@@ -31,15 +31,17 @@ export type V1Result = {
   readonly clientInfo?: string
 }
 
+/** `retry: false` for a health check: one request, so a server that answers with an error says so at once. */
 export const fetchV1 = async (
   deps: AppleDeps,
   server: AnisetteServer,
-  timeoutMs?: number
+  timeoutMs?: number,
+  retry = true
 ): Promise<V1Result> => {
   const response = await fetchApple(
     deps,
     `${server.address}/`,
-    compact({ timeoutMs })
+    compact({ timeoutMs, retryTransient: retry })
   )
   const data = v1Schema.parse(JSON.parse(utf8Decode(response.body)))
   const { 'X-Mme-Client-Info': clientInfo, ...rest } = data

@@ -16,6 +16,7 @@ import {
   markerFor
 } from '@installer/application/installed/marker.ts'
 import { CERTIFICATE_ID_KEY } from '@installer/sidestore/constants.ts'
+import type { RemotePairingState } from '@ipaforge/device'
 import {
   createDict,
   type PlistValue,
@@ -30,6 +31,7 @@ vi.mock('@ipaforge/signer', async (importOriginal) => ({
 const SIDESTORE = `com.SideStore.SideStore.${FREE_TEAM.id}`
 const VALID = 'AAAA01'
 const PAIRING_PATH = 'Documents/PairingFile_Lockdown.plist'
+const REMOTE_PATH = 'Documents/PairingFile_RemoteRP.plist'
 
 type Setup = {
   readonly bundleId?: string
@@ -40,6 +42,11 @@ type Setup = {
   /** The host id in its pairing file; none: no file. */
   readonly pairedWith?: string
   readonly locked?: boolean
+  /** The identifier in its remote pairing file; none: no file. */
+  readonly remoteIdentifier?: string
+  /** What the device says about this computer's saved remote pairing. */
+  readonly saved?: RemotePairingState
+  readonly ios?: string
 }
 
 const harnessFor = ({
@@ -47,7 +54,10 @@ const harnessFor = ({
   signedWith,
   holds,
   pairedWith,
-  locked
+  locked,
+  remoteIdentifier,
+  saved,
+  ios
 }: Setup) => {
   const raw: [string, PlistValue][] = [['CFBundleShortVersionString', '0.6.2']]
 
@@ -65,6 +75,8 @@ const harnessFor = ({
   return createHarness({
     device: {
       locked: locked ?? false,
+      ...(saved ? { savedRemotePairing: saved } : {}),
+      ...(ios ? { productVersion: ios } : {}),
       installed: new Map([
         [
           bundleId,
@@ -76,16 +88,26 @@ const harnessFor = ({
         ]
       ]),
       profiles: [profile('sidestore', FREE_TEAM.id, bundleId)],
-      files: new Map(
-        pairedWith
-          ? [
+      files: new Map([
+        ...(pairedWith
+          ? ([
               [
                 `${bundleId}/${PAIRING_PATH}`,
                 serializeXmlPlist(createDict([['HostID', pairedWith]]))
               ]
-            ]
-          : []
-      )
+            ] as const)
+          : []),
+        ...(remoteIdentifier
+          ? ([
+              [
+                `${bundleId}/${REMOTE_PATH}`,
+                serializeXmlPlist(
+                  createDict([['identifier', remoteIdentifier]])
+                )
+              ]
+            ] as const)
+          : [])
+      ])
     },
     apple: {
       existingCertificates: [{ serialNumber: VALID, machineName: 'IPAForge' }],
@@ -96,6 +118,44 @@ const harnessFor = ({
 
 const check = (setup: Setup) =>
   harnessFor(setup).engine.checkSideStore({ udid: UDID, accountId: ACCOUNT })
+
+describe('checkSideStore, remote pairing (iOS 17.4 and later)', () => {
+  const remotePairingOf = async (setup: Setup) =>
+    (await check({ signedWith: VALID, holds: VALID, ...setup })).sideStore
+      ?.remotePairing
+
+  it('is missing without its file, and not needed below iOS 17.4', async () => {
+    expect(await remotePairingOf({})).toBe('missing')
+    expect(await remotePairingOf({ ios: '17.2' })).toBe('not-needed')
+  })
+
+  it("is this computer's, accepted or refused, as the device says", async () => {
+    expect(
+      await remotePairingOf({
+        remoteIdentifier: 'HOST-A',
+        saved: { state: 'accepted', identifier: 'HOST-A' }
+      })
+    ).toBe('accepted')
+    expect(
+      await remotePairingOf({
+        remoteIdentifier: 'HOST-A',
+        saved: { state: 'rejected', identifier: 'HOST-A' }
+      })
+    ).toBe('rejected')
+  })
+
+  it("is another computer's when the file isn't the pairing this computer saved", async () => {
+    expect(
+      await remotePairingOf({
+        remoteIdentifier: 'HOST-B',
+        saved: { state: 'accepted', identifier: 'HOST-A' }
+      })
+    ).toBe('other-computer')
+    expect(await remotePairingOf({ remoteIdentifier: 'HOST-B' })).toBe(
+      'other-computer'
+    )
+  })
+})
 
 describe('checkSideStore', () => {
   it('finds nothing to fix in a SideStore IPAForge installed, holding a valid certificate, paired here', async () => {
