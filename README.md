@@ -8,7 +8,7 @@
 
 **Install SideStore and your own apps on iPhone and iPad with a free Apple ID, from Windows, macOS or Linux.**
 
-**[Website](https://ipaforge.github.io)** · **[Download](https://github.com/IPAForge/ipaforge/releases)** · **[Discord](https://discord.gg/C87DKmAWhr)** · [Installing](docs/installing.md) · [Roadmap](docs/roadmap.md)
+**[Website](https://ipaforge.com)** · **[Download](https://github.com/IPAForge/ipaforge/releases)** · **[Discord](https://discord.gg/C87DKmAWhr)** · [Installing](docs/installing.md) · [Roadmap](docs/roadmap.md)
 
 IPAForge is a free, open-source desktop app for sideloading. You plug in your iPhone, sign in with your Apple ID, and it does the rest:
 

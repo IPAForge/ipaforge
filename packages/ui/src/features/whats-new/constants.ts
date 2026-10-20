@@ -48,7 +48,7 @@ export const RELEASE_NOTES: readonly ReleaseNotes[] = [
       {
         kind: 'new',
         title: 'A website',
-        text: 'ipaforge.github.io: what IPAForge does, the downloads, and a Discord to ask for help.'
+        text: 'ipaforge.com: what IPAForge does, the downloads, and a Discord to ask for help.'
       },
       {
         kind: 'changed',
