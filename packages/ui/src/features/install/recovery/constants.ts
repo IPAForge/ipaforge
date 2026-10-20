@@ -2,7 +2,7 @@ import { RecoveryAction as R } from '@ipaforge/rpc'
 import type { Fix } from '@ui/features/install/recovery/types.ts'
 
 /** Where problems are reported: Report the problem opens a new issue here, filled in. */
-export const ISSUES_URL = 'https://github.com/SirReaDy/ipaforge/issues'
+export const ISSUES_URL = 'https://github.com/IPAForge/ipaforge/issues'
 
 const APPLE_ACCOUNT_URL = 'https://account.apple.com'
 const APPLE_DEVELOPER_URL = 'https://developer.apple.com/account'

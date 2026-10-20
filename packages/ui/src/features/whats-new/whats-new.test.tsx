@@ -5,6 +5,8 @@ import { describe, expect, it } from 'vitest'
 import { t } from '@ui/__tests__/test-i18n.ts'
 import { renderApp } from '@ui/__tests__/test-services.tsx'
 import {
+  NOTE_KINDS,
+  noteKindKeys,
   RELEASE_NOTES,
   WHATS_NEW_SEEN_KEY
 } from '@ui/features/whats-new/constants.ts'
@@ -26,16 +28,16 @@ describe("What's new", () => {
 
     const dialog = await screen.findByRole('dialog', dialogTitle)
     expect(dialog.textContent).toContain(LATEST?.lead)
-    // A section per kind of note: New, Changed and Fixed.
+    // A section per kind of note the version has, in the order New, Changed, Fixed, Removed.
     expect(
       within(dialog)
         .getAllByRole('heading', { level: 3 })
         .map((heading) => heading.textContent)
-    ).toEqual([
-      t('whatsNew.kind.new'),
-      t('whatsNew.kind.changed'),
-      t('whatsNew.kind.fixed')
-    ])
+    ).toEqual(
+      NOTE_KINDS.filter((kind) =>
+        LATEST?.items.some((item) => item.kind === kind)
+      ).map((kind) => t(noteKindKeys[kind]))
+    )
 
     await user.click(
       within(dialog).getByRole('button', { name: t('whatsNew.dialog.close') })

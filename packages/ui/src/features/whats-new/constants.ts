@@ -3,7 +3,7 @@ import type { NoteKind, ReleaseNotes } from '@ui/features/whats-new/types.ts'
 import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 
 /** IPAForge's releases on GitHub, each version's under `tag/v<version>`. */
-export const RELEASES_URL = 'https://github.com/SirReaDy/ipaforge/releases'
+export const RELEASES_URL = 'https://github.com/IPAForge/ipaforge/releases'
 
 /** The changelog page. */
 export const WHATS_NEW_PATH = '/whats-new'
@@ -40,6 +40,26 @@ export const noteKindDots = {
  * Add the new version's notes here with its release (docs/releases/<version>.md has the longer ones).
  */
 export const RELEASE_NOTES: readonly ReleaseNotes[] = [
+  {
+    version: '0.1.0-alpha.5',
+    date: '2026-10-20',
+    lead: 'IPAForge has a home of its own, and stays open source for good.',
+    items: [
+      {
+        kind: 'new',
+        title: 'A website',
+        text: 'ipaforge.github.io: what IPAForge does, the downloads, and a Discord to ask for help.'
+      },
+      {
+        kind: 'changed',
+        text: 'IPAForge moves to github.com/IPAForge/ipaforge, and updates itself from there. Old links still work.'
+      },
+      {
+        kind: 'changed',
+        text: 'IPAForge is now under the GNU AGPL-3.0: free to use, change and share, and anything built from it must stay open source too.'
+      }
+    ]
+  },
   {
     version: '0.1.0-alpha.4',
     date: '2026-10-20',

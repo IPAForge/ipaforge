@@ -2,11 +2,20 @@ import type { ManualFile } from '@desktop/main/updates/types.ts'
 import type { ManualPackage } from '@ipaforge/rpc'
 
 /** IPAForge's releases on GitHub: each one's page, and its files under `download/`. */
-export const RELEASES_URL = 'https://github.com/SirReaDy/ipaforge/releases'
+export const RELEASES_URL = 'https://github.com/IPAForge/ipaforge/releases'
 
-/** Who signs IPAForge's releases: its release workflow, through GitHub's OIDC issuer (`release.yml` on a tag). */
-export const RELEASE_WORKFLOW_IDENTITY =
+/**
+ * Who signs IPAForge's releases: its release workflow (`release.yml` on a tag), through GitHub's OIDC issuer. The
+ * repository moved from SirReaDy/ipaforge to the IPAForge organization; releases made before the move carry the
+ * old name, so both are accepted, and nothing else.
+ */
+export const RELEASE_WORKFLOWS = [
+  'https://github.com/IPAForge/ipaforge/.github/workflows/release.yml',
   'https://github.com/SirReaDy/ipaforge/.github/workflows/release.yml'
+] as const
+
+/** What sigstore-js says when a signature is valid but made by someone else. */
+export const UNTRUSTED_SIGNER = 'UNTRUSTED_SIGNER_ERROR'
 export const SIGSTORE_ISSUER = 'https://token.actions.githubusercontent.com'
 
 /** How long the check may take before IPAForge opens without it (offline, a slow network). */

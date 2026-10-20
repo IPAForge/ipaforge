@@ -2,11 +2,11 @@
 
 # Installing IPAForge
 
-> **IPAForge is in alpha.** The first test builds are on the **[Releases page](https://github.com/SirReaDy/ipaforge/releases)** as pre-releases. They work, but expect rough edges, and please [report](#problems) what breaks.
+> **IPAForge is in alpha.** The first test builds are on the **[Releases page](https://github.com/IPAForge/ipaforge/releases)** as pre-releases. They work, but expect rough edges, and please [report](#problems) what breaks.
 
 ## Download
 
-Get IPAForge from the **[Releases page](https://github.com/SirReaDy/ipaforge/releases)**, and only from there. Each release lists its files' SHA-256 checksums in `SHA256SUMS.txt`.
+Get IPAForge from the **[Releases page](https://github.com/IPAForge/ipaforge/releases)**, and only from there. Each release lists its files' SHA-256 checksums in `SHA256SUMS.txt`.
 
 | Your computer | File |
 |---|---|
@@ -24,9 +24,11 @@ Every file has a signature next to it, `<file>.sigstore.json`, made by the relea
 ```sh
 cosign verify-blob IPAForge-<version>-mac-arm64.dmg \
   --bundle IPAForge-<version>-mac-arm64.dmg.sigstore.json \
-  --certificate-identity "https://github.com/SirReaDy/ipaforge/.github/workflows/release.yml@refs/tags/v<version>" \
+  --certificate-identity "https://github.com/IPAForge/ipaforge/.github/workflows/release.yml@refs/tags/v<version>" \
   --certificate-oidc-issuer https://token.actions.githubusercontent.com
 ```
+
+Releases up to 0.1.0-alpha.4 were made before the repository moved to the IPAForge organization: for those, the identity starts with `https://github.com/SirReaDy/ipaforge/`.
 
 The macOS app itself is signed with IPAForge's own certificate. To check the app you installed:
 
@@ -126,4 +128,4 @@ IPAForge places the pairing file and certificate SideStore needs automatically.
 ## Problems?
 
 - [Device](device.md) explains device errors, and [Apple Account](apple-account.md) explains sign-in errors. Each error message names its code.
-- Still stuck? [Open an issue](https://github.com/SirReaDy/ipaforge/issues/new/choose) with the error code. **Never post** your Apple ID password, verification codes, pairing files, certificates or device UDID.
+- Still stuck? [Open an issue](https://github.com/IPAForge/ipaforge/issues/new/choose) with the error code. **Never post** your Apple ID password, verification codes, pairing files, certificates or device UDID.

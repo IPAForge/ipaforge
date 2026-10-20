@@ -1,6 +1,6 @@
 {
   "name": "@ipaforge/desktop",
-  "version": "0.1.0-alpha.4",
+  "version": "0.1.0-alpha.5",
   "license": "AGPL-3.0-or-later",
   "private": true,
   "type": "module",
@@ -43,6 +43,6 @@
   "productName": "IPAForge",
   "description": "Install SideStore and preload your apps onto iPhone and iPad.",
   "author": "Dan Motpan",
-  "homepage": "https://github.com/SirReaDy/ipaforge",
+  "homepage": "https://ipaforge.github.io",
   "desktopName": "ipaforge.desktop"
 }

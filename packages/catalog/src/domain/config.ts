@@ -17,7 +17,7 @@ export type CatalogConfig = {
 
 export const DEFAULT_CATALOG_CONFIG: CatalogConfig = {
   manifestUrl:
-    'https://raw.githubusercontent.com/SirReaDy/ipaforge/main/catalog/sources.json',
+    'https://raw.githubusercontent.com/IPAForge/ipaforge/main/catalog/sources.json',
   githubApi: 'https://api.github.com',
   maxDownloadBytes: 2 * 1024 * 1024 * 1024,
   requestTimeoutMs: 30_000,

@@ -3,7 +3,7 @@ import type { UpdateSource, UpdateState } from '@ipaforge/rpc'
 import { createFixedUpdateSource } from '@ui/services/updates/fixed-update-source.ts'
 
 const NEXT = '0.1.0-alpha.99'
-const RELEASE = `https://github.com/SirReaDy/ipaforge/releases/tag/v${NEXT}`
+const RELEASE = `https://github.com/IPAForge/ipaforge/releases/tag/v${NEXT}`
 
 /** A sample state for each phase. */
 const sampleStates: Readonly<Record<string, UpdateState>> = {

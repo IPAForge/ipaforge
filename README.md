@@ -1,14 +1,14 @@
 # IPAForge
 
-[![CI](https://github.com/SirReaDy/ipaforge/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/SirReaDy/ipaforge/actions/workflows/ci.yml)
-[![Downloads](https://img.shields.io/github/downloads/SirReaDy/ipaforge/total?label=downloads)](https://github.com/SirReaDy/ipaforge/releases)
-[![Latest release](https://img.shields.io/github/v/release/SirReaDy/ipaforge?include_prereleases&label=release)](https://github.com/SirReaDy/ipaforge/releases/latest)
+[![CI](https://github.com/IPAForge/ipaforge/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/IPAForge/ipaforge/actions/workflows/ci.yml)
+[![Downloads](https://img.shields.io/github/downloads/IPAForge/ipaforge/total?label=downloads)](https://github.com/IPAForge/ipaforge/releases)
+[![Latest release](https://img.shields.io/github/v/release/IPAForge/ipaforge?include_prereleases&label=release)](https://github.com/IPAForge/ipaforge/releases/latest)
 [![Licence: AGPL-3.0](https://img.shields.io/badge/licence-AGPL--3.0-blue.svg)](LICENSE)
 [![Sponsor](https://img.shields.io/badge/sponsor-%E2%9D%A4-ea4aaa?logo=githubsponsors)](https://github.com/sponsors/SirReaDy)
 
 **Install SideStore and your own apps on iPhone and iPad with a free Apple ID, from Windows, macOS or Linux.**
 
-**[Website](https://ipaforge.github.io)** · **[Download](https://github.com/SirReaDy/ipaforge/releases)** · **[Discord](https://discord.gg/C87DKmAWhr)** · [Installing](docs/installing.md) · [Roadmap](docs/roadmap.md)
+**[Website](https://ipaforge.github.io)** · **[Download](https://github.com/IPAForge/ipaforge/releases)** · **[Discord](https://discord.gg/C87DKmAWhr)** · [Installing](docs/installing.md) · [Roadmap](docs/roadmap.md)
 
 IPAForge is a free, open-source desktop app for sideloading. You plug in your iPhone, sign in with your Apple ID, and it does the rest:
 
@@ -19,7 +19,7 @@ IPAForge is a free, open-source desktop app for sideloading. You plug in your iP
 After that it keeps them working: it shows when each app expires, refreshes them before they do, repairs SideStore when it stops refreshing, and explains every failure with the fixes that apply. The whole engine, code signing included, is written in TypeScript, with no native helpers or bundled command-line tools.
 
 > [!NOTE]
-> **Alpha, 0.1.0-alpha.4.** Builds for macOS, Windows and Linux are on the [Releases page](https://github.com/SirReaDy/ipaforge/releases), and IPAForge updates itself from there. It isn't notarised or code-signed for Windows yet: [how to open it the first time](docs/installing.md#opening-ipaforge-the-first-time). Questions and feedback: [Discord](https://discord.gg/C87DKmAWhr) or [Issues](https://github.com/SirReaDy/ipaforge/issues).
+> **Alpha, 0.1.0-alpha.5.** Builds for macOS, Windows and Linux are on the [Releases page](https://github.com/IPAForge/ipaforge/releases), and IPAForge updates itself from there. It isn't notarised or code-signed for Windows yet: [how to open it the first time](docs/installing.md#opening-ipaforge-the-first-time). Questions and feedback: [Discord](https://discord.gg/C87DKmAWhr) or [Issues](https://github.com/IPAForge/ipaforge/issues).
 
 ## Why IPAForge
 

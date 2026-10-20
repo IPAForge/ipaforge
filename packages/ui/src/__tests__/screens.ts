@@ -81,7 +81,7 @@ export const renderWhatsNew = async ({
     })
   )
   await waitFor(() =>
-    expect(all('[role="dialog"] li').length).toBeGreaterThanOrEqual(4)
+    expect(all('[role="dialog"] li')).toHaveLength(LATEST?.items.length ?? 0)
   )
 }
 
