@@ -99,6 +99,26 @@ describe('Accounts page', () => {
     ).toBe(OLD)
   })
 
+  it('signs in again with the saved password, asking only for the code', async () => {
+    const { user, list } = await openPage({ scenario: 'code-needed' })
+    await user.click(
+      await within(rowFor(list, OLD)).findByRole('button', {
+        name: t('accounts.signInAgain')
+      })
+    )
+    const code = await screen.findByRole('dialog', {
+      name: t('prompts.code.title')
+    })
+    expect(screen.queryByLabelText(/Password/)).toBeNull()
+    await user.type(within(code).getByRole('textbox'), '123456')
+    await user.click(
+      within(code).getByRole('button', { name: t('prompts.code.verify') })
+    )
+    expect(
+      await screen.findByRole('dialog', { name: t('signIn.done.title') })
+    ).toBeDefined()
+  })
+
   it('asks before signing out, saying what is forgotten, and keeps the account on Cancel', async () => {
     const { user, list } = await openPage()
     await user.click(

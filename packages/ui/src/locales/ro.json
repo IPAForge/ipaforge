@@ -257,6 +257,73 @@
       "system": "Sistem ({language})",
       "hint": "IPAForge folosește limba sistemului, dacă nu alegi alta aici.",
       "draft": "ciornă"
+    },
+    "anisette": {
+      "title": "Servere anisette",
+      "hint": "Conectarea la Apple are nevoie de un server anisette, care îi spune lui Apple ce computer se conectează. IPAForge folosește singur unul care funcționează; alege aici un anumit server dacă preferi, sau adaugă-l pe al tău.",
+      "add": "Adaugă server",
+      "loading": "Se încarcă serverele…",
+      "modeLabel": "Cum alege IPAForge un server",
+      "mode": {
+        "automatic": "Automat",
+        "chosen": "Alege un server"
+      },
+      "modeHint": {
+        "automatic": "Încearcă serverele în această ordine și trece la următorul când unul nu merge.",
+        "chosen": "Folosește mereu {name}.",
+        "none": "Alege serverul pe care IPAForge îl va folosi mereu."
+      },
+      "noneChosen": "Niciun server ales încă: până alegi unul, IPAForge alege singur.",
+      "chosenDown": "{name} nu răspunde. Conectarea nu va merge până nu revine, până nu alegi alt server sau până nu treci pe Automat.",
+      "count": "{count, plural, one {# server} few {# servere} other {# de servere}}",
+      "sources": "{custom, plural, =0 {} other {# adăugate de tine, }}{list} din lista SideStore, {backup} de rezervă ·",
+      "listUpdated": "Lista SideStore actualizată {ago}",
+      "listNever": "Lista SideStore nu a fost descărcată încă",
+      "updateList": "Actualizează lista",
+      "updating": "Se actualizează…",
+      "testAll": "Testează tot",
+      "testing": "Se testează…",
+      "group": {
+        "custom": "Adăugate de tine · folosite primele",
+        "list": "Din lista SideStore",
+        "backup": "Rezervă · doar când lista SideStore nu poate fi accesată sau niciunul nu răspunde"
+      },
+      "tag": {
+        "custom": "Adăugat de tine",
+        "inUse": "În uz",
+        "chosen": "Ales"
+      },
+      "position": "Încercat al {position}-lea",
+      "use": "Folosește {name}",
+      "chooseLabel": "Serverul folosit",
+      "status": {
+        "untested": "Netestat",
+        "testing": "Se testează…",
+        "ok": "Funcționează · {ms} ms",
+        "bad": "Nu răspunde"
+      },
+      "test": "Testează",
+      "testOne": "Testează {name}",
+      "edit": "Editează {name}",
+      "remove": "Elimină {name}",
+      "confirmRemove": "Elimini {name}?",
+      "removeYes": "Elimină",
+      "skipped": "Nefolosite din lista SideStore: {names} (fără HTTPS). Poți adăuga singur un server HTTP, de exemplu unul de pe computerul tău.",
+      "dialog": {
+        "addTitle": "Adaugă un server anisette",
+        "editTitle": "Editează serverul",
+        "body": "Merge orice server anisette care folosește protocolul obișnuit: unul public sau unul pe care îl rulezi tu.",
+        "name": "Nume",
+        "namePlaceholder": "Serverul meu",
+        "address": "Adresă",
+        "addressPlaceholder": "https://anisette.my-server.net",
+        "addressHint": "https:// sau, pentru un server rulat de tine, http://",
+        "nameMissing": "Dă-i un nume.",
+        "addressInvalid": "Introdu o adresă care începe cu https:// sau http://.",
+        "exists": "Acest server este deja în listă.",
+        "stillAdd": "Îl poți adăuga oricum.",
+        "save": "Salvează"
+      }
     }
   },
   "theme": {
@@ -465,6 +532,14 @@
       "developer_request_failed": {
         "title": "Serviciile Apple pentru dezvoltatori au eșuat",
         "body": "O cerere către serviciile Apple pentru dezvoltatori a eșuat. Încearcă din nou și raportează problema dacă se repetă."
+      },
+      "anisette_server_invalid": {
+        "title": "Acest server anisette nu poate fi folosit",
+        "body": "Verifică numele și adresa: adresa începe cu https:// sau http://."
+      },
+      "anisette_server_exists": {
+        "title": "Acest server anisette este deja în listă",
+        "body": "Alege-l din listă, în Setări."
       }
     },
     "catalog": {
@@ -753,6 +828,10 @@
       "open": "Deschide",
       "tryAnyway": {
         "how": "Apple a raportat un număr negativ de App ID-uri rămase, o eroare cunoscută a Apple: numărul real poate fi mai mare. „Încearcă oricum” îi cere Apple să le creeze; dacă limita e chiar atinsă, Apple spune asta."
+      },
+      "changeAnisetteServer": {
+        "how": "Deschide Setările, testează serverele anisette și alege unul care funcționează, sau revino la Automat.",
+        "button": "Deschide serverele anisette"
       }
     },
     "reportHint": "Deschide un tichet nou pe GitHub, cu diagnosticul completat. Nu se trimite nimic până nu îl publici tu."
@@ -934,7 +1013,12 @@
       "close": "Gata"
     },
     "rememberPassword": "Salvează parola în portcheiul sistemului",
-    "rememberPasswordHint": "Permite IPAForge să se autentifice singur din nou când expiră sesiunea."
+    "rememberPasswordHint": "Permite IPAForge să se autentifice singur din nou când expiră sesiunea.",
+    "resuming": {
+      "title": "Te conectezi din nou",
+      "body": "Conectare la {appleId} cu ce a salvat IPAForge…",
+      "cancel": "Anulează"
+    }
   },
   "accounts": {
     "description": "Apple ID-urile cu care IPAForge semnează aplicații. Cel folosit apare în bara de sus.",
@@ -1586,6 +1670,13 @@
       "body": "Această copie a fost instalată dintr-{package, select, msi {un installer .msi} deb {un pachet .deb} rpm {un pachet .rpm} other {un pachet}}, care nu se poate actualiza singur. Descarcă versiunea nouă și instaleaz-o peste aceasta: ID-urile Apple, aplicațiile și setările rămân.",
       "download": "Descarcă {version}",
       "later": "Mai târziu"
+    },
+    "nativeBuild": {
+      "title": "Aceasta este versiunea pentru Intel",
+      "body": "Mac-ul tău are Apple silicon, așa că această copie IPAForge rulează prin Rosetta și totul merge mai încet. Descarcă versiunea pentru Apple silicon și instaleaz-o peste aceasta; ID-urile Apple, dispozitivele și aplicațiile rămân.",
+      "file": "IPAForge-…-mac-arm64.dmg",
+      "later": "Mai târziu",
+      "download": "Descarcă pentru Apple silicon"
     }
   },
   "whatsNew": {

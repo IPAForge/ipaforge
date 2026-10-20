@@ -11,6 +11,7 @@ export const fakeScenarioIds = [
   'hot-plug',
   'devices',
   'accounts',
+  'code-needed',
   'no-accounts',
   'sign-in-no-2fa',
   'no-keychain',

@@ -40,6 +40,11 @@ export type SignInFlowInput = {
   readonly appleId: string
   /** Save the password (in the SecretStore) so an expired session can be renewed without asking. Default: no. */
   readonly rememberPassword?: boolean
+  /**
+   * "Sign in again" for this saved account: its saved session or password is used first, so only what's missing
+   * is asked (usually just the second factor's code).
+   */
+  readonly accountId?: string
 }
 
 export type SignInState = {

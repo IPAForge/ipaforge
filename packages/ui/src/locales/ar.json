@@ -257,6 +257,73 @@
       "system": "النظام ({language})",
       "hint": "يتبع IPAForge لغة النظام ما لم تختر لغة أخرى هنا.",
       "draft": "مسودة"
+    },
+    "anisette": {
+      "title": "خوادم anisette",
+      "hint": "يحتاج تسجيل الدخول إلى Apple خادم anisette يخبر Apple بالكمبيوتر الذي يسجّل الدخول. يستخدم IPAForge خادمًا يعمل من تلقاء نفسه؛ اختر خادمًا معيّنًا هنا إن أردت، أو أضف خادمك.",
+      "add": "إضافة خادم",
+      "loading": "جارٍ تحميل الخوادم…",
+      "modeLabel": "كيف يختار IPAForge الخادم",
+      "mode": {
+        "automatic": "تلقائي",
+        "chosen": "اختيار خادم"
+      },
+      "modeHint": {
+        "automatic": "يجرّب الخوادم بهذا الترتيب وينتقل إلى التالي عند فشل أحدها.",
+        "chosen": "يستخدم {name} دائمًا.",
+        "none": "اختر الخادم الذي سيستخدمه IPAForge دائمًا."
+      },
+      "noneChosen": "لم يُختر خادم بعد: إلى أن تختار، يختار IPAForge بنفسه.",
+      "chosenDown": "لا يستجيب {name}. لن يعمل تسجيل الدخول حتى يعود، أو تختار خادمًا آخر، أو تعود إلى الوضع التلقائي.",
+      "count": "{count, plural, zero {لا خوادم} one {خادم واحد} two {خادمان} few {# خوادم} many {# خادمًا} other {# خادم}}",
+      "sources": "{custom, plural, =0 {} other {أضفت #، }}{list} من قائمة SideStore، {backup} احتياطيًا ·",
+      "listUpdated": "حُدّثت قائمة SideStore {ago}",
+      "listNever": "لم تُجلب قائمة SideStore بعد",
+      "updateList": "تحديث القائمة",
+      "updating": "جارٍ التحديث…",
+      "testAll": "اختبار الكل",
+      "testing": "جارٍ الاختبار…",
+      "group": {
+        "custom": "أضفتها أنت · تُستخدم أولًا",
+        "list": "من قائمة SideStore",
+        "backup": "احتياطي · فقط عند تعذّر الوصول إلى قائمة SideStore أو عدم استجابة أي منها"
+      },
+      "tag": {
+        "custom": "أضفته أنت",
+        "inUse": "قيد الاستخدام",
+        "chosen": "مختار"
+      },
+      "position": "يُجرَّب بالترتيب {position}",
+      "use": "استخدام {name}",
+      "chooseLabel": "الخادم المستخدم",
+      "status": {
+        "untested": "لم يُختبر",
+        "testing": "جارٍ الاختبار…",
+        "ok": "يعمل · {ms} م.ث",
+        "bad": "لا يستجيب"
+      },
+      "test": "اختبار",
+      "testOne": "اختبار {name}",
+      "edit": "تعديل {name}",
+      "remove": "إزالة {name}",
+      "confirmRemove": "إزالة {name}؟",
+      "removeYes": "إزالة",
+      "skipped": "غير مستخدمة من قائمة SideStore: {names} (بلا HTTPS). يمكنك إضافة خادم HTTP بنفسك، مثل خادم على كمبيوترك.",
+      "dialog": {
+        "addTitle": "إضافة خادم anisette",
+        "editTitle": "تعديل الخادم",
+        "body": "يعمل أي خادم anisette يستخدم البروتوكول المعتاد: خادم عام أو خادم تشغّله بنفسك.",
+        "name": "الاسم",
+        "namePlaceholder": "خادمي",
+        "address": "العنوان",
+        "addressPlaceholder": "https://anisette.my-server.net",
+        "addressHint": "https://‎ أو، لخادم تشغّله بنفسك، http://‎",
+        "nameMissing": "أعطه اسمًا.",
+        "addressInvalid": "أدخل عنوانًا يبدأ بـ https://‎ أو http://‎.",
+        "exists": "هذا الخادم موجود في القائمة بالفعل.",
+        "stillAdd": "ما زال بإمكانك إضافته.",
+        "save": "حفظ"
+      }
     }
   },
   "theme": {
@@ -465,6 +532,14 @@
       "developer_request_failed": {
         "title": "فشلت خدمات Apple للمطورين",
         "body": "فشل طلب إلى خدمات Apple للمطورين. حاول مرة أخرى، وأبلغ عن المشكلة إذا استمرت."
+      },
+      "anisette_server_invalid": {
+        "title": "لا يمكن استخدام خادم anisette هذا",
+        "body": "تحقّق من الاسم والعنوان: يبدأ العنوان بـ https://‎ أو http://‎."
+      },
+      "anisette_server_exists": {
+        "title": "خادم anisette هذا موجود في القائمة بالفعل",
+        "body": "اختره من القائمة في الإعدادات بدلًا من ذلك."
       }
     },
     "catalog": {
@@ -753,6 +828,10 @@
       "open": "فتح",
       "tryAnyway": {
         "how": "أبلغت Apple عن عدد سالب من معرّفات التطبيقات المتبقية، وهو خلل معروف لديها: قد يكون العدد الحقيقي أكبر. «حاول على أي حال» يطلب من Apple إنشاءها؛ وإن كان الحد قد بلغ فعلًا فستقول ذلك."
+      },
+      "changeAnisetteServer": {
+        "how": "افتح الإعدادات، واختبر خوادم anisette، واختر خادمًا يعمل، أو عُد إلى الوضع التلقائي.",
+        "button": "فتح خوادم anisette"
       }
     },
     "reportHint": "يفتح بلاغًا جديدًا على GitHub مع ملء التشخيص. لا يُرسل شيء حتى ترسله بنفسك."
@@ -934,7 +1013,12 @@
       "close": "تم"
     },
     "rememberPassword": "احفظ كلمة السر في سلسلة مفاتيح النظام",
-    "rememberPasswordHint": "يتيح لـ IPAForge تسجيل الدخول مجددًا بنفسه عند انتهاء الجلسة."
+    "rememberPasswordHint": "يتيح لـ IPAForge تسجيل الدخول مجددًا بنفسه عند انتهاء الجلسة.",
+    "resuming": {
+      "title": "تسجيل الدخول مجددًا",
+      "body": "جارٍ تسجيل الدخول إلى {appleId} بما حفظه IPAForge…",
+      "cancel": "إلغاء"
+    }
   },
   "accounts": {
     "description": "معرّفات Apple التي يوقّع بها IPAForge التطبيقات. المعرّف المستخدم يظهر في الشريط العلوي.",
@@ -1586,6 +1670,13 @@
       "body": "ثُبّتت هذه النسخة من {package, select, msi {مثبّت ‎.msi} deb {حزمة ‎.deb} rpm {حزمة ‎.rpm} other {حزمة}} لا يمكنها تحديث نفسها. نزّل الإصدار الجديد وثبّته فوق هذا: تبقى معرّفات Apple والتطبيقات والإعدادات كما هي.",
       "download": "نزّل {version}",
       "later": "لاحقًا"
+    },
+    "nativeBuild": {
+      "title": "هذا إصدار Intel",
+      "body": "جهاز Mac لديك يعمل بمعالج Apple silicon، لذا تعمل هذه النسخة من IPAForge عبر Rosetta وكل شيء أبطأ. نزّل إصدار Apple silicon وثبّته فوق هذه النسخة؛ تبقى معرّفات Apple والأجهزة والتطبيقات كما هي.",
+      "file": "IPAForge-…-mac-arm64.dmg",
+      "later": "لاحقًا",
+      "download": "تنزيل لـ Apple silicon"
     }
   },
   "whatsNew": {

@@ -18,6 +18,9 @@ export const RELEASE_WORKFLOWS = [
 export const UNTRUSTED_SIGNER = 'UNTRUSTED_SIGNER_ERROR'
 export const SIGSTORE_ISSUER = 'https://token.actions.githubusercontent.com'
 
+/** Where an Intel build running under Rosetta sends the user for the Apple silicon one. */
+export const NATIVE_BUILD_URL = `${RELEASES_URL}/latest`
+
 /** How long the check may take before IPAForge opens without it (offline, a slow network). */
 export const CHECK_TIMEOUT_MS = 15_000
 

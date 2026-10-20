@@ -31,7 +31,13 @@ export const createEncryptedFileSecretStore = (
   let loading: Promise<SecretRecord> | undefined
 
   const cryptoKey = (): Promise<CryptoKey> => {
-    key ??= keyProvider().then(importAesKey)
+    key ??= keyProvider()
+      .then(importAesKey)
+      .catch((error: unknown) => {
+        // The keychain said no (or was dismissed): ask again next time, so a later Allow is not ignored.
+        key = undefined
+        throw error
+      })
     return key
   }
 

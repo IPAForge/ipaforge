@@ -78,6 +78,26 @@ describe('createUpdateService', () => {
     expect(service.current()).toEqual({ phase: 'idle' })
   })
 
+  it('says where the Apple silicon build is when the Intel one runs under Rosetta', async () => {
+    const service = createUpdateService({
+      updater: fakeUpdater(undefined).port,
+      verifier: signedBy(),
+      kind: 'self',
+      arch: 'x64',
+      translated: true,
+      logger
+    })
+    service.start()
+    await vi.runAllTimersAsync()
+
+    expect(service.current()).toEqual({
+      phase: 'idle',
+      nativeBuild: {
+        url: 'https://github.com/IPAForge/ipaforge/releases/latest'
+      }
+    })
+  })
+
   it('downloads a newer version with progress, then installs it', async () => {
     const updater = fakeUpdater(NEXT)
     const { service } = start(updater.port)

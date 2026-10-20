@@ -3,7 +3,6 @@ import type { RouterHistory } from '@tanstack/react-router'
 import { RouterProvider } from '@tanstack/react-router'
 import { useState } from 'react'
 
-import { DeviceFeed } from '@ui/components/device-feed.tsx'
 import { createQueryClient } from '@ui/hooks/queries/query-client.ts'
 import { queryKeys } from '@ui/hooks/queries/query-keys.ts'
 import { LanguageProvider } from '@ui/i18n/provider/language-provider.tsx'
@@ -33,8 +32,8 @@ export type AppProps = {
 }
 
 /**
- * The whole UI: host services (the Engine client among them), the query cache for Engine queries kept in step
- * with the device feed, what the user picked in the top bar, the install run (kept here so it goes on in other
+ * The whole UI: host services (the Engine client among them), the query cache for Engine queries (kept in step
+ * with the device feed once the update check is done), what the user picked in the top bar, the install run (kept here so it goes on in other
  * sections), the preload list, the log viewer's filters, the language, the theme, then the router (whose root route is the shell). Touches no browser global
  * at import time, so any host can mount it. HeroUI v3 itself needs no provider.
  */
@@ -69,7 +68,6 @@ export const App = ({ services, language, history }: AppProps) => {
   return (
     <UiServicesContext value={scoped}>
       <QueryClientProvider client={queryClient}>
-        <DeviceFeed />
         <SelectionContext value={selection}>
           <ActiveRunContext value={activeRun}>
             <PreloadContext value={preload}>

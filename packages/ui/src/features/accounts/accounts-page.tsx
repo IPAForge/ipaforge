@@ -18,7 +18,12 @@ import type { Account } from '@ui/services/engine/types.ts'
 
 /** Which dialog is open: sign-in (maybe again, for a saved Apple ID) or the sign-out confirmation. */
 type OpenDialog =
-  | { readonly kind: 'sign-in'; readonly appleId?: string | undefined }
+  | {
+      readonly kind: 'sign-in'
+      readonly appleId?: string | undefined
+      /** "Sign in again" for this saved account. */
+      readonly accountId?: string | undefined
+    }
   | { readonly kind: 'sign-out'; readonly account: Account }
   | undefined
 
@@ -34,7 +39,11 @@ export const AccountsPage = () => {
   const onAddAppleId = () => setDialog({ kind: 'sign-in' })
   const onUse = (account: Account) => select('account', account.id)
   const onSignInAgain = (account: Account) =>
-    setDialog({ kind: 'sign-in', appleId: account.appleId })
+    setDialog({
+      kind: 'sign-in',
+      appleId: account.appleId,
+      accountId: account.id
+    })
   const onSignOut = (account: Account) =>
     setDialog({ kind: 'sign-out', account })
   // Signing out the Apple ID in use hands its place to the next saved one; with none left, nothing is in use.
@@ -84,6 +93,7 @@ export const AccountsPage = () => {
       {dialog?.kind === 'sign-in' ? (
         <SignInDialog
           appleId={dialog.appleId}
+          accountId={dialog.accountId}
           onClose={onClose}
           onSignedIn={onUse}
         />

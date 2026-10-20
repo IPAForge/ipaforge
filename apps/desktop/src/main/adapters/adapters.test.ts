@@ -338,6 +338,37 @@ describe('encrypted file secret store', () => {
   })
 })
 
+describe('encrypted file secret store, when the keychain says no', () => {
+  it('asks for the key again next time, so a later Allow is used', async () => {
+    const { createEncryptedFileSecretStore } = await import(
+      '@desktop/main/adapters/encrypted-file-secret-store.ts'
+    )
+    const dir = await mkdtemp(join(tmpdir(), 'ipaforge-enc-'))
+    try {
+      const key = crypto.getRandomValues(new Uint8Array(32))
+      let asked = 0
+      const store = createEncryptedFileSecretStore(
+        join(dir, 'secrets.enc'),
+        async () => {
+          asked += 1
+          if (asked === 1) throw new Error('denied')
+          return key
+        }
+      )
+      await expect(
+        store.set('apple/session/x', utf8Encode('value'))
+      ).rejects.toThrow('denied')
+      await store.set('apple/session/x', utf8Encode('value'))
+      expect(
+        utf8Decode((await store.get('apple/session/x')) ?? new Uint8Array())
+      ).toBe('value')
+      expect(asked).toBe(2)
+    } finally {
+      await rm(dir, { recursive: true, force: true })
+    }
+  })
+})
+
 describe('file download store', () => {
   it('keeps only verified downloads and never leaves partial files', async () => {
     const { createFileDownloadStore } = await import(

@@ -28,6 +28,11 @@ const sampleStates: Readonly<Record<string, UpdateState>> = {
     packageType: 'msi',
     fileName: `IPAForge-${NEXT}-win-x64.msi`,
     url: RELEASE
+  },
+  // The Intel build running under Rosetta on an Apple silicon Mac.
+  rosetta: {
+    phase: 'idle',
+    nativeBuild: { url: 'https://github.com/IPAForge/ipaforge/releases/latest' }
   }
 }
 

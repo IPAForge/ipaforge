@@ -122,6 +122,52 @@ describe('signIn', () => {
     expect(prompts.asked.at(-1)?.data).toMatchObject({ resent: false })
   })
 
+  it('signs a saved account in again with what was saved, asking for nothing', async () => {
+    const h = createHarness()
+    const prompts = scripted({})
+    const result = await h.engine.signIn(
+      { ...input, accountId: ACCOUNT },
+      { onPrompt: prompts }
+    ).result
+
+    expect(result.status === 'completed' && result.state.account?.id).toBe(
+      ACCOUNT
+    )
+    expect(prompts.asked).toEqual([])
+  })
+
+  it('asks a saved account only for the code when its saved password needs one', async () => {
+    const challenge = twoFactorChallenge('123456')
+    const h = createHarness({
+      apple: { resume: async () => ({ kind: 'two_factor', challenge }) }
+    })
+    const prompts = scripted({ [PromptKind.TwoFactorCode]: () => '123456' })
+    const result = await h.engine.signIn(
+      { ...input, accountId: ACCOUNT },
+      { onPrompt: prompts }
+    ).result
+
+    expect(result.status).toBe('completed')
+    expect(prompts.asked.map((p) => p.kind)).toEqual([PromptKind.TwoFactorCode])
+    expect(h.apple.calls.saved).toBe(1)
+  })
+
+  it('asks a saved account for the password when none was saved', async () => {
+    const h = createHarness({
+      apple: {
+        resume: async () => ({ kind: 'needs_password', appleId: ACCOUNT })
+      }
+    })
+    const prompts = scripted({ [PromptKind.Password]: () => 'secret' })
+    const result = await h.engine.signIn(
+      { ...input, accountId: ACCOUNT },
+      { onPrompt: prompts }
+    ).result
+
+    expect(result.status).toBe('completed')
+    expect(prompts.asked.map((p) => p.kind)).toEqual([PromptKind.Password])
+  })
+
   it('keeps the password out of the state, and stops when it is declined', async () => {
     const h = createHarness()
     const events: RunEvent[] = []

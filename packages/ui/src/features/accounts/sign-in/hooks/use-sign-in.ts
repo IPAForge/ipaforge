@@ -28,19 +28,26 @@ export const useSignIn = (
     isPending: false
   })
   const run = useRef<SignInRun | undefined>(undefined)
+  // A "sign in again" run that found no saved password: the form's password answers its question.
+  const awaitingPassword = useRef(false)
   const done = useRef(onSignedIn)
   done.current = onSignedIn
 
   // Closing the dialog mid sign-in cancels the run.
   useEffect(() => () => run.current?.cancel(), [])
 
-  const follow = (handle: SignInRun, password: string) => {
+  const follow = (handle: SignInRun, password: string | undefined) => {
     let count = 0
     let passwordSent = false
     handle.subscribe((event) => {
       if (event.type !== 'prompt') return
       if (event.request.kind === PromptKind.Password && !passwordSent) {
         passwordSent = true
+        if (password === undefined) {
+          awaitingPassword.current = true
+          setState({ phase: 'form', isPending: false })
+          return
+        }
         handle.answer(password)
         return
       }
@@ -84,6 +91,13 @@ export const useSignIn = (
   return {
     state,
     start: (appleId, password, rememberPassword) => {
+      const waiting = run.current
+      if (awaitingPassword.current && waiting?.pending()) {
+        awaitingPassword.current = false
+        waiting.answer(password)
+        setState({ phase: 'form', isPending: true })
+        return
+      }
       const handle = engine.signIn({
         appleId: appleId.trim(),
         rememberPassword
@@ -91,6 +105,12 @@ export const useSignIn = (
       run.current = handle
       setState({ phase: 'form', isPending: true })
       follow(handle, password)
+    },
+    resume: (appleId, accountId) => {
+      const handle = engine.signIn({ appleId, accountId })
+      run.current = handle
+      setState({ phase: 'resuming' })
+      follow(handle, undefined)
     },
     answer: (answer) => respond((handle) => handle.answer(answer)),
     decline: () => respond((handle) => handle.decline())

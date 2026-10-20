@@ -257,6 +257,73 @@
       "system": "System ({language})",
       "hint": "IPAForge follows your system language unless you choose one here.",
       "draft": "draft"
+    },
+    "anisette": {
+      "title": "Anisette servers",
+      "hint": "Signing in to Apple needs an anisette server, which tells Apple which computer is signing in. IPAForge uses one that works, by itself; choose one here if you prefer a particular server, or add your own.",
+      "add": "Add server",
+      "loading": "Loading the servers…",
+      "modeLabel": "How IPAForge picks a server",
+      "mode": {
+        "automatic": "Automatic",
+        "chosen": "Choose a server"
+      },
+      "modeHint": {
+        "automatic": "Tries the servers in this order and moves on when one fails.",
+        "chosen": "Always uses {name}.",
+        "none": "Pick the server IPAForge should always use."
+      },
+      "noneChosen": "No server chosen yet: until you pick one, IPAForge keeps choosing by itself.",
+      "chosenDown": "{name} isn't responding. Signing in won't work until it's back, or until you choose another server or switch to Automatic.",
+      "count": "{count, plural, one {# server} other {# servers}}",
+      "sources": "{custom, plural, =0 {} other {# added by you, }}{list} from SideStore's list, {backup} as a backup ·",
+      "listUpdated": "SideStore's list updated {ago}",
+      "listNever": "SideStore's list not fetched yet",
+      "updateList": "Update list",
+      "updating": "Updating…",
+      "testAll": "Test all",
+      "testing": "Testing…",
+      "group": {
+        "custom": "Added by you · used first",
+        "list": "From SideStore's list",
+        "backup": "Backup · only when SideStore's list can't be reached or none of it answers"
+      },
+      "tag": {
+        "custom": "Added by you",
+        "inUse": "In use",
+        "chosen": "Chosen"
+      },
+      "position": "Tried as number {position}",
+      "use": "Use {name}",
+      "chooseLabel": "Server to use",
+      "status": {
+        "untested": "Not tested",
+        "testing": "Testing…",
+        "ok": "Working · {ms} ms",
+        "bad": "Not responding"
+      },
+      "test": "Test",
+      "testOne": "Test {name}",
+      "edit": "Edit {name}",
+      "remove": "Remove {name}",
+      "confirmRemove": "Remove {name}?",
+      "removeYes": "Remove",
+      "skipped": "Not used from SideStore's list: {names} (no HTTPS). You can add a plain-HTTP server yourself, for example one on your own computer.",
+      "dialog": {
+        "addTitle": "Add an anisette server",
+        "editTitle": "Edit server",
+        "body": "Any anisette server that speaks the usual protocol works: a public one, or one you run yourself.",
+        "name": "Name",
+        "namePlaceholder": "My server",
+        "address": "Address",
+        "addressPlaceholder": "https://anisette.my-server.net",
+        "addressHint": "https:// or, for a server you run yourself, http://",
+        "nameMissing": "Give it a name.",
+        "addressInvalid": "Enter an address that starts with https:// or http://.",
+        "exists": "This server is already in the list.",
+        "stillAdd": "You can still add it.",
+        "save": "Save"
+      }
     }
   },
   "theme": {
@@ -465,6 +532,14 @@
       "developer_request_failed": {
         "title": "Apple's developer services failed",
         "body": "A request to Apple's developer services failed. Try again, and report it if it keeps happening."
+      },
+      "anisette_server_invalid": {
+        "title": "This anisette server can't be used",
+        "body": "Check its name and address: the address starts with https:// or http://."
+      },
+      "anisette_server_exists": {
+        "title": "This anisette server is already in the list",
+        "body": "Choose it from the list in Settings instead."
       }
     },
     "catalog": {
@@ -753,6 +828,10 @@
       "open": "Open",
       "tryAnyway": {
         "how": "Apple reported a negative number of App IDs left, which is a known glitch on its side: the real number may be higher. Try anyway asks Apple to create them; if it really is at the limit, it says so."
+      },
+      "changeAnisetteServer": {
+        "how": "Open Settings, test the anisette servers, and choose one that works, or go back to Automatic.",
+        "button": "Open anisette servers"
       }
     },
     "reportHint": "Opens a new GitHub issue with the diagnostics filled in. Nothing is sent until you submit it."
@@ -934,7 +1013,12 @@
       "close": "Done"
     },
     "rememberPassword": "Save my password in the system keychain",
-    "rememberPasswordHint": "Lets IPAForge sign in again on its own when the session expires."
+    "rememberPasswordHint": "Lets IPAForge sign in again on its own when the session expires.",
+    "resuming": {
+      "title": "Signing in again",
+      "body": "Signing in to {appleId} with what IPAForge saved…",
+      "cancel": "Cancel"
+    }
   },
   "accounts": {
     "description": "The Apple IDs IPAForge signs apps with. The one in use is shown in the top bar.",
@@ -1586,6 +1670,13 @@
       "body": "This copy was installed from {package, select, msi {a .msi installer} deb {a .deb package} rpm {an .rpm package} other {a package}}, which can't update itself. Download the new version and install it over this one: your Apple IDs, apps and settings stay.",
       "download": "Download {version}",
       "later": "Later"
+    },
+    "nativeBuild": {
+      "title": "This is the Intel build",
+      "body": "Your Mac has Apple silicon, so this copy of IPAForge runs through Rosetta and everything is slower. Download the Apple silicon build and install it over this one; your Apple IDs, devices and apps stay.",
+      "file": "IPAForge-…-mac-arm64.dmg",
+      "later": "Later",
+      "download": "Download for Apple silicon"
     }
   },
   "whatsNew": {

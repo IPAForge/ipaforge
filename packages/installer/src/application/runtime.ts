@@ -15,15 +15,20 @@ export type FlowRuntime = {
   close(): Promise<void>
 }
 
+/**
+ * The account's session for questions nobody waits on (teams, quota, certificates): the saved session, or a new one
+ * from the saved password, but never a second factor, since there's nowhere to type its code. Signing in again
+ * with a code is the user's to start.
+ */
 const savedSession = async (
   deps: InstallerDeps,
   accountId: string
 ): Promise<AppleSession> => {
-  const resumed = await deps.apple.resume(accountId)
+  const resumed = await deps.apple.resume(accountId, { interactive: false })
   if (resumed.kind === 'signed_in') return resumed.session
   throw new IPAForgeError(ErrorCode.SessionExpired, {
     message: 'sign in again',
-    data: { account: accountId }
+    data: { account: accountId, needs: resumed.kind }
   })
 }
 

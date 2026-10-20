@@ -31,7 +31,11 @@ export const fixes = {
     ],
     buttonKey: 'recovery.retry'
   },
-  [R.ChangeAnisetteServer]: { kind: 'later' },
+  [R.ChangeAnisetteServer]: {
+    kind: 'settings',
+    howKey: 'recovery.fix.changeAnisetteServer.how',
+    buttonKey: 'recovery.fix.changeAnisetteServer.button'
+  },
   [R.ReEnterPassword]: {
     kind: 'resume',
     howKey: 'recovery.fix.reEnterPassword.how',

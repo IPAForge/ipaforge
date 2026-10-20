@@ -5,11 +5,12 @@ import type { RunFailure } from '@ui/state/active-run/types.ts'
 
 /**
  * What pressing a fix does: continue from the checkpoint, ask the device to trust this computer first, start
- * again with another Apple ID or the other channel, nothing (it only explains), or not shown yet (its screen
- * comes in a later phase).
+ * again with another Apple ID or the other channel, open a Settings card, nothing (it only explains), or not shown
+ * yet (its screen comes in a later phase).
  */
 export type FixKind =
   | 'resume'
+  | 'settings'
   | 'pair'
   | 'account'
   | 'channel'

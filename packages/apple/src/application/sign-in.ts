@@ -67,7 +67,11 @@ export const createSignInService = (
             message: 'Apple still asks for a second factor'
           })
         }),
-      { codeAlreadySent: secondFactor.codeAlreadySent }
+      // A code that is already on its way, or that nobody can type in, must not be sent (again).
+      {
+        codeAlreadySent:
+          secondFactor.codeAlreadySent || input.sendCode === false
+      }
     )
 
   const signIn = async (input: SignInInput): Promise<SignInResult> => {

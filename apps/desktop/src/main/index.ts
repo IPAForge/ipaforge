@@ -114,6 +114,7 @@ const createUpdates = (logger: Logger) =>
       readText
     }),
     arch: process.arch,
+    translated: app.runningUnderARM64Translation,
     logger
   })
 

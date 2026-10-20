@@ -1,5 +1,5 @@
-// Which anisette servers to try, in which order: a custom server first, then the built-in fallback, then the
-// remote community list. The remote list is kept up to date: fetched again once it is older than its maximum age
+// The remote community list of anisette servers (SideStore's), which the anisette service tries after the servers
+// the user added and before its own built-in backup. The remote list is kept up to date: fetched again once it is older than its maximum age
 // (on the next anisette request, never polled), and the last list fetched is kept in the secret store, so a failed
 // fetch or an offline start uses it instead of the built-in servers alone.
 
@@ -51,21 +51,26 @@ export const dedupe = (
 const httpsOnly = (
   deps: AppleDeps,
   servers: readonly AnisetteServer[]
-): AnisetteServer[] =>
-  servers.filter((server) => {
-    const secure = server.address.startsWith('https://')
-    if (!secure)
-      deps.logger.warn(
-        'ignoring non-HTTPS anisette server from the remote list',
-        { server: server.name }
-      )
-    return secure
-  })
+): { servers: AnisetteServer[]; skipped: string[] } => {
+  const secure = servers.filter((server) =>
+    server.address.startsWith('https://')
+  )
+  const skipped = servers
+    .filter((server) => !secure.includes(server))
+    .map((server) => server.name)
+  if (skipped.length > 0)
+    deps.logger.warn(
+      'ignoring non-HTTPS anisette servers from the remote list',
+      { servers: skipped }
+    )
 
-/** The remote list's HTTPS servers, or undefined when it cannot be fetched. */
+  return { servers: secure, skipped }
+}
+
+/** The remote list's HTTPS servers and the names left out, or undefined when it cannot be fetched. */
 const fetchRemoteServers = async (
   deps: AppleDeps
-): Promise<AnisetteServer[] | undefined> => {
+): Promise<{ servers: AnisetteServer[]; skipped: string[] } | undefined> => {
   const { config } = deps
   try {
     const response = await fetchApple(deps, config.anisetteServerListUrl, {
@@ -89,6 +94,7 @@ const STORED_LIST_KEY = 'anisette/server-list'
 
 const storedListSchema = z.object({
   fetchedAt: z.number(),
+  skipped: z.array(z.string()).optional(),
   servers: z.array(
     z.object({
       name: z.string(),
@@ -110,7 +116,8 @@ const loadStoredList = async (
 
     return {
       fetchedAt: parsed.data.fetchedAt,
-      servers: parsed.data.servers.map((server) => compact(server))
+      servers: parsed.data.servers.map((server) => compact(server)),
+      skipped: parsed.data.skipped ?? []
     }
   } catch (error) {
     deps.logger.warn('saved anisette server list unreadable', { cause: error })
@@ -132,35 +139,58 @@ export const createRemoteServerList = (deps: AppleDeps): RemoteServerList => {
   const isRetryDue = (now: number): boolean =>
     failedAt === undefined || now - failedAt >= config.anisetteServerListRetryMs
 
-  const refresh = async (): Promise<AnisetteServer[]> => {
-    if (!loaded) {
-      known = await loadStoredList(deps)
-      loaded = true
-    }
+  const loadOnce = async () => {
+    if (loaded) return
+    known = await loadStoredList(deps)
+    loaded = true
+  }
+
+  const refresh = async (force: boolean): Promise<AnisetteServer[]> => {
+    await loadOnce()
     const now = clock.now().getTime()
-    if (isFresh(now) || !isRetryDue(now)) return known?.servers ?? []
-    const servers = await fetchRemoteServers(deps)
-    if (!servers) {
+    if (!force && (isFresh(now) || !isRetryDue(now)))
+      return known?.servers ?? []
+    const fetched = await fetchRemoteServers(deps)
+    if (!fetched) {
       failedAt = now
       return known?.servers ?? []
     }
     failedAt = undefined
-    known = { servers, fetchedAt: now }
+    known = { ...fetched, fetchedAt: now }
     await deps.secrets.set(STORED_LIST_KEY, utf8Encode(JSON.stringify(known)))
     deps.logger.debug('anisette server list updated', {
-      servers: servers.length
+      servers: fetched.servers.length
     })
 
-    return servers
+    return fetched.servers
+  }
+
+  const run = (force: boolean): Promise<AnisetteServer[]> => {
+    // A forced update waits for a fetch already going, then fetches itself.
+    const previous = inFlight ?? Promise.resolve([])
+    const next = force
+      ? previous.then(
+          () => refresh(true),
+          () => refresh(true)
+        )
+      : (inFlight ?? refresh(false))
+    const tracked = next.finally(() => {
+      if (inFlight === tracked) inFlight = undefined
+    })
+    inFlight = tracked
+
+    return tracked
   }
 
   return {
-    current: () => {
-      inFlight ??= refresh().finally(() => {
-        inFlight = undefined
-      })
-
-      return inFlight
+    current: () => run(false),
+    snapshot: async () => {
+      await loadOnce()
+      return known
+    },
+    update: async () => {
+      await run(true)
+      return known
     }
   }
 }

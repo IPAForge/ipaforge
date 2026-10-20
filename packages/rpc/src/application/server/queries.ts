@@ -17,6 +17,15 @@ const queryHandlers = (
   pairDevice: ([udid]) => engine.pairDevice(udid),
   listAccounts: () => engine.listAccounts(),
   canSaveAccounts: () => engine.canSaveAccounts(),
+  anisetteServers: () => engine.anisetteServers(),
+  chooseAnisetteServer: ([choice]) =>
+    engine.chooseAnisetteServer(compact(choice)),
+  addAnisetteServer: ([input]) => engine.addAnisetteServer(input),
+  updateAnisetteServer: ([address, input]) =>
+    engine.updateAnisetteServer(address, input),
+  removeAnisetteServer: ([address]) => engine.removeAnisetteServer(address),
+  testAnisetteServer: ([address]) => engine.testAnisetteServer(address),
+  updateAnisetteServerList: () => engine.updateAnisetteServerList(),
   signOut: ([accountId]) => engine.signOut(accountId),
   listTeams: ([accountId]) => engine.listTeams(accountId),
   catalogApps: () => engine.catalogApps(),

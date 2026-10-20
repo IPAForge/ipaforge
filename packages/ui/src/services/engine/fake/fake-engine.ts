@@ -11,6 +11,7 @@ import {
   type RunHandle,
   StepLabel
 } from '@ipaforge/rpc'
+import { createFakeAnisette } from '@ui/services/engine/fake/fake-anisette.ts'
 import { fakeAppFor, fakePlanFor } from '@ui/services/engine/fake/fake-apps.ts'
 import { fakeAppsSteps } from '@ui/services/engine/fake/fake-apps-steps.ts'
 import {
@@ -115,8 +116,9 @@ const signInRun = (
   world: FakeWorld,
   {
     appleId,
+    accountId,
     rememberPassword
-  }: { appleId: string; rememberPassword?: boolean },
+  }: { appleId: string; accountId?: string; rememberPassword?: boolean },
   options: CommandOptions<FakeSignInState> | undefined
 ) =>
   startScriptedRun<FakeSignInState>({
@@ -126,7 +128,12 @@ const signInRun = (
         stepId: 'sign-in',
         labelKey: StepLabel.signIn,
         run: async (_state, context) => {
-          const password = await askPassword(context, appleId)
+          // Signing a saved account in again uses its saved password; only the code is asked.
+          const saved =
+            accountId !== undefined &&
+            (world.savedPasswords.has(accountId) ||
+              world.codeNeeded.has(accountId))
+          const password = saved ? 'saved' : await askPassword(context, appleId)
           // Apple checks the password.
           await world.appleAnswer()
           if (password.length === 0 || world.scenario === 'wrong-password')
@@ -134,7 +141,8 @@ const signInRun = (
           // Apple skips the second factor for a computer it already knows.
           if (world.scenario !== 'sign-in-no-2fa')
             await completeTwoFactor(context, world.appleAnswer)
-          if (rememberPassword) world.savedPasswords.add(appleId)
+          if (rememberPassword || saved) world.savedPasswords.add(appleId)
+          world.codeNeeded.delete(appleId)
           return { account: saveAccount(world, appleId) }
         }
       }
@@ -235,6 +243,9 @@ export const createFakeEngine = ({
     ...installed,
     ...createFakeSources(
       scenario,
+      () => new Promise<void>((resolve) => setTimeout(resolve, delayMs))
+    ),
+    ...createFakeAnisette(
       () => new Promise<void>((resolve) => setTimeout(resolve, delayMs))
     ),
     listAccounts: async () => world.accounts,

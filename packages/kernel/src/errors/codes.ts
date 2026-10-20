@@ -29,6 +29,10 @@ export const ErrorCode = {
   // apple
   AnisetteUnavailable: 'apple.anisette_unavailable',
   AnisetteNotProvisioned: 'apple.anisette_not_provisioned',
+  /** An anisette server the user typed can't be used: no name, not an http(s) address, or a placeholder. */
+  AnisetteServerInvalid: 'apple.anisette_server_invalid',
+  /** An anisette server the user typed is in the list already. */
+  AnisetteServerExists: 'apple.anisette_server_exists',
   AppIdQuotaExceeded: 'apple.app_id_quota',
   CertificateLimit: 'apple.certificate_limit',
   InvalidCredentials: 'apple.invalid_credentials',

@@ -40,6 +40,8 @@ export const queryKeys = {
     query ? ([...teamKey(query), 'certificates'] as const) : ['idle'],
   planInstall: (input: RemotePlanInstallInput | undefined) =>
     ['plan', input ?? null] as const,
+  /** The anisette servers, the choice and SideStore's list's age (Settings). */
+  anisette: ['anisette'] as const,
   /** Pages of the Engine's log buffer for one filter; never cached between visits to Logs. */
   logs: (filter: LogFilter) => ['logs', 'lines', filter] as const,
   logLevel: ['logs', 'level'] as const

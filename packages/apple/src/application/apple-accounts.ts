@@ -13,6 +13,7 @@ import type {
   AccountStore,
   AppleAccounts,
   AppleAccountsOptions,
+  ResumeOptions,
   ResumeResult,
   ResumeServices,
   SavedAccount
@@ -64,8 +65,10 @@ const reuseSession = async (
 /** Opens a saved account: its session, else a sign-in with its saved password, else "needs the password". */
 export const resumeAccount = async (
   services: ResumeServices,
-  id: string
+  id: string,
+  options: ResumeOptions = {}
 ): Promise<ResumeResult> => {
+  const interactive = options.interactive ?? true
   const account = await findSaved(services.accounts, id)
   if (!account)
     throw new IPAForgeError(ErrorCode.AccountNotFound, { data: { id } })
@@ -83,9 +86,17 @@ export const resumeAccount = async (
   })
   const result = await services.signIn.signIn({
     appleId: account.appleId,
-    password
+    password,
+    sendCode: interactive
   })
   if (result.kind === 'signed_in') await services.accounts.save(result.session)
+  if (result.kind === 'two_factor' && !interactive) {
+    services.deps.logger.info(
+      'the saved password needs a second factor; left for the user',
+      { account: id }
+    )
+    return { kind: 'needs_code', appleId: account.appleId }
+  }
   return result
 }
 
@@ -114,7 +125,8 @@ export const createAppleAccounts = (
     preflight: () => runPreflight(deps, anisette),
     signIn: (signInInput) => signInService.signIn(signInInput),
     appToken: (session, app) => tokens.appToken(session, app),
-    resume: (id) => resumeAccount(resumeServices, id),
+    resume: (id, resumeOptions) =>
+      resumeAccount(resumeServices, id, resumeOptions),
     developer: (session) =>
       createDeveloperServices(deps, anisette, tokens, session),
     markBanned: async (id, udid) => {

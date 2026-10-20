@@ -1,3 +1,9 @@
+import type {
+  AnisetteChoice,
+  AnisetteOverview,
+  AnisetteServerInput,
+  AnisetteServerTest
+} from '@apple/application/anisette/types.ts'
 import type { AppTokenService } from '@apple/application/app-token.ts'
 import type { DeveloperServices } from '@apple/application/developer.ts'
 import type {
@@ -60,7 +66,7 @@ export type ServerHealth = {
 }
 
 export type AnisetteService = {
-  /** Custom server + built-in fallback + remote list (kept up to date), deduplicated, in preference order. */
+  /** Added by the user, SideStore's list (kept up to date), then the built-in backup: deduplicated, in that order. */
   servers(): Promise<AnisetteServer[]>
   health(server: AnisetteServer): Promise<ServerHealth>
   /** Headers and client identity from the first server that works. */
@@ -75,11 +81,37 @@ export type AnisetteService = {
   resync(data: AnisetteData, resyncData: string): Promise<AnisetteData>
   /** Forgets provisioning state (all servers when omitted). Missing state is not an error. */
   reset(server?: AnisetteServer): Promise<void>
+  /** The servers, the choice, the last one that worked and SideStore's list's age, for Settings. */
+  overview(): Promise<AnisetteOverview>
+  /** Automatic, or always one server of the list (none yet: still automatic). */
+  choose(choice: AnisetteChoice): Promise<AnisetteOverview>
+  /** Adds a server, used first (and chosen, when the user picks servers). Http is allowed: the user typed it. */
+  addServer(input: AnisetteServerInput): Promise<AnisetteOverview>
+  updateServer(
+    address: string,
+    input: AnisetteServerInput
+  ): Promise<AnisetteOverview>
+  removeServer(address: string): Promise<AnisetteOverview>
+  /** Whether a server answers, and how fast: one in the list, or an address being added. */
+  test(address: string): Promise<AnisetteServerTest>
+  /** Fetches SideStore's list now. */
+  updateList(): Promise<AnisetteOverview>
 }
 
 export type ResumeResult =
   | SignInResult
   | { readonly kind: 'needs_password'; readonly appleId: string }
+  /** Not interactive, and Apple wants a second factor: nothing was sent, the user has to sign in again. */
+  | { readonly kind: 'needs_code'; readonly appleId: string }
+
+export type ResumeOptions = {
+  /**
+   * False for checks nobody is waiting on (an account's status, its teams or quota): the saved session or password
+   * is still used, but when Apple wants a second factor no code is sent, since there is nowhere to type it.
+   * Default: true.
+   */
+  readonly interactive?: boolean
+}
 
 export type AppleAccounts = {
   readonly anisette: AnisetteService
@@ -91,7 +123,7 @@ export type AppleAccounts = {
    * Re-opens a saved account: reuses its session while Apple accepts it, otherwise signs in again with the
    * saved password (usually without 2FA, since this machine is already known), otherwise asks for the password.
    */
-  resume(id: string): Promise<ResumeResult>
+  resume(id: string, options?: ResumeOptions): Promise<ResumeResult>
   /** Developer services (teams, certificates, App IDs, profiles) for a signed-in session. */
   developer(session: AppleSession): DeveloperServices
   /** Records that Apple blocked this account's profiles on a device, so the UI can offer another account. */
@@ -150,6 +182,8 @@ export type SignInInput = {
   readonly appleId: string
   readonly password: string
   readonly signal?: AbortSignal
+  /** False: when Apple asks for a second factor, don't ask it to send a code to the trusted devices. Default: true. */
+  readonly sendCode?: boolean
 }
 
 export type SignInService = {

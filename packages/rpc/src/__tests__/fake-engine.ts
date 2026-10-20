@@ -25,6 +25,18 @@ export type FakeState = {
 
 export const TEAMS = [{ id: 'TEAM1', name: 'Free team' }]
 
+export const ANISETTE = {
+  servers: [
+    {
+      name: 'SideStore',
+      address: 'https://ani.sidestore.io',
+      source: 'list' as const
+    }
+  ],
+  choice: { mode: 'automatic' as const },
+  skipped: []
+}
+
 const flow = (control: FakeControl) =>
   pipeline<FakeState>('fake.install', [
     {
@@ -169,6 +181,17 @@ export const createFakeEngine = () => {
     },
     listAccounts: async () => [{ id: 'acct', appleId: 'someone@example.com' }],
     canSaveAccounts: async () => true,
+    anisetteServers: async () => ANISETTE,
+    chooseAnisetteServer: async () => ANISETTE,
+    addAnisetteServer: async () => ANISETTE,
+    updateAnisetteServer: async () => ANISETTE,
+    removeAnisetteServer: async () => ANISETTE,
+    testAnisetteServer: async (address: string) => ({
+      address,
+      ok: true,
+      latencyMs: 120
+    }),
+    updateAnisetteServerList: async () => ANISETTE,
     listSources: async () => [],
     sourceApps: async () => [],
     checkSource: async (url: string) => ({

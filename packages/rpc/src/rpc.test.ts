@@ -151,6 +151,32 @@ describe('queries', () => {
       client.checkSource('http://example.com/apps.json')
     ).rejects.toMatchObject({ code: ErrorCode.InvalidRpcMessage })
   })
+
+  it('manages anisette servers through the Engine; a chosen server must be an http(s) address', async () => {
+    const { client } = setup()
+    // eslint-disable-next-line sonarjs/no-clear-text-protocols -- a server the user runs at home may be plain HTTP
+    const home = { name: 'Home', address: 'http://192.168.1.20:6969' }
+
+    expect((await client.anisetteServers()).choice).toEqual({
+      mode: 'automatic'
+    })
+    await client.addAnisetteServer(home)
+    await client.updateAnisetteServer(home.address, home)
+    await client.chooseAnisetteServer({ mode: 'chosen', server: home })
+    await client.removeAnisetteServer(home.address)
+    await client.updateAnisetteServerList()
+    expect(await client.testAnisetteServer(home.address)).toEqual({
+      address: home.address,
+      ok: true,
+      latencyMs: 120
+    })
+    await expect(
+      client.chooseAnisetteServer({
+        mode: 'chosen',
+        server: { name: 'Bad', address: 'ftp://example.com' }
+      })
+    ).rejects.toMatchObject({ code: ErrorCode.InvalidRpcMessage })
+  })
 })
 
 describe('runs', () => {

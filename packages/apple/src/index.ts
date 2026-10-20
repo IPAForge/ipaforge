@@ -1,4 +1,12 @@
 // Public API of @ipaforge/apple: Apple ID sign-in (SRP + 2FA), anisette with failover, app tokens, saved accounts.
+export type {
+  AnisetteChoice,
+  AnisetteOverview,
+  AnisetteServerEntry,
+  AnisetteServerInput,
+  AnisetteServerSource,
+  AnisetteServerTest
+} from '@apple/application/anisette/types.ts'
 export { XCODE_APP } from '@apple/application/app-token.ts'
 export { createAppleAccounts } from '@apple/application/apple-accounts.ts'
 export type {
@@ -24,6 +32,7 @@ export type {
   AppleAccounts,
   AppleAccountsOptions,
   PreflightReport,
+  ResumeOptions,
   ResumeResult,
   SavedAccount,
   SaveOptions,

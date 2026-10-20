@@ -86,11 +86,37 @@ describe('resumeAccount', () => {
     const result = await resumeAccount(services, ID)
 
     expect(result.kind).toBe('signed_in')
-    expect(signIn).toHaveBeenCalledWith({ appleId: ID, password: PASSWORD })
+    expect(signIn).toHaveBeenCalledWith({
+      appleId: ID,
+      password: PASSWORD,
+      sendCode: true
+    })
     expect(accounts.save).toHaveBeenCalledTimes(1)
     expect(records.map((record) => record.msg)).toContain(
       'signing in again with the saved password'
     )
+  })
+
+  it('in the background, stops at a second factor without asking Apple to send a code', async () => {
+    const { services, signIn, accounts } = setup({
+      password: PASSWORD,
+      tokenError: expired
+    })
+    signIn.mockResolvedValueOnce({
+      kind: 'two_factor',
+      challenge: {}
+    } as never)
+
+    expect(await resumeAccount(services, ID, { interactive: false })).toEqual({
+      kind: 'needs_code',
+      appleId: ID
+    })
+    expect(signIn).toHaveBeenCalledWith({
+      appleId: ID,
+      password: PASSWORD,
+      sendCode: false
+    })
+    expect(accounts.save).not.toHaveBeenCalled()
   })
 
   it('needs the password when the session expired and none is saved, logging why', async () => {

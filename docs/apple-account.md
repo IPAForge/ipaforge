@@ -10,7 +10,9 @@
    - The server never sees your Apple ID or password.
    - IPAForge keeps one identity per server and reuses it. Apple distrusts a new machine on every attempt.
    - If a server is down, the next one is used automatically.
-   - The servers are a custom one (if set), the built-in ones, then the community list (`servers.sidestore.io/servers.json`, HTTPS servers only). The list is fetched when anisette is first needed and again once it is an hour old (on the next request, never polled); after a failed fetch it is tried again a minute later. The last list fetched is kept in the secret store, so an offline start or a failed fetch still uses it (`anisetteServerListMaxAgeMs`, `anisetteServerListRetryMs` in the config).
+   - **Automatic** (the default) tries the servers you added (newest first), then the one that worked last, then SideStore's list (`servers.sidestore.io/servers.json`, HTTPS servers only, in its order), then IPAForge's built-in servers that list lacks, as a backup.
+   - **Settings → Anisette servers** shows them in that order with where each comes from, and lets you test one or all (how fast each answers), update SideStore's list now, and add, edit or remove your own (name and address; plain `http://` is allowed only for a server you add, such as one on your own computer). **Choose a server** uses only the one you pick; a server you add while choosing is the one picked. Until you pick one, IPAForge still chooses by itself. The settings are kept in `anisette/settings`, next to the machine identity. Switching servers gives Apple a new machine identity, so the next sign-in may ask for a code.
+   - The community list is fetched when anisette is first needed and again once it is an hour old (on the next request, never polled); after a failed fetch it is tried again a minute later. The last list fetched is kept in the secret store, so an offline start or a failed fetch still uses it (`anisetteServerListMaxAgeMs`, `anisetteServerListRetryMs` in the config).
 2. **Password check (SRP).** Apple checks a proof of your password and returns encrypted session data.
 3. **Second factor.** If your account has trusted devices, IPAForge asks Apple to show a code on them straight away and opens the code step; you tap **Allow** on the device and type the code. **Didn't get a code?** offers **Send a new code** and, when the account has phone numbers, **Text** a number instead. When Apple refuses to send another (too many in a row), the step says so and stays open.
 4. **Developer token.** IPAForge requests the token Xcode uses for developer services. It is valid for about a year.
@@ -69,7 +71,9 @@ After sign-in, IPAForge uses the same developer API Xcode uses, through `apple.d
 
 | Code | Meaning | What to do |
 |---|---|---|
-| `apple.anisette_unavailable` | No anisette server answered | Check the connection; try again later, or set a custom server |
+| `apple.anisette_unavailable` | No anisette server answered (with a chosen server, `chosen` names it) | Check the connection; **Choose another anisette server** opens Settings at the servers |
+| `apple.anisette_server_invalid` | A server you added has no name, an address that isn't `http(s)://`, or a placeholder address | Correct the name or address |
+| `apple.anisette_server_exists` | A server you added is in the list already | Choose it from the list instead |
 | `apple.client_rejected` (`-80045`, `-90010`) | Apple is rejecting this sign-in method right now | Update IPAForge; it usually needs a config update |
 | `apple.invalid_credentials` (`-22406`, `-20970`) | Wrong Apple ID or password | Check them. IPAForge never retries a wrong password, so your account cannot be locked by repeated attempts |
 | `apple.account_locked` | Apple locked the account | Unlock it at iforgot.apple.com |

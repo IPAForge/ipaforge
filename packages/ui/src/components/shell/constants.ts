@@ -43,3 +43,12 @@ export const PICKER_TRIGGER_CLASSES = [
   'flex min-w-0 items-center gap-2 rounded-lg border border-border bg-surface-secondary px-2.5 py-1.5 text-sm outline-none',
   'hover:bg-surface-tertiary focus-visible:ring-2 focus-visible:ring-focus'
 ].join(' ')
+
+/** The app icon's colours (`apps/desktop/build/icon.svg`), for the mark in the top bar. */
+export const logoColors = {
+  tileFrom: '#312e81',
+  tileTo: '#0f172a',
+  sparkFrom: '#fde68a',
+  sparkTo: '#f97316',
+  phone: '#e0e7ff'
+} as const

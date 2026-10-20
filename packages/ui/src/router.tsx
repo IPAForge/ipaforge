@@ -8,6 +8,7 @@ import {
 import type { ComponentType } from 'react'
 
 import { compact } from '@ipaforge/kernel'
+import { DeviceFeed } from '@ui/components/device-feed.tsx'
 import { AppShell } from '@ui/components/shell/app-shell.tsx'
 import { AccountsPage } from '@ui/features/accounts/accounts-page.tsx'
 import { AppsPage } from '@ui/features/apps/apps-page.tsx'
@@ -39,6 +40,8 @@ const sectionPages = {
 const rootRoute = createRootRoute({
   component: () => (
     <UpdateGate>
+      {/* Behind the gate: on launch only the update check runs, then the devices, accounts and the rest. */}
+      <DeviceFeed />
       <AppShell>
         <Outlet />
       </AppShell>
