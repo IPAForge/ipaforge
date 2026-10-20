@@ -14,8 +14,8 @@ The detailed roadmap, with each phase's scope, is [design/roadmap.md](design/roa
 | 5 | Installer engine + catalog ✓ | Pipelines, flows, release catalog, error catalog |
 | 6 | UI foundation ✓ | HeroUI + Tailwind shell, colour palettes, i18n, Engine connection, accounts, devices, install run, its questions, recovery, step details, the log viewer, and screenshot and accessibility tests (#28–#58) |
 | 7 | Onboarding | First-run guided wizard |
-| 8 | Install & preload UX (in progress) | One-click SideStore ✓, live run view ✓, recovery screens ✓, Apple ID switch ✓, preload picker ✓ (#59), app sources ✓ (#66), detailed install progress ✓ (#67), the Apps section ✓ (#68), Repair SideStore ✓ (#70), SideStore QR codes ✓ (#71), on-device checklist ✓ (#72), the smaller notes ✓ (#73) |
-| 9 | Desktop app (alpha builds ✓, #61, #62, #63, #64, #65, #69, #74) | Electron packages for Windows, macOS, Linux ✓; the macOS app signed with IPAForge's own certificate ✓; auto-update and What's new ✓ (#74); next: notarisation, Windows signing |
+| 8 | Install & preload UX ✓ | One-click SideStore ✓, live run view ✓, recovery screens ✓, Apple ID switch ✓, preload picker ✓ (#59), app sources ✓ (#66), detailed install progress ✓ (#67), the Apps section ✓ (#68), Repair SideStore ✓ (#70), SideStore QR codes ✓ (#71), on-device checklist ✓ (#72), the smaller notes ✓ (#73) |
+| 9 | Desktop app (alpha builds ✓, #61, #62, #63, #64, #65, #69, #74, #75) | Electron packages for Windows, macOS, Linux ✓; the macOS app signed with IPAForge's own certificate ✓; auto-update and What's new ✓ (#74); next: notarisation, Windows signing |
 | 10 | Management tools | Certificates, app IDs, pairing files, import/export |
 | 11 | Wireless & remote pairing | Wi-Fi installs and the iOS 17+ RP pairing file |
 | 12 | Release 1.0 | Docs site, translations, security review, release pipeline, reusable packages on npm |

@@ -44,9 +44,11 @@ packages/ui/
     ├── styles.css      # the only stylesheet: Tailwind, then HeroUI
     ├── index.ts        # public API
     ├── components/     # the shell (app-shell, top-bar, sidebar, …) and shared pieces
-    ├── features/       # one folder per section: install, preload, devices, accounts, certificates, logs, settings;
+    ├── features/       # one folder per section: install, preload, apps, devices, accounts, certificates, logs, settings;
+    │                   #   and repair (Repair SideStore), updates (the update screen), whats-new (What's new, the changelog);
     │                   #   the page at its root, then components/, hooks/, utils/, constants.ts, types.ts as needed
-    ├── state/          # stores kept outside components: active-run/ (the install run), selection/ (device and Apple ID in use)
+    ├── state/          # stores kept outside components: active-run/ (the install run), selection/ (device and Apple ID in use),
+    │                   #   log-view/ (the log viewer's filters), preload/ (the preload list), auto-refresh/ (automatic refresh)
     ├── hooks/          # useTheme, useUiServices, useLanguage, useFormat, useEngine, useRun (use-run.ts), useSelection (use-selection.ts); queries/ (Engine query hooks)
     ├── services/       # what the UI gets from its host: preferences/, system/ (OS colour scheme, languages, clipboard, opening links), logging/, engine/ (request logging, the fake Engine)
     ├── theme/          # palettes/ (data + applying them), store/, provider/

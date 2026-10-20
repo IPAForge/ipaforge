@@ -31,6 +31,9 @@ Sideloading tools tend to fail in a few recurring ways. IPAForge is designed aro
 - **One-click SideStore.** Install SideStore, or LiveContainer with SideStore, from the Stable or Nightly channel. The pairing file and signing certificate are placed automatically.
 - **Keep apps working.** The Apps page lists what IPAForge installed, with when each app expires, and refreshes them (signed again, data kept) with one press or by itself before they expire. It updates them from their source too.
 - **Preload apps.** Drop .ipa files, choose them, add a link, or browse apps from the catalog (LiveContainer, StikDebug, Feather…), SideStore's source and any AltStore-format source you add. Each app is checked before anything changes: its version, the App IDs it needs, whether the device can run it, and whether it updates one already installed. Then they install in one run.
+- **Repair SideStore.** IPAForge checks, line by line, what keeps SideStore from refreshing your apps by itself (who signed it, its certificate, its pairing file, when it expires) and fixes it in one go.
+- **SideStore links and QR codes.** Add a source to SideStore on the iPhone, or have SideStore install an app, by scanning a code.
+- **A checklist for each device.** What it needs for its iOS version (Trust, a passcode, Developer Mode, trusting your Apple ID, LocalDevVPN for SideStore), ticked as you go.
 - **Clear install plan.** Before anything changes, IPAForge shows what the install uses: App IDs and how many are left this week, free-app slots on the device, whether the certificate is reused, and the team.
 - **Live progress.** Every step reports what it did, for example the release it found, whether a saved session was reused, or how many App IDs it registered.
 - **Recovery, not dead ends.** Failures lead to a screen with the fixes that apply, such as continuing from where the run stopped or switching Apple ID. Diagnostics can be copied, and an issue report opens pre-filled.
@@ -38,8 +41,9 @@ Sideloading tools tend to fail in a few recurring ways. IPAForge is designed aro
 - **Works within Apple's limits.** The App ID quota, the three-app limit for free accounts and certificate limits are checked before any change, and each is explained.
 - **Your language.** The language follows the system, and right-to-left languages are supported. Six languages today, every language iOS supports by 1.0.
 - **Themes.** Six colour palettes, each with light and dark variants.
+- **Updates itself.** IPAForge checks for a new version when it opens and installs it, each update checked against its release's Sigstore signature first. **What's new** says what changed, in plain words.
 
-Coming next: app sources and updates (browse trusted sources, update every installed app in one run), deep links and a QR code for SideStore sources, guided onboarding, management tools for certificates and App IDs, and Wi-Fi installs.
+Coming next: guided onboarding, management tools for certificates and App IDs, and Wi-Fi installs.
 
 ## Project status
 
@@ -51,9 +55,9 @@ Coming next: app sources and updates (browse trusted sources, update every insta
 | Developer services | `@ipaforge/apple` | ✅ Complete: teams, certificates, App IDs, app groups, devices, provisioning profiles |
 | Release catalog | `@ipaforge/catalog` | ✅ Complete: GitHub release resolution, mirrors, verified downloads, cache, AltStore-format app sources |
 | Install engine | `@ipaforge/installer` | ✅ Complete: resumable pipelines, install flows, free-app limit, error catalogue |
-| Engine ⇄ UI protocol | `@ipaforge/rpc` | ✅ Complete: typed, validated messages over Electron IPC |
-| User interface | `@ipaforge/ui` | ✅ Foundation complete: accounts, devices, the install run with its questions, step details, recovery and the log viewer, in six languages, checked by screenshot and WCAG 2.2 AA tests; onboarding and preloading come next |
-| Desktop app | `apps/desktop` | 🚧 Alpha: installers for macOS (DMG), Windows (NSIS) and Linux (AppImage, deb, rpm), built and published by CI on a version tag; code signing and auto-update are planned |
+| Engine ⇄ UI protocol | `@ipaforge/rpc` | ✅ Complete: typed, validated messages over Electron IPC, and the update channel |
+| User interface | `@ipaforge/ui` | ✅ Install and preload complete: accounts, devices with their checklist, the install run with its questions, step details and recovery, Preload with app sources, Apps with refresh, Repair SideStore, the log viewer, and What's new, in six languages, checked by screenshot and WCAG 2.2 AA tests; onboarding comes next |
+| Desktop app | `apps/desktop` | 🚧 Alpha: installers for macOS (DMG, zip), Windows (NSIS, MSI) and Linux (AppImage, deb, rpm), built, Sigstore-signed and published by CI on a version tag; updates itself, checking each update's signature; Windows code signing and Apple notarisation are planned |
 
 Sideload signing has been verified against real devices and Apple accounts. Apple's own `codesign --verify --deep --strict` accepts the output, including a full SideStore build signed in about half a second. Details: [Code Signing](docs/signing.md).
 

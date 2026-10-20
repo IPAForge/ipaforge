@@ -15,7 +15,7 @@ IPAForge is an open-source desktop tool (Windows, macOS, Linux) for installing S
 
 ## Project Structure
 
-> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `packages/rpc`, `packages/ui` (palettes, top bar and sidebar shell, routes, i18n with six languages, Engine query hooks and the device feed, Apple ID sign-in and the Accounts page, the device picker and Devices page, the install home, the install run with its questions, step details and recovery box (`state/active-run`, `state/selection`), the log viewer (`features/logs`, `state/log-view`), the Preload page with Browse apps and the Sources tab (`features/preload`, `state/preload`), the Apps page with Refresh, Update and automatic refresh (`features/apps`, `state/auto-refresh`); runs in a browser on a fake Engine via its own Vite config), `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, the RPC transport and IPA resolver, maintainer probes, and the Electron shell: one hardened window rendering `@ipaforge/ui`, connected to the Engine in main over a MessagePort), `fixtures/signer`, `scripts/`, `.github/workflows/`.
+> Planned layout. Directories appear as roadmap milestones land. **Exists today:** `packages/kernel`, `packages/signer`, `packages/device`, `packages/apple`, `packages/catalog`, `packages/installer`, `packages/rpc`, `packages/ui` (palettes, top bar and sidebar shell, routes, i18n with six languages, Engine query hooks and the device feed, Apple ID sign-in and the Accounts page, the device picker and Devices page, the install home, the install run with its questions, step details and recovery box (`state/active-run`, `state/selection`), the log viewer (`features/logs`, `state/log-view`), the Preload page with Browse apps and the Sources tab (`features/preload`, `state/preload`), the Apps page with Refresh, Update and automatic refresh (`features/apps`, `state/auto-refresh`), Repair SideStore (`features/repair`), the on-device checklist (`features/devices/checklist`), the update screen (`features/updates`), What's new and the changelog (`features/whats-new`); runs in a browser on a fake Engine via its own Vite config), `catalog/sources.json`, `apps/desktop` (Node adapters, `createDesktopEngine`, the RPC transport and IPA resolver, maintainer probes, the Electron shell: one hardened window rendering `@ipaforge/ui`, connected to the Engine in main over a MessagePort, and updating on launch (`main/updates`)), `fixtures/signer`, `scripts/`, `patches/`, `docs/releases/`, `.github/workflows/`.
 
 ```
 ipaforge/
@@ -26,13 +26,14 @@ ipaforge/
 │   ├── apple/        # GSA auth + 2FA, anisette provider chain, developer services API
 │   ├── catalog/      # release sources (GitHub API), downloads, cache, AltStore-format app sources
 │   ├── installer/    # pipelines/flows, diagnostics, Engine facade
-│   ├── rpc/          # typed Engine ⇄ UI RPC (Electron IPC)
+│   ├── rpc/          # typed Engine ⇄ UI RPC (Electron IPC), and the update channel
 │   └── ui/           # shared React app (features, theme palettes, i18n)
 ├── apps/
 │   └── desktop/      # Electron composition root + Node adapters
 ├── scripts/          # check-boundaries.ts (+ boundaries.config.ts edge table), check-locales.ts
 ├── tooling/          # Biome GritQL lint plugins, shared Vite aliases, ESLint plugins (own package: TypeScript 6 for the parser)
 ├── fixtures/         # golden Apple codesign outputs for signer tests
+├── patches/          # pnpm patches: name SHA-256 where @sigstore/core and @tufjs/models verify without a hash (Electron's BoringSSL)
 └── docs/             # user, contributor and design documentation
 ```
 
@@ -40,7 +41,7 @@ ipaforge/
 
 | File | Purpose |
 |------|---------|
-| `packages/installer/src/engine.ts` | The Engine facade: every capability the UI can call (`installSideStore`, `installApps`, `placePairing`, `signIn`, `signOut`, `watchDevices`, queries, `classify`) |
+| `packages/installer/src/engine.ts` | The Engine facade: every capability the UI can call (`installSideStore`, `installApps`, `placePairing`, `refreshApps`, `repairSideStore`, `signIn`, `signOut`, `watchDevices`, queries such as `checkSideStore`, `deviceApps` and `installedSource`, `classify`) |
 | `packages/installer/src/index.ts` | Public installer API (Engine, flows, prompts, diagnostics catalogue, pipeline runner) |
 | `packages/signer/src/index.ts` | Public signer API (`inspectIpa`, `planSideloadIdentity`, `signIpa`, `signBundle`, `signBinary`, `reconcileForSideload`, plist, IPA I/O) |
 | `fixtures/signer/generate.sh` | Regenerates the Apple `codesign` golden fixtures (macOS) |
@@ -54,17 +55,18 @@ ipaforge/
 | `apps/desktop/scripts/install-probe.ts` | Maintainer CLI: run the install flows against a real device and Apple account |
 | `catalog/sources.json` | What can be installed and where releases come from (fetched by the app from `main`) |
 | `packages/catalog/src/index.ts` | Public catalog API (`createCatalog`: manifest, release resolution with mirrors, verified downloads) |
-| `packages/rpc/src/index.ts` | Public RPC API (`createRpcServer`, `createEngineClient`, `EngineClient`, `Transport`, in-memory transport) |
+| `packages/rpc/src/index.ts` | Public RPC API (`createRpcServer`, `createEngineClient`, `EngineClient`, `Transport`, in-memory transport; the update channel: `serveUpdates`, `createUpdateClient`, `UpdateSource`) |
 | `apps/desktop/src/main/rpc/` | Electron `MessagePortMain` transport and the IPA resolver (file path, URL download) |
-| `apps/desktop/src/main/updates/` | Updating on launch: electron-updater behind a port, how this copy was installed, the update state served to the window |
+| `apps/desktop/src/main/updates/` | Updating on launch: electron-updater behind a port, the Sigstore check of every update, how this copy was installed, the update state served to the window |
+| `apps/desktop/src/main/system-trust.ts` | Adds the OS's trusted certificates to Node's default at startup (company proxies, self-hosted anisette servers) |
 | `packages/ui/src/features/whats-new/constants.ts` | Release notes for every version (English), shown in What's new and on the changelog page |
 | `apps/desktop/src/main/index.ts` | Electron main: app lifecycle, hardening, the Engine (`createDesktopEngine`, secrets via `main/secrets.ts`) and the window |
 | `apps/desktop/src/main/rpc/serve-engine.ts` | Serves the Engine to the window: a fresh `MessageChannelMain` per page load, `createRpcServer` on one end, the other posted to the page |
-| `apps/desktop/src/preload/forward-port.ts` | The preload's main job: forward the rpc port to the page (`expose-file-paths.ts` adds its one function, a dropped file's path) |
+| `apps/desktop/src/preload/forward-port.ts` | The preload's main job: forward the rpc and update ports to the page (`expose-file-paths.ts` adds its one function, a dropped file's path) |
 | `apps/desktop/src/main/rpc/choose-ipas.ts` | The IPA file dialog behind "Choose files…" on the Preload page, in the main process |
-| `apps/desktop/src/renderer/engine-port.ts` | Renderer: receives the port and wraps it in a `Transport` for `createEngineClient` |
-| `apps/desktop/src/renderer/main.tsx` | Electron renderer: connects the `EngineClient`, then mounts `@ipaforge/ui` with the browser services and a hash history |
-| `apps/desktop/electron-builder.yml` | Installers (DMG, NSIS, AppImage, deb, rpm): `pnpm --filter @ipaforge/desktop dist` |
+| `apps/desktop/src/renderer/engine-port.ts` | Renderer: receives the ports and wraps each in a `Transport` for `createEngineClient` and `createUpdateClient` |
+| `apps/desktop/src/renderer/main.tsx` | Electron renderer: connects the `EngineClient` and the update client, then mounts `@ipaforge/ui` with the browser services and a hash history |
+| `apps/desktop/electron-builder.yml` | Installers (DMG and zip, NSIS and MSI, AppImage, deb, rpm) and the update metadata: `pnpm --filter @ipaforge/desktop dist` |
 | `.github/workflows/release.yml` | On a `v*` tag: builds the installers on all three systems and publishes the GitHub release (notes from `docs/releases/<version>.md`) |
 | `apps/desktop/electron.vite.config.ts` | electron-vite builds for main, preload and renderer (`pnpm --filter @ipaforge/desktop dev` / `build`) |
 | `packages/ui/src/services/engine/fake/fake-engine.ts` | The fake Engine the browser dev host and UI tests use (`?scenario=` in dev) |

@@ -4,7 +4,7 @@
 
 ## Current status
 
-IPAForge is in **alpha**: test builds are on the [Releases page](https://github.com/SirReaDy/ipaforge/releases). Phases 0–6 are complete: foundation, signer, device layer, Apple account, developer services, the installer and the UI foundation. Phase 8 (install and preload) is under way: the Preload page is in; app sources and updates come next. Onboarding (Phase 7) follows once every screen is built. See [Installing](installing.md) to try a build.
+IPAForge is in **alpha**: test builds are on the [Releases page](https://github.com/SirReaDy/ipaforge/releases). Phases 0–6 are complete: foundation, signer, device layer, Apple account, developer services, the installer and the UI foundation. Phase 8 (install and preload) is complete too: Preload with app sources, the Apps page with refresh, Repair SideStore, SideStore QR codes and the on-device checklist. Phase 9 (the desktop app) has installers for every system and updates itself; Windows code signing and Apple notarisation are left. Onboarding (Phase 7) comes next. See [Installing](installing.md) to try a build.
 
 | Area | State |
 |---|---|
@@ -16,10 +16,10 @@ IPAForge is in **alpha**: test builds are on the [Releases page](https://github.
 | Developer services (`apple.developer`) | Implemented (Phase 4): reads verified with a real account |
 | Installer (`@ipaforge/installer`) | Implemented (Phase 5): pipelines, catalog, install flows, IPA checks against the device, free-app limit, diagnostics and the Engine facade |
 | Engine RPC (`@ipaforge/rpc`) | Implemented (Phase 5): typed, validated Engine ⇄ UI messages; wired in Electron over a `MessageChannelMain` (`apps/desktop/src/main/rpc/serve-engine.ts`) |
-| UI (`@ipaforge/ui`) | Done (Phase 6): palettes, the shell, routes, translations, accounts and sign-in, devices, the install run with its questions, step details and recovery screens, the log viewer, screenshot and accessibility tests |
-| Desktop app (`apps/desktop`) | The Electron shell renders the UI connected to the real Engine; packaging comes in Phase 9 |
+| UI (`@ipaforge/ui`) | Done (Phases 6 and 8): palettes, the shell, routes, translations, accounts and sign-in, devices and their checklist, the install run with its questions, step details and recovery screens, Preload and app sources, Apps, Repair SideStore, the log viewer, the update screen and What's new, screenshot and accessibility tests |
+| Desktop app (`apps/desktop`) | Alpha (Phase 9): installers for macOS, Windows and Linux built and Sigstore-signed by CI; updates itself, checking each update's signature |
 
-## What you'll need (once released)
+## What you'll need
 
 | Platform | Requirement |
 |---|---|
