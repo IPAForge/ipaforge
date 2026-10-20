@@ -23,7 +23,7 @@ export const UpdateFailed = ({ state, onSkip }: UpdateFailedProps) => {
       <p className="text-muted text-sm">
         {t('updates.failed.body', { version: state.version })}
       </p>
-      <p className="w-full break-words rounded-lg bg-danger-soft px-3 py-2 text-danger-soft-foreground text-xs">
+      <p className="w-full break-words rounded-lg bg-danger-soft px-3 py-2 text-danger-soft-foreground text-xs first-letter:uppercase">
         {state.reason}
       </p>
       <div className="flex flex-wrap justify-center gap-2">

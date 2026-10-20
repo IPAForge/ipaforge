@@ -55,6 +55,8 @@ describe('createSigstoreVerifier', () => {
       tufCachePath: '/data/sigstore'
     })
 
-    await expect(verifier.verify(FILE, VERSION)).rejects.toThrow('404')
+    await expect(verifier.verify(FILE, VERSION)).rejects.toThrow(
+      `No signature for IPAForge-${VERSION}-win-x64.exe in the ${VERSION} release`
+    )
   })
 })

@@ -27,7 +27,11 @@ export const createSigstoreVerifier = ({
     const name = basename(file)
     const bundle = await fetchJson(
       `${RELEASES_URL}/download/v${version}/${name}.sigstore.json`
-    )
+    ).catch((error: unknown) => {
+      throw new Error(`No signature for ${name} in the ${version} release`, {
+        cause: error
+      })
+    })
     const bytes = await readFile(file)
     await verifyBundle(
       bundle as Parameters<typeof verify>[0],
