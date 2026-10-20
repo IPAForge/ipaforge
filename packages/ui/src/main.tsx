@@ -1,6 +1,7 @@
 // Browser entry (`pnpm --filter @ipaforge/ui dev` and `build`): browser services with the fake Engine over the
 // rpc memory transport, then the language, then <App/>. In development `?scenario=<id>` picks what the fake
-// Engine plays (fake-scenarios.ts); a production build always plays the happy path.
+// Engine plays (fake-scenarios.ts) and `?update=<phase>` shows the update screen (fake-updates.ts); a production
+// build always plays the happy path, with nothing to update.
 import '@ui/styles.css'
 
 import { StrictMode } from 'react'
@@ -12,6 +13,7 @@ import { prepareLanguage } from '@ui/i18n/setup/prepare-language.ts'
 import { createBrowserServices } from '@ui/services/browser-services.ts'
 import { createFakeEngineClient } from '@ui/services/engine/fake/fake-engine-client.ts'
 import { scenarioFromSearch } from '@ui/services/engine/fake/fake-scenarios.ts'
+import { updatesFromSearch } from '@ui/services/updates/fake-updates.ts'
 
 const ROOT_ELEMENT_ID = 'root'
 /** Verbose while developing, quieter in a production build. */
@@ -28,7 +30,10 @@ const scenario = import.meta.env.DEV
 const services = createBrowserServices(window, {
   logLevel: LOG_LEVEL,
   engine: (logger) => createFakeEngineClient({ scenario, logger }),
-  appVersion: APP_VERSION
+  appVersion: APP_VERSION,
+  ...(import.meta.env.DEV
+    ? { updates: updatesFromSearch(window.location.search) }
+    : {})
 })
 
 // The language's messages load before the first render, so English never flashes.

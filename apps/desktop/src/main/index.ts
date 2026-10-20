@@ -1,9 +1,10 @@
-// Electron main process: the app lifecycle, the hardening, the Engine and the one window.
+// Electron main process: the app lifecycle, the hardening, the Engine, updating on launch and the one window.
 //
 // The Engine is built once, with the Node adapters (`createDesktopEngine`). Each page load of the window gets a
 // fresh MessageChannelMain: the rpc server on one end, the other end posted to the page (`serveEngine`).
 // The renderer never gets file paths of its own: importing IPAs (Phase 9) opens a file dialog here, in main.
 
+import { existsSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 
 import {
@@ -16,6 +17,7 @@ import {
   shell,
   type WebContents
 } from 'electron'
+import electronUpdater from 'electron-updater'
 
 import { createFileDownloadStore } from '@desktop/main/adapters/file-download-store.ts'
 import { createNodeHttpClient } from '@desktop/main/adapters/http-client.ts'
@@ -29,6 +31,10 @@ import {
   lockDownWebContents,
   restrictPermissions
 } from '@desktop/main/security.ts'
+import { electronUpdaterPort } from '@desktop/main/updates/electron-updater.ts'
+import { installKind } from '@desktop/main/updates/install-kind.ts'
+import { serveUpdateState } from '@desktop/main/updates/serve-updates.ts'
+import { createUpdateService } from '@desktop/main/updates/update-service.ts'
 import { createMainWindow } from '@desktop/main/window.ts'
 import type { Logger } from '@ipaforge/kernel'
 
@@ -73,6 +79,34 @@ const createEngineConnector = ({ logger, logs }: MainLogging) => {
     })
 }
 
+/** The text of a file, if it is there. */
+const readText = (path: string): string | undefined => {
+  try {
+    return readFileSync(path, 'utf8')
+  } catch {
+    return undefined
+  }
+}
+
+/** Updating on launch; a development build has nothing to update. */
+const createUpdates = (logger: Logger) =>
+  createUpdateService({
+    updater: app.isPackaged
+      ? electronUpdaterPort(electronUpdater.autoUpdater, logger)
+      : undefined,
+    kind: installKind({
+      platform: process.platform,
+      appImage: process.env.APPIMAGE,
+      resourcesPath: process.resourcesPath,
+      execPath: process.execPath,
+      productName: app.getName(),
+      exists: existsSync,
+      readText
+    }),
+    arch: process.arch,
+    logger
+  })
+
 const openWindow = (
   logger: Logger,
   connect: (contents: WebContents) => void
@@ -99,9 +133,21 @@ const start = (logging: MainLogging): void => {
         electron: process.versions.electron,
         platform: process.platform
       })
-      const connect = createEngineConnector(logging)
+      const connectEngine = createEngineConnector(logging)
+      const updates = createUpdates(logger)
+      // The window shows the update screen until the check is done, and the update if there is one.
+      updates.start()
+      const connect = (contents: WebContents) => {
+        connectEngine(contents)
+        serveUpdateState(contents, updates, () => new MessageChannelMain())
+      }
+      // Quitting to install an update replaces the app's files: no window may open from them meanwhile.
+      let isQuitting = false
+      app.on('before-quit', () => {
+        isQuitting = true
+      })
       app.on('activate', () => {
-        if (BrowserWindow.getAllWindows().length === 0)
+        if (!isQuitting && BrowserWindow.getAllWindows().length === 0)
           openWindow(logger, connect)
       })
       openWindow(logger, connect)

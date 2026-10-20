@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 
 import type { Logger } from '@ipaforge/kernel'
-import type { EngineClient } from '@ipaforge/rpc'
+import type { EngineClient, UpdateSource } from '@ipaforge/rpc'
 import type { PreferencesStore } from '@ui/services/preferences/preferences-store.ts'
 import type { ClipboardWriter } from '@ui/services/system/clipboard.ts'
 import type { FileSaver } from '@ui/services/system/file-saver.ts'
@@ -28,8 +28,10 @@ export type UiServices = {
   readonly droppedFilePath: (file: File) => string | undefined
   /** Opens a web page in the user's browser. */
   readonly links: LinkOpener
-  /** Shown in copied diagnostics. */
+  /** Shown in copied diagnostics, in the sidebar and in What's new. */
   readonly appVersion: string
+  /** Updating IPAForge on launch: the main process's updater in the desktop app, idle (or scripted) elsewhere. */
+  readonly updates: UpdateSource
 }
 
 export const UiServicesContext = createContext<UiServices | undefined>(

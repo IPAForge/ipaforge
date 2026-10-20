@@ -2,7 +2,7 @@ import { createMemoryHistory } from '@tanstack/react-router'
 import { render } from '@testing-library/react'
 
 import { compact, createLogger, type LogRecord } from '@ipaforge/kernel'
-import type { EngineClient } from '@ipaforge/rpc'
+import type { EngineClient, UpdateSource } from '@ipaforge/rpc'
 import { App } from '@ui/App.tsx'
 import type { LoadBundle } from '@ui/i18n/loading/types.ts'
 import { prepareLanguage } from '@ui/i18n/setup/prepare-language.ts'
@@ -21,6 +21,7 @@ import type {
   ColorSchemeSource
 } from '@ui/services/system/types.ts'
 import type { UiServices } from '@ui/services/ui-services.ts'
+import { createFixedUpdateSource } from '@ui/services/updates/fixed-update-source.ts'
 
 /** A colour-scheme source the test can flip, like the OS switching to dark. */
 export const createControllableScheme = (initial: ColorScheme) => {
@@ -56,6 +57,10 @@ export type TestServicesOptions = {
   readonly devices?: FakeDeviceFeed
   /** Holds Apple's answers to sign-in requests until the test releases them (default: answer at once). */
   readonly appleAnswer?: () => Promise<void>
+  /** The host's updater; idle by default. */
+  readonly updates?: UpdateSource
+  /** The version the app runs; a test one by default. */
+  readonly appVersion?: string
 }
 
 const ENGLISH = ['en-US']
@@ -67,7 +72,9 @@ export const createTestServices = ({
   scenario,
   engine,
   devices,
-  appleAnswer
+  appleAnswer,
+  updates = createFixedUpdateSource(),
+  appVersion = '0.0.0-test'
 }: TestServicesOptions = {}) => {
   const records: LogRecord[] = []
   const scheme = createControllableScheme('light')
@@ -91,7 +98,8 @@ export const createTestServices = ({
     files,
     droppedFilePath: (file) => file.name,
     links,
-    appVersion: '0.0.0-test'
+    appVersion,
+    updates
   }
 
   return { services, records, scheme, clipboard, files, links }

@@ -40,17 +40,20 @@ export type {
   RpcServer,
   RpcServerOptions
 } from '@rpc/application/types.ts'
+export { createUpdateClient, serveUpdates } from '@rpc/application/updates.ts'
 export { DEFAULT_RPC_CONFIG, type RpcConfig } from '@rpc/domain/config.ts'
 export type { ChooseIpas } from '@rpc/domain/ports/choose-ipas.ts'
 export type { LogSource } from '@rpc/domain/ports/log-source.ts'
 export type { ResolveIpa } from '@rpc/domain/ports/resolve-ipa.ts'
 export type { Transport } from '@rpc/domain/ports/transport.ts'
+export type { UpdateSource } from '@rpc/domain/ports/update-source.ts'
 export { PROTOCOL_VERSION } from '@rpc/domain/protocol/common.ts'
 export { messageSchema } from '@rpc/domain/protocol/messages.ts'
 export { requestSchema } from '@rpc/domain/protocol/requests.ts'
 export type {
   ExternalIpa,
   IpaSource,
+  ManualPackage,
   Message,
   RemoteCheckpoint,
   RemoteInstallAppsInput,
@@ -61,8 +64,10 @@ export type {
   RemoteRepairSideStoreInput,
   RemoteSignInInput,
   Request,
-  SubscriptionTopic
+  SubscriptionTopic,
+  UpdateState
 } from '@rpc/domain/protocol/types.ts'
+export { updateStateSchema } from '@rpc/domain/protocol/updates.ts'
 export type {
   ChosenIpa,
   EngineClient,

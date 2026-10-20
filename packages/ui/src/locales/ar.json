@@ -1556,5 +1556,58 @@
     "notice": "{count, plural, zero {لا شيء متبقٍ على {device}} one {خطوة واحدة متبقية على {device}} two {خطوتان متبقيتان على {device}} few {# خطوات متبقية على {device}} many {# خطوة متبقية على {device}} other {# خطوة متبقية على {device}}}",
     "noticeBody": "ليسير التثبيت والتجديد بسلاسة.",
     "showChecklist": "عرض القائمة"
+  },
+  "updates": {
+    "screen": {
+      "label": "جارٍ تحديث IPAForge"
+    },
+    "checking": {
+      "title": "جارٍ البحث عن تحديثات…"
+    },
+    "downloading": {
+      "title": "جارٍ تحديث IPAForge",
+      "body": "صدر الإصدار {version}. يُنزَّل ويُثبَّت الآن، ثم يُفتح IPAForge من جديد تلقائيًا.",
+      "starting": "يبدأ التنزيل…",
+      "percent": "{fraction, number, percent}"
+    },
+    "installing": {
+      "title": "جارٍ تثبيت {version}…",
+      "body": "سيُفتح IPAForge من جديد بعد لحظات."
+    },
+    "failed": {
+      "title": "لم يكتمل التحديث",
+      "body": "صدر الإصدار {version}. حاول مرة أخرى، أو نزّله من صفحة الإصدار.",
+      "retry": "حاول مرة أخرى",
+      "releasePage": "صفحة الإصدار",
+      "skip": "استخدم هذا الإصدار الآن"
+    },
+    "manual": {
+      "title": "صدر IPAForge {version}",
+      "body": "ثُبّتت هذه النسخة من {package, select, msi {مثبّت ‎.msi} deb {حزمة ‎.deb} rpm {حزمة ‎.rpm} other {حزمة}} لا يمكنها تحديث نفسها. نزّل الإصدار الجديد وثبّته فوق هذا: تبقى معرّفات Apple والتطبيقات والإعدادات كما هي.",
+      "download": "نزّل {version}",
+      "later": "لاحقًا"
+    }
+  },
+  "whatsNew": {
+    "link": "ما الجديد",
+    "version": "الإصدار {version} · {date}",
+    "englishOnly": "ملاحظات الإصدار باللغة الإنجليزية.",
+    "kind": {
+      "new": "جديد",
+      "changed": "تغيّر",
+      "fixed": "أُصلح",
+      "removed": "أُزيل"
+    },
+    "dialog": {
+      "title": "ما الجديد في IPAForge",
+      "everyVersion": "كل الإصدارات",
+      "close": "حسنًا"
+    },
+    "page": {
+      "title": "ما الجديد",
+      "lede": "كل ما تغيّر في IPAForge، الأحدث أولًا.",
+      "current": "هذا الإصدار",
+      "release": "الإصدار على GitHub"
+    }
   }
 }

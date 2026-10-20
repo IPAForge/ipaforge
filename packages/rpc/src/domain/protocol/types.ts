@@ -31,6 +31,10 @@ import type {
   deviceWatchEventSchema,
   subscriptionTopicSchema
 } from '@rpc/domain/protocol/subscriptions.ts'
+import type {
+  manualPackageSchema,
+  updateStateSchema
+} from '@rpc/domain/protocol/updates.ts'
 
 export type ExternalIpa = z.infer<typeof externalIpaSchema>
 
@@ -102,3 +106,7 @@ export type WireLogEvent = z.infer<typeof logEventSchema>
 export type WireSubscriptionEvent = WireDeviceWatchEvent | WireLogEvent
 
 export type RemoteLogPageQuery = z.input<typeof logPageQuerySchema>
+
+export type UpdateState = z.infer<typeof updateStateSchema>
+
+export type ManualPackage = z.infer<typeof manualPackageSchema>

@@ -1556,5 +1556,58 @@
     "notice": "{count, plural, one {# Schritt offen auf {device}} other {# Schritte offen auf {device}}}",
     "noticeBody": "Damit Installieren und Erneuern reibungslos laufen.",
     "showChecklist": "Checkliste zeigen"
+  },
+  "updates": {
+    "screen": {
+      "label": "IPAForge wird aktualisiert"
+    },
+    "checking": {
+      "title": "Suche nach Updates…"
+    },
+    "downloading": {
+      "title": "IPAForge wird aktualisiert",
+      "body": "Version {version} ist da. Sie wird jetzt geladen und installiert, danach öffnet sich IPAForge von selbst wieder.",
+      "starting": "Download startet…",
+      "percent": "{fraction, number, percent}"
+    },
+    "installing": {
+      "title": "{version} wird installiert…",
+      "body": "IPAForge öffnet sich gleich wieder."
+    },
+    "failed": {
+      "title": "Das Update wurde nicht abgeschlossen",
+      "body": "Version {version} ist da. Versuche es erneut oder lade sie von ihrer Release-Seite.",
+      "retry": "Erneut versuchen",
+      "releasePage": "Release-Seite",
+      "skip": "Vorerst diese Version verwenden"
+    },
+    "manual": {
+      "title": "IPAForge {version} ist da",
+      "body": "Diese Kopie wurde aus {package, select, msi {einem .msi-Installer} deb {einem .deb-Paket} rpm {einem .rpm-Paket} other {einem Paket}} installiert, das sich nicht selbst aktualisieren kann. Lade die neue Version und installiere sie über diese: Deine Apple-IDs, Apps und Einstellungen bleiben erhalten.",
+      "download": "{version} laden",
+      "later": "Später"
+    }
+  },
+  "whatsNew": {
+    "link": "Neuigkeiten",
+    "version": "Version {version} · {date}",
+    "englishOnly": "Die Versionshinweise sind auf Englisch.",
+    "kind": {
+      "new": "Neu",
+      "changed": "Geändert",
+      "fixed": "Behoben",
+      "removed": "Entfernt"
+    },
+    "dialog": {
+      "title": "Neu in IPAForge",
+      "everyVersion": "Alle Versionen",
+      "close": "Verstanden"
+    },
+    "page": {
+      "title": "Neuigkeiten",
+      "lede": "Alles, was sich in IPAForge geändert hat, das Neueste zuerst.",
+      "current": "Diese Version",
+      "release": "Release auf GitHub"
+    }
   }
 }

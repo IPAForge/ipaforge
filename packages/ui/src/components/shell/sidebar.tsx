@@ -2,9 +2,10 @@ import { useTranslation } from 'react-i18next'
 
 import { AppCredit } from '@ui/components/shell/app-credit.tsx'
 import { SidebarGroup } from '@ui/components/shell/sidebar-group.tsx'
+import { WhatsNewLink } from '@ui/features/whats-new/components/whats-new-link.tsx'
 import { sectionGroups } from '@ui/sections.ts'
 
-/** Section navigation, with the credit at its foot; on the start edge, so it moves to the right in right-to-left languages. */
+/** Section navigation, with What's new and the credit at its foot; on the start edge, so it moves to the right in right-to-left languages. */
 export const Sidebar = () => {
   const { t } = useTranslation()
 
@@ -18,6 +19,7 @@ export const Sidebar = () => {
           <SidebarGroup key={group.id} group={group} isFirst={index === 0} />
         ))}
       </nav>
+      <WhatsNewLink />
       <AppCredit />
     </div>
   )

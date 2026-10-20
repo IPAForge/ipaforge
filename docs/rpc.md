@@ -36,6 +36,19 @@ A `Transport` sends a message, delivers messages from the other side, reports wh
 
 The main process creates one `MessageChannelMain` per page load (`serveEngine`) and posts the other end to the page; the preload forwards it with `window.postMessage`, and the renderer wraps it in a `Transport` (`apps/desktop/src/renderer/engine-port.ts`).
 
+### The update channel
+
+Updating IPAForge has a channel of its own beside the Engine's, posted the same way under `ipaforge:updates` (`apps/desktop/src/main/updates/serve-updates.ts`). `serveUpdates(source, transport)` sends the host's `UpdateState` at once and on every change. `createUpdateClient(transport)` is the UI's end: an `UpdateSource` that is `checking` until the first state arrives, with `retry()` as the only message back. Both ends validate with zod (`updateStateSchema`), and links in a state must be HTTPS. The states:
+
+| `phase` | Meaning |
+|---|---|
+| `idle` | Nothing to do: up to date, offline, or no updater (a browser, a development build) |
+| `checking` | Asking GitHub for a newer version |
+| `downloading` | `version`, `transferred`, `total`, `bytesPerSecond` |
+| `installing` | Downloaded; IPAForge quits, installs it and opens again |
+| `failed` | The download failed: `version`, the updater's `reason`, and the release page `url` |
+| `manual` | A newer `version` is out but this copy can't install it (`packageType`: `msi`, `deb`, `rpm` or `other`), with the `fileName` to download when known and its `url` |
+
 ## Messages
 
 Every message carries `v` (the protocol version, currently `1`). Both sides ship together, so a version mismatch is rejected rather than negotiated.

@@ -1,5 +1,6 @@
-// Electron renderer: a sandboxed browser context. It waits for the rpc MessagePort the preload forwards, connects
-// an EngineClient to the Engine in the main process over it, then mounts the UI with the browser services.
+// Electron renderer: a sandboxed browser context. It waits for the rpc and update MessagePorts the preload forwards,
+// connects an EngineClient to the Engine in the main process and follows the updater over them, then mounts the UI
+// with the browser services.
 import '@ipaforge/ui/styles.css'
 
 import { createHashHistory } from '@tanstack/react-router'
@@ -8,14 +9,16 @@ import { createRoot } from 'react-dom/client'
 
 import {
   messagePortTransport,
-  receiveEnginePort
+  receiveEnginePort,
+  receivePort
 } from '@desktop/renderer/engine-port.ts'
 import {
   FILE_PATHS_GLOBAL,
   type FilePaths
 } from '@desktop/shared/file-paths.ts'
+import { UPDATES_PORT_CHANNEL } from '@desktop/shared/updates-channel.ts'
 import type { LogLevel } from '@ipaforge/kernel'
-import { createEngineClient } from '@ipaforge/rpc'
+import { createEngineClient, createUpdateClient } from '@ipaforge/rpc'
 import { App, createBrowserServices, prepareLanguage } from '@ipaforge/ui'
 
 const ROOT_ELEMENT_ID = 'root'
@@ -31,11 +34,16 @@ const filePaths = () =>
   (window as unknown as Partial<Record<string, FilePaths>>)[FILE_PATHS_GLOBAL]
 
 const mount = async () => {
-  const port = await receiveEnginePort(window)
+  // Both listen before either port arrives: main posts them together.
+  const [port, updatesPort] = await Promise.all([
+    receiveEnginePort(window),
+    receivePort(window, UPDATES_PORT_CHANNEL)
+  ])
   const services = createBrowserServices(window, {
     logLevel: LOG_LEVEL,
     engine: (logger) =>
       createEngineClient(messagePortTransport(port), { logger }),
+    updates: createUpdateClient(messagePortTransport(updatesPort)),
     appVersion: APP_VERSION,
     // A path only for a file the user dropped; anything else gives "" (unusable).
     droppedFilePath: (file) => filePaths()?.pathOf(file) || undefined

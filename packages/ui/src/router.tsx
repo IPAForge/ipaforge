@@ -19,6 +19,9 @@ import { PreloadPage } from '@ui/features/preload/preload-page.tsx'
 import { REPAIR_PATH } from '@ui/features/repair/constants.ts'
 import { RepairPage } from '@ui/features/repair/repair-page.tsx'
 import { SettingsPage } from '@ui/features/settings/settings-page.tsx'
+import { UpdateGate } from '@ui/features/updates/components/update-gate.tsx'
+import { WHATS_NEW_PATH } from '@ui/features/whats-new/constants.ts'
+import { WhatsNewPage } from '@ui/features/whats-new/whats-new-page.tsx'
 import { homePath, sections } from '@ui/sections.ts'
 import type { AppRouter, AppRouterOptions, SectionId } from '@ui/types.ts'
 
@@ -35,9 +38,11 @@ const sectionPages = {
 
 const rootRoute = createRootRoute({
   component: () => (
-    <AppShell>
-      <Outlet />
-    </AppShell>
+    <UpdateGate>
+      <AppShell>
+        <Outlet />
+      </AppShell>
+    </UpdateGate>
   )
 })
 
@@ -64,10 +69,18 @@ const repairRoute = createRoute({
   component: RepairPage
 })
 
+// The changelog: from the foot of the sidebar and from What's new.
+const whatsNewRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: WHATS_NEW_PATH,
+  component: WhatsNewPage
+})
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   ...sectionRoutes,
-  repairRoute
+  repairRoute,
+  whatsNewRoute
 ])
 
 /** Code-based routes: `/` redirects home, one route per sidebar section, all inside the shell. */

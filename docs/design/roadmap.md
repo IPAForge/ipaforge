@@ -105,7 +105,7 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
     - [x] release 0.1.0-alpha.2: the first release with the self-signed macOS app, the extra installers and Sigstore signatures (#65)
     - [x] release 0.1.0-alpha.3: app sources, detailed install progress and the Apps section with SideStore-style refresh (#69)
     - [ ] code signing: Windows certificate, Apple Developer ID with notarisation and the hardened runtime
-    - [ ] auto-update
+    - [x] auto-update on launch with electron-updater from the GitHub releases: the window waits behind an update screen while IPAForge checks, downloads (with progress) and installs the new version, then reopens; offline or a slow check opens the app, a failed download offers Try again, the release page or going on; copies from a .msi, .deb or .rpm, which can't update themselves, name the file to download. The state reaches the UI over its own MessagePort (`serveUpdates`/`createUpdateClient` in `@ipaforge/rpc`). What's new opens once after an update (the notes in New, Changed, Fixed and Removed lists) and the changelog page lists every version; the notes are in English, bundled in the UI (#74)
   - trust certificates installed in the OS (company proxies, self-hosted anisette servers with their own CA) for anisette and Apple requests, alongside Node's bundled roots and Apple's (`tls.getCACertificates('system')`)
 - [ ] **10. Management tools**: certificate and app-ID management, pairing files per app (place, export, version), certificate and account import/export (`.p12`), and developer portal tools
   - later: signing in with a security key (today detected and explained, not completed)

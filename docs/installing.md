@@ -111,7 +111,10 @@ IPAForge places the pairing file and certificate SideStore needs automatically.
 
 ## Updating and uninstalling
 
-- **Updates:** during the alpha, download the next build from the Releases page (automatic updates come later).
+- **Updates:** IPAForge checks for a new version each time it opens.
+  - **The macOS app, the Windows `.exe` and the AppImage update themselves.** While the new version downloads and installs, IPAForge shows how far along it is, then opens again by itself, and **What's new** says what changed. If it is offline it opens as it is and checks again next time. If the download fails you can **Try again**, open the release page, or use the version you have for now.
+  - **The `.msi`, `.deb` and `.rpm` packages can't update themselves.** IPAForge says a new version is out and names the file to download. Install it over the one you have: your Apple IDs, apps and settings stay.
+  - **What's new** at the foot of the sidebar lists the changes in every version. The release notes are in English.
 - **Uninstall:**
   - **Windows:** Settings › Apps;
   - **macOS:** drag IPAForge to the Bin;

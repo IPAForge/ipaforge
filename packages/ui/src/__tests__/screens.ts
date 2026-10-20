@@ -5,15 +5,23 @@ import axe from 'axe-core'
 import { expect } from 'vitest'
 
 import { compact } from '@ipaforge/kernel'
+import type { UpdateState } from '@ipaforge/rpc'
 import { renderApp } from '@ui/__tests__/test-services.tsx'
+import {
+  RELEASE_NOTES,
+  WHATS_NEW_SEEN_KEY
+} from '@ui/features/whats-new/constants.ts'
 import type { LanguageId } from '@ui/i18n/languages/types.ts'
 import type { FakeScenarioId } from '@ui/services/engine/fake/types.ts'
+import { createFixedUpdateSource } from '@ui/services/updates/fixed-update-source.ts'
 
 export type ScreenOptions = {
   readonly language?: LanguageId
   readonly mode?: 'light' | 'dark'
   readonly scenario?: FakeScenarioId
 }
+
+const [LATEST, PREVIOUS] = RELEASE_NOTES
 
 const all = (selector: string) => document.querySelectorAll(selector)
 
@@ -33,6 +41,65 @@ export const renderScreen = async (
     expect(all('header [data-tone="ready"]').length).toBeGreaterThanOrEqual(2)
   )
   return rendered
+}
+
+/** The update screen (or, for a copy that can't update itself, the app with its note) in `state`. */
+export const renderUpdateScreen = async (
+  state: UpdateState,
+  { language = 'en', mode = 'light' }: ScreenOptions = {}
+) => {
+  const rendered = await renderApp(
+    '/install',
+    compact({
+      updates: createFixedUpdateSource(state),
+      appVersion: PREVIOUS?.version,
+      preferences: { language, 'theme.mode': mode }
+    })
+  )
+  await waitFor(() =>
+    expect(
+      all('main[aria-label] h1, [role="alertdialog"] h2').length
+    ).toBeGreaterThanOrEqual(1)
+  )
+  return rendered
+}
+
+/** The app just updated to the latest version, with What's new open over Install. */
+export const renderWhatsNew = async ({
+  language = 'en',
+  mode = 'light'
+}: ScreenOptions = {}) => {
+  await renderApp(
+    '/install',
+    compact({
+      appVersion: LATEST?.version,
+      preferences: {
+        language,
+        'theme.mode': mode,
+        [WHATS_NEW_SEEN_KEY]: PREVIOUS?.version ?? ''
+      }
+    })
+  )
+  await waitFor(() =>
+    expect(all('[role="dialog"] li').length).toBeGreaterThanOrEqual(4)
+  )
+}
+
+/** Every version's notes, the latest one running. */
+export const renderChangelog = async ({
+  language = 'en',
+  mode = 'light'
+}: ScreenOptions = {}) => {
+  await renderApp(
+    '/whats-new',
+    compact({
+      appVersion: LATEST?.version,
+      preferences: { language, 'theme.mode': mode }
+    })
+  )
+  await waitFor(() =>
+    expect(all('main article')).toHaveLength(RELEASE_NOTES.length)
+  )
 }
 
 /** The Install page has the Engine's plan (App IDs, free apps, certificate, team). */
