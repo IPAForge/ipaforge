@@ -31,7 +31,7 @@
     "apps": "Aplicații",
     "devices": "Dispozitive",
     "accounts": "Conturi",
-    "certificates": "Certificate",
+    "developer": "Developer Portal",
     "logs": "Jurnal",
     "settings": "Configurări",
     "installRunning": "O instalare este în curs"
@@ -1716,6 +1716,101 @@
       "lede": "Tot ce s-a schimbat în IPAForge, cele mai noi primele.",
       "current": "Această versiune",
       "release": "Versiunea pe GitHub"
+    }
+  },
+  "portal": {
+    "description": "Ce deține la Apple echipa ID-ului tău Apple și profilurile de pe dispozitiv.",
+    "tabsLabel": "Ce deține echipa",
+    "tabs": {
+      "certificates": "Certificate",
+      "appIds": "App ID-uri",
+      "profiles": "Profiluri",
+      "groups": "Grupuri de aplicații",
+      "devices": "Dispozitive înregistrate"
+    },
+    "team": {
+      "pick": "Echipă",
+      "free": "{name} (gratuită)",
+      "paid": "{name} (plătită)"
+    },
+    "refresh": "Reîmprospătează",
+    "reading": "Se citește de la Apple…",
+    "noAccount": {
+      "title": "Niciun ID Apple încă",
+      "body": "Conectează-te cu un ID Apple în Conturi ca să vezi ce deține echipa lui."
+    },
+    "expired": "Expirat",
+    "expires": "Expiră pe {date}",
+    "expiredOn": "A expirat pe {date}",
+    "certificates": {
+      "hint": "Un certificat semnează aplicațiile pe care le instalezi. Dacă îl revoci, nicio aplicație semnată cu el nu se mai deschide până nu e semnată din nou.",
+      "usedFree": "{count} din {max} folosite (echipele gratuite pot avea {max})",
+      "usedPaid": "{count, plural, one {# certificat} few {# certificate} other {# de certificate}}",
+      "maker": {
+        "thisComputer": "IPAForge pe acest computer",
+        "ipaforge": "IPAForge pe alt computer",
+        "sidestore": "SideStore",
+        "machine": "„{machine}” (de obicei Xcode)",
+        "unknown": "Un program necunoscut"
+      },
+      "thisComputer": "Al acestui computer",
+      "signs": "Semnează {apps} pe {device}",
+      "signsNothing": "Nu semnează nimic pe {device}",
+      "revoke": "Revocă",
+      "revokeOne": "Revocă {name}",
+      "empty": "Echipa nu are încă certificate. IPAForge face unul la prima instalare."
+    },
+    "revokeDialog": {
+      "title": "Revoci acest certificat?",
+      "apps": "Acestea nu se mai deschid pe {device} până nu sunt semnate din nou (Reîmprospătează din Aplicații face asta):",
+      "none": "Nimic de pe {device} nu e semnat cu el.",
+      "noDevice": "Conectează dispozitivul ca să vezi ce aplicații de pe el semnează acest certificat.",
+      "thisComputer": "IPAForge face unul nou la următoarea instalare sau reîmprospătare.",
+      "sidestore": "SideStore l-a făcut ca să se reîmprospăteze singur: face unul nou data viitoare când te conectezi acolo.",
+      "machine": "Xcode de pe acel computer face unul nou data viitoare când semnează."
+    },
+    "appIds": {
+      "hintFree": "Fiecare aplicație și extensie instalată are nevoie de unul. Echipele gratuite pot înregistra 10 în 7 zile; fiecare contează 7 zile de la creare.",
+      "hintPaid": "Fiecare aplicație și extensie instalată are nevoie de unul. Echipele plătite nu au limită săptămânală.",
+      "left": "{count, plural, one {# rămas săptămâna aceasta} few {# rămase săptămâna aceasta} other {# rămase săptămâna aceasta}}",
+      "leftAndNext": "{left} · următorul se eliberează pe {date}",
+      "countsUntil": "Contează până pe {date}",
+      "unused": "Nefolosit",
+      "delete": "Șterge",
+      "deleteOne": "Șterge {name}",
+      "empty": "Echipa nu are încă App ID-uri."
+    },
+    "deleteDialog": {
+      "title": "Ștergi acest App ID?",
+      "free": "Într-o echipă gratuită contează în continuare la cele 10 pe săptămână până expiră: ștergerea nu eliberează locul mai devreme.",
+      "paid": "Poate fi înregistrat din nou mai târziu."
+    },
+    "profiles": {
+      "title": "Profiluri de provizionare pe {device}",
+      "hint": "Un profil permite unei aplicații (sau extensii) să ruleze pe acest dispozitiv. Reîmprospătarea îi dă unul nou; unul expirat sau nefolosit poate fi șters fără grijă.",
+      "noDevice": "Conectează dispozitivul ca să-i vezi profilurile de provizionare.",
+      "noApp": "Nicio aplicație nu-l folosește",
+      "otherTeam": "Altă echipă",
+      "remove": "Elimină",
+      "removeOne": "Elimină profilul pentru {name}",
+      "removeUnused": "Elimină nefolosite",
+      "empty": "Nu există profiluri de provizionare pe acest dispozitiv."
+    },
+    "removeDialog": {
+      "title": "{count, plural, one {Elimini acest profil?} few {Elimini # profiluri?} other {Elimini # de profiluri?}}",
+      "body": "{count, plural, one {E eliminat de pe {device}. Nicio aplicație de acolo nu are nevoie de el.} other {Sunt eliminate de pe {device}. Nicio aplicație de acolo nu are nevoie de ele.}}"
+    },
+    "groups": {
+      "hint": "Aplicațiile din același grup împart fișiere (de exemplu SideStore și widgetul lui). IPAForge le face când o aplicație are nevoie de unul.",
+      "empty": "Echipa nu are încă grupuri de aplicații."
+    },
+    "devices": {
+      "hintFree": "Aplicațiile semnate rulează doar pe acestea.",
+      "hintPaid": "Aplicațiile semnate rulează doar pe acestea. Echipele plătite pot înregistra 100 pe an; eliminarea se face pe site-ul Apple pentru dezvoltatori, o dată pe an.",
+      "used": "{count} din {max} anul acesta",
+      "connected": "Conectat",
+      "unnamed": "Dispozitiv fără nume",
+      "empty": "Niciun dispozitiv înregistrat încă. IPAForge îl înregistrează pe al tău la prima instalare."
     }
   }
 }

@@ -21,10 +21,12 @@ import type {
   AnisetteOverview,
   AnisetteServerInput,
   AnisetteServerTest,
+  AppGroup,
   AppId,
   AppIdPlan,
   AppIdQuota,
   DevelopmentCertificate,
+  RegisteredDevice,
   SavedAccount,
   Team
 } from '@ipaforge/apple'
@@ -109,6 +111,29 @@ export type AppIdUsage = {
 export type TeamCertificates = {
   readonly team: Team
   readonly certificates: readonly DevelopmentCertificate[]
+  /** The serial of the one this computer keeps, with its key (it signs installs here). */
+  readonly storedSerial?: string
+}
+
+export type TeamAppGroups = {
+  readonly team: Team
+  readonly groups: readonly AppGroup[]
+}
+
+export type TeamDevices = {
+  readonly team: Team
+  readonly devices: readonly RegisteredDevice[]
+}
+
+/** A provisioning profile on a device, and whether an installed app (or one of its extensions) uses it. */
+export type DeviceProfileInfo = {
+  readonly uuid: string
+  readonly name: string
+  readonly teamId?: string
+  /** The bundle id it's for; absent for a wildcard profile. */
+  readonly bundleId?: string
+  readonly expiresAt?: Date
+  readonly isUsed: boolean
 }
 
 export type EngineQueries = {
@@ -162,6 +187,15 @@ export type EngineQueries = {
   deviceApps(udid: string): Promise<DeviceApps>
   /** Makes the Developer Mode switch appear in the device's Settings. */
   revealDeveloperMode(udid: string): Promise<void>
+  /** Revokes one of the team's certificates: every app it signed stops opening until it's signed again. */
+  revokeCertificate(query: TeamQuery, serialNumber: string): Promise<void>
+  /** Deletes one of the team's App IDs (by Apple's id); on a free team it still counts until it expires. */
+  deleteAppId(query: TeamQuery, appIdId: string): Promise<void>
+  appGroups(query: TeamQuery): Promise<TeamAppGroups>
+  registeredDevices(query: TeamQuery): Promise<TeamDevices>
+  /** The provisioning profiles on the device, each with whether an installed app uses it. */
+  deviceProfiles(udid: string): Promise<DeviceProfileInfo[]>
+  removeDeviceProfiles(udid: string, uuids: readonly string[]): Promise<void>
   /** The anisette servers in the order Automatic tries them, the choice, and SideStore's list's age. */
   anisetteServers(): Promise<AnisetteOverview>
   /** Automatic, or always one server of the list. Each change below returns the servers after it. */

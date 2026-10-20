@@ -14,7 +14,7 @@ const findSidebar = () => screen.findByRole('navigation', navigationName)
 const manageKeys = [
   'nav.devices',
   'nav.accounts',
-  'nav.certificates',
+  'nav.developer',
   'nav.logs',
   'nav.settings'
 ] as const satisfies readonly TranslationKey[]
@@ -71,11 +71,11 @@ describe('AppShell', () => {
   })
 
   it('marks only the active section as the current page', async () => {
-    await renderApp('/certificates')
+    await renderApp('/developer')
     const active = await within(await findSidebar()).findByRole('link', {
       current: 'page'
     })
-    expect(active.textContent).toBe(t('nav.certificates'))
+    expect(active.textContent).toBe(t('nav.developer'))
     expect(
       within(sidebar()).getAllByRole('link', { current: 'page' })
     ).toHaveLength(1)

@@ -113,6 +113,10 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
     - [x] every update is checked before it installs: its file must carry a Sigstore signature from `release.yml` on that version's own tag (sigstore-js against Sigstore's public logs), else the update screen says it failed; an install that fails before IPAForge quits says so too. Two small pnpm patches (`patches/`) name SHA-256 where `@sigstore/core` and `@tufjs/models` verify EC and RSA signatures without a hash: OpenSSL assumes it, Electron's BoringSSL refuses (`NO_DEFAULT_DIGEST`) (#74)
     - [x] the certificates the OS trusts (company proxies, self-hosted anisette servers with their own CA) are trusted for Apple and anisette requests and by Node's default, alongside Node's bundled roots and Apple's (`tls.getCACertificates('system')`) (#74)
 - [ ] **10. Management tools**: certificate and app-ID management, pairing files per app (place, export, version), certificate and account import/export (`.p12`), and developer portal tools
+  - progress:
+    - [x] **10a** the Developer Portal page (Certificates in the sidebar before): the team's certificates (who made each, this computer's, which apps on the device each signs, Revoke with what stops opening), App IDs (the app using each, Unused, Delete, the weekly limit), the device's provisioning profiles (Expired, Unused, Another team, Remove and Remove unused), app groups and registered devices, in small tabs with counts, also used by Preload (#86)
+    - [ ] **10b** pairing files per app on the Devices page: place, save to the computer, remove, a new remote pairing
+    - [ ] **10c** `.p12` export and import of this computer's certificate, and saving a signed `.ipa` instead of installing it
   - later: signing in with a security key (today detected and explained, not completed)
   - export signed IPAs (save the signed `.ipa` instead of installing it)
   - delete a pairing file from an app

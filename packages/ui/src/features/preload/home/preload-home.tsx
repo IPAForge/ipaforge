@@ -71,6 +71,7 @@ export const PreloadHome = () => {
       <PreloadTabs
         tab={tab}
         onTab={setTab}
+        appsCount={items.length}
         apps={
           <>
             <DropZone

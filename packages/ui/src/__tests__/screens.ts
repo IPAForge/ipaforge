@@ -144,6 +144,13 @@ export const checklistShown = () =>
 export const appsShown = () =>
   waitFor(() => expect(all('main ul li').length).toBeGreaterThanOrEqual(4))
 
+/** The Developer Portal's certificates, each with what it signs on the iPhone (read after the device's apps). */
+export const developerShown = () =>
+  waitFor(() => {
+    expect(all('main ul li').length).toBeGreaterThanOrEqual(2)
+    expect(all('main ul li:first-child p')).toHaveLength(4)
+  })
+
 /** Repair SideStore with every result in (they come one by one), and the two to check on the iPhone. */
 export const repairShown = () =>
   waitFor(

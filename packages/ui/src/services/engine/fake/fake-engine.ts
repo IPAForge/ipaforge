@@ -16,7 +16,6 @@ import { fakeAppFor, fakePlanFor } from '@ui/services/engine/fake/fake-apps.ts'
 import { fakeAppsSteps } from '@ui/services/engine/fake/fake-apps-steps.ts'
 import {
   fakeCatalogApps,
-  fakeCertificates,
   fakeIphoneCheck,
   fakePairingApps,
   showcaseDevices
@@ -25,6 +24,7 @@ import { createFakeDeviceStates } from '@ui/services/engine/fake/fake-device-sta
 import { createFakeDeviceFeed } from '@ui/services/engine/fake/fake-devices.ts'
 import { fakeInstallSteps } from '@ui/services/engine/fake/fake-install-steps.ts'
 import { createFakeInstalled } from '@ui/services/engine/fake/fake-installed.ts'
+import { createFakePortal } from '@ui/services/engine/fake/fake-portal.ts'
 import { createFakeSideStore } from '@ui/services/engine/fake/fake-sidestore.ts'
 import { createFakeSources } from '@ui/services/engine/fake/fake-sources.ts'
 import {
@@ -248,6 +248,10 @@ export const createFakeEngine = ({
     ...createFakeAnisette(
       () => new Promise<void>((resolve) => setTimeout(resolve, delayMs))
     ),
+    ...createFakePortal(
+      (query) => teamOf(world, query),
+      () => new Promise<void>((resolve) => setTimeout(resolve, delayMs))
+    ),
     listAccounts: async () => world.accounts,
     canSaveAccounts: async () => world.scenario !== 'no-keychain',
     signOut: async (accountId) => forgetAccount(world, accountId),
@@ -271,18 +275,6 @@ export const createFakeEngine = ({
         }))
     },
     recommendedChannel: async () => 'stable',
-    appIdQuota: async (query) => ({
-      team: teamOf(world, query),
-      appIds: [],
-      quota: { max: 10, available: 8 }
-    }),
-    listCertificates: async (query) => ({
-      team: teamOf(world, query),
-      certificates: fakeCertificates.map((certificate) => ({
-        ...certificate,
-        expiresAt: new Date(certificate.expiresAt)
-      }))
-    }),
     planInstall: async (input) => {
       const team = teamOf(world, input)
 

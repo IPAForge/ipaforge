@@ -80,7 +80,17 @@ export const queryCallSchema = z.discriminatedUnion('method', [
   call('removeAnisetteServer', z.tuple([anisetteAddressSchema])),
   /** Waits for the server's answer, up to the health check's timeout. */
   call('testAnisetteServer', z.tuple([z.string().min(1).max(2048)])),
-  call('updateAnisetteServerList', z.tuple([]))
+  call('updateAnisetteServerList', z.tuple([])),
+  call('revokeCertificate', z.tuple([teamQuerySchema, textSchema.max(128)])),
+  call('deleteAppId', z.tuple([teamQuerySchema, textSchema.max(128)])),
+  call('appGroups', z.tuple([teamQuerySchema])),
+  call('registeredDevices', z.tuple([teamQuerySchema])),
+  /** Opens the device and reads its profiles and apps. */
+  call('deviceProfiles', z.tuple([textSchema])),
+  call(
+    'removeDeviceProfiles',
+    z.tuple([textSchema, z.array(textSchema.max(128)).max(500)])
+  )
 ])
 
 export const commandCallSchema = z.discriminatedUnion('command', [

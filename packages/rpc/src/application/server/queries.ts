@@ -26,6 +26,15 @@ const queryHandlers = (
   removeAnisetteServer: ([address]) => engine.removeAnisetteServer(address),
   testAnisetteServer: ([address]) => engine.testAnisetteServer(address),
   updateAnisetteServerList: () => engine.updateAnisetteServerList(),
+  revokeCertificate: ([query, serialNumber]) =>
+    engine.revokeCertificate(compact(query), serialNumber),
+  deleteAppId: ([query, appIdId]) =>
+    engine.deleteAppId(compact(query), appIdId),
+  appGroups: ([query]) => engine.appGroups(compact(query)),
+  registeredDevices: ([query]) => engine.registeredDevices(compact(query)),
+  deviceProfiles: ([udid]) => engine.deviceProfiles(udid),
+  removeDeviceProfiles: ([udid, uuids]) =>
+    engine.removeDeviceProfiles(udid, uuids),
   signOut: ([accountId]) => engine.signOut(accountId),
   listTeams: ([accountId]) => engine.listTeams(accountId),
   catalogApps: () => engine.catalogApps(),

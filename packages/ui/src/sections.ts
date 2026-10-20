@@ -64,9 +64,9 @@ export const sections = [
     group: 'manage'
   },
   {
-    id: 'certificates',
-    path: '/certificates',
-    labelKey: 'nav.certificates',
+    id: 'developer',
+    path: '/developer',
+    labelKey: 'nav.developer',
     icon: BadgeCheck,
     group: 'manage'
   },

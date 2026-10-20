@@ -49,7 +49,11 @@ const openSources = async () => {
 
   await renderApp('/preload')
   await screen.findByRole('article', { name: 'StikDebug' })
-  await user.click(screen.getByRole('tab', { name: t('preload.tabs.sources') }))
+  await user.click(
+    screen.getByRole('tab', {
+      name: new RegExp(`^${t('preload.tabs.sources')}`)
+    })
+  )
 
   return user
 }
@@ -111,7 +115,11 @@ describe('SideStore links', () => {
     const user = await openSources()
 
     await addSource(user, 'https://example.com/apps.json')
-    await user.click(screen.getByRole('tab', { name: t('preload.tabs.apps') }))
+    await user.click(
+      screen.getByRole('tab', {
+        name: new RegExp(`^${t('preload.tabs.apps')}`)
+      })
+    )
     await user.click(
       await screen.findByRole('button', {
         name: t('preload.browse.details', { name: 'PixelPlay' })

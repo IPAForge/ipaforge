@@ -349,6 +349,8 @@ export const fakeApple = (options: FakeAppleOptions = {}) => {
     saved: 0,
     savedOptions: [] as unknown[],
     removed: [] as string[],
+    /** App IDs deleted (the Developer Portal page). */
+    deletedAppIds: [] as string[],
     /** App IDs whose profile was downloaded (a refresh). */
     profiles: [] as string[]
   }
@@ -411,6 +413,16 @@ export const fakeApple = (options: FakeAppleOptions = {}) => {
       })),
       quota: { available: 10, max: 10 }
     }),
+    deleteAppId: async (_team: Team, appId: { id: string }) => {
+      calls.deletedAppIds.push(appId.id)
+    },
+    appGroups: async (team: Team) => [
+      {
+        id: 'GROUP1',
+        identifier: `group.com.SideStore.SideStore.${team.id}`,
+        name: 'SideStore'
+      }
+    ],
     profile: async (_team: Team, appId: { identifier: string }) => {
       calls.profiles.push(appId.identifier)
 

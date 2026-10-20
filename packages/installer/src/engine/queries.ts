@@ -9,30 +9,22 @@ import { checkSideStore } from '@installer/application/installed/check-sidestore
 import { listInstalledApps } from '@installer/application/installed/list-installed.ts'
 import { planRefresh } from '@installer/application/installed/refresh-plan.ts'
 import { removeInstalledApp } from '@installer/application/installed/remove-app.ts'
+import {
+  deleteAppId,
+  deviceProfiles,
+  registeredDevices,
+  removeDeviceProfiles,
+  revokeCertificate,
+  storedSerial,
+  teamAppGroups,
+  withTeam
+} from '@installer/application/portal.ts'
 import { createFlowRuntime } from '@installer/application/runtime.ts'
-import { queryTeam } from '@installer/application/team.ts'
 import { planInstall } from '@installer/engine/plan.ts'
-import type { EngineQueries, TeamQuery } from '@installer/engine/types.ts'
+import type { EngineQueries } from '@installer/engine/types.ts'
 import type { InstallerDeps } from '@installer/types.ts'
-import type { DeveloperServices, Team } from '@ipaforge/apple'
 import type { DeviceCheck } from '@ipaforge/device'
-
-/** Runs `use` with the account's developer services and the queried team. */
-const withTeam = async <T>(
-  deps: InstallerDeps,
-  query: TeamQuery,
-  use: (developer: DeveloperServices, team: Team) => Promise<T>
-): Promise<T> => {
-  const developer = await createFlowRuntime(deps).developer(query.accountId)
-
-  return use(
-    developer,
-    await queryTeam(deps, developer, {
-      accountId: query.accountId,
-      requested: query.teamId
-    })
-  )
-}
+import { compact } from '@ipaforge/kernel'
 
 const deviceStatus = async (
   deps: InstallerDeps,
@@ -64,10 +56,13 @@ export const createEngineQueries = (deps: InstallerDeps): EngineQueries => ({
       ...(await developer.appIds(team))
     })),
   listCertificates: (query) =>
-    withTeam(deps, query, async (developer, team) => ({
-      team,
-      certificates: await developer.certificates(team)
-    })),
+    withTeam(deps, query, async (developer, team) =>
+      compact({
+        team,
+        certificates: await developer.certificates(team),
+        storedSerial: await storedSerial(deps, query.accountId, team.id)
+      })
+    ),
   planInstall: (input) => planInstall(deps, input),
   listSources: () => deps.catalog.sources.list(),
   sourceApps: () => deps.catalog.sources.apps(),
@@ -91,5 +86,12 @@ export const createEngineQueries = (deps: InstallerDeps): EngineQueries => ({
     deps.apple.anisette.updateServer(address, input),
   removeAnisetteServer: (address) => deps.apple.anisette.removeServer(address),
   testAnisetteServer: (address) => deps.apple.anisette.test(address),
-  updateAnisetteServerList: () => deps.apple.anisette.updateList()
+  updateAnisetteServerList: () => deps.apple.anisette.updateList(),
+  revokeCertificate: (query, serialNumber) =>
+    revokeCertificate(deps, query, serialNumber),
+  deleteAppId: (query, appIdId) => deleteAppId(deps, query, appIdId),
+  appGroups: (query) => teamAppGroups(deps, query),
+  registeredDevices: (query) => registeredDevices(deps, query),
+  deviceProfiles: (udid) => deviceProfiles(deps, udid),
+  removeDeviceProfiles: (udid, uuids) => removeDeviceProfiles(deps, udid, uuids)
 })

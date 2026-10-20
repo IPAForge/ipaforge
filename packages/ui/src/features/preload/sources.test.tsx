@@ -27,10 +27,16 @@ const cards = () =>
     .map((card) => card.getAttribute('aria-label'))
 
 const sourcesTab = (user: User) =>
-  user.click(screen.getByRole('tab', { name: t('preload.tabs.sources') }))
+  user.click(
+    screen.getByRole('tab', {
+      name: new RegExp(`^${t('preload.tabs.sources')}`)
+    })
+  )
 
 const appsTab = (user: User) =>
-  user.click(screen.getByRole('tab', { name: t('preload.tabs.apps') }))
+  user.click(
+    screen.getByRole('tab', { name: new RegExp(`^${t('preload.tabs.apps')}`) })
+  )
 
 const sourceRow = async (name: string) =>
   waitFor(() => {

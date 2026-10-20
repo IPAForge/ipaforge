@@ -1,14 +1,15 @@
-import { Tabs } from '@heroui/react'
-import type { Key, ReactNode } from 'react'
-import { useTranslation } from 'react-i18next'
+import type { ReactNode } from 'react'
 
+import { PageTabs } from '@ui/components/page-tabs.tsx'
 import { PreloadTabKey } from '@ui/features/preload/home/constants.ts'
 import type { PreloadTab } from '@ui/features/preload/home/types.ts'
-import { isPreloadTab } from '@ui/features/preload/home/utils/is-preload-tab.ts'
+import { useSources } from '@ui/hooks/queries/use-sources.ts'
 
 type PreloadTabsProps = {
   tab: PreloadTab
   onTab: (tab: PreloadTab) => void
+  /** How many apps are in the list to install. */
+  appsCount: number
   apps: ReactNode
   sources: ReactNode
 }
@@ -17,34 +18,31 @@ type PreloadTabsProps = {
 export const PreloadTabs = ({
   tab,
   onTab,
+  appsCount,
   apps,
   sources
 }: PreloadTabsProps) => {
-  const { t } = useTranslation()
-  const onSelectionChange = (key: Key) => {
-    if (isPreloadTab(key)) onTab(key)
-  }
+  const sourceCount = useSources().data?.length
 
   return (
-    <Tabs selectedKey={tab} onSelectionChange={onSelectionChange}>
-      <Tabs.ListContainer>
-        <Tabs.List aria-label={t('preload.tabs.label')}>
-          <Tabs.Tab id={PreloadTabKey.apps}>
-            {t('preload.tabs.apps')}
-            <Tabs.Indicator />
-          </Tabs.Tab>
-          <Tabs.Tab id={PreloadTabKey.sources}>
-            {t('preload.tabs.sources')}
-            <Tabs.Indicator />
-          </Tabs.Tab>
-        </Tabs.List>
-      </Tabs.ListContainer>
-      <Tabs.Panel id={PreloadTabKey.apps} className="flex flex-col gap-6 pt-4">
-        {apps}
-      </Tabs.Panel>
-      <Tabs.Panel id={PreloadTabKey.sources} className="pt-4">
-        {sources}
-      </Tabs.Panel>
-    </Tabs>
+    <PageTabs
+      labelKey="preload.tabs.label"
+      selected={tab}
+      onSelect={onTab}
+      tabs={[
+        {
+          id: PreloadTabKey.apps,
+          labelKey: 'preload.tabs.apps',
+          count: appsCount,
+          panel: apps
+        },
+        {
+          id: PreloadTabKey.sources,
+          labelKey: 'preload.tabs.sources',
+          ...(sourceCount === undefined ? {} : { count: sourceCount }),
+          panel: sources
+        }
+      ]}
+    />
   )
 }
