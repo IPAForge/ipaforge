@@ -163,7 +163,7 @@ describe('createUpdateService', () => {
       phase: 'failed',
       version: NEXT,
       reason: 'net::ERR_CONNECTION_RESET',
-      url: `https://github.com/SirReaDy/ipaforge/releases/tag/v${NEXT}`
+      url: `https://github.com/IPAForge/ipaforge/releases/tag/v${NEXT}`
     })
 
     service.retry()
@@ -216,7 +216,7 @@ describe('createUpdateService', () => {
         version: NEXT,
         packageType: kind,
         fileName,
-        url: `https://github.com/SirReaDy/ipaforge/releases/download/v${NEXT}/${fileName}`
+        url: `https://github.com/IPAForge/ipaforge/releases/download/v${NEXT}/${fileName}`
       })
       expect(updater.port.download).not.toHaveBeenCalled()
     }
@@ -230,7 +230,7 @@ describe('createUpdateService', () => {
       phase: 'manual',
       version: NEXT,
       packageType: 'other',
-      url: `https://github.com/SirReaDy/ipaforge/releases/tag/v${NEXT}`
+      url: `https://github.com/IPAForge/ipaforge/releases/tag/v${NEXT}`
     })
   })
 })

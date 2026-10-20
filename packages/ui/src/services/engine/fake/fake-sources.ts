@@ -119,7 +119,7 @@ export const createFakeSources = (
   let entries: Entry[] = [
     {
       id: 'ipaforge',
-      url: 'https://raw.githubusercontent.com/SirReaDy/ipaforge/main/catalog/sources.json',
+      url: 'https://raw.githubusercontent.com/IPAForge/ipaforge/main/catalog/sources.json',
       builtin: true,
       enabled: true,
       name: 'IPAForge catalog',

@@ -8,9 +8,9 @@ import { renderApp } from '@ui/__tests__/test-services.tsx'
 import { createFixedUpdateSource } from '@ui/services/updates/fixed-update-source.ts'
 
 const NEXT = '0.1.0-alpha.99'
-const RELEASE = `https://github.com/SirReaDy/ipaforge/releases/tag/v${NEXT}`
+const RELEASE = `https://github.com/IPAForge/ipaforge/releases/tag/v${NEXT}`
 const FILE = `IPAForge-${NEXT}-win-x64.msi`
-const FILE_URL = `https://github.com/SirReaDy/ipaforge/releases/download/v${NEXT}/${FILE}`
+const FILE_URL = `https://github.com/IPAForge/ipaforge/releases/download/v${NEXT}/${FILE}`
 
 const renderWith = (state: UpdateState) => {
   const updates = createFixedUpdateSource(state)

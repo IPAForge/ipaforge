@@ -21,7 +21,7 @@ afterSign: build/after-sign.mjs
 
 publish:
   provider: github
-  owner: SirReaDy
+  owner: IPAForge
   repo: ipaforge
   releaseType: prerelease
 

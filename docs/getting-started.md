@@ -4,7 +4,7 @@
 
 ## Current status
 
-IPAForge is in **alpha**: test builds are on the [Releases page](https://github.com/SirReaDy/ipaforge/releases). Phases 0–6 are complete: foundation, signer, device layer, Apple account, developer services, the installer and the UI foundation. Phase 8 (install and preload) is complete too: Preload with app sources, the Apps page with refresh, Repair SideStore, SideStore QR codes and the on-device checklist. Phase 9 (the desktop app) is complete too: installers for every system, Sigstore-signed releases, and updates itself; Windows code signing and Apple notarisation come with 1.0. Onboarding (Phase 7) comes next. See [Installing](installing.md) to try a build.
+IPAForge is in **alpha**: test builds are on the [Releases page](https://github.com/IPAForge/ipaforge/releases). Phases 0–6 are complete: foundation, signer, device layer, Apple account, developer services, the installer and the UI foundation. Phase 8 (install and preload) is complete too: Preload with app sources, the Apps page with refresh, Repair SideStore, SideStore QR codes and the on-device checklist. Phase 9 (the desktop app) is complete too: installers for every system, Sigstore-signed releases, and updates itself; Windows code signing and Apple notarisation come with 1.0. Onboarding (Phase 7) comes next. See [Installing](installing.md) to try a build.
 
 | Area | State |
 |---|---|

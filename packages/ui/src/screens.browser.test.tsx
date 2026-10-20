@@ -28,7 +28,7 @@ import type { LanguageId } from '@ui/i18n/languages/types.ts'
 
 const LANGUAGES: readonly LanguageId[] = ['en', 'de', 'ar', 'ja', 'en-XA']
 const NEXT = '0.1.0-alpha.99'
-const RELEASE = `https://github.com/SirReaDy/ipaforge/releases/tag/v${NEXT}`
+const RELEASE = `https://github.com/IPAForge/ipaforge/releases/tag/v${NEXT}`
 
 const screens = {
   'install-home': async (options: ScreenOptions) => {
