@@ -36,7 +36,7 @@ IPAForge helps people install apps they already have, on their own devices, with
 
 ## Licence
 
-By contributing, you agree that your contribution is licensed under the [MIT licence](../LICENSE) of this project.
+By contributing, you agree that your contribution is licensed under the [GNU Affero General Public License v3.0 or later](../LICENSE) (AGPL-3.0-or-later) of this project.
 
 ## Code of conduct
 

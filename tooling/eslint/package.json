@@ -6,7 +6,7 @@
   "exports": {
     ".": "./index.js"
   },
-  "license": "MIT",
+  "license": "AGPL-3.0-or-later",
   "dependencies": {
     "@stylistic/eslint-plugin": "5.10.0",
     "eslint": "10.11.0",

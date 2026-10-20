@@ -3,17 +3,23 @@
 [![CI](https://github.com/SirReaDy/ipaforge/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/SirReaDy/ipaforge/actions/workflows/ci.yml)
 [![Downloads](https://img.shields.io/github/downloads/SirReaDy/ipaforge/total?label=downloads)](https://github.com/SirReaDy/ipaforge/releases)
 [![Latest release](https://img.shields.io/github/v/release/SirReaDy/ipaforge?include_prereleases&label=release)](https://github.com/SirReaDy/ipaforge/releases/latest)
-[![Licence: MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
+[![Licence: AGPL-3.0](https://img.shields.io/badge/licence-AGPL--3.0-blue.svg)](LICENSE)
 [![Sponsor](https://img.shields.io/badge/sponsor-%E2%9D%A4-ea4aaa?logo=githubsponsors)](https://github.com/sponsors/SirReaDy)
 
-> Install SideStore and preload your apps onto iPhone and iPad, from Windows, macOS or Linux.
+**Install SideStore and your own apps on iPhone and iPad with a free Apple ID, from Windows, macOS or Linux.**
 
-IPAForge is an open-source desktop app for installing [SideStore](https://github.com/SideStore/SideStore) and other apps on iOS devices. It signs in to your Apple ID and gets a free development certificate. It re-signs each app and installs it over USB. It also places the pairing file and certificate SideStore needs to refresh apps on its own. Extra apps can be preloaded in the same run.
+**[Website](https://ipaforge.github.io)** · **[Download](https://github.com/SirReaDy/ipaforge/releases)** · **[Discord](https://discord.gg/C87DKmAWhr)** · [Installing](docs/installing.md) · [Roadmap](docs/roadmap.md)
 
-The engine is written entirely in TypeScript, with no native helpers or bundled command-line tools. The desktop app is built with Electron.
+IPAForge is a free, open-source desktop app for sideloading. You plug in your iPhone, sign in with your Apple ID, and it does the rest:
+
+1. It gets a free development certificate from Apple for your Apple ID.
+2. It signs [SideStore](https://github.com/SideStore/SideStore) (or LiveContainer with SideStore, or any `.ipa` you choose) with that certificate.
+3. It installs the apps on your device, and places the pairing file and certificate SideStore needs to refresh apps by itself.
+
+After that it keeps them working: it shows when each app expires, refreshes them before they do, repairs SideStore when it stops refreshing, and explains every failure with the fixes that apply. The whole engine, code signing included, is written in TypeScript, with no native helpers or bundled command-line tools.
 
 > [!NOTE]
-> **Alpha.** The engine is complete, and the first test builds for macOS, Windows and Linux are on the [Releases page](https://github.com/SirReaDy/ipaforge/releases) (not notarised yet; [how to open them the first time](docs/installing.md#opening-ipaforge-the-first-time)). See [Project status](#project-status) and the [Roadmap](docs/roadmap.md).
+> **Alpha, 0.1.0-alpha.4.** Builds for macOS, Windows and Linux are on the [Releases page](https://github.com/SirReaDy/ipaforge/releases), and IPAForge updates itself from there. It isn't notarised or code-signed for Windows yet: [how to open it the first time](docs/installing.md#opening-ipaforge-the-first-time). Questions and feedback: [Discord](https://discord.gg/C87DKmAWhr) or [Issues](https://github.com/SirReaDy/ipaforge/issues).
 
 ## Why IPAForge
 
@@ -57,7 +63,7 @@ Coming next: guided onboarding, management tools for certificates and App IDs, a
 | Install engine | `@ipaforge/installer` | ✅ Complete: resumable pipelines, install flows, free-app limit, error catalogue |
 | Engine ⇄ UI protocol | `@ipaforge/rpc` | ✅ Complete: typed, validated messages over Electron IPC, and the update channel |
 | User interface | `@ipaforge/ui` | ✅ Install and preload complete: accounts, devices with their checklist, the install run with its questions, step details and recovery, Preload with app sources, Apps with refresh, Repair SideStore, the log viewer, and What's new, in six languages, checked by screenshot and WCAG 2.2 AA tests; onboarding comes next |
-| Desktop app | `apps/desktop` | 🚧 Alpha: installers for macOS (DMG, zip), Windows (NSIS, MSI) and Linux (AppImage, deb, rpm), built, Sigstore-signed and published by CI on a version tag; updates itself, checking each update's signature; Windows code signing and Apple notarisation are planned |
+| Desktop app | `apps/desktop` | ✅ Complete: installers for macOS (DMG, zip), Windows (NSIS, MSI) and Linux (AppImage, deb, rpm), built, Sigstore-signed and published by CI on a version tag; updates itself, checking each update's signature. Windows code signing and Apple notarisation come with 1.0 |
 
 Sideload signing has been verified against real devices and Apple accounts. Apple's own `codesign --verify --deep --strict` accepts the output, including a full SideStore build signed in about half a second. Details: [Code Signing](docs/signing.md).
 
@@ -154,4 +160,4 @@ IPAForge is free and open source, maintained in spare time. If it saves you time
 
 ## Licence
 
-[MIT](LICENSE) © 2026 Dan Motpan and IPAForge contributors. Third-party components keep their own licences: pkijs, asn1js and zip.js are BSD-3-Clause; @noble/hashes and zod are MIT.
+[GNU Affero General Public License v3.0 or later](LICENSE) (AGPL-3.0-or-later) © 2026 Dan Motpan and IPAForge contributors. You may use, study, change and share IPAForge; anything built from it, including a modified version offered over a network, must be released under the same licence with its source. Versions up to 0.1.0-alpha.4 were released under the MIT licence. Third-party components keep their own licences: pkijs, asn1js and zip.js are BSD-3-Clause; @noble/hashes and zod are MIT.

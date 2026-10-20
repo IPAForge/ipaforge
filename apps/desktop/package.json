@@ -1,7 +1,7 @@
 {
   "name": "@ipaforge/desktop",
   "version": "0.1.0-alpha.4",
-  "license": "MIT",
+  "license": "AGPL-3.0-or-later",
   "private": true,
   "type": "module",
   "main": "out/main/index.js",
