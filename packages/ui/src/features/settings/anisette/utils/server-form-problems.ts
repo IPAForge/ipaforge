@@ -11,13 +11,16 @@ export const serverKey = (address: string): string => {
 
 const isHttpAddress = (address: string): boolean => {
   if (!URL.canParse(address)) return false
-  const { protocol } = new URL(address)
+  const { protocol, username, password } = new URL(address)
 
-  return protocol === 'https:' || protocol === 'http:'
+  return (
+    (protocol === 'https:' || protocol === 'http:') && !(username || password)
+  )
 }
 
 /**
- * What's wrong with the server as typed, before the Engine is asked: no name, not an http(s) address, or one in
+ * What's wrong with the server as typed, before the Engine is asked: no name, not an http(s) address (or one with a
+ * user name or password in it), or one in
  * the list already (`editing`: the address the server had, which it may keep).
  */
 export const serverFormProblems = (

@@ -44,6 +44,9 @@ export const validateServerUrl = (
   }
   if (url.protocol !== 'https:' && url.protocol !== 'http:')
     return { ok: false, reason: 'use http:// or https://' }
+  // A user name or password in the address would be saved and logged with it.
+  if (url.username || url.password)
+    return { ok: false, reason: 'no user name or password in the address' }
   if (PLACEHOLDER_HOSTS.test(url.hostname)) {
     return {
       ok: false,
