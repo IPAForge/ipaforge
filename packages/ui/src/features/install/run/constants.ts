@@ -150,5 +150,6 @@ export const provisionTaskKeys: Readonly<Record<string, TranslationKey>> = {
 export const refreshNoteKeys = {
   profile: 'preload.run.refresh.profile',
   certificate: 'preload.run.refresh.certificate',
-  unmarked: 'preload.run.refresh.unmarked'
+  unmarked: 'preload.run.refresh.unmarked',
+  sidestore: 'preload.run.refresh.sidestore'
 } as const satisfies Record<RefreshKind, TranslationKey>

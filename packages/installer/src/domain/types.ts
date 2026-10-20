@@ -107,6 +107,8 @@ export type AppSource =
       readonly kind: 'catalog'
       readonly appId: string
       readonly channel?: Channel
+      /** Refresh: the installed version, which a refresh never changes; any other version is refused. */
+      readonly version?: string
     }
   | {
       readonly kind: 'file'
@@ -118,6 +120,8 @@ export type AppSource =
        * so a link (from an app's mark, or a source) can't put another app in its place, with its data.
        */
       readonly replaces?: string
+      /** Refresh: the installed version, which a refresh never changes; any other version is refused. */
+      readonly version?: string
     }
   | {
       /** An app installed before, signed again from its kept IPA (Refresh). */
@@ -168,8 +172,12 @@ export type RefreshDecision =
   | {
       readonly bundleId: string
       readonly kind: 'reinstall'
-      /** Its certificate was revoked or replaced, or it carries no IPAForge mark saying which one signed it. */
-      readonly reason: 'certificate' | 'unmarked'
+      /**
+       * Its certificate was revoked or replaced, it carries no IPAForge mark saying which one signed it, or it is
+       * SideStore, which shows the expiry of the profile inside its own files (a new profile alone leaves its date
+       * as it was).
+       */
+      readonly reason: 'certificate' | 'unmarked' | 'sidestore'
     }
 
 /** An app on the device signed with one of the user's teams, as the Apps page lists it. */

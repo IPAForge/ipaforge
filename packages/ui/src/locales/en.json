@@ -686,6 +686,10 @@
       "wrong_app": {
         "title": "This link gives a different app",
         "body": "It isn't the app you're refreshing or updating, so it wasn't installed and the app and its data stay as they are. Add the right .ipa in Preload to install it again."
+      },
+      "version_unavailable": {
+        "title": "This version can't be downloaded again",
+        "body": "Refresh keeps the version on your device, and it's no longer offered for download. Use Update to install the newest version; the app keeps its data."
       }
     },
     "rpc": {
@@ -1109,7 +1113,6 @@
       "foundMany": "Found in {source} and {count, plural, one {# other source} other {# other sources}}. Refresh installs it from the one picked below, keeping its data, and IPAForge keeps it refreshed from then on.",
       "pickSource": "Install it from",
       "choice": "{source} · {version}",
-      "choiceOlder": "{source} · {version} (older than installed)",
       "how": "Add its .ipa in Preload once, and IPAForge keeps it refreshed from then on."
     },
     "auto": {
@@ -1397,7 +1400,8 @@
       "refresh": {
         "profile": "New profile only, nothing installed again",
         "certificate": "Installed again: the certificate that signed it is no longer valid",
-        "unmarked": "Installed again: IPAForge can't tell which certificate signed it"
+        "unmarked": "Installed again: IPAForge can't tell which certificate signed it",
+        "sidestore": "Installed again, its data kept, so SideStore itself shows the new date"
       },
       "group": {
         "failed": "Failed",

@@ -1,6 +1,10 @@
 import { describe, expect, it } from 'vitest'
 
-import { daysLeft, expiryTone } from '@ui/features/apps/utils/expiry.ts'
+import {
+  calendarDaysLeft,
+  daysLeft,
+  expiryTone
+} from '@ui/features/apps/utils/expiry.ts'
 import { isNewerVersion } from '@ui/features/apps/utils/is-newer-version.ts'
 
 const NOW = new Date('2026-10-19T10:00:00Z')
@@ -27,5 +31,28 @@ describe('isNewerVersion', () => {
     expect(isNewerVersion('2.4.0', '2.4')).toBe(false)
     expect(isNewerVersion('1.0', '1.0.1')).toBe(false)
     expect(isNewerVersion('beta', '1.0')).toBe(false)
+  })
+})
+
+/** Local time, as the device's clock shows it. */
+const at = (day: number, hour: number, minute = 0) =>
+  new Date(2026, 9, day, hour, minute)
+
+describe('calendarDaysLeft', () => {
+  it('says 7 for a 7-day profile made a minute ago, as SideStore does', () => {
+    expect(calendarDaysLeft(at(27, 11, 53), at(20, 11, 54))).toBe(7)
+  })
+
+  it('counts calendar days, not hours: late tonight to early next week', () => {
+    expect(calendarDaysLeft(at(26, 1), at(20, 23))).toBe(6)
+  })
+
+  it('says 0 for one ending later today, and negative days once past', () => {
+    expect(calendarDaysLeft(at(20, 22), at(20, 9))).toBe(0)
+    expect(calendarDaysLeft(at(18, 22), at(20, 9))).toBe(-2)
+  })
+
+  it('is unknown without an expiry', () => {
+    expect(calendarDaysLeft(undefined, at(20, 9))).toBeUndefined()
   })
 })

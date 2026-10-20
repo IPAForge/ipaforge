@@ -37,7 +37,12 @@ export const resolveReleaseStep = (
     const channel =
       source.channel ??
       (await catalog.recommendedChannel(source.appId, state.device?.iosVersion))
-    const release = await catalog.resolve(source.appId, channel, context.signal)
+    const release = await catalog.resolve(
+      source.appId,
+      channel,
+      context.signal,
+      source.version
+    )
     context.detail({
       kind: 'release',
       version: release.version,

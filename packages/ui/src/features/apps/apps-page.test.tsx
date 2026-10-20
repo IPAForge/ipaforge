@@ -75,8 +75,21 @@ describe('the Apps page', () => {
       within(youtube).getByRole('button', { name: t('apps.refresh') })
     )
     await waitFor(async () =>
-      expect((await rowOf('YouTube')).textContent).toMatch(
-        /Expires in [67] days/
+      expect((await rowOf('YouTube')).textContent).toMatch(/Expires in 7 days/)
+    )
+  })
+
+  it('installs SideStore again on Refresh, saying why, so its own screen shows the new date', async () => {
+    const user = await open()
+
+    await user.click(
+      within(await rowOf('SideStore')).getByRole('button', {
+        name: t('apps.refresh')
+      })
+    )
+    await waitFor(async () =>
+      expect((await rowOf('SideStore')).textContent).toMatch(
+        /Expires in 7 days/
       )
     )
   })
@@ -125,9 +138,7 @@ describe('the Apps page', () => {
       })
     )
     await waitFor(async () =>
-      expect((await rowOf('YouTube')).textContent).toMatch(
-        /Expires in [67] days/
-      )
+      expect((await rowOf('YouTube')).textContent).toMatch(/Expires in 7 days/)
     )
     expect(screen.queryByText(t('apps.expired.title', { count: 1 }))).toBeNull()
   })
@@ -136,9 +147,7 @@ describe('the Apps page', () => {
     await renderApp('/apps', { scenario: 'apps-expired' })
 
     await waitFor(async () =>
-      expect((await rowOf('YouTube')).textContent).toMatch(
-        /Expires in [67] days/
-      )
+      expect((await rowOf('YouTube')).textContent).toMatch(/Expires in 7 days/)
     )
   })
 
@@ -168,9 +177,7 @@ describe('the Apps page', () => {
       within(game).getByRole('button', { name: t('apps.refresh') })
     )
     await waitFor(async () =>
-      expect((await rowOf('MyGame')).textContent).toMatch(
-        /Expires in [67] days/
-      )
+      expect((await rowOf('MyGame')).textContent).toMatch(/Expires in 7 days/)
     )
     await user.click(
       within(await rowOf('StikDebug')).getByRole('button', {
@@ -179,7 +186,7 @@ describe('the Apps page', () => {
     )
     await waitFor(async () =>
       expect((await rowOf('StikDebug')).textContent).toMatch(
-        /Expires in [67] days/
+        /Expires in 7 days/
       )
     )
   })

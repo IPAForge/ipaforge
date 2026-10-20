@@ -1,4 +1,4 @@
-import { daysLeft } from '@ui/features/apps/utils/expiry.ts'
+import { calendarDaysLeft, daysLeft } from '@ui/features/apps/utils/expiry.ts'
 import { isNewerVersion } from '@ui/features/apps/utils/is-newer-version.ts'
 import { EXPIRES_SOON_DAYS } from '@ui/features/repair/constants.ts'
 import type { CheckRow } from '@ui/features/repair/types.ts'
@@ -95,6 +95,8 @@ const versionRow = (health: SideStoreHealth): CheckRow => {
 
 const expiryRow = (health: SideStoreHealth, now: Date): CheckRow => {
   const days = daysLeft(health.expiresAt, now)
+  // The days said: calendar days, as SideStore shows them.
+  const shown = calendarDaysLeft(health.expiresAt, now) ?? 0
   const base = { id: 'expiry', titleKey: 'repair.expiry.title' } as const
 
   if (days === undefined)
@@ -110,7 +112,7 @@ const expiryRow = (health: SideStoreHealth, now: Date): CheckRow => {
       state: 'bad',
       detailKey: 'repair.expiry.expired',
       tagKey: 'repair.expiry.expiredTag',
-      values: { days: Math.max(1, Math.ceil(-days)) }
+      values: { days: Math.max(1, -shown) }
     }
   if (days <= EXPIRES_SOON_DAYS)
     return {
@@ -118,7 +120,7 @@ const expiryRow = (health: SideStoreHealth, now: Date): CheckRow => {
       state: 'warn',
       detailKey: 'repair.expiry.soon',
       tagKey: 'repair.expiry.soonTag',
-      values: { days: Math.floor(days) }
+      values: { days: Math.max(0, shown) }
     }
 
   return {
@@ -126,7 +128,7 @@ const expiryRow = (health: SideStoreHealth, now: Date): CheckRow => {
     state: 'ok',
     detailKey: 'repair.expiry.ok',
     tagKey: 'repair.ok',
-    values: { days: Math.floor(days) }
+    values: { days: shown }
   }
 }
 

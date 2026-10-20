@@ -29,11 +29,15 @@ export type Catalog = {
   app(appId: string): Promise<CatalogApp>
   /** The channel to suggest for this iOS version. */
   recommendedChannel(appId: string, iosVersion?: string): Promise<Channel>
-  /** The release to download; tries mirrors when the primary source is unusable. Always carries a checksum. */
+  /**
+   * The release to download; tries mirrors when the primary source is unusable. Always carries a checksum. With
+   * `version`, that version's release where the channel tags releases by version (Refresh keeps the version).
+   */
   resolve(
     appId: string,
     channel: Channel,
-    signal?: AbortSignal
+    signal?: AbortSignal,
+    version?: string
   ): Promise<ResolvedRelease>
   download(
     release: ResolvedRelease,
@@ -64,8 +68,8 @@ export const createCatalog = (input: CatalogDepsInput): Catalog => {
     app,
     recommendedChannel: async (appId, iosVersion) =>
       recommendedChannel(await app(appId), iosVersion),
-    resolve: async (appId, channel, signal) =>
-      resolveRelease(deps, await app(appId), channel, signal),
+    resolve: async (appId, channel, signal, version) =>
+      resolveRelease(deps, await app(appId), channel, signal, version),
     download: (release, options) => downloadRelease(deps, release, options),
     sources: createSources(deps, manifest)
   }

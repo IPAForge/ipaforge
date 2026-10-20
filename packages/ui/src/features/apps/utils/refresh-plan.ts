@@ -1,3 +1,4 @@
+import { compact } from '@ipaforge/kernel'
 import type { RefreshPlan } from '@ui/features/apps/types.ts'
 import { adoptSource } from '@ui/features/apps/utils/adopt-source.ts'
 import type {
@@ -15,22 +16,32 @@ type Origin = NonNullable<InstalledApp['marker']>['origin']
  */
 const sourceOfOrigin = (
   origin: Origin,
-  originalBundleId: string
+  originalBundleId: string,
+  version: string | undefined
 ): AppSource | undefined => {
   if (origin.kind === 'catalog')
-    return origin.channel
-      ? { kind: 'catalog', appId: origin.appId, channel: origin.channel }
-      : { kind: 'catalog', appId: origin.appId }
+    return compact({
+      kind: 'catalog' as const,
+      appId: origin.appId,
+      channel: origin.channel,
+      version
+    })
   if (origin.kind === 'url')
-    return { kind: 'url', url: origin.url, replaces: originalBundleId }
+    return compact({
+      kind: 'url' as const,
+      url: origin.url,
+      replaces: originalBundleId,
+      version
+    })
 
   return undefined
 }
 
 /**
- * How Refresh installs an app again: the copy this computer kept; else where its IPAForge mark says it came from
- * (installed on another computer); else, for an app without a mark, the catalog or a source that lists it. A marked
- * app from a file can still get a new profile without being installed again.
+ * How Refresh installs an app again, always at the version on the device (a refresh never changes the version):
+ * the copy this computer kept, when it is that version (the app may have updated itself since); else that version
+ * from where its IPAForge mark says it came from; else, for an app without a mark, the catalog or a source that
+ * lists that version. A marked app from a file can still get a new profile without being installed again.
  */
 export const refreshPlan = (
   app: InstalledApp,
@@ -39,11 +50,12 @@ export const refreshPlan = (
   sources: readonly SourceApps[],
   catalogName: string
 ): RefreshPlan | undefined => {
-  if (app.record) return { kind: 'kept' }
+  if (app.record && app.record.version === app.version) return { kind: 'kept' }
   if (app.marker) {
     const source = sourceOfOrigin(
       app.marker.origin,
-      app.marker.originalBundleId
+      app.marker.originalBundleId,
+      app.version
     )
 
     if (source) return { kind: 'source', source, from: from ?? catalogName }

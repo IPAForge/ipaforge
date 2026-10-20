@@ -1,5 +1,5 @@
+import { compact } from '@ipaforge/kernel'
 import type { RefreshPlan, SourceChoice } from '@ui/features/apps/types.ts'
-import { isNewerVersion } from '@ui/features/apps/utils/is-newer-version.ts'
 import type {
   CatalogApp,
   InstalledApp,
@@ -17,9 +17,9 @@ const originalBundleId = (app: InstalledApp): string | undefined => {
 
 /**
  * Where an app IPAForge has no copy of (installed before it kept copies, or by another tool) can be installed from
- * again: the one catalog app with its original bundle id, else the newest version in a source that lists it, with
- * the others to pick from. Installing it from there keeps its data (same bundle id, same team), and from then on
- * IPAForge keeps it refreshed.
+ * again, at the version on the device (a refresh never changes the version): the one catalog app with its original
+ * bundle id, else a source that lists that version, IPAForge's own sources first, with the others to pick from.
+ * Installing it from there keeps its data (same bundle id, same team), and from then on IPAForge keeps it refreshed.
  */
 export const adoptSource = (
   app: InstalledApp,
@@ -40,50 +40,45 @@ export const adoptSource = (
   if (inCatalog.length === 1 && only)
     return {
       kind: 'source',
-      source: { kind: 'catalog', appId: only.id },
+      source: compact({
+        kind: 'catalog' as const,
+        appId: only.id,
+        version: app.version
+      }),
       from: catalogName
     }
 
-  // A source whose newest version is older than the one on the device would put an older app in its place.
-  const isOlder = (version: string) =>
-    app.version !== undefined && isNewerVersion(app.version, version)
-  // Every source listing it, with its newest version. Never one older than the device's first; then the ones that
-  // also list the version on the device (the app most likely came from one of those), then IPAForge's own sources,
-  // then the ones the user added.
+  const installed = app.version
+
+  // Without the version on the device, no source can be told to have it.
+  if (installed === undefined) return undefined
+
+  // Every source listing the version on the device, IPAForge's own sources first.
   const choices: SourceChoice[] = sources
     .flatMap((source) => {
-      const listed = source.apps.find(
-        (candidate) => candidate.bundleId === original
-      )
-      const latest = listed?.versions[0]
+      const match = source.apps
+        .find((candidate) => candidate.bundleId === original)
+        ?.versions.find((version) => version.version === installed)
 
-      if (!(listed && latest)) return []
+      if (!match) return []
 
       return [
         {
           choice: {
             source: {
               kind: 'url' as const,
-              url: latest.downloadUrl,
-              replaces: original
+              url: match.downloadUrl,
+              replaces: original,
+              version: installed
             },
             from: source.sourceName,
-            version: latest.version,
-            ...(isOlder(latest.version) ? { isOlder: true } : {})
+            version: installed
           },
-          listsInstalled: listed.versions.some(
-            (version) => version.version === app.version
-          ),
           builtin: source.builtin
         }
       ]
     })
-    .sort(
-      (a, b) =>
-        Number(Boolean(a.choice.isOlder)) - Number(Boolean(b.choice.isOlder)) ||
-        Number(b.listsInstalled) - Number(a.listsInstalled) ||
-        Number(b.builtin) - Number(a.builtin)
-    )
+    .sort((a, b) => Number(b.builtin) - Number(a.builtin))
     .map(({ choice }) => choice)
   const [first] = choices
 
@@ -93,7 +88,6 @@ export const adoptSource = (
     kind: 'source',
     source: first.source,
     from: first.from,
-    // A single older source is shown as a choice too, so its "older than installed" is seen before Refresh.
-    ...(choices.length > 1 || first.isOlder ? { choices } : {})
+    ...(choices.length > 1 ? { choices } : {})
   }
 }

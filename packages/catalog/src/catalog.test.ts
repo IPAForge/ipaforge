@@ -166,6 +166,24 @@ describe('release resolution', () => {
     })
   })
 
+  it('resolves an exact version by its tag, with or without a leading v (Refresh keeps the version)', async () => {
+    const http = fakeHttp({
+      'SideStore/SideStore/releases/tags/v0.6.2': () =>
+        respond(200, githubRelease('SideStore.ipa', ipaSha))
+    })
+    const catalog = createCatalog({
+      http: http.client,
+      store: memoryStore(),
+      config: { manifestUrl: 'https://example.invalid/m.json' }
+    })
+    await catalog.resolve('sidestore', 'stable', undefined, '0.6.2')
+
+    expect(http.requested.filter((url) => url.includes('/releases/'))).toEqual([
+      expect.stringContaining('/releases/tags/0.6.2'),
+      expect.stringContaining('/releases/tags/v0.6.2')
+    ])
+  })
+
   it('falls back to a mirror when the source repository has gone', async () => {
     const http = fakeHttp({
       'LiveContainerMirror/LiveContainer/releases/latest': () =>

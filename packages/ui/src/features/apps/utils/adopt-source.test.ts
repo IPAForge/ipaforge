@@ -1,7 +1,11 @@
 import { describe, expect, it } from 'vitest'
 
 import { adoptSource } from '@ui/features/apps/utils/adopt-source.ts'
-import type { InstalledApp, SourceApps } from '@ui/services/engine/types.ts'
+import type {
+  CatalogApp,
+  InstalledApp,
+  SourceApps
+} from '@ui/services/engine/types.ts'
 
 const app: InstalledApp = {
   bundleId: 'com.spotify.client.TEAM',
@@ -31,77 +35,74 @@ const source = (
 })
 
 describe('adoptSource', () => {
-  it('picks the source that lists the version on the device, and offers the others', () => {
+  it('installs the version on the device from a source that lists it, and offers the others that do', () => {
     const plan = adoptSource(
       app,
       [],
-      [source('foxster', ['9.2.0']), source('driftywinds', ['9.1.0', '9.0.1'])],
+      [
+        source('foxster', ['9.2.0', '9.0.1']),
+        source('driftywinds', ['9.1.0', '9.0.1'])
+      ],
       'IPAForge catalog'
     )
 
-    expect(plan).toMatchObject({ kind: 'source', from: 'driftywinds' })
-    expect(
-      plan?.kind === 'source' ? plan.choices?.map((choice) => choice.from) : []
-    ).toEqual(['driftywinds', 'foxster'])
-  })
-
-  it("offers no choice when only one source lists it, and keeps a source's newest version", () => {
-    const plan = adoptSource(
-      app,
-      [],
-      [source('foxster', ['9.2.0', '9.0.1'])],
-      'IPAForge catalog'
-    )
-
-    expect(plan).toEqual({
+    expect(plan).toMatchObject({
       kind: 'source',
       source: {
         kind: 'url',
-        url: 'https://foxster.example.com/9.2.0/Spotify.ipa',
-        replaces: 'com.spotify.client'
-      },
-      from: 'foxster'
+        url: 'https://foxster.example.com/9.0.1/Spotify.ipa',
+        version: '9.0.1'
+      }
     })
+    expect(
+      plan?.kind === 'source'
+        ? plan.choices?.map((choice) => [choice.from, choice.version])
+        : []
+    ).toEqual([
+      ['foxster', '9.0.1'],
+      ['driftywinds', '9.0.1']
+    ])
   })
 
-  it("prefers IPAForge's own sources when none lists the version on the device", () => {
+  it('never takes a newer or older version: a source without the one on the device is left out', () => {
+    expect(
+      adoptSource(
+        app,
+        [],
+        [source('foxster', ['9.2.0']), source('driftywinds', ['9.0.0'])],
+        'IPAForge catalog'
+      )
+    ).toBeUndefined()
+  })
+
+  it("prefers IPAForge's own sources among those that list the version", () => {
     const plan = adoptSource(
       app,
       [],
-      [source('foxster', ['9.2.0']), source('SideStore', ['9.3.0'], true)],
+      [source('foxster', ['9.0.1']), source('SideStore', ['9.0.1'], true)],
       'IPAForge catalog'
     )
 
     expect(plan).toMatchObject({ from: 'SideStore' })
   })
 
-  it('never picks a source older than the version on the device first, and labels it', () => {
-    const plan = adoptSource(
-      { ...app, version: '21.41.5' },
-      [],
-      [source('foxster', ['21.09.2']), source('driftywinds', ['21.41.5'])],
-      'IPAForge catalog'
-    )
-
-    expect(plan).toMatchObject({ from: 'driftywinds' })
+  it('asks the catalog for the version on the device', () => {
     expect(
-      plan?.kind === 'source'
-        ? plan.choices?.map((choice) => [choice.from, choice.isOlder ?? false])
-        : []
-    ).toEqual([
-      ['driftywinds', false],
-      ['foxster', true]
-    ])
-  })
-
-  it('shows a single older source as a choice, so its label is seen', () => {
-    const plan = adoptSource(
-      { ...app, version: '21.41.5' },
-      [],
-      [source('foxster', ['21.09.2'])],
-      'IPAForge catalog'
-    )
-
-    expect(plan?.kind === 'source' ? plan.choices : undefined).toHaveLength(1)
+      adoptSource(
+        app,
+        [
+          {
+            id: 'spotify',
+            bundleId: 'com.spotify.client'
+          } as unknown as CatalogApp
+        ],
+        [],
+        'IPAForge catalog'
+      )
+    ).toEqual({
+      kind: 'source',
+      source: { kind: 'catalog', appId: 'spotify', version: '9.0.1' },
+      from: 'IPAForge catalog'
+    })
   })
 })

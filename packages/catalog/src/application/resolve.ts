@@ -1,5 +1,7 @@
 // Which release to download: the primary source first, then each mirror. A source that has gone, has no matching
-// asset, or publishes no checksum is skipped; only verifiable releases are returned.
+// asset, or publishes no checksum is skipped; only verifiable releases are returned. With a version (Refresh,
+// which never changes it), a channel whose releases are tagged by version is looked up by that tag (`1.2` or
+// `v1.2`); a channel with one fixed tag (Nightly) gives what it has, and the installer checks the version it got.
 
 import type {
   Attempt,
@@ -58,16 +60,40 @@ const fromUrl = (
   return { release }
 }
 
+/** The release with this version's tag (`1.2`, else `v1.2`), or the location's own release without a version. */
+const lookupGithub = async (
+  deps: CatalogDeps,
+  location: GithubLocation,
+  version: string | undefined,
+  signal?: AbortSignal
+) => {
+  if (!version || location.github.tag)
+    return findGithubAsset(deps, location.github, signal)
+  const exact = await findGithubAsset(
+    deps,
+    { ...location.github, tag: version },
+    signal
+  )
+  if (exact.kind !== 'gone') return exact
+
+  return findGithubAsset(
+    deps,
+    { ...location.github, tag: `v${version}` },
+    signal
+  )
+}
+
 const fromGithub = async (
   deps: CatalogDeps,
   app: CatalogApp,
   channel: Channel,
   location: GithubLocation,
   from: Origin,
+  version: string | undefined,
   signal?: AbortSignal
 ): Promise<Attempt> => {
   const { repo } = location.github
-  const lookup = await findGithubAsset(deps, location.github, signal)
+  const lookup = await lookupGithub(deps, location, version, signal)
   if (lookup.kind !== 'found')
     return { skip: { source: repo, reason: lookup.kind } }
   const checksum = location.sha256?.toLowerCase() ?? lookup.asset.sha256
@@ -96,11 +122,12 @@ const attempt = async (
   app: CatalogApp,
   channel: Channel,
   { location, from }: Source,
+  version: string | undefined,
   signal?: AbortSignal
 ): Promise<Attempt> =>
   isUrlLocation(location)
     ? fromUrl(app, channel, location, from)
-    : fromGithub(deps, app, channel, location, from, signal)
+    : fromGithub(deps, app, channel, location, from, version, signal)
 
 const noReleaseError = (
   app: CatalogApp,
@@ -121,11 +148,12 @@ export const resolveRelease = async (
   deps: CatalogDeps,
   app: CatalogApp,
   channel: Channel,
-  signal?: AbortSignal
+  signal?: AbortSignal,
+  version?: string
 ): Promise<ResolvedRelease> => {
   const skipped: Skip[] = []
   for (const source of sourcesOf(app, channel)) {
-    const result = await attempt(deps, app, channel, source, signal)
+    const result = await attempt(deps, app, channel, source, version, signal)
     if ('release' in result) return result.release
     skipped.push(result.skip)
     deps.logger.warn('release source unusable; trying the next one', {

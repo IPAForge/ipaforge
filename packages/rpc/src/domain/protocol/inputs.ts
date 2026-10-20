@@ -10,6 +10,9 @@ const channelSchema = z.enum(['stable', 'nightly'])
 /** Refresh or Update: the original bundle id of the installed app the IPA must be (anything else is refused). */
 const replaces = textSchema.optional()
 
+/** Refresh: the installed version, which a refresh never changes. */
+const version = textSchema.max(128).optional()
+
 const fileIpaSchema = z.object({
   kind: z.literal('file'),
   path: textSchema,
@@ -20,13 +23,15 @@ const fileIpaSchema = z.object({
 const urlIpaSchema = z.object({
   kind: z.literal('url'),
   url: z.url({ protocol: /^https$/ }),
-  replaces
+  replaces,
+  version
 })
 
 const catalogIpaSchema = z.object({
   kind: z.literal('catalog'),
   appId: textSchema,
-  channel: channelSchema.optional()
+  channel: channelSchema.optional(),
+  version
 })
 
 export const externalIpaSchema = z.discriminatedUnion('kind', [

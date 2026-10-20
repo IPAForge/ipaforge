@@ -6,6 +6,7 @@ import { refreshBatch } from '@ui/features/apps/utils/refresh-batch.ts'
 const view = (bundleId: string, refresh: AppView['refresh']): AppView => ({
   app: { bundleId, name: bundleId, version: '1.0', teamId: 'TEAM' },
   daysLeft: 1,
+  daysShown: 1,
   tone: 'soon',
   from: undefined,
   update: undefined,

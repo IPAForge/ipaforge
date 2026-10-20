@@ -110,8 +110,11 @@ export type RunApp = {
   readonly refresh?: RefreshKind | undefined
 }
 
-/** How a refresh treats an app: a new profile only, or installed again (its certificate changed, or it isn't marked). */
-export type RefreshKind = 'profile' | 'certificate' | 'unmarked'
+/**
+ * How a refresh treats an app: a new profile only, or installed again (its certificate changed, it isn't marked,
+ * or it is SideStore, so its own screen shows the new date).
+ */
+export type RefreshKind = 'profile' | 'certificate' | 'unmarked' | 'sidestore'
 
 /** What Repair SideStore fixes: SideStore as installed, installed again, a new profile, the pairing file. */
 export type RepairOptions = {

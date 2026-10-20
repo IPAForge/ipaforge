@@ -20,7 +20,7 @@ export const AppsFacts = ({ managed, settings }: AppsFactsProps) => {
 
     return t('apps.facts.nextIn', {
       name: next.app.name,
-      days: Math.floor(next.daysLeft)
+      days: Math.max(0, next.daysShown ?? 0)
     })
   }
 
