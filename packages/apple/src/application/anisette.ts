@@ -78,9 +78,16 @@ export const createAnisetteService = (
   const health = async (server: AnisetteServer): Promise<ServerHealth> => {
     const started = deps.clock.now().getTime()
     try {
+      // One request each: a health check reports what the server says, without retrying.
       if (server.protocol === 'v1')
-        await fetchV1(deps, server, config.timeouts.healthCheckMs)
-      else await fetchClientInfo(deps, server, config.timeouts.healthCheckMs)
+        await fetchV1(deps, server, config.timeouts.healthCheckMs, false)
+      else
+        await fetchClientInfo(
+          deps,
+          server,
+          config.timeouts.healthCheckMs,
+          false
+        )
       return {
         server,
         ok: true,

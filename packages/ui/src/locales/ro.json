@@ -207,7 +207,8 @@
         },
         "pairing": "Plasat în {apps}",
         "shared": "Certificat partajat",
-        "notShared": "Certificat nepartajat"
+        "notShared": "Certificat nepartajat",
+        "pairingRemote": "Plasat în {apps} · cu asocierea la distanță pentru iOS 17.4 și mai nou"
       },
       "subtitleApps": "{device} · {appleId}"
     },
@@ -1537,7 +1538,19 @@
       "open": "Deschide SideStore și reîmprospătează-ți aplicațiile."
     },
     "open": "Verifică SideStore",
-    "checkingTag": "Se verifică…"
+    "checkingTag": "Se verifică…",
+    "remote": {
+      "title": "Asociere la distanță pentru iOS 17.4 și mai nou",
+      "ok": "Prezentă, iar {device} o acceptă.",
+      "missing": "Lipsește: SideStore poate folosi doar asocierea clasică. Plasarea fișierului de asociere al acestui computer o adaugă.",
+      "missingTag": "Lipsește",
+      "rejected": "{device} nu o mai acceptă (încrederea i-a fost resetată). Plasarea fișierului de asociere al acestui computer creează una nouă.",
+      "rejectedTag": "Neacceptată",
+      "other": "Este a altui computer, așa că IPAForge nu o poate verifica. Plasarea fișierului de asociere al acestui computer o înlocuiește.",
+      "otherTag": "Alt computer",
+      "notNeeded": "Nu e necesară sub iOS 17.4.",
+      "notNeededTag": "Nu e necesară"
+    }
   },
   "sidestore": {
     "addSource": "Adaugă în SideStore",

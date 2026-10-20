@@ -19,12 +19,15 @@ export const sideStorePairingStep = (
     const files =
       PAIRING_APPS.find((app) => app.id === SIDESTORE_APP_ID)?.files ?? []
     const handle = await runtime.device(state.udid)
-    const pairingPlaced = await handle.placePairingFile(
+    const { classic, remote } = await handle.placePairingFile(
       files.map((path) => ({ bundleId, path }))
     )
+    context.detail(
+      remote.length > 0
+        ? { kind: 'pairing', apps: ['SideStore'], remote: true }
+        : { kind: 'pairing', apps: ['SideStore'] }
+    )
 
-    context.detail({ kind: 'pairing', apps: ['SideStore'] })
-
-    return { pairingPlaced }
+    return { pairingPlaced: [...classic, ...remote] }
   }
 })

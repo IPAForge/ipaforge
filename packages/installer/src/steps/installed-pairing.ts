@@ -41,12 +41,14 @@ export const installedPairingStep = (
       bundleId
     )
     const handle = await runtime.device(state.udid)
-    const pairingPlaced = await handle.placePairingFile(targets)
-    context.detail({
-      kind: 'pairing',
-      apps: [job.inspection?.app.name ?? bundleId]
-    })
+    const { classic, remote } = await handle.placePairingFile(targets)
+    const apps = [job.inspection?.app.name ?? bundleId]
+    context.detail(
+      remote.length > 0
+        ? { kind: 'pairing', apps, remote: true }
+        : { kind: 'pairing', apps }
+    )
 
-    return { pairingPlaced }
+    return { pairingPlaced: [...classic, ...remote] }
   }
 })

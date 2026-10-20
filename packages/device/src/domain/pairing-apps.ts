@@ -19,7 +19,8 @@ export const PAIRING_APPS: readonly PairingApp[] = [
     files: [
       'Documents/PairingFile_Lockdown.plist',
       'Documents/ALTPairingFile.mobiledevicepairing'
-    ]
+    ],
+    remoteFiles: ['Documents/PairingFile_RemoteRP.plist']
   },
   {
     id: 'livecontainer',
@@ -29,7 +30,8 @@ export const PAIRING_APPS: readonly PairingApp[] = [
     files: [
       'Documents/SideStore/Documents/PairingFile_Lockdown.plist',
       'Documents/SideStore/Documents/ALTPairingFile.mobiledevicepairing'
-    ]
+    ],
+    remoteFiles: ['Documents/SideStore/Documents/PairingFile_RemoteRP.plist']
   },
   {
     id: 'stikdebug',
@@ -44,6 +46,40 @@ export const PAIRING_APPS: readonly PairingApp[] = [
     files: ['Documents/pairingFile.plist']
   }
 ]
+
+/** iOS 17.4, the first with remote pairing over the lockdown service. */
+const REMOTE_PAIRING_MIN_IOS = [17, 4] as const
+
+export const supportsRemotePairing = (
+  version: readonly [number, number, number]
+): boolean => {
+  const [major, minor] = version
+  const [minMajor, minMinor] = REMOTE_PAIRING_MIN_IOS
+
+  return major > minMajor || (major === minMajor && minor >= minMinor)
+}
+
+/**
+ * The remote pairing files to write next to classic pairing `targets`: for each target that is one of an app's
+ * classic files, that app's remote files, once each.
+ */
+export const remotePairingTargets = <
+  T extends { bundleId: string; path: string }
+>(
+  targets: readonly T[],
+  apps: readonly PairingApp[] = PAIRING_APPS
+): { bundleId: string; path: string }[] => {
+  const found = new Map<string, { bundleId: string; path: string }>()
+  for (const target of targets) {
+    const app = apps.find((candidate) => candidate.files.includes(target.path))
+    for (const path of app?.remoteFiles ?? [])
+      found.set(`${target.bundleId}/${path}`, {
+        bundleId: target.bundleId,
+        path
+      })
+  }
+  return [...found.values()]
+}
 
 /** True when `installed` is `original`, or `original.<TEAMID>` for one of `teamIds` (the user's own teams). */
 export const matchesBundleId = (

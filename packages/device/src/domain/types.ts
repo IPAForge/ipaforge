@@ -42,6 +42,11 @@ export type PairingApp = {
   readonly bundleId: string
   /** Paths inside the app container. Every name the app (current or legacy builds) reads is written. */
   readonly files: readonly string[]
+  /**
+   * Where the app reads a remote pairing (iOS 17.4 and later), in its own file: a file with both the classic and
+   * the remote keys is ambiguous to it. Absent: the app uses the classic pairing only.
+   */
+  readonly remoteFiles?: readonly string[]
 }
 
 export type PairingAppMatch = {

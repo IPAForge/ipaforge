@@ -44,6 +44,14 @@ On-device tools such as SideStore and StikDebug use a copy of this computer's pa
 
 The pairing file is the whole pair record plus the device UDID, including the root private key and the Wi-Fi MAC address (read from the device when the record lacks it). On-device tools refuse a file without them: SideStore fails to start its device connection ("devicegateway not initialized").
 
+### Remote pairing (iOS 17.4 and later)
+
+iOS 17.4 added a second kind of pairing, remote pairing, which newer SideStore builds can use instead of the classic one. On iOS 17.4 and later, placing the pairing file also gives SideStore its remote pairing:
+- **Made over USB once per device**, through the lockdown service `com.apple.dt.remotepairingdeviced.lockdown` that the classic pairing opens (messages are JSON framed with `RPPairing` and a 2-byte big-endian length). Pair-setup is SRP-6a (3072-bit group, SHA-512) with the fixed USB PIN, then this computer's and the device's Ed25519 identities are exchanged under ChaCha20-Poly1305. The device's signature is checked. The device may show the Trust prompt.
+- **Kept per device**, encrypted with the other secrets (`remote-pairing/<udid>`): this computer's Ed25519 key pair and identifier, the device's identifier and public key, and its identity resolving key. Before it's reused, a pair-verify (X25519, both sides signing) checks the device still accepts it. A device that refuses it (its Trust was reset) gets a new one.
+- **Its own file:** `PairingFile_RemoteRP.plist` in SideStore's `Documents` (also for the SideStore inside LiveContainer), holding only `public_key`, `private_key`, `identifier` and `alt_irk`. SideStore treats a file with both the classic and the remote keys as ambiguous, so the classic pairing stays in its own files.
+- **Optional by design:** if making it fails, the classic pairing is still placed (SideStore works with it alone), and a warning is logged. SideStore builds from September 20, 2026 onwards read the remote file; older ones ignore it. Those newer builds also ask, once, which protocol to prefer (Settings → Advanced → Pairing File Management), because a file placed from outside doesn't set that choice inside SideStore.
+
 ## Errors you may see
 
 | Code | Meaning | What to do |
@@ -70,7 +78,8 @@ pnpm --filter @ipaforge/desktop device-probe list              # devices visible
 pnpm --filter @ipaforge/desktop device-probe info              # identity and checks (read-only)
 pnpm --filter @ipaforge/desktop device-probe pair [--own]      # wait for the OS pairing (tap Trust); --own pairs with IPAForge's own record
 pnpm --filter @ipaforge/desktop device-probe apps | profiles   # read-only
-pnpm --filter @ipaforge/desktop device-probe pairing-status <TEAMID...>
+pnpm --filter @ipaforge/desktop device-probe pairing-status <TEAMID...>   # classic and remote pairing files (read-only)
+pnpm --filter @ipaforge/desktop device-probe rp-pair            # iOS 17.4+: makes a remote pairing, then verifies it (kept in memory only)
 pnpm --filter @ipaforge/desktop device-probe afc-speed [--mb 32]   # times AFC writes per chunk size (written, then deleted)
 IPAFORGE_DEVICE=1 pnpm vitest run apps/desktop/src/main/adapters/device.hardware.test.ts
 ```

@@ -7,8 +7,41 @@ import {
   type LucideIcon
 } from 'lucide-react'
 
-import type { CheckState, Fix } from '@ui/features/repair/types.ts'
+import type { CheckRow, CheckState, Fix } from '@ui/features/repair/types.ts'
 import type { TranslationKey } from '@ui/i18n/setup/types.ts'
+import type { SideStoreHealth } from '@ui/services/engine/types.ts'
+
+/** The remote pairing row (iOS 17.4 and later) for each state: how it shows, and its words. */
+export const remotePairingRows = {
+  accepted: {
+    state: 'ok',
+    detailKey: 'repair.remote.ok',
+    tagKey: 'repair.ok'
+  },
+  rejected: {
+    state: 'bad',
+    detailKey: 'repair.remote.rejected',
+    tagKey: 'repair.remote.rejectedTag'
+  },
+  'other-computer': {
+    state: 'warn',
+    detailKey: 'repair.remote.other',
+    tagKey: 'repair.remote.otherTag'
+  },
+  missing: {
+    state: 'warn',
+    detailKey: 'repair.remote.missing',
+    tagKey: 'repair.remote.missingTag'
+  },
+  'not-needed': {
+    state: 'unknown',
+    detailKey: 'repair.remote.notNeeded',
+    tagKey: 'repair.remote.notNeededTag'
+  }
+} as const satisfies Record<
+  SideStoreHealth['remotePairing'],
+  Pick<CheckRow, 'state' | 'detailKey' | 'tagKey'>
+>
 
 /** Each state's mark and colours: the icon, its tint and the tag beside the title. */
 export const checkStateLooks = {

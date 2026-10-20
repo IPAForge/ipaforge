@@ -25,7 +25,7 @@ Installs SideStore, or LiveContainer with SideStore inside, from the catalog. Th
 | 11 | `provision-0` | Creates the App IDs and app group, and downloads the profiles |
 | 12 | `sign-0` | Signs the app and puts the signing certificate into SideStore (`ALTCertificate.p12`) |
 | 13 | `install-0` | Installs it with progress |
-| 14 | `pairing` | Places this computer's pairing file into the installed app (for LiveContainer, into the SideStore inside it) |
+| 14 | `pairing` | Places this computer's pairing file into the installed app (for LiveContainer, into the SideStore inside it), and on iOS 17.4 and later its remote pairing file next to it (`detail.remote`) |
 | 15 | `remember` | Remembers the team for the account |
 
 A new certificate is stored with its private key, per account and team, as soon as Apple issues it. The key never appears in the flow's state or checkpoint.
@@ -61,6 +61,7 @@ After each app is installed, the Engine remembers it (`InstalledStore`, desktop:
   - `signing`: the certificate in its IPAForge mark against the signing team's valid certificates (listed, not revoked, not expired), or `unknown` without a mark;
   - `ownCertificate`: `ALTCertificateID` in its Info.plist (the serial of the certificate it refreshes with) against the same list: `valid`, `missing`, or `other` (it may have replaced it with one of its own);
   - `pairing`: the `HostID` in its pairing file against this computer's pair record: `this-computer`, `other-computer` or `missing`.
+  - `remotePairing` (iOS 17.4 and later): its `PairingFile_RemoteRP.plist` against the remote pairing this computer saved, checked with the device (pair-verify): `accepted`, `rejected`, `other-computer` or `missing`; `not-needed` below iOS 17.4.
 - **`repairSideStore({ udid, accountId, teamId?, channel?, bundleId, reinstall, profile, pairing })`** runs the fixes in one run. With `reinstall`, the SideStore install's steps (pipeline `repairSideStore`), which bring a certificate, a profile and the pairing file. Otherwise, a new profile (`profiles-0`, as Refresh does) and/or this computer's pairing file (`pairing`), replacing what's there.
 
 ### Place pairing file

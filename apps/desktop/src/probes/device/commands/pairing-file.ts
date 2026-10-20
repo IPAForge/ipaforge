@@ -1,6 +1,11 @@
 // device-probe commands for the pairing file inside pairing apps: targets, pairing-status, place.
 import type { DeviceProbe } from '@desktop/probes/device/context.ts'
-import type { DeviceHandle, PairingTarget } from '@ipaforge/device'
+import {
+  type AppFileTarget,
+  type DeviceHandle,
+  type PairingTarget,
+  remotePairingTargets
+} from '@ipaforge/device'
 
 const printTargets = (targets: readonly PairingTarget[]) => {
   for (const t of targets)
@@ -29,9 +34,11 @@ export const pairingStatusCommand =
   ({ withDevice, args }: DeviceProbe) =>
   (): Promise<void> =>
     withDevice(async (handle) => {
-      for (const status of await handle.appFileStatus(
-        await handle.pairingTargets(args.rest)
-      )) {
+      const targets = await handle.pairingTargets(args.rest)
+      for (const status of await handle.appFileStatus([
+        ...targets,
+        ...remotePairingTargets(targets)
+      ])) {
         const when = status.modifiedAt
           ? ` (modified ${status.modifiedAt.toISOString()})`
           : ''
@@ -61,8 +68,15 @@ export const placeCommand =
         )
         return
       }
-      await handle.placePairingFile(targets)
-      for (const status of await handle.appFileStatus(targets)) {
+      const { classic, remote, remoteHow } =
+        await handle.placePairingFile(targets)
+      const written: AppFileTarget[] = [...classic, ...remote]
+      console.log(
+        remote.length > 0
+          ? `remote pairing: ${remoteHow} and written`
+          : 'remote pairing: not written (below iOS 17.4, not SideStore, or it failed: see the log)'
+      )
+      for (const status of await handle.appFileStatus(written)) {
         const state = status.exists ? `${status.size} bytes` : 'missing'
         console.log(`${status.target.path}: ${state}`)
       }

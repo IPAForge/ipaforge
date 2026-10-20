@@ -70,7 +70,12 @@ export const stepReportTexts: StepReportTexts = {
   'install-phase': (report, { t }) =>
     t(`install.run.report.phase.${report.phase}`),
   pairing: (report, { t, list }) =>
-    t('install.run.report.pairing', { apps: list(report.apps) }),
+    t(
+      report.remote
+        ? 'install.run.report.pairingRemote'
+        : 'install.run.report.pairing',
+      { apps: list(report.apps) }
+    ),
   'certificate-shared': (report, { t }) =>
     t(
       report.isShared
