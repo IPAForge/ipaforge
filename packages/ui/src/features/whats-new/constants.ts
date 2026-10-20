@@ -41,6 +41,43 @@ export const noteKindDots = {
  */
 export const RELEASE_NOTES: readonly ReleaseNotes[] = [
   {
+    version: '0.1.0-alpha.6',
+    date: '2026-10-20',
+    lead: 'Anisette servers you can choose, sign-in that asks less, and a Refresh that keeps your apps as they are.',
+    items: [
+      {
+        kind: 'new',
+        title: 'Anisette servers',
+        text: 'In Settings: IPAForge picks a working server by itself, or you choose one, test them, and add your own.'
+      },
+      {
+        kind: 'new',
+        title: 'Remote pairing for SideStore',
+        text: 'On iOS 17.4 and later, SideStore also gets its remote pairing, and Repair SideStore checks it.'
+      },
+      {
+        kind: 'changed',
+        text: 'Refresh never installs another version. SideStore is installed again over itself, its data kept, so it shows its new date too.'
+      },
+      {
+        kind: 'changed',
+        text: 'Days left are counted as SideStore counts them: a fresh profile says 7 days.'
+      },
+      {
+        kind: 'changed',
+        text: 'Sign in again uses your saved password and asks only for the code; checks in the background never send you one.'
+      },
+      {
+        kind: 'fixed',
+        text: 'After a refused keychain prompt, IPAForge asks again next time, so your Apple IDs are saved once you allow it.'
+      },
+      {
+        kind: 'fixed',
+        text: 'The Intel build on an Apple silicon Mac says so, and links to the faster Apple silicon build.'
+      }
+    ]
+  },
+  {
     version: '0.1.0-alpha.5',
     date: '2026-10-20',
     lead: 'IPAForge has a home of its own, and stays open source for good.',
