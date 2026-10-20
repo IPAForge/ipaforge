@@ -1,6 +1,7 @@
 // Reads the IPA before any Apple call, so a broken or encrypted app, one the device cannot run (iOS too old,
 // wrong device family, no 64-bit slice), or another app than the one a Refresh or Update replaces, fails without
-// using up App IDs. The device step runs first.
+// using up App IDs. A Refresh that has to install an app again keeps its version: any other version is refused.
+// The device step runs first.
 import type { FlowRuntime } from '@installer/application/runtime.ts'
 import { StepLabel } from '@installer/domain/labels.ts'
 import { StepWeight } from '@installer/domain/step-weights.ts'
@@ -30,9 +31,18 @@ export const inspectStep = (
     const replaces =
       job.source.kind === 'file' ? job.source.replaces : undefined
 
+    const version =
+      job.source.kind === 'catalog' || job.source.kind === 'file'
+        ? job.source.version
+        : undefined
+
     if (replaces !== undefined && inspection.app.identifier !== replaces)
       throw new IPAForgeError(ErrorCode.WrongApp, {
         data: { expected: replaces, found: inspection.app.identifier }
+      })
+    if (version !== undefined && inspection.app.version !== version)
+      throw new IPAForgeError(ErrorCode.VersionUnavailable, {
+        data: { expected: version, found: inspection.app.version ?? null }
       })
     assertCompatible(inspection, required(state.device, 'device summary'))
     context.detail(

@@ -49,8 +49,6 @@ export type SourceChoice = {
   readonly source: AppSource
   readonly from: string
   readonly version: string
-  /** Older than the version on the device: installing it would go back. */
-  readonly isOlder?: boolean
 }
 
 /** Where an app is in a run started from the Apps page. */

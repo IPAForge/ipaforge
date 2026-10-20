@@ -686,6 +686,10 @@
       "wrong_app": {
         "title": "Dieser Link liefert eine andere App",
         "body": "Es ist nicht die App, die du erneuerst oder aktualisierst. Sie wurde nicht installiert, die App und ihre Daten bleiben unverändert. Füge die richtige .ipa unter „Vorladen“ hinzu, um sie neu zu installieren."
+      },
+      "version_unavailable": {
+        "title": "Diese Version lässt sich nicht erneut laden",
+        "body": "Erneuern behält die Version auf deinem Gerät, und sie wird nicht mehr zum Download angeboten. Installiere mit Aktualisieren die neueste Version; die App behält ihre Daten."
       }
     },
     "rpc": {
@@ -1109,7 +1113,6 @@
       "foundMany": "Gefunden in {source} und {count, plural, one {# weiteren Quelle} other {# weiteren Quellen}}. Erneuern installiert es aus der unten gewählten, seine Daten bleiben, und IPAForge erneuert es danach weiter.",
       "pickSource": "Installieren aus",
       "choice": "{source} · {version}",
-      "choiceOlder": "{source} · {version} (älter als installiert)",
       "how": "Füge ihre .ipa einmal unter „Vorladen“ hinzu, dann erneuert IPAForge sie von da an regelmäßig."
     },
     "auto": {

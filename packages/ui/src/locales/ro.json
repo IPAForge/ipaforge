@@ -686,6 +686,10 @@
       "wrong_app": {
         "title": "Acest link oferă o altă aplicație",
         "body": "Nu este aplicația pe care o reîmprospătezi sau o actualizezi, așa că nu a fost instalată, iar aplicația și datele ei rămân neschimbate. Adaugă fișierul .ipa corect în Preîncărcare pentru a o reinstala."
+      },
+      "version_unavailable": {
+        "title": "Această versiune nu mai poate fi descărcată",
+        "body": "Reîmprospătează păstrează versiunea de pe dispozitiv, iar ea nu mai este oferită pentru descărcare. Folosește Actualizează pentru cea mai nouă versiune; aplicația își păstrează datele."
       }
     },
     "rpc": {
@@ -1109,7 +1113,6 @@
       "foundMany": "Găsită în {source} și în {count, plural, one {încă # sursă} few {încă # surse} other {încă # de surse}}. Reîmprospătarea o instalează din cea aleasă mai jos, păstrându-i datele, iar IPAForge o reîmprospătează de acum înainte.",
       "pickSource": "Instalează din",
       "choice": "{source} · {version}",
-      "choiceOlder": "{source} · {version} (mai veche decât cea instalată)",
       "how": "Adaugă o dată fișierul .ipa în Preîncărcare, iar IPAForge o reîmprospătează de acum înainte."
     },
     "auto": {

@@ -107,6 +107,8 @@ export type AppSource =
       readonly kind: 'catalog'
       readonly appId: string
       readonly channel?: Channel
+      /** Refresh: the installed version, which a refresh never changes; any other version is refused. */
+      readonly version?: string
     }
   | {
       readonly kind: 'file'
@@ -118,6 +120,8 @@ export type AppSource =
        * so a link (from an app's mark, or a source) can't put another app in its place, with its data.
        */
       readonly replaces?: string
+      /** Refresh: the installed version, which a refresh never changes; any other version is refused. */
+      readonly version?: string
     }
   | {
       /** An app installed before, signed again from its kept IPA (Refresh). */

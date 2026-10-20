@@ -90,6 +90,7 @@ export const RECOVERY_CATALOGUE = {
   'catalog.app_source_exists': [R.ImportIpa],
   'installer.kept_ipa_missing': [R.ImportIpa],
   'installer.wrong_app': [R.ImportIpa],
+  'installer.version_unavailable': [R.ImportIpa],
 
   'plist.invalid': [R.ChooseAnotherIpa, R.ReportIssue],
   'net.offline': [R.CheckNetwork, R.Retry],

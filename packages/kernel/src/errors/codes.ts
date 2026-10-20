@@ -112,6 +112,8 @@ export const ErrorCode = {
   /** Refresh: the app wasn't installed by IPAForge here, or its kept IPA is gone; it has to be added again. */
   KeptIpaMissing: 'installer.kept_ipa_missing',
   WrongApp: 'installer.wrong_app',
+  /** Refresh keeps the installed version, and that version can't be downloaded again (Update installs the newest). */
+  VersionUnavailable: 'installer.version_unavailable',
 
   // rpc
   /** A message between the Engine and the UI failed validation or refers to an unknown run or checkpoint. */

@@ -33,7 +33,8 @@ export const toAppSource = async (
     return compact({
       kind: source.kind,
       appId: source.appId,
-      channel: source.channel
+      channel: source.channel,
+      version: source.version
     })
   if (source.kind === 'installed')
     return context.engine.installedSource(context.udid, source.bundleId)
@@ -47,7 +48,8 @@ export const toAppSource = async (
       source.kind === 'url'
         ? { kind: 'url' as const, url: source.url }
         : { kind: 'file' as const, name: file.name },
-    replaces: source.replaces
+    replaces: source.replaces,
+    version: source.kind === 'url' ? source.version : undefined
   })
 }
 
