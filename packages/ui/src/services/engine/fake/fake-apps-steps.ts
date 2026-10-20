@@ -153,7 +153,7 @@ export const fakeAppsSteps = (
               `pairing-${index}`,
               StepLabel.pairing,
               1,
-              reporting({ kind: 'pairing', apps: [app.name] })
+              reporting({ kind: 'pairing', apps: [app.name], remote: true })
             )
           ]
         : []

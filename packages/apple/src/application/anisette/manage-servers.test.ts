@@ -168,6 +168,39 @@ describe('anisette servers in Settings', () => {
     })
   })
 
+  it('asks a server once when testing it, even when it answers with an error that would be retried', async () => {
+    const asked: string[] = []
+    const request = vi.fn(async (req: { url: string }) => {
+      asked.push(req.url)
+      return {
+        status: req.url === LIST_URL ? 200 : 502,
+        headers: {},
+        body: new Response(
+          req.url === LIST_URL
+            ? JSON.stringify({ servers: LIST })
+            : 'bad gateway'
+        ).body as ReadableStream<Uint8Array<ArrayBuffer>>
+      }
+    })
+    const anisette = createAnisetteService(
+      resolveAppleDeps({
+        http: { request } as unknown as HttpClient,
+        webSocket: undefined as never,
+        secrets: memorySecrets(),
+        clock: { now: () => new Date(1000) },
+        sleep: async () => {},
+        config: { retryAttempts: 4, fallbackAnisetteServers: BACKUP }
+      })
+    )
+
+    expect(await anisette.test('https://ani.sidestore.io')).toMatchObject({
+      ok: false
+    })
+    expect(
+      asked.filter((url) => url.startsWith('https://ani.sidestore.io'))
+    ).toHaveLength(1)
+  })
+
   it("fetches SideStore's list again when asked, whatever its age", async () => {
     const { anisette, asked } = setup()
     await anisette.overview()

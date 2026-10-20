@@ -37,6 +37,23 @@ const failedCode = (result: PipelineResult<InstallState>) =>
   result.status === 'failed' ? result.error.code : result.status
 
 describe('installSideStore', () => {
+  it('on iOS 17.4 and later also gives SideStore its remote pairing, in its own file, and says so', async () => {
+    const h = createHarness({ device: { remotePairing: true } })
+    const events: RunEvent[] = []
+    const run = h.engine.installSideStore(input, { onPrompt: scripted() })
+    run.subscribe((event) => events.push(event))
+    const state = completed(await run.result)
+
+    expect(state.pairingPlaced?.map((target) => target.path)).toContain(
+      'Documents/PairingFile_RemoteRP.plist'
+    )
+    expect(
+      events.find(
+        (event) => event.type === 'step-detail' && event.stepId === 'pairing'
+      )
+    ).toMatchObject({ detail: { kind: 'pairing', remote: true } })
+  })
+
   it('runs every step in order and installs SideStore with its certificate and pairing file', async () => {
     const h = createHarness()
     const events: RunEvent[] = []

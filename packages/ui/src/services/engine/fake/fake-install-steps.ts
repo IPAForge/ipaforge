@@ -325,7 +325,7 @@ export const fakeInstallSteps = (
     'pairing',
     StepLabel.pairing,
     1,
-    reporting({ kind: 'pairing', apps: ['SideStore'] })
+    reporting({ kind: 'pairing', apps: ['SideStore'], remote: true })
   ),
   step(world, 'remember', StepLabel.remember, 1, quick)
 ]

@@ -169,6 +169,7 @@ export type FakeSideStoreState = {
   readonly signing: SideStoreHealth['signing']
   readonly ownCertificate: SideStoreHealth['ownCertificate']
   readonly pairing: SideStoreHealth['pairing']
+  readonly remotePairing: SideStoreHealth['remotePairing']
   readonly version: string
   readonly signedBy: SideStoreHealth['signedBy']
 }

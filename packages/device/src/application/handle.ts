@@ -18,6 +18,10 @@ import {
   removeProfile,
   removeStaleProfiles
 } from '@device/application/profiles.ts'
+import {
+  checkRemotePairing,
+  ensureRemotePairing
+} from '@device/application/remote-pairing.ts'
 import { openAfc, revealDeveloperMode } from '@device/application/services.ts'
 import type {
   AppFileStatus,
@@ -26,7 +30,11 @@ import type {
   DeviceSession,
   InstallIpaOptions,
   PairingTarget,
-  PlacePairingOptions
+  PlacedPairing,
+  PlacePairingOptions,
+  RemotePairingOptions,
+  RemotePairingResult,
+  RemotePairingState
 } from '@device/application/types.ts'
 import type { PairRecord } from '@device/domain/pairing/types.ts'
 import type {
@@ -61,18 +69,26 @@ export type DeviceHandle = {
   pairingTargets(teamIds: Iterable<string>): Promise<PairingTarget[]>
   /**
    * Writes this host's pairing file to the confirmed `targets`, enabling Wi-Fi debugging first, and verifies
-   * each write. The file grants lockdown access, so targets are always explicit. Returns the targets written.
+   * each write, and on iOS 17.4 and later SideStore's remote pairing next to it. The file grants lockdown access, so
+   * targets are always explicit. Returns what was written.
    */
   placePairingFile(
     targets: readonly AppFileTarget[],
     options?: PlacePairingOptions
-  ): Promise<readonly AppFileTarget[]>
+  ): Promise<PlacedPairing>
   appFileStatus(targets: readonly AppFileTarget[]): Promise<AppFileStatus[]>
   revealDeveloperMode(): Promise<void>
   /** The device's media file system (`/var/mobile/Media`, incl. `PublicStaging`). Close it when done. */
   openMedia(): Promise<AfcClient>
   /** Lets SideStore and other on-device tools reach lockdownd over Wi-Fi/VPN. Needs a passcode on the device. */
   enableWifiDebugging(): Promise<void>
+  /**
+   * The remote pairing (iOS 17.4 and later) for SideStore: the saved one when the device still accepts it, else a
+   * new one, which may show the Trust prompt.
+   */
+  remotePairing(options?: RemotePairingOptions): Promise<RemotePairingResult>
+  /** Whether the device accepts this computer's saved remote pairing (read-only). */
+  checkRemotePairing(): Promise<RemotePairingState>
   /** The low-level session, for anything not covered above. */
   readonly session: DeviceSession
   close(): Promise<void>
@@ -97,13 +113,13 @@ export const createDeviceHandle = (
   writeAppFile: (target, data) => writeAppFile(ctx, session, target, data),
   readAppFile: (target) => readAppFile(ctx, session, target),
   pairingTargets: (teamIds) => pairingTargets(ctx, session, teamIds),
-  placePairingFile: async (targets, options) => {
-    await placePairingFile(ctx, session, targets, options)
-    return targets
-  },
+  placePairingFile: (targets, options) =>
+    placePairingFile(ctx, session, targets, options),
   appFileStatus: (targets) => appFileStatus(ctx, session, targets),
   revealDeveloperMode: () => revealDeveloperMode(ctx, session),
   openMedia: () => openAfc(ctx, session),
   enableWifiDebugging: () => session.enableWifiDebugging(),
+  remotePairing: (options) => ensureRemotePairing(ctx, session, options),
+  checkRemotePairing: () => checkRemotePairing(ctx, session),
   close: () => session.close()
 })

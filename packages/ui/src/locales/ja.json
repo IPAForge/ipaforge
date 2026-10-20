@@ -207,7 +207,8 @@
         },
         "pairing": "{apps}に配置",
         "shared": "証明書を共有しました",
-        "notShared": "証明書は共有していません"
+        "notShared": "証明書は共有していません",
+        "pairingRemote": "{apps}に配置 · iOS 17.4 以降用のリモートペアリング付き"
       },
       "subtitleApps": "{device} · {appleId}"
     },
@@ -1537,7 +1538,19 @@
       "open": "SideStoreを開いて、アプリをリフレッシュしてください。"
     },
     "open": "SideStoreを確認",
-    "checkingTag": "確認中…"
+    "checkingTag": "確認中…",
+    "remote": {
+      "title": "iOS 17.4 以降用のリモートペアリング",
+      "ok": "あり、{device}が受け入れています。",
+      "missing": "ありません: SideStore は従来のペアリングしか使えません。このコンピュータのペアリングファイルを配置すると追加されます。",
+      "missingTag": "なし",
+      "rejected": "{device}がもう受け入れていません (信頼がリセットされました)。このコンピュータのペアリングファイルを配置すると新しく作られます。",
+      "rejectedTag": "受け入れられていません",
+      "other": "別のコンピュータのものなので、IPAForge は確認できません。このコンピュータのペアリングファイルを配置すると置き換えられます。",
+      "otherTag": "別のコンピュータ",
+      "notNeeded": "iOS 17.4 未満では不要です。",
+      "notNeededTag": "不要"
+    }
   },
   "sidestore": {
     "addSource": "SideStoreに追加",

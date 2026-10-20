@@ -65,7 +65,12 @@ export type StepDetail =
       readonly kind: 'install-phase'
       readonly phase: 'uploading' | 'installing'
     }
-  | { readonly kind: 'pairing'; readonly apps: readonly string[] }
+  | {
+      readonly kind: 'pairing'
+      readonly apps: readonly string[]
+      /** SideStore also got its remote pairing (iOS 17.4 and later). */
+      readonly remote?: boolean
+    }
   | { readonly kind: 'certificate-shared'; readonly isShared: boolean }
 
 export type PipelineEvent =

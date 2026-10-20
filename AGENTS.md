@@ -22,7 +22,7 @@ ipaforge/
 ├── packages/
 │   ├── kernel/       # IPAForgeError/ErrorCode, ports (Logger, HttpClient, SecretStore, FileSource), bytes and text utils, plist
 │   ├── signer/       # Mach-O code signing (CodeDirectory, CodeResources, entitlements, CMS, fat, bundles, IPA)
-│   ├── device/       # usbmux, lockdown, pairing, AFC, house_arrest, installation_proxy
+│   ├── device/       # usbmux, lockdown, pairing (classic and iOS 17.4+ remote), AFC, house_arrest, installation_proxy
 │   ├── apple/        # GSA auth + 2FA, anisette provider chain, developer services API
 │   ├── catalog/      # release sources (GitHub API), downloads, cache, AltStore-format app sources
 │   ├── installer/    # pipelines/flows, diagnostics, Engine facade

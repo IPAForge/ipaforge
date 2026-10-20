@@ -1,5 +1,6 @@
 import type { LockdownSession } from '@device/application/lockdown.ts'
 import type { PairRecord } from '@device/domain/pairing/types.ts'
+import type { RemotePairingRecord } from '@device/domain/remote-pairing/types.ts'
 import type { DeviceInfo, UsbmuxDevice } from '@device/domain/types.ts'
 import type { Link } from '@device/infrastructure/framing/link.ts'
 import type { ContainerMode } from '@device/infrastructure/house-arrest/client.ts'
@@ -93,6 +94,21 @@ export type PlacePairingOptions = {
    * Wi-Fi/VPN with this file, which only works once it is enabled; it fails without a passcode.
    */
   readonly enableWifiDebugging?: boolean
+  /**
+   * Also give SideStore its remote pairing on iOS 17.4 and later (default true): made or reused, then written to
+   * the app's remote pairing file next to the classic one.
+   */
+  readonly remotePairing?: boolean
+  /** Making the remote pairing shows the Trust prompt and waits for the user. */
+  readonly onAwaitingConsent?: () => void
+}
+
+/** What placing the pairing file wrote: the classic files, and the remote ones with how the pairing came about. */
+export type PlacedPairing = {
+  readonly classic: readonly AppFileTarget[]
+  readonly remote: readonly AppFileTarget[]
+  /** Reused (still accepted) or made now; absent when no remote pairing was written. */
+  readonly remoteHow?: RemotePairingResult['how']
 }
 
 export type OpenSessionOptions = PairOptions & {
@@ -125,3 +141,22 @@ export type DeviceSession = {
 export type StartedSession = LockdownSession & {
   readonly pairRecord: PairRecord
 }
+
+/** Making or reusing the remote pairing (iOS 17.4 and later). */
+export type RemotePairingOptions = {
+  /** The device shows a prompt (Trust this computer) and waits for the user. */
+  readonly onAwaitingConsent?: () => void
+  /** Make a new one even when the saved one is still accepted. */
+  readonly forceNew?: boolean
+}
+
+/** The remote pairing to give SideStore, and whether it was reused (still accepted) or made now. */
+export type RemotePairingResult = {
+  readonly record: RemotePairingRecord
+  readonly how: 'verified' | 'created'
+}
+
+/** Whether the device accepts this computer's saved remote pairing, and that pairing's identifier when there is one. */
+export type RemotePairingState =
+  | { readonly state: 'accepted' | 'rejected'; readonly identifier: string }
+  | { readonly state: 'missing' }

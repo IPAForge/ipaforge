@@ -214,6 +214,16 @@ export type SideStoreHealth = {
   readonly ownCertificate: 'valid' | 'missing' | 'other'
   /** Its pairing file: this computer's, another computer's, or none. */
   readonly pairing: 'this-computer' | 'other-computer' | 'missing'
+  /**
+   * Its remote pairing file (iOS 17.4 and later): this computer's and accepted by the device, this computer's but
+   * no longer accepted, another computer's (not checked), none, or not needed below iOS 17.4.
+   */
+  readonly remotePairing:
+    | 'accepted'
+    | 'rejected'
+    | 'other-computer'
+    | 'missing'
+    | 'not-needed'
 }
 
 /** What Repair SideStore found: the device's state and, when it's installed, SideStore's health. */

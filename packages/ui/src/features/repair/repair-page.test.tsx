@@ -94,7 +94,20 @@ describe('Repair SideStore', () => {
       within(await lineOf(t('repair.signing.title'))).getByText(t('repair.ok'))
     ).toBeDefined()
     expect(
+      within(await lineOf(t('repair.remote.title'))).getByText(t('repair.ok'))
+    ).toBeDefined()
+    expect(
       screen.getByRole('list', { name: t('repair.manual.title') })
+    ).toBeDefined()
+  })
+
+  it('says when the device no longer accepts the remote pairing', async () => {
+    await open({ scenario: 'sidestore-broken' })
+
+    expect(
+      within(await lineOf(t('repair.remote.title'))).getByText(
+        t('repair.remote.rejectedTag')
+      )
     ).toBeDefined()
   })
 

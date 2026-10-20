@@ -20,7 +20,33 @@ const health = (changes: Partial<SideStoreHealth> = {}): SideStoreHealth => ({
   signing: 'valid',
   ownCertificate: 'valid',
   pairing: 'this-computer',
+  remotePairing: 'accepted',
   ...changes
+})
+
+describe('repairPlan, remote pairing (iOS 17.4 and later)', () => {
+  it('needs the pairing file when the device no longer accepts the remote pairing', () => {
+    expect(
+      repairPlan(health({ remotePairing: 'rejected' }), NOW).required
+    ).toEqual(['pairing'])
+  })
+
+  it("offers it when there is none, or another computer's, since the classic pairing still works", () => {
+    for (const remotePairing of ['missing', 'other-computer'] as const)
+      expect(repairPlan(health({ remotePairing }), NOW)).toEqual({
+        required: [],
+        optional: ['pairing'],
+        blocked: false
+      })
+  })
+
+  it('needs nothing below iOS 17.4', () => {
+    expect(repairPlan(health({ remotePairing: 'not-needed' }), NOW)).toEqual({
+      required: [],
+      optional: [],
+      blocked: false
+    })
+  })
 })
 
 describe('repairPlan', () => {

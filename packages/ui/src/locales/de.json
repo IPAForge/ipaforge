@@ -207,7 +207,8 @@
         },
         "pairing": "Abgelegt in {apps}",
         "shared": "Zertifikat geteilt",
-        "notShared": "Zertifikat nicht geteilt"
+        "notShared": "Zertifikat nicht geteilt",
+        "pairingRemote": "Abgelegt in {apps} · mit Remote-Kopplung für iOS 17.4 und neuer"
       },
       "subtitleApps": "{device} · {appleId}"
     },
@@ -1537,7 +1538,19 @@
       "open": "Öffne SideStore und erneuere deine Apps."
     },
     "open": "SideStore prüfen",
-    "checkingTag": "Wird geprüft …"
+    "checkingTag": "Wird geprüft …",
+    "remote": {
+      "title": "Remote-Kopplung für iOS 17.4 und neuer",
+      "ok": "Vorhanden, und {device} akzeptiert sie.",
+      "missing": "Fehlt: SideStore kann nur die klassische Kopplung nutzen. Das Ablegen der Kopplungsdatei dieses Computers fügt sie hinzu.",
+      "missingTag": "Fehlt",
+      "rejected": "{device} akzeptiert sie nicht mehr (sein Vertrauen wurde zurückgesetzt). Das Ablegen der Kopplungsdatei dieses Computers erstellt eine neue.",
+      "rejectedTag": "Nicht akzeptiert",
+      "other": "Sie gehört einem anderen Computer, daher kann IPAForge sie nicht prüfen. Das Ablegen der Kopplungsdatei dieses Computers ersetzt sie.",
+      "otherTag": "Anderer Computer",
+      "notNeeded": "Unter iOS 17.4 nicht nötig.",
+      "notNeededTag": "Nicht nötig"
+    }
   },
   "sidestore": {
     "addSource": "Zu SideStore hinzufügen",

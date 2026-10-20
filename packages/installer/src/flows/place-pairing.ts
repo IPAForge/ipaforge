@@ -95,13 +95,20 @@ const placeStep = (runtime: FlowRuntime): Step<PairingState> => ({
   weight: StepWeight.pairing,
   run: async (state, context) => {
     const targets = required(state.targets, 'pairing targets')
-    const placed =
-      targets.length === 0
-        ? []
-        : await (await runtime.device(state.udid)).placePairingFile(targets)
-    context.detail({ kind: 'pairing', apps: placedApps(targets, placed) })
+    if (targets.length === 0) {
+      context.detail({ kind: 'pairing', apps: [] })
+      return { placed: [] }
+    }
+    const { classic, remote } = await (
+      await runtime.device(state.udid)
+    ).placePairingFile(targets)
+    context.detail(
+      remote.length > 0
+        ? { kind: 'pairing', apps: placedApps(targets, classic), remote: true }
+        : { kind: 'pairing', apps: placedApps(targets, classic) }
+    )
 
-    return { placed }
+    return { placed: [...classic, ...remote] }
   }
 })
 

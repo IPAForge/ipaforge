@@ -25,8 +25,10 @@ import type {
   DeviceProfile,
   InstalledApp,
   InstallIpaOptions,
-  PairingTarget
+  PairingTarget,
+  RemotePairingState
 } from '@ipaforge/device'
+import { remotePairingTargets } from '@ipaforge/device'
 import {
   bytesFileSource,
   createDict,
@@ -92,6 +94,10 @@ export const memoryScratch = (): ScratchStore & {
 // --- device -------------------------------------------------------------------------------------------------
 
 export type FakeDeviceOptions = {
+  /** iOS 17.4 or later: placing the pairing file also gives SideStore its remote pairing. */
+  remotePairing?: boolean
+  /** What the device says about this computer's saved remote pairing (default: none saved). */
+  savedRemotePairing?: RemotePairingState
   /** How the device is reached (default `usb`). */
   connection?: 'usb' | 'network'
   locked?: boolean
@@ -201,15 +207,22 @@ export const fakeDevices = (options: FakeDeviceOptions = {}) => {
         [...installed].filter(([bundleId]) => bundleIds.includes(bundleId))
       ),
     pairingTargets: async () => options.pairingTargets ?? [],
+    // On iOS 17.4 and later (`remotePairing`), SideStore also gets its remote pairing file.
     placePairingFile: async (targets: readonly AppFileTarget[]) => {
       calls.placed.push([...targets])
-      return targets
+      const remote = options.remotePairing ? remotePairingTargets(targets) : []
+
+      return remote.length > 0
+        ? { classic: targets, remote, remoteHow: 'created' as const }
+        : { classic: targets, remote }
     },
     appFileStatus: async (targets: readonly AppFileTarget[]) =>
       targets.map((target) => ({
         target,
         exists: target.path.includes('Legacy') || files.has(fileKey(target))
       })),
+    checkRemotePairing: async () =>
+      options.savedRemotePairing ?? { state: 'missing' as const },
     readAppFile: async (target: AppFileTarget) => {
       const data = files.get(fileKey(target))
 

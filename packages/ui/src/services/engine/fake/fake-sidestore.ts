@@ -1,8 +1,8 @@
 // Repair SideStore for the fake Engine: the check reads the fake installed SideStore (its expiry) and the
 // scenario's problems; a repair run plays the fixes it was asked for and clears those problems.
-//   sidestore-broken      expired, holding no certificate, no pairing file
+//   sidestore-broken      expired, holding no certificate, no pairing file, a remote pairing the device refuses
 //   sidestore-unknown     installed by another tool (no mark), holding a replaced certificate, another computer's
-//                         pairing file, an older version
+//                         pairing files, an older version
 //   sidestore-other-team  signed by another Apple ID, and expired
 // Any other scenario: a SideStore with nothing wrong (none at all in `no-apps`).
 import { compact } from '@ipaforge/kernel'
@@ -33,6 +33,7 @@ const initialState = (scenario: string): FakeSideStoreState => {
       signing: 'valid',
       ownCertificate: 'missing',
       pairing: 'missing',
+      remotePairing: 'rejected',
       version: LATEST,
       signedBy: 'team'
     }
@@ -41,6 +42,7 @@ const initialState = (scenario: string): FakeSideStoreState => {
       signing: 'unknown',
       ownCertificate: 'other',
       pairing: 'other-computer',
+      remotePairing: 'other-computer',
       version: '0.6.2',
       signedBy: 'team'
     }
@@ -50,6 +52,7 @@ const initialState = (scenario: string): FakeSideStoreState => {
       signing: 'unknown',
       ownCertificate: 'valid',
       pairing: 'this-computer',
+      remotePairing: 'accepted',
       version: LATEST,
       signedBy: 'other-apple-id'
     }
@@ -58,6 +61,7 @@ const initialState = (scenario: string): FakeSideStoreState => {
     signing: 'valid',
     ownCertificate: 'valid',
     pairing: 'this-computer',
+    remotePairing: 'accepted',
     version: LATEST,
     signedBy: 'team'
   }
@@ -93,7 +97,7 @@ const repairSteps = (
             'pairing',
             StepLabel.pairing,
             1,
-            reporting({ kind: 'pairing', apps: ['SideStore'] })
+            reporting({ kind: 'pairing', apps: ['SideStore'], remote: true })
           )
         ]
       : [])
@@ -133,7 +137,8 @@ export const createFakeSideStore = (
               : new Date(Date.now() - state.expiredDays * DAY_MS),
           signing: state.signing,
           ownCertificate: state.ownCertificate,
-          pairing: state.pairing
+          pairing: state.pairing,
+          remotePairing: state.remotePairing
         })
       }
     },
@@ -145,6 +150,7 @@ export const createFakeSideStore = (
             signing: 'valid' as const,
             ownCertificate: 'valid' as const,
             pairing: 'this-computer' as const,
+            remotePairing: 'accepted' as const,
             version: LATEST
           }
         : {}
@@ -155,7 +161,12 @@ export const createFakeSideStore = (
       state = {
         ...rest,
         ...reinstalled,
-        ...(input.pairing ? { pairing: 'this-computer' as const } : {}),
+        ...(input.pairing
+          ? {
+              pairing: 'this-computer' as const,
+              remotePairing: 'accepted' as const
+            }
+          : {}),
         ...(renewed || expiredDays === undefined ? {} : { expiredDays })
       }
     }

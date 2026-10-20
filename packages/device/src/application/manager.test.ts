@@ -524,8 +524,10 @@ describe('automatic pairing placement', () => {
     expect(new Set(targets.map((t) => t.appName))).toEqual(
       new Set(['SideStore', 'StikDebug'])
     )
-    const placed = await handle.placePairingFile(targets)
+    const { classic: placed, remote } = await handle.placePairingFile(targets)
     expect(impostor.container.files.size).toBe(0)
+    // The fake device offers no remote pairing service: the classic files are placed all the same.
+    expect(remote).toEqual([])
     expect(placed.map((t) => `${t.bundleId}:${t.path}`).sort()).toEqual([
       'com.SideStore.SideStore.ABCDE12345:Documents/ALTPairingFile.mobiledevicepairing',
       'com.SideStore.SideStore.ABCDE12345:Documents/PairingFile_Lockdown.plist',
