@@ -114,7 +114,9 @@ IPAForge places the pairing file and certificate SideStore needs automatically.
 - **Updates:** IPAForge checks for a new version each time it opens.
   - **The macOS app, the Windows `.exe` and the AppImage update themselves.** While the new version downloads and installs, IPAForge shows how far along it is, then opens again by itself, and **What's new** says what changed. If it is offline it opens as it is and checks again next time. If the download fails you can **Try again**, open the release page, or use the version you have for now.
   - **The `.msi`, `.deb` and `.rpm` packages can't update themselves.** IPAForge says a new version is out and names the file to download. Install it over the one you have: your Apple IDs, apps and settings stay.
+  - **Every update is checked before it installs.** Its file must carry the Sigstore signature IPAForge's release workflow made for that version. A file changed after the release, or not published by it, is refused.
   - **What's new** at the foot of the sidebar lists the changes in every version. The release notes are in English.
+- **Company proxies and your own servers:** IPAForge trusts the certificates your system trusts, as well as its own. If your company inspects HTTPS, or you run an anisette server with your own certificate authority, add its certificate to the system's store (Keychain Access on macOS, the certificate manager on Windows, `/usr/local/share/ca-certificates` on Linux).
 - **Uninstall:**
   - **Windows:** Settings › Apps;
   - **macOS:** drag IPAForge to the Bin;

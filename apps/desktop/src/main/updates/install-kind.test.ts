@@ -52,10 +52,9 @@ describe('installKind', () => {
     (type) => {
       const kind = installKind(
         probe({
+          // Any separator: the test also runs on Windows, where `join` uses backslashes.
           readText: (path) =>
-            path === '/opt/IPAForge/resources/package-type'
-              ? `${type}\n`
-              : undefined
+            /resources[/\\]package-type$/.test(path) ? `${type}\n` : undefined
         })
       )
 

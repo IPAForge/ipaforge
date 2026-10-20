@@ -1,6 +1,10 @@
 // electron-updater behind the update service's port: it never downloads or installs on its own, it takes
 // prereleases (every alpha is one) but never an older version, and it logs into IPAForge's log.
-import type { AppUpdater, ProgressInfo } from 'electron-updater'
+import type {
+  AppUpdater,
+  ProgressInfo,
+  UpdateDownloadedEvent
+} from 'electron-updater'
 
 import type { UpdaterPort } from '@desktop/main/updates/types.ts'
 import type { Logger } from '@ipaforge/kernel'
@@ -30,7 +34,7 @@ export const electronUpdaterPort = (
 
       return result?.isUpdateAvailable ? result.updateInfo.version : undefined
     },
-    // Settles on `update-downloaded`: on macOS that is when Squirrel has the update too, so installing works.
+    // Settles on `update-downloaded`. On macOS Squirrel still takes the file over after that; `install` waits for it.
     download: (onProgress) =>
       new Promise((resolve, reject) => {
         const onDownloadProgress = (progress: ProgressInfo) =>
@@ -44,9 +48,9 @@ export const electronUpdaterPort = (
           updater.off('update-downloaded', onDownloaded)
           updater.off('error', onError)
         }
-        const onDownloaded = () => {
+        const onDownloaded = (event: UpdateDownloadedEvent) => {
           stop()
-          resolve()
+          resolve(event.downloadedFile)
         }
         const onError = (error: Error) => {
           stop()
@@ -57,7 +61,12 @@ export const electronUpdaterPort = (
         updater.on('error', onError)
         updater.downloadUpdate().catch(onError)
       }),
-    // Silent on Windows (no installer wizard), and opens the new version afterwards.
-    install: () => updater.quitAndInstall(true, true)
+    // Silent on Windows (no installer wizard), and opens the new version afterwards. It never settles when it works
+    // (IPAForge quits); an error before then, Squirrel refusing the update on macOS say, rejects.
+    install: () =>
+      new Promise((_resolve, reject) => {
+        updater.once('error', reject)
+        updater.quitAndInstall(true, true)
+      })
   }
 }

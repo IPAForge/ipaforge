@@ -1,0 +1,15 @@
+diff --git a/dist/utils/verify.js b/dist/utils/verify.js
+index 8232b6f6a97ab1713303f5e3696f4de253b8e22b..48a305e541920fb773cddb3d7832d4f84854958c 100644
+--- a/dist/utils/verify.js
++++ b/dist/utils/verify.js
+@@ -8,6 +8,9 @@ const canonical_json_1 = require("@tufjs/canonical-json");
+ const crypto_1 = __importDefault(require("crypto"));
+ const verifySignature = (metaDataSignedData, key, signature) => {
+     const canonicalData = Buffer.from((0, canonical_json_1.canonicalize)(metaDataSignedData));
+-    return crypto_1.default.verify(undefined, canonicalData, key, Buffer.from(signature, 'hex'));
++    // IPAForge: name SHA-256 for EC and RSA keys, as OpenSSL assumes; Electron's BoringSSL assumes no hash and fails.
++    const keyType = (key.key ?? key).asymmetricKeyType;
++    const algorithm = keyType === 'ec' || keyType === 'rsa' ? 'sha256' : undefined;
++    return crypto_1.default.verify(algorithm, canonicalData, key, Buffer.from(signature, 'hex'));
+ };
+ exports.verifySignature = verifySignature;

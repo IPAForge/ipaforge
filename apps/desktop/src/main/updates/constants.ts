@@ -4,6 +4,11 @@ import type { ManualPackage } from '@ipaforge/rpc'
 /** IPAForge's releases on GitHub: each one's page, and its files under `download/`. */
 export const RELEASES_URL = 'https://github.com/SirReaDy/ipaforge/releases'
 
+/** Who signs IPAForge's releases: its release workflow, through GitHub's OIDC issuer (`release.yml` on a tag). */
+export const RELEASE_WORKFLOW_IDENTITY =
+  'https://github.com/SirReaDy/ipaforge/.github/workflows/release.yml'
+export const SIGSTORE_ISSUER = 'https://token.actions.githubusercontent.com'
+
 /** How long the check may take before IPAForge opens without it (offline, a slow network). */
 export const CHECK_TIMEOUT_MS = 15_000
 

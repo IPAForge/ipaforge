@@ -1,45 +1,58 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
-import type { InstallKind, UpdaterPort } from '@desktop/main/updates/types.ts'
+import type {
+  InstallKind,
+  UpdaterPort,
+  UpdateVerifier
+} from '@desktop/main/updates/types.ts'
 import { createUpdateService } from '@desktop/main/updates/update-service.ts'
 import { silentLogger as logger } from '@ipaforge/kernel'
 import type { UpdateState } from '@ipaforge/rpc'
 
 const NEXT = '0.1.0-alpha.99'
+const FILE = `/cache/pending/IPAForge-${NEXT}-mac-arm64.zip`
 
 /** An updater whose check and download the test answers. */
 const fakeUpdater = (version: string | undefined) => {
-  let finishDownload: (() => void) | undefined
+  let finishDownload: ((file: string) => void) | undefined
   let failDownload: ((error: Error) => void) | undefined
   let reportProgress: Parameters<UpdaterPort['download']>[0] | undefined
   const port = {
     check: vi.fn(async () => version),
     download: vi.fn(
       (onProgress: Parameters<UpdaterPort['download']>[0]) =>
-        new Promise<void>((resolve, reject) => {
+        new Promise<string>((resolve, reject) => {
           reportProgress = onProgress
           finishDownload = resolve
           failDownload = reject
         })
     ),
-    install: vi.fn()
+    install: vi.fn(() => new Promise<void>(() => {}))
   } satisfies UpdaterPort
 
   return {
     port,
     progress: (transferred: number) =>
       reportProgress?.({ transferred, total: 100, bytesPerSecond: 10 }),
-    finish: () => finishDownload?.(),
+    finish: () => finishDownload?.(FILE),
     fail: (message: string) => failDownload?.(new Error(message))
   }
 }
 
+/** Signed by the release, unless the test says otherwise. */
+const signedBy = (error?: Error) => ({
+  verify: vi.fn(async () => {
+    if (error) throw error
+  })
+})
+
 const start = (
   updater: UpdaterPort | undefined,
   kind: InstallKind = 'self',
-  arch = 'x64'
+  arch = 'x64',
+  verifier: UpdateVerifier = signedBy()
 ) => {
-  const service = createUpdateService({ updater, kind, arch, logger })
+  const service = createUpdateService({ updater, verifier, kind, arch, logger })
   const states: UpdateState[] = []
   service.subscribe((state) => states.push(state))
   service.start()
@@ -86,6 +99,57 @@ describe('createUpdateService', () => {
 
     await vi.runAllTimersAsync()
     expect(updater.port.install).toHaveBeenCalledOnce()
+  })
+
+  it('checks the downloaded file against its release before installing it', async () => {
+    const updater = fakeUpdater(NEXT)
+    const verifier = signedBy()
+    start(updater.port, 'self', 'x64', verifier)
+    await vi.advanceTimersByTimeAsync(0)
+
+    updater.finish()
+    await vi.runAllTimersAsync()
+
+    expect(verifier.verify).toHaveBeenCalledWith(FILE, NEXT)
+    expect(updater.port.install).toHaveBeenCalledOnce()
+  })
+
+  it('never installs a file whose signature is not its release', async () => {
+    const updater = fakeUpdater(NEXT)
+    const { service } = start(
+      updater.port,
+      'self',
+      'x64',
+      signedBy(new Error('certificate identity error'))
+    )
+    await vi.advanceTimersByTimeAsync(0)
+
+    updater.finish()
+    await vi.runAllTimersAsync()
+
+    expect(service.current()).toMatchObject({
+      phase: 'failed',
+      version: NEXT,
+      reason: 'certificate identity error'
+    })
+    expect(updater.port.install).not.toHaveBeenCalled()
+  })
+
+  it('says so when installing fails before IPAForge quits', async () => {
+    const updater = fakeUpdater(NEXT)
+    updater.port.install.mockRejectedValueOnce(
+      new Error('Code signature did not match')
+    )
+    const { service } = start(updater.port)
+    await vi.advanceTimersByTimeAsync(0)
+
+    updater.finish()
+    await vi.runAllTimersAsync()
+
+    expect(service.current()).toMatchObject({
+      phase: 'failed',
+      reason: 'Code signature did not match'
+    })
   })
 
   it('says why a download failed, and tries again when asked', async () => {

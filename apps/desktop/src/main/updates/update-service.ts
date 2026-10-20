@@ -1,7 +1,7 @@
 // Updating IPAForge on launch: check, and if a newer version is out, download it, quit, install it and open it
 // again, while the window shows how far along it is. A check that fails or takes too long (offline) opens this
-// version; a failed download lets the user try again or go on. A package that can't update itself only says
-// which file to download.
+// version; a failed download, or a file whose signature isn't IPAForge's release's, lets the user try again or go
+// on. A package that can't update itself only says which file to download.
 import {
   CHECK_TIMEOUT_MS,
   INSTALL_DELAY_MS
@@ -38,6 +38,7 @@ const withTimeout = <T>(promise: Promise<T>, ms: number): Promise<T> =>
 
 export const createUpdateService = ({
   updater,
+  verifier,
   kind,
   arch,
   logger,
@@ -63,11 +64,16 @@ export const createUpdateService = ({
       bytesPerSecond: 0
     })
     try {
-      await port.download((progress) =>
+      const file = await port.download((progress) =>
         set({ phase: 'downloading', version, ...progress })
       )
+      await verifier.verify(file, version)
+      log.info("the update is signed by IPAForge's release", { version })
     } catch (error) {
-      log.warn('the update did not download', { version, error })
+      log.warn('the update did not download or is not signed by its release', {
+        version,
+        error
+      })
       set({
         phase: 'failed',
         version,
@@ -78,7 +84,17 @@ export const createUpdateService = ({
     }
     log.info('installing the update', { version })
     set({ phase: 'installing', version })
-    setTimeout(() => port.install(), installDelayMs)
+    setTimeout(() => {
+      port.install().catch((error: unknown) => {
+        log.warn('the update did not install', { version, error })
+        set({
+          phase: 'failed',
+          version,
+          reason: reasonOf(error),
+          url: releasePage(version)
+        })
+      })
+    }, installDelayMs)
   }
 
   const run = async (port: UpdaterPort) => {

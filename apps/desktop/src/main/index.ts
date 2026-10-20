@@ -5,6 +5,7 @@
 // The renderer never gets file paths of its own: importing IPAs (Phase 9) opens a file dialog here, in main.
 
 import { existsSync, readFileSync } from 'node:fs'
+import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
 
 import {
@@ -12,6 +13,7 @@ import {
   BrowserWindow,
   dialog,
   MessageChannelMain,
+  net,
   safeStorage,
   session,
   shell,
@@ -31,9 +33,12 @@ import {
   lockDownWebContents,
   restrictPermissions
 } from '@desktop/main/security.ts'
+import { trustSystemCertificates } from '@desktop/main/system-trust.ts'
 import { electronUpdaterPort } from '@desktop/main/updates/electron-updater.ts'
+import { createFetchJson } from '@desktop/main/updates/fetch-json.ts'
 import { installKind } from '@desktop/main/updates/install-kind.ts'
 import { serveUpdateState } from '@desktop/main/updates/serve-updates.ts'
+import { createSigstoreVerifier } from '@desktop/main/updates/sigstore-verifier.ts'
 import { createUpdateService } from '@desktop/main/updates/update-service.ts'
 import { createMainWindow } from '@desktop/main/window.ts'
 import type { Logger } from '@ipaforge/kernel'
@@ -88,12 +93,17 @@ const readText = (path: string): string | undefined => {
   }
 }
 
-/** Updating on launch; a development build has nothing to update. */
+/** Updating on launch, each update checked against its release's Sigstore signature; a development build has nothing to update. */
 const createUpdates = (logger: Logger) =>
   createUpdateService({
     updater: app.isPackaged
       ? electronUpdaterPort(electronUpdater.autoUpdater, logger)
       : undefined,
+    verifier: createSigstoreVerifier({
+      fetchJson: createFetchJson((url) => net.fetch(url)),
+      readFile,
+      tufCachePath: join(app.getPath('userData'), 'sigstore')
+    }),
     kind: installKind({
       platform: process.platform,
       appImage: process.env.APPIMAGE,
@@ -118,6 +128,7 @@ const openWindow = (
 
 const start = (logging: MainLogging): void => {
   const { logger } = logging
+  trustSystemCertificates(logger)
   app.on('web-contents-created', (_event, contents) =>
     lockDownWebContents(contents, logger, (url) => shell.openExternal(url))
   )

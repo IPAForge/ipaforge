@@ -1,0 +1,29 @@
+diff --git a/dist/crypto.js b/dist/crypto.js
+index 8d8110ee4234766dc639b4c01b3cc6d6ba980d40..73f3b5993ce695ffd0a3b47701dd7a73f9846e80 100644
+--- a/dist/crypto.js
++++ b/dist/crypto.js
+@@ -47,11 +47,23 @@ function digest(algorithm, ...data) {
+     }
+     return hash.digest();
+ }
++// IPAForge: without a hash, OpenSSL assumes SHA-256 for EC and RSA keys; Electron's BoringSSL assumes none and every
++// such signature fails. Name it, so both behave like OpenSSL.
++function defaultAlgorithm(key) {
++    try {
++        // A KeyObject already knows its type (and createPublicKey refuses a public one); anything else is parsed.
++        const keyType = key.asymmetricKeyType ?? crypto_1.default.createPublicKey(key).asymmetricKeyType;
++        return keyType === 'ec' || keyType === 'rsa' ? 'sha256' : undefined;
++    }
++    catch {
++        return undefined;
++    }
++}
+ function verify(data, key, signature, algorithm) {
+     // The try/catch is to work around an issue in Node 14.x where verify throws
+     // an error in some scenarios if the signature is invalid.
+     try {
+-        return crypto_1.default.verify(algorithm, data, key, signature);
++        return crypto_1.default.verify(algorithm ?? defaultAlgorithm(key), data, key, signature);
+     }
+     catch (e) {
+         /* istanbul ignore next */
