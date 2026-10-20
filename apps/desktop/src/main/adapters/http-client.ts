@@ -1,5 +1,6 @@
 // Node HttpClient over node:https.
-// - Trust: the standard Node roots plus Apple Root CA (see http/trusted-roots.ts). Verification stays on.
+// - Trust: the standard Node roots, the OS's certificates and Apple Root CA (see http/trusted-roots.ts). Verification
+//   stays on.
 // - Every request uses a fresh connection (no agent pooling): Apple's GrandSlam front door rate-limits pooled
 //   connections.
 // - Redirects are followed only when safe (see http/redirects.ts); compressed bodies are decoded.

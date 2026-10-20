@@ -4,7 +4,7 @@ import {
   type LogLevel,
   type LogRecord
 } from '@ipaforge/kernel'
-import type { EngineClient } from '@ipaforge/rpc'
+import type { EngineClient, UpdateSource } from '@ipaforge/rpc'
 import { consoleLogSink } from '@ui/services/logging/console-log-sink.ts'
 import { createLocalStoragePreferences } from '@ui/services/preferences/local-storage-preferences.ts'
 import { createNavigatorClipboard } from '@ui/services/system/clipboard.ts'
@@ -13,6 +13,7 @@ import { createDownloadFileSaver } from '@ui/services/system/file-saver.ts'
 import { createWindowLinkOpener } from '@ui/services/system/link-opener.ts'
 import { createNavigatorLocaleSource } from '@ui/services/system/locale-source.ts'
 import type { UiServices } from '@ui/services/ui-services.ts'
+import { createFixedUpdateSource } from '@ui/services/updates/fixed-update-source.ts'
 
 export type BrowserServicesOptions = {
   readonly logLevel: LogLevel
@@ -21,6 +22,8 @@ export type BrowserServicesOptions = {
   readonly appVersion: string
   /** The Electron renderer's: the real path of a dropped file. Default: its name (for the fake Engine). */
   readonly droppedFilePath?: (file: File) => string | undefined
+  /** The Electron renderer's: the main process's updater. Default: idle, nothing to update. */
+  readonly updates?: UpdateSource
 }
 
 /**
@@ -33,7 +36,8 @@ export const createBrowserServices = (
     logLevel,
     engine,
     appVersion,
-    droppedFilePath = (file) => file.name
+    droppedFilePath = (file) => file.name,
+    updates = createFixedUpdateSource()
   }: BrowserServicesOptions
 ): UiServices => {
   // Every record goes to the Engine's log buffer (it keeps those at its own level), so the log viewer shows the
@@ -59,6 +63,7 @@ export const createBrowserServices = (
     files: createDownloadFileSaver({ document: host.document, URL }),
     droppedFilePath,
     links: createWindowLinkOpener(host),
-    appVersion
+    appVersion,
+    updates
   }
 }

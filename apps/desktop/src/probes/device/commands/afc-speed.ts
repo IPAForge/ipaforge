@@ -44,6 +44,9 @@ const timeWrite = async (
   }
 }
 
+/** "1.23 s" */
+const formatSeconds = (seconds: number): string => `${seconds.toFixed(2)} s`
+
 export const afcSpeedCommand =
   ({ args, pickDevice, show }: DeviceProbe) =>
   async (): Promise<void> => {
@@ -61,7 +64,7 @@ export const afcSpeedCommand =
       ]
       const best = Math.min(...runs)
 
-      const times = runs.map((seconds) => seconds.toFixed(2) + ' s').join(', ')
+      const times = runs.map(formatSeconds).join(', ')
 
       console.log(
         `${String(chunk / KIB).padStart(5)} KiB chunks: ${times} → ${(mb / best).toFixed(1)} MiB/s`

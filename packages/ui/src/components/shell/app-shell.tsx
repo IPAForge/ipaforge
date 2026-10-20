@@ -8,12 +8,13 @@ import { AutoRefresher } from '@ui/features/apps/components/auto-refresher.tsx'
 import { DeviceNotes } from '@ui/features/devices/components/device-notes.tsx'
 import { RunPromptHost } from '@ui/features/install/prompts/run-prompt-host.tsx'
 import { LogsShortcut } from '@ui/features/logs/components/logs-shortcut.tsx'
+import { WhatsNewHost } from '@ui/features/whats-new/components/whats-new-host.tsx'
 
 type AppShellProps = { children: ReactNode }
 
 /**
  * Top bar across the window, sidebar on the start edge, the current page in `main`, the run's questions, the
- * shortcut to Logs, and refreshing apps by themselves.
+ * shortcut to Logs, refreshing apps by themselves, and What's new after an update.
  */
 export const AppShell = ({ children }: AppShellProps) => (
   <div className="flex h-dvh flex-col bg-background text-foreground">
@@ -33,5 +34,6 @@ export const AppShell = ({ children }: AppShellProps) => (
     <RunPromptHost />
     <LogsShortcut />
     <AutoRefresher />
+    <WhatsNewHost />
   </div>
 )

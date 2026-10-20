@@ -1556,5 +1556,58 @@
     "notice": "{count, plural, one {# pas de făcut pe {device}} few {# pași de făcut pe {device}} other {# de pași de făcut pe {device}}}",
     "noticeBody": "Ca instalarea și reîmprospătarea să meargă fără probleme.",
     "showChecklist": "Arată lista"
+  },
+  "updates": {
+    "screen": {
+      "label": "IPAForge se actualizează"
+    },
+    "checking": {
+      "title": "Se caută actualizări…"
+    },
+    "downloading": {
+      "title": "IPAForge se actualizează",
+      "body": "Versiunea {version} a apărut. Se descarcă și se instalează acum, apoi IPAForge se redeschide singur.",
+      "starting": "Descărcarea începe…",
+      "percent": "{fraction, number, percent}"
+    },
+    "installing": {
+      "title": "Se instalează {version}…",
+      "body": "IPAForge se redeschide imediat."
+    },
+    "failed": {
+      "title": "Actualizarea nu s-a încheiat",
+      "body": "Versiunea {version} a apărut. Încearcă din nou sau descarc-o de pe pagina versiunii.",
+      "retry": "Încearcă din nou",
+      "releasePage": "Pagina versiunii",
+      "skip": "Folosește deocamdată această versiune"
+    },
+    "manual": {
+      "title": "A apărut IPAForge {version}",
+      "body": "Această copie a fost instalată dintr-{package, select, msi {un installer .msi} deb {un pachet .deb} rpm {un pachet .rpm} other {un pachet}}, care nu se poate actualiza singur. Descarcă versiunea nouă și instaleaz-o peste aceasta: ID-urile Apple, aplicațiile și setările rămân.",
+      "download": "Descarcă {version}",
+      "later": "Mai târziu"
+    }
+  },
+  "whatsNew": {
+    "link": "Noutăți",
+    "version": "Versiunea {version} · {date}",
+    "englishOnly": "Notele de versiune sunt în engleză.",
+    "kind": {
+      "new": "Nou",
+      "changed": "Schimbat",
+      "fixed": "Reparat",
+      "removed": "Eliminat"
+    },
+    "dialog": {
+      "title": "Noutăți în IPAForge",
+      "everyVersion": "Toate versiunile",
+      "close": "Am înțeles"
+    },
+    "page": {
+      "title": "Noutăți",
+      "lede": "Tot ce s-a schimbat în IPAForge, cele mai noi primele.",
+      "current": "Această versiune",
+      "release": "Versiunea pe GitHub"
+    }
   }
 }

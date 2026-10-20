@@ -1556,5 +1556,58 @@
     "notice": "{count, plural, one {Осталось # действие на {device}} few {Осталось # действия на {device}} many {Осталось # действий на {device}} other {Осталось # действия на {device}}}",
     "noticeBody": "Чтобы установка и продление прошли гладко.",
     "showChecklist": "Показать список"
+  },
+  "updates": {
+    "screen": {
+      "label": "Обновление IPAForge"
+    },
+    "checking": {
+      "title": "Проверка обновлений…"
+    },
+    "downloading": {
+      "title": "Обновление IPAForge",
+      "body": "Вышла версия {version}. Она сейчас загрузится и установится, затем IPAForge откроется сам.",
+      "starting": "Загрузка начинается…",
+      "percent": "{fraction, number, percent}"
+    },
+    "installing": {
+      "title": "Установка {version}…",
+      "body": "IPAForge сейчас откроется снова."
+    },
+    "failed": {
+      "title": "Обновление не завершилось",
+      "body": "Вышла версия {version}. Попробуйте ещё раз или скачайте её со страницы релиза.",
+      "retry": "Попробовать снова",
+      "releasePage": "Страница релиза",
+      "skip": "Пока использовать эту версию"
+    },
+    "manual": {
+      "title": "Вышел IPAForge {version}",
+      "body": "Эта копия установлена из {package, select, msi {установщика .msi} deb {пакета .deb} rpm {пакета .rpm} other {пакета}}, который не умеет обновляться сам. Скачайте новую версию и установите её поверх этой: Apple ID, приложения и настройки сохранятся.",
+      "download": "Скачать {version}",
+      "later": "Позже"
+    }
+  },
+  "whatsNew": {
+    "link": "Что нового",
+    "version": "Версия {version} · {date}",
+    "englishOnly": "Примечания к выпуску на английском.",
+    "kind": {
+      "new": "Новое",
+      "changed": "Изменено",
+      "fixed": "Исправлено",
+      "removed": "Удалено"
+    },
+    "dialog": {
+      "title": "Что нового в IPAForge",
+      "everyVersion": "Все версии",
+      "close": "Понятно"
+    },
+    "page": {
+      "title": "Что нового",
+      "lede": "Всё, что изменилось в IPAForge, сначала новое.",
+      "current": "Эта версия",
+      "release": "Релиз на GitHub"
+    }
   }
 }

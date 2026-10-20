@@ -1,5 +1,5 @@
-// The renderer's end of the rpc channel: waits for the MessagePort the preload forwards, and wraps it in a
-// Transport for `createEngineClient`.
+// The renderer's end of the rpc and update channels: waits for each MessagePort the preload forwards, and wraps it
+// in a Transport for `createEngineClient` and `createUpdateClient`.
 import { RPC_PORT_CHANNEL } from '@desktop/shared/rpc-channel.ts'
 import type { Transport } from '@ipaforge/rpc'
 
@@ -15,18 +15,23 @@ export type PortSource = {
   ): void
 }
 
-/** Resolves with the rpc port once the preload posts it; only a message from this window itself counts. */
-export const receiveEnginePort = (source: PortSource): Promise<MessagePort> =>
+/** Resolves with a channel's port once the preload posts it; only a message from this window itself counts. */
+export const receivePort = (
+  source: PortSource,
+  channel: string
+): Promise<MessagePort> =>
   new Promise((resolve) => {
     const onMessage = (event: MessageEvent) => {
       const [port] = event.ports
-      if (event.source !== source || event.data !== RPC_PORT_CHANNEL || !port)
-        return
+      if (event.source !== source || event.data !== channel || !port) return
       source.removeEventListener('message', onMessage)
       resolve(port)
     }
     source.addEventListener('message', onMessage)
   })
+
+export const receiveEnginePort = (source: PortSource): Promise<MessagePort> =>
+  receivePort(source, RPC_PORT_CHANNEL)
 
 export const messagePortTransport = (port: MessagePort): Transport => {
   port.start()

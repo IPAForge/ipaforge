@@ -15,7 +15,10 @@ import {
   planShown,
   pressInstall,
   recoveryShown,
+  renderChangelog,
   renderScreen,
+  renderUpdateScreen,
+  renderWhatsNew,
   repairShown,
   type ScreenOptions,
   showSources,
@@ -24,6 +27,8 @@ import {
 import type { LanguageId } from '@ui/i18n/languages/types.ts'
 
 const LANGUAGES: readonly LanguageId[] = ['en', 'de', 'ar', 'ja', 'en-XA']
+const NEXT = '0.1.0-alpha.99'
+const RELEASE = `https://github.com/SirReaDy/ipaforge/releases/tag/v${NEXT}`
 
 const screens = {
   'install-home': async (options: ScreenOptions) => {
@@ -70,6 +75,43 @@ const screens = {
   },
   settings: async (options: ScreenOptions) => {
     await renderScreen('/settings', options)
+  },
+  'whats-new': renderWhatsNew,
+  changelog: renderChangelog,
+  'update-downloading': async (options: ScreenOptions) => {
+    await renderUpdateScreen(
+      {
+        phase: 'downloading',
+        version: NEXT,
+        transferred: 41_000_000,
+        total: 102_000_000,
+        bytesPerSecond: 6_400_000
+      },
+      options
+    )
+  },
+  'update-failed': async (options: ScreenOptions) => {
+    await renderUpdateScreen(
+      {
+        phase: 'failed',
+        version: NEXT,
+        reason: 'net::ERR_CONNECTION_RESET',
+        url: RELEASE
+      },
+      options
+    )
+  },
+  'update-manual': async (options: ScreenOptions) => {
+    await renderUpdateScreen(
+      {
+        phase: 'manual',
+        version: NEXT,
+        packageType: 'deb',
+        fileName: `IPAForge-${NEXT}-linux-amd64.deb`,
+        url: RELEASE
+      },
+      options
+    )
   }
 } satisfies Record<string, (options: ScreenOptions) => Promise<void>>
 

@@ -56,6 +56,8 @@ ipaforge/
 | `packages/catalog/src/index.ts` | Public catalog API (`createCatalog`: manifest, release resolution with mirrors, verified downloads) |
 | `packages/rpc/src/index.ts` | Public RPC API (`createRpcServer`, `createEngineClient`, `EngineClient`, `Transport`, in-memory transport) |
 | `apps/desktop/src/main/rpc/` | Electron `MessagePortMain` transport and the IPA resolver (file path, URL download) |
+| `apps/desktop/src/main/updates/` | Updating on launch: electron-updater behind a port, how this copy was installed, the update state served to the window |
+| `packages/ui/src/features/whats-new/constants.ts` | Release notes for every version (English), shown in What's new and on the changelog page |
 | `apps/desktop/src/main/index.ts` | Electron main: app lifecycle, hardening, the Engine (`createDesktopEngine`, secrets via `main/secrets.ts`) and the window |
 | `apps/desktop/src/main/rpc/serve-engine.ts` | Serves the Engine to the window: a fresh `MessageChannelMain` per page load, `createRpcServer` on one end, the other posted to the page |
 | `apps/desktop/src/preload/forward-port.ts` | The preload's main job: forward the rpc port to the page (`expose-file-paths.ts` adds its one function, a dropped file's path) |

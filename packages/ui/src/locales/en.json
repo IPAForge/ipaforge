@@ -1556,5 +1556,58 @@
     "notice": "{count, plural, one {# thing to do on {device}} other {# things to do on {device}}}",
     "noticeBody": "So installing and refreshing go smoothly.",
     "showChecklist": "Show the checklist"
+  },
+  "updates": {
+    "screen": {
+      "label": "Updating IPAForge"
+    },
+    "checking": {
+      "title": "Checking for updates…"
+    },
+    "downloading": {
+      "title": "Updating IPAForge",
+      "body": "Version {version} is out. It downloads and installs now, then IPAForge opens again by itself.",
+      "starting": "Starting the download…",
+      "percent": "{fraction, number, percent}"
+    },
+    "installing": {
+      "title": "Installing {version}…",
+      "body": "IPAForge opens again in a moment."
+    },
+    "failed": {
+      "title": "The update didn't finish",
+      "body": "Version {version} is out. Try again, or download it from its release page.",
+      "retry": "Try again",
+      "releasePage": "Release page",
+      "skip": "Use this version for now"
+    },
+    "manual": {
+      "title": "IPAForge {version} is out",
+      "body": "This copy was installed from {package, select, msi {a .msi installer} deb {a .deb package} rpm {an .rpm package} other {a package}}, which can't update itself. Download the new version and install it over this one: your Apple IDs, apps and settings stay.",
+      "download": "Download {version}",
+      "later": "Later"
+    }
+  },
+  "whatsNew": {
+    "link": "What's new",
+    "version": "Version {version} · {date}",
+    "englishOnly": "Release notes are in English.",
+    "kind": {
+      "new": "New",
+      "changed": "Changed",
+      "fixed": "Fixed",
+      "removed": "Removed"
+    },
+    "dialog": {
+      "title": "What's new in IPAForge",
+      "everyVersion": "Every version",
+      "close": "Got it"
+    },
+    "page": {
+      "title": "What's new",
+      "lede": "Everything that changed in IPAForge, newest first.",
+      "current": "This version",
+      "release": "Release on GitHub"
+    }
   }
 }

@@ -1556,5 +1556,58 @@
     "notice": "{count, plural, other {{device}で残り#件}}",
     "noticeBody": "インストールとリフレッシュをスムーズに行うためです。",
     "showChecklist": "チェックリストを表示"
+  },
+  "updates": {
+    "screen": {
+      "label": "IPAForge をアップデート中"
+    },
+    "checking": {
+      "title": "アップデートを確認しています…"
+    },
+    "downloading": {
+      "title": "IPAForge をアップデート中",
+      "body": "バージョン {version} が公開されました。いまダウンロードしてインストールし、そのあと IPAForge が自動で開き直します。",
+      "starting": "ダウンロードを開始しています…",
+      "percent": "{fraction, number, percent}"
+    },
+    "installing": {
+      "title": "{version} をインストールしています…",
+      "body": "まもなく IPAForge が開き直します。"
+    },
+    "failed": {
+      "title": "アップデートが完了しませんでした",
+      "body": "バージョン {version} が公開されています。もう一度試すか、リリースページからダウンロードしてください。",
+      "retry": "もう一度試す",
+      "releasePage": "リリースページ",
+      "skip": "ひとまずこのバージョンを使う"
+    },
+    "manual": {
+      "title": "IPAForge {version} が公開されました",
+      "body": "このコピーは自動でアップデートできない{package, select, msi {.msi インストーラー} deb {.deb パッケージ} rpm {.rpm パッケージ} other {パッケージ}}からインストールされています。新しいバージョンをダウンロードして、このバージョンの上からインストールしてください。Apple ID、アプリ、設定はそのまま残ります。",
+      "download": "{version} をダウンロード",
+      "later": "あとで"
+    }
+  },
+  "whatsNew": {
+    "link": "新機能",
+    "version": "バージョン {version} · {date}",
+    "englishOnly": "リリースノートは英語です。",
+    "kind": {
+      "new": "新規",
+      "changed": "変更",
+      "fixed": "修正",
+      "removed": "削除"
+    },
+    "dialog": {
+      "title": "IPAForge の新機能",
+      "everyVersion": "すべてのバージョン",
+      "close": "OK"
+    },
+    "page": {
+      "title": "新機能",
+      "lede": "IPAForge で変わったことすべて。新しい順。",
+      "current": "このバージョン",
+      "release": "GitHub のリリース"
+    }
   }
 }
