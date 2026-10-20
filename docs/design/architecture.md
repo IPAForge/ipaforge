@@ -71,14 +71,14 @@ ipaforge/
 │   │       ├── application/        # runtime, prompts (ask), sign-in, two-factor, certificate store, device watch
 │   │       ├── pipeline/           # Step, Pipeline runner, progress events, cancellation, resume
 │   │       ├── steps/              # the steps flows are built from (sign-in, team, certificate, provision, sign, install…)
-│   │       ├── flows/              # installSideStore, installApps (preload), placePairing, signIn
+│   │       ├── flows/              # installSideStore, installApps (preload), placePairing, refreshApps, repairSideStore, signIn
 │   │       ├── sidestore/          # SideStore-specific target, certificate and trust handling
 │   │       ├── diagnostics/        # error classification → ErrorCode (locked device, quota, DevMode…), recovery
 │   │       ├── infrastructure/     # the signer behind the installer's signing port
 │   │       ├── engine/             # runs, prompt queue, event log, queries, install plan
 │   │       └── engine.ts           # Engine facade = the API every shell exposes to the UI
 │   │
-│   ├── rpc/                        # typed request/stream RPC (Engine ⇄ UI) over Electron IPC
+│   ├── rpc/                        # typed request/stream RPC (Engine ⇄ UI) over Electron IPC, and the update channel
 │   │
 │   └── ui/                         # React app rendered by the desktop shell (presentation layer)
 │       ├── index.html, vite.config.ts  # the UI as a plain browser app (dev server, build)
@@ -88,10 +88,12 @@ ipaforge/
 │           ├── router.tsx          # routes; sections.ts lists the sidebar sections and groups
 │           ├── styles.css          # the only stylesheet (Tailwind + HeroUI)
 │           ├── components/         # the shell and thin compositions of HeroUI components (no CSS files)
-│           ├── features/           # install/, preload/, devices/, accounts/, certificates/, logs/, settings/
+│           ├── features/           # install/, preload/, apps/, repair/, devices/, accounts/, certificates/, logs/,
+│           │                       # settings/, updates/ (the update screen), whats-new/ (What's new, the changelog)
 │           ├── hooks/              # queries/ (Engine query hooks), useEngine, useRun, useSelection, useLanguage,
 │           │                       # useFormat, useTheme, useUiServices
-│           ├── state/              # stores outside components: active-run/ (the install run), selection/
+│           ├── state/              # stores outside components: active-run/ (the install run), selection/, log-view/,
+│           │                       # preload/, auto-refresh/
 │           ├── services/           # what the host provides (UiServices) + browser and in-memory implementations
 │           ├── theme/              # palettes/ (data → HeroUI CSS variables), store/, provider/
 │           ├── i18n/               # i18next setup, languages, on-demand loading, formatters
@@ -100,9 +102,10 @@ ipaforge/
 ├── apps/                           # ── COMPOSITION ROOTS (adapters + wiring) ──
 │   └── desktop/                    # Electron
 │       └── src/
-│           ├── main/               # Engine wiring: Node adapters, secrets (file key sealed by safeStorage), rpc server per window
-│           ├── preload/            # forwards the rpc MessagePort to the page; exposes one function: a dropped file's path
-│           └── renderer/           # wraps the port in a Transport, createEngineClient, mounts @ipaforge/ui
+│           ├── main/               # Engine wiring: Node adapters, secrets (file key sealed by safeStorage), rpc server per window,
+│           │                       # updates/ (electron-updater, the Sigstore check, the update state), the OS's trusted certificates
+│           ├── preload/            # forwards the rpc and update MessagePorts to the page; exposes one function: a dropped file's path
+│           └── renderer/           # wraps the ports in Transports, createEngineClient and createUpdateClient, mounts @ipaforge/ui
 │
 ├── fixtures/                       # golden inputs + Apple codesign outputs (generated on macOS CI)
 └── docs/                           # user and contributor docs; design/ holds architecture, roadmap, conventions and references

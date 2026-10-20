@@ -27,8 +27,8 @@ Core packages define **ports**, which are interfaces. `apps/desktop` provides th
 | `device` | usbmux, lockdown, pairing, AFC, house_arrest, installation_proxy |
 | `apple` | Apple ID login (GSA SRP + 2FA), anisette, developer services |
 | `catalog` | Release sources, GitHub resolution, downloads, cache, and AltStore-format app sources (a `SourceStore` port keeps the list and each source's last good copy) |
-| `installer` | Pipelines and flows (install SideStore, preload, pairing), diagnostics, the **Engine** facade |
-| `rpc` | Typed Engine ⇄ UI calls over Electron IPC |
+| `installer` | Pipelines and flows (install SideStore, preload, pairing, refresh, Repair SideStore), diagnostics, the **Engine** facade |
+| `rpc` | Typed Engine ⇄ UI calls over Electron IPC, plus the update channel (the host's update state, Try again) |
 | `ui` | React app rendered by the desktop shell (HeroUI + Tailwind, palettes, i18n) |
 
 App (composition root): `apps/desktop` (Electron).

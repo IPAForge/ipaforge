@@ -63,7 +63,7 @@ From Terminal, `xattr -dr com.apple.quarantine /Applications/IPAForge.app` skips
 
 **Linux** doesn't check signatures; make the AppImage executable (below).
 
-The app doesn't update itself yet: download the next build from the Releases page.
+From 0.1.0-alpha.4 on, IPAForge updates itself: see [Updating and uninstalling](#updating-and-uninstalling).
 
 ## Before you start
 
