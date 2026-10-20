@@ -57,7 +57,7 @@ See `docs/design/architecture.md` for the full architecture guidelines.
 - **Logging:** structured logger port with levels (`LOG_LEVEL`), redaction of tokens, passwords and serials, and an in-app log viewer.
 - **Error handling:** typed `IPAForgeError` with a stable `code`, a user message key and a recovery action. No raw stack traces in the UI.
 - **Accessibility:** WCAG 2.2 AA through React Aria primitives, with full keyboard navigation.
-- **Licensing:** MIT. No code copied from other sideloading tools, ldid (AGPL) or ipa-resign (proprietary). zsign and rcodesign are used as references only.
+- **Licensing:** AGPL-3.0-or-later (MIT up to 0.1.0-alpha.4). No code copied from other sideloading tools, ldid (AGPL) or ipa-resign (proprietary). zsign and rcodesign are used as references only.
 
 ## Architecture
 

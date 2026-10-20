@@ -3,7 +3,7 @@
 [![CI](https://github.com/SirReaDy/ipaforge/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/SirReaDy/ipaforge/actions/workflows/ci.yml)
 [![Downloads](https://img.shields.io/github/downloads/SirReaDy/ipaforge/total?label=downloads)](https://github.com/SirReaDy/ipaforge/releases)
 [![Latest release](https://img.shields.io/github/v/release/SirReaDy/ipaforge?include_prereleases&label=release)](https://github.com/SirReaDy/ipaforge/releases/latest)
-[![Licence: MIT](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
+[![Licence: AGPL-3.0](https://img.shields.io/badge/licence-AGPL--3.0-blue.svg)](LICENSE)
 [![Sponsor](https://img.shields.io/badge/sponsor-%E2%9D%A4-ea4aaa?logo=githubsponsors)](https://github.com/sponsors/SirReaDy)
 
 > Install SideStore and preload your apps onto iPhone and iPad, from Windows, macOS or Linux.
@@ -154,4 +154,4 @@ IPAForge is free and open source, maintained in spare time. If it saves you time
 
 ## Licence
 
-[MIT](LICENSE) © 2026 Dan Motpan and IPAForge contributors. Third-party components keep their own licences: pkijs, asn1js and zip.js are BSD-3-Clause; @noble/hashes and zod are MIT.
+[GNU Affero General Public License v3.0 or later](LICENSE) (AGPL-3.0-or-later) © 2026 Dan Motpan and IPAForge contributors. You may use, study, change and share IPAForge; anything built from it, including a modified version offered over a network, must be released under the same licence with its source. Versions up to 0.1.0-alpha.4 were released under the MIT licence. Third-party components keep their own licences: pkijs, asn1js and zip.js are BSD-3-Clause; @noble/hashes and zod are MIT.
