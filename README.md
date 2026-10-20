@@ -49,7 +49,7 @@ Sideloading tools tend to fail in a few recurring ways. IPAForge is designed aro
 - **Themes.** Six colour palettes, each with light and dark variants.
 - **Updates itself.** IPAForge checks for a new version when it opens and installs it, each update checked against its release's Sigstore signature first. **What's new** says what changed, in plain words.
 
-Coming next: guided onboarding, management tools for certificates and App IDs, and Wi-Fi installs.
+Coming next: guided onboarding, management tools for certificates and App IDs, and wireless pairing with the iOS 17+ remote pairing file. Installing over Wi-Fi to a device paired before already works.
 
 ## Project status
 
