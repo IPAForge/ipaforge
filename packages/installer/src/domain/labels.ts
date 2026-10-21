@@ -16,6 +16,8 @@ export const StepLabel = {
   refreshProfiles: 'install.steps.refresh_profiles',
   sign: 'install.steps.sign',
   install: 'install.steps.install',
+  /** Save signed .ipa instead: the signed app written to the folder the user picked. */
+  save: 'install.steps.save',
   pairing: 'install.steps.pairing',
   remember: 'install.steps.remember',
   pairingTargets: 'pairing.steps.targets',

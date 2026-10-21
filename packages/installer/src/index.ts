@@ -28,6 +28,7 @@ export { StepLabel } from '@installer/domain/labels.ts'
 export type { InstalledStore } from '@installer/domain/ports/installed-store.ts'
 export type { KeptIpaStore } from '@installer/domain/ports/kept-ipa-store.ts'
 export type { ScratchStore } from '@installer/domain/ports/scratch-store.ts'
+export type { SignedIpaFolder } from '@installer/domain/ports/signed-ipa-folder.ts'
 export type { IpaSigner, SignRequest } from '@installer/domain/ports/types.ts'
 export { PromptKind } from '@installer/domain/prompts.ts'
 export type {

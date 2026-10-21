@@ -34,6 +34,8 @@ export const stepReportTexts: StepReportTexts = {
   session: (report, { t }) => t(`install.run.report.session.${report.how}`),
   team: (report, { t }) =>
     report.isFree ? t('accounts.freeTeam', { name: report.name }) : report.name,
+  saved: (report, { t }) =>
+    t('install.run.report.saved', { path: report.path }),
   'device-registration': (report, { t }) =>
     t(
       report.isNew

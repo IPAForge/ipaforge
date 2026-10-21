@@ -156,5 +156,7 @@ export const requestSchema = z.discriminatedUnion('type', [
   /** A record the UI logged, kept with the Engine's so the viewer shows both. */
   request('log', { record: logRecordSchema }),
   /** The host's file dialog for IPAs; the answer names the files the user picked. */
-  request('choose-ipas', {})
+  request('choose-ipas', {}),
+  /** The host's folder dialog for Save signed .ipa instead; the answer is the folder's id and name, or null. */
+  request('choose-save-folder', {})
 ])

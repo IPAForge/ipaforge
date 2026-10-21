@@ -15,6 +15,7 @@ import { createCommandStarter } from '@rpc/application/server/commands.ts'
 import { createLogRequests } from '@rpc/application/server/logs.ts'
 import { createQueryRunner } from '@rpc/application/server/queries.ts'
 import { createRunRegistry } from '@rpc/application/server/runs.ts'
+import { createSaveFolders } from '@rpc/application/server/save-folders.ts'
 import { createSubscriptionRegistry } from '@rpc/application/server/subscriptions.ts'
 import type {
   RequestHandlers,
@@ -33,6 +34,7 @@ export const createRpcServer = ({
   resolveIpa,
   logs,
   chooseIpas,
+  chooseSaveFolder,
   logger = silentLogger
 }: RpcServerOptions): RpcServer => {
   const log = logger.child({ scope: 'rpc' })
@@ -54,8 +56,9 @@ export const createRpcServer = ({
   }
 
   const runQuery = createQueryRunner(engine, resolveIpa)
+  const saveFolders = createSaveFolders(chooseSaveFolder)
   const runs = createRunRegistry({
-    startCommand: createCommandStarter(engine, resolveIpa),
+    startCommand: createCommandStarter(engine, resolveIpa, saveFolders),
     checkpoints,
     send
   })
@@ -80,7 +83,8 @@ export const createRpcServer = ({
     logs: (request) => logRequests.page(request.query),
     'log-level': (request) => logRequests.level(request.level),
     log: (request) => logRequests.write(request.record as LogRecord),
-    'choose-ipas': () => chooseIpas?.() ?? []
+    'choose-ipas': () => chooseIpas?.() ?? [],
+    'choose-save-folder': () => saveFolders.choose()
   }
 
   const sendError = (id: string, error: IPAForgeError): void => {

@@ -19,7 +19,10 @@ const IPA_BYTES = new Uint8Array([1, 2, 3, 4])
 const ACCOUNT = { udid: 'UDID1', accountId: 'acct' }
 const FILE_APP = { kind: 'file', path: '/picked/My App.ipa' } as const
 
-const setup = () => {
+const setup = (
+  chooseSaveFolder: () => Promise<string | undefined> = async () =>
+    '/Users/me/Signed apps'
+) => {
   const [serverEnd, clientEnd] = createMemoryTransportPair()
   const { engine, control } = createFakeEngine()
   const resolveIpa = vi.fn(async (ipa: ExternalIpa) =>
@@ -28,7 +31,12 @@ const setup = () => {
       IPA_BYTES
     )
   )
-  const server = createRpcServer({ engine, transport: serverEnd, resolveIpa })
+  const server = createRpcServer({
+    engine,
+    transport: serverEnd,
+    resolveIpa,
+    chooseSaveFolder
+  })
   const client = createEngineClient(clientEnd)
 
   return { client, server, control, resolveIpa, serverEnd, clientEnd }
@@ -178,6 +186,37 @@ describe('queries', () => {
         path: `Documents/${'a'.repeat(300)}.plist`
       })
     ).rejects.toMatchObject({ code: ErrorCode.InvalidRpcMessage })
+  })
+
+  it('saves into the folder the host’s dialog gave, never a path from the page', async () => {
+    const { client, control } = setup()
+
+    const folder = await client.chooseSaveFolder()
+    expect(folder?.name).toBe('Signed apps')
+    void client.installApps({
+      ...ACCOUNT,
+      apps: [FILE_APP],
+      save: { folderId: folder?.id ?? '', apps: [0, 5] }
+    })
+    await vi.waitFor(() => expect(control.appInputs).toHaveLength(1))
+    expect(control.appInputs.at(-1)?.save).toEqual({
+      folder: '/Users/me/Signed apps',
+      apps: [0]
+    })
+
+    await expect(
+      client.installApps({
+        ...ACCOUNT,
+        apps: [FILE_APP],
+        save: { folderId: '/etc', apps: [0] }
+      }).result
+    ).rejects.toMatchObject({ code: ErrorCode.InvalidRpcMessage })
+  })
+
+  it('answers with no folder when the dialog is cancelled', async () => {
+    const { client } = setup(async () => undefined)
+
+    expect(await client.chooseSaveFolder()).toBeUndefined()
   })
 
   it('manages app sources through the Engine, over https only', async () => {

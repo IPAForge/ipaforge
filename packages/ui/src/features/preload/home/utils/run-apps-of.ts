@@ -9,7 +9,8 @@ export const runAppsOf = (rows: readonly PreloadRow[]): RunApp[] =>
           {
             name: row.plan?.inspection.app.name ?? row.item.label,
             version: row.plan?.inspection.app.version,
-            source: row.item.source
+            source: row.item.source,
+            save: row.item.save === true
           }
         ]
       : []

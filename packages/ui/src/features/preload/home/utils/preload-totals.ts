@@ -23,7 +23,14 @@ export const preloadTotals = (rows: readonly PreloadRow[]): PreloadTotals => {
   )
   const isFree = first?.team.isFree ?? true
   const available = isFree ? first?.appIds.available : undefined
-  const newApps = plans.filter((plan) => !plan.installedVersion).length
+  // An app saved as a signed .ipa goes on no device: it takes no free-app slot.
+  const newApps = rows.filter(
+    (row) =>
+      row.status === 'ready' &&
+      row.plan &&
+      !row.plan.installedVersion &&
+      row.item.save !== true
+  ).length
   const used = first ? usedSlots(first) : 0
 
   return {

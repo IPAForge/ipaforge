@@ -59,7 +59,8 @@
       "sign": "Semnează aplicația",
       "install": "Instalează pe dispozitiv",
       "pairing": "Plasează fișierul de asociere",
-      "remember": "Memorează această instalare"
+      "remember": "Memorează această instalare",
+      "save": "Salvează .ipa semnat"
     },
     "signInNeeded": {
       "title": "Autentifică-te din nou cu Apple ID-ul tău",
@@ -208,7 +209,8 @@
         "pairing": "Plasat în {apps}",
         "shared": "Certificat partajat",
         "notShared": "Certificat nepartajat",
-        "pairingRemote": "Plasat în {apps} · cu asocierea la distanță pentru iOS 17.4 și mai nou"
+        "pairingRemote": "Plasat în {apps} · cu asocierea la distanță pentru iOS 17.4 și mai nou",
+        "saved": "Salvat în {path}"
       },
       "subtitleApps": "{device} · {appleId}"
     },
@@ -1408,7 +1410,10 @@
       "fromCatalog": "Din catalog · Stabil",
       "remove": "Elimină {name}",
       "cannot": "Nu poate fi instalată.",
-      "fromSource": "Din {name}"
+      "fromSource": "Din {name}",
+      "saveInstead": "Salvează .ipa semnat în loc",
+      "saveInsteadOne": "Salvează {name} ca .ipa semnat în loc să-l instalezi",
+      "savedOnComputer": "Salvat pe acest computer, neinstalat"
     },
     "problem": {
       "notIpa": "Doar fișierele .ipa pot fi instalate.",
@@ -1470,7 +1475,9 @@
     "done": {
       "title": "{count, plural, one {{app} este pe {device}.} few {{app} sunt pe {device}.} other {{app} sunt pe {device}.}}",
       "open": "Deschide fiecare aplicație de pe ecranul principal."
-    }
+    },
+    "signAndSave": "{count, plural, one {Semnează și salvează # aplicație} few {Semnează și salvează # aplicații} other {Semnează și salvează # de aplicații}}",
+    "installAndSave": "{install} de instalat · {save} de salvat ca .ipa semnat"
   },
   "repair": {
     "title": "Repară SideStore",

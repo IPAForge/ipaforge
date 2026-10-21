@@ -2,6 +2,7 @@ import type { Engine } from '@ipaforge/installer'
 import type { Logger } from '@ipaforge/kernel'
 import type { RpcConfig } from '@rpc/domain/config.ts'
 import type { ChooseIpas } from '@rpc/domain/ports/choose-ipas.ts'
+import type { ChooseSaveFolder } from '@rpc/domain/ports/choose-save-folder.ts'
 import type { LogSource } from '@rpc/domain/ports/log-source.ts'
 import type { ResolveIpa } from '@rpc/domain/ports/resolve-ipa.ts'
 import type { Transport } from '@rpc/domain/ports/transport.ts'
@@ -24,6 +25,8 @@ export type RpcServerOptions = {
   readonly logs?: LogSource
   /** The host's file dialog for IPAs; without it, choosing files answers with none. */
   readonly chooseIpas?: ChooseIpas
+  /** The host's folder dialog for Save signed .ipa instead; without it, saving can't start. */
+  readonly chooseSaveFolder?: ChooseSaveFolder
   readonly logger?: Logger
 }
 

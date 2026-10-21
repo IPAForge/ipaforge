@@ -10,7 +10,8 @@ import type {
 import {
   accountSteps,
   installAppSteps,
-  prepareAppSteps
+  prepareAppSteps,
+  saveAppSteps
 } from '@installer/flows/app-steps.ts'
 import { CATALOG_PAIRING_APPS } from '@installer/flows/constants.ts'
 import type { Flow } from '@installer/flows/flow.ts'
@@ -27,6 +28,14 @@ export type InstallAppsInput = {
   readonly apps: readonly AppSource[]
   /** Create App IDs even though Apple's count says none are left, when that count was negative (Try anyway). */
   readonly tryAnyway?: boolean
+  /**
+   * Save signed .ipa instead: the apps (by position) signed and written to `folder` on the computer, not installed.
+   * The folder comes from the host's dialog, never from the page.
+   */
+  readonly save?: {
+    readonly folder: string
+    readonly apps: readonly number[]
+  }
 }
 
 export const INSTALL_APPS = 'installApps'
@@ -72,7 +81,11 @@ export const installAppsFlow = (
   input: InstallAppsInput
 ): Flow<InstallState> => {
   assertSomethingToInstall(input)
-  const pairing = pairingTargets(input.apps)
+  const saved = new Set(input.save?.apps ?? [])
+  // Only an app that goes on the device gets the pairing file.
+  const pairing = pairingTargets(input.apps).filter(
+    (target) => !saved.has(target.index)
+  )
 
   return {
     initial: compact({
@@ -89,7 +102,9 @@ export const installAppsFlow = (
       ),
       ...accountSteps(runtime),
       ...input.apps.flatMap((_source, index) =>
-        installAppSteps(runtime, index)
+        input.save && saved.has(index)
+          ? saveAppSteps(runtime, index, input.save.folder)
+          : installAppSteps(runtime, index)
       ),
       ...pairing.map((target) => installedPairingStep(runtime, target)),
       rememberTeamStep(runtime)

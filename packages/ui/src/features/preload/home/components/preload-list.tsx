@@ -6,10 +6,11 @@ import type { PreloadRow as Row } from '@ui/features/preload/home/types.ts'
 type PreloadListProps = {
   rows: readonly Row[]
   onRemove: (id: string) => void
+  onSave: (id: string, save: boolean) => void
 }
 
 /** The apps to install, in the order they were added. */
-export const PreloadList = ({ rows, onRemove }: PreloadListProps) => {
+export const PreloadList = ({ rows, onRemove, onSave }: PreloadListProps) => {
   const { t } = useTranslation()
 
   return (
@@ -32,7 +33,12 @@ export const PreloadList = ({ rows, onRemove }: PreloadListProps) => {
           className="flex flex-col gap-2"
         >
           {rows.map((row) => (
-            <PreloadRow key={row.item.id} row={row} onRemove={onRemove} />
+            <PreloadRow
+              key={row.item.id}
+              row={row}
+              onRemove={onRemove}
+              onSave={onSave}
+            />
           ))}
         </ul>
       )}

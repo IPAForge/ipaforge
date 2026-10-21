@@ -15,7 +15,8 @@ import {
 import { createFakeLogs } from '@ui/services/engine/fake/fake-logs.ts'
 import {
   createFakeResolveIpa,
-  FAKE_CHOSEN_IPAS
+  FAKE_CHOSEN_IPAS,
+  FAKE_SAVE_FOLDER
 } from '@ui/services/engine/fake/fake-resolve-ipa.ts'
 import type { FakeEngineOptions } from '@ui/services/engine/fake/types.ts'
 import { withRunLogging } from '@ui/services/engine/fake/with-run-logging.ts'
@@ -43,6 +44,7 @@ export const createFakeEngineClient = ({
     transport: serverEnd,
     resolveIpa: createFakeResolveIpa(options.delayMs ?? DEFAULT_DELAY_MS),
     chooseIpas: async () => FAKE_CHOSEN_IPAS,
+    chooseSaveFolder: async () => FAKE_SAVE_FOLDER,
     logs,
     logger: engineLogger
   })

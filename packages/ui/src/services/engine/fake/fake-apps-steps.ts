@@ -83,6 +83,33 @@ const installSteps = (
   step(world, `install-${index}`, StepLabel.install, 6, installing(world))
 ]
 
+/** Save signed .ipa instead: provisioned and signed like an install, then written to the folder picked. */
+const saveSteps = (
+  world: FakeWorld,
+  app: FakeApp,
+  index: number,
+  folder: string
+): ScriptedStep<FakeInstallState>[] => [
+  step(
+    world,
+    `provision-${index}`,
+    StepLabel.provision,
+    2,
+    provisioning(app.extensions + 1)
+  ),
+  step(world, `sign-${index}`, StepLabel.sign, 4, signing(world)),
+  step(
+    world,
+    `save-${index}`,
+    StepLabel.save,
+    1,
+    reporting({
+      kind: 'saved',
+      path: `${folder}/${app.name} ${app.version}.ipa`
+    })
+  )
+]
+
 const signingSteps = (
   world: FakeWorld,
   apps: readonly FakeApp[]
@@ -118,8 +145,11 @@ export const fakeAppsSteps = (
   world: FakeWorld,
   apps: readonly FakeApp[],
   /** Refresh: how many apps get new profiles only, numbered after `apps`. */
-  profiles = 0
+  profiles = 0,
+  /** Save signed .ipa instead: the apps (by position) saved in `folder`. */
+  save?: { readonly folder: string; readonly apps: readonly number[] }
 ): ScriptedStep<FakeInstallState>[] => {
+  const isSaved = (index: number) => save?.apps.includes(index) ?? false
   const profileSteps = Array.from({ length: profiles }, (_, offset) =>
     step(
       world,
@@ -143,10 +173,14 @@ export const fakeAppsSteps = (
       reporting({ kind: 'device-registration', isNew: false })
     ),
     ...signingSteps(world, apps),
-    ...apps.flatMap((app, index) => installSteps(world, app, index)),
+    ...apps.flatMap((app, index) =>
+      save && isSaved(index)
+        ? saveSteps(world, app, index, save.folder)
+        : installSteps(world, app, index)
+    ),
     ...profileSteps,
     ...apps.flatMap((app, index) =>
-      app.name.includes('SideStore')
+      app.name.includes('SideStore') && !isSaved(index)
         ? [
             step(
               world,

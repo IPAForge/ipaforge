@@ -68,6 +68,7 @@ UI to Engine, each with an `id` that its response echoes:
 | `log-level` | `level?` | The level the host records at; with `level`, changes it first |
 | `log` | `record` | A record the UI logged, kept with the Engine's if the level would have recorded it |
 | `choose-ipas` | | The host's file dialog for IPAs: the files picked, or none |
+| `choose-save-folder` | | The host's folder dialog for Save signed .ipa instead: `{ id, name }` of the folder picked, or null |
 
 Engine to UI:
 
@@ -109,6 +110,8 @@ A `FileSource` cannot cross the channel, so the UI names an IPA instead:
 | `{ kind: "installed", bundleId }` | The Engine (`installedSource`): the app's kept IPA and record, for Refresh |
 
 The UI never sees the file system. To pick IPAs it sends `choose-ipas` and gets back `[{ path, name, size }]` from the host's own file dialog (`createRpcServer({ chooseIpas })`; the desktop app opens it in the main process, bound to the window); without a dialog, or when the user cancels, the answer is empty. A file dropped on the window gets its path from the preload's one function (see [User Interface](ui.md)).
+
+Save signed .ipa instead works the same way the other direction: `choose-save-folder` opens the host's folder dialog (`createRpcServer({ chooseSaveFolder })`), and the server keeps the path and answers with an id and the folder's name. `installApps` names the folder by that id (`save: { folderId, apps }`); the server turns it into the path, and an id it didn't give (or from another connection) is refused with `rpc.invalid_message`. A page can't make a run write anywhere the user didn't pick.
 
 ## Errors
 

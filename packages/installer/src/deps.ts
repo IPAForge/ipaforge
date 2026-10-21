@@ -19,6 +19,9 @@ export const resolveInstallerDeps = (
     installed: input.installed ?? createMemoryInstalledStore(),
     kept: input.kept ?? createMemoryKeptIpaStore(),
     signer: input.signer ?? createDefaultSigner(logger),
+    ...(input.signedIpaFolder
+      ? { signedIpaFolder: input.signedIpaFolder }
+      : {}),
     logger,
     clock: input.clock ?? systemClock,
     config: { ...DEFAULT_INSTALLER_CONFIG, ...input.config }

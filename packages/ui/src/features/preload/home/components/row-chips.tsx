@@ -1,13 +1,17 @@
 import { Spinner } from '@heroui/react'
 import { useTranslation } from 'react-i18next'
 
+import { InstallChips } from '@ui/features/preload/home/components/install-chips.tsx'
 import { RowChip } from '@ui/features/preload/home/components/row-chip.tsx'
 import { pairingCatalogApps } from '@ui/features/preload/home/constants.ts'
 import type { PreloadRow } from '@ui/features/preload/home/types.ts'
 
 type RowChipsProps = { row: PreloadRow }
 
-/** How far the Engine is with an app, then what installing it means: its App IDs, new or an update, the pairing. */
+/**
+ * How far the Engine is with an app, then what installing it means: its App IDs, new or an update, the pairing. An
+ * app saved as a signed .ipa says so instead: nothing of it goes on the device.
+ */
 export const RowChips = ({ row }: RowChipsProps) => {
   const { t } = useTranslation()
   const { status, plan, item } = row
@@ -36,19 +40,11 @@ export const RowChips = ({ row }: RowChipsProps) => {
           extensions: plan.inspection.nested.length
         })}
       </RowChip>
-      {plan.installedVersion ? (
-        <RowChip tone="accent">
-          {t('preload.row.updates', {
-            from: plan.installedVersion,
-            to: plan.inspection.app.version ?? ''
-          })}
-        </RowChip>
+      {item.save ? (
+        <RowChip tone="accent">{t('preload.row.savedOnComputer')}</RowChip>
       ) : (
-        <RowChip>{t('preload.row.new')}</RowChip>
+        <InstallChips plan={plan} isPairingApp={isPairingApp} />
       )}
-      {isPairingApp ? (
-        <RowChip tone="accent">{t('preload.row.pairing')}</RowChip>
-      ) : null}
     </>
   )
 }

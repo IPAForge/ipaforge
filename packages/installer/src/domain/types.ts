@@ -255,6 +255,8 @@ export type AppJob = {
   /** The signed IPA, waiting in the scratch store under `key` until the install step ends. */
   readonly signed?: SignedIpa
   readonly installed?: boolean
+  /** Save signed .ipa instead: where the signed app was written on the computer. */
+  readonly savedTo?: string
 }
 
 export type DeviceSummary = {

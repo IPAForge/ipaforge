@@ -59,7 +59,8 @@
       "sign": "App signieren",
       "install": "Auf dem Gerät installieren",
       "pairing": "Kopplungsdatei ablegen",
-      "remember": "Installation merken"
+      "remember": "Installation merken",
+      "save": "Signierte .ipa sichern"
     },
     "signInNeeded": {
       "title": "Deine Apple-ID braucht eine erneute Anmeldung",
@@ -208,7 +209,8 @@
         "pairing": "Abgelegt in {apps}",
         "shared": "Zertifikat geteilt",
         "notShared": "Zertifikat nicht geteilt",
-        "pairingRemote": "Abgelegt in {apps} · mit Remote-Kopplung für iOS 17.4 und neuer"
+        "pairingRemote": "Abgelegt in {apps} · mit Remote-Kopplung für iOS 17.4 und neuer",
+        "saved": "Gesichert unter {path}"
       },
       "subtitleApps": "{device} · {appleId}"
     },
@@ -1408,7 +1410,10 @@
       "fromCatalog": "Aus dem Katalog · Stabil",
       "remove": "{name} entfernen",
       "cannot": "Kann nicht installiert werden.",
-      "fromSource": "Aus {name}"
+      "fromSource": "Aus {name}",
+      "saveInstead": "Stattdessen signierte .ipa sichern",
+      "saveInsteadOne": "{name} als signierte .ipa sichern statt installieren",
+      "savedOnComputer": "Auf diesem Computer gesichert, nicht installiert"
     },
     "problem": {
       "notIpa": "Nur .ipa-Dateien können installiert werden.",
@@ -1470,7 +1475,9 @@
     "done": {
       "title": "{count, plural, one {{app} ist auf {device}.} other {{app} sind auf {device}.}}",
       "open": "Öffne jede App über den Home-Bildschirm."
-    }
+    },
+    "signAndSave": "{count, plural, one {# App signieren und sichern} other {# Apps signieren und sichern}}",
+    "installAndSave": "{install} zum Installieren · {save} als signierte .ipa"
   },
   "repair": {
     "title": "SideStore reparieren",

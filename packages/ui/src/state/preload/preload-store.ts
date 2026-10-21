@@ -47,6 +47,8 @@ export const createPreloadStore = (): PreloadStore => {
       ])
     },
     remove: (id) => set(items.filter((item) => item.id !== id)),
+    setSave: (id, save) =>
+      set(items.map((item) => (item.id === id ? { ...item, save } : item))),
     clear: () => set([])
   }
 }

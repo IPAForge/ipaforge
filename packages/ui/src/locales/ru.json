@@ -59,7 +59,8 @@
       "sign": "Подпись приложения",
       "install": "Установка на устройство",
       "pairing": "Размещение файла сопряжения",
-      "remember": "Сохранение сведений об установке"
+      "remember": "Сохранение сведений об установке",
+      "save": "Сохранить подписанный .ipa"
     },
     "signInNeeded": {
       "title": "Нужно снова войти в Apple ID",
@@ -208,7 +209,8 @@
         "pairing": "Размещено в {apps}",
         "shared": "Сертификат передан",
         "notShared": "Сертификат не передан",
-        "pairingRemote": "Размещено в {apps} · с удалённым сопряжением для iOS 17.4 и новее"
+        "pairingRemote": "Размещено в {apps} · с удалённым сопряжением для iOS 17.4 и новее",
+        "saved": "Сохранено: {path}"
       },
       "subtitleApps": "{device} · {appleId}"
     },
@@ -1408,7 +1410,10 @@
       "fromCatalog": "Из каталога · Стабильный",
       "remove": "Убрать {name}",
       "cannot": "Нельзя установить.",
-      "fromSource": "Из {name}"
+      "fromSource": "Из {name}",
+      "saveInstead": "Сохранить подписанный .ipa вместо установки",
+      "saveInsteadOne": "Сохранить {name} как подписанный .ipa вместо установки",
+      "savedOnComputer": "Сохраняется на компьютере, не устанавливается"
     },
     "problem": {
       "notIpa": "Можно установить только файлы .ipa.",
@@ -1470,7 +1475,9 @@
     "done": {
       "title": "{count, plural, one {{app} на {device}.} few {{app} на {device}.} many {{app} на {device}.} other {{app} на {device}.}}",
       "open": "Открывайте каждое приложение с экрана «Домой»."
-    }
+    },
+    "signAndSave": "{count, plural, one {Подписать и сохранить # приложение} few {Подписать и сохранить # приложения} many {Подписать и сохранить # приложений} other {Подписать и сохранить # приложения}}",
+    "installAndSave": "Установить: {install} · сохранить как .ipa: {save}"
   },
   "repair": {
     "title": "Починить SideStore",

@@ -38,6 +38,7 @@ export const stepDetailSchema = z.discriminatedUnion('kind', [
   detail('session', { how: z.enum(['reused', 'renewed', 'signed-in']) }),
   detail('team', { name: z.string(), isFree: z.boolean() }),
   detail('device-registration', { isNew: z.boolean() }),
+  detail('saved', { path: z.string().max(4096) }),
   detail('certificate', { how: z.enum(['reused', 'created', 'replaced']) }),
   detail('app-ids', { created: count, reused: count, left: count }),
   detail('free-apps', {

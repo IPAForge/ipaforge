@@ -5,6 +5,7 @@ import {
   toInstallAppsInput,
   toRefreshAppsInput
 } from '@rpc/application/server/inputs.ts'
+import type { SaveFolders } from '@rpc/application/server/save-folders.ts'
 import type {
   CommandStarters,
   Options,
@@ -19,13 +20,18 @@ const typed = <S>(options: Options): CommandOptions<S> =>
 
 const commandStarters = (
   engine: Engine,
-  resolveIpa: ResolveIpa
+  resolveIpa: ResolveIpa,
+  saveFolders: SaveFolders
 ): CommandStarters => ({
   installSideStore: async (input, options) =>
     engine.installSideStore(compact(input), typed(options)),
   installApps: async (input, options, signal) =>
     engine.installApps(
-      await toInstallAppsInput(input, { resolveIpa, engine }, signal),
+      await toInstallAppsInput(
+        input,
+        { resolveIpa, engine, folderOf: saveFolders.pathOf },
+        signal
+      ),
       typed(options)
     ),
   refreshApps: async (input, options, signal) =>
@@ -43,9 +49,10 @@ const commandStarters = (
 
 export const createCommandStarter = (
   engine: Engine,
-  resolveIpa: ResolveIpa
+  resolveIpa: ResolveIpa,
+  saveFolders: SaveFolders
 ): StartCommand => {
-  const starters = commandStarters(engine, resolveIpa)
+  const starters = commandStarters(engine, resolveIpa, saveFolders)
 
   // The union of starters cannot be called with the union of calls; `command` pairs them up.
   return (call, options, signal) =>

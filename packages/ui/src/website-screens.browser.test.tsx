@@ -9,6 +9,7 @@ import { screens } from '@ui/__tests__/screen-table.ts'
 const WEBSITE_SCREENS = [
   'install-home',
   'preload',
+  'preload-save',
   'apps',
   'developer',
   'repair',

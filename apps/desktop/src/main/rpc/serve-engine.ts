@@ -16,6 +16,7 @@ export const serveEngine = <P>(
     resolveIpa,
     logs,
     chooseIpas,
+    chooseSaveFolder,
     logger,
     createChannel
   }: ServeEngineDeps<P>
@@ -31,7 +32,8 @@ export const serveEngine = <P>(
       resolveIpa,
       logger,
       ...(logs ? { logs } : {}),
-      ...(chooseIpas ? { chooseIpas } : {})
+      ...(chooseIpas ? { chooseIpas } : {}),
+      ...(chooseSaveFolder ? { chooseSaveFolder } : {})
     })
     contents.postMessage(RPC_PORT_CHANNEL, null, [port2])
     logger.info('engine connected to the renderer')

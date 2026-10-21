@@ -12,6 +12,7 @@ import { inspectStep } from '@installer/steps/inspect.ts'
 import { installStep } from '@installer/steps/install.ts'
 import { provisionStep } from '@installer/steps/provision.ts'
 import { registerDeviceStep } from '@installer/steps/register-device.ts'
+import { saveSignedStep } from '@installer/steps/save.ts'
 import { signStep } from '@installer/steps/sign.ts'
 import { signInStep } from '@installer/steps/sign-in.ts'
 import { teamStep } from '@installer/steps/team.ts'
@@ -43,6 +44,20 @@ export const accountSteps = (runtime: FlowRuntime): Step<InstallState>[] => [
   registerDeviceStep(runtime),
   certificateStep(runtime),
   appIdsStep(runtime)
+]
+
+/**
+ * Save signed .ipa instead: provisioned and signed like an install (no private key inside), then written to the
+ * folder the user picked. It takes no free-app slot: nothing goes on the device.
+ */
+export const saveAppSteps = (
+  runtime: FlowRuntime,
+  index: number,
+  folder: string
+): Step<InstallState>[] => [
+  provisionStep(runtime, index),
+  signStep(runtime, index, { forSaving: true }),
+  saveSignedStep(runtime, index, folder)
 ]
 
 export const installAppSteps = (

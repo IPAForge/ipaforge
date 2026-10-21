@@ -59,7 +59,8 @@
       "sign": "توقيع التطبيق",
       "install": "التثبيت على الجهاز",
       "pairing": "وضع ملف الإقران",
-      "remember": "حفظ عملية التثبيت هذه"
+      "remember": "حفظ عملية التثبيت هذه",
+      "save": "حفظ ملف ‎.ipa الموقّع"
     },
     "signInNeeded": {
       "title": "يلزم تسجيل الدخول مجددًا بمعرّف Apple الخاص بك",
@@ -208,7 +209,8 @@
         "pairing": "وُضع في {apps}",
         "shared": "تمت مشاركة الشهادة",
         "notShared": "لم تُشارك الشهادة",
-        "pairingRemote": "وُضع في {apps} · مع الإقران عن بُعد لـ iOS 17.4 وما بعده"
+        "pairingRemote": "وُضع في {apps} · مع الإقران عن بُعد لـ iOS 17.4 وما بعده",
+        "saved": "حُفظ في {path}"
       },
       "subtitleApps": "{device} · {appleId}"
     },
@@ -1408,7 +1410,10 @@
       "fromCatalog": "من الكتالوج · مستقرة",
       "remove": "إزالة {name}",
       "cannot": "لا يمكن تثبيته.",
-      "fromSource": "من {name}"
+      "fromSource": "من {name}",
+      "saveInstead": "حفظ ‎.ipa موقّع بدلًا من التثبيت",
+      "saveInsteadOne": "حفظ {name} كملف ‎.ipa موقّع بدلًا من تثبيته",
+      "savedOnComputer": "يُحفظ على هذا الحاسوب ولا يُثبَّت"
     },
     "problem": {
       "notIpa": "لا يمكن تثبيت سوى ملفات ‎.ipa.",
@@ -1470,7 +1475,9 @@
     "done": {
       "title": "{count, plural, zero {{app} على {device}.} one {{app} على {device}.} two {{app} على {device}.} few {{app} على {device}.} many {{app} على {device}.} other {{app} على {device}.}}",
       "open": "افتح كل تطبيق من الشاشة الرئيسية."
-    }
+    },
+    "signAndSave": "{count, plural, zero {توقيع وحفظ} one {توقيع وحفظ تطبيق واحد} two {توقيع وحفظ تطبيقين} few {توقيع وحفظ # تطبيقات} many {توقيع وحفظ # تطبيقًا} other {توقيع وحفظ # تطبيق}}",
+    "installAndSave": "{install} للتثبيت · {save} للحفظ كملف ‎.ipa موقّع"
   },
   "repair": {
     "title": "إصلاح SideStore",

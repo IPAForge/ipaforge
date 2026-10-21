@@ -6,7 +6,8 @@ import { basename } from 'node:path'
 import type { ChooseIpasDeps } from '@desktop/main/rpc/types.ts'
 import type { ChooseIpas } from '@ipaforge/rpc'
 
-const IPA_FILTER = { name: 'iOS apps', extensions: ['ipa'] }
+// The file type's name is the same in every language: this process doesn't know the user's.
+const IPA_FILTER = { name: 'IPA', extensions: ['ipa'] }
 
 export const createIpaChooser =
   ({ showOpenDialog }: ChooseIpasDeps): ChooseIpas =>

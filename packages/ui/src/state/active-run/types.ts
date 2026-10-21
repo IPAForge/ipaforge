@@ -106,6 +106,8 @@ export type RunApp = {
   readonly name: string
   readonly version?: string | undefined
   readonly source: AppSource
+  /** Save signed .ipa instead: signed and saved on the computer, not installed. */
+  readonly save?: boolean | undefined
   /** Refresh: a new profile only, or why the app is installed again. */
   readonly refresh?: RefreshKind | undefined
 }
