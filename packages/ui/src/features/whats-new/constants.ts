@@ -41,6 +41,41 @@ export const noteKindDots = {
  */
 export const RELEASE_NOTES: readonly ReleaseNotes[] = [
   {
+    version: '0.1.0-alpha.7',
+    date: '2026-10-21',
+    lead: 'The Developer Portal, pairing files for every app, signed .ipa files you keep, and your certificate as a .p12.',
+    items: [
+      {
+        kind: 'new',
+        title: 'Developer Portal',
+        text: 'Your team’s certificates and the apps each one signs, App IDs, the profiles on your iPhone, app groups and devices, with a way to clean up what nothing uses.'
+      },
+      {
+        kind: 'new',
+        title: 'Pairing files',
+        text: 'On the Apps page: place, replace or remove pairing files for SideStore, LiveContainer, StikDebug and your own apps, and make a new remote pairing.'
+      },
+      {
+        kind: 'new',
+        title: 'Save signed .ipa',
+        text: 'Tick an app in Preload to sign it and save the file on your computer instead of installing it.'
+      },
+      {
+        kind: 'new',
+        title: 'Certificate as .p12',
+        text: 'Export this computer’s certificate for SideStore or another computer, or import one, with no new certificate and no slot used.'
+      },
+      {
+        kind: 'changed',
+        text: 'Cancel refresh on the Apps page while a refresh or update runs.'
+      },
+      {
+        kind: 'fixed',
+        text: 'An install no longer waits forever when your iPhone locks halfway: it stops and asks you to unlock and try again.'
+      }
+    ]
+  },
+  {
     version: '0.1.0-alpha.6',
     date: '2026-10-20',
     lead: 'Anisette servers you can choose, sign-in that asks less, and a Refresh that keeps your apps as they are.',
