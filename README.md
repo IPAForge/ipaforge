@@ -5,6 +5,7 @@
 [![Latest release](https://img.shields.io/github/v/release/IPAForge/ipaforge?include_prereleases&label=release)](https://github.com/IPAForge/ipaforge/releases/latest)
 [![Licence: AGPL-3.0](https://img.shields.io/badge/licence-AGPL--3.0-blue.svg)](LICENSE)
 [![Sponsor](https://img.shields.io/badge/sponsor-%E2%9D%A4-ea4aaa?logo=githubsponsors)](https://github.com/sponsors/SirReaDy)
+[![Patreon](https://img.shields.io/badge/patreon-support-f96854?logo=patreon)](https://patreon.com/IPAForge)
 
 **Install SideStore and your own apps on iPhone and iPad with a free Apple ID, from Windows, macOS or Linux.**
 
@@ -142,7 +143,7 @@ IPAForge is not affiliated with or endorsed by Apple Inc. iPhone, iPad and iOS a
 
 ## Sponsor
 
-IPAForge is free and open source, maintained in spare time. If it saves you time, consider [sponsoring the project](https://github.com/sponsors/SirReaDy). Sponsorship pays for code-signing certificates (Windows signing, Apple notarisation), test devices, and maintenance when Apple changes something.
+IPAForge is free and open source, maintained in spare time. Every feature is free for everyone. If it saves you time, consider supporting it on [Patreon](https://patreon.com/IPAForge) or [GitHub Sponsors](https://github.com/sponsors/SirReaDy). Support pays for code-signing certificates (Windows signing, Apple notarisation), test devices, and maintenance when Apple changes something.
 
 ## Licence
 
