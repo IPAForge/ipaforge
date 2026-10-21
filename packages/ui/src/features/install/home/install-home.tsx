@@ -1,32 +1,17 @@
 import { Button } from '@heroui/react'
 import { Download } from 'lucide-react'
-import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 import { PageHeader } from '@ui/components/page-header.tsx'
 import { RunElsewhereNotice } from '@ui/components/run-elsewhere-notice.tsx'
-import { useAccountView } from '@ui/features/accounts/hooks/use-account-view.ts'
 import { ChecklistNotice } from '@ui/features/devices/checklist/components/checklist-notice.tsx'
-import { useDeviceView } from '@ui/features/devices/hooks/use-device-view.ts'
 import { BlockedNotice } from '@ui/features/install/home/components/blocked-notice.tsx'
 import { ChannelChoice } from '@ui/features/install/home/components/channel-choice.tsx'
 import { DeviceInUseNotice } from '@ui/features/install/home/components/device-in-use-notice.tsx'
 import { SignInNeededNotice } from '@ui/features/install/home/components/sign-in-needed-notice.tsx'
 import { ThisInstall } from '@ui/features/install/home/components/this-install.tsx'
 import { VariantChoice } from '@ui/features/install/home/components/variant-choice.tsx'
-import { installReadiness } from '@ui/features/install/home/utils/readiness.ts'
-import { planInput } from '@ui/features/install/utils/plan-input.ts'
-import { usePlanInstall } from '@ui/hooks/queries/use-plan-install.ts'
-import { useRecommendedChannel } from '@ui/hooks/queries/use-recommended-channel.ts'
-import { useRun } from '@ui/hooks/use-run.ts'
-import {
-  useActiveAccount,
-  useDeviceInUse,
-  useDevicesInUse
-} from '@ui/hooks/use-selection.ts'
-import { variantAppId } from '@ui/services/engine/constants.ts'
-import type { Channel, SideStoreVariant } from '@ui/services/engine/types.ts'
-import { isRunActive } from '@ui/state/active-run/run-view.ts'
+import { useSideStoreChoice } from '@ui/features/install/home/hooks/use-sidestore-choice.ts'
 
 /**
  * The Install page before a run: what to fix first (the device, the Apple ID), what to install and from which
@@ -34,38 +19,8 @@ import { isRunActive } from '@ui/state/active-run/run-view.ts'
  */
 export const InstallHome = () => {
   const { t } = useTranslation()
-  const { run, start } = useRun()
-  const [variant, setVariant] = useState<SideStoreVariant>('sidestore')
-  const [picked, setPicked] = useState<Channel | undefined>(undefined)
-  const inUse = useDeviceInUse()
-  const account = useActiveAccount()
-  const deviceView = useDeviceView(inUse?.udid, inUse?.device)
-  const accountView = useAccountView(account, useDevicesInUse())
-  const recommended = useRecommendedChannel(
-    variantAppId[variant],
-    deviceView.check?.info.productVersion
-  ).data
-  const channel = picked ?? recommended ?? 'stable'
-  const canPlan =
-    inUse !== undefined &&
-    account !== undefined &&
-    deviceView.state === 'ready' &&
-    (accountView.state === 'ready' || accountView.state === 'checking')
-  const plan = usePlanInstall(
-    canPlan
-      ? planInput({ udid: inUse.udid, accountId: account.id, variant, channel })
-      : undefined
-  )
-  const readiness = installReadiness(
-    deviceView.state,
-    accountView.state,
-    plan.data?.appIds.enough ?? true
-  )
-  const app = t(`install.variant.${variant}.title`)
-  const onInstall = () => {
-    if (!inUse || !account) return
-    start({ udid: inUse.udid, accountId: account.id, variant, channel })
-  }
+  const choice = useSideStoreChoice()
+  const onInstall = () => choice.onInstall()
 
   return (
     <div className="flex w-full flex-col gap-6">
@@ -78,23 +33,25 @@ export const InstallHome = () => {
       <BlockedNotice />
       <SignInNeededNotice />
       <ChecklistNotice />
-      <VariantChoice value={variant} onChange={setVariant} />
+      <VariantChoice value={choice.variant} onChange={choice.setVariant} />
       <ChannelChoice
-        value={channel}
-        recommended={recommended}
-        onChange={setPicked}
+        value={choice.channel}
+        recommended={choice.recommended}
+        onChange={choice.setPicked}
       />
-      <ThisInstall plan={plan} isWaiting={!canPlan} app={app} />
+      <ThisInstall
+        plan={choice.plan}
+        isWaiting={!choice.canPlan}
+        app={choice.app}
+      />
       <div className="flex flex-wrap items-center gap-3">
-        <Button
-          size="lg"
-          isDisabled={!readiness.isReady || isRunActive(run?.view)}
-          onPress={onInstall}
-        >
+        <Button size="lg" isDisabled={!choice.canInstall} onPress={onInstall}>
           <Download aria-hidden="true" className="size-4" />
-          {t('install.home.install', { app })}
+          {t('install.home.install', { app: choice.app })}
         </Button>
-        <span className="text-muted text-sm">{t(readiness.reasonKey)}</span>
+        <span className="text-muted text-sm">
+          {t(choice.readiness.reasonKey)}
+        </span>
       </div>
     </div>
   )

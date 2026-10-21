@@ -1935,12 +1935,14 @@
       "welcome": "Bun venit",
       "computer": "Acest computer",
       "iphone": "iPhone-ul tău",
-      "appleid": "ID Apple"
+      "appleid": "ID Apple",
+      "install": "Instalează SideStore",
+      "onphone": "Pe iPhone",
+      "around": "Ești gata"
     },
     "back": "Înapoi",
     "skip": "Sari peste pas",
     "continue": "Continuă",
-    "done": "Gata",
     "later": "Termin mai târziu",
     "checkAgain": "Verifică din nou",
     "checking": "Se verifică…",
@@ -2004,6 +2006,51 @@
       "text": "Termină configurarea IPAForge: {done} din {total} pași făcuți.",
       "continue": "Continuă ghidul",
       "notNow": "Nu acum"
+    },
+    "install": {
+      "title": "Instalează SideStore",
+      "lead": "SideStore îți reîmprospătează singur aplicațiile pe iPhone și instalează altele. IPAForge îi dă fișierul de asociere și certificatul de care are nevoie.",
+      "notNow": "Nu acum"
+    },
+    "onphone": {
+      "title": "Pe iPhone",
+      "lead": "Ce poți face doar tu pe iPhone. Bifează fiecare pas; pagina Dispozitive păstrează aceeași listă."
+    },
+    "around": {
+      "title": "Ești gata",
+      "lead": "Iată unde e totul. Cât timp IPAForge e deschis, îți reîmprospătează aplicațiile înainte să expire.",
+      "again": "Poți rula din nou acest ghid oricând din Setări.",
+      "showMe": "Arată-mi aplicația",
+      "apps": {
+        "title": "Aplicații",
+        "text": "Când expiră fiecare aplicație, cu Reîmprospătare și Actualizare. Tot aici sunt și fișierele de asociere.",
+        "where": "Bara laterală › Aplicații"
+      },
+      "preload": {
+        "title": "Preîncărcare",
+        "text": "Adaugă aplicațiile tale: fișiere .ipa, linkuri, surse. Sau salvează-le ca fișiere .ipa semnate.",
+        "where": "Bara laterală › Preîncărcare"
+      },
+      "repair": {
+        "title": "Repară SideStore",
+        "text": "Dacă SideStore nu se mai reîmprospătează singur, află de ce și repară.",
+        "where": "Aplicații › Verifică SideStore"
+      },
+      "developer": {
+        "title": "Portal pentru dezvoltatori",
+        "text": "Certificatele, ID-urile de aplicație și profilurile tale, și un .p12 ca să-ți muți certificatul.",
+        "where": "Bara laterală › Portal pentru dezvoltatori"
+      },
+      "devices": {
+        "title": "Dispozitive",
+        "text": "Lista de verificare a fiecărui iPhone și fișierul lui de asociere pentru alte unelte.",
+        "where": "Bara laterală › Dispozitive"
+      },
+      "logs": {
+        "title": "Jurnal",
+        "text": "Ce s-a întâmplat, pas cu pas. Atașează-le la un raport de eroare.",
+        "where": "Bara laterală › Jurnal · ⌘L / Ctrl+L"
+      }
     }
   },
   "tour": {

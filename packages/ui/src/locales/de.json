@@ -1935,12 +1935,14 @@
       "welcome": "Willkommen",
       "computer": "Dieser Computer",
       "iphone": "Dein iPhone",
-      "appleid": "Apple-ID"
+      "appleid": "Apple-ID",
+      "install": "SideStore installieren",
+      "onphone": "Auf deinem iPhone",
+      "around": "Fertig eingerichtet"
     },
     "back": "Zurück",
     "skip": "Schritt überspringen",
     "continue": "Weiter",
-    "done": "Fertig",
     "later": "Später fertigstellen",
     "checkAgain": "Erneut prüfen",
     "checking": "Wird geprüft…",
@@ -2004,6 +2006,51 @@
       "text": "Richte IPAForge fertig ein: {done} von {total} Schritten erledigt.",
       "continue": "Einrichtung fortsetzen",
       "notNow": "Jetzt nicht"
+    },
+    "install": {
+      "title": "SideStore installieren",
+      "lead": "SideStore erneuert deine Apps auf dem iPhone selbst und installiert weitere. IPAForge gibt ihm die Pairing-Datei und das Zertifikat, die es braucht.",
+      "notNow": "Jetzt nicht"
+    },
+    "onphone": {
+      "title": "Auf deinem iPhone",
+      "lead": "Was nur du auf dem iPhone tun kannst. Hake jeden Schritt ab; die Geräte-Seite führt dieselbe Liste."
+    },
+    "around": {
+      "title": "Fertig eingerichtet",
+      "lead": "Hier findest du alles. Solange IPAForge offen ist, erneuert es deine Apps, bevor sie ablaufen.",
+      "again": "Du kannst die Einrichtung jederzeit in den Einstellungen erneut starten.",
+      "showMe": "Tour starten",
+      "apps": {
+        "title": "Apps",
+        "text": "Wann jede App abläuft, mit Erneuern und Aktualisieren. Hier sind auch die Pairing-Dateien.",
+        "where": "Seitenleiste › Apps"
+      },
+      "preload": {
+        "title": "Vorladen",
+        "text": "Füge eigene Apps hinzu: .ipa-Dateien, Links, Quellen. Oder speichere sie als signierte .ipa-Dateien.",
+        "where": "Seitenleiste › Vorladen"
+      },
+      "repair": {
+        "title": "SideStore reparieren",
+        "text": "Wenn SideStore nicht mehr selbst erneuert, findet dies den Grund und behebt ihn.",
+        "where": "Apps › SideStore prüfen"
+      },
+      "developer": {
+        "title": "Entwicklerportal",
+        "text": "Deine Zertifikate, App-IDs und Profile, und eine .p12, um dein Zertifikat mitzunehmen.",
+        "where": "Seitenleiste › Entwicklerportal"
+      },
+      "devices": {
+        "title": "Geräte",
+        "text": "Die Checkliste jedes iPhones und seine Pairing-Datei für andere Tools.",
+        "where": "Seitenleiste › Geräte"
+      },
+      "logs": {
+        "title": "Protokoll",
+        "text": "Was passiert ist, Schritt für Schritt. Hänge sie an einen Fehlerbericht an.",
+        "where": "Seitenleiste › Protokoll · ⌘L / Ctrl+L"
+      }
     }
   },
   "tour": {

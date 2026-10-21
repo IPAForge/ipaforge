@@ -1935,12 +1935,14 @@
       "welcome": "ようこそ",
       "computer": "このコンピュータ",
       "iphone": "iPhone",
-      "appleid": "Apple ID"
+      "appleid": "Apple ID",
+      "install": "SideStore をインストール",
+      "onphone": "iPhone で",
+      "around": "準備完了"
     },
     "back": "戻る",
     "skip": "この手順をスキップ",
     "continue": "続ける",
-    "done": "完了",
     "later": "あとで続ける",
     "checkAgain": "再確認",
     "checking": "確認中…",
@@ -2004,6 +2006,51 @@
       "text": "IPAForge のセットアップを完了しましょう:{total} 手順中 {done} 完了。",
       "continue": "ガイドを続ける",
       "notNow": "今はしない"
+    },
+    "install": {
+      "title": "SideStore をインストール",
+      "lead": "SideStore は iPhone 上でアプリを自動で更新し、ほかのアプリもインストールします。必要なペアリングファイルと証明書は IPAForge が渡します。",
+      "notNow": "今はしない"
+    },
+    "onphone": {
+      "title": "iPhone で",
+      "lead": "iPhone であなたにしかできないこと。終わったらチェックしてください。デバイスのページにも同じリストがあります。"
+    },
+    "around": {
+      "title": "準備完了",
+      "lead": "各機能の場所はこちら。IPAForge を開いている間、期限が切れる前にアプリを更新します。",
+      "again": "このガイドは設定からいつでもやり直せます。",
+      "showMe": "ツアーを見る",
+      "apps": {
+        "title": "アプリ",
+        "text": "各アプリの有効期限と、更新・アップデート。ペアリングファイルもここにあります。",
+        "where": "サイドバー › アプリ"
+      },
+      "preload": {
+        "title": "プリロード",
+        "text": "自分のアプリを追加:.ipa ファイル、リンク、ソース。署名済み .ipa として保存もできます。",
+        "where": "サイドバー › プリロード"
+      },
+      "repair": {
+        "title": "SideStoreを修復",
+        "text": "SideStore が自動で更新しなくなったら、原因を見つけて直します。",
+        "where": "アプリ › SideStoreを確認"
+      },
+      "developer": {
+        "title": "デベロッパーポータル",
+        "text": "証明書、App ID、プロファイル。証明書を移すための .p12 も。",
+        "where": "サイドバー › デベロッパーポータル"
+      },
+      "devices": {
+        "title": "デバイス",
+        "text": "各 iPhone のチェックリストと、他のツール用のペアリングファイル。",
+        "where": "サイドバー › デバイス"
+      },
+      "logs": {
+        "title": "ログ",
+        "text": "何が起きたかを手順ごとに。不具合の報告に添付してください。",
+        "where": "サイドバー › ログ · ⌘L / Ctrl+L"
+      }
     }
   },
   "tour": {
