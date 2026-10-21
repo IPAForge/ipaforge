@@ -547,6 +547,10 @@
       "anisette_server_exists": {
         "title": "This anisette server is already in the list",
         "body": "Choose it from the list in Settings instead."
+      },
+      "certificate_not_on_team": {
+        "title": "This certificate isn’t on the team",
+        "body": "Apple doesn’t list it for this team any more: it was revoked, it expired, or it belongs to another team. Export a current one and import that."
       }
     },
     "catalog": {
@@ -667,6 +671,10 @@
       "device_not_provisioned": {
         "title": "The device isn't in the profile",
         "body": "The provisioning profile doesn't include this device. Try again to get a fresh profile."
+      },
+      "pkcs12_password": {
+        "title": "The password doesn’t open this .p12",
+        "body": "Type the password it was exported with, and try again."
       }
     },
     "installer": {
@@ -701,6 +709,10 @@
       "pairing_app_not_found": {
         "title": "That app isn’t on the device",
         "body": "It was removed, or it’s no longer one IPAForge installed. Close Pairing files and open it again."
+      },
+      "certificate_not_stored": {
+        "title": "No certificate on this computer yet",
+        "body": "This computer keeps the team’s certificate once it installs an app with it. Install an app first, or import a .p12."
       }
     },
     "rpc": {
@@ -1184,7 +1196,8 @@
       "newRemoteWaiting": "If your device asks, tap Trust and enter its passcode.",
       "tag": "No pairing file",
       "tagOne": "{name} has no pairing file: open Pairing files"
-    }
+    },
+    "cancelRefresh": "Cancel refresh"
   },
   "logs": {
     "title": "Logs",
@@ -1821,7 +1834,9 @@
       "signsNothing": "Signs nothing on {device}",
       "revoke": "Revoke",
       "revokeOne": "Revoke {name}",
-      "empty": "The team has no certificates yet. IPAForge makes one the first time it installs."
+      "empty": "The team has no certificates yet. IPAForge makes one the first time it installs.",
+      "import": "Import .p12…",
+      "export": "Export .p12"
     },
     "revokeDialog": {
       "title": "Revoke this certificate?",
@@ -1830,7 +1845,8 @@
       "noDevice": "Connect your device to see which of its apps this certificate signs.",
       "thisComputer": "IPAForge makes a new one the next time it installs or refreshes.",
       "sidestore": "SideStore made it to refresh by itself: it makes a new one the next time you sign in there.",
-      "machine": "Xcode on that computer makes a new one the next time it signs."
+      "machine": "Xcode on that computer makes a new one the next time it signs.",
+      "exportedToo": "A .p12 exported from it stops working too."
     },
     "appIds": {
       "hintFree": "Each app and extension you install needs one. Free teams can register 10 in 7 days; each counts for 7 days after it’s made.",
@@ -1874,6 +1890,23 @@
       "connected": "Connected",
       "unnamed": "Unnamed device",
       "empty": "No devices are registered yet. IPAForge registers yours the first time it installs."
+    },
+    "exportDialog": {
+      "title": "Export this computer’s certificate",
+      "body": "A .p12 file with the certificate and its private key, for SideStore or another computer. Anyone with the file and its password can sign apps as your team.",
+      "password": "Password",
+      "again": "Password again",
+      "tooShort": "{count, plural, one {Use at least # character.} other {Use at least # characters.}}",
+      "differ": "The two passwords differ.",
+      "save": "Save .p12…"
+    },
+    "importDialog": {
+      "title": "Import a certificate",
+      "body": "A .p12 from another computer or SideStore. IPAForge checks Apple still lists it for this team, then signs with it here: no new certificate, no slot used.",
+      "noFile": "No file chosen",
+      "choose": "Choose…",
+      "password": "Its password",
+      "import": "Import"
     }
   }
 }

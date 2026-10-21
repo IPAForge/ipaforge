@@ -114,6 +114,9 @@ export {
 } from '@signer/infrastructure/ipa/index.ts'
 export {
   exportPkcs12,
+  importPkcs12,
+  keyMatchesCertificate,
+  type Pkcs12Contents,
   type Pkcs12Input
 } from '@signer/infrastructure/pkcs12/index.ts'
 export {

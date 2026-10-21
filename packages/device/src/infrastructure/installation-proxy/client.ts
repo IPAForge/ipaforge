@@ -16,10 +16,13 @@ import type {
   ApplicationType,
   Fields,
   InstallationProxy,
-  InstallProgress
+  InstallProgress,
+  Watch
 } from '@device/infrastructure/installation-proxy/types.ts'
 import {
   createDict,
+  ErrorCode,
+  IPAForgeError,
   type Logger,
   type PlistDict,
   stringAt
@@ -52,16 +55,66 @@ export const createInstallationProxy = (
 ): InstallationProxy => {
   const { limits, logger } = options
 
+  /**
+   * The next status message. Without `idleTimeoutMs` or `signal` it waits as long as the device takes; with them,
+   * silence that long or an abort closes the service (ending the read) and fails the command.
+   */
+  const receive = (watch: Watch): Promise<PlistDict> => {
+    const reading = receivePlist(link, limits, 'installation_proxy')
+    if (watch.idleTimeoutMs === undefined && !watch.signal) return reading
+
+    return new Promise((resolve, reject) => {
+      const stop = (error: IPAForgeError) => {
+        cleanup()
+        void link.close()
+        reject(error)
+      }
+      const onAbort = () =>
+        stop(
+          new IPAForgeError(ErrorCode.Aborted, { message: 'install cancelled' })
+        )
+      const timer =
+        watch.idleTimeoutMs === undefined
+          ? undefined
+          : setTimeout(
+              () =>
+                stop(
+                  new IPAForgeError(ErrorCode.DeviceTimeout, {
+                    message: `installation_proxy was silent for ${watch.idleTimeoutMs} ms (the device may be locked)`
+                  })
+                ),
+              watch.idleTimeoutMs
+            )
+      const cleanup = () => {
+        clearTimeout(timer)
+        watch.signal?.removeEventListener('abort', onAbort)
+      }
+      if (watch.signal?.aborted) return onAbort()
+      watch.signal?.addEventListener('abort', onAbort, { once: true })
+      reading.then(
+        (message) => {
+          cleanup()
+          resolve(message)
+        },
+        (error: unknown) => {
+          cleanup()
+          reject(error)
+        }
+      )
+    })
+  }
+
   /** Sends a command and reads status messages until `Complete`. */
   const run = async (
     command: string,
     subject: string,
     fields: Fields,
-    onMessage: (message: PlistDict) => void = () => {}
+    onMessage: (message: PlistDict) => void = () => {},
+    watch: Watch = {}
   ): Promise<void> => {
     await sendPlist(link, createDict([['Command', command], ...fields]))
     for (;;) {
-      const response = await receivePlist(link, limits, 'installation_proxy')
+      const response = await receive(watch)
       if (response.Error !== undefined)
         throw installProxyError(response, command, subject)
       onMessage(response)
@@ -95,7 +148,11 @@ export const createInstallationProxy = (
           ['PackagePath', packagePath],
           ['ClientOptions', createDict()]
         ],
-        progress(installOptions.onProgress)
+        progress(installOptions.onProgress),
+        {
+          signal: installOptions.signal,
+          idleTimeoutMs: installOptions.idleTimeoutMs
+        }
       ),
 
     uninstall: (bundleId, uninstallOptions = {}) =>

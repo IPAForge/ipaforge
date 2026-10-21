@@ -69,7 +69,7 @@ iOS 17.4 added a second kind of pairing, remote pairing, which newer SideStore b
 | `device.pairing_path_invalid` | A path given for a pairing file isn't under the app's Documents or Library, or doesn't end in `.plist` or `.mobiledevicepairing` | Use the path from the app's instructions |
 | `device.locked` / `device.pairing_pending` | Waiting for unlock / Trust | Unlock the device and tap Trust |
 | `device.pairing_denied` | Don't Trust was tapped | Unplug, replug, tap Trust |
-| `device.timeout` | Nobody answered the trust prompt | Try again with the device unlocked |
+| `device.timeout` | Nobody answered the trust prompt, or the device stopped answering while it installed (it said nothing for 90 seconds: it usually locked) | Unlock the device and try again |
 | `device.invalid_pair_record` | The device rejected this computer's pairing | Unplug, plug back in, unlock and tap Trust |
 | `device.protocol_error` | The device broke the protocol, for example a failed TLS handshake | Reconnect; the details name the TLS error |
 | `device.passcode_required` | Wi-Fi debugging needs a passcode | Set a passcode in Settings › Face ID & Passcode |

@@ -33,7 +33,9 @@ export const AppsPage = () => {
   const isConnected = apps.device?.isConnected ?? false
   const { refresh, update, isPlanning } = useAppActions()
   const runStates = useAppRunStates()
-  const { run } = useRun()
+  const { run, cancel } = useRun()
+  // A refresh or update going on: it can be cancelled from here, where its progress shows on each row.
+  const isRefreshing = run?.kind === 'apps' && isRunActive(run.view)
   const [removing, setRemoving] = useState<AppView>()
   // Open with the app it was opened for (its row's tag), or null for the button at the top.
   const [pairingFocus, setPairingFocus] = useState<string | null>()
@@ -61,6 +63,11 @@ export const AppsPage = () => {
       <div className="flex flex-wrap items-start justify-between gap-3">
         <PageHeader titleKey="nav.apps" descriptionKey="apps.description" />
         <div className="flex flex-wrap gap-2">
+          {isRefreshing ? (
+            <Button variant="danger-soft" onPress={cancel}>
+              {t('apps.cancelRefresh')}
+            </Button>
+          ) : null}
           <Button
             variant="tertiary"
             onPress={onPairingFiles}

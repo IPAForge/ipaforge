@@ -47,3 +47,9 @@ export type PortalRowView = {
 
 /** What the page read: one query per tab. */
 export type PortalData = ReturnType<typeof usePortalData>
+
+/** A .p12 picked in the import dialog: its name to show, and its bytes. */
+export type PickedFile = {
+  readonly name: string
+  readonly bytes: Uint8Array
+}

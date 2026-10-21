@@ -45,6 +45,7 @@ export const RECOVERY_CATALOGUE = {
   'apple.anisette_server_exists': [R.ChangeAnisetteServer],
   'apple.app_id_quota': [R.WaitForAppIdSlot, R.TryAnyway, R.SwitchAccount],
   'apple.certificate_limit': [R.RevokeCertificate, R.SwitchAccount],
+  'apple.certificate_not_on_team': [R.Retry],
   'apple.invalid_credentials': [R.ReEnterPassword],
   'apple.account_locked': [R.SignInOnAppleDevice, R.SwitchAccount],
   'apple.account_refused': [
@@ -93,6 +94,7 @@ export const RECOVERY_CATALOGUE = {
   'installer.wrong_app': [R.ImportIpa],
   'installer.version_unavailable': [R.ImportIpa],
   'installer.pairing_app_not_found': [R.Retry],
+  'installer.certificate_not_stored': [R.Retry],
 
   'plist.invalid': [R.ChooseAnotherIpa, R.ReportIssue],
   'net.offline': [R.CheckNetwork, R.Retry],
@@ -108,6 +110,7 @@ export const RECOVERY_CATALOGUE = {
   'signer.no_header_space': [R.ChooseAnotherIpa, R.ReportIssue],
   'signer.zip_slip': [R.ChooseAnotherIpa],
   'signer.invalid_certificate': [R.RevokeCertificate, R.Retry],
+  'signer.pkcs12_password': [R.Retry],
   'signer.unknown_issuer': [R.UpdateIPAForge, R.CheckNetwork],
   'signer.invalid_bundle': [R.ChooseAnotherIpa],
   'signer.invalid_profile': REPORT,

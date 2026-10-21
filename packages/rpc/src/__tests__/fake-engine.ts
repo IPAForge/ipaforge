@@ -223,6 +223,8 @@ export const createFakeEngine = () => {
     removeAppPairing: async () => undefined,
     newRemotePairing: async () => undefined,
     devicePairingFile: async () => '<plist/>',
+    exportCertificate: async () => new Uint8Array([0x30, 0x01]),
+    importCertificate: async () => ({ serialNumber: 'SERIAL1' }),
     listSources: async () => [],
     sourceApps: async () => [],
     checkSource: async (url: string) => ({

@@ -247,6 +247,13 @@ export const createEngineClient = (
       }),
     devicePairingFile: (udid) =>
       query({ method: 'devicePairingFile', args: [udid] }),
+    exportCertificate: (team, password) =>
+      query({ method: 'exportCertificate', args: [team, password] }),
+    importCertificate: (team, p12, password) =>
+      query({
+        method: 'importCertificate',
+        args: [team, new Uint8Array(p12), password]
+      }),
     installedApps: (installedQuery) =>
       query({
         method: 'installedApps',

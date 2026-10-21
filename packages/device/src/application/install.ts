@@ -18,6 +18,9 @@ const PERCENT_DONE = 100
 const uploadPercent = (written: number, total: number | undefined): number =>
   total ? Math.floor((written / total) * UPLOAD_SHARE) : 0
 
+/** A device that installs reports progress every few seconds; this long without a word, it has stopped (locked). */
+const INSTALL_IDLE_TIMEOUT_MS = 90_000
+
 const installPercent = (percent: number): number =>
   UPLOAD_SHARE + Math.floor(percent / 2)
 
@@ -63,6 +66,8 @@ const installStaged = (
   useInstallationProxy(ctx, session, (proxy) =>
     proxy.install(stagingPath, {
       upgrade: options.upgrade ?? true,
+      signal: options.signal,
+      idleTimeoutMs: options.idleTimeoutMs ?? INSTALL_IDLE_TIMEOUT_MS,
       onProgress: ({ percent, status }) =>
         report({
           stage: 'installing',

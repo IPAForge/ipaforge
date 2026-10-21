@@ -36,6 +36,8 @@ export const ErrorCode = {
   AnisetteServerExists: 'apple.anisette_server_exists',
   AppIdQuotaExceeded: 'apple.app_id_quota',
   CertificateLimit: 'apple.certificate_limit',
+  /** An imported .p12's certificate isn't one Apple lists for the team (revoked, expired, or another team's). */
+  CertificateNotOnTeam: 'apple.certificate_not_on_team',
   InvalidCredentials: 'apple.invalid_credentials',
   AccountLocked: 'apple.account_locked',
   AccountRefused: 'apple.account_refused',
@@ -94,6 +96,8 @@ export const ErrorCode = {
   NoHeaderSpace: 'signer.no_header_space',
   ZipSlip: 'signer.zip_slip',
   InvalidCertificate: 'signer.invalid_certificate',
+  /** A .p12 that doesn't open with the password given. */
+  Pkcs12Password: 'signer.pkcs12_password',
   UnknownIssuer: 'signer.unknown_issuer',
   InvalidBundle: 'signer.invalid_bundle',
   InvalidProfile: 'signer.invalid_profile',
@@ -117,6 +121,8 @@ export const ErrorCode = {
   VersionUnavailable: 'installer.version_unavailable',
   /** Pairing files: the app isn't on the device, or isn't a pairing app or an app IPAForge installed. */
   PairingAppNotFound: 'installer.pairing_app_not_found',
+  /** Export: this computer keeps no certificate for the team yet (nothing installed with it here). */
+  CertificateNotStored: 'installer.certificate_not_stored',
 
   // rpc
   /** A message between the Engine and the UI failed validation or refers to an unknown run or checkpoint. */

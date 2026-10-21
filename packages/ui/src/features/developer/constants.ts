@@ -46,3 +46,9 @@ export const revokeNoteKeys = {
   sidestore: 'portal.revokeDialog.sidestore',
   machine: 'portal.revokeDialog.machine'
 } as const
+
+/** The shortest password a .p12 is exported with. */
+export const MIN_P12_PASSWORD = 4
+
+/** What the import dialog lets the user pick. */
+export const P12_FILE_TYPES = '.p12,.pfx,application/x-pkcs12'

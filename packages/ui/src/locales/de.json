@@ -547,6 +547,10 @@
       "anisette_server_exists": {
         "title": "Dieser Anisette-Server ist schon in der Liste",
         "body": "Wähle ihn stattdessen in den Einstellungen aus der Liste."
+      },
+      "certificate_not_on_team": {
+        "title": "Dieses Zertifikat gehört nicht zum Team",
+        "body": "Apple führt es für dieses Team nicht mehr: Es wurde widerrufen, ist abgelaufen oder gehört zu einem anderen Team. Exportiere ein aktuelles und importiere dieses."
       }
     },
     "catalog": {
@@ -667,6 +671,10 @@
       "device_not_provisioned": {
         "title": "Das Gerät ist nicht im Profil",
         "body": "Das Bereitstellungsprofil enthält dieses Gerät nicht. Versuche es erneut, um ein neues Profil zu erhalten."
+      },
+      "pkcs12_password": {
+        "title": "Das Passwort öffnet diese .p12 nicht",
+        "body": "Gib das Passwort ein, mit dem sie exportiert wurde, und versuche es erneut."
       }
     },
     "installer": {
@@ -701,6 +709,10 @@
       "pairing_app_not_found": {
         "title": "Diese App ist nicht auf dem Gerät",
         "body": "Sie wurde entfernt oder ist keine von IPAForge installierte App mehr. Schließe Kopplungsdateien und öffne es erneut."
+      },
+      "certificate_not_stored": {
+        "title": "Noch kein Zertifikat auf diesem Computer",
+        "body": "Dieser Computer behält das Zertifikat des Teams, sobald er damit eine App installiert. Installiere zuerst eine App oder importiere eine .p12."
       }
     },
     "rpc": {
@@ -1184,7 +1196,8 @@
       "newRemoteWaiting": "Wenn dein Gerät fragt, tippe auf Vertrauen und gib den Code ein.",
       "tag": "Keine Kopplungsdatei",
       "tagOne": "{name} hat keine Kopplungsdatei: Kopplungsdateien öffnen"
-    }
+    },
+    "cancelRefresh": "Aktualisierung abbrechen"
   },
   "logs": {
     "title": "Protokoll",
@@ -1821,7 +1834,9 @@
       "signsNothing": "Signiert nichts auf {device}",
       "revoke": "Widerrufen",
       "revokeOne": "{name} widerrufen",
-      "empty": "Das Team hat noch keine Zertifikate. IPAForge erstellt eines bei der ersten Installation."
+      "empty": "Das Team hat noch keine Zertifikate. IPAForge erstellt eines bei der ersten Installation.",
+      "import": "Importieren (.p12)…",
+      "export": "Als .p12 exportieren"
     },
     "revokeDialog": {
       "title": "Dieses Zertifikat widerrufen?",
@@ -1830,7 +1845,8 @@
       "noDevice": "Schließe dein Gerät an, um zu sehen, welche seiner Apps dieses Zertifikat signiert.",
       "thisComputer": "IPAForge erstellt beim nächsten Installieren oder Aktualisieren ein neues.",
       "sidestore": "SideStore hat es erstellt, um selbst zu aktualisieren: Es erstellt ein neues, wenn du dich dort das nächste Mal anmeldest.",
-      "machine": "Xcode auf jenem Computer erstellt beim nächsten Signieren ein neues."
+      "machine": "Xcode auf jenem Computer erstellt beim nächsten Signieren ein neues.",
+      "exportedToo": "Eine daraus exportierte .p12 funktioniert dann ebenfalls nicht mehr."
     },
     "appIds": {
       "hintFree": "Jede App und Erweiterung, die du installierst, braucht eine. Kostenlose Teams können 10 in 7 Tagen registrieren; jede zählt 7 Tage lang ab ihrer Erstellung.",
@@ -1874,6 +1890,23 @@
       "connected": "Verbunden",
       "unnamed": "Gerät ohne Namen",
       "empty": "Noch keine Geräte registriert. IPAForge registriert deines bei der ersten Installation."
+    },
+    "exportDialog": {
+      "title": "Zertifikat dieses Computers exportieren",
+      "body": "Eine .p12-Datei mit dem Zertifikat und seinem privaten Schlüssel, für SideStore oder einen anderen Computer. Wer die Datei und ihr Passwort hat, kann Apps als dein Team signieren.",
+      "password": "Passwort",
+      "again": "Passwort wiederholen",
+      "tooShort": "{count, plural, one {Mindestens # Zeichen.} other {Mindestens # Zeichen.}}",
+      "differ": "Die beiden Passwörter stimmen nicht überein.",
+      "save": ".p12 sichern…"
+    },
+    "importDialog": {
+      "title": "Zertifikat importieren",
+      "body": "Eine .p12 von einem anderen Computer oder aus SideStore. IPAForge prüft, ob Apple sie für dieses Team noch führt, und signiert dann hier damit: kein neues Zertifikat, kein Platz verbraucht.",
+      "noFile": "Keine Datei gewählt",
+      "choose": "Auswählen…",
+      "password": "Ihr Passwort",
+      "import": "Importieren"
     }
   }
 }

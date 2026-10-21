@@ -79,6 +79,25 @@ describe('the Apps page', () => {
     )
   })
 
+  it('cancels a refresh from the Apps page while it runs', async () => {
+    // With two teams the run stops to ask which one: it's still going when Cancel is pressed.
+    const user = await open({ scenario: 'two-teams' })
+    const youtube = await rowOf('YouTube')
+
+    await user.click(
+      within(youtube).getByRole('button', { name: t('apps.refresh') })
+    )
+    await user.click(
+      await screen.findByRole('button', { name: t('apps.cancelRefresh') })
+    )
+
+    await waitFor(() =>
+      expect(
+        screen.queryByRole('button', { name: t('apps.cancelRefresh') })
+      ).toBeNull()
+    )
+  })
+
   it('installs SideStore again on Refresh, saying why, so its own screen shows the new date', async () => {
     const user = await open()
 

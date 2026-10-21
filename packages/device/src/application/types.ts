@@ -52,6 +52,11 @@ export type InstallIpaOptions = {
   readonly upgrade?: boolean
   readonly onProgress?: (progress: InstallIpaProgress) => void
   readonly signal?: AbortSignal
+  /**
+   * How long the device may stay silent while it installs (it reports progress every few seconds) before the install
+   * fails with `device.timeout`: a locked device can stop answering. Default 90 seconds.
+   */
+  readonly idleTimeoutMs?: number
 }
 
 export type Report = (progress: InstallIpaProgress) => void
