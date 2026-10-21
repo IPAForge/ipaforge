@@ -1,13 +1,37 @@
 /** The setup guide's steps, in order. */
-export const guideSteps = ['welcome', 'computer', 'iphone', 'appleid'] as const
+export const guideSteps = [
+  'welcome',
+  'computer',
+  'iphone',
+  'appleid',
+  'install',
+  'onphone',
+  'around'
+] as const
 
 /** Each step's name in the steps list. */
 export const guideStepLabelKeys = {
   welcome: 'guide.steps.welcome',
   computer: 'guide.steps.computer',
   iphone: 'guide.steps.iphone',
-  appleid: 'guide.steps.appleid'
+  appleid: 'guide.steps.appleid',
+  install: 'guide.steps.install',
+  onphone: 'guide.steps.onphone',
+  around: 'guide.steps.around'
 } as const
+
+/** The last step's overview: where each part of IPAForge is, with its name, what it's for and how to get there. */
+export const aroundCards = [
+  'apps',
+  'preload',
+  'repair',
+  'developer',
+  'devices',
+  'logs'
+] as const
+
+/** The checklist groups the On your iPhone step shows: what only you can do once SideStore is on the device. */
+export const ON_PHONE_GROUPS = ['after', 'sidestore'] as const
 
 /** The fix for a missing device service, by the computer's system: what to do, and a command to copy (Linux). */
 export const deviceServiceFixKeys = {

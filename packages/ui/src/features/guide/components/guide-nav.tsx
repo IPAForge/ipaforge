@@ -5,6 +5,8 @@ import { useTranslation } from 'react-i18next'
 type GuideNavProps = {
   onBack?: (() => void) | undefined
   onSkip?: (() => void) | undefined
+  /** Skip's label when it isn't Skip this step (Not now). */
+  skipLabel?: string | undefined
   onNext: () => void
   nextLabel: string
   isNextDisabled?: boolean
@@ -16,6 +18,7 @@ type GuideNavProps = {
 export const GuideNav = ({
   onBack,
   onSkip,
+  skipLabel,
   onNext,
   nextLabel,
   isNextDisabled = false,
@@ -34,7 +37,7 @@ export const GuideNav = ({
       <span className="flex-1" />
       {onSkip ? (
         <Button variant="ghost" onPress={onSkip}>
-          {t('guide.skip')}
+          {skipLabel ?? t('guide.skip')}
         </Button>
       ) : null}
       <Button onPress={onNext} isDisabled={isNextDisabled}>

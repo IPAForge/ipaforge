@@ -1935,12 +1935,14 @@
       "welcome": "Welcome",
       "computer": "This computer",
       "iphone": "Your iPhone",
-      "appleid": "Apple ID"
+      "appleid": "Apple ID",
+      "install": "Install SideStore",
+      "onphone": "On your iPhone",
+      "around": "You're set up"
     },
     "back": "Back",
     "skip": "Skip this step",
     "continue": "Continue",
-    "done": "Done",
     "later": "Finish later",
     "checkAgain": "Check again",
     "checking": "Checking…",
@@ -2004,6 +2006,51 @@
       "text": "Finish setting up IPAForge: {done} of {total} steps done.",
       "continue": "Continue the guide",
       "notNow": "Not now"
+    },
+    "install": {
+      "title": "Install SideStore",
+      "lead": "SideStore refreshes your apps on the iPhone by itself and installs more. IPAForge gives it the pairing file and certificate it needs.",
+      "notNow": "Not now"
+    },
+    "onphone": {
+      "title": "On your iPhone",
+      "lead": "What only you can do on the iPhone. Tick each as you go; the Devices page keeps the same list."
+    },
+    "around": {
+      "title": "You're set up",
+      "lead": "Here's where everything is. While IPAForge is open, it refreshes your apps before they expire.",
+      "again": "Run this guide again any time from Settings.",
+      "showMe": "Show me around",
+      "apps": {
+        "title": "Apps",
+        "text": "When each app expires, with Refresh and Update. Pairing files are here too.",
+        "where": "Sidebar › Apps"
+      },
+      "preload": {
+        "title": "Preload",
+        "text": "Add your own apps: .ipa files, links, sources. Or save them as signed .ipa files.",
+        "where": "Sidebar › Preload"
+      },
+      "repair": {
+        "title": "Repair SideStore",
+        "text": "If SideStore stops refreshing by itself, this finds out why and fixes it.",
+        "where": "Apps › Check SideStore"
+      },
+      "developer": {
+        "title": "Developer Portal",
+        "text": "Your certificates, App IDs and profiles, and a .p12 to move your certificate.",
+        "where": "Sidebar › Developer Portal"
+      },
+      "devices": {
+        "title": "Devices",
+        "text": "Each iPhone's checklist, and its pairing file for other tools.",
+        "where": "Sidebar › Devices"
+      },
+      "logs": {
+        "title": "Logs",
+        "text": "What happened, step by step. Attach them to a bug report.",
+        "where": "Sidebar › Logs · ⌘L / Ctrl+L"
+      }
     }
   },
   "tour": {

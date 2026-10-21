@@ -34,6 +34,13 @@ export const screens = {
   'guide-iphone': (options: ScreenOptions) => renderGuide('iphone', options),
   'guide-appleid': (options: ScreenOptions) =>
     renderGuide('appleid', { ...options, scenario: 'two-teams' }),
+  'guide-install': async (options: ScreenOptions) => {
+    await renderGuide('install', options)
+    await planShown()
+  },
+  'guide-onphone': (options: ScreenOptions) =>
+    renderGuide('onphone', { ...options, scenario: 'checklist-todo' }),
+  'guide-around': (options: ScreenOptions) => renderGuide('around', options),
   'guide-banner': (options: ScreenOptions) => renderGuideBanner(options),
   'tour-sidebar': (options: ScreenOptions) => renderTour(3, options),
   'tour-top-bar': (options: ScreenOptions) => renderTour(6, options),

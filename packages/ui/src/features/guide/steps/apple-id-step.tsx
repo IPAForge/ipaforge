@@ -60,7 +60,7 @@ export const AppleIdStep = () => {
         onBack={nav.onBack}
         onSkip={nav.onSkip}
         onNext={nav.onContinue}
-        nextLabel={t(nav.isLast ? 'guide.done' : 'guide.continue')}
+        nextLabel={t('guide.continue')}
         isNextDisabled={!account}
       />
       {isSigningIn ? (

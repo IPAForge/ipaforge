@@ -16,7 +16,7 @@ const button = (key: TranslationKey) =>
 describe('setup guide', () => {
   afterEach(() => vi.restoreAllMocks())
 
-  it('goes through the computer, the iPhone and the Apple ID, then shows the pages', async () => {
+  it('goes through every step, installing SideStore, then shows the pages with the tour', async () => {
     const user = userEvent.setup()
     const { services } = await renderApp('/install', { preferences: open })
 
@@ -40,9 +40,34 @@ describe('setup guide', () => {
 
     await heading('guide.appleid.title')
     await waitFor(() =>
-      expect(button('guide.done').hasAttribute('disabled')).toBe(false)
+      expect(button('guide.continue').hasAttribute('disabled')).toBe(false)
     )
-    await user.click(button('guide.done'))
+    await user.click(button('guide.continue'))
+
+    // Install SideStore: the run in the step, with the team the Apple ID step picked; Continue once it's done.
+    await heading('guide.install.title')
+    const install = await within(screen.getByRole('main')).findByRole(
+      'button',
+      {
+        name: t('install.home.install', {
+          app: t('install.variant.sidestore.title')
+        })
+      }
+    )
+    await waitFor(() => expect(install.hasAttribute('disabled')).toBe(false))
+    await user.click(install)
+    await waitFor(
+      () =>
+        expect(button('guide.continue').hasAttribute('disabled')).toBe(false),
+      { timeout: 4000 }
+    )
+    await user.click(button('guide.continue'))
+
+    await heading('guide.onphone.title')
+    await user.click(button('guide.continue'))
+
+    await heading('guide.around.title')
+    await user.click(button('guide.around.showMe'))
 
     expect(
       await screen.findByRole('navigation', { name: t('shell.navigation') })
@@ -80,6 +105,17 @@ describe('setup guide', () => {
     )
   })
 
+  it('goes from Install SideStore straight to the last step on Not now', async () => {
+    const user = userEvent.setup()
+    await renderApp('/install', {
+      preferences: { ...open, [GuideKey.step]: 'install' }
+    })
+    await heading('guide.install.title')
+    await user.click(button('guide.install.notNow'))
+
+    expect(await heading('guide.around.title')).toBeDefined()
+  })
+
   it('finishes later with a banner that continues where it was', async () => {
     const user = userEvent.setup()
     await renderApp('/install', { preferences: open })
@@ -93,7 +129,7 @@ describe('setup guide', () => {
       name: t('guide.banner.label')
     })
     expect(banner.textContent).toContain(
-      t('guide.banner.text', { done: 1, total: 4 })
+      t('guide.banner.text', { done: 1, total: 7 })
     )
     await user.click(
       within(banner).getByRole('button', { name: t('guide.banner.continue') })
