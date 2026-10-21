@@ -19,7 +19,7 @@ export const SidebarLink = ({ section }: SidebarLinkProps) => {
   const isRunning = section.id === runSection && isRunActive(run?.view)
 
   return (
-    <Link to={section.path} className={LINK_CLASSES}>
+    <Link to={section.path} className={LINK_CLASSES} data-tour={section.id}>
       <Icon aria-hidden="true" className="size-4 shrink-0" />
       <span className="min-w-0 break-words">{t(section.labelKey)}</span>
       {isRunning ? <RunningBadge /> : null}

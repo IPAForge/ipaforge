@@ -6,7 +6,7 @@
     "skipToContent": "コンテンツへスキップ",
     "navigation": "セクション",
     "credit": {
-      "madeWith": "{name}が ❤️ と ☕ で作りました",
+      "madeWith": "❤️ と ☕ で作りました",
       "copyright": "© {year} {name}"
     }
   },
@@ -20,7 +20,8 @@
     "addAppleId": "Apple IDを追加…",
     "noAccounts": "Apple IDはまだありません。",
     "noDevicesHint": "iPhoneまたはiPadをケーブルで接続し、ロックを解除してください。",
-    "openDevices": "デバイスを開く"
+    "openDevices": "デバイスを開く",
+    "tour": "ツアーを見る"
   },
   "nav": {
     "group": {
@@ -252,7 +253,7 @@
     }
   },
   "settings": {
-    "appearance": "外観",
+    "appearance": "外観と言語",
     "mode": "カラーモード",
     "palette": "パレット",
     "language": {
@@ -327,7 +328,22 @@
         "stillAdd": "それでも追加できます。",
         "save": "保存"
       }
-    }
+    },
+    "guide": {
+      "title": "セットアップガイド",
+      "text": "コンピュータ、iPhone、Apple ID の確認をもう一度。",
+      "run": "ガイドをもう一度実行",
+      "tour": "ツアーを見る",
+      "tourTitle": "ページのツアー",
+      "tourHint": "各ページの役割を順番に紹介します。"
+    },
+    "tabs": {
+      "label": "設定",
+      "general": "一般",
+      "anisette": "anisette サーバ"
+    },
+    "modeHint": "ライト、ダーク、またはシステムに合わせる。",
+    "paletteHint": "アプリ全体の色(ライトとダーク)。"
   },
   "theme": {
     "mode": {
@@ -341,7 +357,9 @@
       "aurora": "オーロラ",
       "sunset": "サンセット",
       "forest": "フォレスト",
-      "rose": "ローズ"
+      "rose": "ローズ",
+      "violet": "バイオレット",
+      "mocha": "モカ"
     }
   },
   "errors": {
@@ -1907,6 +1925,128 @@
       "choose": "選択…",
       "password": "そのパスワード",
       "import": "読み込む"
+    }
+  },
+  "guide": {
+    "title": "セットアップガイド",
+    "stepsLabel": "セットアップの手順",
+    "stepDone": "(完了)",
+    "steps": {
+      "welcome": "ようこそ",
+      "computer": "このコンピュータ",
+      "iphone": "iPhone",
+      "appleid": "Apple ID"
+    },
+    "back": "戻る",
+    "skip": "この手順をスキップ",
+    "continue": "続ける",
+    "done": "完了",
+    "later": "あとで続ける",
+    "checkAgain": "再確認",
+    "checking": "確認中…",
+    "copy": "コピー",
+    "copied": "コピーしました",
+    "welcome": {
+      "title": "IPAForge へようこそ",
+      "lead": "いくつかの手順でコンピュータ、iPhone、Apple ID を準備すると、SideStore をインストールできます。まず言語を選んでください。",
+      "needTitle": "必要なもの",
+      "needDevice": "iOS 15 以降の iPhone または iPad と USB ケーブル",
+      "needAppleId": "Apple ID(無料のものでも可)",
+      "needPasscode": "このコンピュータを信頼するための iPhone のパスコード",
+      "skipGuide": "使い方はわかっています",
+      "start": "始める"
+    },
+    "computer": {
+      "title": "このコンピュータ",
+      "lead": "IPAForge は、このコンピュータが Apple にサインインできるかを確認します:Apple のサーバ、時計、anisette サーバ。iPhone と通信できない場合は、その直し方も表示します。",
+      "failed": "確認を実行できませんでした。再確認するか、この手順をスキップしてください。",
+      "service": {
+        "title": "iPhone 接続サービス",
+        "fixMac": "macOS が自動で起動します。Mac を再起動してから再確認してください。",
+        "fixWindows": "Microsoft Store から Apple Devices をインストールし、一度開いてから再確認してください。",
+        "fixLinux": "usbmuxd をインストールし、iPhone を接続してから再確認してください。",
+        "openStore": "Microsoft Store を開く"
+      },
+      "apple": {
+        "title": "Apple のサーバ",
+        "ok": "接続できます。",
+        "fix": "IPAForge が Apple に接続できません。インターネット接続、VPN、ファイアウォールを確認してください。"
+      },
+      "clock": {
+        "title": "時計",
+        "ok": "正確です。",
+        "fix": "{minutes, plural, other {時計が # 分ずれています。}}日付と時刻を自動設定にしてから再確認してください。"
+      },
+      "anisette": {
+        "title": "anisette サーバ",
+        "ok": "{name} が応答しています。サインインに使われます。",
+        "fix": "リストの最初の {tried} 台のサーバがどれも応答しませんでした。接続を確認するか、設定 › anisette サーバでサーバを追加または選択してください。"
+      }
+    },
+    "iphone": {
+      "title": "iPhone",
+      "lead": "iPhone をケーブルで接続してロックを解除し、確認が出たら「信頼」をタップしてください。iOS 16 以降ではデベロッパモードをオンにする必要があります。",
+      "connectTitle": "iPhone を接続してください",
+      "connectText": "USB で iPhone または iPad の接続を待っています…"
+    },
+    "appleid": {
+      "title": "Apple ID",
+      "lead": "インストールするアプリは Apple ID で Apple が署名します。パスワードは Apple にのみ送られ、このコンピュータのキーチェーンに保存されます。",
+      "freeNote": "無料の Apple ID で使えます:アプリの有効期間は 7 日で、IPAForge が更新できます。有料のデベロッパアカウントなら 1 年です。",
+      "signIn": "Apple ID でサインイン",
+      "signedIn": "サインイン済みです。",
+      "team": "アプリに署名するチーム",
+      "free": "無料:アプリは 7 日間",
+      "paid": "有料:アプリは 1 年間"
+    },
+    "banner": {
+      "label": "セットアップガイド",
+      "text": "IPAForge のセットアップを完了しましょう:{total} 手順中 {done} 完了。",
+      "continue": "ガイドを続ける",
+      "notNow": "今はしない"
+    }
+  },
+  "tour": {
+    "count": "{total} 中 {current}",
+    "skip": "ツアーをスキップ",
+    "back": "戻る",
+    "next": "次へ",
+    "done": "完了",
+    "install": {
+      "title": "インストール",
+      "text": "SideStore、または SideStore 入りの LiveContainer をワンクリックでインストール。新しい iPhone ならここから始めましょう。"
+    },
+    "preload": {
+      "title": "プリロード",
+      "text": "自分のアプリを追加:.ipa ファイル、リンク、ソースのアプリ。チェックすると、インストールせず署名済み .ipa として保存します。"
+    },
+    "apps": {
+      "title": "アプリ",
+      "text": "各アプリの有効期限と、更新・アップデート。IPAForge は開いている間、自動で更新します。ペアリングファイルもここにあります。"
+    },
+    "devices": {
+      "title": "デバイス",
+      "text": "iOS バージョンに合わせた各 iPhone のチェックリストと、他のツール用のペアリングファイル。"
+    },
+    "developer": {
+      "title": "Developer Portal",
+      "text": "Apple ID の証明書、App ID、プロファイル。使われていないものを整理したり、証明書を .p12 で移したりできます。"
+    },
+    "pickers": {
+      "title": "デバイスと Apple ID",
+      "text": "IPAForge が使う iPhone や Apple ID をここでいつでも切り替えられます。"
+    },
+    "logs": {
+      "title": "ログ",
+      "text": "IPAForge が行ったすべての手順。不具合の報告に添付してください(⌘L / Ctrl+L)。"
+    },
+    "settings": {
+      "title": "設定",
+      "text": "言語、外観、anisette サーバ、そしてこのツアーをもう一度。"
+    },
+    "showAround": {
+      "title": "ツアーを見る",
+      "text": "いつでもここからこのツアーをもう一度見られます。セットアップガイドは設定にあります。"
     }
   }
 }

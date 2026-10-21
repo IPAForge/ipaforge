@@ -31,6 +31,7 @@ import {
   withTeam
 } from '@installer/application/portal.ts'
 import { createFlowRuntime } from '@installer/application/runtime.ts'
+import { systemCheck } from '@installer/application/system-check.ts'
 import { planInstall } from '@installer/engine/plan.ts'
 import type { EngineQueries } from '@installer/engine/types.ts'
 import type { InstallerDeps } from '@installer/types.ts'
@@ -52,6 +53,7 @@ const deviceStatus = async (
 
 export const createEngineQueries = (deps: InstallerDeps): EngineQueries => ({
   listDevices: () => deps.devices.listDevices(),
+  systemCheck: () => systemCheck(deps),
   deviceStatus: (udid) => deviceStatus(deps, udid, false),
   pairDevice: (udid) => deviceStatus(deps, udid, true),
   listAccounts: () => deps.apple.accounts.list(),

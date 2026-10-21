@@ -48,6 +48,8 @@ export const queryKeys = {
   /** Whose pairing files each app holds; under `apps`, so a run ending reads them again. */
   pairingFiles: (udid: string | undefined, teamIds: readonly string[]) =>
     ['installed-apps', 'pairing', udid ?? null, teamIds.join(',')] as const,
+  /** The setup guide's check of this computer. */
+  systemCheck: ['system-check'] as const,
   planInstall: (input: RemotePlanInstallInput | undefined) =>
     ['plan', input ?? null] as const,
   /** The anisette servers, the choice and SideStore's list's age (Settings). */

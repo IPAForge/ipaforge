@@ -31,7 +31,7 @@ describe('the keyboard', () => {
     expect(focused()?.tagName).toBe('MAIN')
   })
 
-  it('walks the top bar pickers, then every section in order, each with a focus ring', async () => {
+  it('walks the top bar pickers and the tour button, then every section in order, each with a focus ring', async () => {
     await renderScreen('/devices')
 
     await userEvent.tab()
@@ -39,6 +39,10 @@ describe('the keyboard', () => {
       await userEvent.tab()
       expect(focused()?.textContent).toContain(t(labelKey))
     }
+    await userEvent.tab()
+    const tour = focused()
+    expect(tour?.getAttribute('aria-label')).toBe(t('topBar.tour'))
+    expect(tour ? showsFocus(tour) : false).toBe(true)
     for (const section of sections) {
       await userEvent.tab()
       const link = focused()

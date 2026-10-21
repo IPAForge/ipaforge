@@ -110,6 +110,23 @@ export type AppIdUsage = {
   readonly quota: AppIdQuota
 }
 
+/** The setup guide's check of this computer. */
+export type SystemCheck = {
+  /** The system service that talks to iPhones: answering, not installed or not running, or failing otherwise. */
+  readonly deviceService: 'ok' | 'missing' | 'failed'
+  /** Apple's servers answer. */
+  readonly apple: boolean
+  /** This computer's clock is close enough to Apple's for sign-in. */
+  readonly clockOk: boolean
+  /** Apple's clock minus this computer's, when Apple answered. */
+  readonly clockSkewSeconds?: number
+  /**
+   * The anisette servers sign-in tries first, in its order: the first that answered (the one sign-in would use)
+   * and how many were asked.
+   */
+  readonly anisette: { readonly server?: string; readonly tried: number }
+}
+
 export type TeamCertificates = {
   readonly team: Team
   readonly certificates: readonly DevelopmentCertificate[]
@@ -189,6 +206,8 @@ export type EngineQueries = {
   deviceApps(udid: string): Promise<DeviceApps>
   /** Makes the Developer Mode switch appear in the device's Settings. */
   revealDeveloperMode(udid: string): Promise<void>
+  /** The setup guide's check of this computer: the device service, Apple, the clock and anisette. */
+  systemCheck(): Promise<SystemCheck>
   /** Revokes one of the team's certificates: every app it signed stops opening until it's signed again. */
   revokeCertificate(query: TeamQuery, serialNumber: string): Promise<void>
   /** Deletes one of the team's App IDs (by Apple's id); on a free team it still counts until it expires. */

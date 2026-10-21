@@ -167,6 +167,12 @@ export const createFakeEngine = () => {
   }
   const engine = {
     listDevices: async () => [{ udid: 'UDID1', connection: 'USB' }],
+    systemCheck: async () => ({
+      deviceService: 'ok' as const,
+      apple: true,
+      clockOk: true,
+      anisette: { server: 'SideStore', tried: 3 }
+    }),
     deviceStatus: async (udid: string) => {
       throw new IPAForgeError(ErrorCode.DeviceLocked, {
         data: { udid },

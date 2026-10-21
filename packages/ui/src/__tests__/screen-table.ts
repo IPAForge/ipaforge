@@ -1,5 +1,6 @@
 // The main screens the browser tests show, each brought to the state worth checking (and photographing).
 import {
+  anisetteShown,
   appsShown,
   checklistShown,
   developerShown,
@@ -11,7 +12,10 @@ import {
   pressInstall,
   recoveryShown,
   renderChangelog,
+  renderGuide,
+  renderGuideBanner,
   renderScreen,
+  renderTour,
   renderUpdateScreen,
   renderWhatsNew,
   repairShown,
@@ -24,6 +28,15 @@ const NEXT = '0.1.0-alpha.99'
 const RELEASE = `https://github.com/IPAForge/ipaforge/releases/tag/v${NEXT}`
 
 export const screens = {
+  'guide-welcome': (options: ScreenOptions) => renderGuide('welcome', options),
+  'guide-computer': (options: ScreenOptions) =>
+    renderGuide('computer', { ...options, scenario: 'computer-not-ready' }),
+  'guide-iphone': (options: ScreenOptions) => renderGuide('iphone', options),
+  'guide-appleid': (options: ScreenOptions) =>
+    renderGuide('appleid', { ...options, scenario: 'two-teams' }),
+  'guide-banner': (options: ScreenOptions) => renderGuideBanner(options),
+  'tour-sidebar': (options: ScreenOptions) => renderTour(3, options),
+  'tour-top-bar': (options: ScreenOptions) => renderTour(6, options),
   'install-home': async (options: ScreenOptions) => {
     await renderScreen('/install', options)
     await planShown()
@@ -82,6 +95,10 @@ export const screens = {
   },
   settings: async (options: ScreenOptions) => {
     await renderScreen('/settings', options)
+  },
+  'settings-anisette': async (options: ScreenOptions) => {
+    await renderScreen('/settings#anisette', options)
+    await anisetteShown()
   },
   'whats-new': renderWhatsNew,
   changelog: renderChangelog,

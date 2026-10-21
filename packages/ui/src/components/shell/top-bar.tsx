@@ -3,8 +3,9 @@ import { useTranslation } from 'react-i18next'
 import { AccountPicker } from '@ui/components/shell/account-picker.tsx'
 import { AppLogo } from '@ui/components/shell/app-logo.tsx'
 import { DevicePicker } from '@ui/components/shell/device-picker.tsx'
+import { TourButton } from '@ui/features/tour/components/tour-button.tsx'
 
-/** The app's mark and name on the start side, the device and Apple ID pickers on the end side. */
+/** The app's mark and name on the start side; the device and Apple ID pickers and the tour's button on the end side. */
 export const TopBar = () => {
   const { t } = useTranslation()
 
@@ -14,8 +15,11 @@ export const TopBar = () => {
         <AppLogo />
         {t('app.name')}
       </span>
-      <DevicePicker />
-      <AccountPicker />
+      <div data-tour="pickers" className="flex flex-wrap items-center gap-3">
+        <DevicePicker />
+        <AccountPicker />
+      </div>
+      <TourButton />
     </header>
   )
 }

@@ -8,6 +8,7 @@ import type {
 
 export const fakeScenarioIds = [
   'happy',
+  'computer-not-ready',
   'hot-plug',
   'devices',
   'accounts',
