@@ -2,6 +2,10 @@
 // with `apple.session_expired`, an open team choice with `installer.team_required`.
 import { catalogReleases } from '@installer/application/catalog-releases.ts'
 import {
+  exportCertificate,
+  importCertificate
+} from '@installer/application/certificate-transfer.ts'
+import {
   deviceApps,
   revealDeveloperMode
 } from '@installer/application/device-apps.ts'
@@ -106,5 +110,9 @@ export const createEngineQueries = (deps: InstallerDeps): EngineQueries => ({
   placeAppPairing: (input) => placeAppPairing(deps, input),
   removeAppPairing: (query) => removeAppPairing(deps, query),
   newRemotePairing: (query) => newRemotePairing(deps, query),
-  devicePairingFile: (udid) => devicePairingFile(deps, udid)
+  devicePairingFile: (udid) => devicePairingFile(deps, udid),
+  exportCertificate: (query, password) =>
+    exportCertificate(deps, query, password),
+  importCertificate: (query, p12, password) =>
+    importCertificate(deps, query, p12, password)
 })

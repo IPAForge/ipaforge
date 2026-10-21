@@ -3,6 +3,7 @@
 
 // Content types and bags
 export const OID_ENCRYPTED_DATA = '1.2.840.113549.1.7.6'
+export const OID_KEY_BAG = '1.2.840.113549.1.12.10.1.1'
 export const OID_SHROUDED_KEY_BAG = '1.2.840.113549.1.12.10.1.2'
 export const OID_CERT_BAG = '1.2.840.113549.1.12.10.1.3'
 export const OID_X509_CERTIFICATE = '1.2.840.113549.1.9.22.1'

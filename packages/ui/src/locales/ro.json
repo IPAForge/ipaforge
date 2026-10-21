@@ -547,6 +547,10 @@
       "anisette_server_exists": {
         "title": "Acest server anisette este deja în listă",
         "body": "Alege-l din listă, în Setări."
+      },
+      "certificate_not_on_team": {
+        "title": "Certificatul nu e al echipei",
+        "body": "Apple nu-l mai listează pentru această echipă: a fost revocat, a expirat sau e al altei echipe. Exportă unul valid și importă-l pe acela."
       }
     },
     "catalog": {
@@ -667,6 +671,10 @@
       "device_not_provisioned": {
         "title": "Dispozitivul nu este în profil",
         "body": "Profilul de provizionare nu include acest dispozitiv. Încearcă din nou pentru a obține un profil nou."
+      },
+      "pkcs12_password": {
+        "title": "Parola nu deschide acest .p12",
+        "body": "Scrie parola cu care a fost exportat și încearcă din nou."
       }
     },
     "installer": {
@@ -701,6 +709,10 @@
       "pairing_app_not_found": {
         "title": "Aplicația nu e pe dispozitiv",
         "body": "A fost eliminată sau nu mai e una instalată de IPAForge. Închide Fișiere de asociere și deschide-l din nou."
+      },
+      "certificate_not_stored": {
+        "title": "Încă niciun certificat pe acest computer",
+        "body": "Acest computer păstrează certificatul echipei după ce instalează o aplicație cu el. Instalează întâi o aplicație sau importă un .p12."
       }
     },
     "rpc": {
@@ -1184,7 +1196,8 @@
       "newRemoteWaiting": "Dacă dispozitivul întreabă, apasă Am încredere și introdu codul.",
       "tag": "Fără fișier de asociere",
       "tagOne": "{name} nu are fișier de asociere: deschide Fișiere de asociere"
-    }
+    },
+    "cancelRefresh": "Anulează reîmprospătarea"
   },
   "logs": {
     "title": "Jurnal",
@@ -1821,7 +1834,9 @@
       "signsNothing": "Nu semnează nimic pe {device}",
       "revoke": "Revocă",
       "revokeOne": "Revocă {name}",
-      "empty": "Echipa nu are încă certificate. IPAForge face unul la prima instalare."
+      "empty": "Echipa nu are încă certificate. IPAForge face unul la prima instalare.",
+      "import": "Importă .p12…",
+      "export": "Exportă .p12"
     },
     "revokeDialog": {
       "title": "Revoci acest certificat?",
@@ -1830,7 +1845,8 @@
       "noDevice": "Conectează dispozitivul ca să vezi ce aplicații de pe el semnează acest certificat.",
       "thisComputer": "IPAForge face unul nou la următoarea instalare sau reîmprospătare.",
       "sidestore": "SideStore l-a făcut ca să se reîmprospăteze singur: face unul nou data viitoare când te conectezi acolo.",
-      "machine": "Xcode de pe acel computer face unul nou data viitoare când semnează."
+      "machine": "Xcode de pe acel computer face unul nou data viitoare când semnează.",
+      "exportedToo": "Un .p12 exportat din el nu mai funcționează nici el."
     },
     "appIds": {
       "hintFree": "Fiecare aplicație și extensie instalată are nevoie de unul. Echipele gratuite pot înregistra 10 în 7 zile; fiecare contează 7 zile de la creare.",
@@ -1874,6 +1890,23 @@
       "connected": "Conectat",
       "unnamed": "Dispozitiv fără nume",
       "empty": "Niciun dispozitiv înregistrat încă. IPAForge îl înregistrează pe al tău la prima instalare."
+    },
+    "exportDialog": {
+      "title": "Exportă certificatul acestui computer",
+      "body": "Un fișier .p12 cu certificatul și cheia lui privată, pentru SideStore sau alt computer. Oricine are fișierul și parola lui poate semna aplicații în numele echipei tale.",
+      "password": "Parolă",
+      "again": "Parola din nou",
+      "tooShort": "{count, plural, one {Folosește cel puțin # caracter.} few {Folosește cel puțin # caractere.} other {Folosește cel puțin # de caractere.}}",
+      "differ": "Cele două parole diferă.",
+      "save": "Salvează .p12…"
+    },
+    "importDialog": {
+      "title": "Importă un certificat",
+      "body": "Un .p12 de pe alt computer sau din SideStore. IPAForge verifică dacă Apple îl mai listează pentru această echipă, apoi semnează cu el aici: niciun certificat nou, niciun loc folosit.",
+      "noFile": "Niciun fișier ales",
+      "choose": "Alege…",
+      "password": "Parola lui",
+      "import": "Importă"
     }
   }
 }

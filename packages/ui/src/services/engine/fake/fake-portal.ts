@@ -1,4 +1,4 @@
-// The Developer Portal page for the fake Engine: the team's certificates (IPAForge's signs the fake apps), App IDs
+// The Developer Portal page for the fake Engine (a .p12 imports with the password "sidestore"): the team's certificates (IPAForge's signs the fake apps), App IDs
 // (one per installed app and extension, plus one nothing uses), app groups, registered devices, and the profiles
 // on the device (one expired that nothing uses). Revoking, deleting and removing change what it answers next.
 import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
@@ -26,6 +26,8 @@ type PortalQueries = Pick<
   | 'registeredDevices'
   | 'deviceProfiles'
   | 'removeDeviceProfiles'
+  | 'exportCertificate'
+  | 'importCertificate'
 >
 
 /** The bundle ids of the fake's installed apps and their extensions, as sideloaded for the team. */
@@ -43,6 +45,8 @@ export const createFakePortal = (
   teamOf: (query: TeamQuery) => Team,
   wait: () => Promise<void>
 ): PortalQueries => {
+  // This computer's certificate; importing SideStore's .p12 (password "sidestore") makes it that one.
+  let storedSerial = STORED_SERIAL
   let certificates = fakeCertificates.slice(0, 2).map((certificate) => ({
     ...certificate,
     expiresAt: new Date(certificate.expiresAt)
@@ -79,7 +83,7 @@ export const createFakePortal = (
     listCertificates: async (query) => ({
       team: teamOf(query),
       certificates,
-      storedSerial: STORED_SERIAL
+      storedSerial
     }),
     appIdQuota: async (query) => {
       const team = teamOf(query)
@@ -133,6 +137,23 @@ export const createFakePortal = (
         { id: 'DEVICE2', udid: '00008112-000A1B2C3D4E7A2E', name: 'iPad' }
       ]
     }),
+    exportCertificate: async (query) => {
+      teamOf(query)
+      await wait()
+      return new Uint8Array([0x30, 0x82, 0x01, 0x00])
+    },
+    importCertificate: async (query, _p12, password) => {
+      teamOf(query)
+      await wait()
+      if (password !== 'sidestore')
+        throw new IPAForgeError(ErrorCode.Pkcs12Password)
+      const sideStore = certificates.find(
+        (certificate) => certificate.machineName === 'SideStore'
+      )
+      if (!sideStore) throw new IPAForgeError(ErrorCode.CertificateNotOnTeam)
+      storedSerial = sideStore.serialNumber
+      return { serialNumber: sideStore.serialNumber }
+    },
     deviceProfiles: async () => profiles,
     removeDeviceProfiles: async (_udid, uuids) => {
       await wait()

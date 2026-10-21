@@ -104,6 +104,8 @@ export type FakeDevice = {
   /** The next install fails with this installation_proxy error. */
   nextInstallError: string | undefined
   nextInstallDescription: string | undefined
+  /** The next install gets no answer at all, as from a device that locked mid-install. */
+  installGoesSilent: boolean
   devicePublicKeyPem: Uint8Array
 }
 
@@ -180,6 +182,7 @@ export const createFakeDevice = async (
   tlsHandshakeFails: false,
   nextInstallError: undefined,
   nextInstallDescription: undefined,
+  installGoesSilent: false,
   devicePublicKeyPem: await sharedDevicePublicKey()
 })
 
@@ -424,6 +427,10 @@ const install: ProxyHandler = async ({ message, device, send }) => {
   const ipa = device.media.files.get(String(message.PackagePath))
   const failure = takeInstallError(device)
   if (failure) return send(failure)
+  if (device.installGoesSilent) {
+    device.installGoesSilent = false
+    return
+  }
   if (!ipa) return send([['Error', 'PackageNotFound']])
   // Fake IPAs are the text "IPA:<bundle id>".
   const bundleId = utf8Decode(ipa).replace(/^IPA:/, '')

@@ -40,6 +40,10 @@ const queryHandlers = (
   removeAppPairing: ([query]) => engine.removeAppPairing(query),
   newRemotePairing: ([query]) => engine.newRemotePairing(query),
   devicePairingFile: ([udid]) => engine.devicePairingFile(udid),
+  exportCertificate: ([query, password]) =>
+    engine.exportCertificate(compact(query), password),
+  importCertificate: ([query, p12, password]) =>
+    engine.importCertificate(compact(query), p12, password),
   signOut: ([accountId]) => engine.signOut(accountId),
   listTeams: ([accountId]) => engine.listTeams(accountId),
   catalogApps: () => engine.catalogApps(),

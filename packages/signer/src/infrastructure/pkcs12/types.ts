@@ -29,12 +29,24 @@ export type Hmac = {
 
 export type RsaModulus = {
   readonly n: { toString: (radix: number) => string }
+  readonly e?: { toString: (radix: number) => string }
+}
+
+/** What a .p12 holds that signing needs. */
+export type Pkcs12Contents = {
+  /** Its certificate's serial number, upper-case hex without leading zeros. */
+  readonly serialNumber: string
+  /** PKCS#8 DER private key. */
+  readonly privateKey: Uint8Array
 }
 
 /** A parsed bag, as node-forge's PKCS#12 reader returns it (used by tests to round-trip). */
 export type Pkcs12Bag = {
   readonly key?: RsaModulus
-  readonly cert?: { readonly publicKey: RsaModulus }
+  readonly cert?: {
+    readonly publicKey: RsaModulus
+    readonly serialNumber: string
+  }
   readonly attributes: Readonly<Record<string, readonly string[] | undefined>>
 }
 
@@ -84,6 +96,15 @@ export type Forge = {
   readonly md: { readonly sha1: { create: () => MessageDigest } }
   readonly hmac: { create: () => Hmac }
   readonly pki: {
+    /** The PKCS#1 RSAPrivateKey of a key node-forge read. */
+    privateKeyToAsn1: (key: RsaModulus) => Asn1
+    /** PKCS#1 inside a PKCS#8 PrivateKeyInfo. */
+    wrapRsaPrivateKey: (key: Asn1) => Asn1
+    privateKeyFromAsn1: (value: Asn1) => RsaModulus
+    certificateFromAsn1: (value: Asn1) => {
+      readonly publicKey: RsaModulus
+      readonly serialNumber: string
+    }
     readonly pbe: {
       /** PKCS#12 key derivation (RFC 7292 appendix B); `id` 1 = key, 2 = IV, 3 = MAC key. */
       generatePkcs12Key: (

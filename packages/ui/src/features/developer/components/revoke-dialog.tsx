@@ -53,6 +53,7 @@ export const RevokeDialog = ({
         <SignedApps apps={signed} deviceName={deviceName} />
       )}
       {noteKey ? <p className="text-muted">{t(noteKey)}</p> : null}
+      <p className="text-muted">{t('portal.revokeDialog.exportedToo')}</p>
     </ConfirmDialog>
   )
 }

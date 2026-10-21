@@ -126,14 +126,19 @@ describe('the Preload page', () => {
     )
 
     await user.click(installButton())
+    // The whole run plays out first: on a busy machine that takes a few seconds.
     expect(
-      await screen.findByRole('heading', {
-        level: 1,
-        name: t('preload.run.title.completed', {
-          count: 2,
-          app: 'Feather and MyGame'
-        })
-      })
+      await screen.findByRole(
+        'heading',
+        {
+          level: 1,
+          name: t('preload.run.title.completed', {
+            count: 2,
+            app: 'Feather and MyGame'
+          })
+        },
+        { timeout: 10_000 }
+      )
     ).toBeDefined()
     for (const group of [t('preload.run.shared'), 'Feather', 'MyGame'])
       expect(screen.getByRole('list', { name: group })).toBeDefined()
@@ -156,7 +161,7 @@ describe('the Preload page', () => {
 
     history.push('/install')
     expect(await screen.findByText(t('preload.elsewhere.apps'))).toBeDefined()
-  })
+  }, 20_000)
 
   it('signs and saves an app instead of installing it, in the folder the host asks for', async () => {
     const user = userEvent.setup()

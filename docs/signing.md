@@ -130,6 +130,16 @@ certificate bag use `pbeWithSHAAnd3-KeyTripleDES-CBC`, the MAC is HMAC-SHA1, and
 the signer does. Bad input fails with `signer.invalid_certificate`. The output is checked with `openssl pkcs12
 -info -legacy`.
 
+### Importing a PKCS#12
+
+`importPkcs12(bytes, password)` reads a `.p12` from another computer, Keychain Access or SideStore: the legacy
+encryptions (3DES, RC2), PBES2 with AES and PBKDF2 as OpenSSL 3 writes them, and a SHA-1 or SHA-2 MAC, all through
+node-forge. It returns the private key (PKCS#8 DER) and the serial number of the certificate whose public key is the
+key's, not the certificate itself: node-forge re-encodes a certificate it reads, so the exact DER is taken from
+Apple, which lists it for the team, and `keyMatchesCertificate(privateKey, certificate)` checks the pair. A password
+that doesn't open it fails with `signer.pkcs12_password`; a file that isn't a `.p12`, holds no key with its
+certificate, or is over 256 KB fails with `signer.invalid_certificate`.
+
 SideStore holds the certificate this way so it can refresh apps by itself. The installer's
 `sideStoreCertificateAdditions({ certificate, privateKey, serialNumber, machineId })` returns an `additions`
 callback that writes `ALTCertificate.p12` (password = the certificate's `machineId`) and sets Info.plist

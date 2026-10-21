@@ -205,6 +205,17 @@ export type EngineQueries = {
   removeAppPairing(query: PairingTargetQuery): Promise<void>
   /** A new remote pairing (may ask to Trust again), placed in every app that reads one; the old one stops working. */
   newRemotePairing(query: PairingQuery): Promise<void>
+  /** This computer's certificate for the team, with its private key, as a .p12 under `password`. */
+  exportCertificate(query: TeamQuery, password: string): Promise<Uint8Array>
+  /**
+   * Keeps a .p12's certificate and key as this computer's for the team (no new certificate, no slot used), once
+   * Apple lists that certificate for the team and the key is its own.
+   */
+  importCertificate(
+    query: TeamQuery,
+    p12: Uint8Array,
+    password: string
+  ): Promise<{ readonly serialNumber: string }>
   /** This computer's pairing file for the device (an XML plist), for saving: another tool asks for it. */
   devicePairingFile(udid: string): Promise<string>
   /** The anisette servers in the order Automatic tries them, the choice, and SideStore's list's age. */

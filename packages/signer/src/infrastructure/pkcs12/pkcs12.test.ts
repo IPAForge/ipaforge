@@ -14,7 +14,11 @@ import {
   PKCS12_ITERATIONS
 } from '@signer/infrastructure/pkcs12/constants.ts'
 import { forge } from '@signer/infrastructure/pkcs12/forge.ts'
-import { exportPkcs12 } from '@signer/infrastructure/pkcs12/index.ts'
+import {
+  exportPkcs12,
+  importPkcs12,
+  keyMatchesCertificate
+} from '@signer/infrastructure/pkcs12/index.ts'
 import type { Asn1 } from '@signer/infrastructure/pkcs12/types.ts'
 
 const PASSWORD = '00000000-1111-2222-3333-444444444444'
@@ -100,5 +104,81 @@ describe('exportPkcs12', () => {
     expect(() =>
       exportPkcs12({ certificate, privateKey: garbage, password: PASSWORD })
     ).toThrow(expect.objectContaining({ code: ErrorCode.InvalidCertificate }))
+  })
+})
+
+/** node-forge's writer, untyped in the module's slice: for a .p12 encrypted the way OpenSSL 3 does it (AES-256). */
+type ForgeWriter = {
+  pki: {
+    certificateFromAsn1: (value: Asn1) => unknown
+    privateKeyFromAsn1: (value: Asn1) => unknown
+  }
+  pkcs12: {
+    toPkcs12Asn1: (
+      key: unknown,
+      certificate: unknown,
+      password: string,
+      options: { algorithm: string; useMac: boolean }
+    ) => Asn1
+  }
+}
+
+describe('importPkcs12', () => {
+  it('reads back the key IPAForge exports, and its certificate’s serial', () => {
+    const contents = importPkcs12(p12, PASSWORD)
+    const serial = forge.pki
+      .certificateFromAsn1(parse(identity.certificate))
+      .serialNumber.toUpperCase()
+      .replace(/^0+/, '')
+
+    expect(contents.serialNumber).toBe(serial)
+    expect(
+      keyMatchesCertificate(contents.privateKey, identity.certificate)
+    ).toBe(true)
+  })
+
+  it('tells another key from the certificate’s', async () => {
+    const other = await crypto.subtle.generateKey(
+      {
+        name: 'RSASSA-PKCS1-v1_5',
+        modulusLength: 2048,
+        publicExponent: new Uint8Array([1, 0, 1]),
+        hash: 'SHA-256'
+      },
+      true,
+      ['sign', 'verify']
+    )
+    const otherKey = new Uint8Array(
+      await crypto.subtle.exportKey('pkcs8', other.privateKey)
+    )
+
+    expect(keyMatchesCertificate(otherKey, identity.certificate)).toBe(false)
+  })
+
+  it('reads a .p12 encrypted with AES-256, as OpenSSL 3 writes them', () => {
+    const writer = forge as unknown as ForgeWriter
+    const aes = writer.pkcs12.toPkcs12Asn1(
+      writer.pki.privateKeyFromAsn1(parse(privateKey)),
+      writer.pki.certificateFromAsn1(parse(identity.certificate)),
+      'modern',
+      { algorithm: 'aes256', useMac: true }
+    )
+    const bytes = forge.util.binary.raw.decode(forge.asn1.toDer(aes).getBytes())
+
+    expect(
+      keyMatchesCertificate(
+        importPkcs12(bytes, 'modern').privateKey,
+        identity.certificate
+      )
+    ).toBe(true)
+  })
+
+  it('says when the password is wrong, and when the file is no .p12', () => {
+    expect(() => importPkcs12(p12, 'wrong')).toThrow(
+      expect.objectContaining({ code: ErrorCode.Pkcs12Password })
+    )
+    expect(() => importPkcs12(new Uint8Array([1, 2, 3]), PASSWORD)).toThrow(
+      expect.objectContaining({ code: ErrorCode.InvalidCertificate })
+    )
   })
 })

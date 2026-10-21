@@ -37,6 +37,16 @@ import { subscriptionTopicSchema } from '@rpc/domain/protocol/subscriptions.ts'
 const call = <M extends string, A extends z.ZodTuple>(method: M, args: A) =>
   z.object({ method: z.literal(method), args })
 
+/** A .p12's password: anything typed, up to a length no one types. */
+const p12PasswordSchema = z.string().min(1).max(256)
+
+/** A .p12 file's bytes: a certificate and key are a few kilobytes, so anything far bigger isn't one. */
+const p12BytesSchema = z
+  .instanceof(Uint8Array)
+  .refine((bytes) => bytes.byteLength > 0 && bytes.byteLength <= 256 * 1024, {
+    message: 'not a .p12 size'
+  })
+
 export const queryCallSchema = z.discriminatedUnion('method', [
   call('listDevices', z.tuple([])),
   call('deviceStatus', z.tuple([textSchema])),
@@ -99,7 +109,14 @@ export const queryCallSchema = z.discriminatedUnion('method', [
   call('removeAppPairing', z.tuple([pairingTargetQuerySchema])),
   /** May wait for Trust this computer on the device. */
   call('newRemotePairing', z.tuple([installedAppsQuerySchema])),
-  call('devicePairingFile', z.tuple([textSchema]))
+  call('devicePairingFile', z.tuple([textSchema])),
+  /** Asks Apple for the team, then packs this computer's certificate and key under the password. */
+  call('exportCertificate', z.tuple([teamQuerySchema, p12PasswordSchema])),
+  /** Asks Apple for the team's certificates before keeping the .p12's. */
+  call(
+    'importCertificate',
+    z.tuple([teamQuerySchema, p12BytesSchema, p12PasswordSchema])
+  )
 ])
 
 export const commandCallSchema = z.discriminatedUnion('command', [

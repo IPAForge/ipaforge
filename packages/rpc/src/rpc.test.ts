@@ -219,6 +219,22 @@ describe('queries', () => {
     expect(await client.chooseSaveFolder()).toBeUndefined()
   })
 
+  it('exports and imports a .p12 through the Engine; an empty or huge file is refused', async () => {
+    const { client } = setup()
+    const team = { accountId: 'acct' }
+
+    expect(await client.exportCertificate(team, 'secret')).toEqual(
+      new Uint8Array([0x30, 0x01])
+    )
+    expect(
+      await client.importCertificate(team, new Uint8Array([0x30]), 'sidestore')
+    ).toEqual({ serialNumber: 'SERIAL1' })
+    for (const bytes of [new Uint8Array(), new Uint8Array(300 * 1024)])
+      await expect(
+        client.importCertificate(team, bytes, 'sidestore')
+      ).rejects.toMatchObject({ code: ErrorCode.InvalidRpcMessage })
+  })
+
   it('manages app sources through the Engine, over https only', async () => {
     const { client } = setup()
     const url = 'https://example.com/apps.json'

@@ -92,6 +92,9 @@ describe('the Developer Portal', () => {
     expect(
       within(dialog).getByText(t('portal.revokeDialog.thisComputer'))
     ).toBeTruthy()
+    expect(
+      within(dialog).getByText(t('portal.revokeDialog.exportedToo'))
+    ).toBeTruthy()
     await user.click(
       within(dialog).getByRole('button', {
         name: t('portal.certificates.revoke')
@@ -195,4 +198,87 @@ describe('the Developer Portal', () => {
     expect(await screen.findByText(t('portal.noAccount.title'))).toBeTruthy()
     expect(screen.queryByRole('tab')).toBeNull()
   })
+
+  it('exports this computer’s certificate as a .p12, once the password is typed twice', async () => {
+    const user = userEvent.setup()
+    const { files } = await renderApp('/developer')
+
+    await user.click(
+      await screen.findByRole('button', {
+        name: t('portal.certificates.export')
+      })
+    )
+    const dialog = await screen.findByRole('dialog')
+    const [password, again] = within(dialog).getAllByLabelText(
+      /Password/
+    ) as HTMLInputElement[]
+    const save = within(dialog).getByRole('button', {
+      name: t('portal.exportDialog.save')
+    })
+
+    await user.type(password as HTMLInputElement, 'ab')
+    await user.click(save)
+    expect(
+      within(dialog).getByText(t('portal.exportDialog.tooShort', { count: 4 }))
+    ).toBeTruthy()
+    await user.type(password as HTMLInputElement, 'cd')
+    await user.type(again as HTMLInputElement, 'abce')
+    await user.click(save)
+    expect(
+      within(dialog).getByText(t('portal.exportDialog.differ'))
+    ).toBeTruthy()
+
+    await user.clear(again as HTMLInputElement)
+    await user.type(again as HTMLInputElement, 'abcd')
+    await user.click(save)
+
+    await waitFor(() => expect(files.saved).toHaveLength(1))
+    expect(files.saved[0]?.name).toBe('IPAForge-FAKECERT01.p12')
+    expect(files.saved[0]?.bytes?.[0]).toBe(0x30)
+  })
+
+  it('imports a .p12 with its password, and then signs with that certificate here', async () => {
+    const user = userEvent.setup()
+    await open()
+
+    await user.click(
+      await screen.findByRole('button', {
+        name: t('portal.certificates.import')
+      })
+    )
+    const dialog = await screen.findByRole('dialog')
+    const importButton = within(dialog).getByRole('button', {
+      name: t('portal.importDialog.import')
+    })
+    expect(importButton.hasAttribute('disabled')).toBe(true)
+
+    await user.upload(
+      within(dialog).getByLabelText(t('portal.importDialog.choose'), {
+        selector: 'input'
+      }),
+      new File([new Uint8Array([0x30, 0x82])], 'SideStore.p12')
+    )
+    expect(await within(dialog).findByText('SideStore.p12')).toBeTruthy()
+    const password = within(dialog).getByLabelText(
+      t('portal.importDialog.password')
+    )
+    await user.type(password, 'wrong')
+    await user.click(importButton)
+    expect(
+      await within(dialog).findByText(t('errors.signer.pkcs12_password.title'))
+    ).toBeTruthy()
+
+    await user.clear(password)
+    await user.type(password, 'sidestore')
+    await user.click(importButton)
+
+    await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
+    await waitFor(async () => {
+      const sideStore = (await rows('portal.tabs.certificates')).find((row) =>
+        row.startsWith(t('portal.certificates.maker.sidestore'))
+      )
+      expect(sideStore).toBeDefined()
+      expect(sideStore).toContain(t('portal.certificates.thisComputer'))
+    })
+  }, 20_000)
 })

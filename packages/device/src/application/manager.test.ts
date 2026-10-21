@@ -350,6 +350,38 @@ describe('installing apps', () => {
     await handle.close()
   })
 
+  it('gives up on a device that stops answering while it installs, and cleans up', async () => {
+    const rig = await createRig()
+    const handle = await rig.manager.open(rig.device.udid)
+    rig.device.installGoesSilent = true
+
+    expect(
+      await codeOf(
+        handle.installIpa(
+          bytesFileSource('App.ipa', utf8Encode('IPA:com.example.app')),
+          { idleTimeoutMs: 50 }
+        )
+      )
+    ).toBe(ErrorCode.DeviceTimeout)
+    expect([...rig.device.media.files.keys()]).toEqual([])
+    await handle.close()
+  })
+
+  it('stops waiting for the install when cancelled', async () => {
+    const rig = await createRig()
+    const handle = await rig.manager.open(rig.device.udid)
+    rig.device.installGoesSilent = true
+    const controller = new AbortController()
+    const installing = handle.installIpa(
+      bytesFileSource('App.ipa', utf8Encode('IPA:com.example.app')),
+      { signal: controller.signal }
+    )
+    setTimeout(() => controller.abort(), 20)
+
+    expect(await codeOf(installing)).toBe(ErrorCode.Aborted)
+    await handle.close()
+  })
+
   it('reports installation_proxy errors by name and still cleans up', async () => {
     const rig = await createRig()
     const handle = await rig.manager.open(rig.device.udid)

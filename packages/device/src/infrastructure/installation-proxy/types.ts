@@ -11,7 +11,14 @@ export type InstallProgress = {
 export type InstallationProxy = {
   install(
     packagePath: string,
-    options?: { upgrade?: boolean; onProgress?: (p: InstallProgress) => void }
+    options?: {
+      upgrade?: boolean
+      onProgress?: (p: InstallProgress) => void
+      /** Stops waiting (and closes the service) when aborted. */
+      signal?: AbortSignal | undefined
+      /** The longest silence from the device before giving up with `device.timeout`. */
+      idleTimeoutMs?: number | undefined
+    }
   ): Promise<void>
   uninstall(
     bundleId: string,
@@ -29,3 +36,9 @@ export type InstallationProxy = {
 }
 
 export type Fields = readonly (readonly [string, PlistValue])[]
+
+/** What a command's wait for the device stops on: silence that long, or an abort. */
+export type Watch = {
+  readonly signal?: AbortSignal | undefined
+  readonly idleTimeoutMs?: number | undefined
+}
