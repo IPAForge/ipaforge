@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { AppIcon } from '@ui/components/app-icon.tsx'
 import { AppRunLine } from '@ui/features/apps/components/app-run-line.tsx'
 import { ExpiryLabel } from '@ui/features/apps/components/expiry-label.tsx'
+import { PairingTag } from '@ui/features/apps/components/pairing-tag.tsx'
 import { SourcePicker } from '@ui/features/apps/components/source-picker.tsx'
 import type { AppRunState, AppView } from '@ui/features/apps/types.ts'
 import { foundLine } from '@ui/features/apps/utils/found-line.ts'
@@ -16,6 +17,8 @@ type OtherAppRowProps = {
   runState: AppRunState | undefined
   canAct: boolean
   onRefresh: (view: AppView) => void
+  needsPairing: boolean
+  onPairing: (bundleId: string) => void
 }
 
 /**
@@ -26,7 +29,9 @@ export const OtherAppRow = ({
   view,
   runState,
   canAct,
-  onRefresh
+  onRefresh,
+  needsPairing,
+  onPairing
 }: OtherAppRowProps) => {
   const { t } = useTranslation()
   const { app } = view
@@ -39,6 +44,7 @@ export const OtherAppRow = ({
     choice && view.refresh?.kind === 'source'
       ? { ...view.refresh, source: choice.source, from: choice.from }
       : view.refresh
+  const onPairingPress = () => onPairing(view.app.bundleId)
   const onRefreshPress = () => onRefresh({ ...view, refresh })
   const onPick = (key: Key | null) => setPicked(Number(key ?? 0))
   const foundText = foundLine(t, refresh, choices?.length ?? 0)
@@ -50,6 +56,9 @@ export const OtherAppRow = ({
         <div className="flex min-w-0 flex-col gap-1">
           <p className="flex flex-wrap items-baseline gap-x-2 font-semibold">
             {app.name}
+            {needsPairing ? (
+              <PairingTag name={app.name} onOpen={onPairingPress} />
+            ) : null}
             {app.version ? (
               <span className="font-normal text-muted text-sm">
                 {app.version}

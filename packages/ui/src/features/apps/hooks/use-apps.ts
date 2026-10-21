@@ -63,6 +63,7 @@ export const useApps = () => {
   return {
     device,
     account,
+    teamIds,
     settings,
     isLoading: installed.isPending && installed.fetchStatus !== 'idle',
     error: installed.error,

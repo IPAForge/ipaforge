@@ -57,6 +57,15 @@ export const installedAppsQuerySchema = z.object({
   teamIds: z.array(textSchema)
 })
 
+export const pairingTargetQuerySchema = installedAppsQuerySchema.extend({
+  bundleId: textSchema.max(256)
+})
+
+/** The Engine checks the path again (Documents or Library, a pairing file's name). */
+export const placeAppPairingInputSchema = pairingTargetQuerySchema.extend({
+  path: textSchema.max(200).optional()
+})
+
 export const removeAppInputSchema = z.object({
   udid: textSchema,
   bundleId: textSchema

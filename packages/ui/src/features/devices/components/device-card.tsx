@@ -5,6 +5,7 @@ import { StatusDot } from '@ui/components/shell/status-dot.tsx'
 import { CheckAgain } from '@ui/features/devices/components/check-again.tsx'
 import { DeviceFact } from '@ui/features/devices/components/device-fact.tsx'
 import { DeviceNotice } from '@ui/features/devices/components/device-notice.tsx'
+import { SavePairingButton } from '@ui/features/devices/components/save-pairing-button.tsx'
 import { deviceStateClasses } from '@ui/features/devices/constants.ts'
 import { useDeviceView } from '@ui/features/devices/hooks/use-device-view.ts'
 import { modelName } from '@ui/features/devices/utils/model-name.ts'
@@ -54,6 +55,9 @@ export const DeviceCard = ({
                 {t('devices.use')}
               </Button>
             )}
+            {device && state === 'ready' ? (
+              <SavePairingButton udid={udid} />
+            ) : null}
             {device ? <CheckAgain udid={udid} /> : null}
           </div>
         </div>

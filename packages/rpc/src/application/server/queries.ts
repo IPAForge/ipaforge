@@ -35,6 +35,11 @@ const queryHandlers = (
   deviceProfiles: ([udid]) => engine.deviceProfiles(udid),
   removeDeviceProfiles: ([udid, uuids]) =>
     engine.removeDeviceProfiles(udid, uuids),
+  pairingFiles: ([query]) => engine.pairingFiles(query),
+  placeAppPairing: ([input]) => engine.placeAppPairing(compact(input)),
+  removeAppPairing: ([query]) => engine.removeAppPairing(query),
+  newRemotePairing: ([query]) => engine.newRemotePairing(query),
+  devicePairingFile: ([udid]) => engine.devicePairingFile(udid),
   signOut: ([accountId]) => engine.signOut(accountId),
   listTeams: ([accountId]) => engine.listTeams(accountId),
   catalogApps: () => engine.catalogApps(),

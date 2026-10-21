@@ -22,6 +22,7 @@ import {
   supportsRemotePairing
 } from '@device/domain/pairing-apps.ts'
 import { remotePairingFile } from '@device/domain/remote-pairing/record.ts'
+import { compact } from '@ipaforge/kernel'
 
 /** Pairing-file locations of the known pairing apps installed on the device (sideloaded copies only from `teamIds`). */
 export const pairingTargets = async (
@@ -62,9 +63,10 @@ const placeRemotePairing = async (
     const { record, how } = await ensureRemotePairing(
       ctx,
       session,
-      options.onAwaitingConsent
-        ? { onAwaitingConsent: options.onAwaitingConsent }
-        : {}
+      compact({
+        onAwaitingConsent: options.onAwaitingConsent,
+        forceNew: options.newRemotePairing
+      })
     )
     const data = remotePairingFile(record)
     for (const target of targets) await writeAppFile(ctx, session, target, data)
@@ -79,6 +81,12 @@ const placeRemotePairing = async (
   }
 }
 
+/** This host's pairing file for the device (pair record, Wi-Fi MAC address and UDID), as on-device tools read it. */
+export const pairingFileData = async (
+  session: DeviceSession
+): Promise<Uint8Array> =>
+  pairingFile(await withWifiMacAddress(session), session.device.udid)
+
 /**
  * Places this host's pairing file (pair record + UDID) at each target, verifying every write, and on iOS 17.4 and
  * later SideStore's remote pairing next to it.
@@ -90,10 +98,7 @@ export const placePairingFile = async (
   options: PlacePairingOptions = {}
 ): Promise<PlacedPairing> => {
   if (options.enableWifiDebugging ?? true) await session.enableWifiDebugging()
-  const data = pairingFile(
-    await withWifiMacAddress(session),
-    session.device.udid
-  )
+  const data = await pairingFileData(session)
   for (const target of targets) await writeAppFile(ctx, session, target, data)
 
   return {

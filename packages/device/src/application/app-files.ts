@@ -127,6 +127,22 @@ export const readAppFile = (
 ): Promise<Uint8Array> =>
   withAppContainer(ctx, session, target, (afc) => afc.readFile(target.path))
 
+/** Deletes a file from an app's container; a file that isn't there is left as it is. */
+export const removeAppFile = (
+  ctx: DeviceContext,
+  session: DeviceSession,
+  target: AppFileTarget
+): Promise<void> =>
+  withAppContainer(ctx, session, target, async (afc) => {
+    if (!(await afc.exists(target.path))) return
+    await afc.remove(target.path)
+    ctx.deps.logger.info('removed app file', {
+      device: shortUdid(session.device.udid),
+      bundleId: target.bundleId,
+      path: target.path
+    })
+  })
+
 /** Whether each target file exists, with size and modification time. */
 export const appFileStatus = async (
   ctx: DeviceContext,

@@ -24,6 +24,7 @@ import { createFakeDeviceStates } from '@ui/services/engine/fake/fake-device-sta
 import { createFakeDeviceFeed } from '@ui/services/engine/fake/fake-devices.ts'
 import { fakeInstallSteps } from '@ui/services/engine/fake/fake-install-steps.ts'
 import { createFakeInstalled } from '@ui/services/engine/fake/fake-installed.ts'
+import { createFakePairing } from '@ui/services/engine/fake/fake-pairing.ts'
 import { createFakePortal } from '@ui/services/engine/fake/fake-portal.ts'
 import { createFakeSideStore } from '@ui/services/engine/fake/fake-sidestore.ts'
 import { createFakeSources } from '@ui/services/engine/fake/fake-sources.ts'
@@ -250,6 +251,9 @@ export const createFakeEngine = ({
     ),
     ...createFakePortal(
       (query) => teamOf(world, query),
+      () => new Promise<void>((resolve) => setTimeout(resolve, delayMs))
+    ),
+    ...createFakePairing(
       () => new Promise<void>((resolve) => setTimeout(resolve, delayMs))
     ),
     listAccounts: async () => world.accounts,

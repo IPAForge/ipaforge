@@ -209,6 +209,20 @@ export const createFakeEngine = () => {
       }
     ],
     removeDeviceProfiles: async () => undefined,
+    pairingFiles: async () => [
+      {
+        bundleId: 'com.SideStore.SideStore.TEAM',
+        name: 'SideStore',
+        kind: 'known' as const,
+        classic: 'this-computer' as const,
+        placedAt: new Date('2026-10-20T00:00:00Z'),
+        remote: 'accepted' as const
+      }
+    ],
+    placeAppPairing: async () => undefined,
+    removeAppPairing: async () => undefined,
+    newRemotePairing: async () => undefined,
+    devicePairingFile: async () => '<plist/>',
     listSources: async () => [],
     sourceApps: async () => [],
     checkSource: async (url: string) => ({

@@ -10,6 +10,13 @@ import { listInstalledApps } from '@installer/application/installed/list-install
 import { planRefresh } from '@installer/application/installed/refresh-plan.ts'
 import { removeInstalledApp } from '@installer/application/installed/remove-app.ts'
 import {
+  devicePairingFile,
+  newRemotePairing,
+  pairingFiles,
+  placeAppPairing,
+  removeAppPairing
+} from '@installer/application/pairing/pairing-files.ts'
+import {
   deleteAppId,
   deviceProfiles,
   registeredDevices,
@@ -93,5 +100,11 @@ export const createEngineQueries = (deps: InstallerDeps): EngineQueries => ({
   appGroups: (query) => teamAppGroups(deps, query),
   registeredDevices: (query) => registeredDevices(deps, query),
   deviceProfiles: (udid) => deviceProfiles(deps, udid),
-  removeDeviceProfiles: (udid, uuids) => removeDeviceProfiles(deps, udid, uuids)
+  removeDeviceProfiles: (udid, uuids) =>
+    removeDeviceProfiles(deps, udid, uuids),
+  pairingFiles: (query) => pairingFiles(deps, query),
+  placeAppPairing: (input) => placeAppPairing(deps, input),
+  removeAppPairing: (query) => removeAppPairing(deps, query),
+  newRemotePairing: (query) => newRemotePairing(deps, query),
+  devicePairingFile: (udid) => devicePairingFile(deps, udid)
 })

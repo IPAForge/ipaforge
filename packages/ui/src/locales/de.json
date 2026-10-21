@@ -419,6 +419,10 @@
       "profile_not_found": {
         "title": "Bereitstellungsprofil fehlt",
         "body": "Das Gerät findet das Bereitstellungsprofil der App nicht. Versuche es erneut oder installiere die App neu."
+      },
+      "pairing_path_invalid": {
+        "title": "Dieser Pfad kann keine Kopplungsdatei aufnehmen",
+        "body": "Nutze einen Pfad in Documents oder Library der App, der auf .plist oder .mobiledevicepairing endet."
       }
     },
     "apple": {
@@ -691,6 +695,10 @@
       "version_unavailable": {
         "title": "Diese Version lässt sich nicht erneut laden",
         "body": "Erneuern behält die Version auf deinem Gerät, und sie wird nicht mehr zum Download angeboten. Installiere mit Aktualisieren die neueste Version; die App behält ihre Daten."
+      },
+      "pairing_app_not_found": {
+        "title": "Diese App ist nicht auf dem Gerät",
+        "body": "Sie wurde entfernt oder ist keine von IPAForge installierte App mehr. Schließe Kopplungsdateien und öffne es erneut."
       }
     },
     "rpc": {
@@ -917,7 +925,8 @@
       "connected": "{name} verbunden",
       "disconnected": "{name} getrennt",
       "aDevice": "Ein Gerät"
-    }
+    },
+    "savePairing": "Kopplungsdatei sichern…"
   },
   "prompts": {
     "cancel": "Abbrechen",
@@ -1126,6 +1135,53 @@
     "removeDialog": {
       "title": "{name} entfernen?",
       "body": "Sie wird mit ihren Daten von {device} gelöscht und gibt einen Platz für kostenlose Apps frei. Du kannst sie über „Vorladen“ erneut installieren."
+    },
+    "pairing": {
+      "open": "Kopplungsdateien",
+      "title": "Kopplungsdateien",
+      "hint": "Mit einer Kopplungsdatei erreicht eine App dein Gerät selbst, um Apps zu aktualisieren und zu installieren. Wer sie hat, kann das Gerät nutzen: Gib sie deinen eigenen Apps nur, wenn deren Anleitung danach fragt.",
+      "reading": "Kopplungsdateien werden gelesen…",
+      "empty": "Auf diesem Gerät gibt es keine Kopplungs-Apps und keine von IPAForge installierten Apps.",
+      "classic": {
+        "thisComputer": "Kopplung: dieser Computer",
+        "otherComputer": "Kopplung: anderer Computer",
+        "missing": "Kopplung: fehlt"
+      },
+      "remote": {
+        "accepted": "Remote: angenommen",
+        "rejected": "Remote: nicht angenommen",
+        "otherComputer": "Remote: anderer Computer",
+        "missing": "Remote: fehlt"
+      },
+      "detail": {
+        "placed": "Abgelegt am {date}",
+        "needed": "Braucht eine, um sich selbst zu aktualisieren.",
+        "otherComputer": "Von einem anderen Computer: Sie funktioniert, solange diesem Computer vertraut wird.",
+        "ownNone": "Keine. Füge nur eine hinzu, wenn die App danach fragt."
+      },
+      "place": "Ablegen",
+      "placeOne": "Kopplungsdatei in {name} ablegen",
+      "placeAgain": "Erneut ablegen",
+      "placeAgainOne": "Kopplungsdatei erneut in {name} ablegen",
+      "add": "Hinzufügen…",
+      "addOne": "Kopplungsdatei zu {name} hinzufügen",
+      "remove": "Entfernen",
+      "removeOne": "Kopplungsdatei aus {name} entfernen",
+      "newRemote": "Neue Remote-Kopplung",
+      "done": "Fertig",
+      "addTitle": "Kopplungsdatei zu {name} hinzufügen",
+      "addBody": "IPAForge schreibt die Kopplungsdatei dieses Computers in den Ordner der App auf deinem Gerät. Wer sie hat, kann das Gerät nutzen: Füge sie nur Apps hinzu, denen du vertraust.",
+      "pathLabel": "Pfad in der App",
+      "pathHint": "Aus der Anleitung der App; meist in Documents. IPAForge merkt ihn sich für diese App.",
+      "pathInvalid": "Nutze einen Pfad in Documents oder Library, der auf .plist oder .mobiledevicepairing endet.",
+      "removeTitle": "Kopplungsdatei von {name} entfernen?",
+      "removeBody": "Die App erreicht dein Gerät dann nicht mehr selbst (Aktualisieren, Installieren), bis wieder eine Kopplungsdatei abgelegt wird.",
+      "newRemoteTitle": "Neue Remote-Kopplung erstellen?",
+      "newRemoteBody": "IPAForge erstellt eine neue Remote-Kopplung mit deinem Gerät und legt sie in SideStore ab. Das Gerät fragt eventuell, ob du diesem Computer vertraust. Die alte Remote-Kopplung funktioniert danach nicht mehr.",
+      "newRemoteConfirm": "Neue erstellen",
+      "newRemoteWaiting": "Wenn dein Gerät fragt, tippe auf Vertrauen und gib den Code ein.",
+      "tag": "Keine Kopplungsdatei",
+      "tagOne": "{name} hat keine Kopplungsdatei: Kopplungsdateien öffnen"
     }
   },
   "logs": {

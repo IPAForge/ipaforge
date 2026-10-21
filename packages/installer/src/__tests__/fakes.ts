@@ -36,7 +36,8 @@ import {
   type FileSource,
   IPAForgeError,
   readBody,
-  type SecretStore
+  type SecretStore,
+  serializeXmlPlist
 } from '@ipaforge/kernel'
 import type { CodeBundle, IpaInspection } from '@ipaforge/signer'
 
@@ -146,10 +147,14 @@ export const fakeDevices = (options: FakeDeviceOptions = {}) => {
     removedProfiles: [] as string[],
     installedProfiles: [] as Uint8Array[],
     placed: [] as AppFileTarget[][],
+    placedOptions: [] as unknown[],
+    removedFiles: [] as AppFileTarget[],
     revealed: 0
   }
   const files = options.files ?? new Map<string, Uint8Array>()
   const fileKey = (target: AppFileTarget) => `${target.bundleId}/${target.path}`
+  // What placing writes: this computer's pairing file, by its host id.
+  const pairingPlist = serializeXmlPlist(createDict([['HostID', HOST_ID]]))
   const handle = {
     pairRecord: { hostId: HOST_ID },
     device: {
@@ -208,8 +213,13 @@ export const fakeDevices = (options: FakeDeviceOptions = {}) => {
       ),
     pairingTargets: async () => options.pairingTargets ?? [],
     // On iOS 17.4 and later (`remotePairing`), SideStore also gets its remote pairing file.
-    placePairingFile: async (targets: readonly AppFileTarget[]) => {
+    placePairingFile: async (
+      targets: readonly AppFileTarget[],
+      placeOptions?: unknown
+    ) => {
       calls.placed.push([...targets])
+      calls.placedOptions.push(placeOptions)
+      for (const target of targets) files.set(fileKey(target), pairingPlist)
       const remote = options.remotePairing ? remotePairingTargets(targets) : []
 
       return remote.length > 0
@@ -221,6 +231,14 @@ export const fakeDevices = (options: FakeDeviceOptions = {}) => {
         target,
         exists: target.path.includes('Legacy') || files.has(fileKey(target))
       })),
+    removeAppFile: async (target: AppFileTarget) => {
+      calls.removedFiles.push(target)
+      files.delete(fileKey(target))
+    },
+    pairingFileData: async () => pairingPlist,
+    session: {
+      info: async () => ({ productVersion: options.productVersion ?? '18.0' })
+    },
     checkRemotePairing: async () =>
       options.savedRemotePairing ?? { state: 'missing' as const },
     readAppFile: async (target: AppFileTarget) => {
@@ -249,7 +267,7 @@ export const fakeDevices = (options: FakeDeviceOptions = {}) => {
     }
   } as unknown as DeviceManager
 
-  return { manager, calls, installed }
+  return { manager, calls, installed, files }
 }
 
 // --- apple --------------------------------------------------------------------------------------------------

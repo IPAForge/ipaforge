@@ -52,12 +52,21 @@ iOS 17.4 added a second kind of pairing, remote pairing, which newer SideStore b
 - **Its own file:** `PairingFile_RemoteRP.plist` in SideStore's `Documents` (also for the SideStore inside LiveContainer), holding only `public_key`, `private_key`, `identifier` and `alt_irk`. SideStore treats a file with both the classic and the remote keys as ambiguous, so the classic pairing stays in its own files.
 - **Optional by design:** if making it fails, the classic pairing is still placed (SideStore works with it alone), and a warning is logged. SideStore builds from September 20, 2026 onwards read the remote file; older ones ignore it. Those newer builds also ask, once, which protocol to prefer (Settings → Advanced → Pairing File Management), because a file placed from outside doesn't set that choice inside SideStore.
 
+### Pairing files per app
+
+**Apps › Pairing files** shows every pairing app and every other app IPAForge installed on the device, with whose pairing files each holds (`engine.pairingFiles`): this computer's (the file's `HostID` is this computer's), another computer's, or none, and, on iOS 17.4 and later, whether SideStore's remote file is this computer's and still accepted.
+- **Place** writes this computer's files into one app (`engine.placeAppPairing`): a known app at the paths it reads (SideStore's remote file too), an app of your own at the path you give. That path must be under the app's `Documents/` or `Library/`, end in `.plist` or `.mobiledevicepairing`, and contain no `..`; it is remembered per device and app (`pairing-paths/<udid>`), and the old file is removed when the path changes. Apps other tools installed are never offered.
+- **Remove** deletes an app's files (`engine.removeAppPairing`; `handle.removeAppFile`): the app can't reach the device by itself until a file is placed again.
+- **New remote pairing** makes a new one even when the saved one is still accepted (`newRemotePairing: true` on `placePairingFile`), and places it, with the classic file, in every app that reads one. The old one stops working.
+- **Save pairing file…** on the Devices page saves this computer's file (`handle.pairingFileData`, `engine.devicePairingFile`) as `<UDID>.mobiledevicepairing`, for another tool that asks for one.
+
 ## Errors you may see
 
 | Code | Meaning | What to do |
 |---|---|---|
 | `device.usbmuxd_unavailable` | usbmuxd/Apple Mobile Device Service isn't running | See the table at the top |
 | `device.not_found` | The device was unplugged or isn't visible | Reconnect; try another cable or port |
+| `device.pairing_path_invalid` | A path given for a pairing file isn't under the app's Documents or Library, or doesn't end in `.plist` or `.mobiledevicepairing` | Use the path from the app's instructions |
 | `device.locked` / `device.pairing_pending` | Waiting for unlock / Trust | Unlock the device and tap Trust |
 | `device.pairing_denied` | Don't Trust was tapped | Unplug, replug, tap Trust |
 | `device.timeout` | Nobody answered the trust prompt | Try again with the device unlocked |

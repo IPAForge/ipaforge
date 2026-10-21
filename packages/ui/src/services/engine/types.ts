@@ -31,6 +31,7 @@ export type TeamAppId = Resolved<'appIdQuota'>['appIds'][number]
 export type TeamAppGroup = Resolved<'appGroups'>['groups'][number]
 export type TeamDevice = Resolved<'registeredDevices'>['devices'][number]
 export type DeviceProfile = Resolved<'deviceProfiles'>[number]
+export type AppPairing = Resolved<'pairingFiles'>[number]
 export type AnisetteOverview = Resolved<'anisetteServers'>
 export type AnisetteServerEntry = AnisetteOverview['servers'][number]
 export type AnisetteChoice = AnisetteOverview['choice']

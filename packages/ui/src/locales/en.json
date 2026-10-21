@@ -419,6 +419,10 @@
       "profile_not_found": {
         "title": "Provisioning profile missing",
         "body": "The device couldn't find the app's provisioning profile. Try again, or reinstall the app."
+      },
+      "pairing_path_invalid": {
+        "title": "That path can’t hold a pairing file",
+        "body": "Use a path in the app’s Documents or Library that ends in .plist or .mobiledevicepairing."
       }
     },
     "apple": {
@@ -691,6 +695,10 @@
       "version_unavailable": {
         "title": "This version can't be downloaded again",
         "body": "Refresh keeps the version on your device, and it's no longer offered for download. Use Update to install the newest version; the app keeps its data."
+      },
+      "pairing_app_not_found": {
+        "title": "That app isn’t on the device",
+        "body": "It was removed, or it’s no longer one IPAForge installed. Close Pairing files and open it again."
       }
     },
     "rpc": {
@@ -917,7 +925,8 @@
       "connected": "{name} connected",
       "disconnected": "{name} disconnected",
       "aDevice": "A device"
-    }
+    },
+    "savePairing": "Save pairing file…"
   },
   "prompts": {
     "cancel": "Cancel",
@@ -1126,6 +1135,53 @@
     "removeDialog": {
       "title": "Remove {name}?",
       "body": "It's deleted from {device} with its data, and frees a free-app slot. You can install it again from Preload."
+    },
+    "pairing": {
+      "open": "Pairing files",
+      "title": "Pairing files",
+      "hint": "A pairing file lets an app reach your device by itself, to refresh and install apps. Whoever holds it can use the device, so give one to your own apps only when their instructions ask for it.",
+      "reading": "Reading the pairing files…",
+      "empty": "There are no pairing apps or apps installed by IPAForge on this device.",
+      "classic": {
+        "thisComputer": "Pairing: this computer’s",
+        "otherComputer": "Pairing: another computer’s",
+        "missing": "Pairing: missing"
+      },
+      "remote": {
+        "accepted": "Remote: accepted",
+        "rejected": "Remote: not accepted",
+        "otherComputer": "Remote: another computer’s",
+        "missing": "Remote: missing"
+      },
+      "detail": {
+        "placed": "Placed {date}",
+        "needed": "Needs one to refresh by itself.",
+        "otherComputer": "From another computer: it works while that computer stays trusted.",
+        "ownNone": "None. Add one only if the app asks for it."
+      },
+      "place": "Place",
+      "placeOne": "Place the pairing file in {name}",
+      "placeAgain": "Place again",
+      "placeAgainOne": "Place the pairing file in {name} again",
+      "add": "Add…",
+      "addOne": "Add a pairing file to {name}",
+      "remove": "Remove",
+      "removeOne": "Remove the pairing file from {name}",
+      "newRemote": "New remote pairing",
+      "done": "Done",
+      "addTitle": "Add a pairing file to {name}",
+      "addBody": "IPAForge writes this computer’s pairing file into the app’s folder on your device. Whoever holds it can use the device: add it only to apps you trust.",
+      "pathLabel": "Path inside the app",
+      "pathHint": "From the app’s instructions; usually in Documents. IPAForge remembers it for this app.",
+      "pathInvalid": "Use a path in Documents or Library that ends in .plist or .mobiledevicepairing.",
+      "removeTitle": "Remove {name}’s pairing file?",
+      "removeBody": "It can’t reach your device by itself any more (refreshing, installing) until a pairing file is placed again.",
+      "newRemoteTitle": "Make a new remote pairing?",
+      "newRemoteBody": "IPAForge makes a new remote pairing with your device and places it in SideStore. The device may ask you to trust this computer. The old remote pairing stops working.",
+      "newRemoteConfirm": "Make a new one",
+      "newRemoteWaiting": "If your device asks, tap Trust and enter its passcode.",
+      "tag": "No pairing file",
+      "tagOne": "{name} has no pairing file: open Pairing files"
     }
   },
   "logs": {

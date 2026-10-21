@@ -1,5 +1,9 @@
 import type { TranslationKey } from '@ui/i18n/setup/types.ts'
-import type { AppSource, InstalledApp } from '@ui/services/engine/types.ts'
+import type {
+  AppPairing,
+  AppSource,
+  InstalledApp
+} from '@ui/services/engine/types.ts'
 import type { RefreshKind } from '@ui/state/active-run/types.ts'
 
 /** How close an app is to expiring: fine, inside the refresh window, expired, or unknown (no profile seen). */
@@ -72,3 +76,10 @@ export type RefreshBatch = {
   }[]
   readonly profiles: readonly AppView[]
 }
+
+/** What the Pairing files dialog shows: the list, or one step about an app (or SideStore's remote pairing). */
+export type PairingStep =
+  | { readonly kind: 'list' }
+  | { readonly kind: 'add'; readonly app: AppPairing }
+  | { readonly kind: 'remove'; readonly app: AppPairing }
+  | { readonly kind: 'newRemote' }

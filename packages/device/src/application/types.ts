@@ -101,6 +101,8 @@ export type PlacePairingOptions = {
   readonly remotePairing?: boolean
   /** Making the remote pairing shows the Trust prompt and waits for the user. */
   readonly onAwaitingConsent?: () => void
+  /** Make a new remote pairing even when the saved one is still accepted (the old one stops working). */
+  readonly newRemotePairing?: boolean
 }
 
 /** What placing the pairing file wrote: the classic files, and the remote ones with how the pairing came about. */

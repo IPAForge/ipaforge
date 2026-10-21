@@ -144,6 +144,24 @@ export const checklistShown = () =>
 export const appsShown = () =>
   waitFor(() => expect(all('main ul li').length).toBeGreaterThanOrEqual(4))
 
+/** Apps with Pairing files open, every app's row in. */
+export const openPairingFiles = async () => {
+  const button = await waitFor(() => {
+    const found = [...all('main button')].find(
+      (candidate) => candidate.getAttribute('data-pairing') === 'open'
+    )
+
+    if (!(found instanceof HTMLElement)) throw new Error('no Pairing files')
+
+    return found
+  })
+
+  button.click()
+  await waitFor(() =>
+    expect(all('[role="dialog"] ul li').length).toBeGreaterThanOrEqual(5)
+  )
+}
+
 /** The Developer Portal's certificates, each with what it signs on the iPhone (read after the device's apps). */
 export const developerShown = () =>
   waitFor(() => {

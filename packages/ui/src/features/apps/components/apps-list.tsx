@@ -11,10 +11,18 @@ type AppsListProps = {
   onRefresh: (view: AppView) => void
   onUpdate: (view: AppView) => void
   onRemove: (view: AppView) => void
+  /** The apps that can't reach the device by itself (no pairing file): their rows say so. */
+  needsPairing: ReadonlySet<string>
+  onPairing: (bundleId: string) => void
 }
 
 /** The apps IPAForge installed, soonest to expire first, or what to do when there are none yet. */
-export const AppsList = ({ views, runStates, ...actions }: AppsListProps) => {
+export const AppsList = ({
+  views,
+  runStates,
+  needsPairing,
+  ...actions
+}: AppsListProps) => {
   const { t } = useTranslation()
 
   return (
@@ -36,6 +44,7 @@ export const AppsList = ({ views, runStates, ...actions }: AppsListProps) => {
               key={view.app.bundleId}
               view={view}
               runState={runStateOf(view, runStates)}
+              needsPairing={needsPairing.has(view.app.bundleId)}
               {...actions}
             />
           ))}

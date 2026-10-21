@@ -32,6 +32,7 @@ export const RECOVERY_CATALOGUE = {
     R.SwitchAccount
   ],
   'device.profile_not_found': [R.Retry, R.ReinstallApp],
+  'device.pairing_path_invalid': [R.Retry],
 
   // apple
   'apple.anisette_unavailable': [
@@ -91,6 +92,7 @@ export const RECOVERY_CATALOGUE = {
   'installer.kept_ipa_missing': [R.ImportIpa],
   'installer.wrong_app': [R.ImportIpa],
   'installer.version_unavailable': [R.ImportIpa],
+  'installer.pairing_app_not_found': [R.Retry],
 
   'plist.invalid': [R.ChooseAnotherIpa, R.ReportIssue],
   'net.offline': [R.CheckNetwork, R.Retry],

@@ -2,6 +2,7 @@
 import {
   appFileStatus,
   readAppFile,
+  removeAppFile,
   writeAppFile
 } from '@device/application/app-files.ts'
 import { listApps, lookupApps, uninstallApp } from '@device/application/apps.ts'
@@ -9,6 +10,7 @@ import { checkDevice } from '@device/application/checks.ts'
 import type { DeviceContext } from '@device/application/context.ts'
 import { installIpa } from '@device/application/install.ts'
 import {
+  pairingFileData,
   pairingTargets,
   placePairingFile
 } from '@device/application/pairing-file.ts'
@@ -77,6 +79,10 @@ export type DeviceHandle = {
     options?: PlacePairingOptions
   ): Promise<PlacedPairing>
   appFileStatus(targets: readonly AppFileTarget[]): Promise<AppFileStatus[]>
+  /** Deletes a file from an app's container (nothing happens when it isn't there). */
+  removeAppFile(target: AppFileTarget): Promise<void>
+  /** This host's pairing file for the device, for saving to the computer (another tool asks for it). */
+  pairingFileData(): Promise<Uint8Array>
   revealDeveloperMode(): Promise<void>
   /** The device's media file system (`/var/mobile/Media`, incl. `PublicStaging`). Close it when done. */
   openMedia(): Promise<AfcClient>
@@ -116,6 +122,8 @@ export const createDeviceHandle = (
   placePairingFile: (targets, options) =>
     placePairingFile(ctx, session, targets, options),
   appFileStatus: (targets) => appFileStatus(ctx, session, targets),
+  removeAppFile: (target) => removeAppFile(ctx, session, target),
+  pairingFileData: () => pairingFileData(session),
   revealDeveloperMode: () => revealDeveloperMode(ctx, session),
   openMedia: () => openAfc(ctx, session),
   enableWifiDebugging: () => session.enableWifiDebugging(),

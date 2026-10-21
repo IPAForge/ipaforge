@@ -224,6 +224,28 @@ export const createEngineClient = (
     deviceProfiles: (udid) => query({ method: 'deviceProfiles', args: [udid] }),
     removeDeviceProfiles: (udid, uuids) =>
       query({ method: 'removeDeviceProfiles', args: [udid, [...uuids]] }),
+    pairingFiles: ({ udid, teamIds }) =>
+      query({
+        method: 'pairingFiles',
+        args: [{ udid, teamIds: [...teamIds] }]
+      }),
+    placeAppPairing: ({ teamIds, ...input }) =>
+      query({
+        method: 'placeAppPairing',
+        args: [{ ...input, teamIds: [...teamIds] }]
+      }),
+    removeAppPairing: ({ teamIds, ...input }) =>
+      query({
+        method: 'removeAppPairing',
+        args: [{ ...input, teamIds: [...teamIds] }]
+      }),
+    newRemotePairing: ({ udid, teamIds }) =>
+      query({
+        method: 'newRemotePairing',
+        args: [{ udid, teamIds: [...teamIds] }]
+      }),
+    devicePairingFile: (udid) =>
+      query({ method: 'devicePairingFile', args: [udid] }),
     installedApps: (installedQuery) =>
       query({
         method: 'installedApps',

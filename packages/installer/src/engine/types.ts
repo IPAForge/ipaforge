@@ -5,8 +5,10 @@ import type { RefreshPlanQuery } from '@installer/application/installed/refresh-
 import type { FreeSlots } from '@installer/application/types.ts'
 import type {
   AppSource,
+  ClassicPairingState,
   InstalledApp,
   RefreshDecision,
+  RemotePairingFileState,
   SideStoreCheck
 } from '@installer/domain/types.ts'
 import type {
@@ -196,6 +198,15 @@ export type EngineQueries = {
   /** The provisioning profiles on the device, each with whether an installed app uses it. */
   deviceProfiles(udid: string): Promise<DeviceProfileInfo[]>
   removeDeviceProfiles(udid: string, uuids: readonly string[]): Promise<void>
+  /** The device's pairing apps and other apps IPAForge installed, with whose pairing files each holds. */
+  pairingFiles(query: PairingQuery): Promise<AppPairing[]>
+  /** Writes this computer's pairing file into one app (an own app at the path given, remembered). */
+  placeAppPairing(input: PlacePairingInput): Promise<void>
+  removeAppPairing(query: PairingTargetQuery): Promise<void>
+  /** A new remote pairing (may ask to Trust again), placed in every app that reads one; the old one stops working. */
+  newRemotePairing(query: PairingQuery): Promise<void>
+  /** This computer's pairing file for the device (an XML plist), for saving: another tool asks for it. */
+  devicePairingFile(udid: string): Promise<string>
   /** The anisette servers in the order Automatic tries them, the choice, and SideStore's list's age. */
   anisetteServers(): Promise<AnisetteOverview>
   /** Automatic, or always one server of the list. Each change below returns the servers after it. */
@@ -211,6 +222,35 @@ export type EngineQueries = {
   testAnisetteServer(address: string): Promise<AnisetteServerTest>
   /** Fetches SideStore's list of servers now. */
   updateAnisetteServerList(): Promise<AnisetteOverview>
+}
+
+/** One app's pairing files, as the Pairing files dialog shows them. */
+export type AppPairing = {
+  readonly bundleId: string
+  readonly name: string
+  /** A pairing app IPAForge knows (its paths are known), or another app IPAForge installed (a path the user gives). */
+  readonly kind: 'known' | 'own'
+  readonly classic: ClassicPairingState
+  /** When the classic file was written, when the device says. */
+  readonly placedAt?: Date
+  /** Known apps that read a remote pairing file, on iOS 17.4 and later. */
+  readonly remote?: RemotePairingFileState
+  /** Own apps: where its pairing file goes, once given. */
+  readonly path?: string
+}
+
+export type PairingQuery = {
+  readonly udid: string
+  readonly teamIds: readonly string[]
+}
+
+export type PairingTargetQuery = PairingQuery & {
+  readonly bundleId: string
+}
+
+export type PlacePairingInput = PairingTargetQuery & {
+  /** Own apps only: where the file goes (`Documents/…` or `Library/…`, ending in .plist or .mobiledevicepairing). */
+  readonly path?: string
 }
 
 export type InstalledAppsQuery = {
