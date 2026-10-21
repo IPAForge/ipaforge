@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { AppIcon } from '@ui/components/app-icon.tsx'
 import { AppRunLine } from '@ui/features/apps/components/app-run-line.tsx'
 import { ExpiryLabel } from '@ui/features/apps/components/expiry-label.tsx'
+import { PairingTag } from '@ui/features/apps/components/pairing-tag.tsx'
 import type { AppRunState, AppView } from '@ui/features/apps/types.ts'
 import { CheckSideStoreButton } from '@ui/features/repair/components/check-sidestore-button.tsx'
 import { isSideStore } from '@ui/features/repair/utils/is-sidestore.ts'
@@ -13,6 +14,8 @@ type AppRowProps = {
   runState: AppRunState | undefined
   canAct: boolean
   onRefresh: (view: AppView) => void
+  needsPairing: boolean
+  onPairing: (bundleId: string) => void
   onUpdate: (view: AppView) => void
   onRemove: (view: AppView) => void
 }
@@ -27,11 +30,14 @@ export const AppRow = ({
   runState,
   canAct,
   onRefresh,
+  needsPairing,
+  onPairing,
   onUpdate,
   onRemove
 }: AppRowProps) => {
   const { t } = useTranslation()
   const { app, update, from } = view
+  const onPairingPress = () => onPairing(view.app.bundleId)
   const onRefreshPress = () => onRefresh(view)
   const onUpdatePress = () => onUpdate(view)
   const onRemovePress = () => onRemove(view)
@@ -49,6 +55,9 @@ export const AppRow = ({
               <span className="font-normal text-muted text-sm">
                 {app.version}
               </span>
+            ) : null}
+            {needsPairing ? (
+              <PairingTag name={app.name} onOpen={onPairingPress} />
             ) : null}
             {update && !runState ? (
               <Chip size="sm" color="accent">

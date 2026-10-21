@@ -45,6 +45,9 @@ export const queryKeys = {
   /** The provisioning profiles on a device; under `apps`, so a run ending reads them again. */
   deviceProfiles: (udid: string | undefined) =>
     ['installed-apps', 'profiles', udid ?? null] as const,
+  /** Whose pairing files each app holds; under `apps`, so a run ending reads them again. */
+  pairingFiles: (udid: string | undefined, teamIds: readonly string[]) =>
+    ['installed-apps', 'pairing', udid ?? null, teamIds.join(',')] as const,
   planInstall: (input: RemotePlanInstallInput | undefined) =>
     ['plan', input ?? null] as const,
   /** The anisette servers, the choice and SideStore's list's age (Settings). */

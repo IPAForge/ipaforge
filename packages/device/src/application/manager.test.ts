@@ -511,6 +511,41 @@ describe('app files and pairing files', () => {
   })
 })
 
+describe('removing pairing files and saving one', () => {
+  it('removes a file from an app, and leaves a missing one alone', async () => {
+    const rig = await createRig()
+    const app = addApp(rig.device, 'com.example.game.TEAM1')
+    const handle = await rig.manager.open(rig.device.udid)
+    const target = {
+      bundleId: app.bundleId,
+      path: 'Documents/pairingFile.plist'
+    }
+    await handle.placePairingFile([target], { remotePairing: false })
+    expect(app.container.files.has(target.path)).toBe(true)
+
+    await handle.removeAppFile(target)
+    await handle.removeAppFile(target)
+
+    expect(app.container.files.has(target.path)).toBe(false)
+    expect((await handle.appFileStatus([target]))[0]?.exists).toBe(false)
+    await handle.close()
+  })
+
+  it('gives this host’s pairing file, as on-device tools read it', async () => {
+    const rig = await createRig()
+    const handle = await rig.manager.open(rig.device.udid)
+    const plist = parsePlist(await handle.pairingFileData()) as Record<
+      string,
+      unknown
+    >
+
+    expect(plist.HostID).toBe(handle.pairRecord.hostId)
+    expect(plist.UDID).toBe(rig.device.udid)
+    expect(plist.WiFiMACAddress).toBe('aa:bb:cc:dd:ee:ff')
+    await handle.close()
+  })
+})
+
 describe('automatic pairing placement', () => {
   it("finds the user's pairing apps and writes each file they read", async () => {
     const rig = await createRig()

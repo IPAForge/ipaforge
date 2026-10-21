@@ -7,14 +7,22 @@ type PortalRowProps = {
   view: PortalRowView
   /** Its buttons, beside the text in a wide row and under it in a narrow one. */
   actions?: ReactNode | undefined
+  /** Draws attention to the row (the app a link opened the list at). */
+  isHighlighted?: boolean
 }
 
 /** One thing the team holds: its name and tags, its identifier and details, and what can be done with it. */
-export const PortalRow = ({ view, actions }: PortalRowProps) => (
-  <li className="@container rounded-xl border border-border bg-surface px-3 py-2.5">
+export const PortalRow = ({
+  view,
+  actions,
+  isHighlighted = false
+}: PortalRowProps) => (
+  <li
+    className={`@container rounded-xl border bg-surface px-3 py-2.5 ${isHighlighted ? 'border-accent ring-1 ring-accent' : 'border-border'}`}
+  >
     <div className="grid grid-cols-1 items-start gap-2 @xl:grid-cols-[minmax(0,1fr)_auto]">
       <div className="flex min-w-0 flex-col gap-1">
-        <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-semibold">
+        <p className="flex flex-wrap items-center gap-x-2 gap-y-1 font-semibold text-foreground">
           {view.title}
           {view.tags.map((tag) => (
             <RowTagChip key={tag.labelKey} tag={tag} />

@@ -13,6 +13,7 @@ import {
   fillPreload,
   logsShown,
   openAddAllToSideStore,
+  openPairingFiles,
   planShown,
   pressInstall,
   recoveryShown,
@@ -62,6 +63,11 @@ const screens = {
   apps: async (options: ScreenOptions) => {
     await renderScreen('/apps', options)
     await appsShown()
+  },
+  'pairing-files': async (options: ScreenOptions) => {
+    await renderScreen('/apps', options)
+    await appsShown()
+    await openPairingFiles()
   },
   developer: async (options: ScreenOptions) => {
     await renderScreen('/developer', options)

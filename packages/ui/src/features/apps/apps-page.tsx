@@ -9,13 +9,16 @@ import { AppsRunFailedNotice } from '@ui/features/apps/components/apps-run-faile
 import { AutoRefreshCard } from '@ui/features/apps/components/auto-refresh-card.tsx'
 import { ExpiredNotice } from '@ui/features/apps/components/expired-notice.tsx'
 import { OtherAppRow } from '@ui/features/apps/components/other-app-row.tsx'
+import { PairingFilesDialog } from '@ui/features/apps/components/pairing-files-dialog.tsx'
 import { RemoveAppDialog } from '@ui/features/apps/components/remove-app-dialog.tsx'
 import { useAppActions } from '@ui/features/apps/hooks/use-app-actions.ts'
 import { useAppRunStates } from '@ui/features/apps/hooks/use-app-run-states.ts'
 import { useApps } from '@ui/features/apps/hooks/use-apps.ts'
 import type { AppView } from '@ui/features/apps/types.ts'
+import { needsPairing } from '@ui/features/apps/utils/needs-pairing.ts'
 import { runStateOf } from '@ui/features/apps/utils/run-state-of.ts'
 import { SignInNeededNotice } from '@ui/features/install/home/components/sign-in-needed-notice.tsx'
+import { usePairingFiles } from '@ui/hooks/queries/use-pairing-files.ts'
 import { useRun } from '@ui/hooks/use-run.ts'
 import { isRunActive } from '@ui/state/active-run/run-view.ts'
 
@@ -27,11 +30,17 @@ import { isRunActive } from '@ui/state/active-run/run-view.ts'
 export const AppsPage = () => {
   const { t } = useTranslation()
   const apps = useApps()
+  const isConnected = apps.device?.isConnected ?? false
   const { refresh, update, isPlanning } = useAppActions()
   const runStates = useAppRunStates()
   const { run } = useRun()
   const [removing, setRemoving] = useState<AppView>()
-  const isConnected = apps.device?.isConnected ?? false
+  // Open with the app it was opened for (its row's tag), or null for the button at the top.
+  const [pairingFocus, setPairingFocus] = useState<string | null>()
+  const pairing = usePairingFiles(apps.device?.udid, apps.teamIds, isConnected)
+  const needsPairingIds = new Set(
+    (pairing.data ?? []).filter(needsPairing).map((app) => app.bundleId)
+  )
   const canAct =
     isConnected &&
     apps.account !== undefined &&
@@ -43,12 +52,23 @@ export const AppsPage = () => {
   const onUpdateAll = () => update(apps.updates)
   const onRefreshExpired = () => refresh(apps.expired)
   const onCloseRemove = () => setRemoving(undefined)
+  const onPairingFiles = () => setPairingFocus(null)
+  const onPairing = (bundleId: string) => setPairingFocus(bundleId)
+  const onClosePairing = () => setPairingFocus(undefined)
 
   return (
     <div className="flex w-full flex-col gap-6">
       <div className="flex flex-wrap items-start justify-between gap-3">
         <PageHeader titleKey="nav.apps" descriptionKey="apps.description" />
         <div className="flex flex-wrap gap-2">
+          <Button
+            variant="tertiary"
+            onPress={onPairingFiles}
+            data-pairing="open"
+            isDisabled={!isConnected || apps.account === undefined}
+          >
+            {t('apps.pairing.open')}
+          </Button>
           {apps.updates.length > 0 ? (
             <Button
               variant="secondary"
@@ -92,6 +112,8 @@ export const AppsPage = () => {
         onRefresh={onRefreshOne}
         onUpdate={onUpdateOne}
         onRemove={setRemoving}
+        needsPairing={needsPairingIds}
+        onPairing={onPairing}
       />
       {apps.others.length > 0 ? (
         <section className="flex flex-col gap-3">
@@ -110,12 +132,22 @@ export const AppsPage = () => {
                 runState={runStateOf(view, runStates)}
                 canAct={canAct}
                 onRefresh={onRefreshOne}
+                needsPairing={needsPairingIds.has(view.app.bundleId)}
+                onPairing={onPairing}
               />
             ))}
           </ul>
         </section>
       ) : null}
       <AutoRefreshCard />
+      {pairingFocus !== undefined && apps.device ? (
+        <PairingFilesDialog
+          udid={apps.device.udid}
+          teamIds={apps.teamIds}
+          focus={pairingFocus ?? undefined}
+          onClose={onClosePairing}
+        />
+      ) : null}
       {removing && apps.device ? (
         <RemoveAppDialog
           view={removing}

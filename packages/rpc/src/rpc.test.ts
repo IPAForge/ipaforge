@@ -156,6 +156,30 @@ describe('queries', () => {
     ).rejects.toMatchObject({ code: ErrorCode.InvalidRpcMessage })
   })
 
+  it('reads and changes pairing files per app through the Engine; a path too long is refused', async () => {
+    const { client } = setup()
+    const query = { udid: 'UDID1', teamIds: ['TEAM'] }
+
+    const [sideStore] = await client.pairingFiles(query)
+    expect(sideStore?.placedAt).toBeInstanceOf(Date)
+    await client.placeAppPairing({ ...query, bundleId: 'com.example.game' })
+    await client.placeAppPairing({
+      ...query,
+      bundleId: 'com.example.game',
+      path: 'Documents/pairingFile.plist'
+    })
+    await client.removeAppPairing({ ...query, bundleId: 'com.example.game' })
+    await client.newRemotePairing(query)
+    expect(await client.devicePairingFile('UDID1')).toBe('<plist/>')
+    await expect(
+      client.placeAppPairing({
+        ...query,
+        bundleId: 'com.example.game',
+        path: `Documents/${'a'.repeat(300)}.plist`
+      })
+    ).rejects.toMatchObject({ code: ErrorCode.InvalidRpcMessage })
+  })
+
   it('manages app sources through the Engine, over https only', async () => {
     const { client } = setup()
     const url = 'https://example.com/apps.json'

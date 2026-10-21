@@ -294,3 +294,11 @@ export type TwoFactorCodeAnswer =
   | string
   | { readonly resend: true }
   | { readonly textTo: number }
+
+export type ClassicPairingState = 'this-computer' | 'other-computer' | 'missing'
+
+export type RemotePairingFileState =
+  | 'accepted'
+  | 'rejected'
+  | 'other-computer'
+  | 'missing'

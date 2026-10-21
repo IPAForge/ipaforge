@@ -4,6 +4,11 @@
 // certificates still sign.
 import { listInstalledApps } from '@installer/application/installed/list-installed.ts'
 import { validCertificateSerials } from '@installer/application/installed/valid-certificates.ts'
+import {
+  classicPairingOf,
+  remotePairingOf,
+  usesRemotePairing
+} from '@installer/application/pairing/pairing-state.ts'
 import { createFlowRuntime } from '@installer/application/runtime.ts'
 import { queryTeam } from '@installer/application/team.ts'
 import type {
@@ -20,12 +25,11 @@ import type { InstallerDeps } from '@installer/types.ts'
 import type { DeveloperServices, Team } from '@ipaforge/apple'
 import type { Channel } from '@ipaforge/catalog'
 import {
+  type AppFileTarget,
   type DeviceHandle,
-  PAIRING_APPS,
-  parseVersion,
-  supportsRemotePairing
+  PAIRING_APPS
 } from '@ipaforge/device'
-import { compact, isPlistDict, parsePlist, stringAt } from '@ipaforge/kernel'
+import { compact, stringAt } from '@ipaforge/kernel'
 
 export type CheckSideStoreQuery = {
   readonly udid: string
@@ -44,57 +48,30 @@ const isSideStore = (bundleId: string): boolean =>
 const teamIdOf = (bundleId: string): string =>
   bundleId.slice(SIDESTORE_BUNDLE_ID.length + 1)
 
+const sideStoreTargets = (
+  bundleId: string,
+  kind: 'files' | 'remoteFiles'
+): AppFileTarget[] =>
+  (PAIRING_APPS.find((app) => app.id === SIDESTORE_APP_ID)?.[kind] ?? []).map(
+    (path) => ({ bundleId, path })
+  )
+
 /** The pairing file in SideStore's Documents: whose it is, by the host id this computer pairs with. */
 const pairingOf = async (
   handle: DeviceHandle,
   bundleId: string
-): Promise<SideStoreHealth['pairing']> => {
-  const files =
-    PAIRING_APPS.find((app) => app.id === SIDESTORE_APP_ID)?.files ?? []
-  const targets = files.map((path) => ({ bundleId, path }))
-  const present = (await handle.appFileStatus(targets)).filter(
-    (status) => status.exists
-  )
-  const [first] = present
-
-  if (!first) return 'missing'
-
-  const file = parsePlist(await handle.readAppFile(first.target))
-  const hostId = isPlistDict(file) ? stringAt(file, 'HostID') : undefined
-
-  return hostId?.toUpperCase() === handle.pairRecord.hostId.toUpperCase()
-    ? 'this-computer'
-    : 'other-computer'
-}
+): Promise<SideStoreHealth['pairing']> =>
+  (await classicPairingOf(handle, sideStoreTargets(bundleId, 'files'))).state
 
 /** The remote pairing file in SideStore's Documents: whether it is this computer's, and the device accepts it. */
-const remotePairingOf = async (
+const sideStoreRemotePairingOf = (
   handle: DeviceHandle,
   bundleId: string,
   iosVersion: string | undefined
-): Promise<SideStoreHealth['remotePairing']> => {
-  if (!supportsRemotePairing(parseVersion(iosVersion ?? '0')))
-    return 'not-needed'
-  const paths =
-    PAIRING_APPS.find((app) => app.id === SIDESTORE_APP_ID)?.remoteFiles ?? []
-  const targets = paths.map((path) => ({ bundleId, path }))
-  const [present] = (await handle.appFileStatus(targets)).filter(
-    (status) => status.exists
-  )
-
-  if (!present) return 'missing'
-
-  const file = parsePlist(await handle.readAppFile(present.target))
-  const identifier = isPlistDict(file)
-    ? stringAt(file, 'identifier')
-    : undefined
-  const saved = await handle.checkRemotePairing()
-
-  if (saved.state === 'missing' || saved.identifier !== identifier)
-    return 'other-computer'
-
-  return saved.state
-}
+): Promise<SideStoreHealth['remotePairing']> =>
+  usesRemotePairing(iosVersion)
+    ? remotePairingOf(handle, sideStoreTargets(bundleId, 'remoteFiles'))
+    : Promise.resolve('not-needed')
 
 /** The latest version on SideStore's channel; undefined when the catalog can't be reached. */
 const latestVersion = async (
@@ -211,7 +188,7 @@ export const checkSideStore = async (
           valid
         ),
         pairing: await pairingOf(handle, installed.bundleId),
-        remotePairing: await remotePairingOf(
+        remotePairing: await sideStoreRemotePairingOf(
           handle,
           installed.bundleId,
           info.productVersion

@@ -419,6 +419,10 @@
       "profile_not_found": {
         "title": "Lipsește profilul de provizionare",
         "body": "Dispozitivul nu a găsit profilul de provizionare al aplicației. Încearcă din nou sau reinstalează aplicația."
+      },
+      "pairing_path_invalid": {
+        "title": "Calea nu poate ține un fișier de asociere",
+        "body": "Folosește o cale în Documents sau Library a aplicației care se termină în .plist sau .mobiledevicepairing."
       }
     },
     "apple": {
@@ -691,6 +695,10 @@
       "version_unavailable": {
         "title": "Această versiune nu mai poate fi descărcată",
         "body": "Reîmprospătează păstrează versiunea de pe dispozitiv, iar ea nu mai este oferită pentru descărcare. Folosește Actualizează pentru cea mai nouă versiune; aplicația își păstrează datele."
+      },
+      "pairing_app_not_found": {
+        "title": "Aplicația nu e pe dispozitiv",
+        "body": "A fost eliminată sau nu mai e una instalată de IPAForge. Închide Fișiere de asociere și deschide-l din nou."
       }
     },
     "rpc": {
@@ -917,7 +925,8 @@
       "connected": "{name} s-a conectat",
       "disconnected": "{name} s-a deconectat",
       "aDevice": "Un dispozitiv"
-    }
+    },
+    "savePairing": "Salvează fișierul de asociere…"
   },
   "prompts": {
     "cancel": "Anulează",
@@ -1126,6 +1135,53 @@
     "removeDialog": {
       "title": "Elimini {name}?",
       "body": "Este ștearsă de pe {device} împreună cu datele ei și eliberează un loc pentru aplicații gratuite. O poți instala din nou din Preîncărcare."
+    },
+    "pairing": {
+      "open": "Fișiere de asociere",
+      "title": "Fișiere de asociere",
+      "hint": "Un fișier de asociere permite unei aplicații să ajungă singură la dispozitiv, ca să reîmprospăteze și să instaleze aplicații. Cine îl are poate folosi dispozitivul, așa că dă-l aplicațiilor tale doar când instrucțiunile lor îl cer.",
+      "reading": "Se citesc fișierele de asociere…",
+      "empty": "Pe acest dispozitiv nu sunt aplicații de asociere sau aplicații instalate de IPAForge.",
+      "classic": {
+        "thisComputer": "Asociere: acest computer",
+        "otherComputer": "Asociere: alt computer",
+        "missing": "Asociere: lipsește"
+      },
+      "remote": {
+        "accepted": "La distanță: acceptată",
+        "rejected": "La distanță: neacceptată",
+        "otherComputer": "La distanță: alt computer",
+        "missing": "La distanță: lipsește"
+      },
+      "detail": {
+        "placed": "Pus pe {date}",
+        "needed": "Are nevoie de unul ca să se reîmprospăteze singură.",
+        "otherComputer": "De pe alt computer: funcționează cât timp acel computer rămâne de încredere.",
+        "ownNone": "Niciunul. Adaugă unul doar dacă aplicația îl cere."
+      },
+      "place": "Pune",
+      "placeOne": "Pune fișierul de asociere în {name}",
+      "placeAgain": "Pune din nou",
+      "placeAgainOne": "Pune din nou fișierul de asociere în {name}",
+      "add": "Adaugă…",
+      "addOne": "Adaugă un fișier de asociere în {name}",
+      "remove": "Elimină",
+      "removeOne": "Elimină fișierul de asociere din {name}",
+      "newRemote": "Asociere nouă la distanță",
+      "done": "Gata",
+      "addTitle": "Adaugă un fișier de asociere în {name}",
+      "addBody": "IPAForge scrie fișierul de asociere al acestui computer în dosarul aplicației de pe dispozitiv. Cine îl are poate folosi dispozitivul: adaugă-l doar aplicațiilor în care ai încredere.",
+      "pathLabel": "Calea în aplicație",
+      "pathHint": "Din instrucțiunile aplicației; de obicei în Documents. IPAForge o ține minte pentru această aplicație.",
+      "pathInvalid": "Folosește o cale în Documents sau Library care se termină în .plist sau .mobiledevicepairing.",
+      "removeTitle": "Elimini fișierul de asociere al lui {name}?",
+      "removeBody": "Nu mai poate ajunge singură la dispozitiv (reîmprospătare, instalare) până nu se pune din nou un fișier de asociere.",
+      "newRemoteTitle": "Faci o asociere nouă la distanță?",
+      "newRemoteBody": "IPAForge face o asociere nouă la distanță cu dispozitivul și o pune în SideStore. Dispozitivul poate cere să ai încredere în acest computer. Vechea asociere la distanță nu mai funcționează.",
+      "newRemoteConfirm": "Fă una nouă",
+      "newRemoteWaiting": "Dacă dispozitivul întreabă, apasă Am încredere și introdu codul.",
+      "tag": "Fără fișier de asociere",
+      "tagOne": "{name} nu are fișier de asociere: deschide Fișiere de asociere"
     }
   },
   "logs": {

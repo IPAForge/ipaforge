@@ -25,6 +25,7 @@ export const ErrorCode = {
   ProfileBanned: 'device.profile_banned',
   SigningIdentityInvalid: 'device.identity_invalid',
   ProfileNotFound: 'device.profile_not_found',
+  PairingPathInvalid: 'device.pairing_path_invalid',
 
   // apple
   AnisetteUnavailable: 'apple.anisette_unavailable',
@@ -114,6 +115,8 @@ export const ErrorCode = {
   WrongApp: 'installer.wrong_app',
   /** Refresh keeps the installed version, and that version can't be downloaded again (Update installs the newest). */
   VersionUnavailable: 'installer.version_unavailable',
+  /** Pairing files: the app isn't on the device, or isn't a pairing app or an app IPAForge installed. */
+  PairingAppNotFound: 'installer.pairing_app_not_found',
 
   // rpc
   /** A message between the Engine and the UI failed validation or refers to an unknown run or checkpoint. */

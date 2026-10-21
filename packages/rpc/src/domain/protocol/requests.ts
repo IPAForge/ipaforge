@@ -16,6 +16,8 @@ import {
   installAppsInputSchema,
   installedAppsQuerySchema,
   installSideStoreInputSchema,
+  pairingTargetQuerySchema,
+  placeAppPairingInputSchema,
   placePairingInputSchema,
   planInstallInputSchema,
   refreshAppsInputSchema,
@@ -90,7 +92,14 @@ export const queryCallSchema = z.discriminatedUnion('method', [
   call(
     'removeDeviceProfiles',
     z.tuple([textSchema, z.array(textSchema.max(128)).max(500)])
-  )
+  ),
+  /** Opens the device and reads each pairing app's files. */
+  call('pairingFiles', z.tuple([installedAppsQuerySchema])),
+  call('placeAppPairing', z.tuple([placeAppPairingInputSchema])),
+  call('removeAppPairing', z.tuple([pairingTargetQuerySchema])),
+  /** May wait for Trust this computer on the device. */
+  call('newRemotePairing', z.tuple([installedAppsQuerySchema])),
+  call('devicePairingFile', z.tuple([textSchema]))
 ])
 
 export const commandCallSchema = z.discriminatedUnion('command', [
