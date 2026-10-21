@@ -87,10 +87,10 @@ jobs:
         env:
           IPAFORGE_E2E: "1"
 
-  # Screenshot and accessibility tests in a real Chromium. They run in Playwright's image, the one the reference
-  # images are made in (packages/ui/scripts/update-screenshots.sh), so fonts and anti-aliasing match exactly.
+  # Layout and accessibility tests in a real Chromium (cut-off translations, text out of its box, WCAG), in
+  # Playwright's image, so fonts match those the website's screenshots are made with.
   ui-browser:
-    name: ui screenshots and accessibility
+    name: ui layout and accessibility
     runs-on: ubuntu-latest
     container:
       image: mcr.microsoft.com/playwright:v1.63.0-noble
@@ -100,10 +100,3 @@ jobs:
       - uses: pnpm/action-setup@0977fd99725f1db4007ccb2928dbb4e90d06cc86 # v6.0.10
       - run: pnpm install --frozen-lockfile
       - run: pnpm test:browser
-      # The actual and diff images of a screen that changed, to compare with the reference.
-      - if: failure()
-        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
-        with:
-          name: screenshot-diffs
-          path: packages/ui/.vitest/
-          if-no-files-found: ignore

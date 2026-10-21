@@ -11,9 +11,9 @@ coverage/
 # local caches (e.g. downloaded IPAs for opt-in e2e tests)
 .cache/
 
-# Browser tests: only the Linux reference screenshots are kept (packages/ui/scripts/update-screenshots.sh)
-packages/ui/src/__screenshots__/**/*-darwin.png
-packages/ui/src/__screenshots__/**/*-win32.png
+# Browser tests keep no images: the website's screenshots are made on demand (packages/ui/scripts/website-screenshots.sh)
+packages/ui/src/__screenshots__/
+packages/ui/website-screenshots/
 packages/ui/.vitest/
 
 # Desktop installers (electron-builder)

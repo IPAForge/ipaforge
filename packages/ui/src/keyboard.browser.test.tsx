@@ -25,9 +25,7 @@ describe('the keyboard', () => {
     const skip = focused()
     expect(skip?.textContent).toBe(t('shell.skipToContent'))
     expect(skip?.getBoundingClientRect().width).toBeGreaterThan(2)
-    await expect(page.elementLocator(document.body)).toMatchScreenshot(
-      'skip-link-focused'
-    )
+    expect(skip ? showsFocus(skip) : false).toBe(true)
 
     await userEvent.keyboard('{Enter}')
     expect(focused()?.tagName).toBe('MAIN')

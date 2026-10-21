@@ -322,21 +322,21 @@ English is part of the main bundle: it is the fallback and the source of the key
 
 Tests call `await renderApp(path, { languages, preferences, load })`, which runs `prepareLanguage` like a host; `load` replaces the bundle loader to delay or fail a language.
 
-## Screenshot and accessibility tests
+## Layout and accessibility tests
 
-The `*.browser.test.tsx` files run the whole app in a real Chromium (Vitest's browser mode with Playwright, `vitest.browser.config.ts`), separately from the happy-dom tests:
+The `*.browser.test.tsx` files run the whole app in a real Chromium (Vitest's browser mode with Playwright, `vitest.browser.config.ts`), separately from the happy-dom tests. No reference images are kept: the checks below read the page itself.
 
 ```sh
-pnpm test:browser                                # the checks; compares with the Linux reference images on Linux
-pnpm --filter @ipaforge/ui test:browser:update   # rebuilds the reference images in Docker (any system)
+pnpm test:browser                          # the checks
+pnpm --filter @ipaforge/ui screenshots     # the website's screenshots, in Docker (any system)
 ```
 
-- **Screenshots** (`src/screens.browser.test.tsx`): the Install page, a failed run with its recovery box, Preload with two apps, Logs and Settings, in English, German (long words), Arabic (right to left), Japanese and the pseudo-locale, plus every screen in dark mode. Each is compared with its reference image in `src/__screenshots__/`; a changed screen fails with the new image and a diff (CI uploads them as `screenshot-diffs`). The clock is fixed and animations are off, so images only change when the UI does.
+- **Every main screen** (`src/__tests__/screen-table.ts`, checked by `src/screens.browser.test.tsx`): Install, a failed run with its recovery box, Preload and its sources, the Devices checklist, Apps with Pairing files, the Developer Portal, Repair SideStore, Logs, Settings, What's new and the update screens, in English, German (long words), Arabic (right to left), Japanese and the pseudo-locale. The clock is fixed and animations are off.
 - **No clipped text:** in every language, an element with translated text that overflows its box fails the test. The pseudo-locale wraps every message in brackets, so a clipped bracket is a label too short for a longer language. User data (names, Apple IDs) may truncate by design.
 - **Accessibility:** axe checks every screen against WCAG 2.2 AA, in light and dark and right to left (contrast, names, roles, lists, target sizes).
 - **Keyboard** (`src/keyboard.browser.test.tsx`): the skip link shows on the first Tab and moves focus to the page, Tab walks the top bar and the sidebar in order with a visible focus ring, a picker opens with Enter and closes with Escape back on its button, and Ctrl+L opens Logs.
 
-**Reference images are Linux only.** Fonts and anti-aliasing differ on every system, so the images are made in Playwright's Docker image (`mcr.microsoft.com/playwright:v1.63.0-noble`), the one CI runs these tests in. On macOS or Windows `pnpm test:browser` writes and compares images for that system, which git ignores. After a deliberate UI change, run `test:browser:update`, look at the changed images, and commit them with the change.
+**The website's screenshots** (`src/website-screens.browser.test.tsx`, skipped in every other run) are the screens ipaforge.com shows, in English, light and dark. `pnpm --filter @ipaforge/ui screenshots` takes them in Playwright's Docker image (`mcr.microsoft.com/playwright:v1.63.0-noble`, the one CI runs these tests in, so fonts match) and leaves them in `packages/ui/website-screenshots/`, which git ignores; the website keeps them as WebP.
 
 ## Styling rules
 

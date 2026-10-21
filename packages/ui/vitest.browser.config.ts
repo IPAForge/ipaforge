@@ -1,6 +1,6 @@
-// Screenshot and accessibility tests (`*.browser.test.tsx`) in a real Chromium, through Vitest's browser mode.
-// Reference images are made on Linux only (CI, or `pnpm test:browser:update` in Playwright's Docker image):
-// fonts render differently on every system, so other systems would only ever compare against themselves.
+// Layout and accessibility tests (`*.browser.test.tsx`) in a real Chromium, through Vitest's browser mode: cut-off
+// translations, text out of its box and WCAG violations, on every main screen. No reference images are kept; the
+// website's screenshots are taken on demand (scripts/website-screenshots.sh).
 import tailwindcss from '@tailwindcss/vite'
 import react from '@vitejs/plugin-react'
 import { playwright } from '@vitest/browser-playwright'
@@ -29,17 +29,7 @@ export default defineProject({
           reducedMotion: 'reduce'
         }
       }),
-      instances: [{ browser: 'chromium', viewport: VIEWPORT }],
-      expect: {
-        toMatchScreenshot: {
-          comparatorName: 'pixelmatch',
-          // Anti-aliasing differs by a few pixels between runs of the same browser; real changes are far larger.
-          comparatorOptions: {
-            threshold: 0.1,
-            allowedMismatchedPixelRatio: 0.002
-          }
-        }
-      }
+      instances: [{ browser: 'chromium', viewport: VIEWPORT }]
     }
   }
 })
