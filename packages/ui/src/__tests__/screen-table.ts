@@ -16,7 +16,8 @@ import {
   renderWhatsNew,
   repairShown,
   type ScreenOptions,
-  showSources
+  showSources,
+  tickSaveInstead
 } from '@ui/__tests__/screens.ts'
 
 const NEXT = '0.1.0-alpha.99'
@@ -36,6 +37,11 @@ export const screens = {
   preload: async (options: ScreenOptions) => {
     await renderScreen('/preload', options)
     await fillPreload()
+  },
+  'preload-save': async (options: ScreenOptions) => {
+    await renderScreen('/preload', options)
+    await fillPreload()
+    await tickSaveInstead()
   },
   'preload-sources': async (options: ScreenOptions) => {
     await renderScreen('/preload', options)

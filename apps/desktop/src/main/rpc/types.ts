@@ -1,6 +1,11 @@
 import type { Engine } from '@ipaforge/installer'
 import type { Logger } from '@ipaforge/kernel'
-import type { ChooseIpas, LogSource, ResolveIpa } from '@ipaforge/rpc'
+import type {
+  ChooseIpas,
+  ChooseSaveFolder,
+  LogSource,
+  ResolveIpa
+} from '@ipaforge/rpc'
 
 export type MessageListener = (event: { readonly data: unknown }) => void
 
@@ -34,9 +39,21 @@ export type ServeEngineDeps<P> = {
   readonly logs?: LogSource
   /** The file dialog for this window's "Choose files…" (main process only). */
   readonly chooseIpas?: ChooseIpas
+  /** The folder dialog for Save signed .ipa instead (main process only). */
+  readonly chooseSaveFolder?: ChooseSaveFolder
   readonly logger: Logger
   /** `() => new MessageChannelMain()` */
   readonly createChannel: () => ChannelPair<P>
+}
+
+/** The part of Electron's `dialog.showOpenDialog` the save-folder chooser uses, already bound to the window. */
+export type ChooseSaveFolderDeps = {
+  showOpenDialog(options: {
+    readonly properties: readonly ('openDirectory' | 'createDirectory')[]
+  }): Promise<{
+    readonly canceled: boolean
+    readonly filePaths: readonly string[]
+  }>
 }
 
 /** The part of Electron's `dialog.showOpenDialog` the IPA chooser uses, already bound to the window. */

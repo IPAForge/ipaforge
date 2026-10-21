@@ -5,6 +5,7 @@ import { createFileDownloadStore } from '@desktop/main/adapters/file-download-st
 import { createFileKeptIpaStore } from '@desktop/main/adapters/file-kept-ipa-store.ts'
 import { createFileScratchStore } from '@desktop/main/adapters/file-scratch-store.ts'
 import { createFileSecretStore } from '@desktop/main/adapters/file-secret-store.ts'
+import { createFileSignedIpaFolder } from '@desktop/main/adapters/file-signed-ipa-folder.ts'
 import { createNodeHttpClient } from '@desktop/main/adapters/http-client.ts'
 import { createNodeUsbmuxTransport } from '@desktop/main/adapters/usbmux-transport.ts'
 import { createWebSocketFactory } from '@desktop/main/adapters/web-socket.ts'
@@ -54,6 +55,8 @@ export const createDesktopEngine = ({
     // What was installed on each device (not secret), and each app's original IPA, for Refresh.
     installed: createFileSecretStore(join(dataDir, 'installed.json')),
     kept: createFileKeptIpaStore(join(dataDir, 'kept')),
+    // Save signed .ipa instead: into the folder the user picked in the dialog.
+    signedIpaFolder: createFileSignedIpaFolder(),
     logger
   })
 }

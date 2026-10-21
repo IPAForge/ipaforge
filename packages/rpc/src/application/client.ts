@@ -33,6 +33,7 @@ import type {
   WireSubscriptionEvent
 } from '@rpc/domain/protocol/types.ts'
 import type {
+  ChosenFolder,
   ChosenIpa,
   EngineClient,
   EngineLogs,
@@ -286,6 +287,10 @@ export const createEngineClient = (
     classify,
     logs,
     chooseIpas: () =>
-      requests.send({ type: 'choose-ipas' }) as Promise<readonly ChosenIpa[]>
+      requests.send({ type: 'choose-ipas' }) as Promise<readonly ChosenIpa[]>,
+    chooseSaveFolder: async () =>
+      ((await requests.send({
+        type: 'choose-save-folder'
+      })) as ChosenFolder | null) ?? undefined
   }
 }

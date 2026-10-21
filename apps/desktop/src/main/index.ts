@@ -26,6 +26,7 @@ import { createNodeHttpClient } from '@desktop/main/adapters/http-client.ts'
 import { createDesktopEngine } from '@desktop/main/engine.ts'
 import { createMainLogging, type MainLogging } from '@desktop/main/logger.ts'
 import { createIpaChooser } from '@desktop/main/rpc/choose-ipas.ts'
+import { createSaveFolderChooser } from '@desktop/main/rpc/choose-save-folder.ts'
 import { createIpaResolver } from '@desktop/main/rpc/resolve-ipa.ts'
 import { serveEngine } from '@desktop/main/rpc/serve-engine.ts'
 import { createDesktopSecrets } from '@desktop/main/secrets.ts'
@@ -73,6 +74,16 @@ const createEngineConnector = ({ logger, logs }: MainLogging) => {
               extensions: [...filter.extensions]
             }))
           }
+
+          return window
+            ? dialog.showOpenDialog(window, settings)
+            : dialog.showOpenDialog(settings)
+        }
+      }),
+      chooseSaveFolder: createSaveFolderChooser({
+        showOpenDialog: (options) => {
+          const window = BrowserWindow.fromWebContents(contents)
+          const settings = { properties: [...options.properties] }
 
           return window
             ? dialog.showOpenDialog(window, settings)

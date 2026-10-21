@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next'
 import { AppIcon } from '@ui/components/app-icon.tsx'
 import { RowChips } from '@ui/features/preload/home/components/row-chips.tsx'
 import { RowProblem } from '@ui/features/preload/home/components/row-problem.tsx'
+import { SaveIpaCheckbox } from '@ui/features/preload/home/components/save-ipa-checkbox.tsx'
 import type { PreloadRow as Row } from '@ui/features/preload/home/types.ts'
 import { sourceLine } from '@ui/features/preload/home/utils/source-line.ts'
 import { useFormat } from '@ui/hooks/use-format.ts'
@@ -12,10 +13,11 @@ import { useFormat } from '@ui/hooks/use-format.ts'
 type PreloadRowProps = {
   row: Row
   onRemove: (id: string) => void
+  onSave: (id: string, save: boolean) => void
 }
 
 /** An app in the list: its name and version once read, where it comes from, its facts or why it can't install. */
-export const PreloadRow = ({ row, onRemove }: PreloadRowProps) => {
+export const PreloadRow = ({ row, onRemove, onSave }: PreloadRowProps) => {
   const { t } = useTranslation()
   const { fileSize } = useFormat()
   const { item, plan, problem } = row
@@ -30,6 +32,7 @@ export const PreloadRow = ({ row, onRemove }: PreloadRowProps) => {
     fileSize
   )
   const onPress = () => onRemove(item.id)
+  const onSaveChange = (save: boolean) => onSave(item.id, save)
 
   return (
     <li
@@ -57,6 +60,15 @@ export const PreloadRow = ({ row, onRemove }: PreloadRowProps) => {
       <div className="col-span-2 col-start-2 flex flex-wrap items-center gap-1.5">
         <RowChips row={row} />
       </div>
+      {item.source && !item.refused ? (
+        <div className="col-span-2 col-start-2">
+          <SaveIpaCheckbox
+            name={name}
+            isSelected={item.save === true}
+            onChange={onSaveChange}
+          />
+        </div>
+      ) : null}
       {problem ? <RowProblem problem={problem} /> : null}
     </li>
   )

@@ -190,6 +190,8 @@ The list (`state/preload/`, kept while you visit other sections) asks the Engine
 3. no app that can't be installed;
 4. enough App IDs.
 
+Each app can be ticked **Save signed .ipa instead**: it's signed and saved on the computer rather than installed (its row then says so, and it takes no free-app slot in the summary). When any app is ticked, Install first asks where to save (`engine.chooseSaveFolder()`, the host's folder dialog; cancelling starts nothing), and the button counts only the apps to install, with "N to install · M to save as signed .ipa" beside it, or reads **Sign and save** when every app is saved. The run shows each saved app's file under its `save-N` step.
+
 It starts `engine.installApps` with the ready apps. The run is the same run view as Install (one run at a time, in `state/active-run/`, which holds either kind; the other page says an install is running and links to it), with the steps grouped by app: the device and Apple ID steps first, then each app's own. **Done** empties the list.
 
 The browser dev host's fake Engine plays it too: its file dialog picks `MyGame.ipa`, a link "downloads" for a moment, StikDebug is on the device in an older version, and names decide the problems (a name with `Encrypted`, `Future` or `NotAnApp` in it). Its sources: the catalog and SideStore's source built in, and any https link added as "Example Community Repo"; a link containing `unreachable` or `notsource` fails that way, and `skipped` leaves two apps out. The `source-offline` scenario makes SideStore's source fail to refresh.

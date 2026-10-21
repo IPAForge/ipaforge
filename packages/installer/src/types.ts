@@ -2,6 +2,7 @@ import type { InstallerConfig } from '@installer/domain/config.ts'
 import type { InstalledStore } from '@installer/domain/ports/installed-store.ts'
 import type { KeptIpaStore } from '@installer/domain/ports/kept-ipa-store.ts'
 import type { ScratchStore } from '@installer/domain/ports/scratch-store.ts'
+import type { SignedIpaFolder } from '@installer/domain/ports/signed-ipa-folder.ts'
 import type { IpaSigner } from '@installer/domain/ports/types.ts'
 import type { AppleAccounts } from '@ipaforge/apple'
 import type { Catalog } from '@ipaforge/catalog'
@@ -21,6 +22,8 @@ export type InstallerDeps = {
   /** Each installed app's original IPA, signed again by Refresh. */
   readonly kept: KeptIpaStore
   readonly signer: IpaSigner
+  /** Where "Save signed .ipa instead" writes; without it, a run that saves fails before signing anything. */
+  readonly signedIpaFolder?: SignedIpaFolder
   readonly logger: Logger
   readonly clock: Clock
   readonly config: InstallerConfig

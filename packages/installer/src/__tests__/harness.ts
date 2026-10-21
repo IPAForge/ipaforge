@@ -26,16 +26,29 @@ export const createHarness = (options: HarnessOptions = {}) => {
   const signer = fakeSigner(options.signerIds)
   const secrets = memorySecrets()
   const scratch = memoryScratch()
+  // Save signed .ipa instead: what was written, by folder and name.
+  const saved: { folder: string; name: string; bytes: Uint8Array }[] = []
+  const signedIpaFolder = {
+    save: async (
+      folder: string,
+      name: string,
+      stream: ReadableStream<Uint8Array>
+    ) => {
+      saved.push({ folder, name, bytes: await new Response(stream).bytes() })
+      return `${folder}/${name}`
+    }
+  }
   const engine = createEngine({
     devices: devices.manager,
     apple: apple.apple,
     catalog: catalog.catalog,
     secrets,
     scratch,
-    signer: signer.signer
+    signer: signer.signer,
+    signedIpaFolder
   })
 
-  return { engine, devices, apple, catalog, signer, secrets, scratch }
+  return { engine, devices, apple, catalog, signer, secrets, scratch, saved }
 }
 
 export type Answers = Readonly<

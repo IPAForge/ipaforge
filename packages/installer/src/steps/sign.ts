@@ -48,12 +48,17 @@ const certificateAdditions = (
 const onWifi = async (runtime: FlowRuntime, udid: string): Promise<boolean> =>
   (await runtime.device(udid)).device.connectionType === 'network'
 
-/** Signs the job's IPA into the scratch store; also used by the install step when the signed copy is gone. */
+/**
+ * Signs the job's IPA into the scratch store; also used by the install step when the signed copy is gone. A copy to
+ * save on the computer (`forSaving`) never carries the certificate's private key (SideStore's additions), and is
+ * always compressed: it's a file to keep, not to send.
+ */
 export const signToScratch = async (
   runtime: FlowRuntime,
   state: InstallState,
   index: number,
-  context: StepContext
+  context: StepContext,
+  { forSaving = false }: { readonly forSaving?: boolean } = {}
 ): Promise<SignedIpa> => {
   const { signer, scratch } = runtime.deps
   const job = jobAt(state, index)
@@ -66,7 +71,7 @@ export const signToScratch = async (
     required(state.certificateSerial, 'certificate')
   )
   const der = required(certificate.certificate.content, 'certificate content')
-  const isWifi = await onWifi(runtime, state.udid)
+  const isCompressed = forSaving || (await onWifi(runtime, state.udid))
   const stream = await signer.sign(
     required(job.file, 'IPA file'),
     compact({
@@ -79,14 +84,14 @@ export const signToScratch = async (
       deviceUdid: state.udid,
       // SideStore's certificate (when it may have it), and IPAForge's mark with where the app came from.
       additions: withMarker(
-        certificateAdditions(job, certificate, der),
+        forSaving ? undefined : certificateAdditions(job, certificate, der),
         markerFor(
           required(job.inspection, 'inspection').app.identifier,
           originOf(job),
           state.certificateSerial
         )
       ),
-      compressionLevel: isWifi
+      compressionLevel: isCompressed
         ? runtime.deps.config.wifiCompressionLevel
         : undefined,
       onProgress: (fraction: number) => context.progress(fraction),
@@ -95,18 +100,19 @@ export const signToScratch = async (
   )
   const key = `${SIGNED_PREFIX}/${globalThis.crypto.randomUUID()}.ipa`
 
-  return { key, file: await scratch.put(key, stream), compressed: isWifi }
+  return { key, file: await scratch.put(key, stream), compressed: isCompressed }
 }
 
 export const signStep = (
   runtime: FlowRuntime,
-  index: number
+  index: number,
+  options: { readonly forSaving?: boolean } = {}
 ): Step<InstallState> => ({
   id: appStepId('sign', index),
   labelKey: StepLabel.sign,
   weight: StepWeight.sign,
   run: async (state, context) => {
-    const signed = await signToScratch(runtime, state, index, context)
+    const signed = await signToScratch(runtime, state, index, context, options)
     context.detail({
       kind: 'signed',
       bundles: required(jobAt(state, index).identity, 'identity plan').bundles

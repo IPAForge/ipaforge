@@ -59,7 +59,8 @@
       "sign": "アプリに署名",
       "install": "デバイスにインストール",
       "pairing": "ペアリングファイルを配置",
-      "remember": "このインストールを記録"
+      "remember": "このインストールを記録",
+      "save": "署名済み.ipaを保存"
     },
     "signInNeeded": {
       "title": "Apple IDにもう一度サインインする必要があります",
@@ -208,7 +209,8 @@
         "pairing": "{apps}に配置",
         "shared": "証明書を共有しました",
         "notShared": "証明書は共有していません",
-        "pairingRemote": "{apps}に配置 · iOS 17.4 以降用のリモートペアリング付き"
+        "pairingRemote": "{apps}に配置 · iOS 17.4 以降用のリモートペアリング付き",
+        "saved": "{path}に保存しました"
       },
       "subtitleApps": "{device} · {appleId}"
     },
@@ -1408,7 +1410,10 @@
       "fromCatalog": "カタログから · 安定版",
       "remove": "{name}を削除",
       "cannot": "インストールできません。",
-      "fromSource": "{name}から"
+      "fromSource": "{name}から",
+      "saveInstead": "インストールせず署名済み.ipaを保存",
+      "saveInsteadOne": "{name}をインストールせず署名済み.ipaとして保存",
+      "savedOnComputer": "このコンピュータに保存（インストールしない）"
     },
     "problem": {
       "notIpa": "インストールできるのは.ipaファイルのみです。",
@@ -1470,7 +1475,9 @@
     "done": {
       "title": "{count, plural, other {{app}を{device}にインストールしました。}}",
       "open": "各アプリをホーム画面から開いてください。"
-    }
+    },
+    "signAndSave": "{count, plural, other {#個のアプリに署名して保存}}",
+    "installAndSave": "インストール{install}件 · 署名済み.ipaとして保存{save}件"
   },
   "repair": {
     "title": "SideStoreを修復",

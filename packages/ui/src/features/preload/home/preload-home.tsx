@@ -22,6 +22,7 @@ import type { PreloadTab } from '@ui/features/preload/home/types.ts'
 import { preloadReadiness } from '@ui/features/preload/home/utils/preload-readiness.ts'
 import { preloadTotals } from '@ui/features/preload/home/utils/preload-totals.ts'
 import { runAppsOf } from '@ui/features/preload/home/utils/run-apps-of.ts'
+import { useEngine } from '@ui/hooks/use-engine.ts'
 import { usePreloadList } from '@ui/hooks/use-preload-list.ts'
 import { useRun } from '@ui/hooks/use-run.ts'
 import { isRunActive } from '@ui/state/active-run/run-view.ts'
@@ -32,7 +33,8 @@ import { isRunActive } from '@ui/state/active-run/run-view.ts'
  * uses, and Install. Sources: the app sources Browse apps reads.
  */
 export const PreloadHome = () => {
-  const { items, remove, clear } = usePreloadList()
+  const { items, remove, setSave, clear } = usePreloadList()
+  const engine = useEngine()
   const { run, startApps } = useRun()
   const { target, deviceState, accountState } = usePlanTarget()
   const { addFiles, choose, isChoosing, addLink, addBrowsed } = useAddApps()
@@ -51,11 +53,24 @@ export const PreloadHome = () => {
   const onLink = () => setLinkOpen(true)
   const onCloseLink = () => setLinkOpen(false)
   const onManageSources = () => setTab('sources')
-  const onInstall = () => {
+  const onInstall = async () => {
     if (!target) return
     const apps = runAppsOf(rows)
-    startApps({ ...target, apps: apps.map((app) => app.source) }, apps)
+    const saved = apps.flatMap((app, index) => (app.save ? [index] : []))
+    // Saving asks where first, in the host's dialog; cancelling it starts nothing.
+    const folder =
+      saved.length > 0 ? await engine.chooseSaveFolder() : undefined
+    if (saved.length > 0 && !folder) return
+    startApps(
+      {
+        ...target,
+        apps: apps.map((app) => app.source),
+        ...(folder ? { save: { folderId: folder.id, apps: saved } } : {})
+      },
+      apps
+    )
   }
+  const onInstallPress = () => void onInstall()
 
   return (
     <div className="flex w-full flex-col gap-6">
@@ -85,13 +100,14 @@ export const PreloadHome = () => {
               onAdd={addBrowsed}
               onManage={onManageSources}
             />
-            <PreloadList rows={rows} onRemove={remove} />
+            <PreloadList rows={rows} onRemove={remove} onSave={setSave} />
             {totals.apps > 0 ? <PreloadSummary totals={totals} /> : null}
             <PreloadFooter
               readiness={readiness}
               count={totals.apps}
+              saving={runAppsOf(rows).filter((app) => app.save).length}
               hasItems={items.length > 0}
-              onInstall={onInstall}
+              onInstall={onInstallPress}
               onClear={clear}
             />
           </>

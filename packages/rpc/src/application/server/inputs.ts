@@ -83,12 +83,31 @@ const toAppSources = async (
   return apps
 }
 
+/**
+ * Save signed .ipa instead names its folder by the id the host's dialog gave it; the path never comes from the page.
+ */
 export const toInstallAppsInput = async (
   input: InstallAppsCall,
-  context: Omit<SourceContext, 'udid'>,
+  context: Omit<SourceContext, 'udid'> & {
+    readonly folderOf: (id: string) => string
+  },
   signal: AbortSignal
-): Promise<InstallAppsInput> =>
-  compact({ ...input, apps: await toAppSources(input, context, signal) })
+): Promise<InstallAppsInput> => {
+  const { save, ...rest } = input
+  const folder = save ? context.folderOf(save.folderId) : undefined
+
+  return compact({
+    ...rest,
+    apps: await toAppSources(input, context, signal),
+    save:
+      save && folder !== undefined
+        ? {
+            folder,
+            apps: save.apps.filter((index) => index < input.apps.length)
+          }
+        : undefined
+  })
+}
 
 export const toRefreshAppsInput = async (
   input: RefreshAppsCall,

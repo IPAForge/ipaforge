@@ -136,6 +136,22 @@ export const fillPreload = async () => {
   })
 }
 
+/** Preload filled, with its last app ticked to save as a signed .ipa (the footer then says what installs and saves). */
+export const tickSaveInstead = async () => {
+  const boxes = await waitFor(() => {
+    const found = all('main ul li input[type="checkbox"]')
+    if (found.length < 2) throw new Error('no Save signed .ipa instead yet')
+    return found
+  })
+  const last = boxes[boxes.length - 1]
+  if (last instanceof HTMLElement) last.click()
+  await waitFor(() =>
+    expect(all('main input[type="checkbox"]:checked')).toHaveLength(1)
+  )
+  // The list and its footer, in view.
+  boxes[0]?.closest('ul')?.scrollIntoView({ block: 'start' })
+}
+
 /** The Devices page with its checklist open (LocalDevVPN to install, so with its QR code). */
 export const checklistShown = () =>
   waitFor(() => expect(all('main svg[role="img"]')).toHaveLength(1))

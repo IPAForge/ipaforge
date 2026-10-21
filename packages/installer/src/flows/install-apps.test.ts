@@ -241,4 +241,28 @@ describe('installApps', () => {
     const h = createHarness()
     expect(() => h.engine.installApps(install([]))).toThrow()
   })
+
+  it('saves the apps marked to save in the folder picked, signed without the private key, and installs the others', async () => {
+    const h = createHarness()
+    const result = await h.engine.installApps(
+      {
+        ...install([{ kind: 'catalog', appId: 'sidestore' }, file('one.ipa')]),
+        save: { folder: '/Users/me/Signed', apps: [0] }
+      },
+      { onPrompt: scripted() }
+    ).result
+
+    expect(result.status).toBe('completed')
+    expect(h.saved.map(({ folder, name }) => ({ folder, name }))).toEqual([
+      { folder: '/Users/me/Signed', name: 'App.ipa' }
+    ])
+    expect(h.devices.calls.installs).toHaveLength(1)
+    // SideStore saved to a folder doesn't carry the certificate's private key, nor gets a pairing file.
+    expect(sharesCertificate(h.signer.calls.signed[0])).toBe(false)
+    expect(h.devices.calls.placed).toEqual([])
+    expect(h.scratch.keys.size).toBe(0)
+    if (result.status !== 'completed') return
+    expect(result.state.apps[0]?.savedTo).toBe('/Users/me/Signed/App.ipa')
+    expect(result.state.apps[0]?.installed).toBeUndefined()
+  })
 })

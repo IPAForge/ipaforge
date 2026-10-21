@@ -16,6 +16,8 @@ export type PreloadItem = {
   readonly origin?: string | undefined
   readonly size?: number | undefined
   readonly refused?: PreloadRefusal | undefined
+  /** Save signed .ipa instead: signed and saved on the computer, not installed. */
+  readonly save?: boolean | undefined
 }
 
 export type NewPreloadItem = Omit<PreloadItem, 'id'>
@@ -27,5 +29,7 @@ export type PreloadStore = {
   /** Adds apps; one already in the list (same file, link or catalog app) isn't added twice. */
   add: (items: readonly NewPreloadItem[]) => void
   remove: (id: string) => void
+  /** Save signed .ipa instead, or install (the default). */
+  setSave: (id: string, save: boolean) => void
   clear: () => void
 }

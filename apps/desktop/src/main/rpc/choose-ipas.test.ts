@@ -21,7 +21,7 @@ describe('createIpaChooser', () => {
     ])
     expect(showOpenDialog).toHaveBeenCalledWith({
       properties: ['openFile', 'multiSelections'],
-      filters: [{ name: 'iOS apps', extensions: ['ipa'] }]
+      filters: [{ name: 'IPA', extensions: ['ipa'] }]
     })
   })
 

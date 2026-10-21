@@ -24,6 +24,9 @@ export const createFakeResolveIpa =
   }
 
 /** What the fake file dialog picks. */
+/** The folder the fake's dialog picks for Save signed .ipa instead. */
+export const FAKE_SAVE_FOLDER = '/Users/you/Signed apps'
+
 export const FAKE_CHOSEN_IPAS = [
   {
     path: '/Users/you/Downloads/MyGame.ipa',

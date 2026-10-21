@@ -71,6 +71,12 @@ export type EngineLogs = {
   write(record: LogRecord): void
 }
 
+/** A folder the user picked for Save signed .ipa instead: an id the Engine knows it by, and its name to show. */
+export type ChosenFolder = {
+  readonly id: string
+  readonly name: string
+}
+
 /** An IPA the user picked in the host's file dialog: where it is (to name it as a file source), its name and size. */
 export type ChosenIpa = {
   readonly path: string
@@ -117,6 +123,8 @@ export type EngineClient = Omit<EngineQueries, 'planInstall'> & {
   readonly logs: EngineLogs
   /** Opens the host's file dialog for IPAs (none when cancelled, or when the host has no dialog). */
   chooseIpas(): Promise<readonly ChosenIpa[]>
+  /** Opens the host's folder dialog for Save signed .ipa instead (nothing when cancelled, or without a dialog). */
+  chooseSaveFolder(): Promise<ChosenFolder | undefined>
 }
 
 // What a value looks like after crossing the channel. Structured clone keeps data (Maps, Dates, bytes) but refuses

@@ -64,6 +64,7 @@ ipaforge/
 | `apps/desktop/src/main/rpc/serve-engine.ts` | Serves the Engine to the window: a fresh `MessageChannelMain` per page load, `createRpcServer` on one end, the other posted to the page |
 | `apps/desktop/src/preload/forward-port.ts` | The preload's main job: forward the rpc and update ports to the page (`expose-file-paths.ts` adds its one function, a dropped file's path) |
 | `apps/desktop/src/main/rpc/choose-ipas.ts` | The IPA file dialog behind "Choose files…" on the Preload page, in the main process |
+| `apps/desktop/src/main/rpc/choose-save-folder.ts` | The folder dialog behind Save signed .ipa instead (the RPC server keeps the path; the page gets an id) |
 | `apps/desktop/src/renderer/engine-port.ts` | Renderer: receives the ports and wraps each in a `Transport` for `createEngineClient` and `createUpdateClient` |
 | `apps/desktop/src/renderer/main.tsx` | Electron renderer: connects the `EngineClient` and the update client, then mounts `@ipaforge/ui` with the browser services and a hash history |
 | `apps/desktop/electron-builder.yml` | Installers (DMG and zip, NSIS and MSI, AppImage, deb, rpm) and the update metadata: `pnpm --filter @ipaforge/desktop dist` |

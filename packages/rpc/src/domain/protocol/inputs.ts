@@ -98,7 +98,14 @@ export const installAppsInputSchema = z.object({
   ...accountSchema,
   teamId,
   apps: z.array(ipaSourceSchema),
-  tryAnyway
+  tryAnyway,
+  /** Save signed .ipa instead: the apps (by position) to save in a folder the host's dialog gave an id to. */
+  save: z
+    .object({
+      folderId: textSchema.max(64),
+      apps: z.array(z.number().int().nonnegative().max(999)).max(100)
+    })
+    .optional()
 })
 
 export const refreshPlanQuerySchema = z.object({

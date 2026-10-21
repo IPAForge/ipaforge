@@ -38,6 +38,8 @@ export type StepDetail =
     }
   | { readonly kind: 'team'; readonly name: string; readonly isFree: boolean }
   | { readonly kind: 'device-registration'; readonly isNew: boolean }
+  /** Save signed .ipa instead: where the signed app was written. */
+  | { readonly kind: 'saved'; readonly path: string }
   | {
       readonly kind: 'certificate'
       readonly how: 'reused' | 'created' | 'replaced'

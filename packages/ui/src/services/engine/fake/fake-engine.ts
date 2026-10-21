@@ -84,6 +84,10 @@ const appsRun = (
     readonly accountId: string
     readonly apps: readonly unknown[]
     readonly profiles?: readonly string[]
+    readonly save?: {
+      readonly folder: string
+      readonly apps: readonly number[]
+    }
   },
   options: CommandOptions<FakeInstallState> | undefined
 ) =>
@@ -92,7 +96,8 @@ const appsRun = (
     steps: fakeAppsSteps(
       world,
       input.apps.map((source) => fakeAppFor(source as FakeAppSource)),
-      input.profiles?.length
+      input.profiles?.length,
+      input.save
     ),
     initial: { udid: input.udid, accountId: input.accountId },
     options,

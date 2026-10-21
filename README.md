@@ -51,7 +51,7 @@ Sideloading tools tend to fail in a few recurring ways. IPAForge is designed aro
 
 Sideload signing has been verified against real devices and Apple accounts: Apple's own `codesign --verify --deep --strict` accepts the output, including a full SideStore build signed in about half a second. Details: [Code Signing](docs/signing.md).
 
-New: the **Developer Portal** page, with your team's certificates (and the apps each one signs), App IDs, the profiles on your device, app groups and registered devices, and the iOS 17+ remote pairing file for SideStore. Pairing files per app: place, remove or give your own apps one, in one dialog. Coming next: `.p12` import and export, saving signed `.ipa` files, and guided onboarding. Installing over Wi-Fi to a device paired before already works.
+New: the **Developer Portal** page, with your team's certificates (and the apps each one signs), App IDs, the profiles on your device, app groups and registered devices, and the iOS 17+ remote pairing file for SideStore. Pairing files per app: place, remove or give your own apps one, in one dialog. Save signed `.ipa` files instead of installing them. Coming next: `.p12` import and export, and guided onboarding. Installing over Wi-Fi to a device paired before already works.
 
 ## Requirements
 

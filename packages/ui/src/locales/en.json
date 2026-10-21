@@ -59,7 +59,8 @@
       "sign": "Sign the app",
       "install": "Install on the device",
       "pairing": "Place the pairing file",
-      "remember": "Remember this install"
+      "remember": "Remember this install",
+      "save": "Save the signed .ipa"
     },
     "signInNeeded": {
       "title": "Your Apple ID needs you to sign in again",
@@ -208,7 +209,8 @@
         "pairing": "Placed in {apps}",
         "shared": "Certificate shared",
         "notShared": "Certificate not shared",
-        "pairingRemote": "Placed in {apps} · with remote pairing for iOS 17.4 and later"
+        "pairingRemote": "Placed in {apps} · with remote pairing for iOS 17.4 and later",
+        "saved": "Saved to {path}"
       },
       "subtitleApps": "{device} · {appleId}"
     },
@@ -1408,7 +1410,10 @@
       "fromCatalog": "From the catalog · Stable",
       "remove": "Remove {name}",
       "cannot": "Can't be installed.",
-      "fromSource": "From {name}"
+      "fromSource": "From {name}",
+      "saveInstead": "Save signed .ipa instead",
+      "saveInsteadOne": "Save {name} as a signed .ipa instead of installing it",
+      "savedOnComputer": "Saved on this computer, not installed"
     },
     "problem": {
       "notIpa": "Only .ipa files can be installed.",
@@ -1470,7 +1475,9 @@
     "done": {
       "title": "{count, plural, one {{app} is on {device}.} other {{app} are on {device}.}}",
       "open": "Open each app from the Home Screen."
-    }
+    },
+    "signAndSave": "{count, plural, one {Sign and save # app} other {Sign and save # apps}}",
+    "installAndSave": "{install} to install · {save} to save as signed .ipa"
   },
   "repair": {
     "title": "Repair SideStore",

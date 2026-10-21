@@ -34,6 +34,8 @@ A new certificate is stored with its private key, per account and team, as soon 
 
 Installs one or more IPAs, from the catalog, from files or from links (an app source's apps are added by their download link), one after another (the Preload page). All apps are downloaded and inspected first, each checked against the device (minimum iOS, device family, architecture), so an app the device cannot run stops the run before any Apple call. The account steps then run once (sign-in, team, device, certificate) and check the App ID budget for all apps together. After that, each app goes through `free-apps`, `provision`, `sign` and `install`. When the list holds SideStore from the catalog (on its own or in LiveContainer), the run ends with the `pairing` step as Install SideStore does, so it gets this computer's pairing file too. Each app's steps carry its place in the list (`inspect-0`, `install-1`), which the UI groups them by.
 
+**Save signed .ipa instead.** `installApps` takes `save: { folder, apps }`: the apps at those positions are provisioned and signed like the others, then written to `folder` (`save-N`, through the host's `SignedIpaFolder`; desktop: never over a file already there, `App (2).ipa` instead) and not installed. They take no free-app slot and get no pairing file. A saved IPA never carries the signing certificate's private key, whatever the app, and is always compressed. The folder comes from the host's folder dialog: the RPC server keeps its path and the page names it only by an id, so a run can only write where the user chose.
+
 The signing certificate goes only into an app IPAForge has a reason to trust:
 
 - a catalog release whose download matched its published SHA-256;
@@ -91,6 +93,7 @@ Each step tells the UI what it did, with `context.detail(detail)` (a `step-detai
 | `provision-N` | the number of profiles |
 | `sign-N` | the number of bundles signed, and whether the IPA was compressed (over Wi-Fi) |
 | `install-N` | uploading, then installing |
+| `save-N` | where the signed IPA was saved |
 
 While they run, steps also report how far they are (`step-progress` with a detail):
 

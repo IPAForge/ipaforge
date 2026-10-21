@@ -157,4 +157,57 @@ describe('the Preload page', () => {
     history.push('/install')
     expect(await screen.findByText(t('preload.elsewhere.apps'))).toBeDefined()
   })
+
+  it('signs and saves an app instead of installing it, in the folder the host asks for', async () => {
+    const user = userEvent.setup()
+    await renderApp('/preload')
+    await addFromCatalog(user, 'Feather')
+    await user.click(
+      await screen.findByRole('button', { name: t('preload.add.choose') })
+    )
+    const game = await row('MyGame')
+    await waitFor(() =>
+      expect(installButton().hasAttribute('disabled')).toBe(false)
+    )
+
+    await user.click(
+      within(game).getByRole('checkbox', {
+        name: t('preload.row.saveInsteadOne', { name: 'MyGame' })
+      })
+    )
+    expect(
+      screen.getByText(t('preload.installAndSave', { install: 1, save: 1 }))
+    ).toBeDefined()
+
+    await user.click(installButton())
+    const steps = await screen.findByRole('list', { name: 'MyGame' })
+    await waitFor(() =>
+      expect(steps.textContent).toContain(t('install.steps.save'))
+    )
+    expect(steps.textContent).not.toContain(t('install.steps.install'))
+    expect(screen.getByRole('list', { name: 'Feather' }).textContent).toContain(
+      t('install.steps.install')
+    )
+  })
+
+  it('says Sign and save when every app is saved', async () => {
+    const user = userEvent.setup()
+    await renderApp('/preload')
+    await user.click(
+      await screen.findByRole('button', { name: t('preload.add.choose') })
+    )
+    const game = await row('MyGame')
+
+    await user.click(
+      within(game).getByRole('checkbox', {
+        name: t('preload.row.saveInsteadOne', { name: 'MyGame' })
+      })
+    )
+
+    expect(
+      await screen.findByRole('button', {
+        name: t('preload.signAndSave', { count: 1 })
+      })
+    ).toBeDefined()
+  })
 })
