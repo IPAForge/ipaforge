@@ -17,7 +17,7 @@
     "preview": "vite preview",
     "typecheck": "tsc -p tsconfig.src.json && tsc -p tsconfig.json",
     "test:browser": "vitest run -c vitest.browser.config.ts",
-    "test:browser:update": "bash scripts/update-screenshots.sh"
+    "screenshots": "bash scripts/website-screenshots.sh"
   },
   "dependencies": {
     "@formatjs/icu-messageformat-parser": "3.5.18",
