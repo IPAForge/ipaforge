@@ -68,6 +68,7 @@ export type {
   RemoveAppInput,
   RunEvent,
   RunHandle,
+  SystemCheck,
   TeamCertificates,
   TeamQuery
 } from '@installer/engine/types.ts'

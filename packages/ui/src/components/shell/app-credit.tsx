@@ -8,7 +8,7 @@ export const AppCredit = () => {
 
   return (
     <footer className="flex flex-col gap-0.5 px-3 pt-3 text-muted text-xs">
-      <p>{t('shell.credit.madeWith', { name: AUTHOR })}</p>
+      <p>{t('shell.credit.madeWith')}</p>
       <p>
         {t('shell.credit.copyright', { year: COPYRIGHT_YEAR, name: AUTHOR })}
       </p>

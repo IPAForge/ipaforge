@@ -239,6 +239,23 @@ export const createFakeEngine = ({
 
   return {
     listDevices: async () => devices.list(),
+    // The setup guide's computer check: scenario "computer-not-ready" plays a missing device service and a wrong clock.
+    systemCheck: async () =>
+      world.scenario === 'computer-not-ready'
+        ? {
+            deviceService: 'missing',
+            apple: true,
+            clockOk: false,
+            clockSkewSeconds: 240,
+            anisette: { server: 'SideStore', tried: 3 }
+          }
+        : {
+            deviceService: 'ok',
+            apple: true,
+            clockOk: true,
+            clockSkewSeconds: 0,
+            anisette: { server: 'SideStore', tried: 3 }
+          },
     watchDevices: (listener, options) =>
       devices.watch(listener, options?.signal),
     deviceStatus: deviceStates.status,

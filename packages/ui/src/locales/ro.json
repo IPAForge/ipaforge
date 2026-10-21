@@ -6,7 +6,7 @@
     "skipToContent": "Treci la conținut",
     "navigation": "Secțiuni",
     "credit": {
-      "madeWith": "Făcut cu ❤️ și ☕ de {name}",
+      "madeWith": "Făcut cu ❤️ și ☕",
       "copyright": "© {year} {name}"
     }
   },
@@ -20,7 +20,8 @@
     "addAppleId": "Adaugă un Apple ID…",
     "noAccounts": "Niciun Apple ID încă.",
     "noDevicesHint": "Conectează un iPhone sau iPad prin cablu și deblochează-l.",
-    "openDevices": "Deschide Dispozitive"
+    "openDevices": "Deschide Dispozitive",
+    "tour": "Arată-mi aplicația"
   },
   "nav": {
     "group": {
@@ -252,7 +253,7 @@
     }
   },
   "settings": {
-    "appearance": "Aspect",
+    "appearance": "Aspect și limbă",
     "mode": "Mod de culoare",
     "palette": "Paletă",
     "language": {
@@ -327,7 +328,22 @@
         "stillAdd": "Îl poți adăuga oricum.",
         "save": "Salvează"
       }
-    }
+    },
+    "guide": {
+      "title": "Ghid de configurare",
+      "text": "Din nou verificările pentru computer, iPhone și ID Apple.",
+      "run": "Rulează ghidul din nou",
+      "tour": "Arată-mi aplicația",
+      "tourTitle": "Turul paginilor",
+      "tourHint": "La ce folosește fiecare pagină, pe rând."
+    },
+    "tabs": {
+      "label": "Setări",
+      "general": "General",
+      "anisette": "Servere anisette"
+    },
+    "modeHint": "Luminos, întunecat sau ca sistemul tău.",
+    "paletteHint": "Culorile întregii aplicații, pe luminos și pe întunecat."
   },
   "theme": {
     "mode": {
@@ -341,7 +357,9 @@
       "aurora": "Auroră",
       "sunset": "Apus",
       "forest": "Pădure",
-      "rose": "Roz"
+      "rose": "Roz",
+      "violet": "Violet",
+      "mocha": "Mocha"
     }
   },
   "errors": {
@@ -1907,6 +1925,128 @@
       "choose": "Alege…",
       "password": "Parola lui",
       "import": "Importă"
+    }
+  },
+  "guide": {
+    "title": "Ghid de configurare",
+    "stepsLabel": "Pașii configurării",
+    "stepDone": "(gata)",
+    "steps": {
+      "welcome": "Bun venit",
+      "computer": "Acest computer",
+      "iphone": "iPhone-ul tău",
+      "appleid": "ID Apple"
+    },
+    "back": "Înapoi",
+    "skip": "Sari peste pas",
+    "continue": "Continuă",
+    "done": "Gata",
+    "later": "Termin mai târziu",
+    "checkAgain": "Verifică din nou",
+    "checking": "Se verifică…",
+    "copy": "Copiază",
+    "copied": "Copiat",
+    "welcome": {
+      "title": "Bun venit în IPAForge",
+      "lead": "Câțiva pași pregătesc computerul, iPhone-ul și ID-ul Apple, apoi poți instala SideStore. Alege mai întâi limba.",
+      "needTitle": "De ce ai nevoie",
+      "needDevice": "Un iPhone sau iPad cu iOS 15 sau mai nou și cablul lui USB",
+      "needAppleId": "Un ID Apple (merge și unul gratuit)",
+      "needPasscode": "Codul iPhone-ului, ca să ai încredere în acest computer",
+      "skipGuide": "Mă descurc singur",
+      "start": "Începe"
+    },
+    "computer": {
+      "title": "Acest computer",
+      "lead": "IPAForge verifică dacă acest computer se poate conecta la Apple: serverele Apple, ceasul și un server anisette. Dacă nu poate comunica cu iPhone-urile, îți spune și cum repari asta.",
+      "failed": "Verificările nu au rulat. Verifică din nou sau sari peste acest pas.",
+      "service": {
+        "title": "Serviciul de conectare iPhone",
+        "fixMac": "macOS ar trebui să-l pornească singur. Repornește Mac-ul, apoi verifică din nou.",
+        "fixWindows": "Instalează Apple Devices din Microsoft Store, deschide-l o dată, apoi verifică din nou.",
+        "fixLinux": "Instalează usbmuxd, conectează iPhone-ul, apoi verifică din nou.",
+        "openStore": "Deschide Microsoft Store"
+      },
+      "apple": {
+        "title": "Serverele Apple",
+        "ok": "Accesibile.",
+        "fix": "IPAForge nu poate ajunge la Apple. Verifică conexiunea la internet, VPN-ul sau firewall-ul."
+      },
+      "clock": {
+        "title": "Ceas",
+        "ok": "Corect.",
+        "fix": "{minutes, plural, one {Ceasul e decalat cu # minut.} few {Ceasul e decalat cu # minute.} other {Ceasul e decalat cu # de minute.}} Setează data și ora automat, apoi verifică din nou."
+      },
+      "anisette": {
+        "title": "Servere anisette",
+        "ok": "{name} răspunde. Conectarea îl folosește.",
+        "fix": "Niciunul dintre primele {tried} servere din lista ta nu a răspuns. Verifică conexiunea sau adaugă ori alege un server în Setări › Servere anisette."
+      }
+    },
+    "iphone": {
+      "title": "iPhone-ul tău",
+      "lead": "Conectează iPhone-ul prin cablu, deblochează-l și atinge Ai încredere când te întreabă. Pe iOS 16 și mai nou, Modul dezvoltator trebuie să fie activat.",
+      "connectTitle": "Conectează iPhone-ul",
+      "connectText": "Se așteaptă un iPhone sau iPad prin USB…"
+    },
+    "appleid": {
+      "title": "ID-ul tău Apple",
+      "lead": "Apple semnează aplicațiile pe care le instalezi cu ID-ul tău Apple. Parola merge doar la Apple și rămâne în keychain-ul acestui computer.",
+      "freeNote": "Un ID Apple gratuit e suficient: aplicațiile durează 7 zile, iar IPAForge le poate reîmprospăta. Un cont de dezvoltator plătit durează un an.",
+      "signIn": "Conectează-te cu ID-ul Apple",
+      "signedIn": "Conectat.",
+      "team": "Echipa care semnează aplicațiile",
+      "free": "Gratuit: aplicațiile durează 7 zile",
+      "paid": "Plătit: aplicațiile durează un an"
+    },
+    "banner": {
+      "label": "Ghid de configurare",
+      "text": "Termină configurarea IPAForge: {done} din {total} pași făcuți.",
+      "continue": "Continuă ghidul",
+      "notNow": "Nu acum"
+    }
+  },
+  "tour": {
+    "count": "{current} din {total}",
+    "skip": "Sari peste tur",
+    "back": "Înapoi",
+    "next": "Înainte",
+    "done": "Gata",
+    "install": {
+      "title": "Instalare",
+      "text": "Instalează SideStore, sau LiveContainer cu SideStore, dintr-un clic. Începe de aici pe un iPhone nou."
+    },
+    "preload": {
+      "title": "Preîncărcare",
+      "text": "Adaugă aplicațiile tale: fișiere .ipa, linkuri sau aplicații din surse. Bifează una ca s-o salvezi ca .ipa semnat."
+    },
+    "apps": {
+      "title": "Aplicații",
+      "text": "Când expiră fiecare aplicație, cu Reîmprospătare și Actualizare. IPAForge le reîmprospătează singur cât e deschis. Tot aici sunt și fișierele de asociere."
+    },
+    "devices": {
+      "title": "Dispozitive",
+      "text": "Lista de verificare a fiecărui iPhone pentru versiunea lui de iOS și fișierul lui de asociere pentru alte unelte."
+    },
+    "developer": {
+      "title": "Developer Portal",
+      "text": "Certificatele, ID-urile de aplicație și profilurile ID-ului tău Apple. Curăță ce nu mai folosește nimic sau mută certificatul ca .p12."
+    },
+    "pickers": {
+      "title": "Dispozitiv și ID Apple",
+      "text": "Schimbă de aici, oricând, iPhone-ul sau ID-ul Apple pe care îl folosește IPAForge."
+    },
+    "logs": {
+      "title": "Jurnale",
+      "text": "Fiecare pas făcut de IPAForge. Atașează-le la un raport de eroare (⌘L / Ctrl+L)."
+    },
+    "settings": {
+      "title": "Setări",
+      "text": "Limba, aspectul, serverele anisette și din nou acest tur."
+    },
+    "showAround": {
+      "title": "Arată-mi aplicația",
+      "text": "Reia acest tur de aici, oricând. Ghidul de configurare e în Setări."
     }
   }
 }

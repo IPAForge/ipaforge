@@ -22,6 +22,7 @@ import type {
 } from '@ui/services/system/types.ts'
 import type { UiServices } from '@ui/services/ui-services.ts'
 import { createFixedUpdateSource } from '@ui/services/updates/fixed-update-source.ts'
+import { GuideKey } from '@ui/state/guide/constants.ts'
 
 /** A colour-scheme source the test can flip, like the OS switching to dark. */
 export const createControllableScheme = (initial: ColorScheme) => {
@@ -51,6 +52,8 @@ export type TestServicesOptions = {
   readonly load?: LoadBundle
   /** What the fake Engine plays; the happy path by default. */
   readonly scenario?: FakeScenarioId
+  /** The setup guide opens by itself while no Apple ID is saved (off by default in tests). */
+  readonly guideOpensByItself?: boolean
   /** Another Engine client, e.g. one whose calls never settle. */
   readonly engine?: EngineClient
   /** The fake Engine's connected devices, for a test that plugs devices in and out. */
@@ -86,7 +89,11 @@ export const createTestServices = ({
       level: 'debug',
       sink: (record) => records.push(record)
     }),
-    preferences: createMemoryPreferencesStore(preferences),
+    // Tests start past the setup guide unless they set its status themselves.
+    preferences: createMemoryPreferencesStore({
+      [GuideKey.status]: 'finished',
+      ...preferences
+    }),
     colorScheme: scheme.source,
     localeSource: createFixedLocaleSource(languages),
     engine:
@@ -122,7 +129,12 @@ export const renderApp = async (
     history,
     language,
     ...render(
-      <App services={test.services} language={language} history={history} />
+      <App
+        services={test.services}
+        language={language}
+        history={history}
+        guideOpensByItself={options.guideOpensByItself ?? false}
+      />
     )
   }
 }

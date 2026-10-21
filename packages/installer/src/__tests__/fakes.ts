@@ -283,6 +283,8 @@ export const session: AppleSession = {
 
 export type FakeAppleOptions = {
   teams?: Team[]
+  /** What Apple's preflight finds (the setup guide's computer check); all well by default. */
+  preflight?: Awaited<ReturnType<AppleAccounts['preflight']>>
   rememberedTeam?: string
   resume?: () => Promise<Awaited<ReturnType<AppleAccounts['resume']>>>
   signIn?: () => Promise<Awaited<ReturnType<AppleAccounts['signIn']>>>
@@ -483,6 +485,15 @@ export const fakeApple = (options: FakeAppleOptions = {}) => {
   } as unknown as DeveloperServices
 
   const apple = {
+    preflight: async () =>
+      options.preflight ?? {
+        apple: { ok: true },
+        clockOk: true,
+        clockSkewSeconds: 0,
+        anisette: [
+          { server: { name: 'Fake', address: 'https://ani.example' }, ok: true }
+        ]
+      },
     resume: async () => {
       calls.sessions++
       return options.resume

@@ -53,6 +53,8 @@ export const queryCallSchema = z.discriminatedUnion('method', [
   call('deviceApps', z.tuple([textSchema])),
   /** Not a read: makes the Developer Mode switch appear in the device's Settings. */
   call('revealDeveloperMode', z.tuple([textSchema])),
+  /** Lists devices and asks Apple and the anisette servers: as slow as the slowest of them. */
+  call('systemCheck', z.tuple([])),
   /** Waits for the Trust tap on the device, so it can take as long as the user does. */
   call('pairDevice', z.tuple([textSchema])),
   call('listAccounts', z.tuple([])),

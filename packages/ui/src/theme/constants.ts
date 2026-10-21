@@ -6,7 +6,9 @@ export const paletteIds = [
   'aurora',
   'sunset',
   'forest',
-  'rose'
+  'rose',
+  'violet',
+  'mocha'
 ] as const
 
 export const colorModes = ['system', 'light', 'dark'] as const

@@ -13,7 +13,7 @@ The detailed roadmap, with each phase's scope, is [design/roadmap.md](design/roa
 | 4 | Developer services ✓ | Teams, certificates, app IDs, groups, profiles |
 | 5 | Installer engine + catalog ✓ | Pipelines, flows, release catalog, error catalog |
 | 6 | UI foundation ✓ | HeroUI + Tailwind shell, colour palettes, i18n, Engine connection, accounts, devices, install run, its questions, recovery, step details, the log viewer, and screenshot and accessibility tests (#28–#58) |
-| 7 | Onboarding | First-run guided wizard |
+| 7 | Onboarding | First-run guided wizard: 7a the setup guide (computer, iPhone and Apple ID checks) and the tour ✓ (#95); 7b installing from the guide |
 | 8 | Install & preload UX ✓ | One-click SideStore ✓, live run view ✓, recovery screens ✓, Apple ID switch ✓, preload picker ✓ (#59), app sources ✓ (#66), detailed install progress ✓ (#67), the Apps section ✓ (#68), Repair SideStore ✓ (#70), SideStore QR codes ✓ (#71), on-device checklist ✓ (#72), the smaller notes ✓ (#73), anisette servers in Settings ✓ (#80), days left as SideStore counts them and SideStore refreshed with its own date ✓ (#81), installs that never hang on a locked device and Cancel refresh ✓ (#93) |
 | 9 | Desktop app ✓ (#61, #62, #63, #64, #65, #69, #74, #75, #77) | Electron packages for Windows, macOS, Linux ✓; the macOS app signed with IPAForge's own certificate ✓; auto-update and What's new ✓ (#74); Windows signing and notarisation moved to 1.0 |
 | 10 | Management tools ✓ | Developer Portal page (#86), pairing files per app (#87), saving signed IPAs (#90), `.p12` import and export (#93) |

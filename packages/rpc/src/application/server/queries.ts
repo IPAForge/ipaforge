@@ -14,6 +14,7 @@ const queryHandlers = (
   deviceStatus: ([udid]) => engine.deviceStatus(udid),
   deviceApps: ([udid]) => engine.deviceApps(udid),
   revealDeveloperMode: ([udid]) => engine.revealDeveloperMode(udid),
+  systemCheck: () => engine.systemCheck(),
   pairDevice: ([udid]) => engine.pairDevice(udid),
   listAccounts: () => engine.listAccounts(),
   canSaveAccounts: () => engine.canSaveAccounts(),

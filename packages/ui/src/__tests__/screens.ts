@@ -14,6 +14,7 @@ import {
 import type { LanguageId } from '@ui/i18n/languages/types.ts'
 import type { FakeScenarioId } from '@ui/services/engine/fake/types.ts'
 import { createFixedUpdateSource } from '@ui/services/updates/fixed-update-source.ts'
+import { GuideKey } from '@ui/state/guide/constants.ts'
 
 export type ScreenOptions = {
   readonly language?: LanguageId
@@ -41,6 +42,67 @@ export const renderScreen = async (
     expect(all('header [data-tone="ready"]').length).toBeGreaterThanOrEqual(2)
   )
   return rendered
+}
+
+/** The setup guide open at `step`, once its checks have answered (no mark still waiting). */
+export const renderGuide = async (
+  step: string,
+  { language = 'en', mode = 'light', scenario }: ScreenOptions = {}
+) => {
+  await renderApp(
+    '/install',
+    compact({
+      scenario,
+      preferences: {
+        language,
+        'theme.mode': mode,
+        [GuideKey.status]: 'open',
+        [GuideKey.step]: step,
+        [GuideKey.done]: '["welcome"]'
+      }
+    })
+  )
+  await waitFor(() => {
+    expect(all('main h1')).toHaveLength(1)
+    const marks = [...all('main li > span[aria-hidden="true"]')]
+    expect(marks.every((mark) => mark.textContent !== '…')).toBe(true)
+  })
+}
+
+/** Install after Finish later: the banner to continue the guide above the page. */
+export const renderGuideBanner = async (options: ScreenOptions = {}) => {
+  const { language = 'en', mode = 'light' } = options
+  await renderApp(
+    '/install',
+    compact({
+      preferences: {
+        language,
+        'theme.mode': mode,
+        [GuideKey.status]: 'later',
+        [GuideKey.done]: '["welcome","computer"]'
+      }
+    })
+  )
+  await planShown()
+}
+
+/** Settings with the tour at `stop`: Show me around, then Next until there. */
+export const renderTour = async (stop: number, options: ScreenOptions = {}) => {
+  await renderScreen('/settings', options)
+  const press = async (selector: string) => {
+    const button = await waitFor(() => {
+      const found = document.querySelector<HTMLElement>(selector)
+      expect(found).not.toBeNull()
+      return found
+    })
+    button?.click()
+  }
+  await press('[data-tour-action="start"]')
+  for (let index = 0; index < stop; index++)
+    await press('[data-tour-action="next"]')
+  await waitFor(() =>
+    expect(all('[role="dialog"] [data-tour-action="back"]')).toHaveLength(1)
+  )
 }
 
 /** The update screen (or, for a copy that can't update itself, the app with its note) in `state`. */
@@ -101,6 +163,10 @@ export const renderChangelog = async ({
     expect(all('main article')).toHaveLength(RELEASE_NOTES.length)
   )
 }
+
+/** Settings › Anisette servers lists the servers. */
+export const anisetteShown = () =>
+  waitFor(() => expect(all('main ul li').length).toBeGreaterThanOrEqual(4))
 
 /** The Install page has the Engine's plan (App IDs, free apps, certificate, team). */
 export const planShown = () =>

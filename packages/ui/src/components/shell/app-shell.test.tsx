@@ -33,9 +33,7 @@ describe('AppShell', () => {
 
   it('credits its maker at the foot of the sidebar', async () => {
     await renderApp('/devices')
-    const madeWith = await screen.findByText(
-      t('shell.credit.madeWith', { name: 'Dan Motpan' })
-    )
+    const madeWith = await screen.findByText(t('shell.credit.madeWith'))
     const credit = madeWith.closest('footer')
     expect(credit?.textContent).toContain('© 2026 Dan Motpan')
   })
@@ -97,7 +95,7 @@ describe('AppShell', () => {
     )
   })
 
-  it('tabs through the skip link, the top bar pickers, then the sections in order', async () => {
+  it('tabs through the skip link, the top bar pickers, the tour, then the sections in order', async () => {
     const user = userEvent.setup()
     await renderApp('/devices')
     await findSidebar()
@@ -111,6 +109,10 @@ describe('AppShell', () => {
       ).not.toBeNull()
       expect(document.activeElement?.textContent).toContain(t(labelKey))
     }
+    await user.tab()
+    expect(document.activeElement?.getAttribute('aria-label')).toBe(
+      t('topBar.tour')
+    )
     for (const section of sections) {
       await user.tab()
       expect(document.activeElement?.textContent).toBe(t(section.labelKey))

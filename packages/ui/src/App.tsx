@@ -14,6 +14,8 @@ import { ActiveRunContext } from '@ui/state/active-run/active-run-context.ts'
 import { createActiveRunStore } from '@ui/state/active-run/active-run-store.ts'
 import { AutoRefreshContext } from '@ui/state/auto-refresh/auto-refresh-context.ts'
 import { createAutoRefreshStore } from '@ui/state/auto-refresh/auto-refresh-store.ts'
+import { GuideContext } from '@ui/state/guide/guide-context.ts'
+import { createGuideStore } from '@ui/state/guide/guide-store.ts'
 import { LogViewContext } from '@ui/state/log-view/log-view-context.ts'
 import { createLogViewStore } from '@ui/state/log-view/log-view-store.ts'
 import { PreloadContext } from '@ui/state/preload/preload-context.ts'
@@ -29,6 +31,8 @@ export type AppProps = {
   language: LanguageSetup
   /** Defaults to the browser history; tests pass a memory history, a `file://` renderer a hash history. */
   history?: RouterHistory
+  /** The setup guide opens by itself while no Apple ID is saved; tests turn it off unless they check it. */
+  guideOpensByItself?: boolean
 }
 
 /**
@@ -37,7 +41,12 @@ export type AppProps = {
  * sections), the preload list, the log viewer's filters, the language, the theme, then the router (whose root route is the shell). Touches no browser global
  * at import time, so any host can mount it. HeroUI v3 itself needs no provider.
  */
-export const App = ({ services, language, history }: AppProps) => {
+export const App = ({
+  services,
+  language,
+  history,
+  guideOpensByItself = true
+}: AppProps) => {
   const [scoped] = useState(() => scopeServices(services))
   const [router] = useState(() =>
     createAppRouter({ logger: scoped.logger, history })
@@ -64,6 +73,9 @@ export const App = ({ services, language, history }: AppProps) => {
   const [autoRefresh] = useState(() =>
     createAutoRefreshStore(scoped.preferences)
   )
+  const [guide] = useState(() =>
+    createGuideStore(scoped.preferences, guideOpensByItself)
+  )
 
   return (
     <UiServicesContext value={scoped}>
@@ -72,13 +84,15 @@ export const App = ({ services, language, history }: AppProps) => {
           <ActiveRunContext value={activeRun}>
             <PreloadContext value={preload}>
               <AutoRefreshContext value={autoRefresh}>
-                <LogViewContext value={logView}>
-                  <LanguageProvider setup={language}>
-                    <ThemeProvider>
-                      <RouterProvider router={router} />
-                    </ThemeProvider>
-                  </LanguageProvider>
-                </LogViewContext>
+                <GuideContext value={guide}>
+                  <LogViewContext value={logView}>
+                    <LanguageProvider setup={language}>
+                      <ThemeProvider>
+                        <RouterProvider router={router} />
+                      </ThemeProvider>
+                    </LanguageProvider>
+                  </LogViewContext>
+                </GuideContext>
               </AutoRefreshContext>
             </PreloadContext>
           </ActiveRunContext>

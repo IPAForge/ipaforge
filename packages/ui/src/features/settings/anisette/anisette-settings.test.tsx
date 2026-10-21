@@ -11,9 +11,16 @@ const HOME = 'http://192.168.1.20:6969'
 
 type User = ReturnType<typeof userEvent.setup>
 
+/** Settings on its Anisette servers tab (the tab pressed, or opened by the `#anisette` link). */
 const openCard = async (path = '/settings') => {
   const user = userEvent.setup()
   const rendered = await renderApp(path)
+  if (path === '/settings')
+    await user.click(
+      await screen.findByRole('tab', {
+        name: new RegExp(t('settings.tabs.anisette'))
+      })
+    )
   const card = await screen.findByRole('region', {
     name: t('settings.anisette.title')
   })

@@ -1,8 +1,7 @@
-import type { PaletteTokens } from '@ui/theme/types.ts'
+/** Settings' tabs, in order. */
+export const settingsTabs = ['general', 'anisette'] as const
 
-/** The tokens each swatch previews, in display order. */
-export const PREVIEW_TOKENS = [
-  'accent',
-  'background',
-  'surfaceTertiary'
-] as const satisfies readonly (keyof PaletteTokens)[]
+export const settingsTabLabelKeys = {
+  general: 'settings.tabs.general',
+  anisette: 'settings.tabs.anisette'
+} as const

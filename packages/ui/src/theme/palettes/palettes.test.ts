@@ -8,7 +8,7 @@ const OKLCH = /^oklch\(\d+(?:\.\d+)? \d+(?:\.\d+)? \d+\)$/
 const tokenNames = Object.keys(heroUiVariables).sort()
 
 describe('palettes', () => {
-  it('defines exactly the six palettes', () => {
+  it('defines exactly the palettes listed', () => {
     expect(Object.keys(palettes).sort()).toEqual([...paletteIds].sort())
   })
 

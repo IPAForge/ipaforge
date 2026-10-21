@@ -6,7 +6,7 @@
     "skipToContent": "Zum Inhalt springen",
     "navigation": "Bereiche",
     "credit": {
-      "madeWith": "Mit ❤️ und ☕ gemacht von {name}",
+      "madeWith": "Mit ❤️ und ☕ gemacht",
       "copyright": "© {year} {name}"
     }
   },
@@ -20,7 +20,8 @@
     "addAppleId": "Apple-ID hinzufügen…",
     "noAccounts": "Noch keine Apple-IDs.",
     "noDevicesHint": "Verbinde ein iPhone oder iPad per Kabel und entsperre es.",
-    "openDevices": "Geräte öffnen"
+    "openDevices": "Geräte öffnen",
+    "tour": "Tour starten"
   },
   "nav": {
     "group": {
@@ -252,7 +253,7 @@
     }
   },
   "settings": {
-    "appearance": "Darstellung",
+    "appearance": "Aussehen und Sprache",
     "mode": "Farbmodus",
     "palette": "Farbpalette",
     "language": {
@@ -327,7 +328,22 @@
         "stillAdd": "Du kannst ihn trotzdem hinzufügen.",
         "save": "Speichern"
       }
-    }
+    },
+    "guide": {
+      "title": "Einrichtung",
+      "text": "Die Prüfungen für Computer, iPhone und Apple-ID noch einmal.",
+      "run": "Einrichtung erneut starten",
+      "tour": "Tour starten",
+      "tourTitle": "Tour durch die Seiten",
+      "tourHint": "Wofür jede Seite da ist, Station für Station."
+    },
+    "tabs": {
+      "label": "Einstellungen",
+      "general": "Allgemein",
+      "anisette": "Anisette-Server"
+    },
+    "modeHint": "Hell, dunkel oder wie dein System.",
+    "paletteHint": "Die Farben der ganzen App, hell und dunkel."
   },
   "theme": {
     "mode": {
@@ -341,7 +357,9 @@
       "aurora": "Polarlicht",
       "sunset": "Sonnenuntergang",
       "forest": "Wald",
-      "rose": "Rosé"
+      "rose": "Rosé",
+      "violet": "Violett",
+      "mocha": "Mokka"
     }
   },
   "errors": {
@@ -1907,6 +1925,128 @@
       "choose": "Auswählen…",
       "password": "Ihr Passwort",
       "import": "Importieren"
+    }
+  },
+  "guide": {
+    "title": "Einrichtung",
+    "stepsLabel": "Einrichtungsschritte",
+    "stepDone": "(erledigt)",
+    "steps": {
+      "welcome": "Willkommen",
+      "computer": "Dieser Computer",
+      "iphone": "Dein iPhone",
+      "appleid": "Apple-ID"
+    },
+    "back": "Zurück",
+    "skip": "Schritt überspringen",
+    "continue": "Weiter",
+    "done": "Fertig",
+    "later": "Später fertigstellen",
+    "checkAgain": "Erneut prüfen",
+    "checking": "Wird geprüft…",
+    "copy": "Kopieren",
+    "copied": "Kopiert",
+    "welcome": {
+      "title": "Willkommen bei IPAForge",
+      "lead": "In wenigen Schritten machst du Computer, iPhone und Apple-ID bereit, dann kannst du SideStore installieren. Wähle zuerst deine Sprache.",
+      "needTitle": "Was du brauchst",
+      "needDevice": "Ein iPhone oder iPad mit iOS 15 oder neuer und sein USB-Kabel",
+      "needAppleId": "Eine Apple-ID (eine kostenlose reicht)",
+      "needPasscode": "Den Code deines iPhones, um diesem Computer zu vertrauen",
+      "skipGuide": "Ich kenne mich aus",
+      "start": "Los geht's"
+    },
+    "computer": {
+      "title": "Dieser Computer",
+      "lead": "IPAForge prüft, ob sich dieser Computer bei Apple anmelden kann: Apples Server, die Uhr und ein Anisette-Server. Kann er nicht mit iPhones sprechen, sagt es auch, wie du das behebst.",
+      "failed": "Die Prüfungen sind nicht gelaufen. Prüfe erneut oder überspringe diesen Schritt.",
+      "service": {
+        "title": "iPhone-Verbindungsdienst",
+        "fixMac": "macOS sollte ihn selbst starten. Starte deinen Mac neu und prüfe erneut.",
+        "fixWindows": "Installiere Apple Devices aus dem Microsoft Store, öffne es einmal und prüfe erneut.",
+        "fixLinux": "Installiere usbmuxd, schließe dein iPhone an und prüfe erneut.",
+        "openStore": "Microsoft Store öffnen"
+      },
+      "apple": {
+        "title": "Apples Server",
+        "ok": "Erreichbar.",
+        "fix": "IPAForge erreicht Apple nicht. Prüfe Internetverbindung, VPN oder Firewall."
+      },
+      "clock": {
+        "title": "Uhr",
+        "ok": "Stimmt.",
+        "fix": "{minutes, plural, one {Deine Uhr geht # Minute falsch.} other {Deine Uhr geht # Minuten falsch.}} Stelle Datum und Uhrzeit automatisch ein und prüfe erneut."
+      },
+      "anisette": {
+        "title": "Anisette-Server",
+        "ok": "{name} antwortet. Die Anmeldung verwendet ihn.",
+        "fix": "Keiner der ersten {tried} Server in deiner Liste hat geantwortet. Prüfe deine Verbindung oder füge unter Einstellungen › Anisette-Server einen hinzu oder wähle einen aus."
+      }
+    },
+    "iphone": {
+      "title": "Dein iPhone",
+      "lead": "Schließe dein iPhone per Kabel an, entsperre es und tippe auf Vertrauen, wenn es fragt. Ab iOS 16 muss der Entwicklermodus an sein.",
+      "connectTitle": "Schließe dein iPhone an",
+      "connectText": "Warte auf ein iPhone oder iPad über USB…"
+    },
+    "appleid": {
+      "title": "Deine Apple-ID",
+      "lead": "Apple signiert die Apps, die du installierst, mit deiner Apple-ID. Dein Passwort geht nur an Apple und bleibt im Schlüsselbund dieses Computers.",
+      "freeNote": "Eine kostenlose Apple-ID reicht: Ihre Apps laufen 7 Tage, und IPAForge kann sie erneuern. Ein bezahlter Entwickler-Account hält ein Jahr.",
+      "signIn": "Mit Apple-ID anmelden",
+      "signedIn": "Angemeldet.",
+      "team": "Team, das die Apps signiert",
+      "free": "Kostenlos: Apps laufen 7 Tage",
+      "paid": "Bezahlt: Apps laufen ein Jahr"
+    },
+    "banner": {
+      "label": "Einrichtung",
+      "text": "Richte IPAForge fertig ein: {done} von {total} Schritten erledigt.",
+      "continue": "Einrichtung fortsetzen",
+      "notNow": "Jetzt nicht"
+    }
+  },
+  "tour": {
+    "count": "{current} von {total}",
+    "skip": "Tour überspringen",
+    "back": "Zurück",
+    "next": "Weiter",
+    "done": "Fertig",
+    "install": {
+      "title": "Installieren",
+      "text": "Installiere SideStore oder LiveContainer mit SideStore mit einem Klick. Fang hier an, wenn das iPhone neu ist."
+    },
+    "preload": {
+      "title": "Vorladen",
+      "text": "Füge eigene Apps hinzu: .ipa-Dateien, Links oder Apps aus Quellen. Hake eine an, um sie stattdessen als signierte .ipa zu speichern."
+    },
+    "apps": {
+      "title": "Apps",
+      "text": "Wann jede App abläuft, mit Erneuern und Aktualisieren. IPAForge erneuert sie selbst, solange es offen ist. Hier sind auch die Pairing-Dateien."
+    },
+    "devices": {
+      "title": "Geräte",
+      "text": "Die Checkliste jedes iPhones für seine iOS-Version und seine Pairing-Datei für andere Tools."
+    },
+    "developer": {
+      "title": "Developer Portal",
+      "text": "Zertifikate, App-IDs und Profile deiner Apple-ID. Räume auf, was nichts mehr nutzt, oder nimm dein Zertifikat als .p12 mit."
+    },
+    "pickers": {
+      "title": "Gerät und Apple-ID",
+      "text": "Wechsle hier jederzeit das iPhone oder die Apple-ID, die IPAForge verwendet."
+    },
+    "logs": {
+      "title": "Protokolle",
+      "text": "Jeder Schritt, den IPAForge gemacht hat. Hänge sie an einen Fehlerbericht an (⌘L / Strg+L)."
+    },
+    "settings": {
+      "title": "Einstellungen",
+      "text": "Sprache, Aussehen, Anisette-Server und diese Tour erneut."
+    },
+    "showAround": {
+      "title": "Tour starten",
+      "text": "Starte diese Tour hier jederzeit erneut. Die Einrichtung findest du in den Einstellungen."
     }
   }
 }
