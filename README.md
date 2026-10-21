@@ -20,7 +20,7 @@ IPAForge is a free, open-source desktop app for sideloading. You plug in your iP
 After that it keeps them working: it shows when each app expires, refreshes them before they do, repairs SideStore when it stops refreshing, and explains every failure with the fixes that apply. The whole engine, code signing included, is written in TypeScript, with no native helpers or bundled command-line tools.
 
 > [!NOTE]
-> **Alpha, 0.1.0-alpha.5.** Builds for macOS, Windows and Linux are on the [Releases page](https://github.com/IPAForge/ipaforge/releases), and IPAForge updates itself from there. It isn't notarised or code-signed for Windows yet: [how to open it the first time](docs/installing.md#opening-ipaforge-the-first-time). Questions and feedback: [Discord](https://discord.gg/kGJn7NC5Zf) or [Issues](https://github.com/IPAForge/ipaforge/issues).
+> **Alpha, 0.1.0-alpha.7.** Builds for macOS, Windows and Linux are on the [Releases page](https://github.com/IPAForge/ipaforge/releases), and IPAForge updates itself from there. It isn't notarised or code-signed for Windows yet: [how to open it the first time](docs/installing.md#opening-ipaforge-the-first-time). Questions and feedback: [Discord](https://discord.gg/kGJn7NC5Zf) or [Issues](https://github.com/IPAForge/ipaforge/issues).
 
 ## Why IPAForge
 
