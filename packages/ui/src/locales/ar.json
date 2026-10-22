@@ -443,6 +443,10 @@
       "pairing_path_invalid": {
         "title": "لا يمكن وضع ملف اقتران في هذا المسار",
         "body": "استخدم مسارًا في Documents أو Library الخاصة بالتطبيق ينتهي بـ ‎.plist أو ‎.mobiledevicepairing."
+      },
+      "local_network_denied": {
+        "title": "لا يستطيع IPAForge البحث عن الأجهزة في شبكتك",
+        "body": "لم يسمح macOS لـ IPAForge بالعثور على الأجهزة في شبكتك المحلية، لذا لا يمكنه الوصول إلى أجهزة iPhone عبر Wi-Fi. الأجهزة الموصولة بالكابل تعمل كالمعتاد."
       }
     },
     "apple": {
@@ -877,9 +881,13 @@
       "changeAnisetteServer": {
         "how": "افتح الإعدادات، واختبر خوادم anisette، واختر خادمًا يعمل، أو عُد إلى الوضع التلقائي.",
         "button": "فتح خوادم anisette"
+      },
+      "allowLocalNetwork": {
+        "how": "افتح إعدادات النظام › الخصوصية والأمن › الشبكة المحلية، وفعّل IPAForge، ثم حاول مرة أخرى. أو وصّل الجهاز بالكابل."
       }
     },
-    "reportHint": "يفتح بلاغًا جديدًا على GitHub مع ملء التشخيص. لا يُرسل شيء حتى ترسله بنفسك."
+    "reportHint": "يفتح بلاغًا جديدًا على GitHub مع ملء التشخيص. لا يُرسل شيء حتى ترسله بنفسك.",
+    "allow-local-network": "السماح بالوصول إلى الشبكة المحلية"
   },
   "devices": {
     "engine": {
@@ -958,7 +966,10 @@
       "disconnected": "تم فصل {name}",
       "aDevice": "جهاز"
     },
-    "savePairing": "حفظ ملف الاقتران…"
+    "savePairing": "حفظ ملف الاقتران…",
+    "localNetwork": {
+      "open": "افتح إعدادات الشبكة المحلية"
+    }
   },
   "prompts": {
     "cancel": "إلغاء",

@@ -35,6 +35,8 @@ export type DeviceWatchEvent =
       readonly deviceId: number
       readonly udid?: string
     }
+  /** Whether the OS refuses IPAForge local network access (macOS Local Network), so Wi-Fi devices can't be found. */
+  | { readonly type: 'network'; readonly denied: boolean }
 
 export type DeviceWatchListener = (event: DeviceWatchEvent) => void
 

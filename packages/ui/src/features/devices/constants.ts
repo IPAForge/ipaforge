@@ -139,3 +139,7 @@ export const modelNames: Readonly<Record<string, string>> = {
   'iPad16,5': 'iPad Pro 13-inch (M4)',
   'iPad16,6': 'iPad Pro 13-inch (M4)'
 }
+
+/** macOS System Settings › Privacy & Security › Local Network. */
+export const LOCAL_NETWORK_SETTINGS_URL =
+  'x-apple.systempreferences:com.apple.preference.security?Privacy_LocalNetwork'

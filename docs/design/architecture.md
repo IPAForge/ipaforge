@@ -46,7 +46,8 @@ ipaforge/
 │   ├── device/                     # CONTEXT: talking to iOS devices
 │   │   └── src/
 │   │       ├── domain/             # UsbmuxDevice, DeviceInfo, PairRecord (+PEM), profiles, install errors, pairing apps
-│   │       │                       # (data), config, constants; ports: DeviceTransport → Connection (with startTls)
+│   │       │                       # (data), config, constants; ports: DeviceTransport → Connection (with startTls),
+│   │       │                       #   and, for Wi-Fi without usbmuxd, connectTcp and openMulticast (MulticastSocket)
 │   │       ├── infrastructure/     # framing, usbmux, lockdown, pairing certificates (pkijs), afc, house-arrest,
 │   │       │                       # installation-proxy, misagent, amfi
 │   │       └── application/        # DeviceManager facade: pair, sessions, installIpa, profiles, app files, checks
@@ -168,6 +169,9 @@ export type Connection = {
 
 export type DeviceTransport = {
   connectUsbmux(): Promise<Connection>
+  // Optional: a host that can reach devices on the local network without usbmuxd.
+  connectTcp?(host: string, port: number): Promise<Connection>
+  openMulticast?(): Promise<MulticastSocket>
 }
 ```
 

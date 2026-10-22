@@ -79,6 +79,8 @@ From 0.1.0-alpha.4 on, IPAForge updates itself: see [Updating and uninstalling](
 | **macOS** | Nothing extra |
 | **Linux** | `usbmuxd`, e.g. `sudo apt install usbmuxd` / `sudo dnf install usbmuxd`; it starts when a device is plugged in |
 
+**Wi-Fi:** once a device has been connected by cable, IPAForge can install to it over Wi-Fi on the same network, also without usbmuxd running. On macOS, allow **IPAForge** to find devices on your local network when asked (System Settings › Privacy & Security › Local Network). On Windows, allow IPAForge through the firewall if asked.
+
 ## Install
 
 ### Windows

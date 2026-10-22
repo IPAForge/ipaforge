@@ -443,6 +443,10 @@
       "pairing_path_invalid": {
         "title": "That path can’t hold a pairing file",
         "body": "Use a path in the app’s Documents or Library that ends in .plist or .mobiledevicepairing."
+      },
+      "local_network_denied": {
+        "title": "IPAForge can't look for devices on your network",
+        "body": "macOS hasn't allowed IPAForge to find devices on your local network, so it can't reach iPhones over Wi-Fi. Devices on a cable still work."
       }
     },
     "apple": {
@@ -877,9 +881,13 @@
       "changeAnisetteServer": {
         "how": "Open Settings, test the anisette servers, and choose one that works, or go back to Automatic.",
         "button": "Open anisette servers"
+      },
+      "allowLocalNetwork": {
+        "how": "Open System Settings › Privacy & Security › Local Network, turn on IPAForge, then try again. Or connect the device with a cable."
       }
     },
-    "reportHint": "Opens a new GitHub issue with the diagnostics filled in. Nothing is sent until you submit it."
+    "reportHint": "Opens a new GitHub issue with the diagnostics filled in. Nothing is sent until you submit it.",
+    "allow-local-network": "Allow local network access"
   },
   "devices": {
     "engine": {
@@ -958,7 +966,10 @@
       "disconnected": "{name} disconnected",
       "aDevice": "A device"
     },
-    "savePairing": "Save pairing file…"
+    "savePairing": "Save pairing file…",
+    "localNetwork": {
+      "open": "Open Local Network settings"
+    }
   },
   "prompts": {
     "cancel": "Cancel",

@@ -30,6 +30,10 @@ const codeOf = async (
   return undefined
 }
 
+/** The pair records IPAForge saved of its own (the secret store also remembers devices' Wi-Fi addresses). */
+const ownPairRecords = (rig: { secrets: { values: Map<string, unknown> } }) =>
+  [...rig.secrets.values.keys()].filter((key) => key.startsWith('pair-record/'))
+
 describe('devices', () => {
   it('lists devices and prefers USB over Wi-Fi for the same device', async () => {
     const rig = await createRig()
@@ -120,7 +124,7 @@ describe('pairing and sessions', () => {
     ])
     expect(rig.sleeps).toEqual([1000, 1000])
     expect(pairRequests(rig)).toBe(0)
-    expect(rig.secrets.values.size).toBe(0)
+    expect(ownPairRecords(rig)).toEqual([])
     expectUsbmuxdUntouched(rig)
 
     const record = parsePairRecord(
@@ -251,7 +255,7 @@ describe('pairing and sessions', () => {
     expect(error.message).toContain('tap Trust')
     expect(pairRequests(rig)).toBe(0)
     expect(rig.fake.pairRecords.get(rig.device.udid)).toBe(osRecord)
-    expect(rig.secrets.values.size).toBe(0)
+    expect(ownPairRecords(rig)).toEqual([])
     expectUsbmuxdUntouched(rig)
   })
 

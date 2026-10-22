@@ -13,6 +13,10 @@
 //   pnpm --filter @ipaforge/desktop device-probe afc-speed [--mb 32]   (times AFC writes with each chunk size)
 //   pnpm --filter @ipaforge/desktop device-probe reveal-devmode
 //   pnpm --filter @ipaforge/desktop device-probe rp-pair   (iOS 17.4+: makes a remote pairing, then verifies it)
+//   pnpm --filter @ipaforge/desktop device-probe wifi-list [--udid <udid>]   (finds known devices on Wi-Fi, no usbmuxd)
+//
+// --direct (any device command): reach the device straight over Wi-Fi only, skipping the cable and usbmuxd. The
+// devices to look for are usbmuxd's and --udid; their pair records come from usbmuxd.
 //
 // `pair` (and any command on a device without a pair record) waits for the OS to pair: unlock the device and tap
 // Trust, and the OS stores its record in usbmuxd. If none appears within the timeout, or with --own, IPAForge pairs

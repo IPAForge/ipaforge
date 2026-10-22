@@ -443,6 +443,10 @@
       "pairing_path_invalid": {
         "title": "Dieser Pfad kann keine Kopplungsdatei aufnehmen",
         "body": "Nutze einen Pfad in Documents oder Library der App, der auf .plist oder .mobiledevicepairing endet."
+      },
+      "local_network_denied": {
+        "title": "IPAForge kann im Netzwerk nicht nach Geräten suchen",
+        "body": "macOS hat IPAForge nicht erlaubt, Geräte im lokalen Netzwerk zu finden, daher erreicht es iPhones nicht über WLAN. Geräte am Kabel funktionieren weiterhin."
       }
     },
     "apple": {
@@ -877,9 +881,13 @@
       "changeAnisetteServer": {
         "how": "Öffne die Einstellungen, teste die Anisette-Server und wähle einen, der funktioniert, oder wechsle zurück zu Automatisch.",
         "button": "Anisette-Server öffnen"
+      },
+      "allowLocalNetwork": {
+        "how": "Öffne Systemeinstellungen › Datenschutz & Sicherheit › Lokales Netzwerk, aktiviere IPAForge und versuche es erneut. Oder schließe das Gerät per Kabel an."
       }
     },
-    "reportHint": "Öffnet ein neues GitHub-Issue mit der Diagnose. Nichts wird gesendet, bevor du es abschickst."
+    "reportHint": "Öffnet ein neues GitHub-Issue mit der Diagnose. Nichts wird gesendet, bevor du es abschickst.",
+    "allow-local-network": "Zugriff auf das lokale Netzwerk erlauben"
   },
   "devices": {
     "engine": {
@@ -958,7 +966,10 @@
       "disconnected": "{name} getrennt",
       "aDevice": "Ein Gerät"
     },
-    "savePairing": "Kopplungsdatei sichern…"
+    "savePairing": "Kopplungsdatei sichern…",
+    "localNetwork": {
+      "open": "Einstellungen für lokales Netzwerk öffnen"
+    }
   },
   "prompts": {
     "cancel": "Abbrechen",

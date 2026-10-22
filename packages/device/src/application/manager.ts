@@ -1,4 +1,5 @@
-// The device facade: finding devices, pairing, and opening a session handle.
+// The device facade: finding devices (through usbmuxd and on the local network), pairing, and opening a session
+// handle.
 import {
   createDeviceContext,
   type DeviceContext
@@ -7,6 +8,10 @@ import {
   createDeviceHandle,
   type DeviceHandle
 } from '@device/application/handle.ts'
+import {
+  discoverNetworkDevices,
+  watchNetworkDevices
+} from '@device/application/network-devices.ts'
 import { pairDevice } from '@device/application/pair.ts'
 import {
   exportPairRecord,
@@ -33,6 +38,17 @@ export type DeviceManager = {
     onEvent: (event: DeviceEvent) => void,
     signal: AbortSignal
   ): Promise<void>
+  /**
+   * Searches the local network for known devices until `signal` aborts, streaming them as attach/detach events
+   * (each with its Wi-Fi `address`). Ends at once when the host can't search; throws `device.local_network_denied`
+   * when the OS refuses local network access.
+   */
+  watchNetwork(
+    onEvent: (event: DeviceEvent) => void,
+    signal: AbortSignal
+  ): Promise<void>
+  /** Searches the network for a few seconds and returns the known devices found there. */
+  discoverNetwork(): Promise<UsbmuxDevice[]>
   pair(udid: string, options?: PairOptions): Promise<PairRecord>
   isPaired(udid: string): Promise<boolean>
   exportPairRecord(udid: string): Promise<Uint8Array>
@@ -40,17 +56,62 @@ export type DeviceManager = {
   open(udid: string, options?: OpenSessionOptions): Promise<DeviceHandle>
 }
 
-const findDevice = async (
+const isUsbmuxdMissing = (error: unknown): boolean =>
+  error instanceof IPAForgeError && error.code === ErrorCode.UsbmuxdUnavailable
+
+/** usbmuxd's devices, or none when there is no usbmuxd (devices on Wi-Fi can still be reached directly). */
+const usbmuxDevices = async (ctx: DeviceContext): Promise<UsbmuxDevice[]> => {
+  try {
+    return await ctx.usbmux.listDevices()
+  } catch (error) {
+    if (isUsbmuxdMissing(error)) return []
+    throw error
+  }
+}
+
+/**
+ * The way to reach `udid`: by cable first, then straight over Wi-Fi (faster than usbmuxd's own Wi-Fi link, measured
+ * 16–18 against 6.4 MiB/s), then usbmuxd over Wi-Fi. When none is known, a short search of the network looks for it.
+ */
+const notFound = (udid: string) =>
+  new IPAForgeError(ErrorCode.DeviceNotFound, {
+    data: { device: shortUdid(udid) }
+  })
+
+/** `udid` straight over Wi-Fi: as found by the running search, or by a short one. */
+const findOnWifi = async (
   ctx: DeviceContext,
   udid: string
 ): Promise<UsbmuxDevice> => {
-  const device = (await ctx.usbmux.listDevices()).find(
+  const device =
+    ctx.network.get(udid) ??
+    (await discoverNetworkDevices(ctx)).find(
+      (candidate) => candidate.udid === udid
+    )
+  if (!device) throw notFound(udid)
+  return device
+}
+
+const findDevice = async (
+  ctx: DeviceContext,
+  udid: string,
+  route: OpenSessionOptions['route'] = 'best'
+): Promise<UsbmuxDevice> => {
+  if (route === 'wifi') return findOnWifi(ctx, udid)
+  const listed = (await usbmuxDevices(ctx)).filter(
     (candidate) => candidate.udid === udid
   )
-  if (!device)
-    throw new IPAForgeError(ErrorCode.DeviceNotFound, {
-      data: { device: shortUdid(udid) }
-    })
+  const usb = listed.find((candidate) => candidate.connectionType === 'usb')
+  if (usb) return usb
+  const direct =
+    ctx.network.get(udid) ??
+    (listed.length === 0
+      ? (await discoverNetworkDevices(ctx)).find(
+          (candidate) => candidate.udid === udid
+        )
+      : undefined)
+  const device = direct ?? listed[0]
+  if (!device) throw notFound(udid)
   return device
 }
 
@@ -58,8 +119,20 @@ export const createDeviceManager = (input: DeviceDepsInput): DeviceManager => {
   const ctx = createDeviceContext(resolveDeviceDeps(input))
 
   return {
-    listDevices: () => ctx.usbmux.listDevices(),
+    listDevices: async () => {
+      const network = [...ctx.network.values()]
+      try {
+        return [...(await ctx.usbmux.listDevices()), ...network]
+      } catch (error) {
+        // Without usbmuxd, devices on Wi-Fi are still reachable: only none at all is an error.
+        if (isUsbmuxdMissing(error) && network.length > 0) return network
+        throw error
+      }
+    },
     watch: (onEvent, signal) => ctx.usbmux.listen(onEvent, signal),
+    watchNetwork: (onEvent, signal) =>
+      watchNetworkDevices(ctx, onEvent, signal),
+    discoverNetwork: () => discoverNetworkDevices(ctx),
     pair: async (udid, options) =>
       (await pairDevice(ctx, await findDevice(ctx, udid), options)).record,
     isPaired: async (udid) => (await getPairRecord(ctx, udid)) !== undefined,
@@ -71,7 +144,11 @@ export const createDeviceManager = (input: DeviceDepsInput): DeviceManager => {
     open: async (udid, options) =>
       createDeviceHandle(
         ctx,
-        await openSession(ctx, await findDevice(ctx, udid), options)
+        await openSession(
+          ctx,
+          await findDevice(ctx, udid, options?.route),
+          options
+        )
       )
   }
 }

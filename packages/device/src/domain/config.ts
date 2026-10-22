@@ -17,6 +17,12 @@ export type DeviceConfig = {
   readonly afcWriteChunkBytes: number
   /** Bytes requested per AFC read packet. */
   readonly afcReadChunkBytes: number
+  /** Turn on the device's Wi-Fi connections whenever a session opens, so it can be reached without the cable. */
+  readonly enableWifiConnections: boolean
+  /** How long a search for devices on the network listens for answers. */
+  readonly networkBrowseMs: number
+  /** How often a running search asks again; a device not heard from for three rounds is gone. */
+  readonly networkQueryIntervalMs: number
 }
 
 export const DEFAULT_DEVICE_CONFIG: DeviceConfig = {
@@ -28,7 +34,10 @@ export const DEFAULT_DEVICE_CONFIG: DeviceConfig = {
   pairingTimeoutMs: 120_000,
   // Measured on an iPhone over Wi-Fi (device-probe afc-speed): 64 KiB 2.7 MiB/s, 256 KiB 4.7, 1 MiB 6.4, 4 MiB 6.7.
   afcWriteChunkBytes: 1024 * 1024,
-  afcReadChunkBytes: 1024 * 1024
+  afcReadChunkBytes: 1024 * 1024,
+  enableWifiConnections: true,
+  networkBrowseMs: 3000,
+  networkQueryIntervalMs: 10_000
 }
 
 export const resolveDeviceConfig = (

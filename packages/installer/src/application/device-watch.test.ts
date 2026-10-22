@@ -19,20 +19,33 @@ type Session = {
   readonly signal: AbortSignal
 }
 
-/** A DeviceManager whose `Listen` sessions the test drives: each `watch` call is a session that stays open. */
-const fakeUsbmux = (listed: () => UsbmuxDevice[]) => {
-  const sessions: Session[] = []
-  const listDevices = vi.fn(async () => listed())
-  const watch = vi.fn(
+/** A session the test drives: it stays open until aborted or dropped. */
+const sessionsOf = (sessions: Session[]) =>
+  vi.fn(
     (onEvent: (event: DeviceEvent) => void, signal: AbortSignal) =>
       new Promise<void>((resolve, reject) => {
         sessions.push({ emit: onEvent, drop: reject, signal })
         signal.addEventListener('abort', () => resolve(), { once: true })
       })
   )
-  const devices = { listDevices, watch } as unknown as DeviceManager
 
-  return { devices, listDevices, watch, sessions }
+/**
+ * A DeviceManager whose `Listen` sessions and network searches the test drives: each `watch` and `watchNetwork`
+ * call is a session that stays open.
+ */
+const fakeUsbmux = (listed: () => UsbmuxDevice[]) => {
+  const sessions: Session[] = []
+  const searches: Session[] = []
+  const listDevices = vi.fn(async () => listed())
+  const watch = sessionsOf(sessions)
+  const watchNetwork = sessionsOf(searches)
+  const devices = {
+    listDevices,
+    watch,
+    watchNetwork
+  } as unknown as DeviceManager
+
+  return { devices, listDevices, watch, sessions, searches }
 }
 
 const config = {
@@ -180,5 +193,49 @@ describe('createDeviceWatch', () => {
     // A new listener starts a fresh connection.
     watch.subscribe(() => {})
     await vi.waitFor(() => expect(sessions).toHaveLength(2))
+  })
+
+  it('adds devices found on Wi-Fi, each with its best link: USB, then straight over Wi-Fi, then usbmuxd', async () => {
+    const usbmuxWifi: UsbmuxDevice = {
+      udid: 'IPAD',
+      deviceId: 2,
+      connectionType: 'network'
+    }
+    const { watch, sessions, searches } = setup(() => [IPHONE, usbmuxWifi])
+    const { events, listener } = record()
+    watch.subscribe(listener)
+    await vi.waitFor(() => expect(sessions).toHaveLength(1))
+    await vi.waitFor(() => expect(searches).toHaveLength(1))
+    const [search] = searches
+    const direct = (udid: string, deviceId: number): UsbmuxDevice => ({
+      udid,
+      deviceId,
+      connectionType: 'network',
+      address: '192.0.2.10'
+    })
+    search?.emit({ kind: 'attached', device: direct('IPHONE', -1) })
+    search?.emit({ kind: 'attached', device: direct('IPAD', -2) })
+    search?.emit({ kind: 'attached', device: direct('IPOD', -3) })
+
+    const last = events.filter((event) => event.type === 'devices').at(-1)
+    expect(last).toEqual({
+      type: 'devices',
+      devices: [IPHONE, direct('IPAD', -2), direct('IPOD', -3)]
+    })
+  })
+
+  it('says when the OS refuses local network access, also to a listener that comes later', async () => {
+    const { watch, searches } = setup()
+    const first = record()
+    watch.subscribe(first.listener)
+    await vi.waitFor(() => expect(searches).toHaveLength(1))
+    searches[0]?.drop(new IPAForgeError(ErrorCode.LocalNetworkDenied))
+    await vi.waitFor(() =>
+      expect(first.events).toContainEqual({ type: 'network', denied: true })
+    )
+
+    const late = record()
+    watch.subscribe(late.listener)
+    expect(late.events).toContainEqual({ type: 'network', denied: true })
   })
 })

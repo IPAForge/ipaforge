@@ -26,6 +26,7 @@ export const ErrorCode = {
   SigningIdentityInvalid: 'device.identity_invalid',
   ProfileNotFound: 'device.profile_not_found',
   PairingPathInvalid: 'device.pairing_path_invalid',
+  LocalNetworkDenied: 'device.local_network_denied',
 
   // apple
   AnisetteUnavailable: 'apple.anisette_unavailable',

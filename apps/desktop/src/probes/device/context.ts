@@ -9,8 +9,10 @@ import {
   type DeviceHandle,
   type DeviceManager,
   type PairingProgress,
+  serializeKnownDevices,
   shortUdid,
-  type UsbmuxDevice
+  type UsbmuxDevice,
+  WIFI_DEVICES_KEY
 } from '@ipaforge/device'
 
 export type DeviceProbe = {
@@ -18,8 +20,10 @@ export type DeviceProbe = {
   readonly args: DeviceProbeArgs
   /** A UDID as printed: shortened unless --show-udid is given. */
   readonly show: (udid: string) => string
-  /** The device named by --udid, or the first one connected. */
+  /** The device named by --udid, or the first one connected (with --direct: found on Wi-Fi). */
   readonly pickDevice: () => Promise<UsbmuxDevice>
+  /** With --direct: searches the network for usbmuxd's devices and --udid, and returns those found. */
+  readonly discoverDirect: () => Promise<UsbmuxDevice[]>
   /** Opens the picked device (pairing if needed), runs `use`, then closes it. */
   readonly withDevice: (
     use: (handle: DeviceHandle) => Promise<void>
@@ -38,15 +42,36 @@ export const printPairingProgress = (event: PairingProgress): void =>
   console.log(`pairing: ${describePairingProgress(event)}`)
 
 export const createDeviceProbe = (args: DeviceProbeArgs): DeviceProbe => {
+  const secrets = createMemorySecretStore()
   const manager = createDeviceManager({
     transport: createNodeUsbmuxTransport(),
-    secrets: createMemorySecretStore(),
+    secrets,
     logger: createProbeLogger()
   })
   const showUdid = args.flag('show-udid')
+  const isDirect = args.flag('direct')
+
+  /**
+   * --direct: the device straight over Wi-Fi only. This run's secrets live in memory, so the devices to look for
+   * are told first: usbmuxd's (on a cable or its own Wi-Fi link) and --udid (its pair record comes from usbmuxd).
+   */
+  const discoverDirect = async (): Promise<UsbmuxDevice[]> => {
+    const listed = await manager.listDevices().catch(() => [])
+    const udids = new Set([
+      ...listed.map((device) => device.udid),
+      ...(args.option('udid') ? [args.option('udid') as string] : [])
+    ])
+    await secrets.set(
+      WIFI_DEVICES_KEY,
+      serializeKnownDevices([...udids].map((udid) => ({ udid })))
+    )
+    return manager.discoverNetwork()
+  }
 
   const pickDevice = async (): Promise<UsbmuxDevice> => {
-    const devices = await manager.listDevices()
+    const devices = isDirect
+      ? await discoverDirect()
+      : await manager.listDevices()
     const wanted = args.option('udid')
     const device = wanted ? devices.find((d) => d.udid === wanted) : devices[0]
     if (!device)
@@ -61,8 +86,10 @@ export const createDeviceProbe = (args: DeviceProbeArgs): DeviceProbe => {
   ): Promise<void> => {
     const device = await pickDevice()
     const handle = await manager.open(device.udid, {
-      onProgress: printPairingProgress
+      onProgress: printPairingProgress,
+      ...(isDirect ? { route: 'wifi' as const } : {})
     })
+    if (isDirect) console.log(`over Wi-Fi at ${device.address ?? '?'}`)
     try {
       await use(handle)
     } finally {
@@ -75,6 +102,7 @@ export const createDeviceProbe = (args: DeviceProbeArgs): DeviceProbe => {
     args,
     show: (udid) => (showUdid ? udid : shortUdid(udid)),
     pickDevice,
+    discoverDirect,
     withDevice
   }
 }

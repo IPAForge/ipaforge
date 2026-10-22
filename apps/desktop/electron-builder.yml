@@ -38,6 +38,17 @@ mac:
   identity: '-'
   hardenedRuntime: false
   notarize: false
+  # Finding iPhones on Wi-Fi: macOS asks before an app looks on the local network, with this reason (translated in
+  # build/mac-locales), and only for the Bonjour types listed.
+  extendInfo:
+    NSLocalNetworkUsageDescription: IPAForge looks for your iPhone and iPad on the local network, so it can install apps over Wi-Fi without a cable.
+    NSBonjourServices:
+      - _apple-mobdev2._tcp
+      - _remotepairing._tcp
+  extraResources:
+    - from: build/mac-locales
+      to: .
+      filter: ['**/*']
 
 dmg:
   title: ${productName} ${version}

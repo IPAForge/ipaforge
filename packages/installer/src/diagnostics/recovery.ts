@@ -26,6 +26,8 @@ export const RecoveryAction = {
   PairAgain: 'pair-again',
   SetPasscode: 'set-passcode',
   InstallDeviceSupport: 'install-device-support',
+  /** macOS: allow IPAForge to find devices on the local network (Privacy & Security › Local Network). */
+  AllowLocalNetwork: 'allow-local-network',
   ReinstallApp: 'reinstall-app',
   ChooseAnotherIpa: 'choose-another-ipa',
   ChooseAnotherChannel: 'choose-another-channel',

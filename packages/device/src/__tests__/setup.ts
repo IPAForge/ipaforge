@@ -1,4 +1,4 @@
-// Test-only: a DeviceManager wired to a fake usbmuxd with a fake clock and instant sleeps.
+// Test-only: a DeviceManager wired to a fake usbmuxd (and a fake Wi-Fi) with a fake clock and instant sleeps.
 
 import {
   createFakeDevice,
@@ -45,6 +45,8 @@ export const createRig = async (
     sleep: async (ms) => {
       sleeps.push(ms)
       now += ms
+      // Instant, but a real turn of the event loop, so work that isn't a microtask (WebCrypto) still runs.
+      await new Promise((resolve) => setTimeout(resolve, 0))
     },
     config
   })

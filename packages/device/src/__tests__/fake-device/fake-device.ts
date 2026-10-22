@@ -8,6 +8,7 @@ import {
   serveAfc
 } from '@device/__tests__/fake-device/fake-afc.ts'
 import { createPipe } from '@device/__tests__/fake-device/pipe.ts'
+import { lockdownAdvert } from '@device/__tests__/mdns-answer.ts'
 import { DEFAULT_DEVICE_CONFIG } from '@device/domain/config.ts'
 import {
   LOCKDOWN_PORT,
@@ -17,6 +18,7 @@ import {
 import { serializePairRecord } from '@device/domain/pairing/pair-record.ts'
 import { encodePem } from '@device/domain/pairing/pem.ts'
 import type {
+  Datagram,
   DeviceTransport,
   TlsCredentials
 } from '@device/domain/ports/types.ts'
@@ -125,6 +127,12 @@ export type FakeUsbmuxd = {
   osPairsAfterMisses: number | undefined
   /** usbmuxd is not running: every connection fails. */
   unavailable: boolean
+  /** Devices on the fake Wi-Fi, by address: they answer mDNS queries and take TCP connections. */
+  readonly onWifi: Map<string, FakeDevice>
+  /** Extra TXT entries a device's Wi-Fi advert carries (identifier, authTag), by UDID. */
+  readonly wifiTxt: Map<string, readonly string[]>
+  /** The OS refuses local network access (macOS): every mDNS send fails. */
+  localNetworkDenied: boolean
   attach(device: FakeDevice): void
   detach(udid: string): void
 }
@@ -258,13 +266,16 @@ type LockdownRequest = {
 type LockdownHandler = (request: LockdownRequest) => Promise<void>
 
 /** What lockdownd reports for `domain`/`key`; `undefined` when it has no value. */
+/** Every fake device's Wi-Fi MAC address, as lockdown reports it and its Wi-Fi advert's name starts. */
+export const WIFI_MAC = 'aa:bb:cc:dd:ee:ff'
+
 const lockdownValue = (
   device: FakeDevice,
   domain: string | undefined,
   key: string | undefined
 ): PlistValue | undefined => {
   if (key === 'DevicePublicKey') return device.devicePublicKeyPem
-  if (key === 'WiFiAddress') return 'aa:bb:cc:dd:ee:ff'
+  if (key === 'WiFiAddress') return WIFI_MAC
   if (domain === AMFI_DOMAIN && key === 'DeveloperModeStatus')
     return device.developerMode
   if (!key) return deviceValues(device)
@@ -676,6 +687,9 @@ export const createFakeUsbmuxd = (
     requests: [],
     osPairsAfterMisses: options.osPairsAfterMisses,
     unavailable: false,
+    onWifi: new Map(),
+    wifiTxt: new Map(),
+    localNetworkDenied: false,
     attach: (device) => {
       devices.push(device)
       for (const listener of listeners) listener(attachedPacket(device))
@@ -699,6 +713,46 @@ export const createFakeUsbmuxd = (
         const pipe = createPipe()
         void serve(createLink(pipe.server), pipe.onTls)
         return pipe.client
+      },
+      connectTcp: async (host, port) => {
+        const device = fake.onWifi.get(host)
+        const service =
+          port === LOCKDOWN_PORT
+            ? 'lockdown'
+            : device && portsOf(device).get(port)
+        if (!device || !service)
+          throw new IPAForgeError(ErrorCode.DeviceDisconnected, {
+            data: { host, port }
+          })
+        fake.requests.push(`tcp:${host}:${port}`)
+        const pipe = createPipe()
+        void handOver(createLink(pipe.server), pipe.onTls, { device, service })
+        return pipe.client
+      },
+      openMulticast: async () => {
+        const listeners = new Set<(datagram: Datagram) => void>()
+
+        return {
+          send: async () => {
+            if (fake.localNetworkDenied)
+              throw new IPAForgeError(ErrorCode.LocalNetworkDenied)
+            for (const [address, device] of fake.onWifi) {
+              const bytes = lockdownAdvert({
+                mac: WIFI_MAC,
+                host: `${device.udid.slice(-4)}.local`,
+                address,
+                txt: fake.wifiTxt.get(device.udid) ?? []
+              })
+              for (const listener of [...listeners])
+                listener({ bytes, from: address })
+            }
+          },
+          onMessage: (listener) => {
+            listeners.add(listener)
+            return () => listeners.delete(listener)
+          },
+          close: async () => listeners.clear()
+        }
       }
     }
   }

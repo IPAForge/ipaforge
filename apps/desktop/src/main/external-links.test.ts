@@ -29,4 +29,17 @@ describe('isAllowedExternalLink', () => {
     ])
       expect(isAllowedExternalLink(url), url).toBe(false)
   })
+
+  it("allows macOS's Local Network settings, by its exact URL only", () => {
+    expect(
+      isAllowedExternalLink(
+        'x-apple.systempreferences:com.apple.preference.security?Privacy_LocalNetwork'
+      )
+    ).toBe(true)
+    expect(
+      isAllowedExternalLink(
+        'x-apple.systempreferences:com.apple.preference.security?Privacy_Camera'
+      )
+    ).toBe(false)
+  })
 })

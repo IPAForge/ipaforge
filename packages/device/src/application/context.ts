@@ -1,3 +1,4 @@
+import type { UsbmuxDevice } from '@device/domain/types.ts'
 import type { FrameLimits } from '@device/infrastructure/framing/plist-frames.ts'
 import { createUsbmuxClient } from '@device/infrastructure/usbmux/client.ts'
 import type { UsbmuxClient } from '@device/infrastructure/usbmux/types.ts'
@@ -8,6 +9,10 @@ export type DeviceContext = {
   readonly deps: DeviceDeps
   readonly usbmux: UsbmuxClient
   readonly limits: FrameLimits
+  /** Devices found on the network while a search runs, by UDID: reached straight at their Wi-Fi address. */
+  readonly network: Map<string, UsbmuxDevice>
+  /** Each network device's negative device id, kept so it stays the same while the manager lives. */
+  readonly networkIds: Map<string, number>
 }
 
 export const createDeviceContext = (deps: DeviceDeps): DeviceContext => {
@@ -19,6 +24,8 @@ export const createDeviceContext = (deps: DeviceDeps): DeviceContext => {
   return {
     deps,
     limits,
+    network: new Map(),
+    networkIds: new Map(),
     usbmux: createUsbmuxClient({
       transport: deps.transport,
       logger: deps.logger,

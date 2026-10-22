@@ -2,7 +2,7 @@
 
 # Talking to the Device
 
-`@ipaforge/device` installs apps, manages provisioning profiles and places pairing files on an iPhone or iPad. It never drives USB itself: it talks to the operating system's **usbmuxd**, which already owns the device, so it works next to Finder, Apple Devices and iTunes.
+`@ipaforge/device` installs apps, manages provisioning profiles and places pairing files on an iPhone or iPad. It never drives USB itself: it talks to the operating system's **usbmuxd**, which already owns the device, so it works next to Finder, Apple Devices and iTunes. On Wi-Fi it can also reach a device it knows directly, without usbmuxd (see [Wi-Fi without usbmuxd](#wi-fi-without-usbmuxd)).
 
 | OS | How IPAForge reaches the device | If it's missing |
 |---|---|---|
@@ -22,6 +22,19 @@ IPAForge uses the pairing the operating system already made. When the user taps 
 - **IPAForge never writes to usbmuxd.** It does not save, replace or delete the OS's pair record, so Finder, Apple Devices and other tools keep working.
 - If the device rejects the OS's record (for example after **Reset Location & Privacy** or **Clear Trusted Computers**), IPAForge does not pair over it. It fails with `device.invalid_pair_record`: unplug the device, plug it back in, unlock it and tap Trust, so the OS pairs again. If the device rejects a record IPAForge made itself, IPAForge pairs again once.
 - Every session is TLS-encrypted. The device is authenticated by **pinning**: it must present exactly the device certificate from the pair record. A failed TLS handshake is reported as `device.protocol_error` with the TLS details; it does not mean the pairing is wrong, so it never triggers pairing. The certificates in a pair record are SHA-1 with empty subject and issuer names, which OpenSSL refuses at its default security level, so device connections (and only those) run at `@SECLEVEL=0`; the pinning is what authenticates the device.
+
+## Wi-Fi without usbmuxd
+
+A device this computer has opened before can be reached on the same Wi-Fi network without usbmuxd. This works on Linux without usbmuxd installed, and where Apple's own Wi-Fi discovery doesn't list the device.
+
+- **Wi-Fi is turned on by itself.** Whenever a session opens, by cable or over Wi-Fi, IPAForge reads the device's `EnableWifiConnections` (lockdown domain `com.apple.mobile.wireless_lockdown`, the same setting as Finder's *Show this iPhone when on Wi-Fi*) and turns it on if it is off. It logs when it does. Hosts can turn this off with `enableWifiConnections: false`. A failure here never fails the session.
+- **The device is remembered:** its UDID and its real Wi-Fi MAC address (lockdown `WiFiAddress`), in the secret store under `wifi-devices`.
+- **Finding it:** IPAForge asks for `_apple-mobdev2._tcp.local` (mDNS) every 10 seconds, from a UDP port of its own, so devices answer straight back to it (RFC 6762 §6.7). It never binds 5353, so it doesn't compete with Bonjour or avahi. Each query goes out of every IPv4 interface. One answer carries the advert's name (`<MAC>@<IPv6>-supportsRP-NN`), its TXT values and the device's IPv4 address.
+- **Telling devices apart:** with Private Wi-Fi Address, the MAC in the advert changes on every network. So on iOS 26.4 and later IPAForge checks the advert's `authTag` against each known device's pair record: it must equal the first 8 bytes of HMAC-SHA256(key, `identifier`), the key being HKDF-SHA512 of the pair record's HostID (no salt, no info, 32 bytes), checked against a real iPhone on iOS 26.6.1. Otherwise it compares the MAC in the advert's name with the remembered one. Adverts of devices this computer isn't paired with are ignored. A tag must be exactly 8 bytes (compared in constant time, at most 4 per advert), so a short forged one can't match. Matching only decides where to connect: the device is authenticated as on USB, by the TLS pin to the pair record's device certificate, so an advert that lies leads to a failed session, never to an install.
+- **Connecting:** lockdown on TCP port 62078 straight at the device's address, with the same pair record and TLS, then every service on the port lockdown starts. Without usbmuxd, IPAForge's own pair record is used (a device paired by the OS needs its usbmuxd record, so it needs usbmuxd).
+- **Which link is used:** USB first, then straight over Wi-Fi, then usbmuxd's own Wi-Fi link. Straight over Wi-Fi measured 16–18 MiB/s against 6.4 MiB/s for usbmuxd's link, and ~37 MiB/s over USB.
+- A device is gone after a goodbye from it, or when it hasn't answered for three rounds.
+- **macOS asks first.** The first search shows "find devices on your local network" (the reason is in the app's Info.plist, translated). If it's refused, sends fail with "no route to host", which IPAForge reports as `device.local_network_denied`, and the Devices page explains how to allow it. Devices on a cable still work.
 
 ## What it can do
 
@@ -79,6 +92,7 @@ iOS 17.4 added a second kind of pairing, remote pairing, which newer SideStore b
 | `device.identity_invalid` (`0xe8008018`) | The signing certificate was revoked or is no longer valid | Sign again with a valid certificate; check the computer's clock |
 | `device.profile_not_found` (`0xe8008015`) | A bundle has no matching profile, or the device registration is still pending | Retry later; re-provision |
 | `device.install_failed` | Any other installd error; its name is in the details | See the details |
+| `device.local_network_denied` | macOS refused IPAForge local network access, so devices on Wi-Fi can't be found | System Settings › Privacy & Security › Local Network › IPAForge; or use a cable |
 
 ## For contributors
 
@@ -90,10 +104,12 @@ pnpm --filter @ipaforge/desktop device-probe apps | profiles   # read-only
 pnpm --filter @ipaforge/desktop device-probe pairing-status <TEAMID...>   # classic and remote pairing files (read-only)
 pnpm --filter @ipaforge/desktop device-probe rp-pair            # iOS 17.4+: makes a remote pairing, then verifies it (kept in memory only)
 pnpm --filter @ipaforge/desktop device-probe afc-speed [--mb 32]   # times AFC writes per chunk size (written, then deleted)
+pnpm --filter @ipaforge/desktop device-probe wifi-list [--udid <udid>]   # finds known devices on Wi-Fi, without usbmuxd
+pnpm --filter @ipaforge/desktop device-probe info --direct [--udid <udid>]   # any device command, straight over Wi-Fi only
 IPAFORGE_DEVICE=1 pnpm vitest run apps/desktop/src/main/adapters/device.hardware.test.ts
 ```
 
-Unit tests run against an in-memory fake device (`packages/device/src/__tests__/fake-device/`), which simulates usbmuxd, lockdownd and every service, so CI needs no hardware.
+Unit tests run against an in-memory fake device (`packages/device/src/__tests__/fake-device/`), which simulates usbmuxd, lockdownd and every service, and a fake Wi-Fi (direct TCP and mDNS answers), so CI needs no hardware.
 
 ## See Also
 

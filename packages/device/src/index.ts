@@ -62,7 +62,9 @@ export {
 } from '@device/domain/pairing-apps.ts'
 export type {
   Connection,
+  Datagram,
   DeviceTransport,
+  MulticastSocket,
   TlsCredentials
 } from '@device/domain/ports/types.ts'
 export {
@@ -86,6 +88,10 @@ export type {
   RemoveStaleOptions,
   UsbmuxDevice
 } from '@device/domain/types.ts'
+export {
+  serializeKnownDevices,
+  WIFI_DEVICES_KEY
+} from '@device/domain/wifi.ts'
 export type { AfcClient, AfcStat } from '@device/infrastructure/afc/types.ts'
 export type { ContainerMode } from '@device/infrastructure/house-arrest/client.ts'
 export type { InstalledApp } from '@device/infrastructure/installation-proxy/apps.ts'
@@ -93,5 +99,9 @@ export type {
   ApplicationType,
   InstallProgress
 } from '@device/infrastructure/installation-proxy/types.ts'
+export {
+  MDNS_GROUP,
+  MDNS_PORT
+} from '@device/infrastructure/mdns/constants.ts'
 export { createPairRecord } from '@device/infrastructure/pairing/certificates.ts'
 export type { DeviceDeps, DeviceDepsInput, Sleep } from '@device/types.ts'

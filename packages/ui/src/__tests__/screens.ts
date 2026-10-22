@@ -168,6 +168,12 @@ export const renderChangelog = async ({
 export const anisetteShown = () =>
   waitFor(() => expect(all('main ul li').length).toBeGreaterThanOrEqual(4))
 
+/** Devices with macOS's Local Network refusal noted (its button opens the settings). */
+export const localNetworkNoticeShown = () =>
+  waitFor(() =>
+    expect(all('main [role="status"] button').length).toBeGreaterThanOrEqual(1)
+  )
+
 /** The Install page has the Engine's plan (App IDs, free apps, certificate, team). */
 export const planShown = () =>
   waitFor(() => expect(all('main dl dd').length).toBeGreaterThanOrEqual(4))

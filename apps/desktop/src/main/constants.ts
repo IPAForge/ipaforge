@@ -12,6 +12,11 @@ export const allowedExternalLinks = [
   { origin: 'https://apps.microsoft.com', path: '/detail/9np83lwlpz9k' }
 ] as const
 
+/** System settings pages the UI may open, by their exact URL: macOS Privacy & Security › Local Network. */
+export const allowedSettingsLinks: ReadonlySet<string> = new Set([
+  'x-apple.systempreferences:com.apple.preference.security?Privacy_LocalNetwork'
+])
+
 /**
  * The only permission the UI gets: writing text to the clipboard (Copy diagnostics, copying an Apple link).
  * Camera, microphone, notifications and every other request are refused.

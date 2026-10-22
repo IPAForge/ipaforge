@@ -1,11 +1,18 @@
-import { allowedExternalLinks } from '@desktop/main/constants.ts'
+import {
+  allowedExternalLinks,
+  allowedSettingsLinks
+} from '@desktop/main/constants.ts'
 
 /** The page is the allowed path or below it ("/" allows the whole origin). */
 const isUnder = (pathname: string, path: string): boolean =>
   path === '/' || pathname === path || pathname.startsWith(`${path}/`)
 
-/** Whether the UI may open `url` in the browser: HTTPS, an allowed origin, no credentials, under an allowed path. */
+/**
+ * Whether the UI may open `url`: an allowed system settings page exactly, or HTTPS on an allowed origin, no
+ * credentials, under an allowed path.
+ */
 export const isAllowedExternalLink = (url: string): boolean => {
+  if (allowedSettingsLinks.has(url)) return true
   if (!URL.canParse(url)) return false
   const { origin, pathname, username, password } = new URL(url)
   if (username || password) return false

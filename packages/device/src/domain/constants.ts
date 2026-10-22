@@ -35,6 +35,12 @@ export const Service = {
   Amfi: 'com.apple.amfi.lockdown'
 } as const
 
+/** The wireless lockdown key that lets the device take connections over Wi-Fi (Finder's "Show this iPhone when on Wi-Fi"). */
+export const WIFI_CONNECTIONS_KEY = 'EnableWifiConnections'
+
+/** The lockdown value holding the device's Wi-Fi MAC address. */
+export const WIFI_ADDRESS_KEY = 'WiFiAddress'
+
 export const LockdownDomain = {
   Amfi: 'com.apple.security.mac.amfi',
   WirelessLockdown: 'com.apple.mobile.wireless_lockdown'

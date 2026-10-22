@@ -10,6 +10,7 @@ export const fakeScenarioIds = [
   'happy',
   'computer-not-ready',
   'hot-plug',
+  'local-network-denied',
   'devices',
   'accounts',
   'code-needed',

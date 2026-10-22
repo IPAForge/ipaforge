@@ -7,8 +7,9 @@ import { uniqueDevices } from '@ui/hooks/queries/use-devices.ts'
 import { useEngine } from '@ui/hooks/use-engine.ts'
 
 /**
- * Keeps the device queries in step with the Engine's device feed (usbmuxd `Listen`): every new list replaces the
- * cached one, and a device that comes or goes has its status read again. Mounted once, by `App`.
+ * Keeps the device queries in step with the Engine's device feed (usbmuxd `Listen` and the search of the local
+ * network): every new list replaces the cached one, a device that comes or goes has its status read again, and a
+ * refused local network access is kept for the Devices page. Mounted once, by `App`.
  */
 export const useDeviceFeed = (): void => {
   const engine = useEngine()
@@ -21,6 +22,10 @@ export const useDeviceFeed = (): void => {
           queryKeys.devices,
           uniqueDevices(event.devices)
         )
+        return
+      }
+      if (event.type === 'network') {
+        queryClient.setQueryData(queryKeys.localNetworkDenied, event.denied)
         return
       }
       const udid = event.type === 'attached' ? event.device.udid : event.udid
