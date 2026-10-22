@@ -49,6 +49,8 @@ export type WifiAdvert = {
   readonly instance: string
   /** Its IPv4 address. */
   readonly address: string
+  /** The service's port (SRV), when the answer gave it. */
+  readonly port?: number | undefined
   /** The MAC address in the instance name: the device's real one, or a private one for this network. */
   readonly mac?: string | undefined
   /** TXT `identifier` and `authTag` values (iOS 26.4 and later), checked against the pair records. */
@@ -71,6 +73,7 @@ export type BrowseOptions = {
 /** What one search knows of an instance before its address is in: where it is, and its TXT values. */
 export type PendingAdvert = {
   host?: string
+  port?: number
   identifier?: string | undefined
   authTags: string[]
 }

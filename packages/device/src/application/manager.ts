@@ -21,9 +21,11 @@ import {
 } from '@device/application/pair-records.ts'
 import { openSession } from '@device/application/session.ts'
 import type {
+  DeviceTunnel,
   OpenSessionOptions,
   PairOptions
 } from '@device/application/types.ts'
+import { openWifiTunnel } from '@device/application/wifi-tunnel.ts'
 import { resolveDeviceDeps } from '@device/deps.ts'
 import { shortUdid } from '@device/domain/device.ts'
 import type { PairRecord } from '@device/domain/pairing/types.ts'
@@ -49,6 +51,11 @@ export type DeviceManager = {
   ): Promise<void>
   /** Searches the network for a few seconds and returns the known devices found there. */
   discoverNetwork(): Promise<UsbmuxDevice[]>
+  /**
+   * Opens the iOS 17.4+ tunnel to `udid` on Wi-Fi, with its saved remote pairing (make one over USB first,
+   * `DeviceHandle.remotePairing`). Close it when done.
+   */
+  openWifiTunnel(udid: string): Promise<DeviceTunnel>
   pair(udid: string, options?: PairOptions): Promise<PairRecord>
   isPaired(udid: string): Promise<boolean>
   exportPairRecord(udid: string): Promise<Uint8Array>
@@ -133,6 +140,8 @@ export const createDeviceManager = (input: DeviceDepsInput): DeviceManager => {
     watchNetwork: (onEvent, signal) =>
       watchNetworkDevices(ctx, onEvent, signal),
     discoverNetwork: () => discoverNetworkDevices(ctx),
+    openWifiTunnel: async (udid) =>
+      openWifiTunnel(ctx, await findOnWifi(ctx, udid)),
     pair: async (udid, options) =>
       (await pairDevice(ctx, await findDevice(ctx, udid), options)).record,
     isPaired: async (udid) => (await getPairRecord(ctx, udid)) !== undefined,

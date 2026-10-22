@@ -19,6 +19,7 @@ import {
   createPairingChannel,
   encodeFrame
 } from '@device/infrastructure/remote-pairing/channel.ts'
+import { createEncryptedChannel } from '@device/infrastructure/remote-pairing/encrypted-channel.ts'
 import { pairSetup } from '@device/infrastructure/remote-pairing/pair-setup.ts'
 import { pairVerify } from '@device/infrastructure/remote-pairing/pair-verify.ts'
 import { ErrorCode, utf8Decode } from '@ipaforge/kernel'
@@ -101,16 +102,45 @@ describe('remote pair-setup', () => {
 })
 
 describe('remote pair-verify', () => {
-  it('is accepted by the device that pairing was made with', async () => {
+  it('is accepted by the device that pairing was made with, sharing its secret', async () => {
     const device = createFakeRemoteDevice()
     const record = await pairSetup(device.channel, {
       host: hostIdentity(),
       randomBytes
     })
 
-    await expect(
-      pairVerify(device.channel, { record, hostName: 'IPAForge', randomBytes })
-    ).resolves.toBeUndefined()
+    const secret = await pairVerify(device.channel, {
+      record,
+      hostName: 'IPAForge',
+      randomBytes
+    })
+    expect(secret).toEqual(device.shared())
+  })
+
+  it('then sends requests encrypted, and opens the encrypted answer', async () => {
+    const device = createFakeRemoteDevice({ listenerPort: 51_234 })
+    const record = await pairSetup(device.channel, {
+      host: hostIdentity(),
+      randomBytes
+    })
+    const secret = await pairVerify(device.channel, {
+      record,
+      hostName: 'IPAForge',
+      randomBytes
+    })
+    const encrypted = createEncryptedChannel(device.channel, secret)
+
+    const first = await encrypted.request({
+      request: { _0: { createListener: {} } }
+    })
+    const second = await encrypted.request({
+      request: { _0: { createListener: {} } }
+    })
+    expect(first).toMatchObject({
+      response: { _1: { createListener: { port: 51_234 } } }
+    })
+    expect(second).toEqual(first)
+    expect(device.encrypted).toHaveLength(2)
   })
 
   it('is refused once the device forgot this computer', async () => {

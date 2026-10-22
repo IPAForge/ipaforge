@@ -95,6 +95,7 @@ export {
   serializeKnownDevices,
   WIFI_DEVICES_KEY
 } from '@device/domain/wifi.ts'
+export { createAfcClient } from '@device/infrastructure/afc/client.ts'
 export type { AfcClient, AfcStat } from '@device/infrastructure/afc/types.ts'
 export type { ContainerMode } from '@device/infrastructure/house-arrest/client.ts'
 export type { InstalledApp } from '@device/infrastructure/installation-proxy/apps.ts'
@@ -114,5 +115,9 @@ export type {
   XpcValue
 } from '@device/infrastructure/rsd/types.ts'
 export { XpcUuid } from '@device/infrastructure/rsd/xpc-uuid.ts'
+export {
+  connectTlsPsk,
+  type TlsPskOptions
+} from '@device/infrastructure/tls-psk/connection.ts'
 export type { TcpStats } from '@device/infrastructure/tunnel/types.ts'
 export type { DeviceDeps, DeviceDepsInput, Sleep } from '@device/types.ts'

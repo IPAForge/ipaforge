@@ -1,6 +1,8 @@
 // The device side of remote pairing, for tests: an SRP server with the USB PIN, its own Ed25519 identity, and the
 // replies to pair-setup (M2, M4, M6) and pair-verify (M2, M4), as a PairingChannel the host code talks to.
+import { chacha20poly1305 } from '@noble/ciphers/chacha.js'
 import { ed25519, x25519 } from '@noble/curves/ed25519.js'
+import { hkdf } from '@noble/hashes/hkdf.js'
 import { sha512 } from '@noble/hashes/sha2.js'
 
 import {
@@ -48,6 +50,8 @@ const random = (length: number) =>
   globalThis.crypto.getRandomValues(new Uint8Array(length))
 
 export type FakeRemoteDeviceOptions = {
+  /** The port createListener answers with (a network connection's tunnel). */
+  readonly listenerPort?: number
   /** The device asks the user first (sends awaitingUserConsent before M2). */
   readonly asksConsent?: boolean
   /** The device refuses outright, with this reason. */
@@ -83,6 +87,11 @@ export const createFakeRemoteDevice = (
         key: Uint8Array
       }
     | undefined
+  /** The pair-verify secret, keying the encrypted messages that follow it. */
+  let shared: Uint8Array | undefined
+  const encrypted: Record<string, unknown>[] = []
+  let fromHost = 0
+  let toHost = 0
   const errorRecord = () => pairingData([[TlvType.Error, new Uint8Array([2])]])
 
   const setupStep = (tlv: ReadonlyMap<number, Uint8Array>) => {
@@ -230,6 +239,7 @@ export const createFakeRemoteDevice = (
         KeyDerivation.verifyEncrypt
       )
       verify = { secret, publicKey, hostKey, key }
+      shared = x25519.getSharedSecret(secret, hostKey)
       const id = utf8Encode(DEVICE_ID)
       queue.push(
         pairingData([
@@ -305,8 +315,77 @@ export const createFakeRemoteDevice = (
       if (!next) throw new Error('the fake device has nothing to say')
       return next
     },
+    sendMessage: async (message) => {
+      const plain = valueAt(message, ['plain', '_0'])
+      if (plain && typeof plain === 'object')
+        return channel.send(plain as Record<string, unknown>)
+      const sealed = valueAt(message, ['streamEncrypted', '_0'])
+      if (typeof sealed !== 'string' || !shared)
+        throw new Error('the fake device got a message it cannot read')
+      const key = (info: string) =>
+        hkdf(
+          sha512,
+          shared ?? new Uint8Array(),
+          new Uint8Array(0),
+          utf8Encode(info),
+          32
+        )
+      const nonce = (counter: number) => {
+        const bytes = new Uint8Array(12)
+        new DataView(bytes.buffer).setBigUint64(0, BigInt(counter), true)
+        return bytes
+      }
+      const body = JSON.parse(
+        utf8Decode(
+          chacha20poly1305(
+            key('ClientEncrypt-main'),
+            nonce(fromHost++)
+          ).decrypt(fromBase64(sealed))
+        )
+      ) as Record<string, unknown>
+      encrypted.push(body)
+      const reply = valueAt(body, ['request', '_0', 'createListener'])
+        ? {
+            response: {
+              _1: {
+                createListener: {
+                  port: options.listenerPort ?? 50_000,
+                  serviceName: 'FAKE-SERVICE',
+                  devicePublicKey: 'FAKE'
+                }
+              }
+            }
+          }
+        : {
+            response: {
+              _1: { errorExtended: { _0: { reason: 'unknown request' } } }
+            }
+          }
+      queue.push({
+        streamEncrypted: {
+          _0: toBase64(
+            chacha20poly1305(
+              key('ServerEncrypt-main'),
+              nonce(toHost++)
+            ).encrypt(utf8Encode(JSON.stringify(reply)))
+          )
+        }
+      })
+    },
+    receiveMessage: async () => {
+      const next = queue.shift()
+      if (!next) throw new Error('the fake device has nothing to say')
+      return next.streamEncrypted ? next : { plain: { _0: next } }
+    },
     close: async () => {}
   }
 
-  return { channel, sent, devicePublicKey, known }
+  return {
+    channel,
+    sent,
+    encrypted,
+    devicePublicKey,
+    known,
+    shared: () => shared
+  }
 }

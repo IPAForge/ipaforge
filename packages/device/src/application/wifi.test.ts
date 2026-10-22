@@ -21,6 +21,15 @@ import {
   utf8Encode
 } from '@ipaforge/kernel'
 
+const codeOf = async (promise: Promise<unknown>) => {
+  try {
+    await promise
+  } catch (error) {
+    return (error as { code?: string }).code
+  }
+  return undefined
+}
+
 const WIFI_KEY = `${LockdownDomain.WirelessLockdown}/${WIFI_CONNECTIONS_KEY}`
 const ADDRESS = '192.0.2.10'
 
@@ -180,5 +189,18 @@ describe('Wi-Fi without usbmuxd', () => {
     moveToWifi(rig)
 
     expect(await rig.manager.discoverNetwork()).toEqual([])
+  })
+
+  it('opens no tunnel to a device that is not on Wi-Fi, or has no remote pairing yet', async () => {
+    const rig = await createRig()
+    await openAndClose(rig)
+    expect(await codeOf(rig.manager.openWifiTunnel(rig.device.udid))).toBe(
+      ErrorCode.DeviceNotFound
+    )
+
+    moveToWifi(rig)
+    expect(await codeOf(rig.manager.openWifiTunnel(rig.device.udid))).toBe(
+      ErrorCode.DeviceNotPaired
+    )
   })
 })

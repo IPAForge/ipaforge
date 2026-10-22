@@ -1,5 +1,6 @@
-// Opening the iOS 17.4+ device tunnel over a session's link: CoreDeviceProxy, the CDTunnel handshake, our own TCP
-// over its packets, then RSD for the service map. Addresses, ports and the MTU are fresh for every tunnel.
+// Opening the iOS 17.4+ device tunnel: over a session's link (CoreDeviceProxy) or over Wi-Fi (the remote pairing
+// listener's TLS-PSK, wifi-tunnel.ts), then the CDTunnel handshake, our own TCP over its packets, and RSD for the
+// service map. Addresses, ports and the MTU are fresh for every tunnel.
 import type { DeviceContext } from '@device/application/context.ts'
 import type { DeviceTunnel } from '@device/application/types.ts'
 import { CORE_DEVICE_PROXY_SERVICE } from '@device/domain/constants.ts'
@@ -86,10 +87,22 @@ export const openDeviceTunnel = async (
   ctx: DeviceContext,
   device: UsbmuxDevice,
   startService: (service: string) => Promise<Link>
+): Promise<DeviceTunnel> =>
+  openTunnelOver(ctx, device, await startProxy(device, startService))
+
+/**
+ * The tunnel over a connection that carries it (CoreDeviceProxy's over USB, the remote pairing listener's TLS over
+ * Wi-Fi): the CDTunnel handshake, our own TCP over its packets, then RSD. `onClose` closes what the carrier
+ * depends on (the remote pairing control connection over Wi-Fi), after the tunnel.
+ */
+export const openTunnelOver = async (
+  ctx: DeviceContext,
+  device: UsbmuxDevice,
+  proxy: Link,
+  onClose: () => Promise<void> = async () => {}
 ): Promise<DeviceTunnel> => {
   const { logger, config } = ctx.deps
   const started = ctx.deps.clock.now().getTime()
-  const proxy = await startProxy(device, startService)
   const parameters = await closeOnError(proxy, (link) =>
     cdTunnelHandshake(link, config.tunnelMtu)
   )
@@ -137,6 +150,7 @@ export const openDeviceTunnel = async (
     stats: () => ({ ...stack.stats }),
     close: async () => {
       await stack.close()
+      await onClose()
       logger.debug('tunnel closed', { device: shortUdid(device.udid) })
     }
   }

@@ -3,8 +3,12 @@ import { describe, expect, it } from 'vitest'
 import { lockdownAdvert, ptrData } from '@device/__tests__/mdns-answer.ts'
 import type { Datagram, MulticastSocket } from '@device/domain/ports/types.ts'
 import { authTagMatches } from '@device/infrastructure/mdns/auth-tag.ts'
-import { browseWifiDevices } from '@device/infrastructure/mdns/browser.ts'
 import {
+  browseService,
+  browseWifiDevices
+} from '@device/infrastructure/mdns/browser.ts'
+import {
+  REMOTE_PAIRING_SERVICE,
   RecordType,
   WIFI_LOCKDOWN_SERVICE
 } from '@device/infrastructure/mdns/constants.ts'
@@ -164,7 +168,7 @@ const browse = async (
 }
 
 describe('searching the network', () => {
-  it('finds a device once, with its address, MAC and TXT values', async () => {
+  it('finds a device once, with its address, port, MAC and TXT values', async () => {
     const { socket, sent } = fakeSocket(() => [lockdownAdvert(ADVERT)])
     const events = await browse(socket, 2)
     expect(events).toEqual([
@@ -173,6 +177,7 @@ describe('searching the network', () => {
         advert: {
           instance: `${ADVERT.mac}@fe80::1-supportsRP-24.${WIFI_LOCKDOWN_SERVICE}`,
           address: '192.0.2.10',
+          port: 32498,
           mac: ADVERT.mac,
           identifier: '0A1B2C3D-4E5F-4A6B-8C7D-9E0F1A2B3C4D',
           authTags: ['dr5/vaK9kIw=']
@@ -196,6 +201,39 @@ describe('searching the network', () => {
       isThere = false
     })
     expect(quiet.map((event) => event.kind)).toEqual(['found', 'lost'])
+  })
+
+  it("searches for any service: a device's remote pairing advert, with its port", async () => {
+    const { socket } = fakeSocket(() => [
+      lockdownAdvert({ ...ADVERT, service: REMOTE_PAIRING_SERVICE }),
+      lockdownAdvert(ADVERT)
+    ])
+    const events: BrowseEvent[] = []
+    const controller = new AbortController()
+    await browseService(
+      socket,
+      REMOTE_PAIRING_SERVICE,
+      {
+        logger: silentLogger,
+        intervalMs: 1000,
+        now: () => 0,
+        sleep: async () => controller.abort()
+      },
+      (event) => events.push(event),
+      controller.signal
+    )
+
+    // Only the service asked for: the lockdown advert in the same answer is not this search's.
+    expect(events).toEqual([
+      {
+        kind: 'found',
+        advert: expect.objectContaining({
+          instance: expect.stringContaining(REMOTE_PAIRING_SERVICE),
+          address: '192.0.2.10',
+          port: 32498
+        })
+      }
+    ])
   })
 
   it('stops with local_network_denied when the OS refuses the search', async () => {

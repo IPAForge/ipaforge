@@ -19,5 +19,8 @@ export const CLASS_MASK = 0x7f_ff
 /** The service a device advertises while it takes lockdown connections over Wi-Fi. */
 export const WIFI_LOCKDOWN_SERVICE = '_apple-mobdev2._tcp.local'
 
+/** The service an iOS 17+ device's remote pairing listens on: the way to its tunnel over Wi-Fi. */
+export const REMOTE_PAIRING_SERVICE = '_remotepairing._tcp.local'
+
 /** Most compression pointers a name may follow before it counts as a loop. */
 export const MAX_NAME_JUMPS = 32

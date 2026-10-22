@@ -30,11 +30,22 @@ const txtValues = (entries: readonly string[], key: string): string[] =>
 
 const sameAdvert = (a: WifiAdvert, b: WifiAdvert): boolean =>
   a.address === b.address &&
+  a.port === b.port &&
   a.identifier === b.identifier &&
   a.authTags.join() === b.authTags.join()
 
-export const browseWifiDevices = async (
+export const browseWifiDevices = (
   socket: MulticastSocket,
+  options: BrowseOptions,
+  onEvent: (event: BrowseEvent) => void,
+  signal: AbortSignal
+): Promise<void> =>
+  browseService(socket, WIFI_LOCKDOWN_SERVICE, options, onEvent, signal)
+
+/** The same search for any DNS-SD service type (`_remotepairing._tcp.local` for the remote pairing tunnel). */
+export const browseService = async (
+  socket: MulticastSocket,
+  service: string,
   { sleep, now, intervalMs, logger }: BrowseOptions,
   onEvent: (event: BrowseEvent) => void,
   signal: AbortSignal
@@ -70,6 +81,7 @@ export const browseWifiDevices = async (
     const advert: WifiAdvert = {
       instance,
       address,
+      port: partial.port,
       mac: macOfInstance(instance),
       identifier: partial.identifier,
       authTags: partial.authTags
@@ -82,10 +94,7 @@ export const browseWifiDevices = async (
   }
 
   const take = (record: ResourceRecord) => {
-    if (
-      record.type === RecordType.PTR &&
-      record.name === WIFI_LOCKDOWN_SERVICE
-    ) {
+    if (record.type === RecordType.PTR && record.name === service) {
       if (record.ttl === 0) lose(record.target)
       else if (!partials.has(record.target))
         partials.set(record.target, { authTags: [] })
@@ -97,7 +106,10 @@ export const browseWifiDevices = async (
     }
     const partial = partials.get(record.name)
     if (!partial) return
-    if (record.type === RecordType.SRV) partial.host = record.target
+    if (record.type === RecordType.SRV) {
+      partial.host = record.target
+      partial.port = record.port
+    }
     if (record.type === RecordType.TXT) {
       partial.identifier = txtValues(record.entries, 'identifier')[0]
       partial.authTags = txtValues(record.entries, 'authTag')
@@ -129,7 +141,7 @@ export const browseWifiDevices = async (
   const stop = socket.onMessage(({ bytes }) => onMessage(bytes))
   try {
     while (!signal.aborted) {
-      await send([{ name: WIFI_LOCKDOWN_SERVICE, type: RecordType.PTR }])
+      await send([{ name: service, type: RecordType.PTR }])
       try {
         await sleep(intervalMs, signal)
       } catch {
