@@ -16,6 +16,10 @@ import {
   targetsCommand
 } from '@desktop/probes/device/commands/pairing-file.ts'
 import { remotePairCommand } from '@desktop/probes/device/commands/remote-pairing.ts'
+import {
+  rsdServicesCommand,
+  tunnelInstallCommand
+} from '@desktop/probes/device/commands/tunnel.ts'
 import type { DeviceProbe } from '@desktop/probes/device/context.ts'
 import type { ProbeCommands } from '@desktop/probes/shared/types.ts'
 
@@ -33,5 +37,7 @@ export const deviceCommands = (probe: DeviceProbe): ProbeCommands => ({
   place: placeCommand(probe),
   'reveal-devmode': revealDevModeCommand(probe),
   'rp-pair': remotePairCommand(probe),
-  'wifi-list': wifiListCommand(probe)
+  'wifi-list': wifiListCommand(probe),
+  'rsd-services': rsdServicesCommand(probe),
+  'tunnel-install': tunnelInstallCommand(probe)
 })

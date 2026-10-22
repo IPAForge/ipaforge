@@ -447,6 +447,10 @@
       "local_network_denied": {
         "title": "IPAForge nu poate căuta dispozitive în rețea",
         "body": "macOS nu i-a permis lui IPAForge să găsească dispozitive în rețeaua locală, așa că nu poate ajunge la iPhone-uri prin Wi-Fi. Dispozitivele conectate prin cablu funcționează în continuare."
+      },
+      "tunnel_unavailable": {
+        "title": "Tunelul către dispozitiv nu s-a deschis",
+        "body": "IPAForge nu a putut deschide tunelul securizat pe care iOS 17.4 și versiunile mai noi îl oferă prin cablu. Verifică dacă dispozitivul are iOS 17.4 sau mai nou, reconectează-l și încearcă din nou."
       }
     },
     "apple": {

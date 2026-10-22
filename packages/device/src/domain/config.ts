@@ -23,6 +23,22 @@ export type DeviceConfig = {
   readonly networkBrowseMs: number
   /** How often a running search asks again; a device not heard from for three rounds is gone. */
   readonly networkQueryIntervalMs: number
+  /**
+   * The largest packet IPAForge sends through the iOS 17.4+ tunnel (asked for in the handshake, and a cap on every
+   * packet). Packets of 8 KB and more stall connections to the device.
+   */
+  readonly tunnelMtu: number
+  /** First retransmission timeout inside the tunnel, doubled on every timeout up to `tunnelMaxRtoMs`. */
+  readonly tunnelInitialRtoMs: number
+  readonly tunnelMaxRtoMs: number
+  /** Retransmission timeouts in a row before a connection inside the tunnel is given up. */
+  readonly tunnelMaxRetransmits: number
+  /** Unacknowledged bytes each connection inside the tunnel may queue before a write waits. */
+  readonly tunnelSendBufferBytes: number
+  /** Bytes each connection inside the tunnel buffers before it closes its receive window. */
+  readonly tunnelReceiveBufferBytes: number
+  /** How long the device's service discovery (RSD) may take to answer inside the tunnel. */
+  readonly rsdHandshakeTimeoutMs: number
 }
 
 export const DEFAULT_DEVICE_CONFIG: DeviceConfig = {
@@ -37,7 +53,15 @@ export const DEFAULT_DEVICE_CONFIG: DeviceConfig = {
   afcReadChunkBytes: 1024 * 1024,
   enableWifiConnections: true,
   networkBrowseMs: 3000,
-  networkQueryIntervalMs: 10_000
+  networkQueryIntervalMs: 10_000,
+  // Measured over USB (iOS 26, 100 MiB to PublicStaging): MTU 1500 29.8 MiB/s, 6000 33.7, 8000 34.2.
+  tunnelMtu: 8000,
+  tunnelInitialRtoMs: 200,
+  tunnelMaxRtoMs: 8000,
+  tunnelMaxRetransmits: 8,
+  tunnelSendBufferBytes: 4 * 1024 * 1024,
+  tunnelReceiveBufferBytes: 4 * 1024 * 1024,
+  rsdHandshakeTimeoutMs: 10_000
 }
 
 export const resolveDeviceConfig = (

@@ -8,6 +8,7 @@ import {
   createDeviceManager,
   type DeviceHandle,
   type DeviceManager,
+  type OpenSessionOptions,
   type PairingProgress,
   serializeKnownDevices,
   shortUdid,
@@ -24,9 +25,13 @@ export type DeviceProbe = {
   readonly pickDevice: () => Promise<UsbmuxDevice>
   /** With --direct: searches the network for usbmuxd's devices and --udid, and returns those found. */
   readonly discoverDirect: () => Promise<UsbmuxDevice[]>
-  /** Opens the picked device (pairing if needed), runs `use`, then closes it. */
+  /**
+   * Opens the picked device (pairing if needed), runs `use`, then closes it. `route` (or --direct, --tunnel) picks
+   * how: straight over Wi-Fi, or with every service through the iOS 17.4+ tunnel.
+   */
   readonly withDevice: (
-    use: (handle: DeviceHandle) => Promise<void>
+    use: (handle: DeviceHandle) => Promise<void>,
+    route?: OpenSessionOptions['route']
   ) => Promise<void>
 }
 
@@ -50,6 +55,10 @@ export const createDeviceProbe = (args: DeviceProbeArgs): DeviceProbe => {
   })
   const showUdid = args.flag('show-udid')
   const isDirect = args.flag('direct')
+  const flagRoute = (): OpenSessionOptions['route'] => {
+    if (isDirect) return 'wifi'
+    return args.flag('tunnel') ? 'tunnel' : undefined
+  }
 
   /**
    * --direct: the device straight over Wi-Fi only. This run's secrets live in memory, so the devices to look for
@@ -82,14 +91,16 @@ export const createDeviceProbe = (args: DeviceProbeArgs): DeviceProbe => {
   }
 
   const withDevice = async (
-    use: (handle: DeviceHandle) => Promise<void>
+    use: (handle: DeviceHandle) => Promise<void>,
+    route = flagRoute()
   ): Promise<void> => {
     const device = await pickDevice()
     const handle = await manager.open(device.udid, {
       onProgress: printPairingProgress,
-      ...(isDirect ? { route: 'wifi' as const } : {})
+      ...(route ? { route } : {})
     })
-    if (isDirect) console.log(`over Wi-Fi at ${device.address ?? '?'}`)
+    if (route === 'wifi') console.log(`over Wi-Fi at ${device.address ?? '?'}`)
+    if (route === 'tunnel') console.log('services through the device tunnel')
     try {
       await use(handle)
     } finally {

@@ -22,7 +22,7 @@ ipaforge/
 ├── packages/
 │   ├── kernel/       # IPAForgeError/ErrorCode, ports (Logger, HttpClient, SecretStore, FileSource), bytes and text utils, plist
 │   ├── signer/       # Mach-O code signing (CodeDirectory, CodeResources, entitlements, CMS, fat, bundles, IPA)
-│   ├── device/       # usbmux, lockdown, pairing (classic and iOS 17.4+ remote), AFC, house_arrest, installation_proxy, Wi-Fi without usbmuxd (mDNS)
+│   ├── device/       # usbmux, lockdown, pairing (classic and iOS 17.4+ remote), AFC, house_arrest, installation_proxy, Wi-Fi without usbmuxd (mDNS), the iOS 17.4+ device tunnel (own TCP, RSD, shims)
 │   ├── apple/        # GSA auth + 2FA, anisette provider chain, developer services API
 │   ├── catalog/      # release sources (GitHub API), downloads, cache, AltStore-format app sources
 │   ├── installer/    # pipelines/flows, diagnostics, Engine facade
@@ -47,6 +47,8 @@ ipaforge/
 | `fixtures/signer/generate.sh` | Regenerates the Apple `codesign` golden fixtures (macOS) |
 | `packages/signer/scripts/compare-real-cert.ts` | Maintainer check against a real Apple Development `.p12` |
 | `packages/device/src/index.ts` | Public device API (`createDeviceManager`: pairing, install, profiles, app files, checks) |
+| `packages/device/src/application/device-link.ts` | The one routing point for connections and services: usbmuxd, straight over Wi-Fi, or through the device tunnel (`route: "tunnel"`, and the fallback when lockdown refuses a service) |
+| `packages/device/src/infrastructure/tunnel/tcp-stack.ts` | The userspace TCP client inside the iOS 17.4+ tunnel (one packet per write, MTU cap); `tcp-connection.ts` holds one connection's state machine |
 | `apps/desktop/src/main/adapters/` | Node adapters: usbmuxd transport, pinned TLS, file source, and for Wi-Fi without usbmuxd direct TCP and the mDNS socket (`network/`) |
 | `apps/desktop/scripts/device-probe.ts` | Maintainer CLI against a real device |
 | `packages/apple/src/index.ts` | Public Apple API (`createAppleAccounts`: anisette, sign-in + 2FA, app tokens, saved accounts) |

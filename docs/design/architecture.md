@@ -49,8 +49,10 @@ ipaforge/
 │   │       │                       # (data), config, constants; ports: DeviceTransport → Connection (with startTls),
 │   │       │                       #   and, for Wi-Fi without usbmuxd, connectTcp and openMulticast (MulticastSocket)
 │   │       ├── infrastructure/     # framing, usbmux, lockdown, pairing certificates (pkijs), afc, house-arrest,
-│   │       │                       # installation-proxy, misagent, amfi
-│   │       └── application/        # DeviceManager facade: pair, sessions, installIpa, profiles, app files, checks
+│   │       │                       # installation-proxy, misagent, amfi, mdns, remote-pairing; tunnel/ (CDTunnel, IPv6,
+│   │       │                       #   our own TCP client) and rsd/ (XPC, minimal HTTP/2, RSD, RSDCheckin): iOS 17.4+
+│   │       └── application/        # DeviceManager facade: pair, sessions, installIpa, profiles, app files, checks;
+│   │                               # device-link (every connection and service: usbmuxd, Wi-Fi, or the device tunnel)
 │   │
 │   ├── apple/                      # CONTEXT: Apple account + developer services
 │   │   └── src/
