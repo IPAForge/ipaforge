@@ -1,6 +1,6 @@
 // The fake Engine's connected devices and their live feed, like the Engine's `watchDevices`: the list first, then
 // each attach and detach with the list after it. Tests plug devices in and out; the `hot-plug` scenario does it on
-// a timer so the dev host shows the feed.
+// a timer so the dev host shows the feed, and `local-network-denied` says macOS refused the search on Wi-Fi.
 import type { DeviceWatchEvent } from '@ipaforge/rpc'
 import { FAKE_IPAD, fakeDevices } from '@ui/services/engine/fake/fake-data.ts'
 import type {
@@ -14,7 +14,8 @@ const HOT_PLUG_INTERVAL_MS = 5000
 
 export const createFakeDeviceFeed = (
   hotPlug: boolean,
-  initial: readonly Device[] = fakeDevices
+  initial: readonly Device[] = fakeDevices,
+  isLocalNetworkDenied = false
 ): FakeDeviceFeed => {
   let devices = [...initial]
   const listeners = new Set<DeviceFeedListener>()
@@ -56,6 +57,7 @@ export const createFakeDeviceFeed = (
     watch: (listener, signal) => {
       listeners.add(listener)
       listener({ type: 'devices', devices })
+      if (isLocalNetworkDenied) listener({ type: 'network', denied: true })
       if (hotPlug && !timer)
         timer = setInterval(toggleIpad, HOT_PLUG_INTERVAL_MS)
       const unsubscribe = () => {

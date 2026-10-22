@@ -82,6 +82,8 @@
 | TLS handshake with lockdownd fails | `device.protocol_error` with the TLS error code and reason; not a pairing problem, never re-paired |
 | `MissingValue` on `EnableWifiDebugging` | `device.passcode_required` |
 | usbmuxd unreachable | `device.usbmuxd_unavailable` |
+| macOS refuses an mDNS send or a LAN connection (`EHOSTUNREACH`/`EPERM`: Local Network privacy) | `device.local_network_denied`; Wi-Fi devices can't be found, a cable still works |
+| Private Wi-Fi Address: the advert's MAC differs from the device's on each network | not an error: the advert is matched by its `authTag` (iOS 26.4+) against the pair record's HostID |
 
 ## 3. Two-factor authentication requirements (Phase 3)
 - Trusted-device push; SMS with a number picker; resend; switch method.

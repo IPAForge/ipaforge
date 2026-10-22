@@ -1,4 +1,5 @@
 import type { DeviceContext } from '@device/application/context.ts'
+import { connectToDevice } from '@device/application/device-link.ts'
 import {
   type LockdownSession,
   openLockdownSession
@@ -15,6 +16,7 @@ import type {
   StartServiceOptions,
   StoredPairRecord
 } from '@device/application/types.ts'
+import { prepareWifi } from '@device/application/wifi.ts'
 import { LockdownDomain } from '@device/domain/constants.ts'
 import { shortUdid } from '@device/domain/device.ts'
 import { tlsCredentials } from '@device/domain/pairing/pair-record.ts'
@@ -112,7 +114,7 @@ const sessionFor = (
     )
 
     return closeOnError(
-      await ctx.usbmux.connect(device.deviceId, port),
+      await connectToDevice(ctx, device, port),
       async (link) => {
         if (enableServiceSsl) await link.startTls(credentials)
         return link
@@ -177,5 +179,6 @@ export const openSession = async (
     options.autoPair ?? true
   )
   ctx.deps.logger.info('session opened', { device: shortUdid(device.udid) })
+  await prepareWifi(ctx, device, started.lockdown)
   return sessionFor(ctx, device, pairRecord, started)
 }

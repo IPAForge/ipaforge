@@ -8,6 +8,8 @@ const teamKey = ({ accountId, teamId }: TeamQuery) =>
 
 export const queryKeys = {
   devices: ['devices'] as const,
+  /** Whether the OS refuses local network access (macOS), so devices on Wi-Fi can't be found: from the feed. */
+  localNetworkDenied: ['local-network-denied'] as const,
   deviceStatus: (udid: string | undefined) =>
     ['devices', udid ?? null, 'status'] as const,
   accounts: ['accounts'] as const,

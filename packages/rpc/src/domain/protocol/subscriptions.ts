@@ -21,5 +21,6 @@ export const deviceWatchEventSchema = z.discriminatedUnion('type', [
     type: z.literal('detached'),
     deviceId: z.number().int(),
     udid: z.string().optional()
-  })
+  }),
+  z.object({ type: z.literal('network'), denied: z.boolean() })
 ])

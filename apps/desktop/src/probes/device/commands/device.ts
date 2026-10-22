@@ -17,6 +17,18 @@ export const listCommand =
     }
   }
 
+/** wifi-list: searches the network for known devices (usbmuxd's and --udid) and lists where each was found. */
+export const wifiListCommand =
+  ({ discoverDirect, show }: DeviceProbe) =>
+  async (): Promise<void> => {
+    const started = Date.now()
+    const found = await discoverDirect()
+    console.log(`searched the network for ${Date.now() - started} ms`)
+    if (found.length === 0) console.log('no known devices on Wi-Fi')
+    for (const device of found)
+      console.log(`${show(device.udid)}  wifi  ${device.address ?? '?'}`)
+  }
+
 export const infoCommand =
   ({ withDevice, show }: DeviceProbe) =>
   (): Promise<void> =>

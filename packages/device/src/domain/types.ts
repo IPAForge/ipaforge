@@ -1,12 +1,14 @@
 export type ConnectionType = 'usb' | 'network'
 
-/** A device as usbmuxd reports it. */
+/** A device as usbmuxd reports it, or as found on the local network (then with its `address`). */
 export type UsbmuxDevice = {
   readonly udid: string
-  /** usbmuxd's handle for this attachment (changes on every reconnect). */
+  /** usbmuxd's handle for this attachment (changes on every reconnect); negative for one found on Wi-Fi. */
   readonly deviceId: number
   readonly connectionType: ConnectionType
   readonly productId?: number
+  /** Its Wi-Fi address when found on the network: reached directly over TCP, without usbmuxd. */
+  readonly address?: string
 }
 
 export type DeviceEvent =
@@ -77,4 +79,10 @@ export type RemoveStaleOptions = {
   readonly now: Date
   /** Also remove this team's profiles whose app is no longer installed. */
   readonly teamId?: string
+}
+
+/** A device seen before, so it can be recognised on the network: its UDID and its real Wi-Fi MAC address. */
+export type KnownWifiDevice = {
+  readonly udid: string
+  readonly mac?: string | undefined
 }

@@ -1,6 +1,8 @@
 // Connected devices as a live feed, from usbmuxd's `Listen` instead of polling. One connection serves every
 // listener. When it drops (the usbmuxd service restarted, the computer slept), it reconnects with backoff and sends
 // one full list again; only when usbmuxd refuses `Listen` outright does it fall back to reading the list slowly.
+// Beside it, a search of the local network finds known devices on Wi-Fi without usbmuxd (it keeps going when
+// usbmuxd is missing), and says when the OS refuses local network access.
 
 import type {
   DeviceWatch,
@@ -28,16 +30,25 @@ const abortableSleep = (ms: number, signal: AbortSignal): Promise<void> =>
     )
   })
 
-/** One entry per device: a device on USB and Wi-Fi is listed with its USB link. */
+/** How good a link is: USB, then straight over Wi-Fi (faster than usbmuxd's), then usbmuxd over Wi-Fi. */
+const linkRank = (device: UsbmuxDevice): number => {
+  if (device.connectionType === 'usb') return 0
+  return device.address === undefined ? 2 : 1
+}
+
+/** One entry per device, with its best link. */
 const byDevice = (attached: ReadonlyMap<number, UsbmuxDevice>) => {
   const devices = new Map<string, UsbmuxDevice>()
   for (const device of attached.values()) {
     const known = devices.get(device.udid)
-    if (!known || device.connectionType === 'usb')
+    if (!known || linkRank(device) < linkRank(known))
       devices.set(device.udid, device)
   }
   return [...devices.values()]
 }
+
+const isLocalNetworkDenied = (error: unknown): boolean =>
+  error instanceof IPAForgeError && error.code === ErrorCode.LocalNetworkDenied
 
 /** usbmuxd answered `Listen` with an error before sending anything: it will not stream on this machine. */
 const isListenRefused = (error: unknown, received: boolean): boolean =>
@@ -56,6 +67,7 @@ export const createDeviceWatch = ({
   let attached = new Map<number, UsbmuxDevice>()
   let current: readonly UsbmuxDevice[] | undefined
   let controller: AbortController | undefined
+  let networkDenied = false
 
   const emit = (event: DeviceWatchEvent) => {
     for (const listener of [...listeners]) listener(event)
@@ -126,6 +138,35 @@ export const createDeviceWatch = ({
     })
   }
 
+  const setNetworkDenied = (denied: boolean) => {
+    if (denied === networkDenied) return
+    networkDenied = denied
+    emit({ type: 'network', denied })
+  }
+
+  /** Searches the network until aborted; retries with backoff, and ends when the host can't search at all. */
+  const searchNetwork = async (signal: AbortSignal) => {
+    let failures = 0
+    while (!signal.aborted) {
+      try {
+        await devices.watchNetwork((event) => {
+          setNetworkDenied(false)
+          apply(event)
+        }, signal)
+        return
+      } catch (error) {
+        if (signal.aborted) return
+        setNetworkDenied(isLocalNetworkDenied(error))
+        failures += 1
+        log.warn('network search failed; retrying', {
+          code: toIPAForgeError(error).code,
+          attempt: failures
+        })
+        await sleep(backoff(failures), signal)
+      }
+    }
+  }
+
   const run = async (signal: AbortSignal) => {
     let failures = 0
     while (!signal.aborted) {
@@ -155,6 +196,9 @@ export const createDeviceWatch = ({
     run(own.signal).catch(() => {
       // Only an abort ends the loop with an error; it is how the watch stops.
     })
+    searchNetwork(own.signal).catch(() => {
+      // As above: only an abort.
+    })
   }
 
   const stop = () => {
@@ -162,6 +206,7 @@ export const createDeviceWatch = ({
     controller = undefined
     attached = new Map()
     current = undefined
+    networkDenied = false
     log.info('stopped watching devices')
   }
 
@@ -170,7 +215,10 @@ export const createDeviceWatch = ({
       if (signal?.aborted) return () => {}
       listeners.add(listener)
       if (!controller) start()
-      else if (current) listener({ type: 'devices', devices: current })
+      else if (current) {
+        listener({ type: 'devices', devices: current })
+        if (networkDenied) listener({ type: 'network', denied: true })
+      }
       const unsubscribe = () => {
         signal?.removeEventListener('abort', unsubscribe)
         if (!listeners.delete(listener)) return

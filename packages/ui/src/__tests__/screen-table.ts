@@ -5,6 +5,7 @@ import {
   checklistShown,
   developerShown,
   fillPreload,
+  localNetworkNoticeShown,
   logsShown,
   openAddAllToSideStore,
   openPairingFiles,
@@ -75,6 +76,13 @@ export const screens = {
   devices: async (options: ScreenOptions) => {
     await renderScreen('/devices', { ...options, scenario: 'checklist-todo' })
     await checklistShown()
+  },
+  'devices-local-network': async (options: ScreenOptions) => {
+    await renderScreen('/devices', {
+      ...options,
+      scenario: 'local-network-denied'
+    })
+    await localNetworkNoticeShown()
   },
   apps: async (options: ScreenOptions) => {
     await renderScreen('/apps', options)

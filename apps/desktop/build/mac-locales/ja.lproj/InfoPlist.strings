@@ -1,0 +1,2 @@
+/* macOS shows this when IPAForge first looks for devices on the local network. */
+"NSLocalNetworkUsageDescription" = "IPAForge はローカルネットワーク上の iPhone と iPad を探し、ケーブルなしで Wi-Fi 経由でアプリをインストールします。";

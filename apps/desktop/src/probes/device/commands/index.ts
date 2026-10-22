@@ -6,7 +6,8 @@ import {
   listCommand,
   pairCommand,
   profilesCommand,
-  revealDevModeCommand
+  revealDevModeCommand,
+  wifiListCommand
 } from '@desktop/probes/device/commands/device.ts'
 import { installCommand } from '@desktop/probes/device/commands/install.ts'
 import {
@@ -31,5 +32,6 @@ export const deviceCommands = (probe: DeviceProbe): ProbeCommands => ({
   'afc-speed': afcSpeedCommand(probe),
   place: placeCommand(probe),
   'reveal-devmode': revealDevModeCommand(probe),
-  'rp-pair': remotePairCommand(probe)
+  'rp-pair': remotePairCommand(probe),
+  'wifi-list': wifiListCommand(probe)
 })

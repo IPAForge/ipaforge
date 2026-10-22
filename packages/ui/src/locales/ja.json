@@ -443,6 +443,10 @@
       "pairing_path_invalid": {
         "title": "このパスにはペアリングファイルを置けません",
         "body": "アプリのDocumentsまたはLibrary内で、.plistまたは.mobiledevicepairingで終わるパスを使ってください。"
+      },
+      "local_network_denied": {
+        "title": "IPAForge がネットワーク上のデバイスを探せません",
+        "body": "macOS が IPAForge にローカルネットワーク上のデバイスを探すことを許可していないため、Wi-Fi で iPhone に接続できません。ケーブル接続のデバイスは引き続き使えます。"
       }
     },
     "apple": {
@@ -877,9 +881,13 @@
       "changeAnisetteServer": {
         "how": "設定を開いて anisette サーバーをテストし、動作するものを選ぶか、自動に戻してください。",
         "button": "anisette サーバーを開く"
+      },
+      "allowLocalNetwork": {
+        "how": "システム設定 › プライバシーとセキュリティ › ローカルネットワーク で IPAForge をオンにしてから、もう一度お試しください。またはケーブルで接続してください。"
       }
     },
-    "reportHint": "診断情報を記入した新しいGitHub Issueを開きます。送信するまで何も送られません。"
+    "reportHint": "診断情報を記入した新しいGitHub Issueを開きます。送信するまで何も送られません。",
+    "allow-local-network": "ローカルネットワークへのアクセスを許可"
   },
   "devices": {
     "engine": {
@@ -958,7 +966,10 @@
       "disconnected": "{name}が切断されました",
       "aDevice": "デバイス"
     },
-    "savePairing": "ペアリングファイルを保存…"
+    "savePairing": "ペアリングファイルを保存…",
+    "localNetwork": {
+      "open": "ローカルネットワークの設定を開く"
+    }
   },
   "prompts": {
     "cancel": "キャンセル",

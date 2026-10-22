@@ -17,7 +17,7 @@ The detailed roadmap, with each phase's scope, is [design/roadmap.md](design/roa
 | 8 | Install & preload UX ✓ | One-click SideStore ✓, live run view ✓, recovery screens ✓, Apple ID switch ✓, preload picker ✓ (#59), app sources ✓ (#66), detailed install progress ✓ (#67), the Apps section ✓ (#68), Repair SideStore ✓ (#70), SideStore QR codes ✓ (#71), on-device checklist ✓ (#72), the smaller notes ✓ (#73), anisette servers in Settings ✓ (#80), days left as SideStore counts them and SideStore refreshed with its own date ✓ (#81), installs that never hang on a locked device and Cancel refresh ✓ (#93) |
 | 9 | Desktop app ✓ (#61, #62, #63, #64, #65, #69, #74, #75, #77) | Electron packages for Windows, macOS, Linux ✓; the macOS app signed with IPAForge's own certificate ✓; auto-update and What's new ✓ (#74); Windows signing and notarisation moved to 1.0 |
 | 10 | Management tools ✓ | Developer Portal page (#86), pairing files per app (#87), saving signed IPAs (#90), `.p12` import and export (#93) |
-| 11 | Wireless & remote pairing | 11.1 the iOS 17.4+ remote pairing file for SideStore ✓ (#82); 11.2 installing through the iOS 17+ device tunnel over USB and Wi-Fi, and finding devices on the network; 11.3 Apple TV and Vision Pro (installing over Wi-Fi to a paired device works already) |
+| 11 | Wireless & remote pairing | 11.1 the iOS 17.4+ remote pairing file for SideStore ✓ (#82); 11.2a Wi-Fi without usbmuxd, devices found on the network ✓ (#97); 11.2b–d installing through the iOS 17+ device tunnel over USB and Wi-Fi; 11.3 Apple TV and Vision Pro (installing over Wi-Fi to a paired device works already) |
 | 12 | Release 1.0 | Docs site, translations, security review, Windows code signing and Apple notarisation, reusable packages on npm |
 
 ## See Also

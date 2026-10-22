@@ -33,6 +33,8 @@ export const RECOVERY_CATALOGUE = {
   ],
   'device.profile_not_found': [R.Retry, R.ReinstallApp],
   'device.pairing_path_invalid': [R.Retry],
+  // A cable still works while Wi-Fi is refused.
+  'device.local_network_denied': [R.AllowLocalNetwork, R.ReconnectDevice],
 
   // apple
   'apple.anisette_unavailable': [

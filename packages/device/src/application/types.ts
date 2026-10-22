@@ -121,6 +121,8 @@ export type PlacedPairing = {
 export type OpenSessionOptions = PairOptions & {
   /** Pair automatically (trust prompt) when there is no usable pair record. Default true. */
   readonly autoPair?: boolean
+  /** `wifi`: only straight over Wi-Fi, skipping the cable and usbmuxd (maintainer probes). Default: the best link. */
+  readonly route?: 'best' | 'wifi'
 }
 
 export type StartServiceOptions = {

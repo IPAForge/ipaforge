@@ -193,7 +193,8 @@ export const createFakeEngine = ({
     new Promise<void>((resolve) => setTimeout(resolve, appleDelayMs)),
   devices = createFakeDeviceFeed(
     scenario === 'hot-plug',
-    scenario === 'devices' ? showcaseDevices : undefined
+    scenario === 'devices' ? showcaseDevices : undefined,
+    scenario === 'local-network-denied'
   )
 }: FakeEngineOptions = {}): Engine => {
   const world = createFakeWorld(scenario, delayMs, appleAnswer)

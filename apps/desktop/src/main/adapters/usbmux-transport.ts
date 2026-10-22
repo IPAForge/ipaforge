@@ -1,6 +1,9 @@
-// Node DeviceTransport: connects to the system usbmuxd (Unix socket on macOS/Linux, TCP 27015 on Windows).
+// Node DeviceTransport: connects to the system usbmuxd (Unix socket on macOS/Linux, TCP 27015 on Windows), and
+// straight to devices on the local network (TCP to their Wi-Fi address, and the UDP socket that finds them).
 import { connect, type Socket } from 'node:net'
 
+import { openMulticast } from '@desktop/main/adapters/network/multicast-socket.ts'
+import { connectTcp } from '@desktop/main/adapters/network/tcp-connection.ts'
 import { createNodeConnection } from '@desktop/main/adapters/node-connection.ts'
 import {
   describeEndpoint,
@@ -46,5 +49,7 @@ const open = (endpoint: UsbmuxdEndpoint): Promise<Socket> =>
 export const createNodeUsbmuxTransport = (
   endpoint: UsbmuxdEndpoint = resolveUsbmuxdEndpoint()
 ): DeviceTransport => ({
-  connectUsbmux: async () => createNodeConnection(await open(endpoint))
+  connectUsbmux: async () => createNodeConnection(await open(endpoint)),
+  connectTcp,
+  openMulticast
 })

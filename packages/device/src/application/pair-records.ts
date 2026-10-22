@@ -18,12 +18,24 @@ export const notPairedError = (udid: string): IPAForgeError =>
     data: { device: shortUdid(udid) }
   })
 
-/** The record the OS keeps in usbmuxd once the user has tapped Trust; `undefined` while there is none. */
+const isUsbmuxdMissing = (error: unknown): boolean =>
+  error instanceof IPAForgeError && error.code === ErrorCode.UsbmuxdUnavailable
+
+/**
+ * The record the OS keeps in usbmuxd once the user has tapped Trust; `undefined` while there is none, and when
+ * there is no usbmuxd at all (a device reached on Wi-Fi then uses IPAForge's own record).
+ */
 export const readOsPairRecord = async (
   ctx: DeviceContext,
   udid: string
 ): Promise<PairRecord | undefined> => {
-  const bytes = await ctx.usbmux.readPairRecord(udid)
+  let bytes: Uint8Array | undefined
+  try {
+    bytes = await ctx.usbmux.readPairRecord(udid)
+  } catch (error) {
+    if (!isUsbmuxdMissing(error)) throw error
+    return undefined
+  }
 
   return bytes ? parsePairRecord(bytes, ctx.deps.config.plist) : undefined
 }

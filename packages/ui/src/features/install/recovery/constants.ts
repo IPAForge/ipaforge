@@ -138,6 +138,11 @@ export const fixes = {
     kind: 'info',
     howKey: 'recovery.fix.installDeviceSupport.how'
   },
+  [R.AllowLocalNetwork]: {
+    kind: 'resume',
+    howKey: 'recovery.fix.allowLocalNetwork.how',
+    buttonKey: 'recovery.retry'
+  },
   [R.ReinstallApp]: {
     kind: 'resume',
     howKey: 'recovery.fix.reinstallApp.how',

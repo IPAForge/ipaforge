@@ -1,5 +1,7 @@
-// Connections to lockdownd: plain (for pairing) and with a session started (for everything else).
+// Connections to lockdownd: plain (for pairing) and with a session started (for everything else), through
+// usbmuxd or straight to the device on Wi-Fi.
 import type { DeviceContext } from '@device/application/context.ts'
+import { connectToDevice } from '@device/application/device-link.ts'
 import { LOCKDOWN_PORT } from '@device/domain/constants.ts'
 import { tlsCredentials } from '@device/domain/pairing/pair-record.ts'
 import type { PairRecord } from '@device/domain/pairing/types.ts'
@@ -18,7 +20,7 @@ export const openLockdown = async (
   ctx: DeviceContext,
   device: UsbmuxDevice
 ): Promise<LockdownClient> => {
-  const link = await ctx.usbmux.connect(device.deviceId, LOCKDOWN_PORT)
+  const link = await connectToDevice(ctx, device, LOCKDOWN_PORT)
   const lockdown = createLockdownClient(link, {
     label: ctx.deps.config.label,
     limits: ctx.limits,

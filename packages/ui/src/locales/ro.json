@@ -443,6 +443,10 @@
       "pairing_path_invalid": {
         "title": "Calea nu poate ține un fișier de asociere",
         "body": "Folosește o cale în Documents sau Library a aplicației care se termină în .plist sau .mobiledevicepairing."
+      },
+      "local_network_denied": {
+        "title": "IPAForge nu poate căuta dispozitive în rețea",
+        "body": "macOS nu i-a permis lui IPAForge să găsească dispozitive în rețeaua locală, așa că nu poate ajunge la iPhone-uri prin Wi-Fi. Dispozitivele conectate prin cablu funcționează în continuare."
       }
     },
     "apple": {
@@ -877,9 +881,13 @@
       "changeAnisetteServer": {
         "how": "Deschide Setările, testează serverele anisette și alege unul care funcționează, sau revino la Automat.",
         "button": "Deschide serverele anisette"
+      },
+      "allowLocalNetwork": {
+        "how": "Deschide Configurări sistem › Confidențialitate și securitate › Rețea locală, activează IPAForge, apoi încearcă din nou. Sau conectează dispozitivul prin cablu."
       }
     },
-    "reportHint": "Deschide un tichet nou pe GitHub, cu diagnosticul completat. Nu se trimite nimic până nu îl publici tu."
+    "reportHint": "Deschide un tichet nou pe GitHub, cu diagnosticul completat. Nu se trimite nimic până nu îl publici tu.",
+    "allow-local-network": "Permite accesul la rețeaua locală"
   },
   "devices": {
     "engine": {
@@ -958,7 +966,10 @@
       "disconnected": "{name} s-a deconectat",
       "aDevice": "Un dispozitiv"
     },
-    "savePairing": "Salvează fișierul de asociere…"
+    "savePairing": "Salvează fișierul de asociere…",
+    "localNetwork": {
+      "open": "Deschide setările Rețea locală"
+    }
   },
   "prompts": {
     "cancel": "Anulează",
