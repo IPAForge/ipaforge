@@ -38,7 +38,10 @@ const hostIdFor = async (
   }
 }
 
-/** The known device this advert is from, or `undefined` when it is someone else's (or not paired with us). */
+/**
+ * The known device this advert is from, or `undefined` when it is someone else's (or not paired with us). A signed
+ * advert (iOS 26.4+) is matched by its tags only; the MAC address is for adverts without them.
+ */
 const matchAdvert = async (
   ctx: DeviceContext,
   advert: WifiAdvert
@@ -51,6 +54,8 @@ const matchAdvert = async (
       for (const tag of advert.authTags.slice(0, MAX_AUTH_TAGS))
         if (await authTagMatches(hostId, advert.identifier, tag)) return udid
     }
+    // A device that signs its advert signs it for every computer it's paired with: no tag of ours, not ours.
+    return undefined
   }
   return known.find(
     (device) => device.mac !== undefined && device.mac === advert.mac

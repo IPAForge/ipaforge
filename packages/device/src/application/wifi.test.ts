@@ -169,4 +169,16 @@ describe('Wi-Fi without usbmuxd', () => {
       rig.manager.watchNetwork(() => {}, new AbortController().signal)
     ).rejects.toMatchObject({ code: ErrorCode.LocalNetworkDenied })
   })
+
+  it("doesn't match a signed advert by its MAC when none of its tags is this computer's", async () => {
+    const rig = await createRig()
+    await openAndClose(rig)
+    rig.fake.wifiTxt.set(rig.device.udid, [
+      'identifier=0A1B2C3D-4E5F-4A6B-8C7D-9E0F1A2B3C4D',
+      'authTag=AAAAAAAAAAA='
+    ])
+    moveToWifi(rig)
+
+    expect(await rig.manager.discoverNetwork()).toEqual([])
+  })
 })
