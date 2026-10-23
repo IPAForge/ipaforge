@@ -1,5 +1,5 @@
 import type { DeviceContext } from '@device/application/context.ts'
-import { connectToDevice } from '@device/application/device-link.ts'
+import { createServiceRouter } from '@device/application/device-link.ts'
 import {
   type LockdownSession,
   openLockdownSession
@@ -13,17 +13,13 @@ import type {
   DeviceSession,
   OpenSessionOptions,
   StartedSession,
-  StartServiceOptions,
   StoredPairRecord
 } from '@device/application/types.ts'
 import { prepareWifi } from '@device/application/wifi.ts'
 import { LockdownDomain } from '@device/domain/constants.ts'
 import { shortUdid } from '@device/domain/device.ts'
-import { tlsCredentials } from '@device/domain/pairing/pair-record.ts'
 import type { PairRecord } from '@device/domain/pairing/types.ts'
 import type { UsbmuxDevice } from '@device/domain/types.ts'
-import { closeOnError } from '@device/infrastructure/closeable.ts'
-import type { Link } from '@device/infrastructure/framing/link.ts'
 import { LockdownErrorName } from '@device/infrastructure/lockdown/constants.ts'
 import { toDeviceInfo } from '@device/infrastructure/lockdown/device-info.ts'
 import { isLockdownError } from '@device/infrastructure/lockdown/errors.ts'
@@ -97,30 +93,17 @@ const sessionFor = (
   ctx: DeviceContext,
   device: UsbmuxDevice,
   pairRecord: PairRecord,
-  { lockdown, sessionId }: LockdownSession
+  { lockdown, sessionId }: LockdownSession,
+  route: OpenSessionOptions['route']
 ): DeviceSession => {
   const { logger } = ctx.deps
-  const credentials = tlsCredentials(pairRecord)
+  const services = createServiceRouter(
+    ctx,
+    device,
+    { lockdown, pairRecord },
+    route === 'tunnel' ? 'tunnel' : 'fallback'
+  )
   let closed = false
-
-  const startService = async (
-    service: string,
-    options: StartServiceOptions = {}
-  ): Promise<Link> => {
-    const escrowBag = options.escrowBag ? pairRecord.escrowBag : undefined
-    const { port, enableServiceSsl } = await lockdown.startService(
-      service,
-      escrowBag
-    )
-
-    return closeOnError(
-      await connectToDevice(ctx, device, port),
-      async (link) => {
-        if (enableServiceSsl) await link.startTls(credentials)
-        return link
-      }
-    )
-  }
 
   const enableWifiDebugging = async (): Promise<void> => {
     try {
@@ -140,6 +123,9 @@ const sessionFor = (
   const close = async (): Promise<void> => {
     if (closed) return
     closed = true
+    await services.close().catch((error: unknown) => {
+      logger.debug('closing the tunnel failed (ignored)', { cause: error })
+    })
     try {
       await lockdown.stopSession(sessionId)
     } catch (error) {
@@ -156,7 +142,8 @@ const sessionFor = (
     info: async () => toDeviceInfo(await lockdown.getValue()),
     getValue: (key, domain) => lockdown.getValue(key, domain),
     setValue: (domain, key, value) => lockdown.setValue(domain, key, value),
-    startService,
+    startService: services.startService,
+    tunnel: services.tunnel,
     enableWifiDebugging,
     close
   }
@@ -180,5 +167,5 @@ export const openSession = async (
   )
   ctx.deps.logger.info('session opened', { device: shortUdid(device.udid) })
   await prepareWifi(ctx, device, started.lockdown)
-  return sessionFor(ctx, device, pairRecord, started)
+  return sessionFor(ctx, device, pairRecord, started, options.route)
 }

@@ -8,15 +8,23 @@ import {
   serveAfc
 } from '@device/__tests__/fake-device/fake-afc.ts'
 import { createPipe } from '@device/__tests__/fake-device/pipe.ts'
+import {
+  type FakeTunnel,
+  type FakeTunnelOptions,
+  serveFakeTunnel
+} from '@device/__tests__/fake-tunnel/fake-tunnel.ts'
 import { lockdownAdvert } from '@device/__tests__/mdns-answer.ts'
 import { DEFAULT_DEVICE_CONFIG } from '@device/domain/config.ts'
 import {
+  CORE_DEVICE_PROXY_SERVICE,
   LOCKDOWN_PORT,
   Service,
   UsbmuxResult
 } from '@device/domain/constants.ts'
+import { parseVersion } from '@device/domain/device.ts'
 import { serializePairRecord } from '@device/domain/pairing/pair-record.ts'
 import { encodePem } from '@device/domain/pairing/pem.ts'
+import { supportsRemotePairing } from '@device/domain/pairing-apps.ts'
 import type {
   Datagram,
   DeviceTransport,
@@ -75,6 +83,8 @@ export type FakeDeviceOptions = {
   readonly locked?: boolean
   /** A passcode is set (Wi-Fi debugging needs one). */
   readonly hasPasscode?: boolean
+  /** CoreDeviceProxy opens the iOS 17.4+ tunnel. Default: from iOS 17.4. */
+  readonly tunnel?: boolean
 }
 
 /** What the host's TLS adapter throws when the handshake fails (`tlsHandshakeFails`). */
@@ -109,6 +119,14 @@ export type FakeDevice = {
   /** The next install gets no answer at all, as from a device that locked mid-install. */
   installGoesSilent: boolean
   devicePublicKeyPem: Uint8Array
+  /** CoreDeviceProxy is there (iOS 17.4 and later). */
+  tunnel: boolean
+  /** Services lockdown's StartService refuses (`InvalidService`), though their shims in the tunnel work. */
+  readonly refusedServices: Set<string>
+  /** Every tunnel opened, in order. */
+  readonly tunnels: FakeTunnel[]
+  /** How the next tunnels behave (TCP peer, refused check-ins…). */
+  tunnelOptions: Partial<FakeTunnelOptions>
 }
 
 export type FakeUsbmuxdOptions = {
@@ -191,7 +209,14 @@ export const createFakeDevice = async (
   nextInstallError: undefined,
   nextInstallDescription: undefined,
   installGoesSilent: false,
-  devicePublicKeyPem: await sharedDevicePublicKey()
+  devicePublicKeyPem: await sharedDevicePublicKey(),
+  // CoreDeviceProxy came with remote pairing, in iOS 17.4.
+  tunnel:
+    options.tunnel ??
+    supportsRemotePairing(parseVersion(options.productVersion ?? '18.2')),
+  refusedServices: new Set(),
+  tunnels: [],
+  tunnelOptions: {}
 })
 
 export const addApp = (
@@ -342,17 +367,21 @@ const startSession: LockdownHandler = async ({
   ])
 }
 
-const isService = (service: string): boolean =>
-  Object.values(Service).includes(service as never)
+const isService = (service: string, device: FakeDevice): boolean =>
+  service === CORE_DEVICE_PROXY_SERVICE
+    ? device.tunnel
+    : Object.values(Service).includes(service as never) &&
+      !device.refusedServices.has(service)
 
 const startService: LockdownHandler = async ({
   message,
+  device,
   answer,
   fail,
   openPort
 }) => {
   const service = String(message.Service)
-  if (!isService(service)) return fail('InvalidService')
+  if (!isService(service, device)) return fail('InvalidService')
   await answer([
     ['Port', openPort(service)],
     ['Service', service],
@@ -583,12 +612,36 @@ const serveAmfi = async (link: Link, device: FakeDevice): Promise<void> => {
   await sendPlist(link, createDict([['success', true]]))
 }
 
+/** CoreDeviceProxy: the tunnel, with a shim for every service above. */
+const serveTunnel = async (link: Link, device: FakeDevice): Promise<void> => {
+  const shims = new Map(
+    Object.values(Service).map((service) => [
+      service,
+      (shimLink: Link) => serveService(service, shimLink, device)
+    ])
+  )
+  device.requests.push('tunnel:open')
+  const tunnel = serveFakeTunnel(link, {
+    shims,
+    xpcServices: ['com.apple.coredevice.appservice'],
+    properties: {
+      UniqueDeviceID: device.udid,
+      ProductVersion: device.productVersion
+    },
+    ...device.tunnelOptions
+  })
+  device.tunnels.push(tunnel)
+  await tunnel.closed
+}
+
 const serveService = (
   service: string,
   link: Link,
   device: FakeDevice
 ): Promise<void> => {
   switch (service) {
+    case CORE_DEVICE_PROXY_SERVICE:
+      return serveTunnel(link, device)
     case Service.Afc:
       return serveAfc(link, device.media)
     case Service.InstallationProxy:

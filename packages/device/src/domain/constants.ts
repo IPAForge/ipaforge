@@ -35,6 +35,10 @@ export const Service = {
   Amfi: 'com.apple.amfi.lockdown'
 } as const
 
+/** The lockdown service that opens the iOS 17.4+ device tunnel (CDTunnel) over the session's link. */
+export const CORE_DEVICE_PROXY_SERVICE =
+  'com.apple.internal.devicecompute.CoreDeviceProxy'
+
 /** The wireless lockdown key that lets the device take connections over Wi-Fi (Finder's "Show this iPhone when on Wi-Fi"). */
 export const WIFI_CONNECTIONS_KEY = 'EnableWifiConnections'
 

@@ -447,6 +447,10 @@
       "local_network_denied": {
         "title": "IPAForge can't look for devices on your network",
         "body": "macOS hasn't allowed IPAForge to find devices on your local network, so it can't reach iPhones over Wi-Fi. Devices on a cable still work."
+      },
+      "tunnel_unavailable": {
+        "title": "The device's tunnel didn't open",
+        "body": "IPAForge couldn't open the secure tunnel that iOS 17.4 and later offer over the cable. Check that the device runs iOS 17.4 or later, reconnect it and try again."
       }
     },
     "apple": {

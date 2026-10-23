@@ -24,7 +24,7 @@ Core packages define **ports**, which are interfaces. `apps/desktop` provides th
 |---|---|
 | `kernel` | `IPAForgeError` + `ErrorCode`, ports (Logger, HttpClient, SecretStore, FileSource, Clock, Cache), byte utilities |
 | `signer` | Mach-O code signing, CodeResources, entitlements, CMS, IPA streaming |
-| `device` | usbmux, lockdown, pairing, AFC, house_arrest, installation_proxy |
+| `device` | usbmux, lockdown, pairing, AFC, house_arrest, installation_proxy, Wi-Fi discovery, and the iOS 17.4+ device tunnel (its own IPv6 and TCP client, RSD, the services inside) |
 | `apple` | Apple ID login (GSA SRP + 2FA), anisette, developer services |
 | `catalog` | Release sources, GitHub resolution, downloads, cache, and AltStore-format app sources (a `SourceStore` port keeps the list and each source's last good copy) |
 | `installer` | Pipelines and flows (install SideStore, preload, pairing, refresh, Repair SideStore), diagnostics, the **Engine** facade |

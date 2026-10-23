@@ -4,6 +4,11 @@ import type { RemotePairingRecord } from '@device/domain/remote-pairing/types.ts
 import type { DeviceInfo, UsbmuxDevice } from '@device/domain/types.ts'
 import type { Link } from '@device/infrastructure/framing/link.ts'
 import type { ContainerMode } from '@device/infrastructure/house-arrest/client.ts'
+import type {
+  RsdService,
+  XpcDictionary
+} from '@device/infrastructure/rsd/types.ts'
+import type { TcpStats } from '@device/infrastructure/tunnel/types.ts'
 import type { PlistValue } from '@ipaforge/kernel'
 
 export type AppFileTarget = {
@@ -121,8 +126,12 @@ export type PlacedPairing = {
 export type OpenSessionOptions = PairOptions & {
   /** Pair automatically (trust prompt) when there is no usable pair record. Default true. */
   readonly autoPair?: boolean
-  /** `wifi`: only straight over Wi-Fi, skipping the cable and usbmuxd (maintainer probes). Default: the best link. */
-  readonly route?: 'best' | 'wifi'
+  /**
+   * `wifi`: only straight over Wi-Fi, skipping the cable and usbmuxd (maintainer probes). `tunnel`: the best link,
+   * with every service that has a counterpart in the iOS 17.4+ tunnel opened through it. Default: the best link,
+   * with the tunnel only as a fallback for services lockdown won't start.
+   */
+  readonly route?: 'best' | 'wifi' | 'tunnel'
 }
 
 export type StartServiceOptions = {
@@ -139,6 +148,11 @@ export type DeviceSession = {
   setValue(domain: string, key: string, value: PlistValue): Promise<void>
   /** Starts `service` and returns a new connection to it (TLS when the device asks for it). */
   startService(service: string, options?: StartServiceOptions): Promise<Link>
+  /**
+   * The device's iOS 17.4+ tunnel, opened on first use over this session's link and closed with the session.
+   * Throws `device.tunnel_unavailable` when the device can't open one (before iOS 17.4).
+   */
+  tunnel(): Promise<DeviceTunnel>
   /**
    * Lets the device be reached over Wi-Fi/VPN (SideStore and StikDebug use the pairing file this way).
    * lockdownd answers `MissingValue` when no passcode is set → `device.passcode_required`.
@@ -169,3 +183,27 @@ export type RemotePairingResult = {
 export type RemotePairingState =
   | { readonly state: 'accepted' | 'rejected'; readonly identifier: string }
   | { readonly state: 'missing' }
+
+/**
+ * The iOS 17.4+ device tunnel: CoreDeviceProxy's packet tunnel with IPAForge's own TCP inside, and the services the
+ * device's RSD lists there. Lockdown services have a counterpart (`<service>.shim.remote`) that speaks the same
+ * protocol without TLS once checked in.
+ */
+export type DeviceTunnel = {
+  /** The largest packet IPAForge sends through it. */
+  readonly mtu: number
+  readonly services: ReadonlyMap<string, RsdService>
+  /** What RSD says about the device (UDID, iOS version, model…). */
+  readonly properties: XpcDictionary
+  /** A checked-in connection to lockdown `service`'s counterpart, or `undefined` when the tunnel has none. */
+  openShim(service: string): Promise<Link | undefined>
+  stats(): TcpStats
+  close(): Promise<void>
+}
+
+/** How a session reaches its services: lockdown `StartService`, or the tunnel. */
+export type ServiceRouter = {
+  startService(service: string, options?: StartServiceOptions): Promise<Link>
+  tunnel(): Promise<DeviceTunnel>
+  close(): Promise<void>
+}

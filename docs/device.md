@@ -2,7 +2,7 @@
 
 # Talking to the Device
 
-`@ipaforge/device` installs apps, manages provisioning profiles and places pairing files on an iPhone or iPad. It never drives USB itself: it talks to the operating system's **usbmuxd**, which already owns the device, so it works next to Finder, Apple Devices and iTunes. On Wi-Fi it can also reach a device it knows directly, without usbmuxd (see [Wi-Fi without usbmuxd](#wi-fi-without-usbmuxd)).
+`@ipaforge/device` installs apps, manages provisioning profiles and places pairing files on an iPhone or iPad. It never drives USB itself: it talks to the operating system's **usbmuxd**, which already owns the device, so it works next to Finder, Apple Devices and iTunes. On Wi-Fi it can also reach a device it knows directly, without usbmuxd (see [Wi-Fi without usbmuxd](#wi-fi-without-usbmuxd)). On iOS 17.4 and later it can also open the device's own tunnel (see [The device tunnel](#the-device-tunnel-ios-174-and-later)).
 
 | OS | How IPAForge reaches the device | If it's missing |
 |---|---|---|
@@ -35,6 +35,19 @@ A device this computer has opened before can be reached on the same Wi-Fi networ
 - **Which link is used:** USB first, then straight over Wi-Fi, then usbmuxd's own Wi-Fi link. Straight over Wi-Fi measured 16–18 MiB/s against 6.4 MiB/s for usbmuxd's link, and ~37 MiB/s over USB.
 - A device is gone after a goodbye from it, or when it hasn't answered for three rounds.
 - **macOS asks first.** The first search shows "find devices on your local network" (the reason is in the app's Info.plist, translated). If it's refused, sends fail with "no route to host", which IPAForge reports as `device.local_network_denied`, and the Devices page explains how to allow it. Devices on a cable still work.
+
+## The device tunnel (iOS 17.4 and later)
+
+From iOS 17.4 a device offers a second way to its services: a packet tunnel, the way Xcode reaches it. Installs don't need it, so they still go the classic way, lockdown `StartService` on the session's link, which works on every iOS. The tunnel is used when lockdown won't start a service: IPAForge then opens it once for the session and reaches that service through it. Maintainer tools can also send every service through it (`route: "tunnel"`).
+
+- **Opening it:** lockdown starts `com.apple.internal.devicecompute.CoreDeviceProxy` over the session's link (TLS with the pair record, as for any service). A `CDTunnel` handshake (the ASCII magic, a 2-byte big-endian length, JSON) asks for an MTU and gets both tunnel addresses, the agreed MTU and the port of the device's service discovery (RSD). They're new for every tunnel and never stored. Before iOS 17.4 the service doesn't exist: `device.tunnel_unavailable`.
+- **No network interface, no admin rights:** after the handshake the connection carries raw IPv6 packets, and IPAForge runs its own TCP client over them, in TypeScript, in `packages/device`. Client connections only, to one peer. Window scaling both ways, sending limited by the device's window, every in-order segment acknowledged at once, and simple loss recovery: a retransmission timer with back-off, fast retransmit on three duplicate ACKs, and a retransmit on every partial ACK until the loss is repaired. A retransmission goes out ahead of the packets still waiting to be written, so a full window queued behind it can't delay it past the next timeout. A connection that gets no ACK through 8 timeouts in a row fails with `device.timeout`, unless the device keeps answering with a closed window.
+- **Two rules from measuring a real iPhone (iOS 26.6.1, USB):**
+  1. **One packet per write, one write at a time.** When writes are left pending, the TLS socket under the tunnel bundles them into one TLS record of up to 16 KB, and the device loses packets from bundled records, at any rate. Serialized, a 100 MiB upload ran at 34 MiB/s with no retransmission, against ~35.5 MiB/s for the classic path.
+  2. **Packets to the device stay under 8 KB.** Larger ones stall the connection, whatever MTU the tunnel agreed. IPAForge asks for MTU 8000 and never sends a larger packet (`tunnelMtu`): 1500 gave 29.8 MiB/s, 6000 33.7, 8000 34.2.
+- **Finding services:** RSD speaks RemoteXPC, binary XPC objects carried in a minimal HTTP/2 (empty header blocks, no HPACK). The client opens the root and reply streams, then sends its own `Handshake` right away: current iOS sends its service map only in answer to one. The first message on the root stream must be an empty dictionary flagged exactly `AlwaysSet` (with `DataPresent` added the device goes silent). The answer lists every service with its port, and the device's properties; a tunnel that answers with another device's UDID is refused.
+- **Services:** each lockdown service has a counterpart in the tunnel, `<service>.shim.remote` (`com.apple.afc.shim.remote`, `com.apple.mobile.installation_proxy.shim.remote`, house_arrest, misagent, amfi). A connection to one starts with `RSDCheckin` (answered with `RSDCheckin`, then `StartService`) and then speaks the service's usual protocol without TLS, because the tunnel is already encrypted. AFC, installation_proxy and the rest run unchanged on top. A signed SideStore installed this way, tunnel only, in 2.1 s.
+- The tunnel closes with the session.
 
 ## What it can do
 
@@ -93,6 +106,7 @@ iOS 17.4 added a second kind of pairing, remote pairing, which newer SideStore b
 | `device.profile_not_found` (`0xe8008015`) | A bundle has no matching profile, or the device registration is still pending | Retry later; re-provision |
 | `device.install_failed` | Any other installd error; its name is in the details | See the details |
 | `device.local_network_denied` | macOS refused IPAForge local network access, so devices on Wi-Fi can't be found | System Settings › Privacy & Security › Local Network › IPAForge; or use a cable |
+| `device.tunnel_unavailable` | The device didn't open its tunnel (it runs an iOS before 17.4, or refused CoreDeviceProxy) | Update the device to iOS 17.4 or later; reconnect it |
 
 ## For contributors
 
@@ -106,10 +120,13 @@ pnpm --filter @ipaforge/desktop device-probe rp-pair            # iOS 17.4+: mak
 pnpm --filter @ipaforge/desktop device-probe afc-speed [--mb 32]   # times AFC writes per chunk size (written, then deleted)
 pnpm --filter @ipaforge/desktop device-probe wifi-list [--udid <udid>]   # finds known devices on Wi-Fi, without usbmuxd
 pnpm --filter @ipaforge/desktop device-probe info --direct [--udid <udid>]   # any device command, straight over Wi-Fi only
+pnpm --filter @ipaforge/desktop device-probe rsd-services       # iOS 17.4+: the device's properties and services inside its tunnel
+pnpm --filter @ipaforge/desktop device-probe tunnel-install [<signed.ipa>] [--mb 100] [--compare]   # a timed upload and install through the tunnel
+pnpm --filter @ipaforge/desktop device-probe apps --tunnel      # any device command, with every service through the tunnel
 IPAFORGE_DEVICE=1 pnpm vitest run apps/desktop/src/main/adapters/device.hardware.test.ts
 ```
 
-Unit tests run against an in-memory fake device (`packages/device/src/__tests__/fake-device/`), which simulates usbmuxd, lockdownd and every service, and a fake Wi-Fi (direct TCP and mDNS answers), so CI needs no hardware.
+Unit tests run against an in-memory fake device (`packages/device/src/__tests__/fake-device/`), which simulates usbmuxd, lockdownd and every service, a fake Wi-Fi (direct TCP and mDNS answers) and a fake device tunnel (`__tests__/fake-tunnel/`: CDTunnel, a TCP peer written apart from the client that can drop, duplicate or hold back segments and close its window, RSD and the shims), so CI needs no hardware.
 
 ## See Also
 

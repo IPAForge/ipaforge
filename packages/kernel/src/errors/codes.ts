@@ -27,6 +27,8 @@ export const ErrorCode = {
   ProfileNotFound: 'device.profile_not_found',
   PairingPathInvalid: 'device.pairing_path_invalid',
   LocalNetworkDenied: 'device.local_network_denied',
+  /** The device didn't open its iOS 17.4+ tunnel (an older iOS, or the tunnel service refused). */
+  TunnelUnavailable: 'device.tunnel_unavailable',
 
   // apple
   AnisetteUnavailable: 'apple.anisette_unavailable',

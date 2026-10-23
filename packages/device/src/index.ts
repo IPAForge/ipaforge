@@ -1,4 +1,5 @@
-// Public API of @ipaforge/device: talks to iPhones and iPads through the system usbmuxd.
+// Public API of @ipaforge/device: talks to iPhones and iPads through the system usbmuxd, straight over Wi-Fi, and
+// through the iOS 17.4+ device tunnel.
 
 export { assertCanRunSideloadedApps } from '@device/application/checks.ts'
 export type { DeviceHandle } from '@device/application/handle.ts'
@@ -13,6 +14,7 @@ export type {
   DeveloperModeState,
   DeviceCheck,
   DeviceSession,
+  DeviceTunnel,
   InstallIpaOptions,
   InstallIpaProgress,
   InstallStage,
@@ -36,6 +38,7 @@ export {
   resolveDeviceConfig
 } from '@device/domain/config.ts'
 export {
+  CORE_DEVICE_PROXY_SERVICE,
   InstalldCode,
   LOCKDOWN_PORT,
   Service
@@ -104,4 +107,12 @@ export {
   MDNS_PORT
 } from '@device/infrastructure/mdns/constants.ts'
 export { createPairRecord } from '@device/infrastructure/pairing/certificates.ts'
+export { SHIM_SUFFIX } from '@device/infrastructure/rsd/constants.ts'
+export type {
+  RsdService,
+  XpcDictionary,
+  XpcValue
+} from '@device/infrastructure/rsd/types.ts'
+export { XpcUuid } from '@device/infrastructure/rsd/xpc-uuid.ts'
+export type { TcpStats } from '@device/infrastructure/tunnel/types.ts'
 export type { DeviceDeps, DeviceDepsInput, Sleep } from '@device/types.ts'

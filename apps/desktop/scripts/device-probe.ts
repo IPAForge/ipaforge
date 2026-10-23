@@ -14,9 +14,13 @@
 //   pnpm --filter @ipaforge/desktop device-probe reveal-devmode
 //   pnpm --filter @ipaforge/desktop device-probe rp-pair   (iOS 17.4+: makes a remote pairing, then verifies it)
 //   pnpm --filter @ipaforge/desktop device-probe wifi-list [--udid <udid>]   (finds known devices on Wi-Fi, no usbmuxd)
+//   pnpm --filter @ipaforge/desktop device-probe rsd-services   (iOS 17.4+: the device's services inside its tunnel)
+//   pnpm --filter @ipaforge/desktop device-probe tunnel-install [<signed.ipa>] [--mb 100] [--compare]
+//     (iOS 17.4+: a timed upload, and an install, with every service through the tunnel; --compare: and classic)
 //
 // --direct (any device command): reach the device straight over Wi-Fi only, skipping the cable and usbmuxd. The
 // devices to look for are usbmuxd's and --udid; their pair records come from usbmuxd.
+// --tunnel (any device command): open every service through the iOS 17.4+ device tunnel when it has one there.
 //
 // `pair` (and any command on a device without a pair record) waits for the OS to pair: unlock the device and tap
 // Trust, and the OS stores its record in usbmuxd. If none appears within the timeout, or with --own, IPAForge pairs

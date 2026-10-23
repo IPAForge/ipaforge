@@ -35,6 +35,7 @@ export const RECOVERY_CATALOGUE = {
   'device.pairing_path_invalid': [R.Retry],
   // A cable still works while Wi-Fi is refused.
   'device.local_network_denied': [R.AllowLocalNetwork, R.ReconnectDevice],
+  'device.tunnel_unavailable': DEVICE_LINK,
 
   // apple
   'apple.anisette_unavailable': [

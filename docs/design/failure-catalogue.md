@@ -84,6 +84,11 @@
 | usbmuxd unreachable | `device.usbmuxd_unavailable` |
 | macOS refuses an mDNS send or a LAN connection (`EHOSTUNREACH`/`EPERM`: Local Network privacy) | `device.local_network_denied`; Wi-Fi devices can't be found, a cable still works |
 | Private Wi-Fi Address: the advert's MAC differs from the device's on each network | not an error: the advert is matched by its `authTag` (iOS 26.4+) against the pair record's HostID |
+| CoreDeviceProxy refused (`InvalidService`: iOS before 17.4) | `device.tunnel_unavailable`; services keep going through lockdown |
+| The device tunnel loses packets from TLS records that bundle several (pending writes on the TLS socket) | not an error: the TCP client writes one packet per write, each after the previous one finished (34 MiB/s, no retransmission) |
+| Packets of 8 KB and more to the device stall a tunnel connection | not an error: packets are capped at MTU 8000 (`tunnelMtu`) |
+| No ACK through 8 retransmission timeouts in a row inside the tunnel | `device.timeout` for that connection; a closed window the device keeps answering for is waited out |
+| The tunnel's RSD sends no service map (it answers only the client's own Handshake, and goes silent if the first root message isn't flagged exactly AlwaysSet) | the client sends its Handshake first, with those flags; no answer in 10 s → `device.timeout` |
 
 ## 3. Two-factor authentication requirements (Phase 3)
 - Trusted-device push; SMS with a number picker; resend; switch method.
