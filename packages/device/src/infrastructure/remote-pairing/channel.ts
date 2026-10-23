@@ -22,6 +22,10 @@ export type PairingChannel = {
   send(body: Record<string, unknown>): Promise<void>
   /** The next body the device sent. */
   receive(): Promise<Record<string, unknown>>
+  /** Sends an envelope with this `message` (plain or encrypted), with the next sequence number. */
+  sendMessage(message: Record<string, unknown>): Promise<void>
+  /** The next envelope's `message`, whatever it holds. */
+  receiveMessage(): Promise<Record<string, unknown>>
   close(): Promise<void>
 }
 
@@ -56,30 +60,35 @@ export const bodyOf = (envelope: unknown): Record<string, unknown> => {
 export const createPairingChannel = (link: Link): PairingChannel => {
   let sequenceNumber = 0
 
+  const sendMessage = async (message: Record<string, unknown>) => {
+    const envelope = { message, originatedBy: 'host', sequenceNumber }
+    sequenceNumber += 1
+    await link.write(encodeFrame(envelope))
+  }
+
+  const receiveEnvelope = async (): Promise<unknown> => {
+    const magic = await link.reader.readExact(MAGIC.byteLength)
+    if (!magic.every((byte, index) => byte === MAGIC[index]))
+      throw malformed('a frame without the RPPairing tag')
+    const header = await link.reader.readExact(LENGTH_BYTES)
+    const length = new DataView(header.buffer, header.byteOffset).getUint16(0)
+    const json = utf8Decode(await link.reader.readExact(length))
+    try {
+      return JSON.parse(json)
+    } catch {
+      throw malformed('a frame that is not JSON')
+    }
+  }
+
   return {
-    send: async (body) => {
-      const envelope = {
-        message: { plain: { _0: body } },
-        originatedBy: 'host',
-        sequenceNumber
-      }
-      sequenceNumber += 1
-      await link.write(encodeFrame(envelope))
-    },
-    receive: async () => {
-      const magic = await link.reader.readExact(MAGIC.byteLength)
-      if (!magic.every((byte, index) => byte === MAGIC[index]))
-        throw malformed('a frame without the RPPairing tag')
-      const header = await link.reader.readExact(LENGTH_BYTES)
-      const length = new DataView(header.buffer, header.byteOffset).getUint16(0)
-      const json = utf8Decode(await link.reader.readExact(length))
-      let envelope: unknown
-      try {
-        envelope = JSON.parse(json)
-      } catch {
-        throw malformed('a frame that is not JSON')
-      }
-      return bodyOf(envelope)
+    send: (body) => sendMessage({ plain: { _0: body } }),
+    receive: async () => bodyOf(await receiveEnvelope()),
+    sendMessage,
+    receiveMessage: async () => {
+      const envelope = await receiveEnvelope()
+      const message = isRecord(envelope) ? envelope.message : undefined
+      if (!isRecord(message)) throw malformed('an envelope without a message')
+      return message
     },
     close: () => link.close()
   }

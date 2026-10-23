@@ -69,6 +69,8 @@ export const aData = (address: string) =>
   new Uint8Array(address.split('.').map(Number))
 
 export type FakeAdvert = {
+  /** The service advertised: lockdown over Wi-Fi unless said otherwise. */
+  readonly service?: string
   readonly mac: string
   readonly host: string
   readonly address: string
@@ -78,10 +80,17 @@ export type FakeAdvert = {
 
 /** A device's whole advert in one answer, as iOS sends it: PTR, SRV, TXT and A. */
 export const lockdownAdvert = (
-  { mac, host, address, txt = [], ttl }: FakeAdvert,
+  {
+    service = WIFI_LOCKDOWN_SERVICE,
+    mac,
+    host,
+    address,
+    txt = [],
+    ttl
+  }: FakeAdvert,
   id = 0
 ) => {
-  const instance = `${mac}@fe80::1-supportsRP-24.${WIFI_LOCKDOWN_SERVICE}`
+  const instance = `${mac}@fe80::1-supportsRP-24.${service}`
   const at = (record: Omit<RecordSpec, 'ttl'>) => ({
     ...record,
     ...(ttl === undefined ? {} : { ttl })
@@ -90,7 +99,7 @@ export const lockdownAdvert = (
   return mdnsMessage(
     [
       at({
-        name: WIFI_LOCKDOWN_SERVICE,
+        name: service,
         type: RecordType.PTR,
         data: ptrData(instance)
       }),

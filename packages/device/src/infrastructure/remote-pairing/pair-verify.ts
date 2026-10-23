@@ -1,6 +1,7 @@
 // Pair-verify: whether the device still accepts a remote pairing. A fresh X25519 exchange, the device proving it is
 // the device pair-setup met (its Ed25519 signature over both ephemeral keys), then this computer proving the same.
-// The device answers M3 with an error record when it no longer knows this computer.
+// The device answers M3 with an error record when it no longer knows this computer. Returns the X25519 shared
+// secret: on a network connection it keys what follows (the encrypted messages, the tunnel's TLS-PSK).
 import { ed25519, x25519 } from '@noble/curves/ed25519.js'
 
 import {
@@ -47,7 +48,7 @@ const notAccepted = (message: string) =>
 export const pairVerify = async (
   channel: PairingChannel,
   { record, hostName, randomBytes }: PairVerifyOptions
-): Promise<void> => {
+): Promise<Uint8Array> => {
   const step = (data: Uint8Array, startNewSession = false) =>
     exchange(channel, {
       data,
@@ -67,10 +68,8 @@ export const pairVerify = async (
     true
   )
   const deviceKey = requireTlv(m2, TlvType.PublicKey, 'verify key')
-  const encryptKey = deriveKey(
-    x25519.getSharedSecret(secret, deviceKey),
-    KeyDerivation.verifyEncrypt
-  )
+  const sharedSecret = x25519.getSharedSecret(secret, deviceKey)
+  const encryptKey = deriveKey(sharedSecret, KeyDerivation.verifyEncrypt)
   let device: ReturnType<typeof decodeTlv8>
   try {
     device = decodeTlv8(
@@ -124,4 +123,6 @@ export const pairVerify = async (
       ]
     ])
   )
+
+  return sharedSecret
 }

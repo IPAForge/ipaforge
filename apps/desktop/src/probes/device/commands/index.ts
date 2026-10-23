@@ -20,6 +20,7 @@ import {
   rsdServicesCommand,
   tunnelInstallCommand
 } from '@desktop/probes/device/commands/tunnel.ts'
+import { wifiTunnelCommand } from '@desktop/probes/device/commands/wifi-tunnel.ts'
 import type { DeviceProbe } from '@desktop/probes/device/context.ts'
 import type { ProbeCommands } from '@desktop/probes/shared/types.ts'
 
@@ -39,5 +40,6 @@ export const deviceCommands = (probe: DeviceProbe): ProbeCommands => ({
   'rp-pair': remotePairCommand(probe),
   'wifi-list': wifiListCommand(probe),
   'rsd-services': rsdServicesCommand(probe),
-  'tunnel-install': tunnelInstallCommand(probe)
+  'tunnel-install': tunnelInstallCommand(probe),
+  'rp-tunnel': wifiTunnelCommand(probe)
 })

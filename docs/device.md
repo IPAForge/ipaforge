@@ -49,6 +49,18 @@ From iOS 17.4 a device offers a second way to its services: a packet tunnel, the
 - **Services:** each lockdown service has a counterpart in the tunnel, `<service>.shim.remote` (`com.apple.afc.shim.remote`, `com.apple.mobile.installation_proxy.shim.remote`, house_arrest, misagent, amfi). A connection to one starts with `RSDCheckin` (answered with `RSDCheckin`, then `StartService`) and then speaks the service's usual protocol without TLS, because the tunnel is already encrypted. AFC, installation_proxy and the rest run unchanged on top. A signed SideStore installed this way, tunnel only, in 2.1 s.
 - The tunnel closes with the session.
 
+## The tunnel over Wi-Fi (iOS 17.4 and later)
+
+With the remote pairing made over USB ([Remote pairing](#remote-pairing-ios-174-and-later)), IPAForge can open the iOS 17+ CoreDevice tunnel to a device on Wi-Fi (`DeviceManager.openWifiTunnel`, the probe `rp-tunnel`). No Wi-Fi sync or admin rights are needed.
+
+1. **Find the remote pairing port:** the device's `_remotepairing._tcp` advert at its Wi-Fi address (port 49152 on the iPhones tested).
+2. **Pair-verify** over that TCP connection with the saved identity. It gives a shared X25519 secret.
+3. **An encrypted `createListener`** for a TCP tunnel. After pair-verify, messages are `streamEncrypted`: ChaCha20-Poly1305 under HKDF-SHA512 keys (`ClientEncrypt-main` from us, `ServerEncrypt-main` from the device), the nonce being each direction's message count as 8 little-endian bytes then 4 zero bytes. The device answers with the port of the tunnel.
+4. **TLS 1.2 PSK** to that port, keyed with the pair-verify secret, empty identity. iOS refuses every SHA-1 and ECDHE-PSK cipher suite, which are all Electron's TLS library has, so IPAForge uses its own TLS 1.2 PSK client (`infrastructure/tls-psk`) with `TLS_PSK_WITH_AES_128_GCM_SHA256` and the extended master secret. It is tested against OpenSSL's server.
+5. **The CDTunnel handshake** over the TLS connection, the same as over USB. It returns the device's address in the tunnel, ours with the netmask and MTU, and RemoteServiceDiscovery's port. The control connection stays open for the tunnel's life.
+
+Inside, the tunnel is the same as over USB: IPAForge's TCP client, RSD and the services (`DeviceTunnel`). The control connection closes with the tunnel. Measured on an iPhone on iOS 26.6.1: the tunnel and RSD in about 3.3 s, 73 services, an AFC upload of 20 MiB at 9.3 MiB/s with no retransmissions. The app's installs don't use it yet: they go through a device session, which runs over the Wi-Fi tunnel with 11.2d.
+
 ## What it can do
 
 | Capability | Service |
@@ -119,6 +131,7 @@ pnpm --filter @ipaforge/desktop device-probe pairing-status <TEAMID...>   # clas
 pnpm --filter @ipaforge/desktop device-probe rp-pair            # iOS 17.4+: makes a remote pairing, then verifies it (kept in memory only)
 pnpm --filter @ipaforge/desktop device-probe afc-speed [--mb 32]   # times AFC writes per chunk size (written, then deleted)
 pnpm --filter @ipaforge/desktop device-probe wifi-list [--udid <udid>]   # finds known devices on Wi-Fi, without usbmuxd
+pnpm --filter @ipaforge/desktop device-probe rp-tunnel [--udid <udid>]   # iOS 17.4+: opens the tunnel over Wi-Fi, prints what the device set up
 pnpm --filter @ipaforge/desktop device-probe info --direct [--udid <udid>]   # any device command, straight over Wi-Fi only
 pnpm --filter @ipaforge/desktop device-probe rsd-services       # iOS 17.4+: the device's properties and services inside its tunnel
 pnpm --filter @ipaforge/desktop device-probe tunnel-install [<signed.ipa>] [--mb 100] [--compare]   # a timed upload and install through the tunnel

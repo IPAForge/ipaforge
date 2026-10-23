@@ -17,6 +17,7 @@
 //   pnpm --filter @ipaforge/desktop device-probe rsd-services   (iOS 17.4+: the device's services inside its tunnel)
 //   pnpm --filter @ipaforge/desktop device-probe tunnel-install [<signed.ipa>] [--mb 100] [--compare]
 //     (iOS 17.4+: a timed upload, and an install, with every service through the tunnel; --compare: and classic)
+//   pnpm --filter @ipaforge/desktop device-probe rp-tunnel [--mb 20]   (iOS 17.4+: the tunnel over Wi-Fi, and an upload through it)
 //
 // --direct (any device command): reach the device straight over Wi-Fi only, skipping the cable and usbmuxd. The
 // devices to look for are usbmuxd's and --udid; their pair records come from usbmuxd.

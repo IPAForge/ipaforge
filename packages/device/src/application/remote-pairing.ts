@@ -63,7 +63,8 @@ const newHostIdentity = (): HostIdentity => {
   }
 }
 
-const hostNameOf = (identifier: string): string =>
+/** How this computer is named on the device for a pairing: the same for the pairing's life. */
+export const hostNameOf = (identifier: string): string =>
   `${HOST_NAME_PREFIX}-${identifier.slice(0, 6).toLowerCase()}`
 
 const withChannel = async <T>(
@@ -78,7 +79,8 @@ const withChannel = async <T>(
 const isRefusal = (error: unknown): boolean =>
   error instanceof IPAForgeError && error.code === ErrorCode.PairingDenied
 
-const savedRecord = async (ctx: DeviceContext, udid: string) =>
+/** The remote pairing saved for `udid`, when one was made. */
+export const savedRecord = async (ctx: DeviceContext, udid: string) =>
   parseRemotePairing(await ctx.deps.secrets.get(remotePairingSecretKey(udid)))
 
 const verify = (session: DeviceSession, record: RemotePairingRecord) =>
