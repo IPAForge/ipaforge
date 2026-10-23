@@ -1,5 +1,7 @@
 import { defineConfig } from 'vitest/config'
 
+import { testDefaults } from './tooling/vite/test-defaults.ts'
+
 export default defineConfig({
   test: {
     projects: [
@@ -7,6 +9,7 @@ export default defineConfig({
       'apps/*',
       {
         test: {
+          ...testDefaults,
           name: 'scripts',
           include: ['scripts/*.test.ts', 'tooling/**/*.test.ts']
         }
