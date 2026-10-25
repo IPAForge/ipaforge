@@ -19,7 +19,9 @@ import {
   importPairRecord,
   requirePairRecord
 } from '@device/application/pair-records.ts'
+import { savedRecord } from '@device/application/remote-pairing.ts'
 import { openSession } from '@device/application/session.ts'
+import { openTunnelSession } from '@device/application/tunnel-session.ts'
 import type {
   DeviceTunnel,
   OpenSessionOptions,
@@ -122,6 +124,28 @@ const findDevice = async (
   return device
 }
 
+const UNREACHABLE: ReadonlySet<string> = new Set([
+  ErrorCode.DeviceDisconnected,
+  ErrorCode.DeviceNotFound,
+  ErrorCode.DeviceTimeout
+])
+
+const isUnreachable = (error: unknown): boolean =>
+  error instanceof IPAForgeError && UNREACHABLE.has(error.code)
+
+/** A session inside the Wi-Fi tunnel, opened with the saved remote pairing; the classic record serves pairing files. */
+const openOverWifiTunnel = async (ctx: DeviceContext, udid: string) => {
+  const device = await findOnWifi(ctx, udid)
+  const record = await requirePairRecord(ctx, udid)
+
+  return openTunnelSession(
+    ctx,
+    device,
+    await openWifiTunnel(ctx, device),
+    record
+  )
+}
+
 export const createDeviceManager = (input: DeviceDepsInput): DeviceManager => {
   const ctx = createDeviceContext(resolveDeviceDeps(input))
 
@@ -150,14 +174,29 @@ export const createDeviceManager = (input: DeviceDepsInput): DeviceManager => {
     importPairRecord: async (udid, data) => {
       await importPairRecord(ctx, udid, data)
     },
-    open: async (udid, options) =>
-      createDeviceHandle(
-        ctx,
-        await openSession(
-          ctx,
-          await findDevice(ctx, udid, options?.route),
-          options
+    open: async (udid, options) => {
+      if (options?.route === 'wifi-tunnel')
+        return createDeviceHandle(ctx, await openOverWifiTunnel(ctx, udid))
+      const device = await findDevice(ctx, udid, options?.route)
+      try {
+        return createDeviceHandle(ctx, await openSession(ctx, device, options))
+      } catch (error) {
+        // Lockdown straight over Wi-Fi didn't answer: the remote pairing's tunnel is the other way in.
+        if (
+          device.address === undefined ||
+          !isUnreachable(error) ||
+          !(await savedRecord(ctx, udid))
         )
-      )
+          throw error
+        ctx.deps.logger.info('Wi-Fi lockdown unreachable; trying the tunnel', {
+          device: shortUdid(udid)
+        })
+        try {
+          return createDeviceHandle(ctx, await openOverWifiTunnel(ctx, udid))
+        } catch {
+          throw error
+        }
+      }
+    }
   }
 }

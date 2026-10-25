@@ -128,25 +128,29 @@ export const openTunnelOver = async (
     ms: ctx.deps.clock.now().getTime() - started
   })
 
+  /** A checked-in connection to the service RSD lists as `name`, or `undefined` when it lists none. */
+  const openService = async (name: string): Promise<Link | undefined> => {
+    const service = services.get(name)
+    if (!service) return undefined
+    const link = createLink(await stack.connect(service.port))
+
+    return closeOnError(link, async (checkedIn) => {
+      await rsdCheckin(checkedIn, {
+        label: config.label,
+        limits: ctx.limits,
+        service: service.name
+      })
+      logger.debug('service through the tunnel', { service: name })
+      return checkedIn
+    })
+  }
+
   return {
     mtu: tcp.mtu,
     services,
     properties,
-    openShim: async (service) => {
-      const shim = services.get(`${service}${SHIM_SUFFIX}`)
-      if (!shim) return undefined
-      const link = createLink(await stack.connect(shim.port))
-
-      return closeOnError(link, async (checkedIn) => {
-        await rsdCheckin(checkedIn, {
-          label: config.label,
-          limits: ctx.limits,
-          service: shim.name
-        })
-        logger.debug('service through the tunnel', { service })
-        return checkedIn
-      })
-    },
+    openShim: (service) => openService(`${service}${SHIM_SUFFIX}`),
+    openService,
     stats: () => ({ ...stack.stats }),
     close: async () => {
       await stack.close()

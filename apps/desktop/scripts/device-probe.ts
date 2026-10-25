@@ -21,6 +21,8 @@
 //
 // --direct (any device command): reach the device straight over Wi-Fi only, skipping the cable and usbmuxd. The
 // devices to look for are usbmuxd's and --udid; their pair records come from usbmuxd.
+// --wifi-tunnel (any device command): a session entirely inside the iOS 17.4+ tunnel over Wi-Fi, with the remote
+// pairing (made or checked over usbmuxd first).
 // --tunnel (any device command): open every service through the iOS 17.4+ device tunnel when it has one there.
 //
 // `pair` (and any command on a device without a pair record) waits for the OS to pair: unlock the device and tap

@@ -135,9 +135,11 @@ describe('Wi-Fi without usbmuxd', () => {
       DEFAULT_PLIST_LIMITS
     )
     const identifier = '0A1B2C3D-4E5F-4A6B-8C7D-9E0F1A2B3C4D'
+    // One tag per paired computer, the second and later under `authTag#1`, `authTag#2`…: this one's is the second.
     rig.fake.wifiTxt.set(rig.device.udid, [
       `identifier=${identifier}`,
-      `authTag=${await authTagFor(record.hostId, identifier)}`
+      `authTag=${await authTagFor('another computer', identifier)}`,
+      `authTag#1=${await authTagFor(record.hostId, identifier)}`
     ])
     moveToWifi(rig)
 

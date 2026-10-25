@@ -57,7 +57,21 @@ export const createDeviceProbe = (args: DeviceProbeArgs): DeviceProbe => {
   const isDirect = args.flag('direct')
   const flagRoute = (): OpenSessionOptions['route'] => {
     if (isDirect) return 'wifi'
+    if (args.flag('wifi-tunnel')) return 'wifi-tunnel'
     return args.flag('tunnel') ? 'tunnel' : undefined
+  }
+
+  /**
+   * --wifi-tunnel needs the remote pairing, and this run's secrets live in memory: make (or check) it through
+   * usbmuxd first, which also remembers the device for the search on Wi-Fi.
+   */
+  const prepareWifiTunnel = async (udid: string) => {
+    const usb = await manager.open(udid, { onProgress: printPairingProgress })
+    try {
+      console.log(`remote pairing ${(await usb.remotePairing()).how}`)
+    } finally {
+      await usb.close()
+    }
   }
 
   /**
@@ -66,14 +80,21 @@ export const createDeviceProbe = (args: DeviceProbeArgs): DeviceProbe => {
    */
   const discoverDirect = async (): Promise<UsbmuxDevice[]> => {
     const listed = await manager.listDevices().catch(() => [])
-    const udids = new Set([
-      ...listed.map((device) => device.udid),
-      ...(args.option('udid') ? [args.option('udid') as string] : [])
-    ])
+    const wanted = args.option('udid')
     await secrets.set(
       WIFI_DEVICES_KEY,
-      serializeKnownDevices([...udids].map((udid) => ({ udid })))
+      serializeKnownDevices(
+        wanted && !listed.some((d) => d.udid === wanted)
+          ? [{ udid: wanted }]
+          : []
+      )
     )
+    // Opening a device once remembers it with its Wi-Fi MAC address, as the app does: what matches a device
+    // whose advert isn't signed (before iOS 26.4). One that can't be opened is still matched by its authTag.
+    for (const { udid } of listed) {
+      const handle = await manager.open(udid).catch(() => undefined)
+      await handle?.close()
+    }
     return manager.discoverNetwork()
   }
 
@@ -95,12 +116,15 @@ export const createDeviceProbe = (args: DeviceProbeArgs): DeviceProbe => {
     route = flagRoute()
   ): Promise<void> => {
     const device = await pickDevice()
+    if (route === 'wifi-tunnel') await prepareWifiTunnel(device.udid)
     const handle = await manager.open(device.udid, {
       onProgress: printPairingProgress,
       ...(route ? { route } : {})
     })
     if (route === 'wifi') console.log(`over Wi-Fi at ${device.address ?? '?'}`)
     if (route === 'tunnel') console.log('services through the device tunnel')
+    if (route === 'wifi-tunnel')
+      console.log('a session inside the tunnel over Wi-Fi')
     try {
       await use(handle)
     } finally {

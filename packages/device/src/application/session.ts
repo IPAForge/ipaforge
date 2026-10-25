@@ -23,6 +23,7 @@ import type { UsbmuxDevice } from '@device/domain/types.ts'
 import { LockdownErrorName } from '@device/infrastructure/lockdown/constants.ts'
 import { toDeviceInfo } from '@device/infrastructure/lockdown/device-info.ts'
 import { isLockdownError } from '@device/infrastructure/lockdown/errors.ts'
+import type { LockdownClient } from '@device/infrastructure/lockdown/types.ts'
 import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 const isInvalidPairing = (error: unknown): boolean =>
@@ -88,6 +89,27 @@ const startSession = async (
   }
 }
 
+/**
+ * Lets the device be reached over Wi-Fi/VPN (SideStore and StikDebug use the pairing file this way). lockdownd
+ * answers `MissingValue` when no passcode is set → `device.passcode_required`.
+ */
+export const enableWifiDebuggingWith = async (
+  lockdown: LockdownClient
+): Promise<void> => {
+  try {
+    await lockdown.setValue(
+      LockdownDomain.WirelessLockdown,
+      'EnableWifiDebugging',
+      true
+    )
+  } catch (error) {
+    if (isLockdownError(error, LockdownErrorName.MissingValue)) {
+      throw new IPAForgeError(ErrorCode.PasscodeRequired, { cause: error })
+    }
+    throw error
+  }
+}
+
 /** The `DeviceSession` over a started lockdown session. */
 const sessionFor = (
   ctx: DeviceContext,
@@ -105,20 +127,7 @@ const sessionFor = (
   )
   let closed = false
 
-  const enableWifiDebugging = async (): Promise<void> => {
-    try {
-      await lockdown.setValue(
-        LockdownDomain.WirelessLockdown,
-        'EnableWifiDebugging',
-        true
-      )
-    } catch (error) {
-      if (isLockdownError(error, LockdownErrorName.MissingValue)) {
-        throw new IPAForgeError(ErrorCode.PasscodeRequired, { cause: error })
-      }
-      throw error
-    }
-  }
+  const enableWifiDebugging = () => enableWifiDebuggingWith(lockdown)
 
   const close = async (): Promise<void> => {
     if (closed) return

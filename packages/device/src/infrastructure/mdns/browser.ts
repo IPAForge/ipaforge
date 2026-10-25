@@ -28,6 +28,14 @@ const txtValues = (entries: readonly string[], key: string): string[] =>
     .filter((entry) => entry.startsWith(`${key}=`))
     .map((entry) => entry.slice(key.length + 1))
 
+// One authTag per paired computer: the first is `authTag`, the next ones `authTag#1`, `authTag#2`…
+const AUTH_TAG_KEY = /^authTag(?:#\d+)?=/
+
+const authTagValues = (entries: readonly string[]): string[] =>
+  entries
+    .filter((entry) => AUTH_TAG_KEY.test(entry))
+    .map((entry) => entry.slice(entry.indexOf('=') + 1))
+
 const sameAdvert = (a: WifiAdvert, b: WifiAdvert): boolean =>
   a.address === b.address &&
   a.port === b.port &&
@@ -112,7 +120,7 @@ export const browseService = async (
     }
     if (record.type === RecordType.TXT) {
       partial.identifier = txtValues(record.entries, 'identifier')[0]
-      partial.authTags = txtValues(record.entries, 'authTag')
+      partial.authTags = authTagValues(record.entries)
     }
   }
 

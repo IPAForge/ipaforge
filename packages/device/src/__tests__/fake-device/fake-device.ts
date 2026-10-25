@@ -18,6 +18,7 @@ import { DEFAULT_DEVICE_CONFIG } from '@device/domain/config.ts'
 import {
   CORE_DEVICE_PROXY_SERVICE,
   LOCKDOWN_PORT,
+  LOCKDOWN_REMOTE_SERVICE,
   Service,
   UsbmuxResult
 } from '@device/domain/constants.ts'
@@ -623,6 +624,13 @@ const serveTunnel = async (link: Link, device: FakeDevice): Promise<void> => {
   device.requests.push('tunnel:open')
   const tunnel = serveFakeTunnel(link, {
     shims,
+    // Lockdown in the tunnel: the same requests, once checked in, without StartSession or TLS.
+    services: new Map([
+      [
+        LOCKDOWN_REMOTE_SERVICE,
+        (lockdownLink: Link) => serveLockdown(lockdownLink, device, new Map())
+      ]
+    ]),
     xpcServices: ['com.apple.coredevice.appservice'],
     properties: {
       UniqueDeviceID: device.udid,

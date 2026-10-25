@@ -25,7 +25,9 @@ const ADVERT = {
   address: '192.0.2.10',
   txt: [
     'identifier=0A1B2C3D-4E5F-4A6B-8C7D-9E0F1A2B3C4D',
-    'authTag=dr5/vaK9kIw='
+    'authTag=dr5/vaK9kIw=',
+    'authTag#1=AAAAAAAAAAA=',
+    'authTags=not-a-tag'
   ]
 }
 
@@ -180,7 +182,7 @@ describe('searching the network', () => {
           port: 32498,
           mac: ADVERT.mac,
           identifier: '0A1B2C3D-4E5F-4A6B-8C7D-9E0F1A2B3C4D',
-          authTags: ['dr5/vaK9kIw=']
+          authTags: ['dr5/vaK9kIw=', 'AAAAAAAAAAA=']
         }
       }
     ])
