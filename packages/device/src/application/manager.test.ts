@@ -616,6 +616,23 @@ describe('automatic pairing placement', () => {
     await handle.close()
   })
 
+  it('leaves Wi-Fi debugging alone when it is on already (iOS 26 resets the tunnel on that write)', async () => {
+    const rig = await createRig()
+    rig.device.values.set(
+      'com.apple.mobile.wireless_lockdown/EnableWifiDebugging',
+      true
+    )
+    const handle = await rig.manager.open(rig.device.udid)
+    const before = rig.device.requests.filter(
+      (request) => request === 'lockdown:SetValue'
+    ).length
+    await handle.enableWifiDebugging()
+    expect(
+      rig.device.requests.filter((request) => request === 'lockdown:SetValue')
+    ).toHaveLength(before)
+    await handle.close()
+  })
+
   it('requires a passcode for Wi-Fi debugging', async () => {
     const rig = await createRig({ hasPasscode: false })
     addApp(rig.device, 'com.SideStore.SideStore.ABCDE12345')

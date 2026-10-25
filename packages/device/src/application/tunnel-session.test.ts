@@ -10,6 +10,7 @@ import { resolveDeviceDeps } from '@device/deps.ts'
 import { LOCKDOWN_REMOTE_SERVICE } from '@device/domain/constants.ts'
 import { bytesFileSource, ErrorCode, utf8Encode } from '@ipaforge/kernel'
 
+const ADDRESS = '192.0.2.10'
 const AFC_SHIM = 'com.apple.afc.shim.remote'
 const INSTALL_SHIM = 'com.apple.mobile.installation_proxy.shim.remote'
 
@@ -77,6 +78,39 @@ describe('a session inside the tunnel', () => {
     })
     await handle.close()
     await expect(rig.device.tunnels[0]?.closed).resolves.toBeUndefined()
+    await usb.close()
+  })
+
+  it('turns on Wi-Fi debugging for a device on Wi-Fi by lockdown at its address, never through the tunnel', async () => {
+    const rig = await createRig({ productVersion: '26.6.1' })
+    const usb = await rig.manager.open(rig.device.udid, { route: 'tunnel' })
+    rig.fake.onWifi.set(ADDRESS, rig.device)
+    const ctx = createDeviceContext(
+      resolveDeviceDeps({ transport: rig.fake.transport, secrets: rig.secrets })
+    )
+    const onWifi = {
+      ...usb.session.device,
+      connectionType: 'network' as const,
+      address: ADDRESS
+    }
+    const handle = createDeviceHandle(
+      ctx,
+      await openTunnelSession(
+        ctx,
+        onWifi,
+        await usb.session.tunnel(),
+        usb.pairRecord
+      )
+    )
+
+    await handle.enableWifiDebugging()
+    expect(rig.fake.requests).toContain(`tcp:${ADDRESS}:62078`)
+    expect(
+      rig.device.values.get(
+        'com.apple.mobile.wireless_lockdown/EnableWifiDebugging'
+      )
+    ).toBe(true)
+    await handle.close()
     await usb.close()
   })
 })

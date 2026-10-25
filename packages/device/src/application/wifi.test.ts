@@ -3,11 +3,16 @@ import { describe, expect, it } from 'vitest'
 
 import { WIFI_MAC } from '@device/__tests__/fake-device/fake-device.ts'
 import { createRig, type TestRig } from '@device/__tests__/setup.ts'
+import { createDeviceManager } from '@device/application/manager.ts'
 import {
   LockdownDomain,
   WIFI_CONNECTIONS_KEY
 } from '@device/domain/constants.ts'
 import { parsePairRecord } from '@device/domain/pairing/pair-record.ts'
+import {
+  remotePairingSecretKey,
+  serializeRemotePairing
+} from '@device/domain/remote-pairing/record.ts'
 import type { DeviceEvent } from '@device/domain/types.ts'
 import {
   parseKnownDevices,
@@ -17,6 +22,7 @@ import {
 import {
   DEFAULT_PLIST_LIMITS,
   ErrorCode,
+  type Logger,
   toBase64,
   utf8Encode
 } from '@ipaforge/kernel'
@@ -204,5 +210,99 @@ describe('Wi-Fi without usbmuxd', () => {
     expect(await codeOf(rig.manager.openWifiTunnel(rig.device.udid))).toBe(
       ErrorCode.DeviceNotPaired
     )
+  })
+})
+
+/** The rig's device and secrets, with a manager whose log lines are kept, to see which way a session went. */
+const loggedManager = (rig: TestRig, makeRemotePairing = false) => {
+  const logs: string[] = []
+  const keep = (message: string) => {
+    logs.push(message)
+  }
+  const logger: Logger = {
+    debug: keep,
+    info: keep,
+    warn: keep,
+    error: keep,
+    child: () => logger
+  }
+  const manager = createDeviceManager({
+    transport: rig.fake.transport,
+    secrets: rig.secrets,
+    logger,
+    sleep: () => new Promise((resolve) => setTimeout(resolve, 0)),
+    config: { makeRemotePairing }
+  })
+
+  return { manager, logs }
+}
+
+const saveRemotePairing = (rig: TestRig) =>
+  rig.secrets.set(
+    remotePairingSecretKey(rig.device.udid),
+    serializeRemotePairing({
+      identifier: '11C8B687-03B7-9EEB-E19E-B377CF073FB8',
+      publicKey: new Uint8Array(32).fill(1),
+      privateKey: new Uint8Array(32).fill(2),
+      deviceIdentifier: 'E25CE045-BD3B-4838-B9BF-A4882792A653',
+      devicePublicKey: new Uint8Array(32).fill(3),
+      altIrk: new Uint8Array(16).fill(4)
+    })
+  )
+
+const startServices = (rig: TestRig) =>
+  rig.device.requests.filter((request) => request === 'lockdown:StartService')
+    .length
+
+const TUNNEL_FAILED = 'the Wi-Fi tunnel did not open; trying lockdown'
+
+describe('Wi-Fi on iOS 17 and later', () => {
+  it('goes through the tunnel first for a device with a remote pairing, and to lockdown when it does not open', async () => {
+    const rig = await createRig({ productVersion: '26.6.1' })
+    await openAndClose(rig)
+    moveToWifi(rig)
+    await saveRemotePairing(rig)
+    const { manager, logs } = loggedManager(rig)
+
+    const handle = await manager.open(rig.device.udid)
+    expect(logs).toContain(TUNNEL_FAILED)
+    expect(handle.device).toMatchObject({ address: ADDRESS })
+    await handle.close()
+  })
+
+  it('opens a device without a remote pairing, or on the wifi route, by lockdown only', async () => {
+    const rig = await createRig({ productVersion: '26.6.1' })
+    await openAndClose(rig)
+    moveToWifi(rig)
+    const { manager, logs } = loggedManager(rig)
+    await (await manager.open(rig.device.udid)).close()
+
+    await saveRemotePairing(rig)
+    await (await manager.open(rig.device.udid, { route: 'wifi' })).close()
+    expect(logs).not.toContain(TUNNEL_FAILED)
+  })
+
+  it('makes the remote pairing by cable when none is saved, and never fails the session over it', async () => {
+    const rig = await createRig({ productVersion: '26.6.1' })
+    const { manager, logs } = loggedManager(rig, true)
+    const before = startServices(rig)
+
+    const handle = await manager.open(rig.device.udid)
+    // The fake device has no remote pairing service: the attempt is made, and only logged.
+    expect(startServices(rig)).toBeGreaterThan(before)
+    expect(logs).toContain('remote pairing for Wi-Fi skipped')
+    await handle.close()
+  })
+
+  it('leaves the remote pairing alone when one is saved, or before iOS 17.4', async () => {
+    const saved = await createRig({ productVersion: '26.6.1' })
+    await saveRemotePairing(saved)
+    const old = await createRig({ productVersion: '17.3' })
+    for (const rig of [saved, old]) {
+      const { manager } = loggedManager(rig, true)
+      const before = startServices(rig)
+      await (await manager.open(rig.device.udid)).close()
+      expect(startServices(rig)).toBe(before)
+    }
   })
 })

@@ -2,7 +2,10 @@
 // its remote pairing): lockdown is the tunnel's own (`com.apple.mobile.lockdown.remote.trusted`, trusted once
 // checked in, so no StartSession and no TLS of ours), and every service is its counterpart in the tunnel.
 import type { DeviceContext } from '@device/application/context.ts'
-import { enableWifiDebuggingWith } from '@device/application/session.ts'
+import {
+  enableWifiDebuggingWith,
+  openSession
+} from '@device/application/session.ts'
 import type { DeviceSession, DeviceTunnel } from '@device/application/types.ts'
 import { LOCKDOWN_REMOTE_SERVICE } from '@device/domain/constants.ts'
 import { shortUdid } from '@device/domain/device.ts'
@@ -18,6 +21,26 @@ const unavailable = (device: UsbmuxDevice, service: string) =>
     message: `${service} is not offered through the tunnel`,
     data: { device: shortUdid(device.udid), service }
   })
+
+/**
+ * Turns on Wi-Fi debugging for a device on Wi-Fi by lockdown straight at its address: the tunnel's lockdown doesn't
+ * return wireless lockdown values, and iOS 26 resets it on the write, while lockdown on Wi-Fi does both (only the
+ * services it starts are closed there). Checked on an iPhone on iOS 26.6.1.
+ */
+const enableWifiDebuggingOnWifi = async (
+  ctx: DeviceContext,
+  device: UsbmuxDevice
+): Promise<void> => {
+  const direct = await openSession(ctx, device, {
+    route: 'wifi',
+    autoPair: false
+  })
+  try {
+    await direct.enableWifiDebugging()
+  } finally {
+    await direct.close()
+  }
+}
 
 /** A session over an open tunnel; closing it closes the tunnel too. */
 export const openTunnelSession = async (
@@ -51,7 +74,10 @@ export const openTunnelSession = async (
         return shim
       },
       tunnel: async () => tunnel,
-      enableWifiDebugging: () => enableWifiDebuggingWith(lockdown),
+      enableWifiDebugging: () =>
+        device.address === undefined
+          ? enableWifiDebuggingWith(lockdown)
+          : enableWifiDebuggingOnWifi(ctx, device),
       close: async () => {
         if (closed) return
         closed = true

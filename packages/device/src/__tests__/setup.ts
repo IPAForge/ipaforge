@@ -48,7 +48,8 @@ export const createRig = async (
       // Instant, but a real turn of the event loop, so work that isn't a microtask (WebCrypto) still runs.
       await new Promise((resolve) => setTimeout(resolve, 0))
     },
-    config
+    // The fake device has no remote pairing service on lockdown: tests that want one turn this back on.
+    config: { makeRemotePairing: false, ...config }
   })
 
   return { fake, device, manager, secrets, sleeps }

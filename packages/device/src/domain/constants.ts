@@ -42,6 +42,9 @@ export const CORE_DEVICE_PROXY_SERVICE =
 /** The wireless lockdown key that lets the device take connections over Wi-Fi (Finder's "Show this iPhone when on Wi-Fi"). */
 export const WIFI_CONNECTIONS_KEY = 'EnableWifiConnections'
 
+/** The wireless lockdown key that lets on-device tools such as SideStore reach the device with a pairing file. */
+export const WIFI_DEBUGGING_KEY = 'EnableWifiDebugging'
+
 /** Lockdown inside the device's tunnel: trusted once checked in, so no StartSession and no TLS of ours. */
 export const LOCKDOWN_REMOTE_SERVICE =
   'com.apple.mobile.lockdown.remote.trusted'

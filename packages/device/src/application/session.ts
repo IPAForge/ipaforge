@@ -9,6 +9,7 @@ import {
   getPairRecord,
   notPairedError
 } from '@device/application/pair-records.ts'
+import { prepareRemotePairing } from '@device/application/remote-pairing.ts'
 import type {
   DeviceSession,
   OpenSessionOptions,
@@ -16,7 +17,7 @@ import type {
   StoredPairRecord
 } from '@device/application/types.ts'
 import { prepareWifi } from '@device/application/wifi.ts'
-import { LockdownDomain } from '@device/domain/constants.ts'
+import { LockdownDomain, WIFI_DEBUGGING_KEY } from '@device/domain/constants.ts'
 import { shortUdid } from '@device/domain/device.ts'
 import type { PairRecord } from '@device/domain/pairing/types.ts'
 import type { UsbmuxDevice } from '@device/domain/types.ts'
@@ -91,15 +92,20 @@ const startSession = async (
 
 /**
  * Lets the device be reached over Wi-Fi/VPN (SideStore and StikDebug use the pairing file this way). lockdownd
- * answers `MissingValue` when no passcode is set → `device.passcode_required`.
+ * answers `MissingValue` when no passcode is set → `device.passcode_required`. Read first: a device on iOS 26
+ * resets the tunnel's lockdown on this write, so a device that has it on already is never written to.
  */
 export const enableWifiDebuggingWith = async (
   lockdown: LockdownClient
 ): Promise<void> => {
+  const current = await lockdown
+    .getValue(WIFI_DEBUGGING_KEY, LockdownDomain.WirelessLockdown)
+    .catch(() => undefined)
+  if (current === true) return
   try {
     await lockdown.setValue(
       LockdownDomain.WirelessLockdown,
-      'EnableWifiDebugging',
+      WIFI_DEBUGGING_KEY,
       true
     )
   } catch (error) {
@@ -176,5 +182,7 @@ export const openSession = async (
   )
   ctx.deps.logger.info('session opened', { device: shortUdid(device.udid) })
   await prepareWifi(ctx, device, started.lockdown)
-  return sessionFor(ctx, device, pairRecord, started, options.route)
+  const session = sessionFor(ctx, device, pairRecord, started, options.route)
+  await prepareRemotePairing(ctx, session)
+  return session
 }

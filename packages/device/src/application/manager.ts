@@ -33,7 +33,7 @@ import { shortUdid } from '@device/domain/device.ts'
 import type { PairRecord } from '@device/domain/pairing/types.ts'
 import type { DeviceEvent, UsbmuxDevice } from '@device/domain/types.ts'
 import type { DeviceDepsInput } from '@device/types.ts'
-import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
+import { ErrorCode, IPAForgeError, toIPAForgeError } from '@ipaforge/kernel'
 
 export type DeviceManager = {
   listDevices(): Promise<UsbmuxDevice[]>
@@ -178,11 +178,31 @@ export const createDeviceManager = (input: DeviceDepsInput): DeviceManager => {
       if (options?.route === 'wifi-tunnel')
         return createDeviceHandle(ctx, await openOverWifiTunnel(ctx, udid))
       const device = await findDevice(ctx, udid, options?.route)
+      // On iOS 17 and later, lockdown straight over Wi-Fi answers, but the device closes every service it starts
+      // there: with a remote pairing, the tunnel goes first, and lockdown is for older devices.
+      const tunnelFirst =
+        device.address !== undefined &&
+        options?.route !== 'wifi' &&
+        (await savedRecord(ctx, udid)) !== undefined
+      if (tunnelFirst) {
+        try {
+          return createDeviceHandle(ctx, await openOverWifiTunnel(ctx, udid))
+        } catch (error) {
+          ctx.deps.logger.info(
+            'the Wi-Fi tunnel did not open; trying lockdown',
+            {
+              device: shortUdid(udid),
+              code: toIPAForgeError(error).code
+            }
+          )
+        }
+      }
       try {
         return createDeviceHandle(ctx, await openSession(ctx, device, options))
       } catch (error) {
         // Lockdown straight over Wi-Fi didn't answer: the remote pairing's tunnel is the other way in.
         if (
+          tunnelFirst ||
           device.address === undefined ||
           !isUnreachable(error) ||
           !(await savedRecord(ctx, udid))
