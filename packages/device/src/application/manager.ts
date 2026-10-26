@@ -19,7 +19,9 @@ import {
   importPairRecord,
   requirePairRecord
 } from '@device/application/pair-records.ts'
+import { savedRecord } from '@device/application/remote-pairing.ts'
 import { openSession } from '@device/application/session.ts'
+import { openTunnelSession } from '@device/application/tunnel-session.ts'
 import type {
   DeviceTunnel,
   OpenSessionOptions,
@@ -31,7 +33,7 @@ import { shortUdid } from '@device/domain/device.ts'
 import type { PairRecord } from '@device/domain/pairing/types.ts'
 import type { DeviceEvent, UsbmuxDevice } from '@device/domain/types.ts'
 import type { DeviceDepsInput } from '@device/types.ts'
-import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
+import { ErrorCode, IPAForgeError, toIPAForgeError } from '@ipaforge/kernel'
 
 export type DeviceManager = {
   listDevices(): Promise<UsbmuxDevice[]>
@@ -122,6 +124,28 @@ const findDevice = async (
   return device
 }
 
+const UNREACHABLE: ReadonlySet<string> = new Set([
+  ErrorCode.DeviceDisconnected,
+  ErrorCode.DeviceNotFound,
+  ErrorCode.DeviceTimeout
+])
+
+const isUnreachable = (error: unknown): boolean =>
+  error instanceof IPAForgeError && UNREACHABLE.has(error.code)
+
+/** A session inside the Wi-Fi tunnel, opened with the saved remote pairing; the classic record serves pairing files. */
+const openOverWifiTunnel = async (ctx: DeviceContext, udid: string) => {
+  const device = await findOnWifi(ctx, udid)
+  const record = await requirePairRecord(ctx, udid)
+
+  return openTunnelSession(
+    ctx,
+    device,
+    await openWifiTunnel(ctx, device),
+    record
+  )
+}
+
 export const createDeviceManager = (input: DeviceDepsInput): DeviceManager => {
   const ctx = createDeviceContext(resolveDeviceDeps(input))
 
@@ -150,14 +174,50 @@ export const createDeviceManager = (input: DeviceDepsInput): DeviceManager => {
     importPairRecord: async (udid, data) => {
       await importPairRecord(ctx, udid, data)
     },
-    open: async (udid, options) =>
-      createDeviceHandle(
-        ctx,
-        await openSession(
-          ctx,
-          await findDevice(ctx, udid, options?.route),
-          options
+    open: async (udid, options) => {
+      if (options?.route === 'wifi-tunnel')
+        return createDeviceHandle(ctx, await openOverWifiTunnel(ctx, udid))
+      const device = await findDevice(ctx, udid, options?.route)
+      // With a remote pairing, the tunnel goes first: lockdown straight over Wi-Fi can answer while the device closes
+      // every service it starts there (an iPhone on iOS 26.6.1, from Windows; the same one installs that way from a
+      // Mac), and the tunnel is faster. Lockdown is for older devices, and for when the tunnel doesn't open.
+      const tunnelFirst =
+        device.address !== undefined &&
+        options?.route !== 'wifi' &&
+        (await savedRecord(ctx, udid)) !== undefined
+      if (tunnelFirst) {
+        try {
+          return createDeviceHandle(ctx, await openOverWifiTunnel(ctx, udid))
+        } catch (error) {
+          ctx.deps.logger.info(
+            'the Wi-Fi tunnel did not open; trying lockdown',
+            {
+              device: shortUdid(udid),
+              code: toIPAForgeError(error).code
+            }
+          )
+        }
+      }
+      try {
+        return createDeviceHandle(ctx, await openSession(ctx, device, options))
+      } catch (error) {
+        // Lockdown straight over Wi-Fi didn't answer: the remote pairing's tunnel is the other way in.
+        if (
+          tunnelFirst ||
+          device.address === undefined ||
+          !isUnreachable(error) ||
+          !(await savedRecord(ctx, udid))
         )
-      )
+          throw error
+        ctx.deps.logger.info('Wi-Fi lockdown unreachable; trying the tunnel', {
+          device: shortUdid(udid)
+        })
+        try {
+          return createDeviceHandle(ctx, await openOverWifiTunnel(ctx, udid))
+        } catch {
+          throw error
+        }
+      }
+    }
   }
 }

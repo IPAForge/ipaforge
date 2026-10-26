@@ -39,6 +39,8 @@ const LIMITS = {
 export type FakeTunnelOptions = {
   /** Lockdown service name → what serves it once checked in (its shim is `<name>.shim.remote`). */
   readonly shims: ReadonlyMap<string, ServiceHandler>
+  /** Services checked in like shims but listed by their own name (lockdown in the tunnel), and what serves them. */
+  readonly services?: ReadonlyMap<string, ServiceHandler>
   /** Extra RSD entries that aren't shims (RemoteXPC services), by name. */
   readonly xpcServices?: readonly string[]
   readonly properties?: XpcDictionary
@@ -89,6 +91,14 @@ const serviceTable = (options: FakeTunnelOptions, tunnel: FakeTunnel) => {
       options.refuseCheckin === name ? 'ServiceProhibited' : undefined
     listeners.set(port, serveShim(name, handler, tunnel, refuse))
     // RSD sends ports as strings.
+    services[name] = {
+      Port: String(port),
+      Properties: { UsesRemoteXPC: false }
+    }
+    port++
+  }
+  for (const [name, handler] of options.services ?? []) {
+    listeners.set(port, serveShim(name, handler, tunnel))
     services[name] = {
       Port: String(port),
       Properties: { UsesRemoteXPC: false }

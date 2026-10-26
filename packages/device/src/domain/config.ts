@@ -19,6 +19,11 @@ export type DeviceConfig = {
   readonly afcReadChunkBytes: number
   /** Turn on the device's Wi-Fi connections whenever a session opens, so it can be reached without the cable. */
   readonly enableWifiConnections: boolean
+  /**
+   * Make the iOS 17.4+ remote pairing whenever a session opens by cable and none is saved: on Wi-Fi such a device
+   * serves its services only through the tunnel, and the tunnel needs it.
+   */
+  readonly makeRemotePairing: boolean
   /** How long a search for devices on the network listens for answers. */
   readonly networkBrowseMs: number
   /** How often a running search asks again; a device not heard from for three rounds is gone. */
@@ -52,6 +57,7 @@ export const DEFAULT_DEVICE_CONFIG: DeviceConfig = {
   afcWriteChunkBytes: 1024 * 1024,
   afcReadChunkBytes: 1024 * 1024,
   enableWifiConnections: true,
+  makeRemotePairing: true,
   networkBrowseMs: 3000,
   networkQueryIntervalMs: 10_000,
   // Measured over USB (iOS 26, 100 MiB to PublicStaging): MTU 1500 29.8 MiB/s, 6000 33.7, 8000 34.2.

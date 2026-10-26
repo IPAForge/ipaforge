@@ -131,7 +131,7 @@ export type OpenSessionOptions = PairOptions & {
    * with every service that has a counterpart in the iOS 17.4+ tunnel opened through it. Default: the best link,
    * with the tunnel only as a fallback for services lockdown won't start.
    */
-  readonly route?: 'best' | 'wifi' | 'tunnel'
+  readonly route?: 'best' | 'wifi' | 'tunnel' | 'wifi-tunnel'
 }
 
 export type StartServiceOptions = {
@@ -197,6 +197,8 @@ export type DeviceTunnel = {
   readonly properties: XpcDictionary
   /** A checked-in connection to lockdown `service`'s counterpart, or `undefined` when the tunnel has none. */
   openShim(service: string): Promise<Link | undefined>
+  /** A checked-in connection to any service RSD lists, by its exact name (`com.apple.mobile.lockdown.remote.trusted`). */
+  openService(name: string): Promise<Link | undefined>
   stats(): TcpStats
   close(): Promise<void>
 }

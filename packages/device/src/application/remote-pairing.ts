@@ -10,6 +10,8 @@ import type {
   RemotePairingResult,
   RemotePairingState
 } from '@device/application/types.ts'
+import { parseVersion, shortUdid } from '@device/domain/device.ts'
+import { supportsRemotePairing } from '@device/domain/pairing-apps.ts'
 import { REMOTE_PAIRING_SERVICE } from '@device/domain/remote-pairing/constants.ts'
 import {
   parseRemotePairing,
@@ -24,7 +26,12 @@ import { withClient } from '@device/infrastructure/closeable.ts'
 import { createPairingChannel } from '@device/infrastructure/remote-pairing/channel.ts'
 import { pairSetup } from '@device/infrastructure/remote-pairing/pair-setup.ts'
 import { pairVerify } from '@device/infrastructure/remote-pairing/pair-verify.ts'
-import { ErrorCode, IPAForgeError, toHex } from '@ipaforge/kernel'
+import {
+  ErrorCode,
+  IPAForgeError,
+  toHex,
+  toIPAForgeError
+} from '@ipaforge/kernel'
 
 const randomBytes = (length: number): Uint8Array =>
   globalThis.crypto.getRandomValues(new Uint8Array(length))
@@ -147,4 +154,38 @@ export const ensureRemotePairing = async (
   logger.info('remote pairing made', { host: host.name })
 
   return { record, how: 'created' }
+}
+
+/**
+ * By cable, makes the remote pairing (iOS 17.4+) when none is saved, so the device can later be opened through the
+ * tunnel on Wi-Fi. Best-effort: a device that would ask the user first is left alone, and it never fails the session.
+ */
+export const prepareRemotePairing = async (
+  ctx: DeviceContext,
+  session: DeviceSession
+): Promise<void> => {
+  const { device } = session
+  const { config, logger } = ctx.deps
+  if (!config.makeRemotePairing || device.connectionType !== 'usb') return
+  try {
+    const version = await session.getValue('ProductVersion')
+    if (
+      typeof version !== 'string' ||
+      !supportsRemotePairing(parseVersion(version)) ||
+      (await savedRecord(ctx, device.udid))
+    )
+      return
+    await ensureRemotePairing(ctx, session, {
+      onAwaitingConsent: () => {
+        throw new IPAForgeError(ErrorCode.PairingDenied, {
+          message: 'the device asks the user first'
+        })
+      }
+    })
+  } catch (error) {
+    logger.warn('remote pairing for Wi-Fi skipped', {
+      device: shortUdid(device.udid),
+      code: toIPAForgeError(error).code
+    })
+  }
 }
