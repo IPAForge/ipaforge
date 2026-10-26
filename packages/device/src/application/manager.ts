@@ -178,8 +178,9 @@ export const createDeviceManager = (input: DeviceDepsInput): DeviceManager => {
       if (options?.route === 'wifi-tunnel')
         return createDeviceHandle(ctx, await openOverWifiTunnel(ctx, udid))
       const device = await findDevice(ctx, udid, options?.route)
-      // On iOS 17 and later, lockdown straight over Wi-Fi answers, but the device closes every service it starts
-      // there: with a remote pairing, the tunnel goes first, and lockdown is for older devices.
+      // With a remote pairing, the tunnel goes first: lockdown straight over Wi-Fi can answer while the device closes
+      // every service it starts there (an iPhone on iOS 26.6.1, from Windows; the same one installs that way from a
+      // Mac), and the tunnel is faster. Lockdown is for older devices, and for when the tunnel doesn't open.
       const tunnelFirst =
         device.address !== undefined &&
         options?.route !== 'wifi' &&

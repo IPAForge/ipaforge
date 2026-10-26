@@ -214,10 +214,15 @@ describe('Wi-Fi without usbmuxd', () => {
 })
 
 /** The rig's device and secrets, with a manager whose log lines are kept, to see which way a session went. */
-const loggedManager = (rig: TestRig, makeRemotePairing = false) => {
+const loggedManager = (
+  rig: TestRig,
+  makeRemotePairing = false,
+  onLog?: (message: string) => void
+) => {
   const logs: string[] = []
   const keep = (message: string) => {
     logs.push(message)
+    onLog?.(message)
   }
   const logger: Logger = {
     debug: keep,
@@ -257,15 +262,23 @@ const startServices = (rig: TestRig) =>
 const TUNNEL_FAILED = 'the Wi-Fi tunnel did not open; trying lockdown'
 
 describe('Wi-Fi on iOS 17 and later', () => {
-  it('goes through the tunnel first for a device with a remote pairing, and to lockdown when it does not open', async () => {
+  it('tries the tunnel before lockdown at its address for a device with a remote pairing, then lockdown', async () => {
     const rig = await createRig({ productVersion: '26.6.1' })
     await openAndClose(rig)
     moveToWifi(rig)
     await saveRemotePairing(rig)
-    const { manager, logs } = loggedManager(rig)
+    const lockdownAtAddress = `tcp:${ADDRESS}:62078`
+    let lockdownBeforeTunnel: boolean | undefined
+    const { manager, logs } = loggedManager(rig, false, (message) => {
+      if (message === TUNNEL_FAILED)
+        lockdownBeforeTunnel = rig.fake.requests.includes(lockdownAtAddress)
+    })
 
+    // The fake device has no remote pairing service on Wi-Fi, so the tunnel fails and lockdown takes over.
     const handle = await manager.open(rig.device.udid)
     expect(logs).toContain(TUNNEL_FAILED)
+    expect(lockdownBeforeTunnel).toBe(false)
+    expect(rig.fake.requests).toContain(lockdownAtAddress)
     expect(handle.device).toMatchObject({ address: ADDRESS })
     await handle.close()
   })
