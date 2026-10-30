@@ -81,11 +81,14 @@ export {
 } from '@device/domain/remote-pairing/record.ts'
 export type { RemotePairingRecord } from '@device/domain/remote-pairing/types.ts'
 export type {
+  CodePairedDevice,
   ConnectionType,
   DeviceEvent,
   DeviceInfo,
   DeviceProfile,
   FindPairingAppsOptions,
+  PairableDevice,
+  PairableEvent,
   PairingApp,
   PairingAppMatch,
   RemoveStaleOptions,

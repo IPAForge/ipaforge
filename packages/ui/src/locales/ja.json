@@ -21,7 +21,8 @@
     "noAccounts": "Apple IDはまだありません。",
     "noDevicesHint": "iPhoneまたはiPadをケーブルで接続し、ロックを解除してください。",
     "openDevices": "デバイスを開く",
-    "tour": "ツアーを見る"
+    "tour": "ツアーを見る",
+    "pairByCode": "Apple TVまたはVision Proをペアリング…"
   },
   "nav": {
     "group": {
@@ -115,6 +116,7 @@
     },
     "readiness": {
       "noDevice": "先にデバイスを接続してください。",
+      "notYetTv": "Apple TVとVision Proへのインストールは今後のバージョンで対応します。",
       "checking": "デバイスを確認中…",
       "device": "デバイスの準備ができると使えます。",
       "noAccount": "先にApple IDを追加してください。",
@@ -451,6 +453,18 @@
       "tunnel_unavailable": {
         "title": "デバイスへのトンネルを開けませんでした",
         "body": "iOS 17.4 以降がケーブル経由で提供する安全なトンネルを IPAForge が開けませんでした。デバイスが iOS 17.4 以降であることを確認し、接続し直してもう一度お試しください。"
+      },
+      "pairing_code_wrong": {
+        "title": "コードが一致しません",
+        "body": "入力したコードはデバイスに表示されているものと異なります。画面のコードを確認して、もう一度お試しください。"
+      },
+      "pairing_backoff": {
+        "title": "間違ったコードが多すぎます",
+        "body": "デバイスはしばらくコードを受け付けません。少し待ってからペアリング画面をもう一度開き、ペアリングし直してください。"
+      },
+      "pairing_screen_closed": {
+        "title": "ペアリング画面が閉じられました",
+        "body": "ペアリングが終わる前に、デバイスがペアリング画面を閉じました。もう一度開いたままにしてください。Apple TV:設定 → リモコンとデバイス → Remote Appとデバイス。Apple Vision Pro:設定 → 一般 → リモートデバイス。"
       }
     },
     "apple": {
@@ -899,7 +913,7 @@
       "connected": "{count, plural, =0 {エンジン接続済み · デバイスなし} other {エンジン接続済み · デバイス#台}}",
       "failed": "エンジンに接続できません：{reason}"
     },
-    "description": "このコンピュータに接続されているiPhoneとiPad。使用中のデバイスは上部バーに表示されます。",
+    "description": "このコンピュータに接続されているiPhoneとiPad、およびペアリング済みのApple TVとVision Pro。使用中のデバイスは上部バーに表示されます。",
     "unknownDevice": "不明なデバイス",
     "line": "{model} · iOS {ios} · {link}",
     "model": "{model} · iOS {ios}",
@@ -925,7 +939,9 @@
       "model": "モデル",
       "ios": "iOS",
       "connection": "接続",
-      "udid": "UDID"
+      "udid": "UDID",
+      "pairing": "ペアリング",
+      "address": "アドレス"
     },
     "empty": {
       "title": "デバイスがまだありません",
@@ -963,6 +979,16 @@
         "bodyWifi": "Wi-Fiで接続されています。スリープを解除してロックを外し、このコンピュータと同じネットワークに置いてから再確認してください。ケーブルの方が確実です。",
         "reason": "理由：{reason}",
         "titleUnnamed": "デバイスを読み取れません"
+      },
+      "offNetwork": {
+        "title": "{name}がネットワーク上にありません",
+        "tv": "リモコンでスリープを解除し、このコンピュータと同じWi-Fiにつないだままにしてください。",
+        "vision": "装着してロックを解除し、このコンピュータと同じWi-Fiにつないだままにしてください。"
+      },
+      "pairAgain": {
+        "title": "{name}をもう一度ペアリング",
+        "body": "このコンピュータとのペアリングを受け付けなくなりました。tvOSまたはvisionOSのアップデート後はよくあることです。新しいコードでもう一度ペアリングしてください。",
+        "action": "再ペアリング…"
       }
     },
     "notes": {
@@ -973,6 +999,19 @@
     "savePairing": "ペアリングファイルを保存…",
     "localNetwork": {
       "open": "ローカルネットワークの設定を開く"
+    },
+    "os": {
+      "tv": "tvOS",
+      "vision": "visionOS"
+    },
+    "lineOs": "{model} · {os} {version} · {link}",
+    "modelOs": "{model} · {os} {version}",
+    "pairedByCode": "このコンピュータとコードでペアリング済み",
+    "forget": {
+      "action": "削除…",
+      "title": "{name}を削除しますか?",
+      "body": "IPAForgeはこのコンピュータとのペアリングを削除します。インストール済みのアプリは残ります。再び使うには、もう一度ペアリングしてください。",
+      "confirm": "削除"
     }
   },
   "prompts": {
@@ -2110,5 +2149,66 @@
       "title": "ツアーを見る",
       "text": "いつでもここからこのツアーをもう一度見られます。セットアップガイドは設定にあります。"
     }
+  },
+  "pairByCode": {
+    "steps": {
+      "pair": "コードでペアリング"
+    },
+    "open": "Apple TVまたはVision Proをペアリング…",
+    "title": "Apple TVまたはVision Proをペアリング",
+    "titleAgain": "{name}をもう一度ペアリング",
+    "progress": {
+      "label": "手順",
+      "find": "1 検索",
+      "code": "2 コード"
+    },
+    "intro": "ケーブルがないため、Wi-Fi経由でコードを使ってペアリングします。デバイスをこのコンピュータと同じWi-Fiにつなぎ、ペアリング画面を開いたままにしてください:",
+    "where": {
+      "tv": "Apple TV",
+      "vision": "Apple Vision Pro",
+      "tvPath": "設定 → リモコンとデバイス → Remote Appとデバイス",
+      "visionPath": "設定 → 一般 → リモートデバイス"
+    },
+    "found": "ネットワーク上で見つかったデバイス",
+    "showing": "ペアリング画面を表示中",
+    "pair": "ペアリング",
+    "searching": "ネットワークを検索しています… ペアリング画面を開くと、ここにデバイスが表示されます。",
+    "searchingMore": "ほかのデバイスも引き続き検索しています…",
+    "help": {
+      "title": "表示されない場合",
+      "screen": "ペアリング画面を開いたままにしてください。表示している間だけデバイスを見つけられます。",
+      "network": "このコンピュータと同じWi-Fiであること(ゲストネットワークではなく、どちらにもVPNがないこと)。",
+      "ipv6": "ルーターでIPv6がオンになっていること(Appleがペアリングに必要とします)。",
+      "macos": "macOS:システム設定 → プライバシーとセキュリティ → ローカルネットワーク → IPAForgeをオン。",
+      "windows": "Windows:ファイアウォールに尋ねられたら、プライベートネットワークでIPAForgeを許可してください。"
+    },
+    "failed": "ネットワークの検索が止まりました。閉じてからもう一度開いてください。",
+    "code": {
+      "title": "{name}に表示されたコードを入力",
+      "body": "{name}にコードが表示されます。ここに入力してください。",
+      "label": "コード",
+      "wrong": "コードが一致しません。{name}のコードを確認して、もう一度お試しください。",
+      "pairing": "{name}とペアリングしています…",
+      "checking": "コードを確認しています…"
+    },
+    "back": "戻る",
+    "backToList": "一覧に戻る",
+    "backoff": {
+      "title": "間違ったコードが多すぎます",
+      "wait": "{name}では{seconds, plural, other {#秒}}後にもう一度試せます。",
+      "later": "{name}はしばらくコードを受け付けません。少し待ってから、もう一度お試しください。"
+    },
+    "closed": {
+      "title": "{name}のペアリング画面が閉じられました",
+      "body": "コードはペアリング画面が開いている間だけ有効です。{name}でもう一度開いてください:"
+    },
+    "done": {
+      "title": "{name}をペアリングしました",
+      "body": "{name}がデバイスページに追加されました。ペアリング画面は閉じてかまいません。",
+      "vision": "デベロッパモードをオンにすると、アプリをインストールできます。",
+      "use": "{name}を使用",
+      "close": "閉じる"
+    },
+    "pairNamed": "{name}をペアリング"
   }
 }

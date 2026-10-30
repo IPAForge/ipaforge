@@ -2,6 +2,7 @@ import { useTranslation } from 'react-i18next'
 
 import { deviceTone } from '@ui/features/devices/constants.ts'
 import type { DeviceView } from '@ui/features/devices/types.ts'
+import { deviceKind } from '@ui/features/devices/utils/device-kind.ts'
 import { deviceState } from '@ui/features/devices/utils/device-state.ts'
 import { linkKey } from '@ui/features/devices/utils/link-key.ts'
 import { modelName } from '@ui/features/devices/utils/model-name.ts'
@@ -40,8 +41,21 @@ export const useDeviceView = (
   const model = info
     ? { model: modelName(info.productType), ios: info.productVersion }
     : undefined
+  // An Apple TV or Vision Pro names its own OS: "Apple TV 4K · tvOS 26.1 · Wi-Fi".
+  const kind = deviceKind(info?.productType)
   const describe = () => {
     if (!model) return link
+    if (kind) {
+      const values = {
+        model: model.model,
+        os: t(`devices.os.${kind}`),
+        version: model.ios
+      }
+
+      return link
+        ? t('devices.lineOs', { ...values, link })
+        : t('devices.modelOs', values)
+    }
     return link
       ? t('devices.line', { ...model, link })
       : t('devices.model', model)

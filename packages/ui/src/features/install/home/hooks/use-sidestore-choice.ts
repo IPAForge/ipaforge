@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import { useAccountView } from '@ui/features/accounts/hooks/use-account-view.ts'
 import { useDeviceView } from '@ui/features/devices/hooks/use-device-view.ts'
+import { installDeviceState } from '@ui/features/install/home/utils/install-device-state.ts'
 import { installReadiness } from '@ui/features/install/home/utils/readiness.ts'
 import { planInput } from '@ui/features/install/utils/plan-input.ts'
 import { usePlanInstall } from '@ui/hooks/queries/use-plan-install.ts'
@@ -30,6 +31,7 @@ export const useSideStoreChoice = () => {
   const inUse = useDeviceInUse()
   const account = useActiveAccount()
   const deviceView = useDeviceView(inUse?.udid, inUse?.device)
+  const deviceState = installDeviceState(inUse, deviceView.state)
   const accountView = useAccountView(account, useDevicesInUse())
   const recommended = useRecommendedChannel(
     variantAppId[variant],
@@ -39,7 +41,7 @@ export const useSideStoreChoice = () => {
   const canPlan =
     inUse !== undefined &&
     account !== undefined &&
-    deviceView.state === 'ready' &&
+    deviceState === 'ready' &&
     (accountView.state === 'ready' || accountView.state === 'checking')
   const plan = usePlanInstall(
     canPlan
@@ -47,7 +49,7 @@ export const useSideStoreChoice = () => {
       : undefined
   )
   const readiness = installReadiness(
-    deviceView.state,
+    deviceState,
     accountView.state,
     plan.data?.appIds.enough ?? true
   )

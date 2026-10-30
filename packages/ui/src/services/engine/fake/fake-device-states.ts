@@ -73,6 +73,9 @@ export const createFakeDeviceStates = (
 
   return {
     status,
+    add: (check, trusted = true) => {
+      states.set(check.info.udid, { check, trusted, locksFor: 0 })
+    },
     pair: async (udid) => {
       const state = states.get(udid)
       if (!state)

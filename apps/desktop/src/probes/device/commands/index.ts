@@ -1,6 +1,10 @@
 import { afcCheckCommand } from '@desktop/probes/device/commands/afc-check.ts'
 import { afcSpeedCommand } from '@desktop/probes/device/commands/afc-speed.ts'
 import {
+  tvBrowseCommand,
+  tvPairCommand
+} from '@desktop/probes/device/commands/code-pairing.ts'
+import {
   appsCommand,
   infoCommand,
   listCommand,
@@ -41,5 +45,7 @@ export const deviceCommands = (probe: DeviceProbe): ProbeCommands => ({
   'wifi-list': wifiListCommand(probe),
   'rsd-services': rsdServicesCommand(probe),
   'tunnel-install': tunnelInstallCommand(probe),
-  'rp-tunnel': wifiTunnelCommand(probe)
+  'rp-tunnel': wifiTunnelCommand(probe),
+  'tv-browse': tvBrowseCommand(probe),
+  'tv-pair': tvPairCommand(probe)
 })

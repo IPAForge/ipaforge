@@ -8,12 +8,14 @@ import {
   serveAfc
 } from '@device/__tests__/fake-device/fake-afc.ts'
 import { createPipe } from '@device/__tests__/fake-device/pipe.ts'
+import type { createFakeRemoteDevice } from '@device/__tests__/fake-remote-device.ts'
 import {
   type FakeTunnel,
   type FakeTunnelOptions,
   serveFakeTunnel
 } from '@device/__tests__/fake-tunnel/fake-tunnel.ts'
 import { lockdownAdvert } from '@device/__tests__/mdns-answer.ts'
+import { serveRemotePairing } from '@device/__tests__/serve-remote-pairing.ts'
 import { DEFAULT_DEVICE_CONFIG } from '@device/domain/config.ts'
 import {
   CORE_DEVICE_PROXY_SERVICE,
@@ -38,6 +40,10 @@ import {
   receivePlist,
   sendPlist
 } from '@device/infrastructure/framing/plist-frames.ts'
+import {
+  MANUAL_PAIRING_SERVICE,
+  REMOTE_PAIRING_SERVICE
+} from '@device/infrastructure/mdns/constants.ts'
 import { createPairRecord } from '@device/infrastructure/pairing/certificates.ts'
 import {
   encodeUsbmuxPacket,
@@ -150,11 +156,27 @@ export type FakeUsbmuxd = {
   readonly onWifi: Map<string, FakeDevice>
   /** Extra TXT entries a device's Wi-Fi advert carries (identifier, authTag), by UDID. */
   readonly wifiTxt: Map<string, readonly string[]>
+  /**
+   * Apple TVs and Vision Pros showing their pairing screen, by address: their pairing advert answers mDNS queries,
+   * and its port (32498) serves the fake device's pair-setup.
+   */
+  readonly pairable: Map<
+    string,
+    {
+      readonly txt: readonly string[]
+      readonly device: ReturnType<typeof createFakeRemoteDevice>
+    }
+  >
+  /** Remote pairing adverts (`_remotepairing._tcp`) by address, with their TXT (identifier, authTag). */
+  readonly remotePairingAdverts: Map<string, readonly string[]>
   /** The OS refuses local network access (macOS): every mDNS send fails. */
   localNetworkDenied: boolean
   attach(device: FakeDevice): void
   detach(udid: string): void
 }
+
+/** The port every fake advert's SRV gives: a device showing its pairing screen takes pair-setup there. */
+export const PAIRING_ADVERT_PORT = 32_498
 
 /** A real RSA key, as lockdownd reports `DevicePublicKey` (PKCS#1 PEM). */
 const devicePublicKey = async (): Promise<Uint8Array> => {
@@ -750,6 +772,8 @@ export const createFakeUsbmuxd = (
     unavailable: false,
     onWifi: new Map(),
     wifiTxt: new Map(),
+    pairable: new Map(),
+    remotePairingAdverts: new Map(),
     localNetworkDenied: false,
     attach: (device) => {
       devices.push(device)
@@ -776,6 +800,13 @@ export const createFakeUsbmuxd = (
         return pipe.client
       },
       connectTcp: async (host, port) => {
+        const showing = fake.pairable.get(host)
+        if (showing && port === PAIRING_ADVERT_PORT) {
+          fake.requests.push(`tcp:${host}:${port}`)
+          const pipe = createPipe()
+          void serveRemotePairing(createLink(pipe.server), showing.device)
+          return pipe.client
+        }
         const device = fake.onWifi.get(host)
         const service =
           port === LOCKDOWN_PORT
@@ -807,6 +838,29 @@ export const createFakeUsbmuxd = (
               for (const listener of [...listeners])
                 listener({ bytes, from: address })
             }
+            const adverts = [
+              ...[...fake.pairable].map(([address, { txt }]) =>
+                lockdownAdvert({
+                  service: MANUAL_PAIRING_SERVICE,
+                  mac: 'tv',
+                  host: `tv-${address}.local`,
+                  address,
+                  txt
+                })
+              ),
+              ...[...fake.remotePairingAdverts].map(([address, txt]) =>
+                lockdownAdvert({
+                  service: REMOTE_PAIRING_SERVICE,
+                  mac: 'rp',
+                  host: `rp-${address}.local`,
+                  address,
+                  txt
+                })
+              )
+            ]
+            for (const bytes of adverts)
+              for (const listener of [...listeners])
+                listener({ bytes, from: 'fake' })
           },
           onMessage: (listener) => {
             listeners.add(listener)

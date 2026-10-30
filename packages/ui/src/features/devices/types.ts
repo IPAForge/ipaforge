@@ -5,6 +5,9 @@ import type { useDevices } from '@ui/hooks/queries/use-devices.ts'
 import type { TranslationKey } from '@ui/i18n/setup/types.ts'
 import type { DeviceCheck } from '@ui/services/engine/types.ts'
 
+/** A device paired by code: an Apple TV or an Apple Vision Pro. */
+export type DeviceKind = 'tv' | 'vision'
+
 export type DeviceState =
   | 'checking'
   | 'ready'

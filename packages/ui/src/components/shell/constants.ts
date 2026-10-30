@@ -15,6 +15,9 @@ export const ADD_APPLE_ID = 'add-apple-id'
 /** The device menu's "Open Devices" item. */
 export const OPEN_DEVICES = 'open-devices'
 
+/** The device menu's "Pair Apple TV or Vision Pro…" item. */
+export const PAIR_BY_CODE = 'pair-by-code'
+
 // The router marks the current route with `aria-current="page"`; the styling keys off that attribute.
 export const LINK_CLASSES = [
   'flex items-center gap-3 rounded-lg px-3 py-2 text-sm text-muted outline-none',

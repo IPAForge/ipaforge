@@ -1,6 +1,12 @@
 // The device facade: finding devices (through usbmuxd and on the local network), pairing, and opening a session
 // handle.
 import {
+  codePairedDevices,
+  forgetCodePaired,
+  pairByCode,
+  watchPairable
+} from '@device/application/code-pairing.ts'
+import {
   createDeviceContext,
   type DeviceContext
 } from '@device/application/context.ts'
@@ -31,7 +37,13 @@ import { openWifiTunnel } from '@device/application/wifi-tunnel.ts'
 import { resolveDeviceDeps } from '@device/deps.ts'
 import { shortUdid } from '@device/domain/device.ts'
 import type { PairRecord } from '@device/domain/pairing/types.ts'
-import type { DeviceEvent, UsbmuxDevice } from '@device/domain/types.ts'
+import type {
+  CodePairedDevice,
+  DeviceEvent,
+  PairableDevice,
+  PairableEvent,
+  UsbmuxDevice
+} from '@device/domain/types.ts'
 import type { DeviceDepsInput } from '@device/types.ts'
 import { ErrorCode, IPAForgeError, toIPAForgeError } from '@ipaforge/kernel'
 
@@ -63,6 +75,27 @@ export type DeviceManager = {
   exportPairRecord(udid: string): Promise<Uint8Array>
   importPairRecord(udid: string, data: Uint8Array): Promise<void>
   open(udid: string, options?: OpenSessionOptions): Promise<DeviceHandle>
+  /**
+   * Searches the network for Apple TVs and Vision Pros showing their pairing screen until `signal` aborts. Ends at
+   * once when the host can't search; throws `device.local_network_denied` when the OS refuses it.
+   */
+  watchPairable(
+    onEvent: (event: PairableEvent) => void,
+    signal: AbortSignal
+  ): Promise<void>
+  /**
+   * Pairs with a device showing its pairing screen, asking for the code it shows once it shows it. From then on it
+   * is found by `watchNetwork` and opened through its tunnel. Throws `device.pairing_code_wrong` (try again: the
+   * device shows a new code), `device.pairing_backoff` or `device.pairing_screen_closed`.
+   */
+  pairByCode(
+    target: PairableDevice,
+    askPin: () => Promise<string>
+  ): Promise<CodePairedDevice>
+  /** The devices paired by code, whether or not they're on the network now. */
+  codePairedDevices(): Promise<CodePairedDevice[]>
+  /** Forgets a device paired by code: its pairing goes, the apps on it stay. */
+  forgetCodePaired(udid: string): Promise<void>
 }
 
 const isUsbmuxdMissing = (error: unknown): boolean =>
@@ -146,6 +179,25 @@ const openOverWifiTunnel = async (ctx: DeviceContext, udid: string) => {
   )
 }
 
+/** A session with a device paired by code: through its tunnel on Wi-Fi, the only way to it. */
+const openCodePaired = async (ctx: DeviceContext, udid: string) => {
+  const device = await findOnWifi(ctx, udid)
+
+  return openTunnelSession(
+    ctx,
+    device,
+    await openWifiTunnel(ctx, device),
+    undefined
+  )
+}
+
+const isCodePaired = async (
+  ctx: DeviceContext,
+  udid: string
+): Promise<boolean> =>
+  ctx.network.get(udid)?.pairedByCode === true ||
+  (await codePairedDevices(ctx)).some((device) => device.udid === udid)
+
 export const createDeviceManager = (input: DeviceDepsInput): DeviceManager => {
   const ctx = createDeviceContext(resolveDeviceDeps(input))
 
@@ -174,7 +226,13 @@ export const createDeviceManager = (input: DeviceDepsInput): DeviceManager => {
     importPairRecord: async (udid, data) => {
       await importPairRecord(ctx, udid, data)
     },
+    watchPairable: (onEvent, signal) => watchPairable(ctx, onEvent, signal),
+    pairByCode: (target, askPin) => pairByCode(ctx, target, askPin),
+    codePairedDevices: () => codePairedDevices(ctx),
+    forgetCodePaired: (udid) => forgetCodePaired(ctx, udid),
     open: async (udid, options) => {
+      if (await isCodePaired(ctx, udid))
+        return createDeviceHandle(ctx, await openCodePaired(ctx, udid))
       if (options?.route === 'wifi-tunnel')
         return createDeviceHandle(ctx, await openOverWifiTunnel(ctx, udid))
       const device = await findDevice(ctx, udid, options?.route)

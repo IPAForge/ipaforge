@@ -23,6 +23,11 @@ describe('device helpers', () => {
     expect(developerModeState('16.0', true)).toBe('on')
     expect(developerModeState('17.1', false)).toBe('off')
     expect(developerModeState('18.0', undefined)).toBe('unknown')
+    // tvOS has no Developer Mode; visionOS has it from 1.0, below iOS 16's number.
+    expect(developerModeState('26.1', undefined, 'AppleTV14,1')).toBe(
+      'not_required'
+    )
+    expect(developerModeState('2.4', false, 'RealityDevice14,1')).toBe('off')
   })
 })
 

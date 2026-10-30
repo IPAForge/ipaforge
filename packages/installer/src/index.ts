@@ -64,6 +64,7 @@ export type {
   EngineQueries,
   InstalledAppsQuery,
   InstallPlan,
+  PairableWatchEvent,
   PlanInstallInput,
   RemoveAppInput,
   RunEvent,
@@ -78,6 +79,7 @@ export {
   type InstallAppsInput
 } from '@installer/flows/install-apps.ts'
 export { INSTALL_SIDESTORE } from '@installer/flows/install-sidestore.ts'
+export { PAIR_BY_CODE } from '@installer/flows/pair-by-code.ts'
 export { PLACE_PAIRING } from '@installer/flows/place-pairing.ts'
 export {
   REFRESH_APPS,
@@ -90,6 +92,8 @@ export {
 export { SIGN_IN } from '@installer/flows/sign-in.ts'
 export type {
   InstallSideStoreInput,
+  PairByCodeInput,
+  PairByCodeState,
   PairingOverwrite,
   PairingState,
   PlacePairingInput,

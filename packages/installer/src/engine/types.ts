@@ -39,7 +39,12 @@ import type {
   SourceInfo,
   SourcePreview
 } from '@ipaforge/catalog'
-import type { DeviceCheck, UsbmuxDevice } from '@ipaforge/device'
+import type {
+  CodePairedDevice,
+  DeviceCheck,
+  PairableEvent,
+  UsbmuxDevice
+} from '@ipaforge/device'
 import type {
   CompatibilityProblem,
   IpaInspection,
@@ -155,6 +160,12 @@ export type DeviceProfileInfo = {
   readonly isUsed: boolean
 }
 
+/** What the search for Apple TVs and Vision Pros showing their pairing screen reports, and when it can't search. */
+export type PairableWatchEvent =
+  | PairableEvent
+  | { readonly kind: 'denied' }
+  | { readonly kind: 'failed'; readonly code: string }
+
 export type EngineQueries = {
   listDevices(): Promise<UsbmuxDevice[]>
   /** Lock state, Developer Mode and iOS version of a paired device. */
@@ -164,6 +175,10 @@ export type EngineQueries = {
    * waits for the tap), then reads its status like `deviceStatus`.
    */
   pairDevice(udid: string): Promise<DeviceCheck>
+  /** The Apple TVs and Vision Pros paired by code, whether or not they're on the network now. */
+  codePairedDevices(): Promise<CodePairedDevice[]>
+  /** Forgets an Apple TV or Vision Pro paired by code: its pairing goes, the apps on it stay. */
+  forgetCodePaired(udid: string): Promise<void>
   listAccounts(): Promise<SavedAccount[]>
   /** False when saved Apple IDs last only until the app quits: no OS keychain, or access to it was denied. */
   canSaveAccounts(): Promise<boolean>

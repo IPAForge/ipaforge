@@ -21,7 +21,8 @@
     "noAccounts": "Niciun Apple ID încă.",
     "noDevicesHint": "Conectează un iPhone sau iPad prin cablu și deblochează-l.",
     "openDevices": "Deschide Dispozitive",
-    "tour": "Arată-mi aplicația"
+    "tour": "Arată-mi aplicația",
+    "pairByCode": "Asociază Apple TV sau Vision Pro…"
   },
   "nav": {
     "group": {
@@ -115,6 +116,7 @@
     },
     "readiness": {
       "noDevice": "Conectează întâi un dispozitiv.",
+      "notYetTv": "Instalarea pe Apple TV și Vision Pro vine într-o versiune ulterioară.",
       "checking": "Se verifică dispozitivul…",
       "device": "Disponibil când dispozitivul este pregătit.",
       "noAccount": "Adaugă întâi un Apple ID.",
@@ -451,6 +453,18 @@
       "tunnel_unavailable": {
         "title": "Tunelul către dispozitiv nu s-a deschis",
         "body": "IPAForge nu a putut deschide tunelul securizat pe care iOS 17.4 și versiunile mai noi îl oferă prin cablu. Verifică dacă dispozitivul are iOS 17.4 sau mai nou, reconectează-l și încearcă din nou."
+      },
+      "pairing_code_wrong": {
+        "title": "Codul nu se potrivește",
+        "body": "Codul introdus nu este cel afișat de dispozitiv. Verifică codul de pe ecranul lui și încearcă din nou."
+      },
+      "pairing_backoff": {
+        "title": "Prea multe coduri greșite",
+        "body": "Dispozitivul nu mai acceptă coduri o vreme. Așteaptă puțin, deschide din nou ecranul de asociere și asociază-l încă o dată."
+      },
+      "pairing_screen_closed": {
+        "title": "Ecranul de asociere s-a închis",
+        "body": "Dispozitivul a închis ecranul de asociere înainte ca asocierea să se termine. Deschide-l din nou și lasă-l deschis: Apple TV: Configurări → Telecomenzi și dispozitive → Aplicația Remote și dispozitive. Apple Vision Pro: Configurări → General → Dispozitive la distanță."
       }
     },
     "apple": {
@@ -899,7 +913,7 @@
       "connected": "{count, plural, =0 {Motor conectat · niciun dispozitiv} one {Motor conectat · # dispozitiv} few {Motor conectat · # dispozitive} other {Motor conectat · # de dispozitive}}",
       "failed": "Motorul nu poate fi accesat: {reason}"
     },
-    "description": "iPhone-urile și iPad-urile conectate la acest computer. Cel folosit apare în bara de sus.",
+    "description": "iPhone-urile și iPad-urile conectate la acest computer și dispozitivele Apple TV și Vision Pro asociate cu el. Cel folosit apare în bara de sus.",
     "unknownDevice": "Dispozitiv necunoscut",
     "line": "{model} · iOS {ios} · {link}",
     "model": "{model} · iOS {ios}",
@@ -925,7 +939,9 @@
       "model": "Model",
       "ios": "iOS",
       "connection": "Conexiune",
-      "udid": "UDID"
+      "udid": "UDID",
+      "pairing": "Asociere",
+      "address": "Adresă"
     },
     "empty": {
       "title": "Încă niciun dispozitiv",
@@ -963,6 +979,16 @@
         "bodyWifi": "Este conectat prin Wi-Fi: trezește-l, deblochează-l și ține-l în aceeași rețea cu acest computer, apoi apasă „Verifică din nou”. Un cablu este mai sigur.",
         "reason": "Motiv: {reason}",
         "titleUnnamed": "Dispozitivul nu poate fi citit"
+      },
+      "offNetwork": {
+        "title": "{name} nu este în rețea",
+        "tv": "Trezește-l cu telecomanda și ține-l în aceeași rețea Wi-Fi ca acest computer.",
+        "vision": "Pune-l pe cap, deblochează-l și ține-l în aceeași rețea Wi-Fi ca acest computer."
+      },
+      "pairAgain": {
+        "title": "Asociază din nou {name}",
+        "body": "Nu mai acceptă asocierea acestui computer. E normal după o actualizare tvOS sau visionOS: asociază-l din nou cu un cod nou.",
+        "action": "Asociază din nou…"
       }
     },
     "notes": {
@@ -973,6 +999,19 @@
     "savePairing": "Salvează fișierul de asociere…",
     "localNetwork": {
       "open": "Deschide setările Rețea locală"
+    },
+    "os": {
+      "tv": "tvOS",
+      "vision": "visionOS"
+    },
+    "lineOs": "{model} · {os} {version} · {link}",
+    "modelOs": "{model} · {os} {version}",
+    "pairedByCode": "Asociat cu acest computer, prin cod",
+    "forget": {
+      "action": "Uită…",
+      "title": "Uiți {name}?",
+      "body": "IPAForge șterge asocierea acestui computer. Aplicațiile deja instalate rămân. Ca să-l folosești din nou, asociază-l din nou.",
+      "confirm": "Uită"
     }
   },
   "prompts": {
@@ -2110,5 +2149,66 @@
       "title": "Arată-mi aplicația",
       "text": "Reia acest tur de aici, oricând. Ghidul de configurare e în Setări."
     }
+  },
+  "pairByCode": {
+    "steps": {
+      "pair": "Asociere cu codul"
+    },
+    "open": "Asociază Apple TV sau Vision Pro…",
+    "title": "Asociază un Apple TV sau Vision Pro",
+    "titleAgain": "Asociază din nou {name}",
+    "progress": {
+      "label": "Pași",
+      "find": "1 Găsire",
+      "code": "2 Cod"
+    },
+    "intro": "Nu au cablu, așa că se asociază prin Wi-Fi cu un cod. Conectează dispozitivul la aceeași rețea Wi-Fi ca acest computer, apoi deschide ecranul lui de asociere și lasă-l deschis:",
+    "where": {
+      "tv": "Apple TV",
+      "vision": "Apple Vision Pro",
+      "tvPath": "Configurări → Telecomenzi și dispozitive → Aplicația Remote și dispozitive",
+      "visionPath": "Configurări → General → Dispozitive la distanță"
+    },
+    "found": "Găsite în rețeaua ta",
+    "showing": "Afișează ecranul de asociere",
+    "pair": "Asociază",
+    "searching": "Se caută în rețeaua ta… Dispozitivul apare aici după ce îi deschizi ecranul de asociere.",
+    "searchingMore": "Se caută în continuare și altele…",
+    "help": {
+      "title": "Nu apare",
+      "screen": "Lasă ecranul de asociere deschis: dispozitivul poate fi găsit doar cât timp îl afișează.",
+      "network": "Aceeași rețea Wi-Fi ca acest computer: nu o rețea pentru oaspeți și fără VPN pe niciuna dintre părți.",
+      "ipv6": "IPv6 activat în router (Apple are nevoie de el pentru asociere).",
+      "macos": "macOS: Configurări sistem → Confidențialitate și securitate → Rețea locală → IPAForge activat.",
+      "windows": "Windows: permite IPAForge în rețelele private când întreabă firewallul."
+    },
+    "failed": "Căutarea în rețeaua ta s-a oprit. Închide această fereastră și deschide-o din nou.",
+    "code": {
+      "title": "Introdu codul de pe {name}",
+      "body": "{name} afișează un cod. Introdu-l aici.",
+      "label": "Cod",
+      "wrong": "Codul nu se potrivește. Verifică codul de pe {name} și încearcă din nou.",
+      "pairing": "Se asociază cu {name}…",
+      "checking": "Se verifică codul…"
+    },
+    "back": "Înapoi",
+    "backToList": "Înapoi la listă",
+    "backoff": {
+      "title": "Prea multe coduri greșite",
+      "wait": "{name} te lasă să încerci din nou peste {seconds, plural, one {# secundă} few {# secunde} other {# de secunde}}.",
+      "later": "{name} nu mai acceptă coduri o vreme. Așteaptă puțin, apoi încearcă din nou."
+    },
+    "closed": {
+      "title": "{name} și-a închis ecranul de asociere",
+      "body": "Codul funcționează doar cât timp ecranul de asociere este deschis. Deschide-l din nou pe {name}:"
+    },
+    "done": {
+      "title": "{name} este asociat",
+      "body": "{name} apare acum pe pagina Dispozitive. Poți închide acum ecranul lui de asociere.",
+      "vision": "Aplicațiile se instalează după ce activezi Modul dezvoltator.",
+      "use": "Folosește {name}",
+      "close": "Închide"
+    },
+    "pairNamed": "Asociază {name}"
   }
 }

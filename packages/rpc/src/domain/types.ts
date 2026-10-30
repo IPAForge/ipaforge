@@ -4,6 +4,8 @@ import type {
   EngineQueries,
   InstallPlan,
   InstallState,
+  PairableWatchEvent,
+  PairByCodeState,
   PairingState,
   PromptRequest,
   RunEvent,
@@ -21,6 +23,7 @@ import type {
   RemoteCheckpoint,
   RemoteInstallAppsInput,
   RemoteInstallSideStoreInput,
+  RemotePairByCodeInput,
   RemotePlacePairingInput,
   RemotePlanInstallInput,
   RemoteRefreshAppsInput,
@@ -116,6 +119,18 @@ export type EngineClient = Omit<EngineQueries, 'planInstall'> & {
    * it. Returns the function that stops listening; the channel closing stops it too.
    */
   watchDevices(listener: (event: DeviceWatchEvent) => void): () => void
+  /**
+   * Apple TVs and Vision Pros showing their pairing screen, as they appear and go (`denied` when the OS refuses
+   * local network access). Returns the function that stops the search; the channel closing stops it too.
+   */
+  watchPairableDevices(
+    listener: (event: PairableWatchEvent) => void
+  ): () => void
+  /** Pairs an Apple TV or Vision Pro by the code it shows; answer its `device.pairing_code` prompt. */
+  pairByCode(
+    input: RemotePairByCodeInput,
+    options?: RemoteCommandOptions
+  ): RemoteRunHandle<Wire<PairByCodeState>>
   /** Forgets a saved Apple ID (account, session, saved password); its certificates stay for the next sign-in. */
   signOut(accountId: string): Promise<void>
   /** Runs locally: errors arrive as IPAForgeErrors with their code, data and cause chain intact. */

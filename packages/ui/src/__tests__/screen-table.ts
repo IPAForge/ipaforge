@@ -3,12 +3,15 @@ import {
   anisetteShown,
   appsShown,
   checklistShown,
+  codePairedShown,
   developerShown,
   fillPreload,
   localNetworkNoticeShown,
   logsShown,
   openAddAllToSideStore,
+  openPairDialog,
   openPairingFiles,
+  pickPairable,
   planShown,
   pressInstall,
   recoveryShown,
@@ -83,6 +86,19 @@ export const screens = {
       scenario: 'local-network-denied'
     })
     await localNetworkNoticeShown()
+  },
+  'devices-tv': async (options: ScreenOptions) => {
+    await renderScreen('/devices', { ...options, scenario: 'paired-tv' })
+    await codePairedShown()
+  },
+  'pair-find': async (options: ScreenOptions) => {
+    await renderScreen('/devices', options)
+    await openPairDialog()
+  },
+  'pair-code': async (options: ScreenOptions) => {
+    await renderScreen('/devices', options)
+    await openPairDialog()
+    await pickPairable()
   },
   apps: async (options: ScreenOptions) => {
     await renderScreen('/apps', options)

@@ -14,6 +14,7 @@ import {
 import { createFakeAnisette } from '@ui/services/engine/fake/fake-anisette.ts'
 import { fakeAppFor, fakePlanFor } from '@ui/services/engine/fake/fake-apps.ts'
 import { fakeAppsSteps } from '@ui/services/engine/fake/fake-apps-steps.ts'
+import { createFakeCodePairing } from '@ui/services/engine/fake/fake-code-pairing.ts'
 import {
   fakeCatalogApps,
   fakeIphoneCheck,
@@ -279,6 +280,12 @@ export const createFakeEngine = ({
     ...createFakePairing(
       () => new Promise<void>((resolve) => setTimeout(resolve, delayMs))
     ),
+    ...createFakeCodePairing({
+      scenario,
+      delayMs,
+      devices,
+      states: deviceStates
+    }),
     listAccounts: async () => world.accounts,
     canSaveAccounts: async () => world.scenario !== 'no-keychain',
     signOut: async (accountId) => forgetAccount(world, accountId),

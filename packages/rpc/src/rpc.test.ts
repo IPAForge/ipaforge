@@ -1,6 +1,10 @@
 import { describe, expect, it, vi } from 'vitest'
 
-import type { DeviceWatchEvent, RunEvent } from '@ipaforge/installer'
+import type {
+  DeviceWatchEvent,
+  PairableWatchEvent,
+  RunEvent
+} from '@ipaforge/installer'
 import { bytesFileSource, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 import {
   createFakeEngine,
@@ -594,6 +598,39 @@ describe('device watch', () => {
     stop()
     await settle()
     expect(events).toHaveLength(3)
+  })
+
+  it('streams Apple TVs and Vision Pros showing their pairing screen, and pairs one by code', async () => {
+    const { client, control } = setup()
+    const events: PairableWatchEvent[] = []
+    const stop = client.watchPairableDevices((event) => events.push(event))
+    await vi.waitFor(() => expect(control.pairableWatchers.size).toBe(1))
+    const tv = {
+      id: 'tv._remotepairing-manual-pairing._tcp.local',
+      name: 'Living Room',
+      model: 'AppleTV14,1',
+      address: '192.0.2.20',
+      port: 49_152
+    }
+    for (const watcher of control.pairableWatchers) {
+      watcher({ kind: 'found', device: tv })
+      watcher({ kind: 'denied' })
+    }
+    await vi.waitFor(() => expect(events).toHaveLength(2))
+    expect(events).toEqual([{ kind: 'found', device: tv }, { kind: 'denied' }])
+    stop()
+    await vi.waitFor(() => expect(control.pairableWatchers.size).toBe(0))
+
+    const handle = client.pairByCode({ target: tv })
+    await nextPrompt(handle)
+    handle.cancel()
+    await handle.result
+    expect(control.pairByCodeInputs).toEqual([{ target: tv }])
+    expect(await client.codePairedDevices()).toEqual([
+      { udid: 'TV-UDID', name: 'Living Room', model: 'AppleTV14,1' }
+    ])
+    await client.forgetCodePaired('TV-UDID')
+    expect(control.forgotten).toEqual(['TV-UDID'])
   })
 
   it('ends the Engine subscription when the channel closes', async () => {

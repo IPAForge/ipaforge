@@ -21,7 +21,8 @@
     "noAccounts": "No Apple IDs yet.",
     "noDevicesHint": "Connect an iPhone or iPad with a cable and unlock it.",
     "openDevices": "Open Devices",
-    "tour": "Show me around"
+    "tour": "Show me around",
+    "pairByCode": "Pair Apple TV or Vision Pro…"
   },
   "nav": {
     "group": {
@@ -115,6 +116,7 @@
     },
     "readiness": {
       "noDevice": "Connect a device first.",
+      "notYetTv": "Installing to Apple TV and Vision Pro comes in a later version.",
       "checking": "Checking the device…",
       "device": "Available once the device is ready.",
       "noAccount": "Add an Apple ID first.",
@@ -451,6 +453,18 @@
       "tunnel_unavailable": {
         "title": "The device's tunnel didn't open",
         "body": "IPAForge couldn't open the secure tunnel that iOS 17.4 and later offer over the cable. Check that the device runs iOS 17.4 or later, reconnect it and try again."
+      },
+      "pairing_code_wrong": {
+        "title": "The code didn't match",
+        "body": "The code typed isn't the one the device shows. Check the code on its screen and try again."
+      },
+      "pairing_backoff": {
+        "title": "Too many wrong codes",
+        "body": "The device takes no more codes for a while. Wait a moment, open its pairing screen again and pair once more."
+      },
+      "pairing_screen_closed": {
+        "title": "The pairing screen closed",
+        "body": "The device stopped showing its pairing screen before pairing finished. Open it again and keep it open: Apple TV: Settings → Remotes and Devices → Remote App and Devices. Apple Vision Pro: Settings → General → Remote Devices."
       }
     },
     "apple": {
@@ -899,7 +913,7 @@
       "connected": "{count, plural, =0 {Engine connected · no devices} one {Engine connected · # device} other {Engine connected · # devices}}",
       "failed": "Can't reach the Engine: {reason}"
     },
-    "description": "iPhones and iPads connected to this computer. The one in use is shown in the top bar.",
+    "description": "iPhones and iPads connected to this computer, and the Apple TVs and Vision Pros paired with it. The one in use is shown in the top bar.",
     "unknownDevice": "Unknown device",
     "line": "{model} · iOS {ios} · {link}",
     "model": "{model} · iOS {ios}",
@@ -925,7 +939,9 @@
       "model": "Model",
       "ios": "iOS",
       "connection": "Connection",
-      "udid": "UDID"
+      "udid": "UDID",
+      "pairing": "Pairing",
+      "address": "Address"
     },
     "empty": {
       "title": "No devices yet",
@@ -963,6 +979,16 @@
         "bodyWifi": "It's connected over Wi-Fi: wake it, unlock it and keep it on the same network as this computer, then Check again. A cable is more reliable.",
         "reason": "Reason: {reason}",
         "titleUnnamed": "Can't read the device"
+      },
+      "offNetwork": {
+        "title": "{name} isn't on the network",
+        "tv": "Wake it with its remote, and keep it on the same Wi-Fi as this computer.",
+        "vision": "Put it on, unlock it, and keep it on the same Wi-Fi as this computer."
+      },
+      "pairAgain": {
+        "title": "Pair {name} again",
+        "body": "It no longer accepts this computer's pairing. That's normal after a tvOS or visionOS update: pair it again with a new code.",
+        "action": "Pair again…"
       }
     },
     "notes": {
@@ -973,6 +999,19 @@
     "savePairing": "Save pairing file…",
     "localNetwork": {
       "open": "Open Local Network settings"
+    },
+    "os": {
+      "tv": "tvOS",
+      "vision": "visionOS"
+    },
+    "lineOs": "{model} · {os} {version} · {link}",
+    "modelOs": "{model} · {os} {version}",
+    "pairedByCode": "Paired with this computer, by code",
+    "forget": {
+      "action": "Forget…",
+      "title": "Forget {name}?",
+      "body": "IPAForge removes this computer's pairing. Apps already on it stay. To use it again, pair it again.",
+      "confirm": "Forget"
     }
   },
   "prompts": {
@@ -2110,5 +2149,66 @@
       "title": "Show me around",
       "text": "Take this tour again from here, any time. The setup guide is in Settings."
     }
+  },
+  "pairByCode": {
+    "steps": {
+      "pair": "Pair with the code"
+    },
+    "open": "Pair Apple TV or Vision Pro…",
+    "title": "Pair an Apple TV or Vision Pro",
+    "titleAgain": "Pair {name} again",
+    "progress": {
+      "label": "Steps",
+      "find": "1 Find",
+      "code": "2 Code"
+    },
+    "intro": "They have no cable, so they're paired over Wi-Fi with a code. Put the device on the same Wi-Fi as this computer, then open its pairing screen and keep it open:",
+    "where": {
+      "tv": "Apple TV",
+      "vision": "Apple Vision Pro",
+      "tvPath": "Settings → Remotes and Devices → Remote App and Devices",
+      "visionPath": "Settings → General → Remote Devices"
+    },
+    "found": "Found on your network",
+    "showing": "Showing its pairing screen",
+    "pair": "Pair",
+    "searching": "Looking on your network… The device shows up here once its pairing screen is open.",
+    "searchingMore": "Still looking for others…",
+    "help": {
+      "title": "It doesn't show up",
+      "screen": "Keep the pairing screen open: the device can only be found while it's showing.",
+      "network": "Same Wi-Fi as this computer: not a guest network, and no VPN on either side.",
+      "ipv6": "IPv6 turned on in the router (Apple needs it for pairing).",
+      "macos": "macOS: System Settings → Privacy & Security → Local Network → IPAForge turned on.",
+      "windows": "Windows: allow IPAForge on private networks when the firewall asks."
+    },
+    "failed": "The search on your network stopped. Close this and open it again.",
+    "code": {
+      "title": "Enter the code on {name}",
+      "body": "{name} shows a code. Type it here.",
+      "label": "Code",
+      "wrong": "That code didn't match. Check the code on {name} and try again.",
+      "pairing": "Pairing with {name}…",
+      "checking": "Checking the code…"
+    },
+    "back": "Back",
+    "backToList": "Back to the list",
+    "backoff": {
+      "title": "Too many wrong codes",
+      "wait": "{name} lets you try again in {seconds, plural, one {# second} other {# seconds}}.",
+      "later": "{name} takes no more codes for a while. Wait a moment, then try again."
+    },
+    "closed": {
+      "title": "{name} closed its pairing screen",
+      "body": "The code only works while the pairing screen is open. Open it again on {name}:"
+    },
+    "done": {
+      "title": "{name} is paired",
+      "body": "{name} is on your Devices page. You can close its pairing screen now.",
+      "vision": "Apps install once Developer Mode is on.",
+      "use": "Use {name}",
+      "close": "Close"
+    },
+    "pairNamed": "Pair {name}"
   }
 }

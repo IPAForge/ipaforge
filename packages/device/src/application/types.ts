@@ -142,7 +142,8 @@ export type StartServiceOptions = {
 /** An open lockdown session with one device. Close it when done. */
 export type DeviceSession = {
   readonly device: UsbmuxDevice
-  readonly pairRecord: PairRecord
+  /** The classic pairing; a device paired by code (Apple TV, Vision Pro) has none. */
+  readonly pairRecord?: PairRecord | undefined
   info(): Promise<DeviceInfo>
   getValue(key?: string, domain?: string): Promise<PlistValue | undefined>
   setValue(domain: string, key: string, value: PlistValue): Promise<void>

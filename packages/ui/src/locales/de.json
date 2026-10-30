@@ -21,7 +21,8 @@
     "noAccounts": "Noch keine Apple-IDs.",
     "noDevicesHint": "Verbinde ein iPhone oder iPad per Kabel und entsperre es.",
     "openDevices": "Geräte öffnen",
-    "tour": "Tour starten"
+    "tour": "Tour starten",
+    "pairByCode": "Apple TV oder Vision Pro koppeln …"
   },
   "nav": {
     "group": {
@@ -115,6 +116,7 @@
     },
     "readiness": {
       "noDevice": "Verbinde zuerst ein Gerät.",
+      "notYetTv": "Installationen auf Apple TV und Vision Pro kommen in einer späteren Version.",
       "checking": "Gerät wird geprüft…",
       "device": "Verfügbar, sobald das Gerät bereit ist.",
       "noAccount": "Füge zuerst eine Apple-ID hinzu.",
@@ -451,6 +453,18 @@
       "tunnel_unavailable": {
         "title": "Der Tunnel zum Gerät ließ sich nicht öffnen",
         "body": "IPAForge konnte den sicheren Tunnel nicht öffnen, den iOS 17.4 und neuer über das Kabel anbieten. Prüfe, ob auf dem Gerät iOS 17.4 oder neuer läuft, verbinde es erneut und versuche es noch einmal."
+      },
+      "pairing_code_wrong": {
+        "title": "Der Code stimmt nicht",
+        "body": "Der eingegebene Code ist nicht der, den das Gerät anzeigt. Prüfe den Code auf seinem Bildschirm und versuche es erneut."
+      },
+      "pairing_backoff": {
+        "title": "Zu viele falsche Codes",
+        "body": "Das Gerät nimmt eine Weile keine Codes mehr an. Warte kurz, öffne den Kopplungsbildschirm erneut und kopple noch einmal."
+      },
+      "pairing_screen_closed": {
+        "title": "Der Kopplungsbildschirm wurde geschlossen",
+        "body": "Das Gerät hat seinen Kopplungsbildschirm geschlossen, bevor die Kopplung fertig war. Öffne ihn erneut und lass ihn offen: Apple TV: Einstellungen → Fernbedienungen und Geräte → Remote-App und Geräte. Apple Vision Pro: Einstellungen → Allgemein → Entfernte Geräte."
       }
     },
     "apple": {
@@ -899,7 +913,7 @@
       "connected": "{count, plural, =0 {Engine verbunden · keine Geräte} one {Engine verbunden · # Gerät} other {Engine verbunden · # Geräte}}",
       "failed": "Die Engine ist nicht erreichbar: {reason}"
     },
-    "description": "iPhones und iPads, die mit diesem Computer verbunden sind. Das verwendete wird in der oberen Leiste angezeigt.",
+    "description": "iPhones und iPads, die mit diesem Computer verbunden sind, und die damit gekoppelten Apple TVs und Vision Pros. Das verwendete wird in der oberen Leiste angezeigt.",
     "unknownDevice": "Unbekanntes Gerät",
     "line": "{model} · iOS {ios} · {link}",
     "model": "{model} · iOS {ios}",
@@ -925,7 +939,9 @@
       "model": "Modell",
       "ios": "iOS",
       "connection": "Verbindung",
-      "udid": "UDID"
+      "udid": "UDID",
+      "pairing": "Kopplung",
+      "address": "Adresse"
     },
     "empty": {
       "title": "Noch keine Geräte",
@@ -963,6 +979,16 @@
         "bodyWifi": "Es ist über WLAN verbunden: Wecke und entsperre es, lass es im selben Netzwerk wie diesen Computer und klicke dann auf „Erneut prüfen“. Ein Kabel ist zuverlässiger.",
         "reason": "Grund: {reason}",
         "titleUnnamed": "Das Gerät kann nicht gelesen werden"
+      },
+      "offNetwork": {
+        "title": "{name} ist nicht im Netzwerk",
+        "tv": "Wecke es mit seiner Fernbedienung und halte es im selben WLAN wie diesen Computer.",
+        "vision": "Setze es auf, entsperre es und halte es im selben WLAN wie diesen Computer."
+      },
+      "pairAgain": {
+        "title": "{name} erneut koppeln",
+        "body": "Es akzeptiert die Kopplung dieses Computers nicht mehr. Das ist nach einem tvOS- oder visionOS-Update normal: Kopple es erneut mit einem neuen Code.",
+        "action": "Erneut koppeln …"
       }
     },
     "notes": {
@@ -973,6 +999,19 @@
     "savePairing": "Kopplungsdatei sichern…",
     "localNetwork": {
       "open": "Einstellungen für lokales Netzwerk öffnen"
+    },
+    "os": {
+      "tv": "tvOS",
+      "vision": "visionOS"
+    },
+    "lineOs": "{model} · {os} {version} · {link}",
+    "modelOs": "{model} · {os} {version}",
+    "pairedByCode": "Mit diesem Computer per Code gekoppelt",
+    "forget": {
+      "action": "Vergessen …",
+      "title": "{name} vergessen?",
+      "body": "IPAForge entfernt die Kopplung dieses Computers. Bereits installierte Apps bleiben. Um es wieder zu verwenden, kopple es erneut.",
+      "confirm": "Vergessen"
     }
   },
   "prompts": {
@@ -2110,5 +2149,66 @@
       "title": "Tour starten",
       "text": "Starte diese Tour hier jederzeit erneut. Die Einrichtung findest du in den Einstellungen."
     }
+  },
+  "pairByCode": {
+    "steps": {
+      "pair": "Mit dem Code koppeln"
+    },
+    "open": "Apple TV oder Vision Pro koppeln …",
+    "title": "Apple TV oder Vision Pro koppeln",
+    "titleAgain": "{name} erneut koppeln",
+    "progress": {
+      "label": "Schritte",
+      "find": "1 Finden",
+      "code": "2 Code"
+    },
+    "intro": "Sie haben kein Kabel, deshalb werden sie über WLAN mit einem Code gekoppelt. Verbinde das Gerät mit demselben WLAN wie diesen Computer, öffne dann seinen Kopplungsbildschirm und lass ihn offen:",
+    "where": {
+      "tv": "Apple TV",
+      "vision": "Apple Vision Pro",
+      "tvPath": "Einstellungen → Fernbedienungen und Geräte → Remote-App und Geräte",
+      "visionPath": "Einstellungen → Allgemein → Entfernte Geräte"
+    },
+    "found": "In deinem Netzwerk gefunden",
+    "showing": "Zeigt seinen Kopplungsbildschirm",
+    "pair": "Koppeln",
+    "searching": "Suche in deinem Netzwerk … Das Gerät erscheint hier, sobald sein Kopplungsbildschirm offen ist.",
+    "searchingMore": "Suche weiter nach anderen …",
+    "help": {
+      "title": "Es erscheint nicht",
+      "screen": "Lass den Kopplungsbildschirm offen: Das Gerät ist nur zu finden, solange er angezeigt wird.",
+      "network": "Dasselbe WLAN wie dieser Computer: kein Gastnetz und auf keiner Seite ein VPN.",
+      "ipv6": "IPv6 im Router eingeschaltet (Apple braucht es für die Kopplung).",
+      "macos": "macOS: Systemeinstellungen → Datenschutz & Sicherheit → Lokales Netzwerk → IPAForge eingeschaltet.",
+      "windows": "Windows: Erlaube IPAForge in privaten Netzwerken, wenn die Firewall fragt."
+    },
+    "failed": "Die Suche in deinem Netzwerk wurde beendet. Schließe dies und öffne es erneut.",
+    "code": {
+      "title": "Code von {name} eingeben",
+      "body": "{name} zeigt einen Code an. Gib ihn hier ein.",
+      "label": "Code",
+      "wrong": "Der Code stimmt nicht. Prüfe den Code auf {name} und versuche es erneut.",
+      "pairing": "Kopple mit {name} …",
+      "checking": "Code wird geprüft …"
+    },
+    "back": "Zurück",
+    "backToList": "Zurück zur Liste",
+    "backoff": {
+      "title": "Zu viele falsche Codes",
+      "wait": "{name} lässt dich in {seconds, plural, one {# Sekunde} other {# Sekunden}} erneut versuchen.",
+      "later": "{name} nimmt eine Weile keine Codes mehr an. Warte kurz und versuche es dann erneut."
+    },
+    "closed": {
+      "title": "{name} hat seinen Kopplungsbildschirm geschlossen",
+      "body": "Der Code funktioniert nur, solange der Kopplungsbildschirm offen ist. Öffne ihn erneut auf {name}:"
+    },
+    "done": {
+      "title": "{name} ist gekoppelt",
+      "body": "{name} ist jetzt auf deiner Geräteseite. Du kannst seinen Kopplungsbildschirm jetzt schließen.",
+      "vision": "Apps lassen sich installieren, sobald der Entwicklermodus eingeschaltet ist.",
+      "use": "{name} verwenden",
+      "close": "Schließen"
+    },
+    "pairNamed": "{name} koppeln"
   }
 }

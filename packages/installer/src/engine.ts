@@ -11,6 +11,7 @@ import { startRun } from '@installer/engine/run-handle.ts'
 import type {
   CommandOptions,
   EngineQueries,
+  PairableWatchEvent,
   RunHandle
 } from '@installer/engine/types.ts'
 import {
@@ -18,6 +19,7 @@ import {
   installAppsFlow
 } from '@installer/flows/install-apps.ts'
 import { installSideStoreFlow } from '@installer/flows/install-sidestore.ts'
+import { pairByCodeFlow } from '@installer/flows/pair-by-code.ts'
 import { placePairingFlow } from '@installer/flows/place-pairing.ts'
 import {
   type RefreshAppsInput,
@@ -30,12 +32,15 @@ import {
 import { signInFlow } from '@installer/flows/sign-in.ts'
 import type {
   InstallSideStoreInput,
+  PairByCodeInput,
+  PairByCodeState,
   PairingState,
   PlacePairingInput,
   SignInFlowInput,
   SignInState
 } from '@installer/flows/types.ts'
 import type { InstallerDepsInput } from '@installer/types.ts'
+import { ErrorCode, IPAForgeError, toIPAForgeError } from '@ipaforge/kernel'
 
 export type Engine = EngineQueries & {
   installSideStore(
@@ -63,6 +68,19 @@ export type Engine = EngineQueries & {
     listener: DeviceWatchListener,
     options?: { readonly signal?: AbortSignal }
   ): () => void
+  /**
+   * Apple TVs and Vision Pros showing their pairing screen, as they appear and go; `denied` when the OS refuses
+   * local network access. Returns the function that stops the search; aborting `signal` stops it too.
+   */
+  watchPairableDevices(
+    listener: (event: PairableWatchEvent) => void,
+    options?: { readonly signal?: AbortSignal }
+  ): () => void
+  /** Pairs an Apple TV or Vision Pro by the code it shows; answer its `device.pairing_code` prompt. */
+  pairByCode(
+    input: PairByCodeInput,
+    options?: CommandOptions<PairByCodeState>
+  ): RunHandle<PairByCodeState>
   /**
    * Forgets a saved Apple ID: the account, its session and its saved password. Its signing certificates stay in
    * the secret store, so signing in again reuses them instead of using up the team's certificate slots.
@@ -118,6 +136,33 @@ export const createEngine = (input: InstallerDepsInput): Engine => {
     },
     watchDevices: (listener, options) =>
       deviceWatch.subscribe(listener, options?.signal),
+    watchPairableDevices: (listener, options) => {
+      const controller = new AbortController()
+      options?.signal?.addEventListener('abort', () => controller.abort(), {
+        once: true
+      })
+      void deps.devices
+        .watchPairable(listener, controller.signal)
+        .catch((error: unknown) => {
+          if (controller.signal.aborted) return
+          const denied =
+            error instanceof IPAForgeError &&
+            error.code === ErrorCode.LocalNetworkDenied
+          if (!denied)
+            deps.logger.warn('the search for devices to pair stopped', {
+              code: toIPAForgeError(error).code
+            })
+          listener(
+            denied
+              ? { kind: 'denied' }
+              : { kind: 'failed', code: toIPAForgeError(error).code }
+          )
+        })
+
+      return () => controller.abort()
+    },
+    pairByCode: (command, options) =>
+      startRun(deps, (runtime) => pairByCodeFlow(runtime, command), options),
     classify,
     installedSource: (udid, bundleId) => installedSource(deps, udid, bundleId)
   }

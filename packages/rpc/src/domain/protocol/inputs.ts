@@ -167,6 +167,18 @@ export const anisetteChoiceSchema = z.discriminatedUnion('mode', [
   })
 ])
 
+/** An Apple TV or Vision Pro showing its pairing screen, as the search found it. */
+export const pairableDeviceSchema = z.object({
+  id: textSchema.max(512),
+  name: textSchema.max(256),
+  model: textSchema.max(128).optional(),
+  address: textSchema.max(64),
+  port: z.number().int().min(1).max(65_535)
+})
+
+/** The code comes later, as a prompt answer, once the device shows it. */
+export const pairByCodeInputSchema = z.object({ target: pairableDeviceSchema })
+
 /** The password and any second factor come later, as prompt answers, so they never sit in the run's input. */
 export const signInInputSchema = z.object({
   appleId: textSchema,

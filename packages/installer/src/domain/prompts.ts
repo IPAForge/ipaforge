@@ -16,7 +16,9 @@ export const PromptKind = {
   /** A manually imported IPA looks like SideStore. Answer: true to share the signing certificate with it. */
   ShareCertificate: 'installer.share_certificate',
   /** Answer: the bundle IDs to place the pairing file into. */
-  ChoosePairingApps: 'device.choose_pairing_apps'
+  ChoosePairingApps: 'device.choose_pairing_apps',
+  /** An Apple TV or Vision Pro shows a code to pair with. Answer: the code. */
+  PairingCode: 'device.pairing_code'
 } as const
 
 export type PromptKind = (typeof PromptKind)[keyof typeof PromptKind]

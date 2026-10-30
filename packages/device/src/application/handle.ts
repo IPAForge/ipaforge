@@ -52,7 +52,8 @@ import type { FileSource } from '@ipaforge/kernel'
 /** A device session with every capability the installer needs. */
 export type DeviceHandle = {
   readonly device: UsbmuxDevice
-  readonly pairRecord: PairRecord
+  /** The classic pairing; a device paired by code (Apple TV, Vision Pro) has none. */
+  readonly pairRecord?: PairRecord | undefined
   check(): Promise<DeviceCheck>
   installIpa(ipa: FileSource, options?: InstallIpaOptions): Promise<void>
   uninstall(bundleId: string): Promise<void>

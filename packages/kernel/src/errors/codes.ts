@@ -29,6 +29,12 @@ export const ErrorCode = {
   LocalNetworkDenied: 'device.local_network_denied',
   /** The device didn't open its iOS 17.4+ tunnel (an older iOS, or the tunnel service refused). */
   TunnelUnavailable: 'device.tunnel_unavailable',
+  /** The code typed for an Apple TV or Vision Pro isn't the one it shows. */
+  PairingCodeWrong: 'device.pairing_code_wrong',
+  /** Too many wrong codes: the device takes no more for a while (`data.seconds`, when it says how long). */
+  PairingBackoff: 'device.pairing_backoff',
+  /** The device closed its pairing screen (or went away) before pairing finished. */
+  PairingScreenClosed: 'device.pairing_screen_closed',
 
   // apple
   AnisetteUnavailable: 'apple.anisette_unavailable',

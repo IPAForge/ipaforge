@@ -6,12 +6,17 @@ import { LOCAL_NETWORK_SETTINGS_URL } from '@ui/features/devices/constants.ts'
 import { useLocalNetworkDenied } from '@ui/hooks/queries/use-local-network-denied.ts'
 import { useUiServices } from '@ui/hooks/use-ui-services.ts'
 
+type LocalNetworkNoticeProps = {
+  /** Said by a search of its own (the pairing dialog's); the device feed's by default. */
+  isDenied?: boolean | undefined
+}
+
 /** macOS refused IPAForge local network access: devices on Wi-Fi can't be found until it is allowed. */
-export const LocalNetworkNotice = () => {
+export const LocalNetworkNotice = ({ isDenied }: LocalNetworkNoticeProps) => {
   const { t } = useTranslation()
   const { links } = useUiServices()
-  const isDenied = useLocalNetworkDenied()
-  if (!isDenied) return null
+  const isFeedDenied = useLocalNetworkDenied()
+  if (!(isDenied ?? isFeedDenied)) return null
   const onOpen = () => links.open(LOCAL_NETWORK_SETTINGS_URL)
 
   return (

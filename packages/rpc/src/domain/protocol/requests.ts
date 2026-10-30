@@ -16,6 +16,7 @@ import {
   installAppsInputSchema,
   installedAppsQuerySchema,
   installSideStoreInputSchema,
+  pairByCodeInputSchema,
   pairingTargetQuerySchema,
   placeAppPairingInputSchema,
   placePairingInputSchema,
@@ -57,6 +58,8 @@ export const queryCallSchema = z.discriminatedUnion('method', [
   call('systemCheck', z.tuple([])),
   /** Waits for the Trust tap on the device, so it can take as long as the user does. */
   call('pairDevice', z.tuple([textSchema])),
+  call('codePairedDevices', z.tuple([])),
+  call('forgetCodePaired', z.tuple([textSchema])),
   call('listAccounts', z.tuple([])),
   call('canSaveAccounts', z.tuple([])),
   call('listTeams', z.tuple([textSchema])),
@@ -142,7 +145,8 @@ export const commandCallSchema = z.discriminatedUnion('command', [
     command: z.literal('placePairing'),
     input: placePairingInputSchema
   }),
-  z.object({ command: z.literal('signIn'), input: signInInputSchema })
+  z.object({ command: z.literal('signIn'), input: signInInputSchema }),
+  z.object({ command: z.literal('pairByCode'), input: pairByCodeInputSchema })
 ])
 
 const request = <T extends string, S extends z.ZodRawShape>(

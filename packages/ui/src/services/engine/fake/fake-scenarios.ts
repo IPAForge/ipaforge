@@ -40,7 +40,11 @@ export const fakeScenarioIds = [
   'checksum',
   'unsupported-ios',
   'anisette',
-  'logs'
+  'logs',
+  'paired-tv',
+  'tv-updated',
+  'pairing-backoff',
+  'pairing-screen-closed'
 ] as const
 
 /** The step each failing scenario stops at, once. */

@@ -7,6 +7,7 @@ import type {
   SubscriptionTopic,
   WireDeviceWatchEvent,
   WireLogEntry,
+  WirePairableWatchEvent,
   WireSubscriptionEvent
 } from '@rpc/domain/protocol/types.ts'
 import { toWire } from '@rpc/domain/wire.ts'
@@ -40,6 +41,17 @@ export const createSubscriptionRegistry = (
         sendEvent(subscriptionId, toWire(event) as WireDeviceWatchEvent, {
           quiet: false
         })
+      ),
+    pairable: (subscriptionId) =>
+      engine.watchPairableDevices((event) =>
+        sendEvent(
+          subscriptionId,
+          {
+            type: 'pairable',
+            event: toWire(event) as WirePairableWatchEvent['event']
+          },
+          { quiet: false }
+        )
       ),
     logs: (subscriptionId) =>
       logs?.buffer.subscribe((entry) =>

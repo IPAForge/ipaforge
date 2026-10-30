@@ -36,6 +36,10 @@ export const RECOVERY_CATALOGUE = {
   // A cable still works while Wi-Fi is refused.
   'device.local_network_denied': [R.AllowLocalNetwork, R.ReconnectDevice],
   'device.tunnel_unavailable': DEVICE_LINK,
+  // An Apple TV or Vision Pro paired by code: each try is a new code on its screen.
+  'device.pairing_code_wrong': [R.ReEnterCode, R.Retry],
+  'device.pairing_backoff': [R.WaitAndRetry],
+  'device.pairing_screen_closed': [R.Retry],
 
   // apple
   'apple.anisette_unavailable': [

@@ -9,6 +9,11 @@ export type UsbmuxDevice = {
   readonly productId?: number
   /** Its Wi-Fi address when found on the network: reached directly over TCP, without usbmuxd. */
   readonly address?: string
+  /**
+   * An Apple TV or Apple Vision Pro paired by the code it showed: it has no cable and no classic pairing, so it is
+   * only ever reached through its tunnel on Wi-Fi.
+   */
+  readonly pairedByCode?: true
 }
 
 export type DeviceEvent =
@@ -82,6 +87,29 @@ export type RemoveStaleOptions = {
 }
 
 /** A device seen before, so it can be recognised on the network: its UDID and its real Wi-Fi MAC address. */
+/** A device paired by code (an Apple TV or Apple Vision Pro), as this computer remembers it. */
+export type CodePairedDevice = {
+  readonly udid: string
+  /** The name and model it gave when it was paired (`AppleTV14,1`, `RealityDevice14,1`), when it gave them. */
+  readonly name?: string | undefined
+  readonly model?: string | undefined
+}
+
+/** A device showing its pairing screen on the network: what it calls itself, and where its pairing listens. */
+export type PairableDevice = {
+  /** Its advert's instance name: the same while its pairing screen stays open. */
+  readonly id: string
+  readonly name: string
+  /** Its model (`AppleTV14,1`), when its advert says. */
+  readonly model?: string | undefined
+  readonly address: string
+  readonly port: number
+}
+
+export type PairableEvent =
+  | { readonly kind: 'found'; readonly device: PairableDevice }
+  | { readonly kind: 'lost'; readonly id: string }
+
 export type KnownWifiDevice = {
   readonly udid: string
   readonly mac?: string | undefined

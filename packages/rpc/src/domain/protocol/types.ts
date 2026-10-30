@@ -5,6 +5,7 @@ import type {
   installAppsInputSchema,
   installSideStoreInputSchema,
   ipaSourceSchema,
+  pairByCodeInputSchema,
   placePairingInputSchema,
   planInstallInputSchema,
   refreshAppsInputSchema,
@@ -29,6 +30,7 @@ import type {
 } from '@rpc/domain/protocol/requests.ts'
 import type {
   deviceWatchEventSchema,
+  pairableWatchEventSchema,
   subscriptionTopicSchema
 } from '@rpc/domain/protocol/subscriptions.ts'
 import type {
@@ -57,6 +59,8 @@ export type RemoteRepairSideStoreInput = z.input<
 export type RemotePlacePairingInput = z.input<typeof placePairingInputSchema>
 
 export type RemoteSignInInput = z.input<typeof signInInputSchema>
+
+export type RemotePairByCodeInput = z.input<typeof pairByCodeInputSchema>
 
 export type WireRunEvent = z.infer<typeof pipelineEventSchema>
 
@@ -103,7 +107,12 @@ export type WireLogEntry = z.infer<typeof logEntrySchema>
 
 export type WireLogEvent = z.infer<typeof logEventSchema>
 
-export type WireSubscriptionEvent = WireDeviceWatchEvent | WireLogEvent
+export type WirePairableWatchEvent = z.infer<typeof pairableWatchEventSchema>
+
+export type WireSubscriptionEvent =
+  | WireDeviceWatchEvent
+  | WirePairableWatchEvent
+  | WireLogEvent
 
 export type RemoteLogPageQuery = z.input<typeof logPageQuerySchema>
 

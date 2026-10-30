@@ -9,7 +9,10 @@ import {
   versionSchema
 } from '@rpc/domain/protocol/common.ts'
 import { logEventSchema } from '@rpc/domain/protocol/logs.ts'
-import { deviceWatchEventSchema } from '@rpc/domain/protocol/subscriptions.ts'
+import {
+  deviceWatchEventSchema,
+  pairableWatchEventSchema
+} from '@rpc/domain/protocol/subscriptions.ts'
 
 const stepId = z.string()
 
@@ -135,6 +138,10 @@ export const messageSchema = z.discriminatedUnion('type', [
   message('run-error', { runId: idSchema, error: serializedErrorSchema }),
   message('subscription-event', {
     subscriptionId: idSchema,
-    event: z.union([deviceWatchEventSchema, logEventSchema])
+    event: z.union([
+      deviceWatchEventSchema,
+      pairableWatchEventSchema,
+      logEventSchema
+    ])
   })
 ])
