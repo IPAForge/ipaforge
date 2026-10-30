@@ -1,6 +1,8 @@
 // The Apps page's list: every app on the device signed with one of the user's teams, read from the device itself
 // (its provisioning profiles say which team signed an app and when it expires), with the Engine's record of the
-// apps it installed. A record whose app is no longer on the device is forgotten, with its kept IPA.
+// apps it installed. iOS removes a profile once it expires, so an app left without one is still listed, by the team
+// at the end of its bundle id (`com.example.app.TEAMID`, as sideloading renames it), as expired. A record whose app
+// is no longer on the device is forgotten, with its kept IPA.
 
 import { readMarker } from '@installer/application/installed/marker.ts'
 import {
@@ -27,6 +29,16 @@ const profiledApp = (
   if (bundleId.includes('*')) return
 
   return compact({ bundleId, teamId, expiresAt: expirationDate })
+}
+
+/** The team a sideloaded app was renamed for (`com.example.app.TEAMID` → `TEAMID`), when it's one of `teams`. */
+const renamedFor = (
+  bundleId: string,
+  teams: ReadonlySet<string>
+): string | undefined => {
+  const teamId = bundleId.slice(bundleId.lastIndexOf('.') + 1)
+
+  return teams.has(teamId) ? teamId : undefined
 }
 
 /** The latest-expiring profile of each app (a refresh installs a new one before the old is removed). */
@@ -64,13 +76,19 @@ export const listInstalledApps = async (
   const handle = await deps.devices.open(udid, { autoPair: false })
 
   try {
-    const profiles = latestProfiles(
-      await handle.listProfiles(),
-      new Set(teamIds)
+    const teams = new Set(teamIds)
+    const profiles = latestProfiles(await handle.listProfiles(), teams)
+    const wanted = new Set([...profiles.keys(), ...recordOf.keys()])
+    // installation_proxy only lists apps (not extensions), so the extensions' own profiles drop out here.
+    const onDevice = new Map(
+      (await handle.listApps('User'))
+        .filter(
+          (app) =>
+            wanted.has(app.bundleId) ||
+            renamedFor(app.bundleId, teams) !== undefined
+        )
+        .map((app) => [app.bundleId, app])
     )
-    const wanted = [...new Set([...profiles.keys(), ...recordOf.keys()])]
-    // installation_proxy only answers for apps (not extensions), so the extensions' own profiles drop out here.
-    const onDevice = await handle.lookupApps(wanted)
 
     await forgetRecords(
       deps,
@@ -86,7 +104,7 @@ export const listInstalledApps = async (
       .flatMap((app) => {
         const profile = profiles.get(app.bundleId)
         const record = recordOf.get(app.bundleId)
-        const teamId = profile?.teamId
+        const teamId = profile?.teamId ?? renamedFor(app.bundleId, teams)
 
         if (!teamId) return []
 
@@ -98,7 +116,8 @@ export const listInstalledApps = async (
             name: app.name ?? record?.name ?? app.bundleId,
             version: app.shortVersion ?? app.version ?? record?.version,
             teamId,
-            expiresAt: profile.expiresAt,
+            expiresAt: profile?.expiresAt,
+            profileGone: profile ? undefined : (true as const),
             record,
             marker
           })

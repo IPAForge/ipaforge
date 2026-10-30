@@ -1126,7 +1126,8 @@
       "in": "{days, plural, other {あと#日で期限切れ · {date}}}",
       "today": "今日で期限切れ",
       "expired": "{days, plural, other {#日前に期限切れ · 開けません}}",
-      "unknown": "有効期限不明"
+      "unknown": "有効期限不明",
+      "gone": "期限切れ · 開けません"
     },
     "run": {
       "checking": "Appleに確認中…",
@@ -1509,6 +1510,7 @@
         "profile": "新しいプロファイルのみ。再インストールはしません",
         "certificate": "再インストールしました: 署名した証明書が無効になっています",
         "unmarked": "再インストールしました: IPAForgeは署名した証明書を判別できません",
+        "appId": "再インストールしました: 期限切れ後にAppleがApp IDを削除しました",
         "sidestore": "データを残したまま再インストールし、SideStore 自体に新しい日付が表示されるようにします"
       },
       "group": {

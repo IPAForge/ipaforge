@@ -1,7 +1,8 @@
 // Before a refresh: which apps need only a new profile and which must be signed and installed again. An app keeps
 // working on a new profile as long as the certificate that signed it is still valid on Apple's side; IPAForge's mark
 // in the app says which one that was. Without the mark (installed before marks, or by another tool) it can't tell,
-// so the app is installed again. SideStore is installed again too (over itself, its data kept) when the version on
+// so the app is installed again, and so is an app whose App ID Apple has removed (a free team's go after 7 days),
+// since no new profile can be made for it. SideStore is installed again too (over itself, its data kept) when the version on
 // the device can be had: this computer's copy of it, or that version's release (stable releases are tagged by
 // version). It shows the expiry of the profile inside its own files, which a new profile alone doesn't change.
 // When that version can't be had (an older Nightly), it gets a new profile like any other app: a refresh never
@@ -68,6 +69,10 @@ export const planRefresh = async (
     requested: query.teamId
   })
   const valid = await validCertificateSerials(deps, developer, team)
+  // A new profile needs the app's App ID: a free team's are removed after 7 days.
+  const appIds = new Set(
+    (await developer.appIds(team)).appIds.map((appId) => appId.identifier)
+  )
   const records = await readRecords(deps, query.udid)
   /** This computer kept the IPA of the version on the device (not one the app has updated from since). */
   const hasKeptCopy = async (app: DeviceApp | undefined, bundleId: string) => {
@@ -110,6 +115,8 @@ export const planRefresh = async (
         if (canInstall)
           return { bundleId, kind: 'reinstall', reason: 'sidestore' }
       }
+      if (!appIds.has(bundleId))
+        return { bundleId, kind: 'reinstall', reason: 'app-id' }
 
       return { bundleId, kind: 'profile' }
     }

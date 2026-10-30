@@ -151,5 +151,6 @@ export const refreshNoteKeys = {
   profile: 'preload.run.refresh.profile',
   certificate: 'preload.run.refresh.certificate',
   unmarked: 'preload.run.refresh.unmarked',
+  'app-id': 'preload.run.refresh.appId',
   sidestore: 'preload.run.refresh.sidestore'
 } as const satisfies Record<RefreshKind, TranslationKey>

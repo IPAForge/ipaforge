@@ -9,7 +9,10 @@ import { useFormat } from '@ui/hooks/use-format.ts'
 
 type ExpiryLabelProps = { view: AppView }
 
-/** "Expires in 4 days · 23 Oct", "Expires today", "Expired 2 days ago · won't open", with its colour. */
+/**
+ * "Expires in 4 days · 23 Oct", "Expires today", "Expired 2 days ago · won't open", with its colour; "Expired · won't
+ * open" once iOS has removed its profile.
+ */
 export const ExpiryLabel = ({ view }: ExpiryLabelProps) => {
   const { t } = useTranslation()
   const { date } = useFormat()
@@ -17,6 +20,7 @@ export const ExpiryLabel = ({ view }: ExpiryLabelProps) => {
   const expiresAt = view.app.expiresAt
 
   const words = () => {
+    if (view.app.profileGone) return t('apps.expiry.gone')
     if (daysLeft === undefined || daysShown === undefined || !expiresAt)
       return t('apps.expiry.unknown')
     if (daysLeft <= 0)

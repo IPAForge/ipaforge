@@ -222,7 +222,7 @@ The first Tab stop is a **Skip to content** link, which is visible only when foc
 - **Include debug details** has the Engine record debug lines too (`engine.logs.setLevel`), until the app restarts.
 - **Ctrl+L** (⌘L on macOS) opens Logs from any section, and goes back from Logs (`features/logs/hooks/use-logs-shortcut.ts`, mounted by the shell); <kbd>/</kbd> focuses the search.
 
-**Apps** (`features/apps/`) lists the apps on the device in use that are signed with one of the Apple ID's teams (`engine.installedApps`), read from the device: its provisioning profiles say which team signed each app and when it expires.
+**Apps** (`features/apps/`) lists the apps on the device in use that are signed with one of the Apple ID's teams (`engine.installedApps`), read from the device: its provisioning profiles say which team signed each app and when it expires. iOS removes a profile once it expires, so an app left without one is still listed, by the team at the end of its bundle id (`com.example.app.TEAMID`), as expired ("Expired · won't open"), and Refresh brings it back.
 - **Installed by IPAForge,** soonest to expire first. Each row shows:
   - the name and version, with an **Update: x.y** chip when a source that's on lists a newer version (by the app's original bundle id);
   - when it expires (green; amber inside the refresh window; red once expired, "won't open") and where it came from (the catalog, the source listing its link, the link's host, or the file);

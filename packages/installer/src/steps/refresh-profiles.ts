@@ -42,11 +42,15 @@ export const refreshProfilesStep = (
     const handle = await runtime.device(state.udid)
     const developer = await runtime.developer(state.accountId)
     const old = profilesOf(await handle.listProfiles(), team.id, bundleId)
-    const bundles = [
-      ...new Set(old.map((profile) => bundleOf(profile, team.id)))
-    ]
+    const bundles = new Set(old.map((profile) => bundleOf(profile, team.id)))
     const { appIds } = await developer.appIds(team)
-    const wanted = appIds.filter((appId) => bundles.includes(appId.identifier))
+    // iOS removes a profile once it expires: without one on the device, the team's App IDs for the app and its
+    // extensions (`app`, `app.widget`) say what needs a profile.
+    const wanted = appIds.filter(({ identifier }) =>
+      old.length > 0
+        ? bundles.has(identifier)
+        : identifier === bundleId || identifier.startsWith(`${bundleId}.`)
+    )
 
     if (wanted.length === 0)
       throw new IPAForgeError(ErrorCode.KeptIpaMissing, {

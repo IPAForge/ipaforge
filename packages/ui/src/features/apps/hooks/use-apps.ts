@@ -49,7 +49,8 @@ export const useApps = () => {
       app,
       daysLeft: days,
       daysShown: calendarDaysLeft(app.expiresAt, now),
-      tone: expiryTone(days, settings.daysBefore),
+      // iOS removes a profile once it expires: an app left without one is expired.
+      tone: app.profileGone ? 'expired' : expiryTone(days, settings.daysBefore),
       from,
       update: appUpdate(app, sources),
       refresh: refreshPlan(app, from, catalogApps, sources, catalogName)
