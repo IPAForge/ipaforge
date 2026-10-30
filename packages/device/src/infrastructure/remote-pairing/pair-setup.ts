@@ -50,7 +50,8 @@ export type PairSetupOptions = ExchangeOptions & {
   readonly randomBytes: (length: number) => Uint8Array
   /**
    * Pairing by code (an Apple TV or Vision Pro): asked once the device answered M1 and shows its code. A device
-   * that asks the user to allow it instead (an iPhone) pairs with the fixed PIN. Without it, the fixed PIN is used.
+   * that asks the user to allow it instead is refused: only the code proves it's the one whose screen the user
+   * sees. Without it, the fixed PIN is used.
    */
   readonly askPin?: () => Promise<string>
 }
@@ -154,8 +155,11 @@ export const pairSetup = async (
     ]),
     true
   )
-  // The device shows its code now; one that asked the user to allow it instead takes the fixed PIN.
-  const byCode = askPin !== undefined && !consentAsked
+  // The device shows its code now. Pairing by code never falls back to the fixed PIN: without the code, nothing
+  // proves this is the device whose screen the user sees.
+  const byCode = askPin !== undefined
+  if (byCode && consentAsked)
+    throw failed('the device asked to be allowed instead of showing a code')
   const pin = byCode ? await askPin() : USB_PIN
   const srp = createSrpClient(SRP_USER, pin, options.randomBytes)
   const { proof, sessionKey } = srp.respond(

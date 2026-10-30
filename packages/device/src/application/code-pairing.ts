@@ -3,6 +3,7 @@
 // `_remotepairing-manual-pairing._tcp`; pair-setup there takes the code as SRP's PIN. The remote pairing is saved
 // like an iPhone's, and the device remembered as paired by code, so the network search knows to look for it.
 import type { DeviceContext } from '@device/application/context.ts'
+import { getPairRecord } from '@device/application/pair-records.ts'
 import {
   newHostIdentity,
   savedRecord
@@ -61,6 +62,25 @@ export const codePairedDevices = async (
   ctx: DeviceContext
 ): Promise<CodePairedDevice[]> =>
   parseCodePaired(await ctx.deps.secrets.get(CODE_PAIRED_KEY))
+
+/** A UDID as devices give it: letters, digits and dashes. */
+const UDID_PATTERN = /^[A-Za-z0-9-]{1,64}$/
+
+/**
+ * Whether the UDID a device gives can be saved as paired by code: a well-formed one, either new or already paired
+ * by code (pairing again). The device says it itself, so one that names a device this computer is paired with
+ * another way (an iPhone, by cable or its remote pairing) is refused, or it would take over that device's pairing.
+ */
+const canSaveAs = async (ctx: DeviceContext, udid: string) => {
+  if (!UDID_PATTERN.test(udid)) return false
+  if ((await codePairedDevices(ctx)).some((entry) => entry.udid === udid))
+    return true
+
+  return (
+    (await ctx.deps.secrets.get(remotePairingSecretKey(udid))) === undefined &&
+    (await getPairRecord(ctx, udid)) === undefined
+  )
+}
 
 const remember = async (
   ctx: DeviceContext,
@@ -137,6 +157,11 @@ export const pairByCode = async (
     )
     // Pairing gives the UDID; a device that left it out is known by its identifier.
     const udid = peer.udid ?? record.deviceIdentifier
+    if (!(await canSaveAs(ctx, udid)))
+      throw new IPAForgeError(ErrorCode.DeviceProtocolError, {
+        message:
+          'the device gave the identity of a device this computer is paired with another way'
+      })
     const device: CodePairedDevice = {
       udid,
       name: peer.name ?? target.name,
@@ -166,9 +191,10 @@ export const forgetCodePaired = async (
   udid: string
 ): Promise<void> => {
   const { secrets, logger } = ctx.deps
-  const others = (await codePairedDevices(ctx)).filter(
-    (entry) => entry.udid !== udid
-  )
+  const known = await codePairedDevices(ctx)
+  // Only a device paired by code: an iPhone's remote pairing isn't this list's to delete.
+  if (!known.some((entry) => entry.udid === udid)) return
+  const others = known.filter((entry) => entry.udid !== udid)
   await secrets.set(CODE_PAIRED_KEY, serializeCodePaired(others))
   if (await savedRecord(ctx, udid))
     await secrets.delete(remotePairingSecretKey(udid))

@@ -21,6 +21,7 @@ import { ErrorCode, toBase64 } from '@ipaforge/kernel'
 
 const TV_ADDRESS = '192.0.2.20'
 const CODE = '482913'
+const TV_UDID = '00008110-0012345678ABCDEF'
 
 const showPairingScreen = (
   rig: TestRig,
@@ -30,6 +31,7 @@ const showPairingScreen = (
     pin: CODE,
     model: 'AppleTV14,1',
     name: 'Living Room',
+    udid: TV_UDID,
     ...options
   })
   rig.fake.pairable.set(TV_ADDRESS, {
@@ -73,12 +75,12 @@ describe('pairing an Apple TV or Vision Pro by code', () => {
 
     const paired = await rig.manager.pairByCode(TARGET, async () => CODE)
     expect(paired).toEqual({
-      udid: 'UDID',
+      udid: TV_UDID,
       name: 'Living Room',
       model: 'AppleTV14,1'
     })
     expect(await rig.manager.codePairedDevices()).toEqual([paired])
-    expect(await rig.secrets.get(remotePairingSecretKey('UDID'))).toBeDefined()
+    expect(await rig.secrets.get(remotePairingSecretKey(TV_UDID))).toBeDefined()
   })
 
   it('saves nothing when the code is wrong, and says so', async () => {
@@ -124,7 +126,7 @@ describe('pairing an Apple TV or Vision Pro by code', () => {
       {
         kind: 'attached',
         device: {
-          udid: 'UDID',
+          udid: TV_UDID,
           deviceId: expect.any(Number),
           connectionType: 'network',
           address: TV_ADDRESS,
@@ -139,10 +141,35 @@ describe('pairing an Apple TV or Vision Pro by code', () => {
     showPairingScreen(rig)
     await rig.manager.pairByCode(TARGET, async () => CODE)
 
-    await rig.manager.forgetCodePaired('UDID')
+    await rig.manager.forgetCodePaired(TV_UDID)
     expect(await rig.manager.codePairedDevices()).toEqual([])
     expect(
-      await rig.secrets.get(remotePairingSecretKey('UDID'))
+      await rig.secrets.get(remotePairingSecretKey(TV_UDID))
     ).toBeUndefined()
+  })
+
+  it("refuses a device that gives the UDID of one paired another way, keeping that one's pairing", async () => {
+    const rig = await createRig()
+    // The cabled fake device (UDID), trusted by the OS, with a remote pairing of its own.
+    await rig.secrets.set(remotePairingSecretKey('UDID'), new Uint8Array([1]))
+    showPairingScreen(rig, { udid: 'UDID' })
+
+    await expect(
+      rig.manager.pairByCode(TARGET, async () => CODE)
+    ).rejects.toMatchObject({ code: ErrorCode.DeviceProtocolError })
+    expect(await rig.manager.codePairedDevices()).toEqual([])
+    expect(await rig.secrets.get(remotePairingSecretKey('UDID'))).toEqual(
+      new Uint8Array([1])
+    )
+  })
+
+  it('forgets only devices paired by code, never an iPhone', async () => {
+    const rig = await createRig()
+    await rig.secrets.set(remotePairingSecretKey('UDID'), new Uint8Array([1]))
+
+    await rig.manager.forgetCodePaired('UDID')
+    expect(await rig.secrets.get(remotePairingSecretKey('UDID'))).toEqual(
+      new Uint8Array([1])
+    )
   })
 })

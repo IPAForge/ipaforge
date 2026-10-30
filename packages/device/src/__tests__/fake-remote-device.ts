@@ -67,6 +67,8 @@ export type FakeRemoteDeviceOptions = {
   /** What M6's info says the device is. */
   readonly model?: string
   readonly name?: string
+  /** The UDID M6's info gives (`UDID` by default, the cabled fake device's). */
+  readonly udid?: string
 }
 
 const pairingData = (entries: readonly TlvEntry[]) => ({
@@ -233,7 +235,7 @@ export const createFakeRemoteDevice = (
                     altIRK: DEVICE_ALT_IRK,
                     model: options.model ?? 'iPhone17,1',
                     name: options.name ?? 'iPhone',
-                    remotepairing_udid: 'UDID'
+                    remotepairing_udid: options.udid ?? 'UDID'
                   })
                 ]
               ])

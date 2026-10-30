@@ -144,15 +144,13 @@ describe('remote pair-setup', () => {
     })
   })
 
-  it('pairs a device that asks the user to allow it with the fixed PIN, never asking for a code', async () => {
+  it('refuses to pair by code with a device that asks to be allowed instead of showing a code', async () => {
     const device = createFakeRemoteDevice({ asksConsent: true })
     const askPin = vi.fn(async () => '123456')
-    await pairSetup(device.channel, {
-      host: hostIdentity(),
-      randomBytes,
-      askPin
-    })
 
+    await expect(
+      pairSetup(device.channel, { host: hostIdentity(), randomBytes, askPin })
+    ).rejects.toMatchObject({ code: ErrorCode.DeviceProtocolError })
     expect(askPin).not.toHaveBeenCalled()
   })
 
