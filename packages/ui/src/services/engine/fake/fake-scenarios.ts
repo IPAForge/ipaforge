@@ -19,6 +19,7 @@ export const fakeScenarioIds = [
   'wifi',
   'apps-due',
   'apps-expired',
+  'apps-profile-gone',
   'no-apps',
   'source-offline',
   'sources-added',

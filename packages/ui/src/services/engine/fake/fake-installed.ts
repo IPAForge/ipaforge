@@ -1,7 +1,8 @@
 // Installed apps for the fake Engine: SideStore from the catalog (5 days left), YouTube from a file (6 days left;
 // 1 in scenario `apps-due`, inside the refresh window), a LiveContainer build from SideStore's fake source with a newer version there, and an
 // app another tool signed with the same team. Refreshing or updating an app gives it 7 more days; Remove deletes it.
-// Scenario `apps-expired` starts with YouTube expired; `no-apps` with nothing installed. Nothing is due by default,
+// Scenario `apps-expired` starts with YouTube expired, `apps-profile-gone` with YouTube expired and its profile removed
+// by iOS; `no-apps` with nothing installed. Nothing is due by default,
 // so automatic refresh doesn't start a run in every test. Apps whose mark names their certificate refresh with a
 // new profile only; YouTube (installed before marks) and the other tool's app are installed again.
 import { bytesFileSource, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
@@ -33,6 +34,15 @@ const record = (
   origin,
   installedAt: new Date().toISOString(),
   keptKey: `${bundleId}.ipa`
+})
+
+/** A refresh, an update or a new install gives the app a new profile: 7 more days. */
+const withNewProfile = ({
+  profileGone: _gone,
+  ...app
+}: FakeInstalledApp): FakeInstalledApp => ({
+  ...app,
+  expiresAt: inDays(LIFETIME_DAYS)
 })
 
 /** YouTube's days left: fine by default (nothing refreshes by itself), inside the window, or expired. */
@@ -75,7 +85,9 @@ const seed = (scenario: string): FakeInstalledApp[] => {
       name: 'YouTube',
       version: '21.41.5',
       teamId: TEAM,
-      expiresAt: inDays(youtubeDays(scenario)),
+      ...(scenario === 'apps-profile-gone'
+        ? { profileGone: true as const }
+        : { expiresAt: inDays(youtubeDays(scenario)) }),
       record: record(
         `com.google.ios.youtube.${TEAM}`,
         'com.google.ios.youtube',
@@ -220,9 +232,7 @@ export const createFakeInstalled = (
     },
     refreshed: (bundleIds) => {
       apps = apps.map((app) =>
-        bundleIds.includes(app.bundleId)
-          ? { ...app, expiresAt: inDays(LIFETIME_DAYS) }
-          : app
+        bundleIds.includes(app.bundleId) ? withNewProfile(app) : app
       )
     },
     reinstalled: (catalogIds) => {
@@ -239,7 +249,7 @@ export const createFakeInstalled = (
 
         apps = apps.map((app) =>
           app.record?.originalBundleId === bundle && version
-            ? { ...app, version, expiresAt: inDays(LIFETIME_DAYS) }
+            ? { ...withNewProfile(app), version }
             : app
         )
       }

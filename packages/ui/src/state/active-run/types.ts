@@ -114,9 +114,14 @@ export type RunApp = {
 
 /**
  * How a refresh treats an app: a new profile only, or installed again (its certificate changed, it isn't marked,
- * or it is SideStore, so its own screen shows the new date).
+ * Apple removed its App ID, or it is SideStore, so its own screen shows the new date).
  */
-export type RefreshKind = 'profile' | 'certificate' | 'unmarked' | 'sidestore'
+export type RefreshKind =
+  | 'profile'
+  | 'certificate'
+  | 'unmarked'
+  | 'app-id'
+  | 'sidestore'
 
 /** What Repair SideStore fixes: SideStore as installed, installed again, a new profile, the pairing file. */
 export type RepairOptions = {

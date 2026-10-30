@@ -101,6 +101,31 @@ describe('installed apps', () => {
     ).toEqual([])
   })
 
+  it('lists an expired app whose profile iOS has removed, by the team at the end of its bundle id', async () => {
+    const harness = createHarness({
+      device: {
+        installed: new Map([
+          [APP, installedApp(APP, 'App')],
+          ['com.example.store', installedApp('com.example.store', 'Store')]
+        ])
+      }
+    })
+
+    expect(
+      await harness.engine.installedApps({
+        udid: UDID,
+        teamIds: [FREE_TEAM.id]
+      })
+    ).toEqual([
+      {
+        bundleId: APP,
+        name: 'App',
+        teamId: FREE_TEAM.id,
+        profileGone: true
+      }
+    ])
+  })
+
   it('refreshes from the kept IPA, keeping the certificate trust and the pairing file, without asking again', async () => {
     const harness = createHarness({ device: deviceWith(SIDESTORE) })
 

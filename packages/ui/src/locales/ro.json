@@ -1111,7 +1111,8 @@
       "in": "{days, plural, one {Expiră în # zi · {date}} few {Expiră în # zile · {date}} other {Expiră în # de zile · {date}}}",
       "today": "Expiră azi",
       "expired": "{days, plural, one {A expirat acum # zi · nu se deschide} few {A expirat acum # zile · nu se deschide} other {A expirat acum # de zile · nu se deschide}}",
-      "unknown": "Expirare necunoscută"
+      "unknown": "Expirare necunoscută",
+      "gone": "A expirat · nu se deschide"
     },
     "run": {
       "checking": "Se verifică la Apple…",
@@ -1494,6 +1495,7 @@
         "profile": "Doar un profil nou, nimic nu se reinstalează",
         "certificate": "Reinstalată: certificatul cu care a fost semnată nu mai este valid",
         "unmarked": "Reinstalată: IPAForge nu poate ști ce certificat a semnat-o",
+        "appId": "Reinstalată: Apple i-a șters App ID-ul după ce a expirat",
         "sidestore": "Instalat din nou, cu datele păstrate, ca SideStore să arate singur noua dată"
       },
       "group": {

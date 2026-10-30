@@ -173,11 +173,12 @@ export type RefreshDecision =
       readonly bundleId: string
       readonly kind: 'reinstall'
       /**
-       * Its certificate was revoked or replaced, it carries no IPAForge mark saying which one signed it, or it is
+       * Its certificate was revoked or replaced, it carries no IPAForge mark saying which one signed it, Apple has
+       * removed its App ID (a free team's go after 7 days), so no new profile can be made for it, or it is
        * SideStore, which shows the expiry of the profile inside its own files (a new profile alone leaves its date
        * as it was).
        */
-      readonly reason: 'certificate' | 'unmarked' | 'sidestore'
+      readonly reason: 'certificate' | 'unmarked' | 'app-id' | 'sidestore'
     }
 
 /** An app on the device signed with one of the user's teams, as the Apps page lists it. */
@@ -188,6 +189,8 @@ export type InstalledApp = {
   readonly teamId: string
   /** When its profile expires, and with it the app; undefined when the device shows no profile for it. */
   readonly expiresAt?: Date
+  /** No profile for it on the device: iOS removes a profile once it expires, so the app won't open. */
+  readonly profileGone?: true
   /** Installed by IPAForge on this computer, which keeps its IPA: it can be refreshed from that copy. */
   readonly record?: InstalledRecord
   /** Installed by IPAForge (on this computer or another): where it came from, read from the app itself. */

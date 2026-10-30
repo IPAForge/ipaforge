@@ -1111,7 +1111,8 @@
       "in": "{days, plural, one {Expires in # day · {date}} other {Expires in # days · {date}}}",
       "today": "Expires today",
       "expired": "{days, plural, one {Expired # day ago · won't open} other {Expired # days ago · won't open}}",
-      "unknown": "Expiry unknown"
+      "unknown": "Expiry unknown",
+      "gone": "Expired · won't open"
     },
     "run": {
       "checking": "Checking with Apple…",
@@ -1494,6 +1495,7 @@
         "profile": "New profile only, nothing installed again",
         "certificate": "Installed again: the certificate that signed it is no longer valid",
         "unmarked": "Installed again: IPAForge can't tell which certificate signed it",
+        "appId": "Installed again: Apple removed its App ID once it expired",
         "sidestore": "Installed again, its data kept, so SideStore itself shows the new date"
       },
       "group": {

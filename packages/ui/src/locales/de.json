@@ -1111,7 +1111,8 @@
       "in": "{days, plural, one {Läuft in # Tag ab · {date}} other {Läuft in # Tagen ab · {date}}}",
       "today": "Läuft heute ab",
       "expired": "{days, plural, one {Vor # Tag abgelaufen · öffnet sich nicht} other {Vor # Tagen abgelaufen · öffnet sich nicht}}",
-      "unknown": "Ablauf unbekannt"
+      "unknown": "Ablauf unbekannt",
+      "gone": "Abgelaufen · öffnet sich nicht"
     },
     "run": {
       "checking": "Wird bei Apple geprüft …",
@@ -1494,6 +1495,7 @@
         "profile": "Nur ein neues Profil, nichts wird neu installiert",
         "certificate": "Neu installiert: Das Zertifikat, mit dem sie signiert wurde, ist nicht mehr gültig",
         "unmarked": "Neu installiert: IPAForge kann nicht erkennen, welches Zertifikat sie signiert hat",
+        "appId": "Neu installiert: Apple hat ihre App-ID nach dem Ablauf entfernt",
         "sidestore": "Erneut installiert, Daten bleiben erhalten, damit SideStore selbst das neue Datum zeigt"
       },
       "group": {

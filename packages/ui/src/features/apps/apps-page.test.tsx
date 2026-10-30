@@ -162,6 +162,22 @@ describe('the Apps page', () => {
     expect(screen.queryByText(t('apps.expired.title', { count: 1 }))).toBeNull()
   })
 
+  it('lists an app whose profile iOS removed as expired, and refreshes it on request', async () => {
+    const user = await open({ scenario: 'apps-profile-gone' })
+
+    expect((await rowOf('YouTube')).textContent).toContain(
+      t('apps.expiry.gone')
+    )
+    await user.click(
+      await screen.findByRole('button', {
+        name: t('apps.expired.refresh', { count: 1 })
+      })
+    )
+    await waitFor(async () =>
+      expect((await rowOf('YouTube')).textContent).toMatch(/Expires in 7 days/)
+    )
+  })
+
   it('refreshes an expired app by itself when automatic refresh is on', async () => {
     await renderApp('/apps', { scenario: 'apps-expired' })
 
