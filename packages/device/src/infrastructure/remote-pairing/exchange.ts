@@ -22,11 +22,19 @@ export type ExchangeOptions = {
   readonly onAwaitingConsent?: () => void
 }
 
-const deviceRefused = (reason: string) =>
+/** A refusal; an error record's number (HomeKit's: 2 authentication, 3 back-off, 5 too many tries) and wait. */
+const deviceRefused = (
+  reason: string,
+  record: { tlvError?: number; retryDelay?: number } = {}
+) =>
   new IPAForgeError(ErrorCode.PairingDenied, {
     message: `remote pairing refused: ${reason}`,
-    data: { reason }
+    data: { reason, ...record }
   })
+
+/** A little-endian unsigned number of up to 4 bytes (the TLV8 `RetryDelay`). */
+const littleEndian = (bytes: Uint8Array): number =>
+  bytes.subarray(0, 4).reduceRight((value, byte) => value * 256 + byte, 0)
 
 export const handshake = async (channel: PairingChannel): Promise<void> => {
   await channel.send(handshakeRequest())
@@ -54,7 +62,13 @@ export const exchange = async (
     if (message.kind !== 'pairing-data') continue
     const tlv = decodeTlv8(message.data)
     const error = tlv.get(TlvType.Error)
-    if (error) throw deviceRefused(`TLV8 error ${error[0] ?? 'unknown'}`)
+    if (error) {
+      const delay = tlv.get(TlvType.RetryDelay)
+      throw deviceRefused(`TLV8 error ${error[0] ?? 'unknown'}`, {
+        ...(error[0] === undefined ? {} : { tlvError: error[0] }),
+        ...(delay ? { retryDelay: littleEndian(delay) } : {})
+      })
+    }
     return tlv
   }
   throw new IPAForgeError(ErrorCode.DeviceProtocolError, {

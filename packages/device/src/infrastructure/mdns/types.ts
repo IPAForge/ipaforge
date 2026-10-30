@@ -43,11 +43,11 @@ export type DnsMessage = {
   readonly records: readonly ResourceRecord[]
 }
 
-/** A device advertising lockdown over Wi-Fi, as one search found it. */
+/** A device advertising a service on the network (lockdown over Wi-Fi, remote pairing), as one search found it. */
 export type WifiAdvert = {
   /** The service instance name (`<MAC>@<address>-supportsRP-NN…`), the advert's identity on this network. */
   readonly instance: string
-  /** Its IPv4 address. */
+  /** Its IPv4 address, or its IPv6 one when it gave no IPv4 address. */
   readonly address: string
   /** The service's port (SRV), when the answer gave it. */
   readonly port?: number | undefined
@@ -56,6 +56,9 @@ export type WifiAdvert = {
   /** TXT `identifier` and `authTag` values (iOS 26.4 and later), checked against the pair records. */
   readonly identifier?: string | undefined
   readonly authTags: readonly string[]
+  /** TXT `name` and `model`: what an Apple TV or Vision Pro's pairing advert calls itself. */
+  readonly name?: string | undefined
+  readonly model?: string | undefined
 }
 
 export type BrowseEvent =
@@ -76,4 +79,6 @@ export type PendingAdvert = {
   port?: number
   identifier?: string | undefined
   authTags: string[]
+  name?: string | undefined
+  model?: string | undefined
 }

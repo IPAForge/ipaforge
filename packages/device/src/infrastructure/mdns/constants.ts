@@ -22,5 +22,11 @@ export const WIFI_LOCKDOWN_SERVICE = '_apple-mobdev2._tcp.local'
 /** The service an iOS 17+ device's remote pairing listens on: the way to its tunnel over Wi-Fi. */
 export const REMOTE_PAIRING_SERVICE = '_remotepairing._tcp.local'
 
+/**
+ * The service an Apple TV or Apple Vision Pro advertises while its pairing screen is open (Remote App and Devices,
+ * Remote Devices): pair-setup with the code it shows. It takes no tunnel; that goes to `_remotepairing._tcp`.
+ */
+export const MANUAL_PAIRING_SERVICE = '_remotepairing-manual-pairing._tcp.local'
+
 /** Most compression pointers a name may follow before it counts as a loop. */
 export const MAX_NAME_JUMPS = 32

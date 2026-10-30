@@ -112,6 +112,10 @@ export type FakeDeviceOptions = {
   files?: Map<string, Uint8Array>
   productVersion?: string
   deviceClass?: string
+  /** An Apple TV showing its pairing screen: the code it shows on each try, a new one every time. */
+  pairingCodes?: readonly string[]
+  /** It takes no more codes after this many wrong ones. */
+  pairingBackoffAfter?: number
 }
 
 export const profile = (
@@ -256,10 +260,27 @@ export const fakeDevices = (options: FakeDeviceOptions = {}) => {
       calls.closed++
     }
   }
+  let pairingTries = 0
   const manager = {
     listDevices: async () => [
       { udid: UDID, deviceId: 1, connectionType: 'usb' as const }
     ],
+    pairByCode: async (
+      target: { readonly name: string },
+      askPin: () => Promise<string>
+    ) => {
+      const shown = options.pairingCodes?.[pairingTries]
+      pairingTries++
+      if (shown === undefined)
+        throw new IPAForgeError(ErrorCode.PairingScreenClosed)
+      if ((await askPin()) === shown)
+        return { udid: 'TV-UDID', name: target.name, model: 'AppleTV14,1' }
+      if (pairingTries >= (options.pairingBackoffAfter ?? Infinity))
+        throw new IPAForgeError(ErrorCode.PairingBackoff, {
+          data: { seconds: 30 }
+        })
+      throw new IPAForgeError(ErrorCode.PairingCodeWrong)
+    },
     open: async (_udid: string, openOptions?: unknown) => {
       calls.opened++
       calls.openOptions.push(openOptions)

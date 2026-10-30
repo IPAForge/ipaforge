@@ -21,5 +21,7 @@ export const StepLabel = {
   pairing: 'install.steps.pairing',
   remember: 'install.steps.remember',
   pairingTargets: 'pairing.steps.targets',
-  placePairing: 'pairing.steps.place'
+  placePairing: 'pairing.steps.place',
+  /** Pairing an Apple TV or Vision Pro with the code it shows. */
+  pairByCode: 'pairByCode.steps.pair'
 } as const

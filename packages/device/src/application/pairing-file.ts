@@ -22,7 +22,7 @@ import {
   supportsRemotePairing
 } from '@device/domain/pairing-apps.ts'
 import { remotePairingFile } from '@device/domain/remote-pairing/record.ts'
-import { compact } from '@ipaforge/kernel'
+import { compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 /** Pairing-file locations of the known pairing apps installed on the device (sideloaded copies only from `teamIds`). */
 export const pairingTargets = async (
@@ -39,12 +39,18 @@ export const pairingTargets = async (
 const withWifiMacAddress = async (
   session: DeviceSession
 ): Promise<PairRecord> => {
-  if (session.pairRecord.wifiMacAddress) return session.pairRecord
+  const { pairRecord } = session
+  // A device paired by code (Apple TV, Vision Pro) has no classic pairing to write.
+  if (!pairRecord)
+    throw new IPAForgeError(ErrorCode.DeviceNotPaired, {
+      message: 'this device has no classic pairing to write'
+    })
+  if (pairRecord.wifiMacAddress) return pairRecord
   const wifiMacAddress = await session.getValue(LOCKDOWN_WIFI_ADDRESS_KEY)
 
   return typeof wifiMacAddress === 'string'
-    ? { ...session.pairRecord, wifiMacAddress }
-    : session.pairRecord
+    ? { ...pairRecord, wifiMacAddress }
+    : pairRecord
 }
 
 /** The remote pairing written to `targets`, or undefined when there are none, the iOS is older, or it failed. */

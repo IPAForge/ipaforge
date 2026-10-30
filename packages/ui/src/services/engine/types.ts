@@ -59,6 +59,18 @@ export type InstallAppsInput = RemoteInstallAppsInput
 export type AppSource = IpaSource
 export type InstallRun = ReturnType<EngineClient['installSideStore']>
 export type SignInRun = ReturnType<EngineClient['signIn']>
+/** An Apple TV or Vision Pro paired by code, as this computer remembers it. */
+export type CodePairedDevice = Resolved<'codePairedDevices'>[number]
+/** What the search for devices showing their pairing screen reports. */
+export type PairableWatchEvent = Parameters<
+  Parameters<EngineClient['watchPairableDevices']>[0]
+>[0]
+/** An Apple TV or Vision Pro showing its pairing screen, as the search found it. */
+export type PairableDevice = Extract<
+  PairableWatchEvent,
+  { readonly kind: 'found' }
+>['device']
+export type PairByCodeRun = ReturnType<EngineClient['pairByCode']>
 export type TwoFactorMethods =
   Prompts['apple.two_factor_method']['data']['methods']
 export type TwoFactorMethod = Prompts['apple.two_factor_method']['answer']

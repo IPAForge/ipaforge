@@ -46,7 +46,7 @@ describe('remote pair-setup', () => {
   it("pairs with the USB PIN and keeps the device's identity and identity resolving key", async () => {
     const device = createFakeRemoteDevice()
     const host = hostIdentity()
-    const record = await pairSetup(device.channel, { host, randomBytes })
+    const { record } = await pairSetup(device.channel, { host, randomBytes })
 
     expect(record.deviceIdentifier).toBe(DEVICE_ID)
     expect(record.devicePublicKey).toEqual(device.devicePublicKey)
@@ -92,6 +92,68 @@ describe('remote pair-setup', () => {
     })
   })
 
+  it('pairs an Apple TV with the code it shows, asked once it shows it, and keeps what it says it is', async () => {
+    const device = createFakeRemoteDevice({
+      pin: '482913',
+      model: 'AppleTV14,1',
+      name: 'Living Room'
+    })
+    const askPin = vi.fn(async () => {
+      // The code is asked for after M1 was sent and answered: the device shows it by then.
+      expect(device.sent).toHaveLength(2)
+      return '482913'
+    })
+    const { record, peer } = await pairSetup(device.channel, {
+      host: hostIdentity(),
+      randomBytes,
+      askPin
+    })
+
+    expect(askPin).toHaveBeenCalledTimes(1)
+    expect(record.altIrk).toEqual(DEVICE_ALT_IRK)
+    expect(peer).toEqual({
+      udid: 'UDID',
+      name: 'Living Room',
+      model: 'AppleTV14,1'
+    })
+  })
+
+  it('says a typed code is wrong, or how long to wait after too many', async () => {
+    const wrong = createFakeRemoteDevice({ pin: '482913' })
+    await expect(
+      pairSetup(wrong.channel, {
+        host: hostIdentity(),
+        randomBytes,
+        askPin: async () => '111111'
+      })
+    ).rejects.toMatchObject({ code: ErrorCode.PairingCodeWrong })
+
+    const tooMany = createFakeRemoteDevice({
+      pin: '482913',
+      backoffSeconds: 30
+    })
+    await expect(
+      pairSetup(tooMany.channel, {
+        host: hostIdentity(),
+        randomBytes,
+        askPin: async () => '111111'
+      })
+    ).rejects.toMatchObject({
+      code: ErrorCode.PairingBackoff,
+      data: { seconds: 30 }
+    })
+  })
+
+  it('refuses to pair by code with a device that asks to be allowed instead of showing a code', async () => {
+    const device = createFakeRemoteDevice({ asksConsent: true })
+    const askPin = vi.fn(async () => '123456')
+
+    await expect(
+      pairSetup(device.channel, { host: hostIdentity(), randomBytes, askPin })
+    ).rejects.toMatchObject({ code: ErrorCode.DeviceProtocolError })
+    expect(askPin).not.toHaveBeenCalled()
+  })
+
   it("refuses a device whose signature doesn't match its identity", async () => {
     const device = createFakeRemoteDevice({ badSignature: true })
 
@@ -104,7 +166,7 @@ describe('remote pair-setup', () => {
 describe('remote pair-verify', () => {
   it('is accepted by the device that pairing was made with, sharing its secret', async () => {
     const device = createFakeRemoteDevice()
-    const record = await pairSetup(device.channel, {
+    const { record } = await pairSetup(device.channel, {
       host: hostIdentity(),
       randomBytes
     })
@@ -119,7 +181,7 @@ describe('remote pair-verify', () => {
 
   it('then sends requests encrypted, and opens the encrypted answer', async () => {
     const device = createFakeRemoteDevice({ listenerPort: 51_234 })
-    const record = await pairSetup(device.channel, {
+    const { record } = await pairSetup(device.channel, {
       host: hostIdentity(),
       randomBytes
     })
@@ -145,7 +207,7 @@ describe('remote pair-verify', () => {
 
   it('is refused once the device forgot this computer', async () => {
     const device = createFakeRemoteDevice({ forgetsHost: true })
-    const record = await pairSetup(device.channel, {
+    const { record } = await pairSetup(device.channel, {
       host: hostIdentity(),
       randomBytes
     })
@@ -157,7 +219,7 @@ describe('remote pair-verify', () => {
 
   it('refuses another device answering for it', async () => {
     const first = createFakeRemoteDevice()
-    const record = await pairSetup(first.channel, {
+    const { record } = await pairSetup(first.channel, {
       host: hostIdentity(),
       randomBytes
     })

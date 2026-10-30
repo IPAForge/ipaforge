@@ -64,6 +64,20 @@ Inside, the tunnel is the same as over USB: IPAForge's TCP client, RSD and the s
 
 **The remote pairing is made by cable.** Whenever a session opens over USB on iOS 17.4 or later and no remote pairing is saved, IPAForge makes one (`makeRemotePairing`, on by default), so the device works on Wi-Fi once the cable is out. It needs no Trust: the classic pairing already counts. A device that would ask the user first is left alone, and a failure here is logged and never fails the session.
 
+## Apple TV and Apple Vision Pro
+
+An Apple TV or Apple Vision Pro has no cable to trust a computer with, so it's paired over Wi-Fi with the code it shows, and reached only through its tunnel (tvOS and visionOS 17 and later). **Not tested with a real Apple TV or Vision Pro yet:** the steps follow the iPhone's, which are tested, and the published descriptions of these devices.
+
+1. **On the device,** with it on the same Wi-Fi as the computer: Settings › Remotes and Devices › Remote App and Devices (Apple TV), or Settings › General › Remote Devices (Vision Pro). Keep that screen open: only then does it advertise `_remotepairing-manual-pairing._tcp`, with its `name` and `model` in the advert.
+2. **Pair-setup by code** to that advert's port, as by cable ([Remote pairing](#remote-pairing-ios-174-and-later)) with one change. An iPhone asks its user to allow the pairing and takes the fixed PIN `000000`. These devices show a 6-digit code instead, which the user types into IPAForge (`DeviceManager.pairByCode`, the Engine's `pairByCode` run with its `device.pairing_code` question). Each try is a new pair-setup, with a new code on the screen. Pairing by code never falls back to the fixed PIN: a device that asks to be allowed instead of showing a code is refused, since only the code proves it's the device whose screen the user sees. M6 gives the device's UDID, name and model.
+3. **Saved like an iPhone's remote pairing,** and the device remembered as paired by code (`code-paired-devices` in the secret store), so the network search looks for it. The device names its own UDID, so a UDID this computer is already paired with another way (an iPhone by cable, or its remote pairing) is refused rather than overwritten.
+4. **Found again** by its remote pairing advert (`_remotepairing._tcp`): its `authTag` is 6 bytes of SipHash-2-4 over the advert's `identifier`, keyed by the device's identity resolving key from pairing, so only a computer paired with it can tell it's that device. It comes in the device feed with `pairedByCode: true`.
+5. **A session** goes through its tunnel on Wi-Fi ([A session inside the tunnel](#the-tunnel-over-wi-fi-ios-174-and-later)): it has no classic pairing, so the session has no pair record, and pairing files can't be written to it. tvOS has no Developer Mode (pairing is enough); visionOS has it in every version.
+
+`DeviceManager.forgetCodePaired` (Forget… on the Devices page) deletes the pairing of a device paired by code, and nothing else; the apps on the device stay. After the device's OS is updated it no longer accepts the pairing (`device.pairing_denied`): pair it again.
+
+Not yet: devices that give only an IPv6 link-local address (IPAForge searches and connects over IPv4), and installing to them (11.3b: the developer services and the signer need to know tvOS and visionOS). Until then, Install and Preload stay off for an Apple TV or Vision Pro in use and say so.
+
 ## What it can do
 
 | Capability | Service |
@@ -122,6 +136,9 @@ iOS 17.4 added a second kind of pairing, remote pairing, which newer SideStore b
 | `device.install_failed` | Any other installd error; its name is in the details | See the details |
 | `device.local_network_denied` | macOS refused IPAForge local network access, so devices on Wi-Fi can't be found | System Settings › Privacy & Security › Local Network › IPAForge; or use a cable |
 | `device.tunnel_unavailable` | The device didn't open its tunnel (it runs an iOS before 17.4, or refused CoreDeviceProxy) | Update the device to iOS 17.4 or later; reconnect it |
+| `device.pairing_code_wrong` | The code typed for an Apple TV or Vision Pro isn't the one it shows | Type the new code it shows now |
+| `device.pairing_backoff` | Too many wrong codes: the device takes none for a while (`data.seconds`) | Wait, then pair again |
+| `device.pairing_screen_closed` | The Apple TV or Vision Pro closed its pairing screen, or went away, before pairing finished | Open the pairing screen again and keep it open |
 
 ## For contributors
 
@@ -140,10 +157,12 @@ pnpm --filter @ipaforge/desktop device-probe info --direct [--udid <udid>]   # a
 pnpm --filter @ipaforge/desktop device-probe rsd-services       # iOS 17.4+: the device's properties and services inside its tunnel
 pnpm --filter @ipaforge/desktop device-probe tunnel-install [<signed.ipa>] [--mb 100] [--compare]   # a timed upload and install through the tunnel
 pnpm --filter @ipaforge/desktop device-probe apps --tunnel      # any device command, with every service through the tunnel
+pnpm --filter @ipaforge/desktop device-probe tv-browse          # Apple TVs and Vision Pros showing their pairing screen
+pnpm --filter @ipaforge/desktop device-probe tv-pair [--name <name>]   # pairs one by its code, then opens a session through its tunnel (this run only)
 IPAFORGE_DEVICE=1 pnpm vitest run apps/desktop/src/main/adapters/device.hardware.test.ts
 ```
 
-Unit tests run against an in-memory fake device (`packages/device/src/__tests__/fake-device/`), which simulates usbmuxd, lockdownd and every service, a fake Wi-Fi (direct TCP and mDNS answers) and a fake device tunnel (`__tests__/fake-tunnel/`: CDTunnel, a TCP peer written apart from the client that can drop, duplicate or hold back segments and close its window, RSD and the shims), so CI needs no hardware.
+Unit tests run against an in-memory fake device (`packages/device/src/__tests__/fake-device/`), which simulates usbmuxd, lockdownd and every service, a fake Wi-Fi (direct TCP and mDNS answers) a fake Apple TV showing its pairing screen (pair-setup with a code, `__tests__/fake-remote-device.ts`) and a fake device tunnel (`__tests__/fake-tunnel/`: CDTunnel, a TCP peer written apart from the client that can drop, duplicate or hold back segments and close its window, RSD and the shims), so CI needs no hardware.
 
 ## See Also
 

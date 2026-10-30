@@ -232,6 +232,35 @@ export const checklistShown = () =>
 export const appsShown = () =>
   waitFor(() => expect(all('main ul li').length).toBeGreaterThanOrEqual(4))
 
+/** The Devices page with a paired Apple TV and Vision Pro, each one's facts in. */
+export const codePairedShown = () =>
+  waitFor(() => expect(all('main dl').length).toBeGreaterThanOrEqual(3))
+
+const pressData = async (selector: string) => {
+  const button = await waitFor(() => {
+    const found = document.querySelector(selector)
+    if (!(found instanceof HTMLElement)) throw new Error(`no ${selector}`)
+    return found
+  })
+  button.click()
+}
+
+/** Devices with Pair Apple TV or Vision Pro open, both devices showing their pairing screen found. */
+export const openPairDialog = async () => {
+  await pressData('main [data-pair="open"]')
+  await waitFor(() =>
+    expect(all('[role="dialog"] [data-pair="device"]')).toHaveLength(2)
+  )
+}
+
+/** The pairing dialog at its code step, for the first device found. */
+export const pickPairable = async () => {
+  await pressData('[role="dialog"] [data-pair="device"]')
+  await waitFor(() =>
+    expect(all('[role="dialog"] input:not([disabled])')).toHaveLength(1)
+  )
+}
+
 /** Apps with Pairing files open, every app's row in. */
 export const openPairingFiles = async () => {
   const button = await waitFor(() => {

@@ -1,6 +1,14 @@
+import { Glasses, Tv } from 'lucide-react'
+
 import { ErrorCode } from '@ipaforge/kernel'
 import type { StatusTone } from '@ui/components/shell/types.ts'
-import type { DeviceState } from '@ui/features/devices/types.ts'
+import type { DeviceKind, DeviceState } from '@ui/features/devices/types.ts'
+
+/** The icon of each kind of device paired by code. */
+export const deviceKindIcons = {
+  tv: Tv,
+  vision: Glasses
+} as const satisfies Record<DeviceKind, unknown>
 
 /** The device has not paired with this computer, or the pairing went stale: the user taps Trust. */
 export const UNTRUSTED: ReadonlySet<string> = new Set([
@@ -137,7 +145,12 @@ export const modelNames: Readonly<Record<string, string>> = {
   'iPad16,3': 'iPad Pro 11-inch (M4)',
   'iPad16,4': 'iPad Pro 11-inch (M4)',
   'iPad16,5': 'iPad Pro 13-inch (M4)',
-  'iPad16,6': 'iPad Pro 13-inch (M4)'
+  'iPad16,6': 'iPad Pro 13-inch (M4)',
+  'AppleTV5,3': 'Apple TV HD',
+  'AppleTV6,2': 'Apple TV 4K',
+  'AppleTV11,1': 'Apple TV 4K (2nd generation)',
+  'AppleTV14,1': 'Apple TV 4K (3rd generation)',
+  'RealityDevice14,1': 'Apple Vision Pro'
 }
 
 /** macOS System Settings › Privacy & Security › Local Network. */

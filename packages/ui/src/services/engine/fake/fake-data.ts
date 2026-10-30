@@ -174,3 +174,85 @@ export const fakePairingApps = [
 export const FAKE_TWO_FACTOR_CODE = '123456'
 /** The size the fake download reports, in bytes. */
 export const FAKE_IPA_SIZE = 28_000_000
+
+/** The code the fake Apple TV and Vision Pro show; any other is wrong. */
+export const FAKE_PAIRING_CODE = '482913'
+
+export const FAKE_TV = '00008110-0012345678ABCDEF'
+/** Addresses from the documentation range (RFC 5737): the fake devices are never on a real network. */
+
+const FAKE_TV_ADDRESS = '192.0.2.42'
+
+const FAKE_VISION_ADDRESS = '192.0.2.57'
+export const FAKE_VISION = '00008112-001A2B3C4D5E6F70'
+
+/** The fake Apple TV and Vision Pro while their pairing screen is open: what the network search finds. */
+export const fakePairable = [
+  {
+    id: 'Living Room._remotepairing-manual-pairing._tcp.local',
+    name: 'Living Room',
+    model: 'AppleTV14,1',
+    address: FAKE_TV_ADDRESS,
+    port: 49_152
+  },
+  {
+    id: 'Studio Vision Pro._remotepairing-manual-pairing._tcp.local',
+    name: 'Studio Vision Pro',
+    model: 'RealityDevice14,1',
+    address: FAKE_VISION_ADDRESS,
+    port: 49_152
+  }
+] as const
+
+/** Each fake device paired by code: its udid, its place on the network, and what its status read says. */
+export const fakeCodePaired = {
+  'AppleTV14,1': {
+    udid: FAKE_TV,
+    device: {
+      udid: FAKE_TV,
+      deviceId: -10,
+      connectionType: 'network',
+      address: FAKE_TV_ADDRESS,
+      pairedByCode: true
+    },
+    check: {
+      info: {
+        udid: FAKE_TV,
+        name: 'Living Room',
+        productType: 'AppleTV14,1',
+        productVersion: '26.1',
+        buildVersion: '23J582',
+        deviceClass: 'AppleTV'
+      },
+      locked: false,
+      developerMode: 'not_required',
+      activated: true
+    }
+  },
+  'RealityDevice14,1': {
+    udid: FAKE_VISION,
+    device: {
+      udid: FAKE_VISION,
+      deviceId: -11,
+      connectionType: 'network',
+      address: FAKE_VISION_ADDRESS,
+      pairedByCode: true
+    },
+    check: {
+      info: {
+        udid: FAKE_VISION,
+        name: 'Studio Vision Pro',
+        productType: 'RealityDevice14,1',
+        productVersion: '26.1',
+        buildVersion: '23N301',
+        deviceClass: 'RealityDevice'
+      },
+      locked: false,
+      developerMode: 'off',
+      activated: true
+    }
+  }
+} as const satisfies Record<
+  string,
+  { udid: string; device: Device; check: DeviceCheck }
+>

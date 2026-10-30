@@ -7,6 +7,7 @@ import {
   type DeviceWatchEvent,
   type Engine,
   type InstallAppsInput,
+  type PairableWatchEvent,
   PromptKind,
   type PromptRequest,
   pipeline,
@@ -150,6 +151,10 @@ export type FakeControl = {
   readonly paired: string[]
   /** Device-watch listeners the server holds. */
   readonly watchers: Set<(event: DeviceWatchEvent) => void>
+  /** Listeners of the search for Apple TVs and Vision Pros showing their pairing screen. */
+  readonly pairableWatchers: Set<(event: PairableWatchEvent) => void>
+  readonly pairByCodeInputs: unknown[]
+  readonly forgotten: string[]
 }
 
 export const createFakeEngine = () => {
@@ -163,7 +168,10 @@ export const createFakeEngine = () => {
     signIns: [],
     signedOut: [],
     paired: [],
-    watchers: new Set()
+    watchers: new Set(),
+    pairableWatchers: new Set(),
+    pairByCodeInputs: [],
+    forgotten: []
   }
   const engine = {
     listDevices: async () => [{ udid: 'UDID1', connection: 'USB' }],
@@ -310,6 +318,20 @@ export const createFakeEngine = () => {
     signIn: (input: unknown, options?: CommandOptions<FakeState>) => {
       control.signIns.push(input)
       return startRun(control, { apps: [] }, options)
+    },
+    pairByCode: (input: unknown, options?: CommandOptions<FakeState>) => {
+      control.pairByCodeInputs.push(input)
+      return startRun(control, { apps: [] }, options)
+    },
+    codePairedDevices: async () => [
+      { udid: 'TV-UDID', name: 'Living Room', model: 'AppleTV14,1' }
+    ],
+    forgetCodePaired: async (udid: string) => {
+      control.forgotten.push(udid)
+    },
+    watchPairableDevices: (listener: (event: PairableWatchEvent) => void) => {
+      control.pairableWatchers.add(listener)
+      return () => control.pairableWatchers.delete(listener)
     },
     signOut: async (accountId: string) => {
       if (accountId !== 'acct')

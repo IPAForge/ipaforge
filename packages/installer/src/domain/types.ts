@@ -92,6 +92,16 @@ export type Prompts = {
     data: { apps: readonly PairingAppChoice[] }
     answer: readonly string[]
   }
+  readonly [PromptKind.PairingCode]: {
+    data: {
+      /** The device showing the code, as it calls itself. */
+      deviceName: string
+      codeLength: number
+      /** The last code was wrong; the device shows a new one now. */
+      retry: boolean
+    }
+    answer: string
+  }
 }
 
 export type PromptData<K extends PromptKind> = Prompts[K]['data']

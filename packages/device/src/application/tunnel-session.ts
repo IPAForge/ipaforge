@@ -47,7 +47,7 @@ export const openTunnelSession = async (
   ctx: DeviceContext,
   device: UsbmuxDevice,
   tunnel: DeviceTunnel,
-  pairRecord: PairRecord
+  pairRecord: PairRecord | undefined
 ): Promise<DeviceSession> =>
   closeOnError(tunnel, async () => {
     const link = await tunnel.openService(LOCKDOWN_REMOTE_SERVICE)

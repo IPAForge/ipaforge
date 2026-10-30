@@ -24,9 +24,27 @@ export type FakeDeviceState = {
 export type FakeDeviceStates = {
   status: (udid: string) => Promise<DeviceCheck>
   pair: (udid: string) => Promise<DeviceCheck>
+  /** A device paired by code from now on, answering with `check`; untrusted: it refuses its pairing. */
+  add: (check: DeviceCheck, trusted?: boolean) => void
 }
 
 export type DeviceFeedListener = (event: DeviceWatchEvent) => void
+
+/** The fake Engine's Apple TVs and Vision Pros: their search, pairing by code, the paired list and Forget. */
+export type FakeCodePairing = Pick<
+  Engine,
+  | 'watchPairableDevices'
+  | 'pairByCode'
+  | 'codePairedDevices'
+  | 'forgetCodePaired'
+>
+
+export type FakeCodePairingOptions = {
+  readonly scenario: FakeScenarioId
+  readonly delayMs: number
+  readonly devices: FakeDeviceFeed
+  readonly states: FakeDeviceStates
+}
 
 export type FakeDeviceFeed = {
   list: () => Device[]

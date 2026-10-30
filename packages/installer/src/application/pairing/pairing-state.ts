@@ -30,7 +30,8 @@ export const classicPairingOf = async (
   const file = parsePlist(await handle.readAppFile(first.target))
   const hostId = isPlistDict(file) ? stringAt(file, 'HostID') : undefined
   const state: ClassicPairingState =
-    hostId?.toUpperCase() === handle.pairRecord.hostId.toUpperCase()
+    hostId !== undefined &&
+    hostId.toUpperCase() === handle.pairRecord?.hostId.toUpperCase()
       ? 'this-computer'
       : 'other-computer'
 

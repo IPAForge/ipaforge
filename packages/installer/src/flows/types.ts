@@ -1,7 +1,12 @@
 import type { AccountState } from '@installer/domain/types.ts'
 import type { SavedAccount } from '@ipaforge/apple'
 import type { Channel } from '@ipaforge/catalog'
-import type { AppFileTarget, PairingTarget } from '@ipaforge/device'
+import type {
+  AppFileTarget,
+  CodePairedDevice,
+  PairableDevice,
+  PairingTarget
+} from '@ipaforge/device'
 
 export type SideStoreVariant = 'sidestore' | 'livecontainer'
 
@@ -34,6 +39,17 @@ export type PairingState = AccountState & {
   /** The chosen apps' pairing paths, with each app's name. */
   readonly targets?: readonly PairingTarget[]
   readonly placed?: readonly AppFileTarget[]
+}
+
+/** Pairing an Apple TV or Vision Pro: the one showing its pairing screen, as the search found it. */
+export type PairByCodeInput = {
+  readonly target: PairableDevice
+}
+
+export type PairByCodeState = {
+  readonly target: PairableDevice
+  /** The device once paired, as remembered. */
+  readonly paired?: CodePairedDevice
 }
 
 export type SignInFlowInput = {

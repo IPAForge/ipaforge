@@ -131,7 +131,7 @@ describe('pairing and sessions', () => {
       rig.fake.pairRecords.get(rig.device.udid) as Uint8Array
     )
     expect(record.systemBuid).toBe(rig.fake.buid)
-    expect(handle.pairRecord.hostId).toBe(record.hostId)
+    expect(handle.pairRecord?.hostId).toBe(record.hostId)
 
     // The session was upgraded to TLS with the host credentials, pinning the device certificate.
     const tls = rig.device.tlsUpgrades[0]
@@ -268,7 +268,7 @@ describe('pairing and sessions', () => {
     rig.device.acceptedHostIds.clear()
     const handle = await rig.manager.open(rig.device.udid, { method: 'own' })
     expect(pairRequests(rig)).toBe(2)
-    expect(handle.pairRecord.hostId).not.toBe(first.hostId)
+    expect(handle.pairRecord?.hostId).not.toBe(first.hostId)
     await handle.close()
     expectUsbmuxdUntouched(rig)
   })
@@ -513,7 +513,7 @@ describe('app files and pairing files', () => {
     expect(plist.WiFiMACAddress).toBe('aa:bb:cc:dd:ee:ff')
     const parsed = { udid: plist.UDID, hostId: plist.HostID }
     expect(parsed.udid).toBe(rig.device.udid)
-    expect(parsed.hostId).toBe(handle.pairRecord.hostId)
+    expect(parsed.hostId).toBe(handle.pairRecord?.hostId)
     expect(stik.container.files.has('Documents/pairingFile.plist')).toBe(true)
     expect(
       parsePlist(
@@ -575,7 +575,7 @@ describe('removing pairing files and saving one', () => {
       unknown
     >
 
-    expect(plist.HostID).toBe(handle.pairRecord.hostId)
+    expect(plist.HostID).toBe(handle.pairRecord?.hostId)
     expect(plist.UDID).toBe(rig.device.udid)
     expect(plist.WiFiMACAddress).toBe('aa:bb:cc:dd:ee:ff')
     await handle.close()

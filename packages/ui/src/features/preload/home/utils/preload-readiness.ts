@@ -1,5 +1,5 @@
 import type { AccountState } from '@ui/features/accounts/types.ts'
-import type { DeviceState } from '@ui/features/devices/types.ts'
+import type { InstallDeviceState } from '@ui/features/install/home/types.ts'
 import {
   installReadiness,
   type Readiness
@@ -21,7 +21,7 @@ const notReady = (reasonKey: Readiness['reasonKey']): Readiness => ({
  */
 export const preloadReadiness = (
   isOtherRunActive: boolean,
-  device: DeviceState | undefined,
+  device: InstallDeviceState | undefined,
   account: AccountState | undefined,
   rows: readonly PreloadRow[],
   totals: PreloadTotals

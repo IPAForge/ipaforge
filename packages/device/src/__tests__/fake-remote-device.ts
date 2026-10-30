@@ -60,6 +60,15 @@ export type FakeRemoteDeviceOptions = {
   readonly forgetsHost?: boolean
   /** The device signs its identity with another key (tampered). */
   readonly badSignature?: boolean
+  /** The code it pairs with (an Apple TV's on-screen code); the fixed USB PIN otherwise. */
+  readonly pin?: string
+  /** A wrong code is answered with "try again in this many seconds" instead of an authentication error. */
+  readonly backoffSeconds?: number
+  /** What M6's info says the device is. */
+  readonly model?: string
+  readonly name?: string
+  /** The UDID M6's info gives (`UDID` by default, the cabled fake device's). */
+  readonly udid?: string
 }
 
 const pairingData = (entries: readonly TlvEntry[]) => ({
@@ -93,6 +102,14 @@ export const createFakeRemoteDevice = (
   let fromHost = 0
   let toHost = 0
   const errorRecord = () => pairingData([[TlvType.Error, new Uint8Array([2])]])
+  // A wrong code: an authentication error, or "try again in this many seconds".
+  const wrongProof = () =>
+    options.backoffSeconds === undefined
+      ? errorRecord()
+      : pairingData([
+          [TlvType.Error, new Uint8Array([3])],
+          [TlvType.RetryDelay, new Uint8Array([options.backoffSeconds])]
+        ])
 
   const setupStep = (tlv: ReadonlyMap<number, Uint8Array>) => {
     const step = tlv.get(TlvType.State)?.[0]
@@ -114,7 +131,8 @@ export const createFakeRemoteDevice = (
         return
       }
       const salt = random(16)
-      const x = bigintOf(hash(salt, hash(utf8Encode(`${SRP_USER}:${USB_PIN}`))))
+      const pin = options.pin ?? USB_PIN
+      const x = bigintOf(hash(salt, hash(utf8Encode(`${SRP_USER}:${pin}`))))
       const v = modPow(g, x, N)
       const b = bigintOf(random(32))
       const B = (k * v + modPow(g, b, N)) % N
@@ -148,7 +166,7 @@ export const createFakeRemoteDevice = (
       )
       const proof = tlv.get(TlvType.Proof) ?? new Uint8Array()
       if (toBase64(M1) !== toBase64(proof)) {
-        queue.push(errorRecord())
+        queue.push(wrongProof())
         return
       }
       setup.K = K
@@ -215,9 +233,9 @@ export const createFakeRemoteDevice = (
                   encodeOpack({
                     accountID: DEVICE_ID,
                     altIRK: DEVICE_ALT_IRK,
-                    model: 'iPhone17,1',
-                    name: 'iPhone',
-                    remotepairing_udid: 'UDID'
+                    model: options.model ?? 'iPhone17,1',
+                    name: options.name ?? 'iPhone',
+                    remotepairing_udid: options.udid ?? 'UDID'
                   })
                 ]
               ])

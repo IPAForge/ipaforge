@@ -10,13 +10,22 @@ import {
 import { parseVersion } from '@device/domain/device.ts'
 import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
-/** Classifies the AMFI `DeveloperModeStatus` value for a given iOS version. */
+/**
+ * Classifies the AMFI `DeveloperModeStatus` value for a device's OS version. tvOS has no Developer Mode (pairing
+ * is enough); visionOS has it in every version, whose numbers start at 1.
+ */
 export const developerModeState = (
   productVersion: string,
-  status: unknown
+  status: unknown,
+  productType = ''
 ): DeveloperModeState => {
+  if (productType.startsWith('AppleTV')) return 'not_required'
   const [major] = parseVersion(productVersion)
-  if (major < DEVELOPER_MODE_MIN_IOS) return 'not_required'
+  if (
+    major < DEVELOPER_MODE_MIN_IOS &&
+    !productType.startsWith('RealityDevice')
+  )
+    return 'not_required'
   if (status === true) return 'on'
   if (status === false) return 'off'
   return 'unknown'
@@ -33,7 +42,11 @@ export const checkDevice = async (
   return {
     info,
     locked: info.locked === true,
-    developerMode: developerModeState(info.productVersion, status),
+    developerMode: developerModeState(
+      info.productVersion,
+      status,
+      info.productType
+    ),
     activated:
       info.activationState === undefined || info.activationState === 'Activated'
   }

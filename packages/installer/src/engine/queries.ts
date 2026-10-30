@@ -56,6 +56,8 @@ export const createEngineQueries = (deps: InstallerDeps): EngineQueries => ({
   systemCheck: () => systemCheck(deps),
   deviceStatus: (udid) => deviceStatus(deps, udid, false),
   pairDevice: (udid) => deviceStatus(deps, udid, true),
+  codePairedDevices: () => deps.devices.codePairedDevices(),
+  forgetCodePaired: (udid) => deps.devices.forgetCodePaired(udid),
   listAccounts: () => deps.apple.accounts.list(),
   canSaveAccounts: async () => (await deps.secrets.isPersistent?.()) ?? true,
   listTeams: async (accountId) =>

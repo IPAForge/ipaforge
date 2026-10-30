@@ -89,6 +89,10 @@
 | Packets of 8 KB and more to the device stall a tunnel connection | not an error: packets are capped at MTU 8000 (`tunnelMtu`) |
 | No ACK through 8 retransmission timeouts in a row inside the tunnel | `device.timeout` for that connection; a closed window the device keeps answering for is waited out |
 | The tunnel's RSD sends no service map (it answers only the client's own Handshake, and goes silent if the first root message isn't flagged exactly AlwaysSet) | the client sends its Handshake first, with those flags; no answer in 10 s → `device.timeout` |
+| Apple TV / Vision Pro pair-setup: TLV8 error 2 (authentication) after the code | `device.pairing_code_wrong`; asked again, a new pair-setup with the new code on the screen |
+| Apple TV / Vision Pro pair-setup: TLV8 error 3 (back-off, with `RetryDelay`) or 5 (too many tries) | `device.pairing_backoff`, `data.seconds` when the device says |
+| The pairing advert's device refuses the connection or closes it mid-pairing (its pairing screen closed) | `device.pairing_screen_closed` |
+| An Apple TV / Vision Pro refuses pair-verify after an OS update | `device.pairing_denied` on the Devices page: pair it again |
 
 ## 3. Two-factor authentication requirements (Phase 3)
 - Trusted-device push; SMS with a number picker; resend; switch method.

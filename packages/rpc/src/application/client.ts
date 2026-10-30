@@ -3,7 +3,11 @@
 
 import type { z } from 'zod'
 
-import { classify, type DeviceWatchEvent } from '@ipaforge/installer'
+import {
+  classify,
+  type DeviceWatchEvent,
+  type PairableWatchEvent
+} from '@ipaforge/installer'
 import {
   compact,
   IPAForgeError,
@@ -125,6 +129,14 @@ export const createEngineClient = (
       if (event.type !== 'log') listener(compact(event) as DeviceWatchEvent)
     })
 
+  const watchPairableDevices = (
+    listener: (event: PairableWatchEvent) => void
+  ): (() => void) =>
+    subscribe('pairable', (event) => {
+      if (event.type === 'pairable')
+        listener(compact(event.event) as PairableWatchEvent)
+    })
+
   /** Nothing here logs: the viewer's own traffic would otherwise fill the log it reads. */
   const logs: EngineLogs = {
     page: (query = {}) =>
@@ -193,6 +205,9 @@ export const createEngineClient = (
       query({ method: 'revealDeveloperMode', args: [udid] }),
     systemCheck: () => query({ method: 'systemCheck', args: [] }),
     pairDevice: (udid) => query({ method: 'pairDevice', args: [udid] }),
+    codePairedDevices: () => query({ method: 'codePairedDevices', args: [] }),
+    forgetCodePaired: (udid) =>
+      query({ method: 'forgetCodePaired', args: [udid] }),
     listAccounts: () => query({ method: 'listAccounts', args: [] }),
     canSaveAccounts: () => query({ method: 'canSaveAccounts', args: [] }),
     listSources: () => query({ method: 'listSources', args: [] }),
@@ -291,6 +306,9 @@ export const createEngineClient = (
     placePairing: (input, options) =>
       start({ command: 'placePairing', input }, options),
     signIn: (input, options) => start({ command: 'signIn', input }, options),
+    pairByCode: (input, options) =>
+      start({ command: 'pairByCode', input }, options),
+    watchPairableDevices,
     watchDevices,
     classify,
     logs,

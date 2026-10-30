@@ -75,6 +75,10 @@ const HANDLERS: Handlers = {
     if (retry) console.log('  That code was not accepted; try again.')
     return (await prompt.ask(`  Enter the ${codeLength}-digit code: `)).trim()
   },
+  [PromptKind.PairingCode]: async (prompt, { deviceName, retry }) => {
+    if (retry) console.log(`  Wrong code; ${deviceName} shows a new one now.`)
+    return (await prompt.ask(`  Code shown on ${deviceName}: `)).trim()
+  },
   [PromptKind.ChooseTeam]: async (prompt, { teams }) => {
     const labels = teams.map(
       (team) => `${team.name} [${team.id}]${team.isFree ? ' (free)' : ''}`

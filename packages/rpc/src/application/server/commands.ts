@@ -44,7 +44,9 @@ const commandStarters = (
   placePairing: async (input, options) =>
     engine.placePairing(compact(input), typed(options)),
   signIn: async (input, options) =>
-    engine.signIn(compact(input), typed(options))
+    engine.signIn(compact(input), typed(options)),
+  pairByCode: async (input, options) =>
+    engine.pairByCode(compact(input), typed(options))
 })
 
 export const createCommandStarter = (

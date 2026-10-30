@@ -54,7 +54,8 @@ const uuidOf = (bytes: Uint8Array): string => {
     .toUpperCase()
 }
 
-const newHostIdentity = (): HostIdentity => {
+/** A new identity for this computer, for one device's pairing. */
+export const newHostIdentity = (): HostIdentity => {
   const privateKey = ed25519.utils.randomSecretKey()
   const identifier = uuidOf(randomBytes(16))
 
@@ -138,7 +139,7 @@ export const ensureRemotePairing = async (
     }
   }
   const host = newHostIdentity()
-  const record = await withChannel(session, (channel) =>
+  const { record } = await withChannel(session, (channel) =>
     pairSetup(channel, {
       host,
       randomBytes,

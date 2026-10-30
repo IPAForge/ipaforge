@@ -3,6 +3,7 @@
 import type { ReactNode } from 'react'
 
 import { PromptKind } from '@ipaforge/rpc'
+import { PairingCodePrompt } from '@ui/components/prompts/pairing-code-prompt.tsx'
 import { PasswordPrompt } from '@ui/components/prompts/password-prompt.tsx'
 import type { PromptProps } from '@ui/components/prompts/prompt-props.ts'
 import { TwoFactorCodePrompt } from '@ui/components/prompts/two-factor-code-prompt.tsx'
@@ -22,5 +23,6 @@ export const askedPrompts = {
   [PromptKind.RevokeCertificate]: RevokeCertificatePrompt,
   [PromptKind.ChooseAppToRemove]: RemoveAppPrompt,
   [PromptKind.ShareCertificate]: ShareCertificatePrompt,
-  [PromptKind.ChoosePairingApps]: PairingAppsPrompt
+  [PromptKind.ChoosePairingApps]: PairingAppsPrompt,
+  [PromptKind.PairingCode]: PairingCodePrompt
 } satisfies Record<PromptKind, (props: PromptProps<never>) => ReactNode>

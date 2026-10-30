@@ -18,6 +18,9 @@
 //   pnpm --filter @ipaforge/desktop device-probe tunnel-install [<signed.ipa>] [--mb 100] [--compare]
 //     (iOS 17.4+: a timed upload, and an install, with every service through the tunnel; --compare: and classic)
 //   pnpm --filter @ipaforge/desktop device-probe rp-tunnel [--mb 20]   (iOS 17.4+: the tunnel over Wi-Fi, and an upload through it)
+//   pnpm --filter @ipaforge/desktop device-probe tv-browse   (Apple TVs and Vision Pros showing their pairing screen)
+//   pnpm --filter @ipaforge/desktop device-probe tv-pair [--name <name>]
+//     (pairs one by the code it shows, then opens a session through its tunnel; the pairing lasts this run only)
 //
 // --direct (any device command): reach the device straight over Wi-Fi only, skipping the cable and usbmuxd. The
 // devices to look for are usbmuxd's and --udid; their pair records come from usbmuxd.
