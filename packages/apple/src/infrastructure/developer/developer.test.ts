@@ -134,7 +134,7 @@ describe('developer client', () => {
 describe('response parsing', () => {
   const skip = () => {}
 
-  it('clamps negative and missing App ID quantities to zero, saying a negative one is unreliable', () => {
+  it('clamps a negative App ID quantity to zero, saying a negative one is unreliable', () => {
     expect(
       toAppIds(
         createDict([
@@ -149,8 +149,12 @@ describe('response parsing', () => {
       available: 0,
       isUnreliable: true
     })
+  })
+
+  it('treats a missing App ID quantity, which a paid team has, as no limit', () => {
     expect(toAppIds(createDict([['appIds', []]]), skip).quota).toEqual({
-      available: 0
+      available: 0,
+      isUnlimited: true
     })
   })
 
