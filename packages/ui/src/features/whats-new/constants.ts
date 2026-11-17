@@ -41,6 +41,45 @@ export const noteKindDots = {
  */
 export const RELEASE_NOTES: readonly ReleaseNotes[] = [
   {
+    version: '0.1.0-alpha.8',
+    date: '2026-11-17',
+    lead: 'A setup guide for your first launch, Wi-Fi installs without a cable, Apple TV and Vision Pro pairing, and a fix for paid teams.',
+    items: [
+      {
+        kind: 'new',
+        title: 'Setup guide and tour',
+        text: 'The first launch checks this computer and your iPhone, signs you in and installs SideStore, then shows you around.'
+      },
+      {
+        kind: 'new',
+        title: 'Wi-Fi without usbmuxd',
+        text: 'An iPhone this computer has used before is found on your network and reached directly, also on Linux without usbmuxd.'
+      },
+      {
+        kind: 'new',
+        title: 'iOS 17.4+ tunnel',
+        text: 'Installs and other iPhone tasks can run through Apple’s device tunnel over USB and Wi-Fi, with no admin rights.'
+      },
+      {
+        kind: 'new',
+        title: 'Apple TV and Vision Pro',
+        text: 'Pair them from the Devices page with the code they show. Installing to them comes later.'
+      },
+      {
+        kind: 'changed',
+        text: 'Expired apps whose profile iOS removed are still listed on the Apps page.'
+      },
+      {
+        kind: 'fixed',
+        text: 'Installing on a paid team no longer stops with the 10 App IDs limit.'
+      },
+      {
+        kind: 'fixed',
+        text: 'An expired app whose profile iOS removed can be refreshed, and one whose App ID Apple removed is installed again.'
+      }
+    ]
+  },
+  {
     version: '0.1.0-alpha.7',
     date: '2026-10-21',
     lead: 'The Developer Portal, pairing files for every app, signed .ipa files you keep, and your certificate as a .p12.',
