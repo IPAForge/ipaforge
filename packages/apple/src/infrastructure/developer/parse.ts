@@ -190,8 +190,10 @@ export const toAppIds = (
     appIds: parseList(response.appIds, appIdSchema, toAppId, onSkip),
     quota: compact({
       max: max.success ? max.data : undefined,
-      // Apple sometimes reports a negative or missing quantity; never let that turn into "plenty".
+      // Apple sometimes reports a negative quantity; never let that turn into "plenty".
       available: available.success ? Math.max(0, available.data) : 0,
+      // Paid teams have no App ID limit and come without a quantity at all.
+      isUnlimited: response.availableQuantity === undefined ? true : undefined,
       // A negative count is Apple's own glitch: it's said, so the user can still try.
       isUnreliable: available.success && available.data < 0 ? true : undefined
     })

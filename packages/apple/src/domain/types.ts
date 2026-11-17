@@ -123,6 +123,8 @@ export type AppIdQuota = {
   readonly max?: number
   /** Never negative (Apple sometimes reports negative numbers). */
   readonly available: number
+  /** Apple sent no quantity, as it does for a paid team: there is no limit. */
+  readonly isUnlimited?: boolean
   /** Apple reported a negative number left: its count can't be trusted (it may still create App IDs). */
   readonly isUnreliable?: boolean
 }

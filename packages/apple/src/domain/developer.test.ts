@@ -57,6 +57,16 @@ describe('App ID budget', () => {
     expect(plan.create).toHaveLength(5)
     expect(plan.enough).toBe(false)
   })
+
+  it('never runs out of App IDs on a team without a limit', () => {
+    const plan = planAppIds(
+      ['a.b.c', 'a.b.d'],
+      [],
+      { available: 0, isUnlimited: true },
+      now
+    )
+    expect(plan.enough).toBe(true)
+  })
 })
 
 describe('developer result codes', () => {
