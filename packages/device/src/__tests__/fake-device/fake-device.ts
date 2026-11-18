@@ -130,6 +130,8 @@ export type FakeDevice = {
   tunnel: boolean
   /** Services lockdown's StartService refuses (`InvalidService`), though their shims in the tunnel work. */
   readonly refusedServices: Set<string>
+  /** Services lockdown's StartService never answers, as from a device that stays silent on them. */
+  readonly silentServices: Set<string>
   /** Every tunnel opened, in order. */
   readonly tunnels: FakeTunnel[]
   /** How the next tunnels behave (TCP peer, refused check-ins…). */
@@ -238,6 +240,7 @@ export const createFakeDevice = async (
     options.tunnel ??
     supportsRemotePairing(parseVersion(options.productVersion ?? '18.2')),
   refusedServices: new Set(),
+  silentServices: new Set(),
   tunnels: [],
   tunnelOptions: {}
 })
@@ -404,6 +407,7 @@ const startService: LockdownHandler = async ({
   openPort
 }) => {
   const service = String(message.Service)
+  if (device.silentServices.has(service)) return new Promise<void>(() => {})
   if (!isService(service, device)) return fail('InvalidService')
   await answer([
     ['Port', openPort(service)],

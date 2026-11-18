@@ -157,36 +157,72 @@ export const ensureRemotePairing = async (
   return { record, how: 'created' }
 }
 
+/** Devices whose remote pairing never answered: not tried again while this app runs. */
+const silentDevices = new WeakMap<DeviceContext, Set<string>>()
+
 /**
  * By cable, makes the remote pairing (iOS 17.4+) when none is saved, so the device can later be opened through the
  * tunnel on Wi-Fi. Best-effort: a device that would ask the user first is left alone, and it never fails the session.
+ * Returns `stuck` when the device didn't answer in time: its lockdown connection is waiting on that answer, so the
+ * caller must drop it and open another.
  */
 export const prepareRemotePairing = async (
   ctx: DeviceContext,
   session: DeviceSession
-): Promise<void> => {
+): Promise<'done' | 'stuck'> => {
   const { device } = session
-  const { config, logger } = ctx.deps
-  if (!config.makeRemotePairing || device.connectionType !== 'usb') return
+  const { config, logger, sleep } = ctx.deps
+  if (!config.makeRemotePairing || device.connectionType !== 'usb')
+    return 'done'
+  if (silentDevices.get(ctx)?.has(device.udid)) return 'done'
+  const stop = new AbortController()
+  const timeout = sleep(config.remotePairingPrepareTimeoutMs, stop.signal).then(
+    () => 'late' as const,
+    () => 'done' as const
+  )
+  // Once the time is up the attempt may still end later, in an error nobody waits for.
+  const attempt = make(ctx, session).then(() => 'done' as const)
+  attempt.catch(() => undefined)
   try {
-    const version = await session.getValue('ProductVersion')
-    if (
-      typeof version !== 'string' ||
-      !supportsRemotePairing(parseVersion(version)) ||
-      (await savedRecord(ctx, device.udid))
-    )
-      return
-    await ensureRemotePairing(ctx, session, {
-      onAwaitingConsent: () => {
-        throw new IPAForgeError(ErrorCode.PairingDenied, {
-          message: 'the device asks the user first'
-        })
-      }
-    })
+    if ((await Promise.race([attempt, timeout])) === 'late') {
+      logger.warn(
+        'remote pairing for Wi-Fi skipped: the device did not answer',
+        {
+          device: shortUdid(device.udid)
+        }
+      )
+      const known = silentDevices.get(ctx) ?? new Set<string>()
+      known.add(device.udid)
+      silentDevices.set(ctx, known)
+      return 'stuck'
+    }
   } catch (error) {
     logger.warn('remote pairing for Wi-Fi skipped', {
       device: shortUdid(device.udid),
       code: toIPAForgeError(error).code
     })
+  } finally {
+    stop.abort()
   }
+  return 'done'
+}
+
+const make = async (
+  ctx: DeviceContext,
+  session: DeviceSession
+): Promise<void> => {
+  const version = await session.getValue('ProductVersion')
+  if (
+    typeof version !== 'string' ||
+    !supportsRemotePairing(parseVersion(version)) ||
+    (await savedRecord(ctx, session.device.udid))
+  )
+    return
+  await ensureRemotePairing(ctx, session, {
+    onAwaitingConsent: () => {
+      throw new IPAForgeError(ErrorCode.PairingDenied, {
+        message: 'the device asks the user first'
+      })
+    }
+  })
 }

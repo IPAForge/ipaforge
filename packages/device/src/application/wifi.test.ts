@@ -9,6 +9,7 @@ import {
   WIFI_CONNECTIONS_KEY
 } from '@device/domain/constants.ts'
 import { parsePairRecord } from '@device/domain/pairing/pair-record.ts'
+import { REMOTE_PAIRING_SERVICE } from '@device/domain/remote-pairing/constants.ts'
 import {
   remotePairingSecretKey,
   serializeRemotePairing
@@ -304,6 +305,19 @@ describe('Wi-Fi on iOS 17 and later', () => {
     // The fake device has no remote pairing service: the attempt is made, and only logged.
     expect(startServices(rig)).toBeGreaterThan(before)
     expect(logs).toContain('remote pairing for Wi-Fi skipped')
+    await handle.close()
+  })
+
+  it('goes on without the remote pairing when the device never answers for it', async () => {
+    const rig = await createRig({ productVersion: '26.6.1' })
+    rig.device.silentServices.add(REMOTE_PAIRING_SERVICE)
+    const { manager, logs } = loggedManager(rig, true)
+
+    const handle = await manager.open(rig.device.udid)
+    expect(logs).toContain(
+      'remote pairing for Wi-Fi skipped: the device did not answer'
+    )
+    expect((await handle.check()).info.productVersion).toBe('26.6.1')
     await handle.close()
   })
 

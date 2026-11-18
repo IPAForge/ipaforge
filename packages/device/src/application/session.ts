@@ -183,6 +183,10 @@ export const openSession = async (
   ctx.deps.logger.info('session opened', { device: shortUdid(device.udid) })
   await prepareWifi(ctx, device, started.lockdown)
   const session = sessionFor(ctx, device, pairRecord, started, options.route)
-  await prepareRemotePairing(ctx, session)
+  if ((await prepareRemotePairing(ctx, session)) === 'stuck') {
+    // The device left lockdown waiting on the remote pairing: that connection is of no use, start over without it.
+    await started.lockdown.close().catch(() => undefined)
+    return openSession(ctx, device, options)
+  }
   return session
 }
