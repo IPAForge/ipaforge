@@ -24,6 +24,8 @@ export type DeviceConfig = {
    * serves its services only through the tunnel, and the tunnel needs it.
    */
   readonly makeRemotePairing: boolean
+  /** How long making that remote pairing by cable may take before the session goes on without it. */
+  readonly remotePairingPrepareTimeoutMs: number
   /** How long a search for devices on the network listens for answers. */
   readonly networkBrowseMs: number
   /** How often a running search asks again; a device not heard from for three rounds is gone. */
@@ -58,6 +60,7 @@ export const DEFAULT_DEVICE_CONFIG: DeviceConfig = {
   afcReadChunkBytes: 1024 * 1024,
   enableWifiConnections: true,
   makeRemotePairing: true,
+  remotePairingPrepareTimeoutMs: 8000,
   networkBrowseMs: 3000,
   networkQueryIntervalMs: 10_000,
   // Measured over USB (iOS 26, 100 MiB to PublicStaging): MTU 1500 29.8 MiB/s, 6000 33.7, 8000 34.2.

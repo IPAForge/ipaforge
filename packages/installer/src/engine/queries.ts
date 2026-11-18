@@ -36,9 +36,27 @@ import { planInstall } from '@installer/engine/plan.ts'
 import type { EngineQueries } from '@installer/engine/types.ts'
 import type { InstallerDeps } from '@installer/types.ts'
 import type { DeviceCheck } from '@ipaforge/device'
-import { compact } from '@ipaforge/kernel'
+import { compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
-const deviceStatus = async (
+/** How long reading a device's status may take: past it the answer is an error the user can retry, not a spinner. */
+const STATUS_TIMEOUT_MS = 30_000
+
+/** Rejects with `device.timeout` after `ms`, unless `work` is done by then. */
+const within = <T>(work: Promise<T>, ms: number): Promise<T> =>
+  new Promise<T>((resolve, reject) => {
+    const timer = setTimeout(
+      () =>
+        reject(
+          new IPAForgeError(ErrorCode.DeviceTimeout, {
+            message: 'the device did not answer in time'
+          })
+        ),
+      ms
+    )
+    work.then(resolve, reject).finally(() => clearTimeout(timer))
+  })
+
+const readStatus = async (
   deps: InstallerDeps,
   udid: string,
   autoPair: boolean
@@ -49,6 +67,19 @@ const deviceStatus = async (
   } finally {
     await handle.close()
   }
+}
+
+// Pairing waits for the user to tap Trust, so only the plain read is bounded.
+const deviceStatus = (
+  deps: InstallerDeps,
+  udid: string,
+  autoPair: boolean
+): Promise<DeviceCheck> => {
+  const read = readStatus(deps, udid, autoPair)
+  if (autoPair) return read
+  read.catch(() => undefined)
+
+  return within(read, STATUS_TIMEOUT_MS)
 }
 
 export const createEngineQueries = (deps: InstallerDeps): EngineQueries => ({
