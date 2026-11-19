@@ -41,6 +41,25 @@ export const noteKindDots = {
  */
 export const RELEASE_NOTES: readonly ReleaseNotes[] = [
   {
+    version: '0.1.0-alpha.9',
+    date: '2026-11-19',
+    lead: 'A fix for the device check that could stay on "Checking the device..." for good.',
+    items: [
+      {
+        kind: 'fixed',
+        text: 'A device no longer stays on "Checking the device..." when it never answers the remote pairing.'
+      },
+      {
+        kind: 'fixed',
+        text: 'Reading a device’s status ends with an error and Check again after 30 seconds.'
+      },
+      {
+        kind: 'changed',
+        text: 'Dependencies updated to close security alerts.'
+      }
+    ]
+  },
+  {
     version: '0.1.0-alpha.8',
     date: '2026-11-17',
     lead: 'A setup guide for your first launch, Wi-Fi installs without a cable, Apple TV and Vision Pro pairing, and a fix for paid teams.',
