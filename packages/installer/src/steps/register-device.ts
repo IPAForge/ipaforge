@@ -1,4 +1,5 @@
 import type { FlowRuntime } from '@installer/application/runtime.ts'
+import { devicePlatform } from '@installer/domain/device-platform.ts'
 import { StepLabel } from '@installer/domain/labels.ts'
 import { StepWeight } from '@installer/domain/step-weights.ts'
 import type { AccountState } from '@installer/domain/types.ts'
@@ -21,10 +22,12 @@ export const registerDeviceStep = <S extends AccountState>(
     const device = required(state.device, 'device')
     const team = required(state.team, 'team')
     const udid = device.udid.toLowerCase()
-    const listed = (await developer.devices(team)).some(
+    const platform = devicePlatform(device)
+    const listed = (await developer.devices(team, platform)).some(
       (registered) => registered.udid.toLowerCase() === udid
     )
-    if (!listed) await developer.registerDevice(team, device.udid, device.name)
+    if (!listed)
+      await developer.registerDevice(team, device.udid, device.name, platform)
     context.detail({ kind: 'device-registration', isNew: !listed })
     return undefined
   }

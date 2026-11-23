@@ -1,8 +1,8 @@
-import type { AnisetteData } from '@apple/domain/types.ts'
+import type { AnisetteData, DevicePlatform } from '@apple/domain/types.ts'
 import type { PlistValue } from '@ipaforge/kernel'
 
-/** `ios/` resources (devices, certificates, App IDs, …) or team-level actions (`listTeams`). */
-export type DeveloperPlatform = 'ios' | 'any'
+/** `ios/` or `tvos/` resources (devices, certificates, App IDs, …), or team-level actions (`listTeams`). */
+export type DeveloperPlatform = DevicePlatform | 'any'
 
 /** Request fields, in the order they are sent. */
 export type DeveloperFields = readonly (readonly [string, PlistValue])[]

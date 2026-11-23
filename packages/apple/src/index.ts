@@ -73,6 +73,7 @@ export type {
   AppToken,
   ClientIdentity,
   DevelopmentCertificate,
+  DevicePlatform,
   ProvisioningProfile,
   RegisteredDevice,
   Team

@@ -4,7 +4,7 @@
 import type { AppTokenService } from '@apple/application/app-token.ts'
 import { anisetteForSession } from '@apple/application/session-anisette.ts'
 import type { AnisetteService } from '@apple/application/types.ts'
-import type { AppleSession, Team } from '@apple/domain/types.ts'
+import type { AppleSession, DevicePlatform, Team } from '@apple/domain/types.ts'
 import { developerRequest } from '@apple/infrastructure/developer/client.ts'
 import type {
   DeveloperFields,
@@ -21,11 +21,12 @@ export type DeveloperContext = {
     platform: DeveloperPlatform,
     fields?: DeveloperFields
   ) => Promise<PlistDict>
-  /** An `ios/` request on behalf of `team` (`teamId` is sent first). */
+  /** An `ios/` request (or `tvos/` for an Apple TV) on behalf of `team` (`teamId` is sent first). */
   readonly teamRequest: (
     team: Team,
     action: string,
-    fields?: DeveloperFields
+    fields?: DeveloperFields,
+    platform?: DevicePlatform
   ) => Promise<PlistDict>
   /** A callback that logs a skipped malformed `what` entry (only its keys, never values). */
   readonly skip: (what: string) => (entry: unknown) => void
@@ -53,8 +54,8 @@ export const createDeveloperContext = (
   return {
     deps,
     request,
-    teamRequest: (team, action, fields = []) =>
-      request(action, 'ios', [['teamId', team.id], ...fields]),
+    teamRequest: (team, action, fields = [], platform = 'ios') =>
+      request(action, platform, [['teamId', team.id], ...fields]),
     skip: (what) => (entry) =>
       deps.logger.warn(`skipped a malformed ${what} entry`, {
         keys: entry && typeof entry === 'object' ? Object.keys(entry) : []

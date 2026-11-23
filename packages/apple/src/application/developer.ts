@@ -40,6 +40,7 @@ import type {
   AppIdQuota,
   AppleSession,
   DevelopmentCertificate,
+  DevicePlatform,
   ProvisioningProfile,
   RegisteredDevice,
   Team
@@ -58,12 +59,14 @@ export type {
 
 export type DeveloperServices = {
   teams(): Promise<Team[]>
-  devices(team: Team): Promise<RegisteredDevice[]>
-  /** Registers the device unless it already is. */
+  /** The team's registered devices under `platform` (`ios` by default; Apple TVs are listed under `tvos`). */
+  devices(team: Team, platform?: DevicePlatform): Promise<RegisteredDevice[]>
+  /** Registers the device unless it already is (`tvos` for an Apple TV). */
   registerDevice(
     team: Team,
     udid: string,
-    name: string
+    name: string,
+    platform?: DevicePlatform
   ): Promise<RegisteredDevice>
   certificates(team: Team): Promise<DevelopmentCertificate[]>
   createCertificate(
@@ -86,7 +89,12 @@ export type DeveloperServices = {
   appGroups(team: Team): Promise<AppGroup[]>
   ensureAppGroup(team: Team, identifier: string): Promise<AppGroup>
   assignAppGroup(team: Team, appId: AppId, group: AppGroup): Promise<void>
-  profile(team: Team, appId: AppId): Promise<ProvisioningProfile>
+  /** The App ID's profile for the devices registered under `platform` (`ios` by default). */
+  profile(
+    team: Team,
+    appId: AppId,
+    platform?: DevicePlatform
+  ): Promise<ProvisioningProfile>
   /** Plans App IDs for `bundles` without changing anything (for the UI's quota display). */
   planAppIds(team: Team, identifiers: readonly string[]): Promise<AppIdPlan>
   provisionApp(request: ProvisionRequest): Promise<ProvisionResult>
@@ -102,8 +110,9 @@ export const createDeveloperServices = (
 
   return {
     teams: () => listTeams(ctx),
-    devices: (team) => listDevices(ctx, team),
-    registerDevice: (team, udid, name) => registerDevice(ctx, team, udid, name),
+    devices: (team, platform) => listDevices(ctx, team, platform),
+    registerDevice: (team, udid, name, platform = 'ios') =>
+      registerDevice(ctx, team, { udid, name, platform }),
     certificates: (team) => listCertificates(ctx, team),
     createCertificate: (team, machineName) =>
       createCertificate(ctx, team, machineName),
@@ -118,7 +127,8 @@ export const createDeveloperServices = (
     ensureAppGroup: (team, identifier) => ensureAppGroup(ctx, team, identifier),
     assignAppGroup: (team, appId, group) =>
       assignAppGroup(ctx, team, appId, group),
-    profile: (team, appId) => downloadProfile(ctx, team, appId),
+    profile: (team, appId, platform) =>
+      downloadProfile(ctx, team, appId, platform),
     planAppIds: (team, identifiers) => planTeamAppIds(ctx, team, identifiers),
     provisionApp: (request) => provisionApp(ctx, request)
   }

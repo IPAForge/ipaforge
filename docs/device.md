@@ -76,7 +76,9 @@ An Apple TV or Apple Vision Pro has no cable to trust a computer with, so it's p
 
 `DeviceManager.forgetCodePaired` (Forget… on the Devices page) deletes the pairing of a device paired by code, and nothing else; the apps on the device stay. After the device's OS is updated it no longer accepts the pairing (`device.pairing_denied`): pair it again.
 
-Not yet: devices that give only an IPv6 link-local address (IPAForge searches and connects over IPv4), and installing to them (11.3b: the developer services and the signer need to know tvOS and visionOS). Until then, Install and Preload stay off for an Apple TV or Vision Pro in use and say so.
+Apps go to them from the Preload page, through that session (11.3b). An Apple TV takes only tvOS apps, and a Vision Pro takes visionOS, iPhone and iPad apps; an app the device can't run is refused before any request to Apple ([Code Signing](signing.md)). An Apple TV is registered and provisioned under the developer services' `tvos/` resources ([Apple Account](apple-account.md#developer-services)). SideStore runs on iPhone and iPad only, so the Install page stays off for an Apple TV or Vision Pro and says to use Preload. None of this has been tried with a real Apple TV or Vision Pro yet.
+
+Not yet: devices that give only an IPv6 link-local address (IPAForge searches and connects over IPv4).
 
 ## What it can do
 

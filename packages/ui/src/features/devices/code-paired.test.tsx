@@ -92,14 +92,14 @@ describe('Apple TV and Vision Pro on the Devices page', () => {
     ).toBeDefined()
   })
 
-  it("doesn't install to an Apple TV yet, and says so", async () => {
+  it("doesn't install SideStore to an Apple TV, and points to Preload", async () => {
     await renderApp('/', {
       scenario: 'paired-tv',
       preferences: { [selectionKeys.device]: FAKE_TV }
     })
 
     expect(
-      await screen.findByText(t('install.readiness.notYetTv'))
+      await screen.findByText(t('install.readiness.noSideStore'))
     ).toBeDefined()
     expect(
       screen
@@ -110,5 +110,15 @@ describe('Apple TV and Vision Pro on the Devices page', () => {
         })
         .hasAttribute('disabled')
     ).toBe(true)
+  })
+
+  it('lets Preload install to an Apple TV', async () => {
+    await renderApp('/preload', {
+      scenario: 'paired-tv',
+      preferences: { [selectionKeys.device]: FAKE_TV }
+    })
+
+    expect(await screen.findByText(t('preload.readiness.empty'))).toBeDefined()
+    expect(screen.queryByText(t('install.readiness.noSideStore'))).toBeNull()
   })
 })

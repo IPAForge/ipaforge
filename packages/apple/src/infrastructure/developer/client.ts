@@ -39,11 +39,15 @@ export const DEVELOPER_PROTOCOL = 'QH65B2'
 const HTTP_UNAUTHORIZED = 401
 const HTTP_FORBIDDEN = 403
 
+/** `ios/`, `tvos/`, or nothing for team-level actions. */
+const platformPath = (platform: DeveloperPlatform): string =>
+  platform === 'any' ? '' : platform + '/'
+
 export const developerUrl = (
   action: string,
   platform: DeveloperPlatform
 ): string =>
-  `${DEVELOPER_BASE}${platform === 'ios' ? 'ios/' : ''}${action}.action?clientId=${DEVELOPER_CLIENT_ID}`
+  `${DEVELOPER_BASE}${platformPath(platform)}${action}.action?clientId=${DEVELOPER_CLIENT_ID}`
 
 const requestHeaders = (
   deps: AppleDeps,

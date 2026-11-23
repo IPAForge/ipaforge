@@ -1,4 +1,5 @@
 import type { FlowRuntime } from '@installer/application/runtime.ts'
+import { devicePlatform } from '@installer/domain/device-platform.ts'
 import { StepLabel } from '@installer/domain/labels.ts'
 import { StepWeight } from '@installer/domain/step-weights.ts'
 import type { InstallState } from '@installer/domain/types.ts'
@@ -29,7 +30,11 @@ export const provisionStep = (
     const { profiles } = await developer.provisionApp(
       compact({
         team: required(state.team, 'team'),
-        device: { udid: device.udid, name: device.name },
+        device: {
+          udid: device.udid,
+          name: device.name,
+          platform: devicePlatform(device)
+        },
         bundles: identity.bundles,
         appGroup: identity.appGroup,
         tryAnyway: state.tryAnyway,
