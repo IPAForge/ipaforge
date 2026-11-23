@@ -288,7 +288,7 @@ Nothing needs registering beyond the JSON file and `status.json`: the build pick
 2. Add `"<code>": "draft"` to `src/locales/status.json`.
 3. If the language is written right to left and isn't Arabic, Hebrew, Persian or Urdu, add it to `RTL_LANGUAGES` in `src/i18n/languages/languages.ts`.
 
-No test lists the languages: they read `status.json`. For ipaforge.com, add the same code's `src/i18n/<code>.json` in [IPAForge/ipaforge.github.io](https://github.com/IPAForge/ipaforge.github.io): its Troubleshooting page then uses this file's error texts.
+No test lists the languages: they read `status.json`. Vitest keeps transformed modules in `node_modules/.vitest-cache`, and a cached `locale-bundles.ts` still lists the old files: after adding a language file, delete that folder before running the tests locally (CI starts without it). For ipaforge.com, add the same code's `src/i18n/<code>.json` in [IPAForge/ipaforge.github.io](https://github.com/IPAForge/ipaforge.github.io): its Troubleshooting page then uses this file's error texts.
 
 ### Drafts and completion
 
