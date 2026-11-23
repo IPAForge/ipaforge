@@ -9,15 +9,24 @@ import {
   PSEUDO_LOCALE,
   shippedLanguages
 } from '@ui/i18n/languages/languages.ts'
+import status from '@ui/locales/status.json'
+
+// Read from status.json, so adding a language changes no test.
+const STATUSES: Readonly<Record<string, string>> = status
+const listed = Object.keys(STATUSES)
 
 describe('languages', () => {
-  it('ships the languages listed in status.json, and the pseudo-locale in dev', () => {
-    expect(shippedLanguages).toEqual(['en', 'de', 'ro', 'ru', 'ar', 'ja'])
+  it('ships the languages listed in status.json, English first, and the pseudo-locale in dev', () => {
+    expect(shippedLanguages).toEqual(listed)
+    expect(shippedLanguages[0]).toBe('en')
     expect(availableLanguages).toEqual([...shippedLanguages, PSEUDO_LOCALE])
   })
 
-  it('marks no language as a draft once every translation is reviewed', () => {
-    expect(shippedLanguages.filter(isDraftLanguage)).toEqual([])
+  it('marks as drafts exactly the languages status.json calls drafts', () => {
+    expect(shippedLanguages.filter(isDraftLanguage)).toEqual(
+      listed.filter((language) => STATUSES[language] === 'draft')
+    )
+    expect(isDraftLanguage('en')).toBe(false)
     expect(isDraftLanguage(PSEUDO_LOCALE)).toBe(false)
   })
 
@@ -35,7 +44,7 @@ describe('languages', () => {
   })
 
   it('names each language in itself, capitalised', () => {
-    expect(shippedLanguages.map(nativeName)).toEqual([
+    expect(['en', 'de', 'ro', 'ru', 'ar', 'ja'].map(nativeName)).toEqual([
       'English',
       'Deutsch',
       'Română',

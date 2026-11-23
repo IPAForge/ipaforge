@@ -288,9 +288,11 @@ Nothing needs registering beyond the JSON file and `status.json`: the build pick
 2. Add `"<code>": "draft"` to `src/locales/status.json`.
 3. If the language is written right to left and isn't Arabic, Hebrew, Persian or Urdu, add it to `RTL_LANGUAGES` in `src/i18n/languages/languages.ts`.
 
+No test lists the languages: they read `status.json`. For ipaforge.com, add the same code's `src/i18n/<code>.json` in [IPAForge/ipaforge.github.io](https://github.com/IPAForge/ipaforge.github.io): its Troubleshooting page then uses this file's error texts.
+
 ### Drafts and completion
 
-`status.json` gives every language a status: `source` (English), `draft` or `reviewed`. Machine-drafted translations start as `draft`, and the language picker shows a small "draft" label next to them. A language loses the label once its whole file has been reviewed and set to `reviewed`. Today every language is `reviewed`, so the picker shows no labels.
+`status.json` gives every language a status: `source` (English), `draft` or `reviewed`. Machine-drafted translations start as `draft`, and the language picker shows a small "draft" label next to them. A language loses the label once its whole file has been reviewed and set to `reviewed`.
 
 `pnpm check:locales` (`scripts/check-locales.ts`, part of `pnpm verify` and CI) fails on:
 
