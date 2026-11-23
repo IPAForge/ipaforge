@@ -105,6 +105,7 @@ ipaforge/
 | Engine RPC | docs/rpc.md | Engine ⇄ UI message protocol, run streaming, checkpoints, error transport, Electron adapter |
 | Roadmap | docs/roadmap.md | Phases with links to plans |
 | Contributing | docs/contributing.md | PR rules, conventions, clean-room policy |
+| Translations | docs/translations.md | Weblate: what is translated, how it reaches main, the project's settings |
 | Code of Conduct | docs/CODE_OF_CONDUCT.md | Contributor Covenant 2.1 |
 | Security Policy | docs/SECURITY.md | Private vulnerability reporting |
 | Signer format spec | docs/design/signer-spec.md | Byte-level iOS code-signing reference |
