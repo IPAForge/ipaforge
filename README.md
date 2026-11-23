@@ -126,6 +126,7 @@ The core packages are platform-independent: they never import Node.js, Electron 
 | [User Interface](docs/ui.md) | Running the UI, structure, themes, translations, styling rules |
 | [Roadmap](docs/roadmap.md) | Phases from foundation to 1.0 |
 | [Contributing](docs/contributing.md) | Pull request rules and conventions |
+| [Translations](docs/translations.md) | Translating IPAForge |
 
 ## Contributing
 

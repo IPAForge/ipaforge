@@ -15,7 +15,8 @@
       "!fixtures/**/expected",
       "!scripts/__fixtures__",
       "!tooling/biome/__fixtures__",
-      "!fixtures/**/manifest.json"
+      "!fixtures/**/manifest.json",
+      "!packages/ui/src/locales/*.json"
     ]
   },
   "formatter": {

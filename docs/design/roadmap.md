@@ -145,7 +145,7 @@ Every feature below maps to the phases that deliver it. "Automatic" means the us
     - Italian, Japanese, Korean, Malay, Norwegian, Polish, Portuguese (Brazil, Portugal), Romanian, Russian, Slovak, Spanish (Spain, Latin America), Swedish, Thai, Turkish, Ukrainian, Vietnamese;
     - plus Persian and Urdu, and any language the community adds;
   - process:
-    - community translation through a hosted platform (Weblate's free plan for open-source projects), synced into the repository by pull request;
+    - community translation by pull request: the app's strings, the website's and the install guide; release notes stay English ([translations.md](../translations.md));
     - drafts may be machine-assisted, but are marked for review until a native speaker approves them;
   - CI fails on missing or extra keys and broken placeholders, and reports each language's completion; languages below 90 % are labelled "beta" in the picker
   - publishing reusable packages to npm, from this monorepo (no separate repositories):

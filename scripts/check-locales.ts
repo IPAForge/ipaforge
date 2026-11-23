@@ -1,9 +1,13 @@
 /**
  * Checks the UI's locale files against `en.json`, the source of truth:
- *  - `status.json` lists exactly the locale files present, each as "source", "draft" or "reviewed";
- *  - no language misses a key of `en.json` or has a key `en.json` lacks;
+ *  - every language listed in `status.json` has its file, each as "source", "draft" or "reviewed";
+ *  - no language has a key `en.json` lacks;
  *  - every message is valid ICU MessageFormat and uses the same arguments (name and type) as English;
- * then reports each language's completion (non-empty messages; an empty one falls back to English).
+ * then reports each language's completion (non-empty messages; a missing or empty one falls back to English).
+ *
+ * Translations can land as far as they are done: a missing message is not a problem, and a file that `status.json`
+ * doesn't list yet (a language just started) is reported as "not shipped". The app offers only the languages
+ * `status.json` lists.
  *
  * Usage: pnpm check:locales [--dir <locales dir>]
  */
@@ -111,15 +115,6 @@ const checkStatus = (
         detail: `no ${language}.json`
       })
   }
-  for (const language of files) {
-    if (!statuses.has(language)) {
-      issues.push({
-        language,
-        problem: 'unlisted-file',
-        detail: `${language}.json is not listed in ${STATUS_FILE}`
-      })
-    }
-  }
   if (statuses.get(SOURCE) !== 'source') {
     issues.push({
       language: SOURCE,
@@ -172,15 +167,6 @@ const checkLanguage = (
 ): Issue[] => {
   const isSource = language === SOURCE
   const issues: Issue[] = []
-  for (const key of english.keys()) {
-    if (!messages.has(key))
-      issues.push({
-        language,
-        key,
-        problem: 'missing-key',
-        detail: `missing (in ${SOURCE})`
-      })
-  }
   for (const [key, text] of messages) {
     if (!english.has(key)) {
       issues.push({
@@ -235,7 +221,7 @@ export const checkLocales = (dir: string): LocaleReport => {
     issues.push(...checkLanguage(language, messages, english))
     completion.push({
       language,
-      status: statuses.get(language) ?? 'unlisted',
+      status: statuses.get(language) ?? 'not shipped',
       translated: countTranslated(messages, english),
       total: english.size
     })

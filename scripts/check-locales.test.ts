@@ -34,6 +34,16 @@ describe('checkLocales', () => {
     ])
   })
 
+  it('passes a partial language, and a file status.json does not list yet (a language still being translated)', () => {
+    const { issues, completion } = checkLocales(join(fixtures, 'dirty'))
+    const problems = issues.map((issue) => `${issue.language} ${issue.problem}`)
+    expect(problems).not.toContain('de missing-key')
+    expect(problems).not.toContain('it unlisted-file')
+    expect(completion.find((entry) => entry.language === 'it')?.status).toBe(
+      'not shipped'
+    )
+  })
+
   it('reports every problem with language and key', () => {
     const { issues } = checkLocales(join(fixtures, 'dirty'))
     expect(
@@ -43,9 +53,7 @@ describe('checkLocales', () => {
     ).toEqual([
       'de - status',
       'fr - missing-file',
-      'it - unlisted-file',
       'en - status',
-      'de nav.logs missing-key',
       'de nav.extra extra-key',
       'de devices invalid-icu',
       'de greeting placeholder-mismatch',

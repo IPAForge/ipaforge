@@ -282,24 +282,28 @@ English is bundled; every other language is its own chunk, loaded on demand (see
 
 ### Adding a language
 
+Languages are translated as pull requests ([Translations](translations.md)), each language's file complete or not. A language is offered in the app once `status.json` lists it.
+
 Nothing needs registering beyond the JSON file and `status.json`: the build picks up every `src/locales/*.json` as its own chunk.
 
-1. Copy `en.json` to `<code>.json` (a BCP 47 code such as `fr` or `pt-BR`) and translate it.
-2. Add `"<code>": "draft"` to `src/locales/status.json`.
+1. Add `src/locales/<code>.json` (a BCP 47 code such as `fr` or `pt-BR`) with the translated messages, in the key order of `en.json`.
+2. Once it is mostly translated, add `"<code>": "draft"` to `src/locales/status.json`.
 3. If the language is written right to left and isn't Arabic, Hebrew, Persian or Urdu, add it to `RTL_LANGUAGES` in `src/i18n/languages/languages.ts`.
+
+No test lists the languages: they read `status.json`. Vitest keeps transformed modules in `node_modules/.vitest-cache`, and a cached `locale-bundles.ts` still lists the old files: after adding a language file, delete that folder before running the tests locally (CI starts without it). On ipaforge.com, a language appears once the website has its `src/i18n/<code>.json`; its Troubleshooting page then uses this file's error texts.
 
 ### Drafts and completion
 
-`status.json` gives every language a status: `source` (English), `draft` or `reviewed`. Machine-drafted translations start as `draft`, and the language picker shows a small "draft" label next to them. A language loses the label once its whole file has been reviewed and set to `reviewed`. Today every language is `reviewed`, so the picker shows no labels.
+`status.json` gives every shipped language a status: `source` (English), `draft` or `reviewed`. A language starts as `draft`, and the language picker shows a small "draft" label next to it. It loses the label once a native speaker has reviewed the whole file and set it to `reviewed`. A file `status.json` doesn't list isn't offered.
 
 `pnpm check:locales` (`scripts/check-locales.ts`, part of `pnpm verify` and CI) fails on:
 
-- a language listed in `status.json` without a file, or a file not listed there, or an unknown status;
-- a key missing from a language, or a key `en.json` doesn't have;
+- a language listed in `status.json` without a file, or an unknown status;
+- a key `en.json` doesn't have;
 - a message that isn't valid ICU (including a plural or select without `other`);
 - a message whose arguments differ from English in name or type (`{name}` vs `{nombre}`, `{count, plural}` vs `{count}`).
 
-It then prints each language's completion: the share of `en.json`'s keys with a non-empty message.
+It then prints each language's completion: the share of `en.json`'s keys with a non-empty message (a missing one shows in English), and "not shipped" for a file `status.json` doesn't list.
 
 ### Which language is shown
 
