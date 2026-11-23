@@ -49,7 +49,7 @@ Sideloading tools tend to fail in a few recurring ways. IPAForge is designed aro
 - **Anisette servers your way.** IPAForge picks a working server by itself from SideStore's list, with its own servers as a backup. Or choose one, add your own (a server on your computer included), and test each one.
 - **Works within Apple's limits.** The App ID quota, the three-app limit for free accounts and certificate limits are checked before any change, and each is explained.
 - **Updates itself.** A new version installs when IPAForge opens, after its release signature checks out, and What's new tells you what changed.
-- **Your language, your look.** Six languages, right to left included, and more coming from translators on [Weblate](https://hosted.weblate.org/engage/ipaforge/), and six colour themes in light and dark.
+- **Your language, your look.** Six languages, right to left included, with more coming from translators on [Weblate](https://hosted.weblate.org/engage/ipaforge/). Six colour themes in light and dark.
 
 Sideload signing has been verified against real devices and Apple accounts: Apple's own `codesign --verify --deep --strict` accepts the output, including a full SideStore build signed in about half a second. Details: [Code Signing](docs/signing.md).
 
