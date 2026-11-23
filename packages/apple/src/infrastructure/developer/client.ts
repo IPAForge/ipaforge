@@ -41,7 +41,7 @@ const HTTP_FORBIDDEN = 403
 
 /** `ios/`, `tvos/`, or nothing for team-level actions. */
 const platformPath = (platform: DeveloperPlatform): string =>
-  platform === 'any' ? '' : platform + '/'
+  platform === 'any' ? '' : `${platform}/`
 
 export const developerUrl = (
   action: string,
