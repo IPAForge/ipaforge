@@ -11,6 +11,7 @@ import type {
   AppId,
   AppIdPlan,
   AppIdQuota,
+  DevicePlatform,
   ProvisioningProfile,
   Team
 } from '@apple/domain/types.ts'
@@ -106,13 +107,18 @@ export const assignAppGroup = async (
   ])
 }
 
+/** The team's profile for an App ID, for the devices registered under `platform` (an Apple TV's is `tvos`). */
 export const downloadProfile = async (
   ctx: DeveloperContext,
   team: Team,
-  appId: AppId
+  appId: AppId,
+  platform: DevicePlatform = 'ios'
 ): Promise<ProvisioningProfile> =>
   toProfile(
-    await ctx.teamRequest(team, 'downloadTeamProvisioningProfile', [
-      ['appIdId', appId.id]
-    ])
+    await ctx.teamRequest(
+      team,
+      'downloadTeamProvisioningProfile',
+      [['appIdId', appId.id]],
+      platform
+    )
   )

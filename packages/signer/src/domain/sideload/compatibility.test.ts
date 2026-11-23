@@ -83,7 +83,14 @@ describe('checkCompatibility', () => {
       [[2], 'iPad', true],
       [[1, 2], 'iPad', true],
       [[3], 'iPad', false],
-      [[2], 'AppleTV', true],
+      [[3], 'AppleTV', true],
+      [[1], 'AppleTV', false],
+      [[1, 2], 'AppleTV', false],
+      [[7], 'RealityDevice', true],
+      [[1], 'RealityDevice', true],
+      [[2], 'RealityDevice', true],
+      [[3], 'RealityDevice', false],
+      [[2], 'Watch', true],
       [[2], undefined, true]
     ])('families %j on a %s runs: %s', (deviceFamilies, deviceClass, runs) => {
       const device: TargetDevice =
@@ -98,6 +105,38 @@ describe('checkCompatibility', () => {
               code: ErrorCode.UnsupportedDevice,
               data: { deviceFamilies, deviceClass }
             }
+      )
+    })
+  })
+
+  describe('on a Vision Pro', () => {
+    const VISION = (iosVersion: string): TargetDevice => ({
+      iosVersion,
+      deviceClass: 'RealityDevice'
+    })
+
+    it.each([
+      ['17.0', '1.3', true],
+      ['18.0', '1.3', false],
+      ['18.0', '2.4', true],
+      ['26.0', '2.4', false],
+      ['26.0', '26.1', true]
+    ])(
+      'an iPad app needing iOS %s on visionOS %s runs: %s',
+      (minimumOSVersion, visionOS, runs) => {
+        const problem = checkCompatibility(
+          inspection({ minimumOSVersion, deviceFamilies: [1, 2] }),
+          VISION(visionOS)
+        )
+        expect(problem === undefined).toBe(runs)
+      }
+    )
+
+    it('compares a visionOS app with visionOS itself', () => {
+      const app = inspection({ minimumOSVersion: '2.0', deviceFamilies: [7] })
+      expect(checkCompatibility(app, VISION('2.4'))).toBeUndefined()
+      expect(checkCompatibility(app, VISION('1.3'))?.code).toBe(
+        ErrorCode.UnsupportedIos
       )
     })
   })

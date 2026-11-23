@@ -209,6 +209,55 @@ describe('installApps', () => {
     expect(sharesCertificate(h.signer.calls.signed[0])).toBe(false)
   })
 
+  describe('to an Apple TV', () => {
+    const appleTv = (families: number[]) => {
+      const h = createHarness({ device: { deviceClass: 'AppleTV' } })
+      h.signer.signer.inspect = async () => {
+        const inspection = inspectionFor('com.example.tv')
+
+        return {
+          ...inspection,
+          app: { ...inspection.app, deviceFamilies: families }
+        }
+      }
+      return h
+    }
+
+    it('registers and provisions a tvOS app under tvos', async () => {
+      const h = appleTv([DeviceFamily.AppleTV])
+      const result = await h.engine.installApps(install([file('tv.ipa')]), {
+        onPrompt: scripted()
+      }).result
+
+      expect(result.status).toBe('completed')
+      expect(h.apple.calls.registeredPlatforms).toEqual(['tvos'])
+      expect(h.apple.calls.provisioned[0]?.device.platform).toBe('tvos')
+      expect(h.devices.calls.installs).toHaveLength(1)
+    })
+
+    it('refuses an iPhone app before any Apple call', async () => {
+      const h = appleTv([DeviceFamily.IPhone])
+      const result = await h.engine.installApps(install([file('one.ipa')]), {
+        onPrompt: scripted()
+      }).result
+
+      expect(result.status === 'failed' && result.error.code).toBe(
+        ErrorCode.UnsupportedDevice
+      )
+      expect(h.apple.calls.sessions).toBe(0)
+    })
+  })
+
+  it('provisions an iPhone under ios', async () => {
+    const h = createHarness()
+    await h.engine.installApps(install([file('one.ipa')]), {
+      onPrompt: scripted()
+    }).result
+
+    expect(h.apple.calls.registeredPlatforms).toEqual(['ios'])
+    expect(h.apple.calls.provisioned[0]?.device.platform).toBe('ios')
+  })
+
   it('stops at the inspect step of an app the device cannot run, before any Apple call', async () => {
     const h = createHarness({ device: { deviceClass: 'iPhone' } })
     h.signer.signer.inspect = async (source) => {

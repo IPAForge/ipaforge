@@ -116,7 +116,7 @@
     },
     "readiness": {
       "noDevice": "Connect a device first.",
-      "notYetTv": "Installing to Apple TV and Vision Pro comes in a later version.",
+      "noSideStore": "SideStore runs on iPhone and iPad. Use Preload to install apps on an Apple TV or Vision Pro.",
       "checking": "Checking the device…",
       "device": "Available once the device is ready.",
       "noAccount": "Add an Apple ID first.",
@@ -662,7 +662,7 @@
       },
       "unsupported_device": {
         "title": "Not made for this device",
-        "body": "This app doesn't support this kind of device, for example an iPad-only app on an iPhone. Choose another IPA."
+        "body": "This app doesn't support this kind of device, for example an iPad-only app on an iPhone, or an iPhone app on an Apple TV. Choose another IPA."
       },
       "no_arm64_build": {
         "title": "No build for iPhone or iPad",

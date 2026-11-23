@@ -2,6 +2,7 @@
 // extensions), the new profiles go on the device, and the old ones come off. The app isn't reinstalled: its
 // signature stays valid with its certificate, and the new profiles give it another 7 days (a year, paid teams).
 import type { FlowRuntime } from '@installer/application/runtime.ts'
+import { devicePlatform } from '@installer/domain/device-platform.ts'
 import { StepLabel } from '@installer/domain/labels.ts'
 import { StepWeight } from '@installer/domain/step-weights.ts'
 import type { InstallState } from '@installer/domain/types.ts'
@@ -61,7 +62,11 @@ export const refreshProfilesStep = (
     const installed = new Set<string>()
 
     for (const [done, appId] of wanted.entries()) {
-      const profile = await developer.profile(team, appId)
+      const profile = await developer.profile(
+        team,
+        appId,
+        devicePlatform(state.device)
+      )
 
       await handle.installProfile(profile.data)
       installed.add(profile.uuid.toUpperCase())

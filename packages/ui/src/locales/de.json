@@ -116,7 +116,7 @@
     },
     "readiness": {
       "noDevice": "Verbinde zuerst ein Gerät.",
-      "notYetTv": "Installationen auf Apple TV und Vision Pro kommen in einer späteren Version.",
+      "noSideStore": "SideStore läuft auf iPhone und iPad. Apps für Apple TV oder Vision Pro installierst du unter Vorladen.",
       "checking": "Gerät wird geprüft…",
       "device": "Verfügbar, sobald das Gerät bereit ist.",
       "noAccount": "Füge zuerst eine Apple-ID hinzu.",
@@ -662,7 +662,7 @@
       },
       "unsupported_device": {
         "title": "Nicht für dieses Gerät gemacht",
-        "body": "Diese App unterstützt diese Art von Gerät nicht, zum Beispiel eine reine iPad-App auf einem iPhone. Wähle eine andere IPA."
+        "body": "Diese App unterstützt diese Art von Gerät nicht, zum Beispiel eine reine iPad-App auf einem iPhone oder eine iPhone-App auf einem Apple TV. Wähle eine andere IPA."
       },
       "no_arm64_build": {
         "title": "Kein Build für iPhone oder iPad",

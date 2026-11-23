@@ -88,6 +88,12 @@ export type Team = {
   readonly isFree: boolean
 }
 
+/**
+ * Which developer-services resources a device's requests go to: `ios/` for iPhone, iPad and Vision Pro, `tvos/` for
+ * Apple TV. An Apple TV is listed, registered and put in profiles only under `tvos/`.
+ */
+export type DevicePlatform = 'ios' | 'tvos'
+
 export type RegisteredDevice = {
   readonly id?: string
   readonly udid: string

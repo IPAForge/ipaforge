@@ -10,6 +10,7 @@ import type {
   CertificateIdentity,
   DeveloperServices,
   DevelopmentCertificate,
+  DevicePlatform,
   ProvisionRequest,
   SavedAccount,
   Team,
@@ -385,6 +386,7 @@ export const fakeApple = (options: FakeAppleOptions = {}) => {
     created: [] as string[],
     revoked: [] as string[],
     registered: [] as string[],
+    registeredPlatforms: [] as DevicePlatform[],
     provisioned: [] as ProvisionRequest[],
     banned: [] as string[],
     saved: 0,
@@ -432,8 +434,14 @@ export const fakeApple = (options: FakeAppleOptions = {}) => {
     teams: async () => teams,
     devices: async () =>
       [...registeredDevices, ...calls.registered].map((udid) => ({ udid })),
-    registerDevice: async (_team: Team, udid: string) => {
+    registerDevice: async (
+      _team: Team,
+      udid: string,
+      _name: string,
+      platform: DevicePlatform = 'ios'
+    ) => {
       calls.registered.push(udid)
+      calls.registeredPlatforms.push(platform)
       return { udid }
     },
     ensureCertificate,

@@ -116,7 +116,7 @@
     },
     "readiness": {
       "noDevice": "先にデバイスを接続してください。",
-      "notYetTv": "Apple TVとVision Proへのインストールは今後のバージョンで対応します。",
+      "noSideStore": "SideStoreはiPhoneとiPadで動作します。Apple TVやVision Proにアプリを入れるには、プリロードを使ってください。",
       "checking": "デバイスを確認中…",
       "device": "デバイスの準備ができると使えます。",
       "noAccount": "先にApple IDを追加してください。",
@@ -662,7 +662,7 @@
       },
       "unsupported_device": {
         "title": "このデバイス向けではありません",
-        "body": "このアプリはこの種類のデバイスに対応していません（例：iPhoneでのiPad専用アプリ）。別のIPAを選んでください。"
+        "body": "このアプリはこの種類のデバイスに対応していません（例：iPhoneでのiPad専用アプリ、Apple TVでのiPhoneアプリ）。別のIPAを選んでください。"
       },
       "no_arm64_build": {
         "title": "iPhoneまたはiPad向けのビルドがありません",

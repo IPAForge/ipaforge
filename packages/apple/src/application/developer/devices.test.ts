@@ -2,7 +2,7 @@ import { describe, expect, it, vi } from 'vitest'
 
 import type { DeveloperContext } from '@apple/application/developer/context.ts'
 import { registerDevice } from '@apple/application/developer/devices.ts'
-import type { Team } from '@apple/domain/types.ts'
+import type { DevicePlatform, Team } from '@apple/domain/types.ts'
 import type { AppleDeps } from '@apple/types.ts'
 import {
   createDict,
@@ -14,6 +14,7 @@ import {
 
 const team: Team = { id: 'TEAM1', name: 'Test', isFree: true }
 const UDID = '00008110-000A1B2C3D4E401C'
+const PHONE = { udid: UDID, name: 'Phone', platform: 'ios' } as const
 
 const developerError = (action: string, resultCode: number) =>
   new IPAForgeError(ErrorCode.DeveloperRequestFailed, {
@@ -25,21 +26,27 @@ const context = (
   addDevice: () => Promise<PlistDict>,
   listed: readonly string[] = []
 ) => {
-  const teamRequest = vi.fn(async (_team: Team, action: string) =>
-    action === 'listDevices'
-      ? createDict([
-          [
-            'devices',
-            listed.map((udid) =>
-              createDict([
-                ['deviceNumber', udid],
-                ['deviceId', 'D1'],
-                ['name', 'Phone']
-              ])
-            )
-          ]
-        ])
-      : addDevice()
+  const teamRequest = vi.fn(
+    async (
+      _team: Team,
+      action: string,
+      _fields?: unknown,
+      _platform?: DevicePlatform
+    ) =>
+      action === 'listDevices'
+        ? createDict([
+            [
+              'devices',
+              listed.map((udid) =>
+                createDict([
+                  ['deviceNumber', udid],
+                  ['deviceId', 'D1'],
+                  ['name', 'Phone']
+                ])
+              )
+            ]
+          ])
+        : addDevice()
   )
   const ctx = {
     deps: { logger: silentLogger } as unknown as AppleDeps,
@@ -57,7 +64,7 @@ describe('registerDevice', () => {
       async () => createDict(),
       [UDID.toLowerCase()]
     )
-    expect(await registerDevice(ctx, team, UDID, 'Phone')).toMatchObject({
+    expect(await registerDevice(ctx, team, PHONE)).toMatchObject({
       id: 'D1'
     })
     expect(teamRequest).toHaveBeenCalledTimes(1)
@@ -76,7 +83,7 @@ describe('registerDevice', () => {
         ]
       ])
     )
-    expect(await registerDevice(ctx, team, UDID, 'Phone')).toMatchObject({
+    expect(await registerDevice(ctx, team, PHONE)).toMatchObject({
       udid: UDID,
       id: 'D2'
     })
@@ -86,17 +93,30 @@ describe('registerDevice', () => {
     const { ctx } = context(async () => {
       throw developerError('addDevice', 35)
     })
-    expect(await registerDevice(ctx, team, UDID, 'Phone')).toEqual({
+    expect(await registerDevice(ctx, team, PHONE)).toEqual({
       udid: UDID,
       name: 'Phone'
     })
+  })
+
+  it('lists and adds an Apple TV under tvos/', async () => {
+    const { ctx, teamRequest } = context(async () => createDict())
+    await registerDevice(ctx, team, {
+      udid: UDID,
+      name: 'Living Room',
+      platform: 'tvos'
+    })
+    expect(teamRequest.mock.calls.map((call) => [call[1], call[3]])).toEqual([
+      ['listDevices', 'tvos'],
+      ['addDevice', 'tvos']
+    ])
   })
 
   it('still fails on any other addDevice error', async () => {
     const { ctx } = context(async () => {
       throw developerError('addDevice', 5405)
     })
-    await expect(registerDevice(ctx, team, UDID, 'Phone')).rejects.toThrow(
+    await expect(registerDevice(ctx, team, PHONE)).rejects.toThrow(
       IPAForgeError
     )
   })

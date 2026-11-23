@@ -3,8 +3,9 @@ import type { BundleKind } from '@signer/domain/bundle/types.ts'
 
 /** The device facts the check needs (lockdownd's `ProductVersion` and `DeviceClass`). */
 export type TargetDevice = {
+  /** The device's own OS version: iOS, tvOS or visionOS. */
   readonly iosVersion: string
-  /** `iPhone`, `iPad`, `iPod`; any other class is not checked. */
+  /** `iPhone`, `iPad`, `iPod`, `AppleTV`, `RealityDevice`; any other class is not checked. */
   readonly deviceClass?: string
 }
 

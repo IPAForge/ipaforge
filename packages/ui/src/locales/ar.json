@@ -116,7 +116,7 @@
     },
     "readiness": {
       "noDevice": "وصّل جهازًا أولًا.",
-      "notYetTv": "سيتوفر التثبيت على Apple TV وVision Pro في إصدار لاحق.",
+      "noSideStore": "يعمل SideStore على iPhone وiPad. لتثبيت التطبيقات على Apple TV أو Vision Pro، استخدم التحميل المسبق.",
       "checking": "جارٍ التحقق من الجهاز…",
       "device": "متاح عندما يكون الجهاز جاهزًا.",
       "noAccount": "أضف معرّف Apple أولًا.",
@@ -662,7 +662,7 @@
       },
       "unsupported_device": {
         "title": "غير مصمم لهذا الجهاز",
-        "body": "لا يدعم هذا التطبيق هذا النوع من الأجهزة، مثل تطبيق مخصص لـ iPad فقط على iPhone. اختر ملف IPA آخر."
+        "body": "لا يدعم هذا التطبيق هذا النوع من الأجهزة، مثل تطبيق مخصص لـ iPad فقط على iPhone، أو تطبيق iPhone على Apple TV. اختر ملف IPA آخر."
       },
       "no_arm64_build": {
         "title": "لا يوجد إصدار لـ iPhone أو iPad",

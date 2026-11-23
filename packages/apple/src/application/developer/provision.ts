@@ -18,7 +18,12 @@ import type {
   ProvisionTask
 } from '@apple/application/developer/types.ts'
 import { planAppIds } from '@apple/domain/developer.ts'
-import type { AppId, AppIdPlan, Team } from '@apple/domain/types.ts'
+import type {
+  AppId,
+  AppIdPlan,
+  DevicePlatform,
+  Team
+} from '@apple/domain/types.ts'
 import { compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 /** Counts the requests to Apple and reports each one done, within its task and overall. */
@@ -108,12 +113,16 @@ const downloadProfiles = async (
   ctx: DeveloperContext,
   team: Team,
   appIds: ReadonlyMap<string, AppId>,
+  platform: DevicePlatform,
   counter: Counter
 ): Promise<Map<string, Uint8Array>> => {
   const profiles = new Map<string, Uint8Array>()
 
   for (const [identifier, appId] of appIds) {
-    profiles.set(identifier, (await downloadProfile(ctx, team, appId)).data)
+    profiles.set(
+      identifier,
+      (await downloadProfile(ctx, team, appId, platform)).data
+    )
     counter.done('profiles', profiles.size, appIds.size)
   }
   return profiles
@@ -124,9 +133,11 @@ export const provisionApp = async (
   request: ProvisionRequest
 ): Promise<ProvisionResult> => {
   const { team, bundles } = request
+  const platform = request.device.platform ?? 'ios'
   const counter = progressCounter(request.onProgress)
 
-  await registerDevice(ctx, team, request.device.udid, request.device.name)
+  // App IDs and app groups are the team's for every platform: only the device and its profiles are per platform.
+  await registerDevice(ctx, team, { ...request.device, platform })
   counter.done('team', 1, TEAM_REQUESTS)
 
   const { appIds, quota } = await listAppIds(ctx, team)
@@ -160,7 +171,13 @@ export const provisionApp = async (
       counter
     )
 
-  const profiles = await downloadProfiles(ctx, team, byIdentifier, counter)
+  const profiles = await downloadProfiles(
+    ctx,
+    team,
+    byIdentifier,
+    platform,
+    counter
+  )
   ctx.deps.logger.info('provisioned app', {
     bundles: bundles.length,
     created: plan.create.length

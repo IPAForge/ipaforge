@@ -2,7 +2,11 @@
 
 import type { DeveloperContext } from '@apple/application/developer/context.ts'
 import { DeveloperCode } from '@apple/domain/constants.ts'
-import type { RegisteredDevice, Team } from '@apple/domain/types.ts'
+import type {
+  DevicePlatform,
+  RegisteredDevice,
+  Team
+} from '@apple/domain/types.ts'
 import { toDevices, toTeams } from '@apple/infrastructure/developer/parse.ts'
 import {
   createDict,
@@ -19,9 +23,13 @@ export const listTeams = async (ctx: DeveloperContext): Promise<Team[]> => {
 
 export const listDevices = async (
   ctx: DeveloperContext,
-  team: Team
+  team: Team,
+  platform: DevicePlatform = 'ios'
 ): Promise<RegisteredDevice[]> =>
-  toDevices(await ctx.teamRequest(team, 'listDevices'), ctx.skip('device'))
+  toDevices(
+    await ctx.teamRequest(team, 'listDevices', [], platform),
+    ctx.skip('device')
+  )
 
 /**
  * Apple can answer `addDevice` with resultCode 35 for a device the team already has, even when `listDevices` did
@@ -35,14 +43,18 @@ const isAlreadyRegistered = (error: unknown): boolean =>
 const addDevice = async (
   ctx: DeveloperContext,
   team: Team,
-  udid: string,
-  name: string
+  device: DeviceToRegister
 ): Promise<PlistDict | undefined> => {
   try {
-    return await ctx.teamRequest(team, 'addDevice', [
-      ['deviceNumber', udid],
-      ['name', name]
-    ])
+    return await ctx.teamRequest(
+      team,
+      'addDevice',
+      [
+        ['deviceNumber', device.udid],
+        ['name', device.name]
+      ],
+      device.platform
+    )
   } catch (error) {
     if (!isAlreadyRegistered(error)) throw error
     ctx.deps.logger.info('device already registered on the team', {
@@ -52,18 +64,24 @@ const addDevice = async (
   }
 }
 
+export type DeviceToRegister = {
+  readonly udid: string
+  readonly name: string
+  readonly platform: DevicePlatform
+}
+
 /** Registers the device unless it already is. */
 export const registerDevice = async (
   ctx: DeveloperContext,
   team: Team,
-  udid: string,
-  name: string
+  device: DeviceToRegister
 ): Promise<RegisteredDevice> => {
-  const existing = (await listDevices(ctx, team)).find(
-    (device) => device.udid.toLowerCase() === udid.toLowerCase()
+  const { udid, name } = device
+  const existing = (await listDevices(ctx, team, device.platform)).find(
+    (listed) => listed.udid.toLowerCase() === udid.toLowerCase()
   )
   if (existing) return existing
-  const response = await addDevice(ctx, team, udid, name)
+  const response = await addDevice(ctx, team, device)
   if (!response) return { udid, name }
   ctx.deps.logger.info('registered device', { team: team.id })
   const added = toDevices(

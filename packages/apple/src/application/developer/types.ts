@@ -2,6 +2,7 @@ import type {
   AppId,
   AppIdPlan,
   DevelopmentCertificate,
+  DevicePlatform,
   Team
 } from '@apple/domain/types.ts'
 
@@ -27,7 +28,12 @@ export type BundleRequest = {
 
 export type ProvisionRequest = {
   readonly team: Team
-  readonly device: { readonly udid: string; readonly name: string }
+  readonly device: {
+    readonly udid: string
+    readonly name: string
+    /** `tvos` for an Apple TV: registered and provisioned under `tvos/`. iPhone, iPad and Vision Pro by default. */
+    readonly platform?: DevicePlatform
+  }
   /** Main app first, then its extensions. */
   readonly bundles: readonly BundleRequest[]
   /** App group to register and assign to every bundle (e.g. `group.com.SideStore.SideStore.ABCDE12345`). */

@@ -116,7 +116,7 @@
     },
     "readiness": {
       "noDevice": "Conectează întâi un dispozitiv.",
-      "notYetTv": "Instalarea pe Apple TV și Vision Pro vine într-o versiune ulterioară.",
+      "noSideStore": "SideStore rulează pe iPhone și iPad. Pentru aplicații pe Apple TV sau Vision Pro, folosește Preîncărcare.",
       "checking": "Se verifică dispozitivul…",
       "device": "Disponibil când dispozitivul este pregătit.",
       "noAccount": "Adaugă întâi un Apple ID.",
@@ -662,7 +662,7 @@
       },
       "unsupported_device": {
         "title": "Nu este făcută pentru acest dispozitiv",
-        "body": "Această aplicație nu acceptă acest tip de dispozitiv, de exemplu o aplicație doar pentru iPad pe un iPhone. Alege alt IPA."
+        "body": "Această aplicație nu acceptă acest tip de dispozitiv, de exemplu o aplicație doar pentru iPad pe un iPhone sau o aplicație pentru iPhone pe un Apple TV. Alege alt IPA."
       },
       "no_arm64_build": {
         "title": "Nicio versiune pentru iPhone sau iPad",

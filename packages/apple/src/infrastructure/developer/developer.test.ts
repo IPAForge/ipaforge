@@ -82,6 +82,9 @@ describe('developer client', () => {
     expect(developerUrl('listAppIds', 'ios')).toContain(
       '/QH65B2/ios/listAppIds.action'
     )
+    expect(developerUrl('addDevice', 'tvos')).toContain(
+      '/QH65B2/tvos/addDevice.action'
+    )
   })
 
   it('sends the envelope, token, adsid and only the cpd anisette headers', async () => {

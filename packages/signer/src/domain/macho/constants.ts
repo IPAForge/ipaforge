@@ -75,7 +75,8 @@ export const Platform = {
   MacOS: 1,
   IOS: 2,
   TvOS: 3,
-  WatchOS: 4
+  WatchOS: 4,
+  VisionOS: 11
 } as const
 
 /** The platform each legacy LC_VERSION_MIN_* command implies. */

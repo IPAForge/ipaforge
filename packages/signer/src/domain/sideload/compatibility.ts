@@ -1,21 +1,45 @@
-// Whether an inspected app can run on a target device: minimum iOS, device family and CPU architecture. Pure, so
-// the installer can check before any Apple call and a plan can report the problem without failing.
+// Whether an inspected app can run on a target device: minimum OS version, device family and CPU architecture. Pure,
+// so the installer can check before any Apple call and a plan can report the problem without failing.
 import { ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 import { isVersionAtLeast } from '@signer/domain/macho/version.ts'
 import {
+  DeviceClass,
+  DeviceFamily,
   FAMILIES_BY_DEVICE_CLASS,
+  IOS_FOR_VISIONOS,
   RUNNABLE_ARCHITECTURES
 } from '@signer/domain/sideload/compatibility-constants.ts'
 import type {
   CompatibilityProblem,
+  InspectedApp,
   IpaInspection,
   Rule,
   TargetDevice
 } from '@signer/domain/sideload/types.ts'
 
+/**
+ * The version an app's `MinimumOSVersion` is compared with: the device's own, except for an iPhone or iPad app on a
+ * Vision Pro, which is compared with the iOS release visionOS runs it as.
+ */
+const comparableVersion = (app: InspectedApp, device: TargetDevice): string => {
+  if (
+    device.deviceClass !== DeviceClass.Vision ||
+    app.deviceFamilies.includes(DeviceFamily.AppleVision)
+  )
+    return device.iosVersion
+
+  return (
+    IOS_FOR_VISIONOS.get(Number.parseInt(device.iosVersion, 10)) ??
+    device.iosVersion
+  )
+}
+
 const iosRule: Rule = (app, device) => {
   const minimum = app.minimumOSVersion
-  if (minimum === undefined || isVersionAtLeast(device.iosVersion, minimum))
+  if (
+    minimum === undefined ||
+    isVersionAtLeast(comparableVersion(app, device), minimum)
+  )
     return undefined
   return {
     code: ErrorCode.UnsupportedIos,

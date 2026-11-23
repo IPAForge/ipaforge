@@ -11,7 +11,7 @@ import type {
   TeamQuery
 } from '@installer/engine/types.ts'
 import type { InstallerDeps } from '@installer/types.ts'
-import type { DeveloperServices, Team } from '@ipaforge/apple'
+import type { DeveloperServices, RegisteredDevice, Team } from '@ipaforge/apple'
 import { compact, ErrorCode, IPAForgeError } from '@ipaforge/kernel'
 
 /** Runs `use` with the account's developer services and the queried team. */
@@ -84,14 +84,44 @@ export const teamAppGroups = (
     groups: await developer.appGroups(team)
   }))
 
+/**
+ * The team's Apple TVs, which Apple lists only under `tvos/`. A team that can't list them there still shows its
+ * other devices.
+ */
+const appleTvs = async (
+  deps: InstallerDeps,
+  developer: DeveloperServices,
+  team: Team
+): Promise<RegisteredDevice[]> => {
+  try {
+    return await developer.devices(team, 'tvos')
+  } catch (error) {
+    deps.logger.warn('could not list the Apple TVs on the team', {
+      cause: error
+    })
+    return []
+  }
+}
+
 export const registeredDevices = (
   deps: InstallerDeps,
   query: TeamQuery
 ): Promise<TeamDevices> =>
-  withTeam(deps, query, async (developer, team) => ({
-    team,
-    devices: await developer.devices(team)
-  }))
+  withTeam(deps, query, async (developer, team) => {
+    const [devices, tvs] = await Promise.all([
+      developer.devices(team),
+      appleTvs(deps, developer, team)
+    ])
+    const listed = new Set(devices.map((device) => device.udid.toLowerCase()))
+
+    return {
+      team,
+      devices: [
+        ...devices,
+        ...tvs.filter((tv) => !listed.has(tv.udid.toLowerCase()))
+      ]
+    }
+  })
 
 /** `ABCDE12345.com.example.app` → `com.example.app`; undefined for a wildcard or a missing one. */
 const bundleIdOf = (applicationIdentifier: string | undefined) => {
