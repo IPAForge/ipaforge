@@ -6,6 +6,11 @@ import { createControllableLoad } from '@ui/__tests__/controllable-load.ts'
 import { createTestI18n, t } from '@ui/__tests__/test-i18n.ts'
 import { renderApp } from '@ui/__tests__/test-services.tsx'
 import { LANGUAGE_PREFERENCE_KEY } from '@ui/i18n/languages/language-store.ts'
+import {
+  isDraftLanguage,
+  nativeName,
+  shippedLanguages
+} from '@ui/i18n/languages/languages.ts'
 
 const html = () => document.documentElement
 /** The select is named by its value and the card title, which is in the language shown. */
@@ -41,14 +46,14 @@ describe('Language settings', () => {
       .getAllByRole('option')
       .map((option) => option.textContent)
 
+    // Every shipped language (from status.json), a draft one with its label.
     expect(options).toEqual([
       t('settings.language.system', { language: 'English' }),
-      'English',
-      'Deutsch',
-      'Română',
-      'Русский',
-      'العربية',
-      '日本語',
+      ...shippedLanguages.map(
+        (language) =>
+          nativeName(language) +
+          (isDraftLanguage(language) ? t('settings.language.draft') : '')
+      ),
       expect.stringContaining('English (') // the dev-only pseudo-locale
     ])
   })

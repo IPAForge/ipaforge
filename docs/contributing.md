@@ -85,13 +85,13 @@ The full rules are in [design/conventions.md](design/conventions.md).
 
 ## Translating
 
-The UI's strings live in `packages/ui/src/locales/`: one JSON file per language, with `en.json` as the source of truth, and `status.json` listing every language as `source`, `draft` or `reviewed`.
+Translations are made on **Weblate**, at [ipaforge.com/translate](https://ipaforge.com/translate/): the app, the website and the install guide, in any language, without git. Weblate sends them here as pull requests. [Translations](translations.md) explains the whole flow and the Weblate setup.
 
-- **Improve a language:** edit its file. Keep every key, and keep ICU placeholders (`{count}`, `{language}`) and plural syntax intact; use your language's plural categories (`one`, `few`, `many`, …). An empty string means "not translated yet" and shows English.
-- **Review a draft:** most languages start as machine drafts marked `"draft"` in `status.json`, and the picker labels them. A native speaker who has read the whole file sets it to `"reviewed"` in the same pull request.
-- **Add a language:** copy `en.json` to `<code>.json`, translate it, and add `"<code>": "draft"` to `status.json`. Nothing else needs registering: each file becomes its own chunk, loaded when the language is chosen.
+- **Change English:** edit `packages/ui/src/locales/en.json` (the source of truth) in your pull request as usual. Weblate picks it up from `main` and marks the other languages' copies of that string as needing an update.
+- **Ship a language:** add it to `packages/ui/src/locales/status.json` as `"draft"` once it is mostly translated; set it to `"reviewed"` once a native speaker has read all of it. Languages not listed there aren't offered.
+- **Don't edit other languages' files by hand** while Weblate is in use: Weblate would overwrite the change or conflict with it. Fix a translation on Weblate instead.
 
-`pnpm check:locales` checks missing or extra keys, ICU syntax and placeholders, and prints each language's completion. See [ui.md](ui.md#translations) for the details.
+`pnpm check:locales` checks keys English doesn't have, ICU syntax and placeholders, and prints each language's completion (a missing string shows in English). See [ui.md](ui.md#translations) for how the app loads languages.
 
 ## Boundary checker
 
