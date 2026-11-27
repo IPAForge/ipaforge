@@ -21,7 +21,7 @@ const setup = (
 
 describe('createLanguageStore', () => {
   it('follows the best match for the OS languages by default', () => {
-    expect(setup(['fr-FR', 'ar-EG']).store.getState()).toEqual({
+    expect(setup(['sw-KE', 'ar-EG']).store.getState()).toEqual({
       choice: 'system',
       systemLanguage: 'ar',
       locale: 'ar'
@@ -61,12 +61,12 @@ describe('createLanguageStore', () => {
   })
 
   it('logs how the language was resolved', () => {
-    const { records } = setup(['pt-BR', 'ro'])
+    const { records } = setup(['sw-KE', 'ro'])
     expect(records).toContainEqual(
       expect.objectContaining({
         level: 'debug',
         msg: 'language resolved',
-        fields: { preferred: 'pt-BR,ro', systemLanguage: 'ro', locale: 'ro' }
+        fields: { preferred: 'sw-KE,ro', systemLanguage: 'ro', locale: 'ro' }
       })
     )
   })
