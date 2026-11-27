@@ -1,0 +1,2216 @@
+{
+  "app": {
+    "name": "IPAForge"
+  },
+  "shell": {
+    "skipToContent": "דילוג לתוכן",
+    "navigation": "אזורים",
+    "credit": {
+      "madeWith": "נוצר עם ❤️ ו-☕",
+      "copyright": "© {year} {name}"
+    }
+  },
+  "topBar": {
+    "device": "מכשיר",
+    "noDevice": "ללא",
+    "deviceMenu": "מכשירים",
+    "account": "Apple ID",
+    "notSignedIn": "לא מחובר",
+    "accountMenu": "Apple ID-ים",
+    "addAppleId": "הוספת Apple ID…",
+    "noAccounts": "עדיין אין Apple ID-ים.",
+    "noDevicesHint": "חבר iPhone או iPad בכבל ובטל את נעילתו.",
+    "openDevices": "פתיחת מכשירים",
+    "tour": "הצג לי סיור",
+    "pairByCode": "צימוד Apple TV או Vision Pro…"
+  },
+  "nav": {
+    "group": {
+      "manage": "ניהול"
+    },
+    "install": "התקנה",
+    "preload": "טעינה מראש",
+    "apps": "אפליקציות",
+    "devices": "מכשירים",
+    "accounts": "חשבונות",
+    "developer": "פורטל המפתחים",
+    "logs": "יומנים",
+    "settings": "הגדרות",
+    "installRunning": "התקנה מתבצעת"
+  },
+  "placeholder": {
+    "body": "אזור זה עדיין בבנייה."
+  },
+  "install": {
+    "title": "התקנת SideStore",
+    "description": "נחתם עם ה-Apple ID שלך, ואז מותקן דרך USB.",
+    "steps": {
+      "device": "בדיקת המכשיר",
+      "resolve": "איתור הגרסה",
+      "download": "הורדה",
+      "inspect": "בדיקת האפליקציה",
+      "certificate_sharing": "שיתוף התעודה",
+      "sign_in": "התחברות ל-Apple",
+      "team": "בחירת הצוות",
+      "register_device": "רישום המכשיר",
+      "certificate": "הכנת התעודה",
+      "app_ids": "רישום App ID-ים",
+      "free_apps": "בדיקת מגבלת האפליקציות החינמיות",
+      "provision": "קבלת פרופילי הקצאה",
+      "refresh_profiles": "קבלת פרופילים חדשים",
+      "sign": "חתימת האפליקציה",
+      "install": "התקנה במכשיר",
+      "pairing": "הנחת קובץ הצימוד",
+      "remember": "שמירת ההתקנה בזיכרון",
+      "save": "שמירת ‎.ipa החתום"
+    },
+    "signInNeeded": {
+      "title": "ה-Apple ID שלך דורש התחברות מחדש",
+      "body": "ההפעלה השמורה של {appleId} פגה. עדיין אפשר להתקין: IPAForge יבקש את הסיסמה כשיגיע לשלב הזה."
+    },
+    "blocked": {
+      "title": "Apple חסמה את {appleId} ב-{device}",
+      "body": "אפליקציות שנחתמו עם ה-Apple ID הזה לא ייפתחו במכשיר הזה. השתמש ב-Apple ID אחר.",
+      "use": "שימוש ב-{appleId}"
+    },
+    "home": {
+      "what": "מה להתקין",
+      "channel": "ערוץ",
+      "install": "התקנת {app}"
+    },
+    "variant": {
+      "sidestore": {
+        "title": "SideStore",
+        "description": "מרענן ומתקין אפליקציות במכשיר בעצמו. משתמש ב-2 App ID-ים."
+      },
+      "livecontainer": {
+        "title": "LiveContainer + SideStore",
+        "description": "מריץ הרבה אפליקציות בתוך אחת, מעבר למגבלה של 3 אפליקציות. משתמש ב-5 App ID-ים."
+      }
+    },
+    "channel": {
+      "stable": "יציב",
+      "nightly": "Nightly",
+      "stableRecommended": "יציב (מומלץ)",
+      "nightlyRecommended": "Nightly (מומלץ)"
+    },
+    "plan": {
+      "title": "ההתקנה הזו",
+      "waiting": "יוצג ברגע שהמכשיר וה-Apple ID יהיו מוכנים.",
+      "checking": "מוריד את {app} ובודק מול Apple… ההורדה נשמרת, כך שההתקנה תשתמש בה.",
+      "unavailable": "לא הצלחנו לבדוק מול Apple. עדיין אפשר להתקין: כל שלב בודק שוב.",
+      "appIds": "App ID-ים",
+      "appIdsValue": "{created, plural, =0 {כל {reused} כבר רשומים} other {{reused, plural, =0 {{created} חדשים} other {{created} חדשים, {reused} בשימוש חוזר}}}} · {left, plural, one {נותר אחד השבוע} two {נותרו שניים השבוע} other {נותרו # השבוע}}",
+      "nextSlot": "הבא ישתחרר ב-{date}",
+      "freeApps": "אפליקציות חינמיות במכשיר",
+      "freeAppsValue": "{used} מתוך {limit} בשימוש",
+      "freeAppsRoom": "יש מקום לאפליקציה הזו",
+      "freeAppsFull": "תבחר אפליקציה אחת להסרה",
+      "noLimit": "ללא הגבלה (צוות בתשלום)",
+      "certificate": "תעודה",
+      "certificateReused": "בשימוש חוזר",
+      "certificateNew": "נוצרת תעודה חדשה",
+      "certificatesOnTeam": "{count, plural, =0 {עדיין אין בצוות} one {אחת בצוות} two {שתיים בצוות} other {# בצוות}}",
+      "team": "צוות",
+      "certificateNewWhy": "ל-IPAForge עדיין אין תעודה משלו בצוות הזה. {count, plural, =0 {} one {זו שכבר קיימת שייכת לכלי אחר, ששומר את המפתח הפרטי שלה.} two {שתי התעודות שכבר קיימות שייכות לכלים אחרים, ששומרים את המפתחות הפרטיים שלהן.} other {# התעודות שכבר קיימות שייכות לכלים אחרים, ששומרים את המפתחות הפרטיים שלהן.}}"
+    },
+    "readiness": {
+      "noDevice": "חבר מכשיר קודם.",
+      "noSideStore": "SideStore פועל על iPhone ו-iPad. השתמש ב'טעינה מראש' כדי להתקין אפליקציות ב-Apple TV או ב-Vision Pro.",
+      "checking": "בודק את המכשיר…",
+      "device": "זמין כשהמכשיר יהיה מוכן.",
+      "noAccount": "הוסף Apple ID קודם.",
+      "blocked": "השתמש קודם ב-Apple ID אחר.",
+      "appIds": "לא נשארו מספיק App ID-ים השבוע.",
+      "ready": "הכול מוכן."
+    },
+    "run": {
+      "title": {
+        "running": "מתקין את {app}",
+        "completed": "{app} הותקן",
+        "failed": "לא הצלחנו להתקין את {app}",
+        "cancelled": "ההתקנה בוטלה"
+      },
+      "subtitle": "{channel} · {device} · {appleId}",
+      "percent": "{fraction, number, percent}",
+      "progress": "התקדמות כוללת",
+      "steps": "שלבים",
+      "cancel": "ביטול",
+      "cancelInstall": "ביטול ההתקנה",
+      "runningHint": "אפשר להשתמש באזורים אחרים בזמן שזה רץ.",
+      "waitingHint": "ממתין לתשובה שלך.",
+      "stepState": {
+        "waiting": "צריך אותך",
+        "skipped": "דולג",
+        "failed": "נכשל"
+      },
+      "detail": {
+        "bytes": "{received} מתוך {total}",
+        "received": "{received}",
+        "retrying": "החיבור נותק. מנסה שוב בעוד {seconds, plural, one {שנייה} two {שתי שניות} other {# שניות}} (ניסיון {attempt})"
+      },
+      "live": {
+        "header": "{percent} · {left}",
+        "installing": "{fraction, number, percent} · {phase}",
+        "count": "{done} מתוך {total}",
+        "task": {
+          "line": "{task} · {count}",
+          "team": "בודק את הצוות",
+          "appIds": "יוצר App ID-ים",
+          "appGroup": "מוסיף את קבוצת האפליקציות",
+          "profiles": "מקבל פרופילים"
+        },
+        "phase": {
+          "unpacking": "מפרק את האפליקציה",
+          "checking": "בודק את האפליקציה",
+          "installing": "מתקין"
+        },
+        "speed": "{speed}/s",
+        "ios": "iOS מתקין אותה",
+        "leftSeconds": "נותרו בערך {seconds} שנ׳",
+        "leftMinutes": "{minutes, plural, one {נותרה בערך דקה} two {נותרו בערך שתי דקות} other {נותרו בערך # דקות}}"
+      },
+      "connection": {
+        "usb": "USB",
+        "network": "Wi-Fi"
+      },
+      "wifi": {
+        "title": "המכשיר הזה מחובר דרך Wi-Fi",
+        "body": "אפליקציות גדולות מותקנות מהר יותר בכבל. ב-Wi-Fi, IPAForge שולח אותן דחוסות כדי לחסוך זמן."
+      },
+      "unsupportedPrompt": {
+        "title": "השלב הזה דורש תשובה",
+        "body": "IPAForge צריך תשובה לשאלה שהגרסה הזו לא יכולה להציג. בטל את ההתקנה ועדכן את IPAForge."
+      },
+      "backToInstall": "חזרה להתקנה",
+      "report": {
+        "device": "{model} · iOS {ios} · {connection}",
+        "release": "{app} {version} · {channel}",
+        "download": "{size} · סכום הביקורת אומת",
+        "downloadCached": "{size} · ממטמון ההורדות",
+        "app": "{app} · {extensions, plural, =0 {ללא הרחבות} one {הרחבה אחת} two {שתי הרחבות} other {# הרחבות}}",
+        "session": {
+          "reused": "ההפעלה השמורה שימשה שוב",
+          "renewed": "התחברות מחדש עם הסיסמה השמורה",
+          "signed-in": "מחובר"
+        },
+        "registered": "נרשם בצוות",
+        "alreadyRegistered": "כבר רשום בצוות",
+        "certificate": {
+          "reused": "שימוש חוזר בתעודה השמורה",
+          "created": "נוצרה תעודה חדשה",
+          "replaced": "אחת בוטלה ונוצרה תעודה חדשה"
+        },
+        "removed": "{app} הוסרה · {used}",
+        "profiles": "{count, plural, one {פרופיל אחד} two {שני פרופילים} other {# פרופילים}}",
+        "signed": "{count, plural, one {חבילה אחת נחתמה} two {שתי חבילות נחתמו} other {# חבילות נחתמו}}",
+        "signedCompressed": "{count, plural, one {חבילה אחת נחתמה} two {שתי חבילות נחתמו} other {# חבילות נחתמו}} · דחוסות עבור Wi-Fi",
+        "phase": {
+          "uploading": "מעלה למכשיר",
+          "installing": "מתקין"
+        },
+        "pairing": "הונח ב-{apps}",
+        "shared": "התעודה שותפה",
+        "notShared": "התעודה לא שותפה",
+        "pairingRemote": "הונח ב-{apps} · עם צימוד מרחוק ל-iOS 17.4 ואילך",
+        "saved": "נשמר ב-{path}"
+      },
+      "subtitleApps": "{device} · {appleId}"
+    },
+    "summary": {
+      "title": "ההתקנה הזו",
+      "app": "אפליקציה",
+      "channel": "ערוץ",
+      "device": "מכשיר",
+      "deviceValue": "{name} · iOS {ios}",
+      "account": "Apple ID",
+      "appIds": "App ID-ים",
+      "appIdsValue": "{count, plural, one {נותר אחד השבוע} two {נותרו שניים השבוע} other {נותרו # השבוע}}",
+      "freeApps": "אפליקציות חינמיות",
+      "apps": "אפליקציות"
+    },
+    "done": {
+      "title": "{app} נמצאת ב-{device}.",
+      "trust": "במכשיר: הגדרות › כללי › VPN וניהול מכשירים › תן אמון ב-{appleId}.",
+      "open": "פתח את SideStore: קובץ הצימוד והתעודה שלך כבר בפנים.",
+      "done": "סיום"
+    },
+    "cancelled": {
+      "title": "נעצר ב-“{step}”.",
+      "body": "דבר שכבר בוצע לא יחזור על עצמו כשתמשיך.",
+      "resume": "המשך"
+    },
+    "failed": {
+      "continues": "שלבים שהסתיימו נשמרים: ניסיון חוזר ימשיך מ-“{step}”.",
+      "copy": "העתקת אבחון",
+      "copied": "הועתק",
+      "copyFailed": "ההעתקה נכשלה",
+      "showLogs": "הצגת יומנים"
+    }
+  },
+  "pairing": {
+    "steps": {
+      "targets": "איתור אפליקציות שזקוקות לצימוד",
+      "place": "הנחת קובץ הצימוד"
+    }
+  },
+  "settings": {
+    "appearance": "מראה ושפה",
+    "mode": "מצב צבע",
+    "palette": "פלטה",
+    "language": {
+      "title": "שפה",
+      "system": "מערכת ({language})",
+      "hint": "IPAForge עוקב אחר שפת המערכת שלך, אלא אם תבחר כאן שפה אחרת.",
+      "draft": "טיוטה"
+    },
+    "anisette": {
+      "title": "שרתי Anisette",
+      "hint": "התחברות ל-Apple דורשת שרת anisette, שמספר ל-Apple איזה מחשב מתחבר. IPAForge משתמש באחד שעובד, באופן אוטומטי; בחר כאן שרת מסוים אם יש לך העדפה, או הוסף שרת משלך.",
+      "add": "הוספת שרת",
+      "loading": "טוען את השרתים…",
+      "modeLabel": "איך IPAForge בוחר שרת",
+      "mode": {
+        "automatic": "אוטומטי",
+        "chosen": "בחירת שרת"
+      },
+      "modeHint": {
+        "automatic": "מנסה את השרתים לפי הסדר הזה וממשיך לבא אחרי כשל.",
+        "chosen": "תמיד משתמש ב-{name}.",
+        "none": "בחר את השרת ש-IPAForge ישתמש בו תמיד."
+      },
+      "noneChosen": "עדיין לא נבחר שרת: עד שתבחר, IPAForge ימשיך לבחור בעצמו.",
+      "chosenDown": "{name} לא מגיב. ההתחברות לא תעבוד עד שיחזור, או עד שתבחר שרת אחר או תעבור למצב אוטומטי.",
+      "count": "{count, plural, one {שרת אחד} two {שני שרתים} other {# שרתים}}",
+      "sources": "{custom, plural, =0 {} other {# שהוספת בעצמך, }}{list} מהרשימה של SideStore, {backup} כגיבוי ·",
+      "listUpdated": "הרשימה של SideStore עודכנה {ago}",
+      "listNever": "הרשימה של SideStore עדיין לא נטענה",
+      "updateList": "עדכון הרשימה",
+      "updating": "מעדכן…",
+      "testAll": "בדיקת הכול",
+      "testing": "בודק…",
+      "group": {
+        "custom": "נוספו על ידך · בשימוש ראשון",
+        "list": "מהרשימה של SideStore",
+        "backup": "גיבוי · רק כשאי אפשר להגיע לרשימה של SideStore או שאף שרת בה לא עונה"
+      },
+      "tag": {
+        "custom": "נוסף על ידך",
+        "inUse": "בשימוש",
+        "chosen": "נבחר"
+      },
+      "position": "מנוסה במקום מספר {position}",
+      "use": "שימוש ב-{name}",
+      "chooseLabel": "שרת לשימוש",
+      "status": {
+        "untested": "לא נבדק",
+        "testing": "בודק…",
+        "ok": "עובד · {ms} ms",
+        "bad": "לא מגיב"
+      },
+      "test": "בדיקה",
+      "testOne": "בדיקת {name}",
+      "edit": "עריכת {name}",
+      "remove": "הסרת {name}",
+      "confirmRemove": "להסיר את {name}?",
+      "removeYes": "הסרה",
+      "skipped": "לא בשימוש מהרשימה של SideStore: {names} (ללא HTTPS). אפשר להוסיף בעצמך שרת HTTP רגיל, למשל כזה שרץ במחשב שלך.",
+      "dialog": {
+        "addTitle": "הוספת שרת anisette",
+        "editTitle": "עריכת שרת",
+        "body": "כל שרת anisette שמדבר בפרוטוקול הרגיל מתאים: ציבורי, או כזה שאתה מפעיל בעצמך.",
+        "name": "שם",
+        "namePlaceholder": "השרת שלי",
+        "address": "כתובת",
+        "addressPlaceholder": "https://anisette.my-server.net",
+        "addressHint": "https://‎ או, לשרת שאתה מפעיל בעצמך, http://‎",
+        "nameMissing": "תן לו שם.",
+        "addressInvalid": "הזן כתובת שמתחילה ב-https://‎ או ב-http://‎.",
+        "exists": "השרת הזה כבר ברשימה.",
+        "stillAdd": "עדיין אפשר להוסיף אותו.",
+        "save": "שמירה"
+      }
+    },
+    "guide": {
+      "title": "מדריך הגדרה",
+      "text": "המחשב, ה-iPhone וה-Apple ID נבדקים שוב.",
+      "run": "הפעל את המדריך שוב",
+      "tour": "הצג לי סיור",
+      "tourTitle": "סיור בדפים",
+      "tourHint": "למה משמש כל דף, תחנה אחר תחנה."
+    },
+    "tabs": {
+      "label": "הגדרות",
+      "general": "כללי",
+      "anisette": "שרתי Anisette"
+    },
+    "modeHint": "בהיר, כהה, או לפי המערכת שלך.",
+    "paletteHint": "הצבעים של כל האפליקציה, בבהיר ובכהה."
+  },
+  "theme": {
+    "mode": {
+      "system": "מערכת",
+      "light": "בהיר",
+      "dark": "כהה"
+    },
+    "palette": {
+      "graphite": "גרפיט",
+      "ocean": "אוקיינוס",
+      "aurora": "זוהר צפוני",
+      "sunset": "שקיעה",
+      "forest": "יער",
+      "rose": "ורד",
+      "violet": "סגול",
+      "mocha": "מוקה"
+    }
+  },
+  "errors": {
+    "device": {
+      "locked": {
+        "title": "בטל את נעילת המכשיר",
+        "body": "המכשיר נעול, ולכן IPAForge לא יכול לתקשר איתו. בטל את הנעילה והשאר אותו פתוח עד שההתקנה מסתיימת."
+      },
+      "developer_mode_off": {
+        "title": "מצב מפתח כבוי",
+        "body": "אפליקציות שמותקנות ב-sideload דורשות מצב מפתח. הפעל אותו ב-הגדרות › פרטיות ואבטחה › מצב מפתח, ואז הפעל מחדש את המכשיר."
+      },
+      "not_paired": {
+        "title": "המחשב הזה עדיין לא מהימן",
+        "body": "בטל את נעילת המכשיר והקש על 'סמוך' כשהוא שואל אם לסמוך על המחשב הזה."
+      },
+      "usbmuxd_unavailable": {
+        "title": "תמיכת המכשירים לא פועלת",
+        "body": "IPAForge לא מצליח להגיע לשירות המערכת שמתקשר עם iPhone ו-iPad. התקן או הפעל אותו ונסה שוב."
+      },
+      "not_found": {
+        "title": "לא נמצא מכשיר",
+        "body": "חבר את ה-iPhone או ה-iPad בכבל USB ובטל את נעילתו."
+      },
+      "disconnected": {
+        "title": "המכשיר נותק",
+        "body": "החיבור נפל. חבר את הכבל מחדש, בטל את נעילת המכשיר ונסה שוב."
+      },
+      "pairing_pending": {
+        "title": "ממתין ל'סמוך'",
+        "body": "בטל את נעילת המכשיר והקש על 'סמוך' בהודעה שהופיעה."
+      },
+      "pairing_denied": {
+        "title": "האמון נדחה",
+        "body": "המכשיר סירב לסמוך על המחשב הזה. בצע צימוד שוב והפעם הקש על 'סמוך'."
+      },
+      "invalid_pair_record": {
+        "title": "הצימוד כבר לא תקף",
+        "body": "המכשיר כבר לא מקבל את הצימוד של המחשב הזה. נתק אותו, חבר אותו שוב, בטל את נעילתו והקש על 'סמוך'."
+      },
+      "service_unavailable": {
+        "title": "שירות במכשיר לא עלה",
+        "body": "המכשיר סירב להפעיל שירות ש-IPAForge צריך. בטל את נעילתו, חבר אותו מחדש ונסה שוב."
+      },
+      "protocol_error": {
+        "title": "תשובה בלתי צפויה מהמכשיר",
+        "body": "המכשיר שלח משהו ש-IPAForge לא הבין. חבר אותו מחדש; אם זה קורה שוב, עדכן את IPAForge או דווח על כך."
+      },
+      "install_failed": {
+        "title": "ההתקנה נכשלה",
+        "body": "המכשיר סירב להתקין את האפליקציה. נסה שוב; אם זה ממשיך להיכשל, התקן את האפליקציה מחדש או דווח על כך."
+      },
+      "afc_error": {
+        "title": "לא הצלחנו להעביר קבצים",
+        "body": "העתקת הקבצים למכשיר נכשלה. בטל את נעילתו ונסה שוב."
+      },
+      "timeout": {
+        "title": "המכשיר הפסיק להגיב",
+        "body": "המכשיר לקח יותר מדי זמן לענות. בטל את נעילתו, חבר אותו מחדש ונסה שוב."
+      },
+      "passcode_required": {
+        "title": "הגדר קוד גישה",
+        "body": "זה דורש קוד גישה במכשיר. הגדר אחד ב-הגדרות › Face ID וקוד גישה, ואז נסה שוב."
+      },
+      "free_app_limit": {
+        "title": "יותר מדי אפליקציות sideload",
+        "body": "ב-Apple ID חינמי אפשר להפעיל רק שלוש אפליקציות sideload במכשיר. הסר אחת ונסה שוב."
+      },
+      "profile_banned": {
+        "title": "Apple חסמה את ה-Apple ID הזה במכשיר",
+        "body": "המכשיר לא יקבל אפליקציות שנחתמו עם ה-Apple ID הזה. ניסיון חוזר לא יעזור: השתמש ב-Apple ID אחר."
+      },
+      "identity_invalid": {
+        "title": "תעודת החתימה כבר לא תקפה",
+        "body": "המכשיר דחה את התעודה שבה נחתמה האפליקציה. בדוק את השעון של המחשב, או בטל את התעודה ונסה שוב."
+      },
+      "profile_not_found": {
+        "title": "פרופיל ההקצאה חסר",
+        "body": "המכשיר לא מצא את פרופיל ההקצאה של האפליקציה. נסה שוב, או התקן את האפליקציה מחדש."
+      },
+      "pairing_path_invalid": {
+        "title": "בנתיב הזה אי אפשר לשמור קובץ צימוד",
+        "body": "השתמש בנתיב בתוך Documents או Library של האפליקציה שמסתיים ב-‎.plist או ב-‎.mobiledevicepairing."
+      },
+      "local_network_denied": {
+        "title": "IPAForge לא יכול לחפש מכשירים ברשת שלך",
+        "body": "macOS לא אפשרה ל-IPAForge למצוא מכשירים ברשת המקומית שלך, ולכן הוא לא יכול להגיע ל-iPhone דרך Wi-Fi. מכשירים שמחוברים בכבל עדיין עובדים."
+      },
+      "tunnel_unavailable": {
+        "title": "המנהרה של המכשיר לא נפתחה",
+        "body": "IPAForge לא הצליח לפתוח את המנהרה המאובטחת ש-iOS 17.4 ואילך מציעות דרך הכבל. ודא שהמכשיר מריץ iOS 17.4 ואילך, חבר אותו מחדש ונסה שוב."
+      },
+      "pairing_code_wrong": {
+        "title": "הקוד לא תאם",
+        "body": "הקוד שהוקלד אינו הקוד שהמכשיר מציג. בדוק את הקוד שעל המסך שלו ונסה שוב."
+      },
+      "pairing_backoff": {
+        "title": "יותר מדי קודים שגויים",
+        "body": "המכשיר לא מקבל קודים נוספים לזמן מה. המתן רגע, פתח שוב את מסך הצימוד שלו ובצע צימוד פעם נוספת."
+      },
+      "pairing_screen_closed": {
+        "title": "מסך הצימוד נסגר",
+        "body": "המכשיר הפסיק להציג את מסך הצימוד לפני שהצימוד הסתיים. פתח אותו שוב והשאר אותו פתוח: Apple TV: הגדרות ← שלטים ומכשירים ← Remote App and Devices. Apple Vision Pro: הגדרות ← כללי ← Remote Devices."
+      }
+    },
+    "apple": {
+      "anisette_unavailable": {
+        "title": "שרת ה-anisette לא מגיב",
+        "body": "התחברות ל-Apple דורשת שרת anisette, והשרת הנוכחי לא ענה. בחר שרת אחר או בדוק את הרשת שלך."
+      },
+      "anisette_not_provisioned": {
+        "title": "שרת ה-anisette לא מוכן",
+        "body": "שרת ה-anisette לא הצליח להכין את עצמו. בחר שרת אחר ונסה שוב."
+      },
+      "app_id_quota": {
+        "title": "לא נשארו App ID-ים השבוע",
+        "body": "ב-Apple ID חינמי אפשר לרשום רק 10 App ID-ים כל 7 ימים. המתן עד שיתפנה מקום, או השתמש ב-Apple ID אחר."
+      },
+      "certificate_limit": {
+        "title": "יותר מדי תעודות",
+        "body": "ה-Apple ID הזה הגיע למגבלת תעודות הפיתוח שלו. בטל אחת, או השתמש ב-Apple ID אחר."
+      },
+      "invalid_credentials": {
+        "title": "Apple ID או סיסמה שגויים",
+        "body": "Apple לא קיבלה את האימייל או הסיסמה. בדוק אותם והזן את הסיסמה שוב."
+      },
+      "account_locked": {
+        "title": "ה-Apple ID הזה נעול",
+        "body": "Apple נעלה את החשבון הזה מטעמי אבטחה. בטל את הנעילה במכשיר Apple או באתר של Apple, או השתמש ב-Apple ID אחר."
+      },
+      "account_refused": {
+        "title": "Apple סירבה להתחברות",
+        "body": "Apple לא מאפשרת כרגע ל-Apple ID הזה להתחבר מכאן. המתן זמן מה, התחבר פעם אחת במכשיר Apple, או השתמש ב-Apple ID אחר."
+      },
+      "client_rejected": {
+        "title": "Apple דחתה את בקשת ההתחברות",
+        "body": "Apple לא קיבלה את הזהות שנשלחה עם ההתחברות. בחר שרת anisette אחר, או המתן ונסה שוב."
+      },
+      "rate_limited": {
+        "title": "יותר מדי בקשות",
+        "body": "Apple מגבילה כרגע בקשות. המתן כמה דקות ונסה שוב."
+      },
+      "service_unavailable": {
+        "title": "השרתים של Apple לא זמינים",
+        "body": "השרתים של Apple לא הגיבו. המתן כמה דקות ובדוק את הרשת שלך."
+      },
+      "two_factor_required": {
+        "title": "הזן את קוד האימות",
+        "body": "Apple שלחה קוד אימות למכשירים המהימנים שלך. הזן אותו כדי להמשיך."
+      },
+      "two_factor_invalid_code": {
+        "title": "קוד אימות שגוי",
+        "body": "הקוד הזה לא עבד. בדוק אותו והזן אותו שוב."
+      },
+      "two_factor_unsupported": {
+        "title": "שיטת ההתחברות הזו לא נתמכת",
+        "body": "ה-Apple ID הזה משתמש בשיטת אימות דו-שלבי ש-IPAForge עדיין לא יודע לטפל בה, כמו מפתח אבטחה. השתמש ב-Apple ID אחר."
+      },
+      "sms_unavailable": {
+        "title": "קודים בהודעת טקסט לא זמינים",
+        "body": "Apple לא תשלח כאן את הקוד בהודעת טקסט. קבל אותו במכשיר מהימן, או השתמש ב-Apple ID אחר."
+      },
+      "clock_skew": {
+        "title": "השעון של המחשב שגוי",
+        "body": "Apple דוחה בקשות כשהשעון לא מדויק. הגדר את התאריך והשעה אוטומטית ונסה שוב."
+      },
+      "protocol_error": {
+        "title": "תשובה בלתי צפויה מ-Apple",
+        "body": "Apple שלחה משהו ש-IPAForge לא הבין. עדכן את IPAForge, או דווח על כך אם זה ממשיך לקרות."
+      },
+      "session_expired": {
+        "title": "ההפעלה שלך פגה",
+        "body": "התחבר שוב ל-Apple ID הזה. אם זה ממשיך לפוג, בדוק את השעון של המחשב."
+      },
+      "account_not_found": {
+        "title": "Apple ID לא נמצא",
+        "body": "ל-IPAForge אין הפעלה שמורה ל-Apple ID הזה. התחבר שוב."
+      },
+      "not_eligible": {
+        "title": "אי אפשר להשתמש ב-Apple ID הזה לפיתוח",
+        "body": "Apple לא מאפשרת לחשבון הזה לחתום על אפליקציות, למשל בגלל הגיל או התנאים שלו. השתמש ב-Apple ID אחר."
+      },
+      "email_unverified": {
+        "title": "אמת את האימייל שלך",
+        "body": "Apple דורשת קודם לאמת את כתובת האימייל של ה-Apple ID הזה. אמת אותה ונסה שוב."
+      },
+      "team_agreement": {
+        "title": "אשר את ההסכם של Apple",
+        "body": "הצוות לא אישר את הסכם המפתחים האחרון של Apple. אשר אותו באתר המפתחים של Apple, או בחר צוות אחר."
+      },
+      "no_teams": {
+        "title": "אין צוות מפתחים",
+        "body": "ל-Apple ID הזה עדיין אין צוות מפתחים. אשר את הסכם המפתחים של Apple, או השתמש ב-Apple ID אחר."
+      },
+      "device_limit": {
+        "title": "הגעת למגבלת המכשירים",
+        "body": "הצוות הזה לא יכול לרשום עוד מכשירים. בחר צוות אחר, או השתמש ב-Apple ID אחר."
+      },
+      "app_id_unavailable": {
+        "title": "ה-App ID הזה תפוס",
+        "body": "צוות אחר כבר משתמש ב-App ID הזה. בחר צוות אחר, או השתמש ב-Apple ID אחר."
+      },
+      "invalid_app_id_name": {
+        "title": "Apple דחתה את שם ה-App ID",
+        "body": "Apple לא קיבלה את השם ש-IPAForge בחר ל-App ID. עדכן את IPAForge, או דווח על כך."
+      },
+      "certificate_not_revocable": {
+        "title": "אי אפשר לבטל את התעודה הזו כאן",
+        "body": "רק Apple יכולה לבטל את התעודה הזו. בטל תעודה אחרת במקומה."
+      },
+      "no_devices_for_profile": {
+        "title": "המכשיר עדיין לא רשום",
+        "body": "Apple עוד לא סיימה לרשום את המכשיר. המתן דקה ונסה שוב."
+      },
+      "developer_request_failed": {
+        "title": "שירותי המפתחים של Apple נכשלו",
+        "body": "בקשה לשירותי המפתחים של Apple נכשלה. נסה שוב, ודווח על כך אם זה ממשיך לקרות."
+      },
+      "anisette_server_invalid": {
+        "title": "אי אפשר להשתמש בשרת ה-anisette הזה",
+        "body": "בדוק את השם והכתובת שלו: הכתובת מתחילה ב-https://‎ או ב-http://‎."
+      },
+      "anisette_server_exists": {
+        "title": "שרת ה-anisette הזה כבר ברשימה",
+        "body": "בחר אותו מהרשימה ב'הגדרות' במקום זאת."
+      },
+      "certificate_not_on_team": {
+        "title": "התעודה הזו לא בצוות",
+        "body": "Apple כבר לא מציגה אותה עבור הצוות הזה: היא בוטלה, פגה, או שייכת לצוות אחר. ייצא תעודה עדכנית וייבא אותה."
+      }
+    },
+    "catalog": {
+      "source_gone": {
+        "title": "הגרסה כבר לא זמינה",
+        "body": "המקום שממנו הורדה האפליקציה הזו כבר לא קיים. בחר ערוץ אחר, ייבא IPA, או עדכן את IPAForge."
+      },
+      "unavailable": {
+        "title": "לא הצלחנו לטעון את רשימת האפליקציות",
+        "body": "IPAForge לא הצליח להביא את רשימת האפליקציות. בדוק את הרשת שלך ונסה שוב."
+      },
+      "download_failed": {
+        "title": "ההורדה נכשלה",
+        "body": "לא ניתן היה להוריד את האפליקציה. בדוק את הרשת שלך ונסה שוב."
+      },
+      "checksum_mismatch": {
+        "title": "ההורדה פגומה",
+        "body": "הקובץ שהורד לא תואם לסכום הביקורת שלו, ולכן לא נעשה בו שימוש. נסה שוב או בחר ערוץ אחר."
+      },
+      "checksum_missing": {
+        "title": "אי אפשר לאמת את ההורדה",
+        "body": "לגרסה הזו אין סכום ביקורת, ולכן IPAForge לא יכול לבדוק אותה. בחר ערוץ אחר, או ייבא את ה-IPA בעצמך."
+      },
+      "rate_limited": {
+        "title": "יותר מדי בקשות ל-GitHub",
+        "body": "GitHub מגבילה כרגע הורדות. המתן כמה דקות ונסה שוב."
+      },
+      "app_source_unreachable": {
+        "title": "לא הצלחנו להגיע למקור הזה",
+        "body": "בדוק את הקישור ואת החיבור שלך לאינטרנט, ונסה שוב."
+      },
+      "app_source_invalid": {
+        "title": "הקישור הזה אינו מקור אפליקציות",
+        "body": "הוא לא מציג אפליקציות בפורמט AltStore. בדוק את הקישור, או הוסף במקום זאת את קובץ ה-‎.ipa של האפליקציה."
+      },
+      "app_source_exists": {
+        "title": "המקור הזה כבר נוסף",
+        "body": "האפליקציות שלו כבר ב'עיון באפליקציות'."
+      }
+    },
+    "plist": {
+      "invalid": {
+        "title": "קובץ ההגדרות של האפליקציה פגום",
+        "body": "לא ניתן היה לקרוא רשימת מאפיינים (plist) בתוך האפליקציה. בחר IPA אחר, או דווח על כך."
+      }
+    },
+    "net": {
+      "offline": {
+        "title": "אין לך חיבור לאינטרנט",
+        "body": "IPAForge לא מצליח להגיע לאינטרנט. בדוק את חיבור הרשת שלך ונסה שוב."
+      }
+    },
+    "signer": {
+      "invalid_macho": {
+        "title": "התוכנית של האפליקציה פגומה",
+        "body": "לא ניתן היה לקרוא את קובץ ההרצה של האפליקציה. בחר IPA אחר."
+      },
+      "encrypted_binary": {
+        "title": "האפליקציה מוצפנת",
+        "body": "ה-IPA הזה מגיע מה-App Store ועדיין מוצפן, ולכן אי אפשר לחתום עליו מחדש. בחר IPA מפוענח."
+      },
+      "unsupported_arch": {
+        "title": "פורמט אפליקציה לא נתמך",
+        "body": "קובץ ההרצה של האפליקציה משתמש בפורמט ש-iOS לא יכולה להריץ. בחר IPA אחר."
+      },
+      "unsupported_ios": {
+        "title": "נדרש iOS חדש יותר",
+        "body": "האפליקציה הזו דורשת גרסת iOS חדשה יותר מזו שבמכשיר. עדכן את המכשיר, או בחר ערוץ או IPA אחר."
+      },
+      "unsupported_device": {
+        "title": "לא נועדה למכשיר הזה",
+        "body": "האפליקציה הזו לא תומכת בסוג המכשיר הזה, למשל אפליקציה ל-iPad בלבד ב-iPhone, או אפליקציית iPhone ב-Apple TV. בחר IPA אחר."
+      },
+      "no_arm64_build": {
+        "title": "אין גרסה ל-iPhone או ל-iPad",
+        "body": "לאפליקציה אין גרסת 64 סיביות ל-iPhone או ל-iPad, למשל גרסת 32 סיביות או גרסת סימולטור. בחר IPA אחר."
+      },
+      "no_header_space": {
+        "title": "אי אפשר לחתום על האפליקציה",
+        "body": "אין מקום בקובץ ההרצה של האפליקציה לחתימה. בחר IPA אחר, או דווח על כך."
+      },
+      "zip_slip": {
+        "title": "ה-IPA לא בטוח",
+        "body": "ה-IPA מנסה לכתוב קבצים מחוץ לתיקייה שלו, ולכן IPAForge סירב לו. בחר IPA אחר."
+      },
+      "invalid_certificate": {
+        "title": "התעודה אינה תקפה",
+        "body": "לא ניתן היה להשתמש בתעודת החתימה. בטל אותה כדי ש-IPAForge יוכל ליצור חדשה, ונסה שוב."
+      },
+      "unknown_issuer": {
+        "title": "מנפיק תעודה לא מוכר",
+        "body": "IPAForge לא מזהה מי הנפיק את התעודה. עדכן את IPAForge ובדוק את הרשת שלך."
+      },
+      "invalid_bundle": {
+        "title": "חבילת האפליקציה אינה תקפה",
+        "body": "ה-IPA לא מכיל אפליקציה תקפה. בחר IPA אחר."
+      },
+      "invalid_profile": {
+        "title": "פרופיל ההקצאה אינו תקף",
+        "body": "לא ניתן היה לקרוא את פרופיל ההקצאה שהתקבל מ-Apple. נסה שוב, ודווח על כך אם זה ממשיך לקרות."
+      },
+      "extension_prefix": {
+        "title": "להרחבת אפליקציה יש מזהה שגוי",
+        "body": "מזהה החבילה של הרחבה לא מתחיל במזהה של האפליקציה עצמה. בחר IPA אחר."
+      },
+      "profile_mismatch": {
+        "title": "פרופיל ההקצאה לא תואם",
+        "body": "הפרופיל לא תואם לאפליקציה שעבורה נוצר. נסה שוב, ודווח על כך אם זה ממשיך לקרות."
+      },
+      "profile_expired": {
+        "title": "פרופיל ההקצאה פג",
+        "body": "הפרופיל פג, או שהשעון של המחשב שגוי. בדוק את השעון ונסה שוב."
+      },
+      "cert_not_in_profile": {
+        "title": "התעודה לא כלולה בפרופיל",
+        "body": "פרופיל ההקצאה לא כולל את תעודת החתימה. נסה שוב כדי לקבל פרופיל חדש."
+      },
+      "device_not_provisioned": {
+        "title": "המכשיר לא כלול בפרופיל",
+        "body": "פרופיל ההקצאה לא כולל את המכשיר הזה. נסה שוב כדי לקבל פרופיל חדש."
+      },
+      "pkcs12_password": {
+        "title": "הסיסמה לא פותחת את קובץ ה-‎.p12 הזה",
+        "body": "הקלד את הסיסמה שבה הוא יוצא, ונסה שוב."
+      }
+    },
+    "installer": {
+      "step_failed": {
+        "title": "שלב נכשל",
+        "body": "משהו השתבש במהלך ההתקנה. נסה שוב, ודווח על כך אם זה ממשיך לקרות."
+      },
+      "prompt_cancelled": {
+        "title": "בוטל",
+        "body": "ההתקנה נעצרה כי שאלה בוטלה. התחל מחדש כשתהיה מוכן."
+      },
+      "certificate_machine_id_missing": {
+        "title": "אי אפשר לשתף את התעודה",
+        "body": "בתעודה הזו חסרים נתונים ש-SideStore צריך כדי לפתוח אותה. בטל אותה כדי ש-IPAForge יוכל ליצור חדשה, ונסה שוב."
+      },
+      "team_required": {
+        "title": "בחר צוות",
+        "body": "ה-Apple ID הזה שייך לכמה צוותים. בחר את הצוות שאיתו לחתום."
+      },
+      "kept_ipa_missing": {
+        "title": "אי אפשר לרענן את האפליקציה הזו כאן",
+        "body": "IPAForge לא התקין אותה במכשיר הזה, או שהעותק ששמר נעלם. הוסף את קובץ ה-‎.ipa שלה ב'טעינה מראש' כדי להתקין אותה שוב."
+      },
+      "wrong_app": {
+        "title": "הקישור הזה מוביל לאפליקציה אחרת",
+        "body": "זו לא האפליקציה שאתה מרענן או מעדכן, ולכן היא לא הותקנה, והאפליקציה והנתונים שלה נשארים כמו שהם. הוסף את קובץ ה-‎.ipa הנכון ב'טעינה מראש' כדי להתקין אותה שוב."
+      },
+      "version_unavailable": {
+        "title": "אי אפשר להוריד שוב את הגרסה הזו",
+        "body": "'רענון' שומר את הגרסה שבמכשיר שלך, והיא כבר לא מוצעת להורדה. השתמש ב'עדכון' כדי להתקין את הגרסה החדשה ביותר; האפליקציה שומרת את הנתונים שלה."
+      },
+      "pairing_app_not_found": {
+        "title": "האפליקציה הזו לא במכשיר",
+        "body": "היא הוסרה, או שהיא כבר לא אחת מאלה ש-IPAForge התקין. סגור את 'קבצי צימוד' ופתח אותו שוב."
+      },
+      "certificate_not_stored": {
+        "title": "עדיין אין תעודה במחשב הזה",
+        "body": "המחשב הזה שומר את תעודת הצוות ברגע שהוא מתקין איתה אפליקציה. התקן קודם אפליקציה, או ייבא קובץ ‎.p12."
+      }
+    },
+    "rpc": {
+      "invalid_message": {
+        "title": "שגיאת תקשורת פנימית",
+        "body": "חלקים של IPAForge לא הבינו זה את זה. עדכן את IPAForge, או דווח על כך."
+      },
+      "disconnected": {
+        "title": "החיבור למנוע אבד",
+        "body": "המנוע של IPAForge הפסיק להגיב. נסה שוב, ודווח על כך אם זה ממשיך לקרות."
+      },
+      "timeout": {
+        "title": "המנוע לא ענה",
+        "body": "המנוע של IPAForge לקח יותר מדי זמן לענות. נסה שוב, ודווח על כך אם זה ממשיך לקרות."
+      }
+    },
+    "internal": {
+      "aborted": {
+        "title": "נעצר",
+        "body": "הפעולה נעצרה לפני שהסתיימה."
+      },
+      "unexpected": {
+        "title": "משהו השתבש",
+        "body": "אירעה שגיאה בלתי צפויה. נסה שוב, ודווח על כך אם זה ממשיך לקרות."
+      }
+    }
+  },
+  "recovery": {
+    "retry": "ניסיון חוזר",
+    "wait-and-retry": "המתן ונסה שוב",
+    "check-network": "בדוק את הרשת שלך",
+    "check-clock": "בדוק את התאריך והשעה",
+    "change-anisette-server": "בחר שרת anisette אחר",
+    "re-enter-password": "הזן את הסיסמה שוב",
+    "re-enter-code": "הזן את הקוד שוב",
+    "use-trusted-device": "השתמש במכשיר מהימן",
+    "sign-in-again": "התחבר שוב",
+    "sign-in-on-apple-device": "התחבר במכשיר Apple",
+    "switch-account": "השתמש ב-Apple ID אחר",
+    "verify-email": "אמת את האימייל שלך",
+    "accept-agreement": "אשר את ההסכם של Apple",
+    "choose-team": "בחר צוות",
+    "revoke-certificate": "בטל תעודה",
+    "wait-for-app-id-slot": "המתן ל-App ID פנוי",
+    "try-anyway": "נסה בכל זאת",
+    "choose-app-to-remove": "בחר אפליקציה להסרה",
+    "unlock-device": "בטל את נעילת המכשיר",
+    "enable-developer-mode": "הפעל מצב מפתח",
+    "trust-computer": "סמוך על המחשב הזה",
+    "reconnect-device": "חבר את המכשיר מחדש",
+    "pair-again": "בצע צימוד שוב",
+    "set-passcode": "הגדר קוד גישה",
+    "install-device-support": "התקן תמיכת מכשירים",
+    "reinstall-app": "התקן את האפליקציה מחדש",
+    "choose-another-ipa": "בחר IPA אחר",
+    "choose-another-channel": "בחר ערוץ אחר",
+    "import-ipa": "ייבא IPA",
+    "update-ipaforge": "עדכן את IPAForge",
+    "report-issue": "דווח על הבעיה",
+    "or": "או",
+    "switchAccount": {
+      "title": "השתמש ב-Apple ID אחר",
+      "body": "ההתקנה מתחילה מחדש עם ה-Apple ID שתבחר."
+    },
+    "fix": {
+      "copy": "העתקה",
+      "copied": "הועתק",
+      "done": "סיימתי, נסה שוב",
+      "waitAndRetry": {
+        "how": "Apple עמוסה או מגבילה בקשות. המתן דקה ונסה שוב."
+      },
+      "checkNetwork": {
+        "how": "ודא שהמחשב הזה מחובר לאינטרנט, ונסה שוב."
+      },
+      "checkClock": {
+        "step1": "פתח את הגדרות התאריך והשעה במחשב הזה",
+        "step2": "הפעל את הגדרת התאריך והשעה האוטומטית"
+      },
+      "reEnterPassword": {
+        "how": "ניסיון חוזר יבקש את הסיסמה; בדוק אותה לפני שתזין אותה."
+      },
+      "reEnterCode": {
+        "how": "ניסיון חוזר יבקש קוד אימות חדש."
+      },
+      "useTrustedDevice": {
+        "how": "כשיתבקש הקוד, בחר במכשיר מהימן במקום בהודעת טקסט."
+      },
+      "signInAgain": {
+        "how": "ניסיון חוזר יבקש את הסיסמה כדי להתחבר שוב."
+      },
+      "signInOnAppleDevice": {
+        "how": "התחבר ל-Apple ID הזה ב-iPhone, ב-iPad או ב-Mac, או באתר של Apple, ופעל לפי מה שהוא מבקש:"
+      },
+      "switchAccount": {
+        "how": "בחר אחד מה-Apple ID-ים השמורים שלך. ההתקנה מתחילה מחדש איתו.",
+        "button": "בחירת Apple ID…"
+      },
+      "verifyEmail": {
+        "how": "אמת את כתובת האימייל של ה-Apple ID הזה באתר של Apple:"
+      },
+      "acceptAgreement": {
+        "how": "התחבר לאתר המפתחים של Apple ואשר את ההסכם שהוא מציג:"
+      },
+      "revokeCertificate": {
+        "how": "ניסיון חוזר ישאל איזו תעודה לבטל."
+      },
+      "waitForAppIdSlot": {
+        "how": "Apple משחררת כל App ID 7 ימים אחרי שנוצר. התקן שוב כשאחד יתפנה, או השתמש ב-Apple ID אחר.",
+        "next": "ה-App ID הבא ישתחרר ב-{date}."
+      },
+      "chooseAppToRemove": {
+        "how": "ניסיון חוזר ישאל איזו אפליקציה להסיר כדי לפנות מקום."
+      },
+      "unlockDevice": {
+        "how": "בטל את נעילת המכשיר והשאר אותו פתוח עד שההתקנה מסתיימת."
+      },
+      "enableDeveloperMode": {
+        "button": "הוא פועל, נסה שוב"
+      },
+      "trustComputer": {
+        "how": "בטל את נעילת המכשיר. כשהוא שואל אם לסמוך על המחשב הזה, הקש על 'סמוך' והזן את קוד הגישה.",
+        "button": "שאל שוב במכשיר"
+      },
+      "reconnectDevice": {
+        "how": "נתק את המכשיר, חבר אותו שוב ובטל את נעילתו."
+      },
+      "setPasscode": {
+        "how": "הגדר קוד גישה במכשיר ב-הגדרות › Face ID וקוד גישה, ואז נסה שוב."
+      },
+      "installDeviceSupport": {
+        "how": "ב-Windows, התקן את Apple Devices (או iTunes) מ-Microsoft Store, ואז הפעל מחדש את IPAForge."
+      },
+      "reinstallApp": {
+        "how": "מחק את האפליקציה מהמכשיר, ואז נסה שוב."
+      },
+      "chooseAnotherChannel": {
+        "how": "ייתכן שהגרסה של הערוץ האחר תעבוד במכשיר הזה.",
+        "button": "התקנה מ-{channel}"
+      },
+      "open": "פתיחה",
+      "tryAnyway": {
+        "how": "Apple דיווחה על מספר שלילי של App ID-ים שנותרו, תקלה ידועה בצד שלה: ייתכן שהמספר האמיתי גבוה יותר. 'נסה בכל זאת' מבקש מ-Apple ליצור אותם; אם באמת הגעת למגבלה, היא תודיע על כך."
+      },
+      "changeAnisetteServer": {
+        "how": "פתח את 'הגדרות', בדוק את שרתי ה-anisette ובחר אחד שעובד, או חזור למצב אוטומטי.",
+        "button": "פתיחת שרתי anisette"
+      },
+      "allowLocalNetwork": {
+        "how": "פתח הגדרות מערכת › פרטיות ואבטחה › רשת מקומית, הפעל את IPAForge, ואז נסה שוב. או חבר את המכשיר בכבל."
+      }
+    },
+    "reportHint": "פותח דיווח חדש ב-GitHub עם האבחון ממולא. שום דבר לא נשלח עד שתאשר.",
+    "allow-local-network": "אפשר גישה לרשת המקומית"
+  },
+  "devices": {
+    "engine": {
+      "connecting": "מתחבר למנוע…",
+      "connected": "{count, plural, =0 {המנוע מחובר · אין מכשירים} one {המנוע מחובר · מכשיר אחד} two {המנוע מחובר · שני מכשירים} other {המנוע מחובר · # מכשירים}}",
+      "failed": "אי אפשר להגיע למנוע: {reason}"
+    },
+    "description": "iPhone ו-iPad שמחוברים למחשב הזה, ו-Apple TV ו-Vision Pro שבוצע איתם צימוד. המכשיר בשימוש מוצג בסרגל העליון.",
+    "unknownDevice": "מכשיר לא מוכר",
+    "line": "{model} · iOS {ios} · {link}",
+    "model": "{model} · iOS {ios}",
+    "withState": "{line} · {state}",
+    "link": {
+      "usb": "USB",
+      "network": "Wi-Fi",
+      "both": "USB ו-Wi-Fi"
+    },
+    "state": {
+      "checking": "בודק…",
+      "ready": "מוכן",
+      "locked": "נעול",
+      "developerModeOff": "מצב מפתח כבוי",
+      "notTrusted": "לא מהימן",
+      "unavailable": "אי אפשר לקרוא את המכשיר",
+      "notConnected": "לא מחובר"
+    },
+    "inUse": "בשימוש",
+    "use": "השתמש במכשיר הזה",
+    "checkAgain": "בדוק שוב",
+    "facts": {
+      "model": "דגם",
+      "ios": "iOS",
+      "connection": "חיבור",
+      "udid": "UDID",
+      "pairing": "צימוד",
+      "address": "כתובת"
+    },
+    "empty": {
+      "title": "עדיין אין מכשירים",
+      "body": "חבר iPhone או iPad בכבל ובטל את נעילתו. ב-Windows חייבים להיות מותקנים Apple Devices או iTunes."
+    },
+    "notice": {
+      "none": {
+        "title": "אין מכשיר מחובר",
+        "body": "חבר iPhone או iPad בכבל ובטל את נעילתו. הוא יופיע כאן מעצמו."
+      },
+      "notConnected": {
+        "title": "{name} לא מחובר",
+        "body": "חבר אותו שוב והוא יהיה בשימוש אוטומטית, או בחר מכשיר אחר בסרגל העליון."
+      },
+      "notTrusted": {
+        "title": "סמוך על המחשב הזה ב-{name}",
+        "body": "בטל את נעילתו, הקש על 'סמוך' והזן את קוד הגישה.",
+        "action": "שאל שוב",
+        "waiting": "ממתין ל'סמוך'…",
+        "titleUnnamed": "סמוך על המחשב הזה במכשיר"
+      },
+      "locked": {
+        "title": "בטל את נעילת {name}",
+        "body": "הוא צריך להישאר פתוח בזמן שמתקינים אפליקציות."
+      },
+      "developerModeOff": {
+        "title": "הפעל מצב מפתח ב-{name}",
+        "step1": "הגדרות ← פרטיות ואבטחה ← מצב מפתח",
+        "step2": "הפעל אותו והפעל מחדש כשיתבקש",
+        "step3": "אחרי ההפעלה מחדש, הקש על 'הפעל' והזן את קוד הגישה"
+      },
+      "unavailable": {
+        "title": "אי אפשר לקרוא את {name}",
+        "body": "נתק אותו וחבר אותו שוב. אם זה ממשיך לקרות, הפעל מחדש את המכשיר.",
+        "bodyWifi": "הוא מחובר דרך Wi-Fi: העיר אותו, בטל את נעילתו והשאר אותו באותה רשת כמו המחשב הזה, ואז בדוק שוב. כבל אמין יותר.",
+        "reason": "סיבה: {reason}",
+        "titleUnnamed": "אי אפשר לקרוא את המכשיר"
+      },
+      "offNetwork": {
+        "title": "{name} לא ברשת",
+        "tv": "העיר אותו בעזרת השלט שלו, והשאר אותו באותה רשת Wi-Fi כמו המחשב הזה.",
+        "vision": "הרכב אותו, בטל את נעילתו והשאר אותו באותה רשת Wi-Fi כמו המחשב הזה."
+      },
+      "pairAgain": {
+        "title": "בצע צימוד של {name} שוב",
+        "body": "הוא כבר לא מקבל את הצימוד של המחשב הזה. זה נורמלי אחרי עדכון tvOS או visionOS: בצע צימוד שוב עם קוד חדש.",
+        "action": "צימוד מחדש…"
+      }
+    },
+    "notes": {
+      "connected": "{name} חובר",
+      "disconnected": "{name} נותק",
+      "aDevice": "מכשיר"
+    },
+    "savePairing": "שמירת קובץ צימוד…",
+    "localNetwork": {
+      "open": "פתיחת הגדרות רשת מקומית"
+    },
+    "os": {
+      "tv": "tvOS",
+      "vision": "visionOS"
+    },
+    "lineOs": "{model} · {os} {version} · {link}",
+    "modelOs": "{model} · {os} {version}",
+    "pairedByCode": "בוצע צימוד עם המחשב הזה, באמצעות קוד",
+    "forget": {
+      "action": "שכח…",
+      "title": "לשכוח את {name}?",
+      "body": "IPAForge מסיר את הצימוד של המחשב הזה. אפליקציות שכבר נמצאות בו נשארות. כדי להשתמש בו שוב, בצע צימוד מחדש.",
+      "confirm": "שכח"
+    }
+  },
+  "prompts": {
+    "cancel": "ביטול",
+    "continue": "המשך",
+    "password": {
+      "title": "התחבר שוב",
+      "body": "ההפעלה השמורה של {appleId} פגה. הזן את הסיסמה כדי להמשיך.",
+      "label": "סיסמה",
+      "checking": "בודק את הסיסמה…"
+    },
+    "method": {
+      "title": "לאן Apple תשלח את הקוד?",
+      "body": "בחר איך לקבל את קוד האימות.",
+      "trustedDevice": "מכשיר מהימן",
+      "trustedDeviceHint": "ה-iPhone, ה-iPad או ה-Mac שלך שמחוברים ל-Apple ID הזה",
+      "sms": "הודעת טקסט אל {number}",
+      "smsHint": "ייתכנו חיובי SMS רגילים",
+      "sending": "שולח את הקוד…"
+    },
+    "code": {
+      "title": "הזן את קוד האימות",
+      "body": "{length, plural, one {הזן את הקוד בן הספרה האחת ש-Apple שלחה.} two {הזן את הקוד בן שתי הספרות ש-Apple שלחה.} other {הזן את הקוד בן # הספרות ש-Apple שלחה.}}",
+      "label": "קוד אימות",
+      "wrong": "הקוד הזה לא עבד. בדוק אותו והזן אותו שוב.",
+      "verify": "אימות",
+      "checking": "בודק את הקוד…",
+      "deviceBody": "{length, plural, one {הזן את הקוד בן הספרה האחת שמוצג ב-iPhone, ב-iPad או ב-Mac שלך.} two {הזן את הקוד בן שתי הספרות שמוצג ב-iPhone, ב-iPad או ב-Mac שלך.} other {הזן את הקוד בן # הספרות שמוצג ב-iPhone, ב-iPad או ב-Mac שלך.}}",
+      "smsBody": "{length, plural, one {הזן את הקוד בן הספרה האחת שנשלח אל {number}.} two {הזן את הקוד בן שתי הספרות שנשלח אל {number}.} other {הזן את הקוד בן # הספרות שנשלח אל {number}.}}",
+      "allowHint": "השאר אותו פתוח, והקש על 'אפשר' כשהוא שואל על ההתחברות.",
+      "noCode": "לא קיבלת קוד?",
+      "resend": "שלח קוד חדש",
+      "textTo": "הודעת טקסט אל {number}",
+      "sending": "שולח קוד חדש…",
+      "sent": "קוד חדש בדרך.",
+      "notSent": "Apple לא שלחה קוד חדש. המתן כמה דקות ונסה שוב."
+    },
+    "suggested": "מומלץ",
+    "team": {
+      "title": "איזה צוות יחתום על האפליקציה?",
+      "body": "ה-Apple ID הזה שייך ליותר מצוות אחד. IPAForge זוכר את הבחירה שלך עבור ה-Apple ID הזה.",
+      "free": "חינמי: אפליקציות פגות אחרי 7 ימים, 3 אפליקציות למכשיר",
+      "paid": "בתשלום: אפליקציות נשארות שנה, ללא הגבלת אפליקציות",
+      "checking": "משתמש בצוות הזה…"
+    },
+    "revoke": {
+      "title": "לבטל תעודה?",
+      "body": "בצוות הזה כבר יש את המספר המרבי של תעודות פיתוח, ולכן IPAForge צריך לבטל אחת כדי ליצור תעודה משלו. אפליקציות שנחתמו בתעודה שתבוטל יפסיקו להתרענן.",
+      "ipaforge": "נוצרה על ידי IPAForge במחשב אחר",
+      "sidestore": "נוצרה על ידי SideStore",
+      "machine": "נוצרה ב-“{machine}” (בדרך כלל Xcode)",
+      "unknown": "נוצרה על ידי כלי לא מוכר",
+      "sidestoreWarning": "SideStore במכשיר שלך יפסיק לרענן אפליקציות עד שייצור תעודה חדשה.",
+      "machineWarning": "Xcode באותו מחשב ייצור תעודה חדשה בפעם הבאה שיחתום.",
+      "expires": "פגה ב-{date}",
+      "confirm": "ביטול והמשך",
+      "revoking": "מבטל את התעודה…"
+    },
+    "remove": {
+      "title": "להסיר אפליקציה כדי לפנות מקום?",
+      "body": "ב-Apple ID חינמי אפשר להחזיק {limit} אפליקציות במכשיר, ולכן אחת צריכה לצאת כדי שהזו תיכנס. אפשר להתקין אותה שוב מאוחר יותר.",
+      "confirm": "הסרה והמשך",
+      "removing": "מסיר את האפליקציה…"
+    },
+    "share": {
+      "title": "לשתף את תעודת החתימה שלך עם “{app}”?",
+      "body": "האפליקציה הזו נראית כמו SideStore. עם התעודה שלך היא יכולה לרענן אפליקציות במכשיר בעצמה. שתף אותה רק עם אפליקציה שאתה סומך עליה.",
+      "yes": "שיתוף התעודה",
+      "yesHint": "היא מרעננת את האפליקציות שלך במכשיר בעצמה",
+      "no": "לא לשתף",
+      "noHint": "היא מותקנת בלי התעודה שלך"
+    },
+    "pairing": {
+      "title": "אילו אפליקציות יקבלו את קובץ הצימוד?",
+      "body": "קובץ הצימוד מאפשר לאפליקציה במכשיר לתקשר איתו דרך Wi-Fi, כמו שהמחשב הזה עושה. רק האפליקציות שסימנת יקבלו אותו.",
+      "available": "{count, plural, one {אפליקציה אחת במכשיר יכולה להשתמש בו} two {שתי אפליקציות במכשיר יכולות להשתמש בו} other {# אפליקציות במכשיר יכולות להשתמש בו}}",
+      "selectAll": "בחר הכול",
+      "clearAll": "נקה הכול",
+      "place": "{count, plural, =0 {בחר אפליקציה} one {הנחה באפליקציה אחת} two {הנחה בשתי אפליקציות} other {הנחה ב-# אפליקציות}}",
+      "placing": "מניח את קובץ הצימוד…",
+      "purpose": {
+        "sidestore": "מרענן ומתקין אפליקציות דרך Wi-Fi",
+        "livecontainer": "מריץ את האפליקציות שבתוכו עם JIT",
+        "stikdebug": "מפעיל JIT לאפליקציות אחרות",
+        "stikstore": "מתקין אפליקציות מהמקורות שלו"
+      }
+    }
+  },
+  "signIn": {
+    "title": "הוספת Apple ID",
+    "body": "IPAForge חותם איתו על אפליקציות. הסיסמה שלך נשלחת רק ל-Apple.",
+    "appleId": "Apple ID",
+    "password": "סיסמה",
+    "submit": "התחברות",
+    "signingIn": "מתחבר…",
+    "done": {
+      "title": "ה-Apple ID נוסף",
+      "body": "מחובר בתור {appleId}.",
+      "close": "סיום"
+    },
+    "rememberPassword": "שמור את הסיסמה שלי ב-keychain של המערכת",
+    "rememberPasswordHint": "מאפשר ל-IPAForge להתחבר שוב בעצמו כשההפעלה פגה.",
+    "resuming": {
+      "title": "מתחבר שוב",
+      "body": "מתחבר ל-{appleId} עם מה ש-IPAForge שמר…",
+      "cancel": "ביטול"
+    }
+  },
+  "accounts": {
+    "description": "ה-Apple ID-ים ש-IPAForge חותם איתם על אפליקציות. זה שבשימוש מוצג בסרגל העליון.",
+    "list": "Apple ID-ים שמורים",
+    "empty": "עדיין אין Apple ID-ים. הוסף אחד כדי להתקין את SideStore.",
+    "notSaved": {
+      "title": "ה-Apple ID-ים לא נשמרים",
+      "body": "IPAForge לא יכול להשתמש ב-keychain של המערכת (ייתכן שהגישה נדחתה), ולכן ה-Apple ID-ים שלך נשמרים רק עד שהוא נסגר. כדי לשמור אותם, פתח את IPAForge שוב ואשר גישה ל-keychain כשיתבקש."
+    },
+    "freeTeam": "{name} (חינמי)",
+    "withState": "{line} · {state}",
+    "state": {
+      "checking": "בודק…",
+      "signInNeeded": "נדרשת התחברות",
+      "blocked": "חסום במכשיר הזה",
+      "unreachable": "לא הצלחנו להגיע ל-Apple"
+    },
+    "inUse": "בשימוש",
+    "noTeams": "צוותים יופיעו אחרי ש-Apple תענה.",
+    "use": "שימוש",
+    "signInAgain": "התחבר שוב",
+    "signOut": {
+      "action": "התנתקות",
+      "title": "להתנתק מ-{appleId}?",
+      "forgets": "IPAForge שוכח את ה-Apple ID הזה, את ההפעלה שלו ואת הסיסמה השמורה שלו.",
+      "keeps": "תעודות החתימה שלו נשארות במחשב הזה, כך שהתחברות מחדש משתמשת בהן שוב. אפליקציות שכבר הותקנו ממשיכות לעבוד עד שהן פגות.",
+      "confirm": "התנתקות"
+    }
+  },
+  "apps": {
+    "description": "האפליקציות ש-IPAForge התקין במכשיר הזה. 'רענון' חותם על אחת מחדש לפני שהיא פגה, ושומר את הנתונים שלה.",
+    "refreshAll": "{count, plural, =0 {רענון הכול} other {רענון הכול (#)}}",
+    "updateAll": "{count, plural, other {עדכון הכול (#)}}",
+    "refresh": "רענון",
+    "update": "עדכון",
+    "remove": "הסרה",
+    "removeApp": "הסרת {name}",
+    "updateTo": "עדכון: {version}",
+    "from": "מ-{source}",
+    "needsIpa": "הותקן על ידי IPAForge מקובץ ‎.ipa במחשב אחר. הוסף את קובץ ה-‎.ipa הזה ב'טעינה מראש' פעם אחת כדי לרענן אותו כאן.",
+    "thisDevice": "המכשיר הזה",
+    "badge": "{count, plural, one {אפליקציה אחת לרענון בקרוב} two {שתי אפליקציות לרענון בקרוב} other {# אפליקציות לרענון בקרוב}}",
+    "expiry": {
+      "in": "{days, plural, one {פגה בעוד יום · {date}} two {פגה בעוד יומיים · {date}} other {פגה בעוד # ימים · {date}}}",
+      "today": "פגה היום",
+      "expired": "{days, plural, one {פגה לפני יום · לא תיפתח} two {פגה לפני יומיים · לא תיפתח} other {פגה לפני # ימים · לא תיפתח}}",
+      "unknown": "תאריך הפקיעה לא ידוע",
+      "gone": "פגה · לא תיפתח"
+    },
+    "run": {
+      "checking": "בודק מול Apple…",
+      "waiting": "ממתין לתורו",
+      "done": "בוצע"
+    },
+    "failed": {
+      "title": "הרענון לא הסתיים: {reason}",
+      "details": "הצגת פרטים",
+      "dismiss": "סגירה"
+    },
+    "notConnected": {
+      "title": "המכשיר הזה לא מחובר",
+      "body": "חבר אותו כדי לראות את האפליקציות שלו, ולרענן או לעדכן אותן."
+    },
+    "expired": {
+      "title": "{count, plural, one {אפליקציה אחת פגה} two {שתי אפליקציות פגו} other {# אפליקציות פגו}}",
+      "body": "הן לא ייפתחו עד שירועננו. הנתונים שלהן נשמרים.",
+      "refresh": "{count, plural, one {רענן אותה עכשיו} other {רענן אותן עכשיו}}"
+    },
+    "facts": {
+      "next": "הבאה שתפוג",
+      "none": "עדיין אין",
+      "nextIn": "{days, plural, one {{name} · יום} two {{name} · יומיים} other {{name} · # ימים}}",
+      "nextExpired": "{name} · פגה",
+      "count": "נשמרות מרוענות",
+      "apps": "{count, plural, one {אפליקציה אחת} two {שתי אפליקציות} other {# אפליקציות}}",
+      "auto": "רענון אוטומטי",
+      "autoOn": "{days, plural, one {פועל · יום לפני} two {פועל · יומיים לפני} other {פועל · # ימים לפני}}",
+      "autoOff": "כבוי"
+    },
+    "list": {
+      "title": "הותקנו על ידי IPAForge",
+      "count": "{count, plural, one {אפליקציה אחת · הקרובה ביותר ראשונה} two {שתי אפליקציות · הקרובה ביותר ראשונה} other {# אפליקציות · הקרובה ביותר ראשונה}}",
+      "empty": "עדיין אין אפליקציות. התקן את SideStore, או טען אפליקציות מראש, והן יוצגו כאן."
+    },
+    "others": {
+      "title": "עדיין לא נשמרות על ידי IPAForge",
+      "hint": "הותקנו לפני הגרסה הזו של IPAForge, או על ידי כלי אחר",
+      "found": "נמצאה ב-{source}. 'רענון' מתקין אותה משם, ושומר את הנתונים שלה, ומאותו רגע IPAForge ישמור אותה מרועננת.",
+      "foundMany": "נמצאה ב-{source} וב-{count, plural, one {מקור אחד נוסף} two {שני מקורות נוספים} other {# מקורות נוספים}}. 'רענון' מתקין אותה מהמקור שנבחר למטה, ושומר את הנתונים שלה, ומאותו רגע IPAForge ישמור אותה מרועננת.",
+      "pickSource": "התקנה מתוך",
+      "choice": "{source} · {version}",
+      "how": "הוסף את קובץ ה-‎.ipa שלה ב'טעינה מראש' פעם אחת, ומאותו רגע IPAForge ישמור אותה מרועננת."
+    },
+    "auto": {
+      "title": "רענון אפליקציות אוטומטי",
+      "body": "כל עוד IPAForge פתוח והמכשיר מחובר, אפליקציות מתרעננות מעצמן לפני שהן פגות.",
+      "toggle": "רענון אוטומטי",
+      "when": "רענון כשנותר לאפליקציה",
+      "days": "{count, plural, one {יום} two {יומיים} other {# ימים}}"
+    },
+    "removeDialog": {
+      "title": "להסיר את {name}?",
+      "body": "היא נמחקת מ-{device} יחד עם הנתונים שלה, ומפנה מקום לאפליקציה חינמית. אפשר להתקין אותה שוב מ'טעינה מראש'."
+    },
+    "pairing": {
+      "open": "קבצי צימוד",
+      "title": "קבצי צימוד",
+      "hint": "קובץ צימוד מאפשר לאפליקציה להגיע למכשיר שלך בעצמה, כדי לרענן ולהתקין אפליקציות. מי שמחזיק בו יכול להשתמש במכשיר, ולכן תן אחד לאפליקציות שלך רק כשההוראות שלהן מבקשות זאת.",
+      "reading": "קורא את קבצי הצימוד…",
+      "empty": "אין במכשיר הזה אפליקציות צימוד או אפליקציות שהותקנו על ידי IPAForge.",
+      "classic": {
+        "thisComputer": "צימוד: של המחשב הזה",
+        "otherComputer": "צימוד: של מחשב אחר",
+        "missing": "צימוד: חסר"
+      },
+      "remote": {
+        "accepted": "מרחוק: התקבל",
+        "rejected": "מרחוק: לא התקבל",
+        "otherComputer": "מרחוק: של מחשב אחר",
+        "missing": "מרחוק: חסר"
+      },
+      "detail": {
+        "placed": "הונח {date}",
+        "needed": "צריכה אחד כדי להתרענן בעצמה.",
+        "otherComputer": "ממחשב אחר: הוא עובד כל עוד המחשב הזה נשאר מהימן.",
+        "ownNone": "אין. הוסף אחד רק אם האפליקציה מבקשת זאת."
+      },
+      "place": "הנחה",
+      "placeOne": "הנחת קובץ הצימוד ב-{name}",
+      "placeAgain": "הנחה מחדש",
+      "placeAgainOne": "הנחת קובץ הצימוד ב-{name} מחדש",
+      "add": "הוספה…",
+      "addOne": "הוספת קובץ צימוד ל-{name}",
+      "remove": "הסרה",
+      "removeOne": "הסרת קובץ הצימוד מ-{name}",
+      "newRemote": "צימוד מרחוק חדש",
+      "done": "סיום",
+      "addTitle": "הוספת קובץ צימוד ל-{name}",
+      "addBody": "IPAForge כותב את קובץ הצימוד של המחשב הזה לתיקיית האפליקציה במכשיר שלך. מי שמחזיק בו יכול להשתמש במכשיר: הוסף אותו רק לאפליקציות שאתה סומך עליהן.",
+      "pathLabel": "נתיב בתוך האפליקציה",
+      "pathHint": "מההוראות של האפליקציה; בדרך כלל ב-Documents. IPAForge זוכר אותו עבור האפליקציה הזו.",
+      "pathInvalid": "השתמש בנתיב ב-Documents או ב-Library שמסתיים ב-‎.plist או ב-‎.mobiledevicepairing.",
+      "removeTitle": "להסיר את קובץ הצימוד של {name}?",
+      "removeBody": "היא לא תוכל להגיע למכשיר שלך בעצמה (רענון, התקנה) עד שיונח קובץ צימוד שוב.",
+      "newRemoteTitle": "ליצור צימוד מרחוק חדש?",
+      "newRemoteBody": "IPAForge יוצר צימוד מרחוק חדש עם המכשיר שלך ומניח אותו ב-SideStore. ייתכן שהמכשיר יבקש ממך לסמוך על המחשב הזה. הצימוד המרוחק הישן יפסיק לעבוד.",
+      "newRemoteConfirm": "יצירת חדש",
+      "newRemoteWaiting": "אם המכשיר שואל, הקש על 'סמוך' והזן את קוד הגישה שלו.",
+      "tag": "אין קובץ צימוד",
+      "tagOne": "ל-{name} אין קובץ צימוד: פתח 'קבצי צימוד'"
+    },
+    "cancelRefresh": "ביטול הרענון"
+  },
+  "logs": {
+    "title": "יומנים",
+    "lede": "מה IPAForge עשה, שורה אחר שורה. אפשר לפתוח אותם מכל מקום עם",
+    "shortcut": {
+      "control": "Ctrl+",
+      "command": "⌘",
+      "key": "L"
+    },
+    "copy": "העתקה",
+    "save": "שמירה…",
+    "clear": "ניקוי",
+    "cleared": "התצוגה נוקתה. 'שמירה' עדיין כותבת כל שורה שנשמרה בהפעלה הזו.",
+    "search": {
+      "label": "חיפוש ביומנים",
+      "placeholder": "חיפוש בהודעות ובפרטים",
+      "key": "/"
+    },
+    "level": {
+      "label": "רמה",
+      "all": "הכול",
+      "info": "מידע",
+      "warn": "אזהרות",
+      "error": "שגיאות"
+    },
+    "levelName": {
+      "debug": "ניפוי באגים",
+      "info": "מידע",
+      "warn": "אזהרה",
+      "error": "שגיאה"
+    },
+    "area": {
+      "label": "תחום",
+      "all": "כל התחומים",
+      "install": "התקנה",
+      "device": "מכשיר",
+      "apple": "Apple",
+      "catalog": "קטלוג",
+      "signing": "חתימה",
+      "engine": "מנוע",
+      "interface": "ממשק",
+      "app": "אפליקציה"
+    },
+    "filters": {
+      "showing": "מוצג רק:",
+      "run": "הרצת ההתקנה הזו ({time})",
+      "text": "“{text}”",
+      "remove": "הסרת המסנן {filter}"
+    },
+    "list": {
+      "label": "שורות יומן",
+      "loadingOlder": "טוען שורות ישנות יותר…"
+    },
+    "row": {
+      "details": "{count, plural, one {פרט אחד} two {שני פרטים} other {# פרטים}}",
+      "scope": "תחום",
+      "redacted": "[הוסתר]",
+      "copy": "העתקת שורה"
+    },
+    "follow": {
+      "on": "עוקב אחר שורות חדשות",
+      "off": "מושהה",
+      "pause": "השהיה",
+      "resume": "מעקב"
+    },
+    "jump": "{count, plural, one {שורה חדשה אחת} two {שתי שורות חדשות} other {# שורות חדשות}} · מעבר לאחרונה",
+    "count": "{matching, plural, one {שורה תואמת אחת} two {שתי שורות תואמות} other {# שורות תואמות}} · {capacity, number} האחרונות נשמרות בהפעלה הזו",
+    "debug": "כלול פרטי ניפוי באגים",
+    "privacy": "סיסמאות, אסימונים, מפתחות, מספרים סידוריים ומזהי מכשיר לעולם לא נכתבים ליומנים; הם מוצגים כ-[הוסתר]. היומנים נשארים במחשב הזה עד שתעתיק או תשמור אותם.",
+    "empty": {
+      "none": {
+        "title": "עדיין לא נרשם דבר",
+        "body": "שורות מופיעות כאן בזמן ש-IPAForge עובד: חיבור מכשיר, התחברות, התקנה."
+      },
+      "noMatch": {
+        "title": "אין שורות תואמות",
+        "body": "שנה את הרמה, את התחום או את החיפוש.",
+        "showAll": "הצגת כל השורות"
+      },
+      "cleared": {
+        "title": "התצוגה נוקתה",
+        "body": "שורות חדשות יופיעו כאן כשיגיעו."
+      },
+      "failed": {
+        "title": "לא הצלחנו לקרוא את היומנים",
+        "body": "ייתכן שהחיבור למנוע נסגר. פתח שוב את 'יומנים' כדי לנסות שוב."
+      }
+    },
+    "export": {
+      "copyTitle": "{count, plural, one {להעתיק שורה אחת?} two {להעתיק שתי שורות?} other {להעתיק # שורות?}}",
+      "saveTitle": "{count, plural, one {לשמור שורה אחת לקובץ?} two {לשמור שתי שורות לקובץ?} other {לשמור # שורות לקובץ?}}",
+      "copyBody": "השורות המוצגות, עם המסננים שהגדרת.",
+      "saveBody": "כל שורה שנשמרה בהפעלה הזו, בלי קשר למסננים.",
+      "warning": "סיסמאות, אסימונים ומזהי מכשיר כבר הושמטו, אבל היומנים כן מציינים את דגם המכשיר, האפליקציות והצוות שלך. בדוק אותם לפני שאתה מפרסם אותם ברבים.",
+      "confirmCopy": "העתקה",
+      "confirmSave": "שמירה",
+      "copied": "{count, plural, one {הועתקה שורה אחת} two {הועתקו שתי שורות} other {הועתקו # שורות}}",
+      "saved": "{count, plural, one {נשמרה שורה אחת} two {נשמרו שתי שורות} other {נשמרו # שורות}}",
+      "copyFailed": "לא הצלחנו להעתיק את השורות",
+      "saveFailed": "לא הצלחנו לשמור את השורות"
+    }
+  },
+  "preload": {
+    "title": "טעינת אפליקציות מראש",
+    "description": "התקן אפליקציות משלך: נחתמות עם ה-Apple ID שלך, מותקנות דרך USB, זו אחר זו.",
+    "tabs": {
+      "label": "טעינה מראש",
+      "apps": "הוספת אפליקציות",
+      "sources": "מקורות"
+    },
+    "add": {
+      "drop": "גרור לכאן קובצי ‎.ipa",
+      "or": "או",
+      "choose": "בחירת קבצים…",
+      "link": "הוספה מקישור…"
+    },
+    "catalog": {
+      "recommended": "מומלץ",
+      "added": "נוסף",
+      "add": "הוספה",
+      "sidestore": "מרענן ומתקין אפליקציות במכשיר בעצמו.",
+      "livecontainerSidestore": "LiveContainer עם SideStore בתוכו.",
+      "livecontainer": "מריץ הרבה אפליקציות בתוך אחת, מעבר למגבלה של 3 אפליקציות.",
+      "stikdebug": "מפעיל JIT לאפליקציות שזקוקות לכך, במכשיר.",
+      "feather": "חותם ומתקין אפליקציות במכשיר עם התעודה שלך."
+    },
+    "browse": {
+      "title": "עיון באפליקציות",
+      "count": "{apps, plural, one {אפליקציה אחת} two {שתי אפליקציות} other {# אפליקציות}} מתוך {sources, plural, one {מקור אחד} two {שני מקורות} other {# מקורות}}",
+      "source": "מקור",
+      "allSources": "כל המקורות",
+      "search": "חיפוש אפליקציות",
+      "manage": "ניהול מקורות",
+      "noMatch": "אין אפליקציות שתואמות ל-“{query}”.",
+      "allOff": "כל המקורות כבויים. הפעל אחד ב'מקורות'.",
+      "loading": "קורא את המקורות…",
+      "catalogLine": "הגרסה האחרונה · נבדקה מול סכום הביקורת שלה",
+      "version": "{version} · {size}",
+      "from": "{name}, וגם ב-{others}",
+      "details": "פרטי {name}",
+      "notRefreshed": {
+        "title": "לא הצלחנו לרענן את {name}",
+        "body": "מוצגות האפליקציות שלו מהרענון האחרון, {when}.",
+        "retry": "ניסיון חוזר"
+      }
+    },
+    "detail": {
+      "version": "גרסה",
+      "latest": "{version} (אחרונה)",
+      "size": "גודל",
+      "needs": "דורש",
+      "needsIos": "iOS {version}",
+      "anyIos": "כל גרסת iOS",
+      "from": "מקור",
+      "builtin": "מובנה · מהימן",
+      "added": "מקור שהוספת",
+      "untrusted": "ממקור שהוספת: IPAForge לא בודק את האפליקציות שלו.",
+      "add": "הוספה לרשימה",
+      "inList": "ברשימה",
+      "close": "סגירה",
+      "loadingReleases": "מחפש את הגרסאות שלה…",
+      "noReleases": "אי אפשר לקרוא את הגרסאות שלה כרגע. בדוק את החיבור ופתח אותה שוב."
+    },
+    "sources": {
+      "description": "המקומות שבהם 'עיון באפליקציות' מוצא אפליקציות. מקורות מובנים מתוחזקים על ידי IPAForge; הוסף אחרים לפי הקישור שלהם (פורמט AltStore).",
+      "add": "הוספת מקור…",
+      "refreshAll": "רענון הכול",
+      "list": "מקורות",
+      "builtin": "מובנה · מהימן",
+      "added": "נוסף על ידך",
+      "catalogName": "קטלוג IPAForge",
+      "apps": "{count, plural, one {אפליקציה אחת} two {שתי אפליקציות} other {# אפליקציות}}",
+      "updated": "עודכן {when}",
+      "notRead": "עדיין לא נקרא",
+      "skipped": "{count, plural, one {אחת דולגה (לא ‎.ipa)} two {שתיים דולגו (לא ‎.ipa)} other {# דולגו (לא ‎.ipa)}}",
+      "failed": "לא הצלחנו להגיע אליו.",
+      "failedCopy": "מוצג העותק האחרון שלו, מ-{when}.",
+      "refreshing": "מרענן…",
+      "show": "הצגת אפליקציות מ-{name}",
+      "refresh": "רענון {name}",
+      "remove": "הסרת {name}",
+      "on": "פועל",
+      "off": "כבוי",
+      "note": "IPAForge לא בודק אפליקציות במקורות שאתה מוסיף. הוסף רק מקורות שאתה סומך עליהם.",
+      "refreshOne": "רענון",
+      "removeOne": "הסרה"
+    },
+    "addSource": {
+      "title": "הוספת מקור",
+      "label": "קישור למקור",
+      "placeholder": "https://example.com/apps.json",
+      "hint": "מקור בפורמט AltStore, מהסוג ש-SideStore קורא. בדרך כלל מסתיים ב-‎.json.",
+      "check": "בדיקה",
+      "checking": "בודק את המקור…",
+      "notLink": "הזן קישור שמתחיל ב-https://‎",
+      "notHttps": "השתמש בקישור https://‎: IPAForge קורא מקורות רק בחיבור מאובטח.",
+      "previewTitle": "להוסיף את המקור הזה?",
+      "includes": "{count, plural, one {אפליקציה אחת, כולל:} two {שתי אפליקציות, כולל:} other {# אפליקציות, כולל:}}",
+      "skipped": "{count, plural, one {אחת נוספת הושמטה: ההורדה שלה אינה ‎.ipa.} two {שתיים נוספות הושמטו: ההורדה שלהן אינה ‎.ipa.} other {# נוספות הושמטו: ההורדה שלהן אינה ‎.ipa.}}",
+      "warningTitle": "הוסף רק מקורות שאתה סומך עליהם",
+      "warningBody": "IPAForge לא בודק את האפליקציות במקורות שאתה מוסיף. כל אפליקציה עדיין נבדקת לפני שהיא מותקנת.",
+      "back": "חזרה",
+      "confirm": "הוספת מקור"
+    },
+    "removeSource": {
+      "title": "להסיר את {name}?",
+      "body": "האפליקציות שלו נעלמות מ'עיון באפליקציות'. אפליקציות שהותקנו ממנו נשארות במכשיר, ואפליקציות ברשימת 'להתקנה' נשארות שם גם כן.",
+      "confirm": "הסרה"
+    },
+    "list": {
+      "title": "להתקנה",
+      "count": "{count, plural, one {אפליקציה אחת} two {שתי אפליקציות} other {# אפליקציות}}",
+      "empty": "עדיין אין אפליקציות. גרור לכאן קובצי ‎.ipa, בחר אותם, הוסף קישור, או בחר אחת ב'עיון באפליקציות'."
+    },
+    "row": {
+      "waiting": "ממתין למכשיר ול-Apple ID",
+      "checking": "בודק…",
+      "downloading": "מוריד ובודק…",
+      "appIds": "{count, plural, one {App ID אחד} two {שני App ID-ים} other {# App ID-ים}}{extensions, plural, =0 {} one { (אפליקציה + הרחבה אחת)} two { (אפליקציה + שתי הרחבות)} other { (אפליקציה + # הרחבות)}}",
+      "updates": "מעדכן {from} ← {to} · שומר את הנתונים שלה",
+      "new": "חדשה במכשיר",
+      "pairing": "מקבלת את קובץ הצימוד ואת התעודה",
+      "fromCatalog": "מהקטלוג · יציב",
+      "remove": "הסרת {name}",
+      "cannot": "אי אפשר להתקין.",
+      "fromSource": "מ-{name}",
+      "saveInstead": "שמירת ‎.ipa חתום במקום",
+      "saveInsteadOne": "שמירת {name} כ-‎.ipa חתום במקום להתקין אותה",
+      "savedOnComputer": "נשמר במחשב הזה, לא הותקן"
+    },
+    "problem": {
+      "notIpa": "אפשר להתקין רק קובצי ‎.ipa.",
+      "unreadable": "IPAForge לא יכול לקרוא את הקובץ הזה. הוסף אותו דרך 'בחירת קבצים…' במקום.",
+      "needsIos": "דורש iOS {needs}; במכשיר הזה יש iOS {has}."
+    },
+    "summary": {
+      "appIds": "{count, plural, one {אחד חדש} two {שניים חדשים} other {# חדשים}} · {left, plural, one {נותר אחד השבוע} two {נותרו שניים השבוע} other {נותרו # השבוע}}",
+      "appIdsNoLimit": "{count, plural, one {אחד חדש} two {שניים חדשים} other {# חדשים}}",
+      "notEnough": "לא נשאר מספיק. הסר אפליקציה, או המתן. {next}",
+      "freeApps": "{after} מתוך {limit} אחרי ההתקנה הזו",
+      "freeAppsOver": "{used, plural, one {אחת כבר שם.} two {שתיים כבר שם.} other {# כבר שם.}} ההתקנה תשאל איזו אפליקציה להסיר, או שאפשר להסיר אחת מהרשימה הזו."
+    },
+    "install": "{count, plural, =0 {התקנה} one {התקנת אפליקציה אחת} two {התקנת שתי אפליקציות} other {התקנת # אפליקציות}}",
+    "clear": "ניקוי הרשימה",
+    "readiness": {
+      "busy": "המתן להתקנה שרצה כעת.",
+      "empty": "הוסף אפליקציה קודם.",
+      "checking": "בודק את האפליקציות…",
+      "problems": "הסר את האפליקציות שאי אפשר להתקין."
+    },
+    "link": {
+      "title": "הוספה מקישור",
+      "body": "קישור ישיר לקובץ ‎.ipa. IPAForge מוריד אותו, ואז בודק אותו כמו כל אפליקציה אחרת.",
+      "label": "קישור",
+      "placeholder": "https://example.com/MyApp.ipa",
+      "add": "הוספה",
+      "httpsOnly": "אפשר להוריד רק קישורי https.",
+      "invalid": "זה לא קישור.",
+      "notIpa": "הקישור חייב להוביל לקובץ ‎.ipa."
+    },
+    "elsewhere": {
+      "apps": "אפליקציות מותקנות כעת",
+      "sidestore": "SideStore מותקן כעת",
+      "body": "התקנה אחת בכל פעם: היא צריכה את המכשיר. זו תוכל להתחיל כשהיא תסתיים.",
+      "open": "פתיחה"
+    },
+    "run": {
+      "title": {
+        "running": "{count, plural, one {מתקין את {app}} two {מתקין שתי אפליקציות} other {מתקין # אפליקציות}}",
+        "completed": "{count, plural, one {{app} הותקנה} two {שתי אפליקציות הותקנו} other {# אפליקציות הותקנו}}",
+        "failed": "לא הצלחנו להתקין את כל האפליקציות"
+      },
+      "backToPreload": "חזרה ל'טעינה מראש'",
+      "shared": "המכשיר הזה וה-Apple ID שלך",
+      "refresh": {
+        "profile": "פרופיל חדש בלבד, שום דבר לא הותקן שוב",
+        "certificate": "הותקנה שוב: התעודה שחתמה עליה כבר לא תקפה",
+        "unmarked": "הותקנה שוב: IPAForge לא יכול לדעת איזו תעודה חתמה עליה",
+        "appId": "הותקנה שוב: Apple הסירה את ה-App ID שלה כשפג תוקפו",
+        "sidestore": "הותקנה שוב, הנתונים שלה נשמרו, כך ש-SideStore עצמו מציג את התאריך החדש"
+      },
+      "group": {
+        "failed": "נכשלו",
+        "done": "בוצעו",
+        "active": "בתהליך",
+        "pending": "ממתינות"
+      }
+    },
+    "done": {
+      "title": "{count, plural, one {{app} נמצאת ב-{device}.} other {{app} נמצאות ב-{device}.}}",
+      "open": "פתח כל אפליקציה ממסך הבית."
+    },
+    "signAndSave": "{count, plural, one {חתימה ושמירה של אפליקציה אחת} two {חתימה ושמירה של שתי אפליקציות} other {חתימה ושמירה של # אפליקציות}}",
+    "installAndSave": "{install} להתקנה · {save} לשמירה כ-‎.ipa חתום"
+  },
+  "repair": {
+    "title": "תיקון SideStore",
+    "description": "IPAForge בודק את SideStore ב-{device} ומתקן מה שמונע ממנו לרענן את האפליקציות שלך בעצמו.",
+    "checkAgain": "בדוק שוב",
+    "checking": "בודק את SideStore…",
+    "checks": "בדיקות",
+    "failed": "לא הצלחנו לבדוק את SideStore: {reason}",
+    "failedBody": "ודא שהמכשיר מחובר ופתוח, ואז לחץ על 'בדוק שוב'.",
+    "ok": "תקין",
+    "unknown": "אי אפשר לדעת",
+    "deviceFirst": "תקן קודם את {device}",
+    "device": {
+      "title": "{device} מוכן",
+      "ok": "פתוח, מהימן ועם מצב מפתח פועל.",
+      "locked": "הוא נעול. בטל את נעילתו, ואז לחץ על 'בדוק שוב'.",
+      "lockedTag": "נעול",
+      "developerMode": "מצב מפתח כבוי, ולכן SideStore והאפליקציות שהוא מתקין לא ייפתחו. ב-iPhone: הגדרות › פרטיות ואבטחה › מצב מפתח, ואז הפעל אותו מחדש.",
+      "developerModeTag": "מצב מפתח כבוי"
+    },
+    "installed": {
+      "title": "SideStore מותקן",
+      "missing": "SideStore לא נמצא ב-{device}.",
+      "missingTag": "לא מותקן"
+    },
+    "signer": {
+      "title": "הוא חתום עם הצוות שבו אתה משתמש כאן",
+      "ok": "'תיקון' יכול להתקין אותו שוב, או לתת לו פרופיל חדש, בלי לאבד את הנתונים שלו.",
+      "otherTeam": "צוות אחר של ה-Apple ID הזה חתם עליו. התקנה מחדש עם הצוות הזה תוסיף SideStore שני, בלי הנתונים והאפליקציות שלו.",
+      "otherTeamTag": "צוות אחר",
+      "otherAppleId": "Apple ID אחר חתם עליו. התקנה מחדש עם זה תוסיף SideStore שני, בלי הנתונים והאפליקציות שלו.",
+      "otherAppleIdTag": "Apple ID אחר"
+    },
+    "version": {
+      "title": "SideStore מעודכן",
+      "ok": "גרסה {version}, האחרונה.",
+      "outdated": "גרסה {version}; יצאה {latest}. בגרסאות ישנות עלולים להיות חסרים תיקונים לרענון ב-iOS עדכני.",
+      "outdatedTag": "{latest} זמינה",
+      "unknown": "גרסה {version}. לא הצלחנו להגיע לקטלוג כדי להשוות."
+    },
+    "expiry": {
+      "title": "SideStore לא פג",
+      "ok": "{days, plural, one {פג בעוד יום.} two {פג בעוד יומיים.} other {פג בעוד # ימים.}}",
+      "soon": "{days, plural, =0 {פג היום.} one {פג בעוד יום.} two {פג בעוד יומיים.} other {פג בעוד # ימים.}} אחרי שפג, SideStore לא יכול לרענן את עצמו.",
+      "soonTag": "פג בקרוב",
+      "expired": "{days, plural, one {פג לפני יום.} two {פג לפני יומיים.} other {פג לפני # ימים.}} הוא לא ייפתח, ולכן לא יכול לרענן את האפליקציות שלך.",
+      "expiredTag": "פג",
+      "unknown": "המכשיר לא מציג עבורו פרופיל."
+    },
+    "signing": {
+      "title": "התעודה שחתמה עליו תקפה",
+      "ok": "עדיין תקפה בצד של Apple.",
+      "revoked": "היא בוטלה או שפגה. SideStore יפסיק להיפתח בהפעלה הבאה שלו.",
+      "revokedTag": "בוטלה",
+      "unknown": "הותקן על ידי כלי אחר, ולכן IPAForge לא יכול לראות איזו תעודה חתמה עליו. 'תיקון' יכול להתקין אותו שוב כדי לוודא."
+    },
+    "own": {
+      "title": "SideStore יכול לחתום על אפליקציות בעצמו",
+      "ok": "יש בידו תעודה תקפה לרענון האפליקציות שלך.",
+      "missing": "אין בידו תעודה, ולכן הרענונים שלו מבקשים ממך להתחבר, או נכשלים.",
+      "missingTag": "אין תעודה",
+      "other": "התעודה שניתנה לו כבר לא תקפה. ייתכן שהחליף אותה בחדשה משלו; אם הרענון נכשל ב-SideStore, התקן אותו שוב.",
+      "otherTag": "ייתכן שהוחלפה"
+    },
+    "pairing": {
+      "title": "ל-SideStore יש קובץ צימוד",
+      "ok": "קיים, והוא הצימוד של המחשב הזה עם {device}.",
+      "missing": "חסר: SideStore לא יכול להגיע למכשיר כדי להתקין או לרענן אפליקציות.",
+      "missingTag": "חסר",
+      "other": "הוא של מחשב אחר. הוא עובד כל עוד הצימוד הזה נשאר תקף; איפוס 'סמוך' במכשיר שובר אותו.",
+      "otherTag": "מחשב אחר"
+    },
+    "manual": {
+      "title": "ב-iPhone שלך · IPAForge לא יכול לבדוק את אלה",
+      "tag": "בדוק בעצמך",
+      "vpn": {
+        "title": "ה-VPN של SideStore פועל כשהוא מרענן",
+        "body": "פתח את LocalDevVPN והתחבר אליו לפני שאתה מרענן ב-SideStore."
+      },
+      "anisette": {
+        "title": "SideStore יכול להגיע לשרת ה-anisette שלו",
+        "body": "ב-SideStore › הגדרות › Anisette, בחר שרת אחר אם הרענון אומר שאי אפשר להתחבר."
+      }
+    },
+    "plan": {
+      "title": "'תיקון' יבצע",
+      "reinstall": "התקנה מחדש של SideStore",
+      "reinstallBody": "מהקטלוג של IPAForge, חתום עם תעודה תקפה שמונחת גם בתוכו. הנתונים שלו והאפליקציות שלך נשארים.",
+      "profile": "מתן פרופיל חדש ל-SideStore",
+      "profileBody": "שום דבר לא מותקן שוב.",
+      "pairing": "הנחת קובץ הצימוד של המחשב הזה",
+      "pairingBody": "ב-Documents של SideStore, במקום מה שיש שם.",
+      "optional": "וגם, אם תרצה",
+      "offerReinstall": "התקנה מחדש של SideStore, כדי לוודא",
+      "offerPairing": "החלפת קובץ הצימוד בזה של המחשב הזה",
+      "hint": "הרצה אחת. השאר את {device} מחובר ופתוח.",
+      "start": "תיקון SideStore"
+    },
+    "blocked": {
+      "title": "אי אפשר להתקין שוב את SideStore עם ה-Apple ID הזה",
+      "body": "צוות אחר או Apple ID אחר חתם עליו, ולכן הנתונים שלו לא יעברו. בחר את ה-Apple ID הזה בסרגל העליון, ואז לחץ על 'בדוק שוב'."
+    },
+    "notInstalled": {
+      "title": "SideStore לא נמצא ב-{device}",
+      "body": "התקן אותו קודם, מדף ההתקנה.",
+      "install": "התקנת SideStore"
+    },
+    "fine": {
+      "title": "SideStore עובד",
+      "body": "אין מה לתקן. אם הוא עדיין לא מצליח לרענן, בדוק את שני הדברים ב-iPhone שלך למטה."
+    },
+    "run": {
+      "title": {
+        "running": "מתקן את SideStore",
+        "completed": "SideStore תוקן",
+        "failed": "לא הצלחנו לתקן את SideStore"
+      }
+    },
+    "done": {
+      "title": "SideStore ב-{device} תוקן.",
+      "open": "פתח את SideStore ורענן את האפליקציות שלך."
+    },
+    "open": "בדיקת SideStore",
+    "checkingTag": "בודק…",
+    "remote": {
+      "title": "צימוד מרחוק ל-iOS 17.4 ואילך",
+      "ok": "קיים, ו-{device} מקבל אותו.",
+      "missing": "חסר: SideStore יכול להשתמש רק בצימוד הקלאסי. הנחת קובץ הצימוד של המחשב הזה מוסיפה אותו.",
+      "missingTag": "חסר",
+      "rejected": "{device} כבר לא מקבל אותו (ה'סמוך' שלו אופס). הנחת קובץ הצימוד של המחשב הזה יוצרת חדש.",
+      "rejectedTag": "לא התקבל",
+      "other": "הוא של מחשב אחר, ולכן IPAForge לא יכול לבדוק אותו. הנחת קובץ הצימוד של המחשב הזה מחליפה אותו.",
+      "otherTag": "מחשב אחר",
+      "notNeeded": "לא נדרש מתחת ל-iOS 17.4.",
+      "notNeededTag": "לא נדרש"
+    }
+  },
+  "sidestore": {
+    "addSource": "הוספה ל-SideStore",
+    "addAll": "הוספת הכול ל-SideStore",
+    "install": "התקנה עם SideStore",
+    "sourceTitle": "הוספת {name} ל-SideStore",
+    "sourceBody": "SideStore מציג גם את האפליקציות שלו, ושומר אותן מעודכנות ב-iPhone. גם SideStore לא בודק את האפליקציות במקור: הוסף רק מקורות שאתה סומך עליהם.",
+    "installTitle": "התקנת {name} עם SideStore",
+    "installBody": "SideStore מוריד את {name} {version}, חותם עליה עם ה-Apple ID שלך ומתקין אותה ב-iPhone בעצמו. ב-Apple ID חינמי היא נספרת ב-3 האפליקציות. היא תופיע ב'אפליקציות' אחרי ש-IPAForge ירענן אותה.",
+    "qrLabel": "קוד QR של הקישור שלמטה",
+    "steps": {
+      "camera": "פתח את המצלמה ב-{device} וכוון אותה אל הקוד.",
+      "banner": "הקש על הבאנר כדי לפתוח את SideStore.",
+      "addSource": "SideStore מבקש להוסיף את המקור: הקש על 'הוסף'.",
+      "install": "SideStore מבקש להתקין את האפליקציה: הקש על 'התקן'."
+    },
+    "onPhone": "ב-iPhone עצמו, הקישור פותח גם את SideStore (אם הודבק ב-Safari או נשלח ב-Messages).",
+    "copy": "העתקה",
+    "copied": "הועתק",
+    "previous": "הקודם",
+    "next": "הבא",
+    "step": "מקור {at} מתוך {count}",
+    "back": "חזרה",
+    "done": "סיום",
+    "offer": "{count, plural, one {הוסף ל-SideStore גם את המקור שהוספת כאן, כדי שיציג את האפליקציות שלו ב-iPhone.} two {הוסף ל-SideStore גם את שני המקורות שהוספת כאן, כדי שיציג את האפליקציות שלהם ב-iPhone.} other {הוסף ל-SideStore גם את # המקורות שהוספת כאן, כדי שיציג את האפליקציות שלהם ב-iPhone.}}"
+  },
+  "checklist": {
+    "title": "ב-{device} · iOS {ios}",
+    "setUp": "{device} מוגדר · iOS {ios}",
+    "show": "הצגת רשימת המשימות",
+    "hide": "הסתרה",
+    "allSet": "הכול מוכן",
+    "progress": "{left, plural, one {דבר אחד לעשות} two {שני דברים לעשות} other {# דברים לעשות}} · {done} מתוך {total} בוצעו",
+    "group": {
+      "before": "לפני ההתקנה",
+      "after": "אחרי ההתקנה",
+      "sidestore": "בשביל SideStore"
+    },
+    "onPhone": "ב-iPhone",
+    "tickedTag": "בוצע ב-iPhone",
+    "tick": "עשיתי את זה",
+    "notNeeded": "לא נדרש ב-iOS הזה",
+    "cable": {
+      "title": "חבר את {device} למחשב הזה",
+      "connected": "מחובר",
+      "none": "לא מחובר",
+      "how": "השתמש בכבל בפעם הראשונה; אחרי זה Wi-Fi עובד כל עוד שניהם באותה רשת."
+    },
+    "unlock": {
+      "title": "בטל את הנעילה",
+      "locked": "נעול",
+      "unlocked": "פתוח",
+      "how": "השאר אותו פתוח בזמן ש-IPAForge מתקין."
+    },
+    "trust": {
+      "title": "סמוך על המחשב הזה",
+      "trusted": "מהימן",
+      "notYet": "עדיין לא",
+      "step1": "בטל את נעילת {device}.",
+      "step2": "הקש על 'סמוך' כשהוא שואל על המחשב הזה.",
+      "step3": "הזן את קוד הגישה שלו.",
+      "again": "שאל שוב"
+    },
+    "passcode": {
+      "title": "הגדר קוד גישה",
+      "how": "SideStore מתרענן דרך Wi-Fi, ו-iOS מאפשרת זאת רק עם קוד גישה: הגדרות › Face ID וקוד גישה."
+    },
+    "devmode": {
+      "title": "הפעל מצב מפתח",
+      "on": "פועל",
+      "off": "כבוי",
+      "step1": "הגדרות › פרטיות ואבטחה › מצב מפתח (אם הוא לא שם, לחץ על 'הצגת האפשרות').",
+      "step2": "הפעל אותו והפעל מחדש את {device}.",
+      "step3": "אחרי ההפעלה מחדש, הקש על 'הפעל' והזן את קוד הגישה.",
+      "reveal": "הצגת האפשרות",
+      "revealed": "עכשיו היא ב-הגדרות › פרטיות ואבטחה."
+    },
+    "developer": {
+      "title": "סמוך על ה-Apple ID שלך כמפתח",
+      "later": "אחרי ההתקנה הראשונה",
+      "step1": "הגדרות › כללי › VPN וניהול מכשירים.",
+      "step2": "תחת 'אפליקציית מפתח', הקש על {appleId}.",
+      "step3": "הקש על 'סמוך'. ה-iPhone צריך אינטרנט בשביל זה."
+    },
+    "vpn": {
+      "title": "התקן את LocalDevVPN",
+      "installed": "מותקן",
+      "notInstalled": "לא מותקן",
+      "how": "SideStore מתקשר עם ה-iPhone דרך ה-VPN המקומי הזה; שום דבר לא יוצא מהטלפון. הוא חינמי ב-App Store.",
+      "qrLabel": "קוד QR של דף LocalDevVPN ב-App Store",
+      "scan": "סרוק עם המצלמה, או חפש \"LocalDevVPN\" ב-App Store."
+    },
+    "vpnOn": {
+      "title": "התחבר ל-LocalDevVPN כש-SideStore מרענן",
+      "tag": "בכל פעם",
+      "later": "אחרי שהתקנת אותו",
+      "how": "פתח את LocalDevVPN והקש על 'התחבר', או תן ל-SideStore להפעיל אותו: הוא שואל בפעם הראשונה."
+    },
+    "repair": {
+      "title": "SideStore יכול להתרענן בעצמו",
+      "tag": "נבדק ב'תיקון'",
+      "how": "התעודה שלו, קובץ הצימוד שלו ותאריך הפקיעה שלו."
+    },
+    "notice": "{count, plural, one {דבר אחד לעשות ב-{device}} two {שני דברים לעשות ב-{device}} other {# דברים לעשות ב-{device}}}",
+    "noticeBody": "כדי שההתקנה והרענון יעברו בצורה חלקה.",
+    "showChecklist": "הצגת רשימת המשימות"
+  },
+  "updates": {
+    "screen": {
+      "label": "מעדכן את IPAForge"
+    },
+    "checking": {
+      "title": "בודק אם יש עדכונים…"
+    },
+    "downloading": {
+      "title": "מעדכן את IPAForge",
+      "body": "גרסה {version} יצאה. היא מורדת ומותקנת עכשיו, ואז IPAForge ייפתח שוב מעצמו.",
+      "starting": "מתחיל את ההורדה…",
+      "percent": "{fraction, number, percent}"
+    },
+    "installing": {
+      "title": "מתקין את {version}…",
+      "body": "IPAForge ייפתח שוב בעוד רגע."
+    },
+    "failed": {
+      "title": "העדכון לא הסתיים",
+      "body": "גרסה {version} יצאה. נסה שוב, או הורד אותה מדף הגרסה שלה.",
+      "retry": "ניסיון חוזר",
+      "releasePage": "דף הגרסה",
+      "skip": "להשתמש בגרסה הזו בינתיים"
+    },
+    "manual": {
+      "title": "IPAForge {version} יצא",
+      "body": "העותק הזה הותקן מ{package, select, msi {מתקין ‎.msi} deb {חבילת ‎.deb} rpm {חבילת ‎.rpm} other {חבילה}}, שאינו יכול להתעדכן בעצמו. הורד את הגרסה החדשה והתקן אותה מעל זו: ה-Apple ID-ים, האפליקציות וההגדרות שלך נשארים.",
+      "download": "הורדת {version}",
+      "later": "מאוחר יותר"
+    },
+    "nativeBuild": {
+      "title": "זו גרסת Intel",
+      "body": "ב-Mac שלך יש Apple silicon, ולכן העותק הזה של IPAForge רץ דרך Rosetta והכול איטי יותר. הורד את הגרסה ל-Apple silicon והתקן אותה מעל זו; ה-Apple ID-ים, המכשירים והאפליקציות שלך נשארים.",
+      "file": "IPAForge-…-mac-arm64.dmg",
+      "later": "מאוחר יותר",
+      "download": "הורדה ל-Apple silicon"
+    }
+  },
+  "whatsNew": {
+    "link": "מה חדש",
+    "version": "גרסה {version} · {date}",
+    "englishOnly": "הערות הגרסה זמינות באנגלית בלבד.",
+    "kind": {
+      "new": "חדש",
+      "changed": "שונה",
+      "fixed": "תוקן",
+      "removed": "הוסר"
+    },
+    "dialog": {
+      "title": "מה חדש ב-IPAForge",
+      "everyVersion": "כל הגרסאות",
+      "close": "הבנתי"
+    },
+    "page": {
+      "title": "מה חדש",
+      "lede": "כל מה שהשתנה ב-IPAForge, מהחדש לישן.",
+      "current": "הגרסה הזו",
+      "release": "הגרסה ב-GitHub"
+    }
+  },
+  "portal": {
+    "description": "מה שהצוות של ה-Apple ID שלך מחזיק אצל Apple, והפרופילים שבמכשיר שלך.",
+    "tabsLabel": "מה שהצוות מחזיק",
+    "tabs": {
+      "certificates": "תעודות",
+      "appIds": "App ID-ים",
+      "profiles": "פרופילים",
+      "groups": "קבוצות אפליקציות",
+      "devices": "מכשירים רשומים"
+    },
+    "team": {
+      "pick": "צוות",
+      "free": "{name} (חינמי)",
+      "paid": "{name} (בתשלום)"
+    },
+    "refresh": "רענון",
+    "reading": "קורא מ-Apple…",
+    "noAccount": {
+      "title": "עדיין אין Apple ID",
+      "body": "התחבר עם Apple ID ב'חשבונות' כדי לראות מה הצוות שלו מחזיק."
+    },
+    "expired": "פגה",
+    "expires": "פגה ב-{date}",
+    "expiredOn": "פגה ב-{date}",
+    "certificates": {
+      "hint": "תעודה חותמת על האפליקציות שאתה מתקין. ביטול של תעודה מפסיק את הפתיחה של כל אפליקציה שהיא חתמה עליה, עד שיחתמו עליהן שוב.",
+      "usedFree": "{count} מתוך {max} בשימוש (צוותים חינמיים יכולים להחזיק {max})",
+      "usedPaid": "{count, plural, one {תעודה אחת} two {שתי תעודות} other {# תעודות}}",
+      "maker": {
+        "thisComputer": "IPAForge במחשב הזה",
+        "ipaforge": "IPAForge במחשב אחר",
+        "sidestore": "SideStore",
+        "machine": "“{machine}” (בדרך כלל Xcode)",
+        "unknown": "כלי לא מוכר"
+      },
+      "thisComputer": "של המחשב הזה",
+      "signs": "חותמת על {apps} ב-{device}",
+      "signsNothing": "לא חותמת על דבר ב-{device}",
+      "revoke": "ביטול",
+      "revokeOne": "ביטול {name}",
+      "empty": "לצוות עדיין אין תעודות. IPAForge יוצר אחת בפעם הראשונה שהוא מתקין.",
+      "import": "ייבוא ‎.p12…",
+      "export": "ייצוא ‎.p12"
+    },
+    "revokeDialog": {
+      "title": "לבטל את התעודה הזו?",
+      "apps": "אלה יפסיקו להיפתח ב-{device} עד שיחתמו עליהן שוב ('רענון' ב'אפליקציות' עושה זאת):",
+      "none": "שום דבר ב-{device} לא חתום איתה.",
+      "noDevice": "חבר את המכשיר שלך כדי לראות על אילו מהאפליקציות שלו התעודה הזו חותמת.",
+      "thisComputer": "IPAForge יוצר חדשה בפעם הבאה שהוא מתקין או מרענן.",
+      "sidestore": "SideStore יצר אותה כדי לרענן בעצמו: הוא יוצר חדשה בפעם הבאה שתתחבר שם.",
+      "machine": "Xcode באותו מחשב יוצר חדשה בפעם הבאה שהוא חותם.",
+      "exportedToo": "גם קובץ ‎.p12 שיוצא ממנה מפסיק לעבוד."
+    },
+    "appIds": {
+      "hintFree": "כל אפליקציה והרחבה שאתה מתקין צריכות אחד. צוותים חינמיים יכולים לרשום 10 ב-7 ימים; כל אחד נספר במשך 7 ימים אחרי שנוצר.",
+      "hintPaid": "כל אפליקציה והרחבה שאתה מתקין צריכות אחד. לצוותים בתשלום אין מגבלה שבועית.",
+      "left": "{count, plural, one {נותר אחד השבוע} two {נותרו שניים השבוע} other {נותרו # השבוע}}",
+      "leftAndNext": "{left} · הבא ישתחרר ב-{date}",
+      "countsUntil": "נספר עד {date}",
+      "unused": "לא בשימוש",
+      "delete": "מחיקה",
+      "deleteOne": "מחיקת {name}",
+      "empty": "לצוות עדיין אין App ID-ים."
+    },
+    "deleteDialog": {
+      "title": "למחוק את ה-App ID הזה?",
+      "free": "בצוות חינמי הוא עדיין נספר במסגרת ה-10 בשבוע עד שהוא פג: מחיקתו לא מחזירה את המקום מוקדם יותר.",
+      "paid": "אפשר לרשום אותו שוב מאוחר יותר."
+    },
+    "profiles": {
+      "title": "פרופילי הקצאה ב-{device}",
+      "hint": "פרופיל מאפשר לאפליקציה אחת (או הרחבה) לרוץ במכשיר הזה. 'רענון' נותן לאפליקציה פרופיל חדש; אפשר להסיר בבטחה פרופיל שפג או שאינו בשימוש.",
+      "noDevice": "חבר את המכשיר שלך כדי לראות את פרופילי ההקצאה שלו.",
+      "noApp": "אף אפליקציה לא משתמשת בו",
+      "otherTeam": "צוות אחר",
+      "remove": "הסרה",
+      "removeOne": "הסרת הפרופיל של {name}",
+      "removeUnused": "הסרת אלה שאינם בשימוש",
+      "empty": "אין פרופילי הקצאה במכשיר הזה."
+    },
+    "removeDialog": {
+      "title": "{count, plural, one {להסיר את הפרופיל הזה?} two {להסיר שני פרופילים?} other {להסיר # פרופילים?}}",
+      "body": "{count, plural, one {הוא יוסר מ-{device}. אף אפליקציה שם לא צריכה אותו.} other {הם יוסרו מ-{device}. אף אפליקציה שם לא צריכה אותם.}}"
+    },
+    "groups": {
+      "hint": "אפליקציות באותה קבוצה חולקות קבצים (למשל SideStore והווידג'ט שלו). IPAForge יוצר אותן כשאפליקציה צריכה אחת.",
+      "empty": "לצוות עדיין אין קבוצות אפליקציות."
+    },
+    "devices": {
+      "hintFree": "אפליקציות שאתה חותם עליהן רצות רק על אלה.",
+      "hintPaid": "אפליקציות שאתה חותם עליהן רצות רק על אלה. צוותים בתשלום יכולים לרשום 100 בשנה; הסרה של אחד נעשית באתר המפתחים של Apple, פעם בשנה.",
+      "used": "{count} מתוך {max} השנה",
+      "connected": "מחובר",
+      "unnamed": "מכשיר ללא שם",
+      "empty": "עדיין לא נרשמו מכשירים. IPAForge רושם את שלך בפעם הראשונה שהוא מתקין."
+    },
+    "exportDialog": {
+      "title": "ייצוא התעודה של המחשב הזה",
+      "body": "קובץ ‎.p12 עם התעודה והמפתח הפרטי שלה, בשביל SideStore או מחשב אחר. כל מי שיש לו את הקובץ ואת הסיסמה שלו יכול לחתום על אפליקציות בשם הצוות שלך.",
+      "password": "סיסמה",
+      "again": "סיסמה שוב",
+      "tooShort": "{count, plural, one {השתמש בתו אחד לפחות.} other {השתמש ב-# תווים לפחות.}}",
+      "differ": "שתי הסיסמאות שונות.",
+      "save": "שמירת ‎.p12…"
+    },
+    "importDialog": {
+      "title": "ייבוא תעודה",
+      "body": "קובץ ‎.p12 ממחשב אחר או מ-SideStore. IPAForge בודק ש-Apple עדיין מציגה אותה עבור הצוות הזה, ואז חותם איתה כאן: בלי תעודה חדשה, בלי לנצל מקום.",
+      "noFile": "לא נבחר קובץ",
+      "choose": "בחירה…",
+      "password": "הסיסמה שלו",
+      "import": "ייבוא"
+    }
+  },
+  "guide": {
+    "title": "מדריך הגדרה",
+    "stepsLabel": "שלבי הגדרה",
+    "stepDone": "(בוצע)",
+    "steps": {
+      "welcome": "ברוכים הבאים",
+      "computer": "המחשב הזה",
+      "iphone": "ה-iPhone שלך",
+      "appleid": "Apple ID",
+      "install": "התקנת SideStore",
+      "onphone": "ב-iPhone שלך",
+      "around": "הכול מוכן"
+    },
+    "back": "חזרה",
+    "skip": "דילוג על השלב הזה",
+    "continue": "המשך",
+    "later": "לסיים מאוחר יותר",
+    "checkAgain": "בדוק שוב",
+    "checking": "בודק…",
+    "copy": "העתקה",
+    "copied": "הועתק",
+    "welcome": {
+      "title": "ברוכים הבאים ל-IPAForge",
+      "lead": "כמה שלבים יכינו את המחשב, ה-iPhone וה-Apple ID שלך, ואז אפשר להתקין את SideStore. בחר קודם את השפה שלך.",
+      "needTitle": "מה תצטרך",
+      "needDevice": "iPhone או iPad עם iOS 15 ומעלה, והכבל USB שלו",
+      "needAppleId": "Apple ID (אחד חינמי מספיק)",
+      "needPasscode": "קוד הגישה של ה-iPhone שלך, כדי לסמוך על המחשב הזה",
+      "skipGuide": "אני מכיר את הדרך",
+      "start": "התחלה"
+    },
+    "computer": {
+      "title": "המחשב הזה",
+      "lead": "IPAForge בודק שהמחשב הזה יכול להתחבר ל-Apple: השרתים של Apple, השעון ושרת anisette. אם הוא לא יכול לתקשר עם iPhone, הוא גם אומר איך לתקן זאת.",
+      "failed": "הבדיקות לא רצו. בדוק שוב, או דלג על השלב הזה.",
+      "service": {
+        "title": "שירות החיבור ל-iPhone",
+        "fixMac": "macOS אמורה להריץ אותו בעצמה. הפעל מחדש את ה-Mac ואז בדוק שוב.",
+        "fixWindows": "התקן את Apple Devices מ-Microsoft Store, פתח אותו פעם אחת, ואז בדוק שוב.",
+        "fixLinux": "התקן את usbmuxd, חבר את ה-iPhone ואז בדוק שוב.",
+        "openStore": "פתיחת Microsoft Store"
+      },
+      "apple": {
+        "title": "השרתים של Apple",
+        "ok": "ניתנים להגעה.",
+        "fix": "IPAForge לא מצליח להגיע ל-Apple. בדוק את חיבור האינטרנט, ה-VPN או חומת האש."
+      },
+      "clock": {
+        "title": "שעון",
+        "ok": "מדויק.",
+        "fix": "{minutes, plural, one {השעון שלך לא מדויק בדקה אחת.} two {השעון שלך לא מדויק בשתי דקות.} other {השעון שלך לא מדויק ב-# דקות.}} הגדר את התאריך והשעה אוטומטית, ואז בדוק שוב."
+      },
+      "anisette": {
+        "title": "שרתי Anisette",
+        "ok": "{name} עונה. ההתחברות משתמשת בו.",
+        "fix": "אף אחד מ-{tried} השרתים הראשונים ברשימה שלך לא ענה. בדוק את החיבור שלך, או הוסף או בחר שרת ב-הגדרות › שרתי Anisette."
+      }
+    },
+    "iphone": {
+      "title": "ה-iPhone שלך",
+      "lead": "חבר את ה-iPhone בכבל, בטל את נעילתו והקש על 'סמוך' כשהוא שואל. ב-iOS 16 ואילך, מצב מפתח חייב להיות פועל.",
+      "connectTitle": "חבר את ה-iPhone שלך",
+      "connectText": "ממתין ל-iPhone או iPad דרך USB…"
+    },
+    "appleid": {
+      "title": "ה-Apple ID שלך",
+      "lead": "Apple חותמת על האפליקציות שאתה מתקין עם ה-Apple ID שלך. הסיסמה שלך נשלחת רק ל-Apple ונשארת ב-keychain של המחשב הזה.",
+      "freeNote": "Apple ID חינמי מספיק: האפליקציות שלו נשארות 7 ימים ו-IPAForge יכול לרענן אותן. חשבון מפתח בתשלום נשאר שנה.",
+      "signIn": "התחברות עם Apple ID",
+      "signedIn": "מחובר.",
+      "team": "הצוות שחותם על האפליקציות",
+      "free": "חינמי: אפליקציות נשארות 7 ימים",
+      "paid": "בתשלום: אפליקציות נשארות שנה"
+    },
+    "banner": {
+      "label": "מדריך הגדרה",
+      "text": "סיים להגדיר את IPAForge: {done} מתוך {total} שלבים הושלמו.",
+      "continue": "המשך במדריך",
+      "notNow": "לא עכשיו"
+    },
+    "install": {
+      "title": "התקנת SideStore",
+      "lead": "SideStore מרענן את האפליקציות שלך ב-iPhone בעצמו ומתקין עוד. IPAForge נותן לו את קובץ הצימוד והתעודה שהוא צריך.",
+      "notNow": "לא עכשיו"
+    },
+    "onphone": {
+      "title": "ב-iPhone שלך",
+      "lead": "מה שרק אתה יכול לעשות ב-iPhone. סמן כל אחד תוך כדי; דף 'מכשירים' שומר את אותה רשימה."
+    },
+    "around": {
+      "title": "הכול מוכן",
+      "lead": "הנה איפה שכל דבר נמצא. כל עוד IPAForge פתוח, הוא מרענן את האפליקציות שלך לפני שהן פגות.",
+      "again": "אפשר להפעיל את המדריך הזה שוב בכל זמן מ'הגדרות'.",
+      "showMe": "הצג לי סיור",
+      "apps": {
+        "title": "אפליקציות",
+        "text": "מתי כל אפליקציה פגה, עם 'רענון' ו'עדכון'. גם קבצי צימוד כאן.",
+        "where": "סרגל צד › אפליקציות"
+      },
+      "preload": {
+        "title": "טעינה מראש",
+        "text": "הוסף אפליקציות משלך: קובצי ‎.ipa, קישורים, מקורות. או שמור אותן כקובצי ‎.ipa חתומים.",
+        "where": "סרגל צד › טעינה מראש"
+      },
+      "repair": {
+        "title": "תיקון SideStore",
+        "text": "אם SideStore מפסיק להתרענן בעצמו, כאן מגלים למה ומתקנים.",
+        "where": "אפליקציות › בדיקת SideStore"
+      },
+      "developer": {
+        "title": "פורטל המפתחים",
+        "text": "התעודות, ה-App ID-ים והפרופילים שלך, וקובץ ‎.p12 להעברת התעודה שלך.",
+        "where": "סרגל צד › פורטל המפתחים"
+      },
+      "devices": {
+        "title": "מכשירים",
+        "text": "רשימת המשימות של כל iPhone, וקובץ הצימוד שלו לכלים אחרים.",
+        "where": "סרגל צד › מכשירים"
+      },
+      "logs": {
+        "title": "יומנים",
+        "text": "מה קרה, צעד אחר צעד. צרף אותם לדיווח על באג.",
+        "where": "סרגל צד › יומנים · ⌘L / Ctrl+L"
+      }
+    }
+  },
+  "tour": {
+    "count": "{current} מתוך {total}",
+    "skip": "דילוג על הסיור",
+    "back": "חזרה",
+    "next": "הבא",
+    "done": "סיום",
+    "install": {
+      "title": "התקנה",
+      "text": "התקן את SideStore, או LiveContainer עם SideStore, בלחיצה אחת. התחל כאן ב-iPhone חדש."
+    },
+    "preload": {
+      "title": "טעינה מראש",
+      "text": "הוסף אפליקציות משלך: קובצי ‎.ipa, קישורים, או אפליקציות ממקורות. סמן אחת כדי לשמור אותה במקום זאת כקובץ ‎.ipa חתום."
+    },
+    "apps": {
+      "title": "אפליקציות",
+      "text": "מתי כל אפליקציה פגה, עם 'רענון' ו'עדכון'. IPAForge מרענן אותן בעצמו כל עוד הוא פתוח. גם קבצי צימוד כאן."
+    },
+    "devices": {
+      "title": "מכשירים",
+      "text": "רשימת המשימות של כל iPhone לפי גרסת ה-iOS שלו, וקובץ הצימוד שלו לכלים אחרים."
+    },
+    "developer": {
+      "title": "פורטל המפתחים",
+      "text": "התעודות, ה-App ID-ים והפרופילים של ה-Apple ID שלך. נקה מה שאף אחד לא משתמש בו, או העבר את התעודה שלך כקובץ ‎.p12."
+    },
+    "pickers": {
+      "title": "מכשיר ו-Apple ID",
+      "text": "החלף את ה-iPhone או את ה-Apple ID ש-IPAForge משתמש בהם כאן, בכל זמן."
+    },
+    "logs": {
+      "title": "יומנים",
+      "text": "כל צעד ש-IPAForge עשה. צרף אותם לדיווח על באג (⌘L / Ctrl+L)."
+    },
+    "settings": {
+      "title": "הגדרות",
+      "text": "שפה, מראה, שרתי anisette, והסיור הזה שוב."
+    },
+    "showAround": {
+      "title": "הצג לי סיור",
+      "text": "אפשר לצאת שוב לסיור הזה מכאן, בכל זמן. מדריך ההגדרה נמצא ב'הגדרות'."
+    }
+  },
+  "pairByCode": {
+    "steps": {
+      "pair": "צימוד עם הקוד"
+    },
+    "open": "צימוד Apple TV או Vision Pro…",
+    "title": "צימוד Apple TV או Vision Pro",
+    "titleAgain": "בצע צימוד של {name} שוב",
+    "progress": {
+      "label": "שלבים",
+      "find": "1 איתור",
+      "code": "2 קוד"
+    },
+    "intro": "אין להם כבל, ולכן מבצעים צימוד דרך Wi-Fi עם קוד. חבר את המכשיר לאותה רשת Wi-Fi כמו המחשב הזה, ואז פתח את מסך הצימוד שלו והשאר אותו פתוח:",
+    "where": {
+      "tv": "Apple TV",
+      "vision": "Apple Vision Pro",
+      "tvPath": "הגדרות ← שלטים ומכשירים ← Remote App and Devices",
+      "visionPath": "הגדרות ← כללי ← Remote Devices"
+    },
+    "found": "נמצא ברשת שלך",
+    "showing": "מציג את מסך הצימוד שלו",
+    "pair": "צימוד",
+    "searching": "מחפש ברשת שלך… המכשיר יופיע כאן ברגע שמסך הצימוד שלו פתוח.",
+    "searchingMore": "עדיין מחפש אחרים…",
+    "help": {
+      "title": "הוא לא מופיע",
+      "screen": "השאר את מסך הצימוד פתוח: אפשר למצוא את המכשיר רק בזמן שהוא מציג אותו.",
+      "network": "אותה רשת Wi-Fi כמו המחשב הזה: לא רשת אורחים, וללא VPN באף אחד מהצדדים.",
+      "ipv6": "IPv6 מופעל בנתב (Apple צריכה אותו לצימוד).",
+      "macos": "macOS: הגדרות מערכת ← פרטיות ואבטחה ← רשת מקומית ← IPAForge מופעל.",
+      "windows": "Windows: אפשר ל-IPAForge גישה ברשתות פרטיות כשחומת האש שואלת."
+    },
+    "failed": "החיפוש ברשת שלך נעצר. סגור את החלון הזה ופתח אותו שוב.",
+    "code": {
+      "title": "הזן את הקוד ב-{name}",
+      "body": "{name} מציג קוד. הקלד אותו כאן.",
+      "label": "קוד",
+      "wrong": "הקוד הזה לא תאם. בדוק את הקוד ב-{name} ונסה שוב.",
+      "pairing": "מבצע צימוד עם {name}…",
+      "checking": "בודק את הקוד…"
+    },
+    "back": "חזרה",
+    "backToList": "חזרה לרשימה",
+    "backoff": {
+      "title": "יותר מדי קודים שגויים",
+      "wait": "{name} מאפשר לך לנסות שוב בעוד {seconds, plural, one {שנייה} two {שתי שניות} other {# שניות}}.",
+      "later": "{name} לא מקבל קודים נוספים לזמן מה. המתן רגע ונסה שוב."
+    },
+    "closed": {
+      "title": "{name} סגר את מסך הצימוד שלו",
+      "body": "הקוד עובד רק כשמסך הצימוד פתוח. פתח אותו שוב ב-{name}:"
+    },
+    "done": {
+      "title": "בוצע צימוד עם {name}",
+      "body": "{name} נמצא בדף 'מכשירים' שלך. אפשר לסגור עכשיו את מסך הצימוד שלו.",
+      "vision": "אפליקציות מותקנות ברגע שמצב מפתח פועל.",
+      "use": "שימוש ב-{name}",
+      "close": "סגירה"
+    },
+    "pairNamed": "צימוד {name}"
+  }
+}
