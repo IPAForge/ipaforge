@@ -1,0 +1,2216 @@
+{
+  "app": {
+    "name": "IPAForge"
+  },
+  "shell": {
+    "skipToContent": "Ga naar de inhoud",
+    "navigation": "Secties",
+    "credit": {
+      "madeWith": "Gemaakt met ❤️ en ☕",
+      "copyright": "© {year} {name}"
+    }
+  },
+  "topBar": {
+    "device": "Apparaat",
+    "noDevice": "Geen",
+    "deviceMenu": "Apparaten",
+    "account": "Apple ID",
+    "notSignedIn": "Niet aangemeld",
+    "accountMenu": "Apple ID's",
+    "addAppleId": "Apple ID toevoegen…",
+    "noAccounts": "Nog geen Apple ID's.",
+    "noDevicesHint": "Verbind een iPhone of iPad met een kabel en ontgrendel hem.",
+    "openDevices": "Apparaten openen",
+    "tour": "Rondleiding",
+    "pairByCode": "Apple TV of Vision Pro koppelen…"
+  },
+  "nav": {
+    "group": {
+      "manage": "Beheren"
+    },
+    "install": "Installeren",
+    "preload": "Vooraf laden",
+    "apps": "Apps",
+    "devices": "Apparaten",
+    "accounts": "Accounts",
+    "developer": "Developer Portal",
+    "logs": "Logboeken",
+    "settings": "Instellingen",
+    "installRunning": "Er loopt een installatie"
+  },
+  "placeholder": {
+    "body": "Dit onderdeel is nog in aanbouw."
+  },
+  "install": {
+    "title": "SideStore installeren",
+    "description": "Ondertekend met je Apple ID en daarna via USB geïnstalleerd.",
+    "steps": {
+      "device": "Het apparaat controleren",
+      "resolve": "De release zoeken",
+      "download": "Downloaden",
+      "inspect": "De app inspecteren",
+      "certificate_sharing": "Het certificaat delen",
+      "sign_in": "Aanmelden bij Apple",
+      "team": "Het team kiezen",
+      "register_device": "Het apparaat registreren",
+      "certificate": "Het certificaat voorbereiden",
+      "app_ids": "App-ID's registreren",
+      "free_apps": "De limiet voor gratis apps controleren",
+      "provision": "Provisioning-profielen ophalen",
+      "refresh_profiles": "Nieuwe profielen ophalen",
+      "sign": "De app ondertekenen",
+      "install": "Op het apparaat installeren",
+      "pairing": "Het koppelbestand plaatsen",
+      "remember": "Deze installatie onthouden",
+      "save": "De ondertekende .ipa opslaan"
+    },
+    "signInNeeded": {
+      "title": "Je Apple ID moet opnieuw worden aangemeld",
+      "body": "De opgeslagen sessie voor {appleId} is verlopen. Je kunt toch installeren: IPAForge vraagt om het wachtwoord zodra het zover is."
+    },
+    "blocked": {
+      "title": "Apple heeft {appleId} geblokkeerd op {device}",
+      "body": "Apps die met deze Apple ID zijn ondertekend, openen niet op dit apparaat. Gebruik een andere Apple ID.",
+      "use": "{appleId} gebruiken"
+    },
+    "home": {
+      "what": "Wat te installeren",
+      "channel": "Kanaal",
+      "install": "{app} installeren"
+    },
+    "variant": {
+      "sidestore": {
+        "title": "SideStore",
+        "description": "Vernieuwt en installeert apps zelf op het apparaat. Gebruikt 2 App-ID's."
+      },
+      "livecontainer": {
+        "title": "LiveContainer + SideStore",
+        "description": "Draait veel apps binnen één app, voorbij de limiet van 3 apps. Gebruikt 5 App-ID's."
+      }
+    },
+    "channel": {
+      "stable": "Stabiel",
+      "nightly": "Nightly",
+      "stableRecommended": "Stabiel (aanbevolen)",
+      "nightlyRecommended": "Nightly (aanbevolen)"
+    },
+    "plan": {
+      "title": "Deze installatie",
+      "waiting": "Wordt getoond zodra het apparaat en de Apple ID klaar zijn.",
+      "checking": "{app} wordt gedownload en bij Apple gecontroleerd… De download blijft bewaard, dus de installatie gebruikt hem opnieuw.",
+      "unavailable": "Kon niet bij Apple controleren. Je kunt toch installeren: elke stap controleert opnieuw.",
+      "appIds": "App-ID's",
+      "appIdsValue": "{created, plural, =0 {Alle {reused} al geregistreerd} other {{reused, plural, =0 {{created} nieuw} other {{created} nieuw, {reused} hergebruikt}}}} · {left, plural, one {# over deze week} other {# over deze week}}",
+      "nextSlot": "De volgende komt vrij op {date}",
+      "freeApps": "Gratis apps op het apparaat",
+      "freeAppsValue": "{used} van {limit} gebruikt",
+      "freeAppsRoom": "Er is ruimte voor deze",
+      "freeAppsFull": "Je kiest er een om te verwijderen",
+      "noLimit": "Geen limiet (betaald team)",
+      "certificate": "Certificaat",
+      "certificateReused": "Hergebruikt",
+      "certificateNew": "Er wordt een nieuw gemaakt",
+      "certificatesOnTeam": "{count, plural, =0 {Nog geen in het team} one {# in het team} other {# in het team}}",
+      "team": "Team",
+      "certificateNewWhy": "IPAForge heeft nog geen eigen certificaat in dit team. {count, plural, =0 {} one {Het certificaat dat er al is, hoort bij een andere tool, die de privésleutel houdt.} other {De # certificaten die er al zijn, horen bij andere tools, die hun privésleutels houden.}}"
+    },
+    "readiness": {
+      "noDevice": "Verbind eerst een apparaat.",
+      "noSideStore": "SideStore draait op iPhone en iPad. Gebruik Vooraf laden om apps op een Apple TV of Vision Pro te installeren.",
+      "checking": "Het apparaat wordt gecontroleerd…",
+      "device": "Beschikbaar zodra het apparaat klaar is.",
+      "noAccount": "Voeg eerst een Apple ID toe.",
+      "blocked": "Gebruik eerst een andere Apple ID.",
+      "appIds": "Deze week zijn er niet genoeg App-ID's meer.",
+      "ready": "Alles is klaar."
+    },
+    "run": {
+      "title": {
+        "running": "{app} wordt geïnstalleerd",
+        "completed": "{app} is geïnstalleerd",
+        "failed": "{app} kon niet worden geïnstalleerd",
+        "cancelled": "Installatie geannuleerd"
+      },
+      "subtitle": "{channel} · {device} · {appleId}",
+      "percent": "{fraction, number, percent}",
+      "progress": "Totale voortgang",
+      "steps": "Stappen",
+      "cancel": "Annuleren",
+      "cancelInstall": "Installatie annuleren",
+      "runningHint": "Je kunt andere onderdelen gebruiken terwijl dit loopt.",
+      "waitingHint": "Wacht op je antwoord.",
+      "stepState": {
+        "waiting": "heeft jou nodig",
+        "skipped": "overgeslagen",
+        "failed": "mislukt"
+      },
+      "detail": {
+        "bytes": "{received} van {total}",
+        "received": "{received}",
+        "retrying": "De verbinding viel weg. Opnieuw proberen over {seconds, plural, one {# seconde} other {# seconden}} (poging {attempt})"
+      },
+      "live": {
+        "header": "{percent} · {left}",
+        "installing": "{fraction, number, percent} · {phase}",
+        "count": "{done} van {total}",
+        "task": {
+          "line": "{task} · {count}",
+          "team": "Het team controleren",
+          "appIds": "App-ID's maken",
+          "appGroup": "De appgroep toevoegen",
+          "profiles": "Profielen ophalen"
+        },
+        "phase": {
+          "unpacking": "De app uitpakken",
+          "checking": "De app controleren",
+          "installing": "Installeren"
+        },
+        "speed": "{speed}/s",
+        "ios": "iOS installeert hem",
+        "leftSeconds": "Nog ongeveer {seconds} s",
+        "leftMinutes": "{minutes, plural, one {Nog ongeveer # min} other {Nog ongeveer # min}}"
+      },
+      "connection": {
+        "usb": "USB",
+        "network": "Wi-Fi"
+      },
+      "wifi": {
+        "title": "Dit apparaat is via Wi-Fi verbonden",
+        "body": "Grote apps installeren veel sneller met een kabel. Via Wi-Fi verstuurt IPAForge ze gecomprimeerd om tijd te besparen."
+      },
+      "unsupportedPrompt": {
+        "title": "Deze stap heeft een antwoord nodig",
+        "body": "IPAForge heeft een antwoord nodig op een vraag die deze versie niet kan tonen. Annuleer de installatie en werk IPAForge bij."
+      },
+      "backToInstall": "Terug naar Installeren",
+      "report": {
+        "device": "{model} · iOS {ios} · {connection}",
+        "release": "{app} {version} · {channel}",
+        "download": "{size} · controlesom gecontroleerd",
+        "downloadCached": "{size} · uit de downloadcache",
+        "app": "{app} · {extensions, plural, =0 {geen extensies} one {# extensie} other {# extensies}}",
+        "session": {
+          "reused": "Opgeslagen sessie hergebruikt",
+          "renewed": "Opnieuw aangemeld met het opgeslagen wachtwoord",
+          "signed-in": "Aangemeld"
+        },
+        "registered": "Geregistreerd bij het team",
+        "alreadyRegistered": "Al geregistreerd bij het team",
+        "certificate": {
+          "reused": "Het opgeslagen certificaat hergebruikt",
+          "created": "Een nieuw certificaat gemaakt",
+          "replaced": "Er een ingetrokken en een nieuw certificaat gemaakt"
+        },
+        "removed": "{app} verwijderd · {used}",
+        "profiles": "{count, plural, one {# profiel} other {# profielen}}",
+        "signed": "{count, plural, one {# bundel ondertekend} other {# bundels ondertekend}}",
+        "signedCompressed": "{count, plural, one {# bundel ondertekend} other {# bundels ondertekend}} · gecomprimeerd voor Wi-Fi",
+        "phase": {
+          "uploading": "Naar het apparaat uploaden",
+          "installing": "Installeren"
+        },
+        "pairing": "Geplaatst in {apps}",
+        "shared": "Certificaat gedeeld",
+        "notShared": "Certificaat niet gedeeld",
+        "pairingRemote": "Geplaatst in {apps} · met externe koppeling voor iOS 17.4 en nieuwer",
+        "saved": "Opgeslagen in {path}"
+      },
+      "subtitleApps": "{device} · {appleId}"
+    },
+    "summary": {
+      "title": "Deze installatie",
+      "app": "App",
+      "channel": "Kanaal",
+      "device": "Apparaat",
+      "deviceValue": "{name} · iOS {ios}",
+      "account": "Apple ID",
+      "appIds": "App-ID's",
+      "appIdsValue": "{count, plural, one {# over deze week} other {# over deze week}}",
+      "freeApps": "Gratis apps",
+      "apps": "Apps"
+    },
+    "done": {
+      "title": "{app} staat op {device}.",
+      "trust": "Op het apparaat: Instellingen › Algemeen › VPN en apparaatbeheer › vertrouw {appleId}.",
+      "open": "Open SideStore: het koppelbestand en je certificaat zitten er al in.",
+      "done": "Klaar"
+    },
+    "cancelled": {
+      "title": "Gestopt bij “{step}”.",
+      "body": "Wat al klaar is, wordt niet herhaald als je hervat.",
+      "resume": "Hervatten"
+    },
+    "failed": {
+      "continues": "Voltooide stappen blijven bewaard: opnieuw proberen gaat verder vanaf “{step}”.",
+      "copy": "Diagnostiek kopiëren",
+      "copied": "Gekopieerd",
+      "copyFailed": "Kopiëren mislukt",
+      "showLogs": "Logboeken tonen"
+    }
+  },
+  "pairing": {
+    "steps": {
+      "targets": "Apps zoeken die een koppeling nodig hebben",
+      "place": "Het koppelbestand plaatsen"
+    }
+  },
+  "settings": {
+    "appearance": "Weergave en taal",
+    "mode": "Kleurmodus",
+    "palette": "Palet",
+    "language": {
+      "title": "Taal",
+      "system": "Systeem ({language})",
+      "hint": "IPAForge volgt de taal van je systeem, tenzij je hier een taal kiest.",
+      "draft": "concept"
+    },
+    "anisette": {
+      "title": "Anisette-servers",
+      "hint": "Voor aanmelden bij Apple is een anisette-server nodig, die Apple vertelt welke computer zich aanmeldt. IPAForge gebruikt zelf een server die werkt; kies hier een server als je een bepaalde voorkeur hebt, of voeg je eigen server toe.",
+      "add": "Server toevoegen",
+      "loading": "De servers worden geladen…",
+      "modeLabel": "Hoe IPAForge een server kiest",
+      "mode": {
+        "automatic": "Automatisch",
+        "chosen": "Een server kiezen"
+      },
+      "modeHint": {
+        "automatic": "Probeert de servers in deze volgorde en gaat verder als er een mislukt.",
+        "chosen": "Gebruikt altijd {name}.",
+        "none": "Kies de server die IPAForge altijd moet gebruiken."
+      },
+      "noneChosen": "Nog geen server gekozen: tot je er een kiest, blijft IPAForge zelf kiezen.",
+      "chosenDown": "{name} reageert niet. Aanmelden werkt pas weer als de server terug is, of als je een andere server kiest of overschakelt naar Automatisch.",
+      "count": "{count, plural, one {# server} other {# servers}}",
+      "sources": "{custom, plural, =0 {} other {# door jou toegevoegd, }}{list} uit de lijst van SideStore, {backup} als reserve ·",
+      "listUpdated": "Lijst van SideStore bijgewerkt {ago}",
+      "listNever": "Lijst van SideStore nog niet opgehaald",
+      "updateList": "Lijst bijwerken",
+      "updating": "Bijwerken…",
+      "testAll": "Alles testen",
+      "testing": "Testen…",
+      "group": {
+        "custom": "Door jou toegevoegd · eerst gebruikt",
+        "list": "Uit de lijst van SideStore",
+        "backup": "Reserve · alleen als de lijst van SideStore onbereikbaar is of geen enkele server antwoordt"
+      },
+      "tag": {
+        "custom": "Door jou toegevoegd",
+        "inUse": "In gebruik",
+        "chosen": "Gekozen"
+      },
+      "position": "Als nummer {position} geprobeerd",
+      "use": "{name} gebruiken",
+      "chooseLabel": "Te gebruiken server",
+      "status": {
+        "untested": "Niet getest",
+        "testing": "Testen…",
+        "ok": "Werkt · {ms} ms",
+        "bad": "Reageert niet"
+      },
+      "test": "Testen",
+      "testOne": "{name} testen",
+      "edit": "{name} bewerken",
+      "remove": "{name} verwijderen",
+      "confirmRemove": "{name} verwijderen?",
+      "removeYes": "Verwijderen",
+      "skipped": "Niet gebruikt uit de lijst van SideStore: {names} (geen HTTPS). Je kunt zelf een server met gewone HTTP toevoegen, bijvoorbeeld een server op je eigen computer.",
+      "dialog": {
+        "addTitle": "Een anisette-server toevoegen",
+        "editTitle": "Server bewerken",
+        "body": "Elke anisette-server die het gebruikelijke protocol spreekt, werkt: een openbare server of een die je zelf draait.",
+        "name": "Naam",
+        "namePlaceholder": "Mijn server",
+        "address": "Adres",
+        "addressPlaceholder": "https://anisette.my-server.net",
+        "addressHint": "https:// of, voor een server die je zelf draait, http://",
+        "nameMissing": "Geef de server een naam.",
+        "addressInvalid": "Voer een adres in dat begint met https:// of http://.",
+        "exists": "Deze server staat al in de lijst.",
+        "stillAdd": "Je kunt hem toch toevoegen.",
+        "save": "Opslaan"
+      }
+    },
+    "guide": {
+      "title": "Installatiegids",
+      "text": "De controles van de computer, iPhone en Apple ID opnieuw.",
+      "run": "De gids opnieuw uitvoeren",
+      "tour": "Rondleiding",
+      "tourTitle": "Rondleiding door de pagina's",
+      "tourHint": "Waar elke pagina voor dient, stap voor stap."
+    },
+    "tabs": {
+      "label": "Instellingen",
+      "general": "Algemeen",
+      "anisette": "Anisette-servers"
+    },
+    "modeHint": "Licht, donker of zoals je systeem.",
+    "paletteHint": "De kleuren van de hele app, in licht en donker."
+  },
+  "theme": {
+    "mode": {
+      "system": "Systeem",
+      "light": "Licht",
+      "dark": "Donker"
+    },
+    "palette": {
+      "graphite": "Grafiet",
+      "ocean": "Oceaan",
+      "aurora": "Aurora",
+      "sunset": "Zonsondergang",
+      "forest": "Bos",
+      "rose": "Roze",
+      "violet": "Violet",
+      "mocha": "Mokka"
+    }
+  },
+  "errors": {
+    "device": {
+      "locked": {
+        "title": "Ontgrendel je apparaat",
+        "body": "Het apparaat is vergrendeld, dus IPAForge kan er niet mee praten. Ontgrendel het en houd het ontgrendeld tot de installatie klaar is."
+      },
+      "developer_mode_off": {
+        "title": "Ontwikkelaarsmodus staat uit",
+        "body": "Gesideloade apps hebben de ontwikkelaarsmodus nodig. Zet hem aan via Instellingen › Privacy en beveiliging › Ontwikkelaarsmodus en start het apparaat daarna opnieuw op."
+      },
+      "not_paired": {
+        "title": "Deze computer wordt nog niet vertrouwd",
+        "body": "Ontgrendel het apparaat en tik op Vertrouw als het vraagt of je deze computer vertrouwt."
+      },
+      "usbmuxd_unavailable": {
+        "title": "Apparaatondersteuning draait niet",
+        "body": "IPAForge kan de systeemservice die met iPhones en iPads praat niet bereiken. Installeer of start hem en probeer het daarna opnieuw."
+      },
+      "not_found": {
+        "title": "Geen apparaat gevonden",
+        "body": "Verbind je iPhone of iPad met een USB-kabel en ontgrendel hem."
+      },
+      "disconnected": {
+        "title": "De verbinding met het apparaat is verbroken",
+        "body": "De verbinding viel weg. Sluit de kabel opnieuw aan, ontgrendel het apparaat en probeer het opnieuw."
+      },
+      "pairing_pending": {
+        "title": "Wachten op Vertrouw",
+        "body": "Ontgrendel het apparaat en tik op Vertrouw in het bericht dat verscheen."
+      },
+      "pairing_denied": {
+        "title": "Vertrouwen is geweigerd",
+        "body": "Het apparaat weigerde deze computer te vertrouwen. Koppel opnieuw en tik dit keer op Vertrouw."
+      },
+      "invalid_pair_record": {
+        "title": "De koppeling is niet meer geldig",
+        "body": "Het apparaat accepteert de koppeling van deze computer niet meer. Haal de kabel eruit, steek hem er weer in, ontgrendel het apparaat en tik op Vertrouw."
+      },
+      "service_unavailable": {
+        "title": "Een apparaatservice is niet gestart",
+        "body": "Het apparaat weigerde een service te starten die IPAForge nodig heeft. Ontgrendel het, verbind het opnieuw en probeer het opnieuw."
+      },
+      "protocol_error": {
+        "title": "Onverwacht antwoord van het apparaat",
+        "body": "Het apparaat stuurde iets wat IPAForge niet begreep. Verbind het opnieuw; als het weer gebeurt, werk IPAForge dan bij of meld het."
+      },
+      "install_failed": {
+        "title": "De installatie is mislukt",
+        "body": "Het apparaat weigerde de app te installeren. Probeer het opnieuw; als het blijft mislukken, installeer de app dan opnieuw of meld het."
+      },
+      "afc_error": {
+        "title": "Bestanden overdragen is mislukt",
+        "body": "Bestanden naar het apparaat kopiëren is mislukt. Ontgrendel het en probeer het opnieuw."
+      },
+      "timeout": {
+        "title": "Het apparaat reageert niet meer",
+        "body": "Het apparaat deed er te lang over om te antwoorden. Ontgrendel het, verbind het opnieuw en probeer het opnieuw."
+      },
+      "passcode_required": {
+        "title": "Stel een toegangscode in",
+        "body": "Hiervoor is een toegangscode op het apparaat nodig. Stel er een in via Instellingen › Face ID en toegangscode en probeer het daarna opnieuw."
+      },
+      "free_app_limit": {
+        "title": "Te veel gesideloade apps",
+        "body": "Met een gratis Apple ID kunnen maar drie gesideloade apps tegelijk actief zijn op een apparaat. Verwijder er een en probeer het opnieuw."
+      },
+      "profile_banned": {
+        "title": "Apple heeft deze Apple ID op het apparaat geblokkeerd",
+        "body": "Het apparaat accepteert geen apps die met deze Apple ID zijn ondertekend. Opnieuw proberen helpt niet: gebruik een andere Apple ID."
+      },
+      "identity_invalid": {
+        "title": "Het ondertekeningscertificaat is niet meer geldig",
+        "body": "Het apparaat wees het certificaat af waarmee de app is ondertekend. Controleer de klok van de computer, of trek het certificaat in en probeer het opnieuw."
+      },
+      "profile_not_found": {
+        "title": "Provisioning-profiel ontbreekt",
+        "body": "Het apparaat kon het provisioning-profiel van de app niet vinden. Probeer het opnieuw of installeer de app opnieuw."
+      },
+      "pairing_path_invalid": {
+        "title": "In dat pad kan geen koppelbestand staan",
+        "body": "Gebruik een pad in Documents of Library van de app dat eindigt op .plist of .mobiledevicepairing."
+      },
+      "local_network_denied": {
+        "title": "IPAForge kan niet naar apparaten op je netwerk zoeken",
+        "body": "macOS heeft IPAForge niet toegestaan apparaten op je lokale netwerk te vinden, dus iPhones zijn niet via Wi-Fi te bereiken. Apparaten met een kabel werken nog steeds."
+      },
+      "tunnel_unavailable": {
+        "title": "De tunnel van het apparaat is niet geopend",
+        "body": "IPAForge kon de beveiligde tunnel die iOS 17.4 en nieuwer via de kabel bieden niet openen. Controleer of het apparaat iOS 17.4 of nieuwer draait, verbind het opnieuw en probeer het opnieuw."
+      },
+      "pairing_code_wrong": {
+        "title": "De code komt niet overeen",
+        "body": "De ingevoerde code is niet de code die het apparaat toont. Controleer de code op het scherm en probeer het opnieuw."
+      },
+      "pairing_backoff": {
+        "title": "Te veel foute codes",
+        "body": "Het apparaat accepteert een tijdje geen codes meer. Wacht even, open het koppelscherm opnieuw en koppel nog eens."
+      },
+      "pairing_screen_closed": {
+        "title": "Het koppelscherm is gesloten",
+        "body": "Het apparaat toonde zijn koppelscherm niet meer voordat het koppelen klaar was. Open het opnieuw en houd het open: Apple TV: Instellingen → Afstandsbedieningen en apparaten → Remote-app en apparaten. Apple Vision Pro: Instellingen → Algemeen → Apparaten op afstand."
+      }
+    },
+    "apple": {
+      "anisette_unavailable": {
+        "title": "De anisette-server reageert niet",
+        "body": "Voor aanmelden bij Apple is een anisette-server nodig, en de huidige antwoordde niet. Kies een andere server of controleer je netwerk."
+      },
+      "anisette_not_provisioned": {
+        "title": "De anisette-server is niet klaar",
+        "body": "De anisette-server kon zichzelf niet instellen. Kies een andere server en probeer het opnieuw."
+      },
+      "app_id_quota": {
+        "title": "Deze week geen App-ID's meer",
+        "body": "Met een gratis Apple ID kun je maar 10 App-ID's per 7 dagen registreren. Wacht tot er een plek vrijkomt of gebruik een andere Apple ID."
+      },
+      "certificate_limit": {
+        "title": "Te veel certificaten",
+        "body": "Deze Apple ID heeft zijn limiet aan ontwikkelaarscertificaten bereikt. Trek er een in of gebruik een andere Apple ID."
+      },
+      "invalid_credentials": {
+        "title": "Verkeerde Apple ID of wachtwoord",
+        "body": "Apple accepteerde het e-mailadres of wachtwoord niet. Controleer ze en voer het wachtwoord opnieuw in."
+      },
+      "account_locked": {
+        "title": "Deze Apple ID is vergrendeld",
+        "body": "Apple heeft dit account om veiligheidsredenen vergrendeld. Ontgrendel het op een Apple-apparaat of op de website van Apple, of gebruik een andere Apple ID."
+      },
+      "account_refused": {
+        "title": "Apple weigerde het aanmelden",
+        "body": "Apple laat deze Apple ID op dit moment niet vanaf hier aanmelden. Wacht een tijdje, meld je één keer aan op een Apple-apparaat of gebruik een andere Apple ID."
+      },
+      "client_rejected": {
+        "title": "Apple wees het aanmeldverzoek af",
+        "body": "Apple accepteerde de identiteit die bij het aanmelden is verstuurd niet. Kies een andere anisette-server, of wacht en probeer het opnieuw."
+      },
+      "rate_limited": {
+        "title": "Te veel verzoeken",
+        "body": "Apple beperkt de verzoeken voorlopig. Wacht een paar minuten en probeer het opnieuw."
+      },
+      "service_unavailable": {
+        "title": "De servers van Apple zijn niet beschikbaar",
+        "body": "De servers van Apple reageerden niet. Wacht een paar minuten en controleer je netwerk."
+      },
+      "two_factor_required": {
+        "title": "Voer de verificatiecode in",
+        "body": "Apple heeft een verificatiecode naar je vertrouwde apparaten gestuurd. Voer die in om door te gaan."
+      },
+      "two_factor_invalid_code": {
+        "title": "Verkeerde verificatiecode",
+        "body": "Die code werkte niet. Controleer hem en voer hem opnieuw in."
+      },
+      "two_factor_unsupported": {
+        "title": "Deze aanmeldmethode wordt niet ondersteund",
+        "body": "Deze Apple ID gebruikt een tweestapsmethode die IPAForge nog niet aankan, zoals een beveiligingssleutel. Gebruik een andere Apple ID."
+      },
+      "sms_unavailable": {
+        "title": "Codes per sms zijn niet beschikbaar",
+        "body": "Apple stuurt de code hier niet per sms. Haal hem op een vertrouwd apparaat op of gebruik een andere Apple ID."
+      },
+      "clock_skew": {
+        "title": "De klok van de computer klopt niet",
+        "body": "Apple wijst verzoeken af als de klok niet klopt. Stel de datum en tijd automatisch in en probeer het opnieuw."
+      },
+      "protocol_error": {
+        "title": "Onverwacht antwoord van Apple",
+        "body": "Apple stuurde iets wat IPAForge niet begreep. Werk IPAForge bij, of meld het als het blijft gebeuren."
+      },
+      "session_expired": {
+        "title": "Je sessie is verlopen",
+        "body": "Meld je opnieuw aan bij deze Apple ID. Als het blijft verlopen, controleer dan de klok van de computer."
+      },
+      "account_not_found": {
+        "title": "Apple ID niet gevonden",
+        "body": "IPAForge heeft geen opgeslagen sessie voor deze Apple ID. Meld je opnieuw aan."
+      },
+      "not_eligible": {
+        "title": "Deze Apple ID kan niet voor ontwikkeling worden gebruikt",
+        "body": "Apple staat niet toe dat dit account apps ondertekent, bijvoorbeeld vanwege de leeftijd of de voorwaarden. Gebruik een andere Apple ID."
+      },
+      "email_unverified": {
+        "title": "Verifieer je e-mailadres",
+        "body": "Apple wil eerst het e-mailadres van deze Apple ID geverifieerd zien. Verifieer het en probeer het daarna opnieuw."
+      },
+      "team_agreement": {
+        "title": "Accepteer de overeenkomst van Apple",
+        "body": "Het team heeft de nieuwste ontwikkelaarsovereenkomst van Apple niet geaccepteerd. Accepteer die op de ontwikkelaarswebsite van Apple, of kies een ander team."
+      },
+      "no_teams": {
+        "title": "Geen ontwikkelaarsteam",
+        "body": "Deze Apple ID heeft nog geen ontwikkelaarsteam. Accepteer de ontwikkelaarsovereenkomst van Apple of gebruik een andere Apple ID."
+      },
+      "device_limit": {
+        "title": "Apparaatlimiet bereikt",
+        "body": "Dit team kan geen apparaten meer registreren. Kies een ander team of gebruik een andere Apple ID."
+      },
+      "app_id_unavailable": {
+        "title": "Deze App-ID is bezet",
+        "body": "Een ander team gebruikt deze App-ID al. Kies een ander team of gebruik een andere Apple ID."
+      },
+      "invalid_app_id_name": {
+        "title": "Apple wees de naam van de App-ID af",
+        "body": "Apple accepteerde de naam niet die IPAForge voor de App-ID koos. Werk IPAForge bij of meld het."
+      },
+      "certificate_not_revocable": {
+        "title": "Dit certificaat kan hier niet worden ingetrokken",
+        "body": "Alleen Apple kan dit certificaat intrekken. Trek in plaats daarvan een ander certificaat in."
+      },
+      "no_devices_for_profile": {
+        "title": "Het apparaat is nog niet geregistreerd",
+        "body": "Apple is nog niet klaar met het registreren van het apparaat. Wacht een minuut en probeer het opnieuw."
+      },
+      "developer_request_failed": {
+        "title": "De ontwikkelaarsservices van Apple zijn mislukt",
+        "body": "Een verzoek aan de ontwikkelaarsservices van Apple is mislukt. Probeer het opnieuw en meld het als het blijft gebeuren."
+      },
+      "anisette_server_invalid": {
+        "title": "Deze anisette-server kan niet worden gebruikt",
+        "body": "Controleer de naam en het adres: het adres begint met https:// of http://."
+      },
+      "anisette_server_exists": {
+        "title": "Deze anisette-server staat al in de lijst",
+        "body": "Kies hem in plaats daarvan uit de lijst in Instellingen."
+      },
+      "certificate_not_on_team": {
+        "title": "Dit certificaat staat niet in het team",
+        "body": "Apple vermeldt het niet meer voor dit team: het is ingetrokken, verlopen of hoort bij een ander team. Exporteer een actueel certificaat en importeer dat."
+      }
+    },
+    "catalog": {
+      "source_gone": {
+        "title": "De release is niet meer beschikbaar",
+        "body": "De plek waar deze app vandaan werd gedownload, bestaat niet meer. Kies een ander kanaal, importeer een IPA of werk IPAForge bij."
+      },
+      "unavailable": {
+        "title": "De lijst met apps kon niet worden geladen",
+        "body": "IPAForge kon de lijst met apps niet ophalen. Controleer je netwerk en probeer het opnieuw."
+      },
+      "download_failed": {
+        "title": "De download is mislukt",
+        "body": "De app kon niet worden gedownload. Controleer je netwerk en probeer het opnieuw."
+      },
+      "checksum_mismatch": {
+        "title": "De download is beschadigd",
+        "body": "Het gedownloade bestand komt niet overeen met zijn controlesom, dus het is niet gebruikt. Probeer het opnieuw of kies een ander kanaal."
+      },
+      "checksum_missing": {
+        "title": "De download kan niet worden geverifieerd",
+        "body": "Deze release heeft geen controlesom, dus IPAForge kan hem niet controleren. Kies een ander kanaal of importeer de IPA zelf."
+      },
+      "rate_limited": {
+        "title": "Te veel verzoeken aan GitHub",
+        "body": "GitHub beperkt de downloads voorlopig. Wacht een paar minuten en probeer het opnieuw."
+      },
+      "app_source_unreachable": {
+        "title": "Deze bron kon niet worden bereikt",
+        "body": "Controleer de link en of je online bent en probeer het opnieuw."
+      },
+      "app_source_invalid": {
+        "title": "Deze link is geen appbron",
+        "body": "Er staan geen apps in het AltStore-formaat in. Controleer de link of voeg in plaats daarvan het .ipa-bestand van de app toe."
+      },
+      "app_source_exists": {
+        "title": "Deze bron is al toegevoegd",
+        "body": "De apps ervan staan al in Apps bladeren."
+      }
+    },
+    "plist": {
+      "invalid": {
+        "title": "Het instellingenbestand van de app is beschadigd",
+        "body": "Een property list in de app kon niet worden gelezen. Kies een andere IPA of meld het."
+      }
+    },
+    "net": {
+      "offline": {
+        "title": "Je bent offline",
+        "body": "IPAForge kan het internet niet bereiken. Controleer je netwerkverbinding en probeer het opnieuw."
+      }
+    },
+    "signer": {
+      "invalid_macho": {
+        "title": "Het programma van de app is beschadigd",
+        "body": "Het uitvoerbare bestand van de app kon niet worden gelezen. Kies een andere IPA."
+      },
+      "encrypted_binary": {
+        "title": "De app is versleuteld",
+        "body": "Deze IPA komt uit de App Store en is nog versleuteld, dus hij kan niet opnieuw worden ondertekend. Kies een ontsleutelde IPA."
+      },
+      "unsupported_arch": {
+        "title": "Niet-ondersteund appformaat",
+        "body": "Het uitvoerbare bestand van de app gebruikt een formaat dat iOS niet kan uitvoeren. Kies een andere IPA."
+      },
+      "unsupported_ios": {
+        "title": "Vereist een nieuwere iOS",
+        "body": "Deze app vereist een nieuwere iOS-versie dan het apparaat heeft. Werk het apparaat bij of kies een ander kanaal of een andere IPA."
+      },
+      "unsupported_device": {
+        "title": "Niet gemaakt voor dit apparaat",
+        "body": "Deze app ondersteunt dit soort apparaat niet, bijvoorbeeld een app alleen voor iPad op een iPhone, of een iPhone-app op een Apple TV. Kies een andere IPA."
+      },
+      "no_arm64_build": {
+        "title": "Geen build voor iPhone of iPad",
+        "body": "De app heeft geen 64-bits build voor iPhone of iPad, bijvoorbeeld een 32-bits build of een simulatorbuild. Kies een andere IPA."
+      },
+      "no_header_space": {
+        "title": "De app kan niet worden ondertekend",
+        "body": "Er is geen ruimte in het uitvoerbare bestand van de app voor een handtekening. Kies een andere IPA of meld het."
+      },
+      "zip_slip": {
+        "title": "De IPA is onveilig",
+        "body": "De IPA probeert bestanden buiten zijn eigen map te schrijven, dus IPAForge weigerde hem. Kies een andere IPA."
+      },
+      "invalid_certificate": {
+        "title": "Het certificaat is ongeldig",
+        "body": "Het ondertekeningscertificaat kon niet worden gebruikt. Trek het in zodat IPAForge een nieuw certificaat kan maken en probeer het opnieuw."
+      },
+      "unknown_issuer": {
+        "title": "Onbekende uitgever van het certificaat",
+        "body": "IPAForge herkent niet wie het certificaat heeft uitgegeven. Werk IPAForge bij en controleer je netwerk."
+      },
+      "invalid_bundle": {
+        "title": "De appbundel is ongeldig",
+        "body": "De IPA bevat geen geldige app. Kies een andere IPA."
+      },
+      "invalid_profile": {
+        "title": "Het provisioning-profiel is ongeldig",
+        "body": "Het provisioning-profiel van Apple kon niet worden gelezen. Probeer het opnieuw en meld het als het blijft gebeuren."
+      },
+      "extension_prefix": {
+        "title": "Een app-extensie heeft de verkeerde ID",
+        "body": "De bundel-ID van een extensie begint niet met de eigen ID van de app. Kies een andere IPA."
+      },
+      "profile_mismatch": {
+        "title": "Het provisioning-profiel past niet",
+        "body": "Het profiel past niet bij de app waarvoor het is gemaakt. Probeer het opnieuw en meld het als het blijft gebeuren."
+      },
+      "profile_expired": {
+        "title": "Het provisioning-profiel is verlopen",
+        "body": "Het profiel is verlopen, of de klok van de computer klopt niet. Controleer de klok en probeer het opnieuw."
+      },
+      "cert_not_in_profile": {
+        "title": "Het certificaat zit niet in het profiel",
+        "body": "Het provisioning-profiel bevat het ondertekeningscertificaat niet. Probeer het opnieuw om een nieuw profiel op te halen."
+      },
+      "device_not_provisioned": {
+        "title": "Het apparaat zit niet in het profiel",
+        "body": "Het provisioning-profiel bevat dit apparaat niet. Probeer het opnieuw om een nieuw profiel op te halen."
+      },
+      "pkcs12_password": {
+        "title": "Het wachtwoord opent deze .p12 niet",
+        "body": "Typ het wachtwoord waarmee hij is geëxporteerd en probeer het opnieuw."
+      }
+    },
+    "installer": {
+      "step_failed": {
+        "title": "Een stap is mislukt",
+        "body": "Er ging iets mis tijdens de installatie. Probeer het opnieuw en meld het als het blijft gebeuren."
+      },
+      "prompt_cancelled": {
+        "title": "Geannuleerd",
+        "body": "De installatie is gestopt omdat een vraag is geannuleerd. Begin opnieuw wanneer je klaar bent."
+      },
+      "certificate_machine_id_missing": {
+        "title": "Het certificaat kan niet worden gedeeld",
+        "body": "Dit certificaat mist de gegevens die SideStore nodig heeft om het te openen. Trek het in zodat IPAForge een nieuw certificaat kan maken en probeer het opnieuw."
+      },
+      "team_required": {
+        "title": "Kies een team",
+        "body": "Deze Apple ID hoort bij meerdere teams. Kies het team waarmee je wilt ondertekenen."
+      },
+      "kept_ipa_missing": {
+        "title": "Deze app kan hier niet worden vernieuwd",
+        "body": "IPAForge heeft hem niet op dit apparaat geïnstalleerd, of de bewaarde kopie is weg. Voeg de .ipa toe in Vooraf laden om hem opnieuw te installeren."
+      },
+      "wrong_app": {
+        "title": "Deze link geeft een andere app",
+        "body": "Het is niet de app die je vernieuwt of bijwerkt, dus hij is niet geïnstalleerd en de app en zijn gegevens blijven zoals ze zijn. Voeg de juiste .ipa toe in Vooraf laden om hem opnieuw te installeren."
+      },
+      "version_unavailable": {
+        "title": "Deze versie kan niet opnieuw worden gedownload",
+        "body": "Vernieuwen behoudt de versie op je apparaat, en die wordt niet meer aangeboden om te downloaden. Gebruik Bijwerken om de nieuwste versie te installeren; de app behoudt zijn gegevens."
+      },
+      "pairing_app_not_found": {
+        "title": "Die app staat niet op het apparaat",
+        "body": "Hij is verwijderd, of is niet meer een app die IPAForge heeft geïnstalleerd. Sluit Koppelbestanden en open het opnieuw."
+      },
+      "certificate_not_stored": {
+        "title": "Nog geen certificaat op deze computer",
+        "body": "Deze computer bewaart het certificaat van het team zodra hij er een app mee installeert. Installeer eerst een app of importeer een .p12."
+      }
+    },
+    "rpc": {
+      "invalid_message": {
+        "title": "Interne communicatiefout",
+        "body": "Onderdelen van IPAForge begrepen elkaar niet. Werk IPAForge bij of meld het."
+      },
+      "disconnected": {
+        "title": "Verbinding met de engine verbroken",
+        "body": "De engine van IPAForge reageert niet meer. Probeer het opnieuw en meld het als het blijft gebeuren."
+      },
+      "timeout": {
+        "title": "De engine antwoordde niet",
+        "body": "De engine van IPAForge deed er te lang over om te antwoorden. Probeer het opnieuw en meld het als het blijft gebeuren."
+      }
+    },
+    "internal": {
+      "aborted": {
+        "title": "Gestopt",
+        "body": "De bewerking is gestopt voordat hij klaar was."
+      },
+      "unexpected": {
+        "title": "Er ging iets mis",
+        "body": "Er is een onverwachte fout opgetreden. Probeer het opnieuw en meld het als het blijft gebeuren."
+      }
+    }
+  },
+  "recovery": {
+    "retry": "Opnieuw proberen",
+    "wait-and-retry": "Wacht en probeer het opnieuw",
+    "check-network": "Controleer je netwerk",
+    "check-clock": "Controleer de datum en tijd",
+    "change-anisette-server": "Kies een andere anisette-server",
+    "re-enter-password": "Voer het wachtwoord opnieuw in",
+    "re-enter-code": "Voer de code opnieuw in",
+    "use-trusted-device": "Gebruik een vertrouwd apparaat",
+    "sign-in-again": "Meld je opnieuw aan",
+    "sign-in-on-apple-device": "Meld je aan op een Apple-apparaat",
+    "switch-account": "Gebruik een andere Apple ID",
+    "verify-email": "Verifieer je e-mailadres",
+    "accept-agreement": "Accepteer de overeenkomst van Apple",
+    "choose-team": "Kies een team",
+    "revoke-certificate": "Trek een certificaat in",
+    "wait-for-app-id-slot": "Wacht op een vrije App-ID",
+    "try-anyway": "Toch proberen",
+    "choose-app-to-remove": "Kies een app om te verwijderen",
+    "unlock-device": "Ontgrendel het apparaat",
+    "enable-developer-mode": "Zet de ontwikkelaarsmodus aan",
+    "trust-computer": "Vertrouw deze computer",
+    "reconnect-device": "Verbind het apparaat opnieuw",
+    "pair-again": "Koppel opnieuw",
+    "set-passcode": "Stel een toegangscode in",
+    "install-device-support": "Installeer apparaatondersteuning",
+    "reinstall-app": "Installeer de app opnieuw",
+    "choose-another-ipa": "Kies een andere IPA",
+    "choose-another-channel": "Kies een ander kanaal",
+    "import-ipa": "Importeer een IPA",
+    "update-ipaforge": "Werk IPAForge bij",
+    "report-issue": "Meld het probleem",
+    "or": "Of",
+    "switchAccount": {
+      "title": "Gebruik een andere Apple ID",
+      "body": "De installatie begint opnieuw met de Apple ID die je kiest."
+    },
+    "fix": {
+      "copy": "Kopiëren",
+      "copied": "Gekopieerd",
+      "done": "Klaar, probeer opnieuw",
+      "waitAndRetry": {
+        "how": "Apple is bezig of beperkt verzoeken. Wacht een minuut en probeer het opnieuw."
+      },
+      "checkNetwork": {
+        "how": "Zorg dat deze computer online is en probeer het opnieuw."
+      },
+      "checkClock": {
+        "step1": "Open de instellingen voor datum en tijd op deze computer",
+        "step2": "Zet het automatisch instellen van datum en tijd aan"
+      },
+      "reEnterPassword": {
+        "how": "Bij opnieuw proberen wordt om het wachtwoord gevraagd; controleer het voordat je het invoert."
+      },
+      "reEnterCode": {
+        "how": "Bij opnieuw proberen wordt om een nieuwe verificatiecode gevraagd."
+      },
+      "useTrustedDevice": {
+        "how": "Kies bij de vraag om de code een vertrouwd apparaat in plaats van een sms."
+      },
+      "signInAgain": {
+        "how": "Bij opnieuw proberen wordt om het wachtwoord gevraagd om opnieuw aan te melden."
+      },
+      "signInOnAppleDevice": {
+        "how": "Meld je aan bij deze Apple ID op een iPhone, iPad of Mac, of op de website van Apple, en volg wat er gevraagd wordt:"
+      },
+      "switchAccount": {
+        "how": "Kies een van je opgeslagen Apple ID's. De installatie begint er opnieuw mee.",
+        "button": "Kies een Apple ID…"
+      },
+      "verifyEmail": {
+        "how": "Verifieer het e-mailadres van deze Apple ID op de website van Apple:"
+      },
+      "acceptAgreement": {
+        "how": "Meld je aan op de ontwikkelaarswebsite van Apple en accepteer de overeenkomst die wordt getoond:"
+      },
+      "revokeCertificate": {
+        "how": "Bij opnieuw proberen wordt gevraagd welk certificaat moet worden ingetrokken."
+      },
+      "waitForAppIdSlot": {
+        "how": "Apple geeft elke App-ID 7 dagen nadat hij is gemaakt weer vrij. Installeer opnieuw zodra er een vrij is, of gebruik een andere Apple ID.",
+        "next": "De volgende App-ID komt vrij op {date}."
+      },
+      "chooseAppToRemove": {
+        "how": "Bij opnieuw proberen wordt gevraagd welke app moet worden verwijderd om ruimte te maken."
+      },
+      "unlockDevice": {
+        "how": "Ontgrendel het apparaat en houd het ontgrendeld tot de installatie klaar is."
+      },
+      "enableDeveloperMode": {
+        "button": "Hij staat aan, probeer opnieuw"
+      },
+      "trustComputer": {
+        "how": "Ontgrendel het apparaat. Tik op Vertrouw als het vraagt of je deze computer vertrouwt en voer de toegangscode in.",
+        "button": "Vraag het opnieuw op het apparaat"
+      },
+      "reconnectDevice": {
+        "how": "Haal het apparaat los, sluit het opnieuw aan en ontgrendel het."
+      },
+      "setPasscode": {
+        "how": "Stel een toegangscode in op het apparaat via Instellingen › Face ID en toegangscode en probeer het daarna opnieuw."
+      },
+      "installDeviceSupport": {
+        "how": "Installeer op Windows Apple Devices (of iTunes) uit de Microsoft Store en start IPAForge daarna opnieuw."
+      },
+      "reinstallApp": {
+        "how": "Verwijder de app van het apparaat en probeer het daarna opnieuw."
+      },
+      "chooseAnotherChannel": {
+        "how": "De build van het andere kanaal werkt misschien op dit apparaat.",
+        "button": "Installeren vanaf {channel}"
+      },
+      "open": "Openen",
+      "tryAnyway": {
+        "how": "Apple meldde een negatief aantal resterende App-ID's, een bekende storing aan zijn kant: het echte aantal kan hoger zijn. Toch proberen vraagt Apple ze aan te maken; als de limiet echt bereikt is, zegt het dat."
+      },
+      "changeAnisetteServer": {
+        "how": "Open Instellingen, test de anisette-servers en kies er een die werkt, of ga terug naar Automatisch.",
+        "button": "Anisette-servers openen"
+      },
+      "allowLocalNetwork": {
+        "how": "Open Systeeminstellingen › Privacy en beveiliging › Lokaal netwerk, zet IPAForge aan en probeer het daarna opnieuw. Of verbind het apparaat met een kabel."
+      }
+    },
+    "reportHint": "Opent een nieuw GitHub-issue met de diagnostiek al ingevuld. Er wordt niets verstuurd voordat je het indient.",
+    "allow-local-network": "Toegang tot het lokale netwerk toestaan"
+  },
+  "devices": {
+    "engine": {
+      "connecting": "Verbinden met de Engine…",
+      "connected": "{count, plural, =0 {Engine verbonden · geen apparaten} one {Engine verbonden · # apparaat} other {Engine verbonden · # apparaten}}",
+      "failed": "Kan de Engine niet bereiken: {reason}"
+    },
+    "description": "iPhones en iPads die met deze computer zijn verbonden, en de Apple TV's en Vision Pro's die ermee zijn gekoppeld. Het apparaat in gebruik staat in de bovenbalk.",
+    "unknownDevice": "Onbekend apparaat",
+    "line": "{model} · iOS {ios} · {link}",
+    "model": "{model} · iOS {ios}",
+    "withState": "{line} · {state}",
+    "link": {
+      "usb": "USB",
+      "network": "Wi-Fi",
+      "both": "USB en Wi-Fi"
+    },
+    "state": {
+      "checking": "Controleren…",
+      "ready": "Klaar",
+      "locked": "Vergrendeld",
+      "developerModeOff": "Ontwikkelaarsmodus uit",
+      "notTrusted": "Niet vertrouwd",
+      "unavailable": "Kan het apparaat niet lezen",
+      "notConnected": "Niet verbonden"
+    },
+    "inUse": "In gebruik",
+    "use": "Dit apparaat gebruiken",
+    "checkAgain": "Opnieuw controleren",
+    "facts": {
+      "model": "Model",
+      "ios": "iOS",
+      "connection": "Verbinding",
+      "udid": "UDID",
+      "pairing": "Koppeling",
+      "address": "Adres"
+    },
+    "empty": {
+      "title": "Nog geen apparaten",
+      "body": "Verbind een iPhone of iPad met een kabel en ontgrendel hem. Op Windows moet Apple Devices of iTunes geïnstalleerd zijn."
+    },
+    "notice": {
+      "none": {
+        "title": "Geen apparaat verbonden",
+        "body": "Verbind een iPhone of iPad met een kabel en ontgrendel hem. Hij verschijnt hier vanzelf."
+      },
+      "notConnected": {
+        "title": "{name} is niet verbonden",
+        "body": "Sluit hem opnieuw aan en hij wordt automatisch gebruikt, of kies een ander apparaat in de bovenbalk."
+      },
+      "notTrusted": {
+        "title": "Vertrouw deze computer op {name}",
+        "body": "Ontgrendel het apparaat, tik op Vertrouw en voer de toegangscode in.",
+        "action": "Opnieuw vragen",
+        "waiting": "Wachten op Vertrouw…",
+        "titleUnnamed": "Vertrouw deze computer op het apparaat"
+      },
+      "locked": {
+        "title": "Ontgrendel {name}",
+        "body": "Het moet ontgrendeld blijven terwijl apps worden geïnstalleerd."
+      },
+      "developerModeOff": {
+        "title": "Zet de ontwikkelaarsmodus aan op {name}",
+        "step1": "Instellingen → Privacy en beveiliging → Ontwikkelaarsmodus",
+        "step2": "Zet hem aan en start opnieuw op wanneer erom gevraagd wordt",
+        "step3": "Tik na het opnieuw opstarten op Zet aan en voer de toegangscode in"
+      },
+      "unavailable": {
+        "title": "Kan {name} niet lezen",
+        "body": "Haal het apparaat los en sluit het opnieuw aan. Als het blijft gebeuren, start het apparaat dan opnieuw op.",
+        "bodyWifi": "Het is via Wi-Fi verbonden: maak het wakker, ontgrendel het en houd het op hetzelfde netwerk als deze computer, en kies dan Opnieuw controleren. Een kabel is betrouwbaarder.",
+        "reason": "Reden: {reason}",
+        "titleUnnamed": "Kan het apparaat niet lezen"
+      },
+      "offNetwork": {
+        "title": "{name} zit niet op het netwerk",
+        "tv": "Maak hem wakker met de afstandsbediening en houd hem op hetzelfde Wi-Fi-netwerk als deze computer.",
+        "vision": "Zet hem op, ontgrendel hem en houd hem op hetzelfde Wi-Fi-netwerk als deze computer."
+      },
+      "pairAgain": {
+        "title": "Koppel {name} opnieuw",
+        "body": "Het apparaat accepteert de koppeling van deze computer niet meer. Dat is normaal na een update van tvOS of visionOS: koppel het opnieuw met een nieuwe code.",
+        "action": "Opnieuw koppelen…"
+      }
+    },
+    "notes": {
+      "connected": "{name} verbonden",
+      "disconnected": "{name} losgekoppeld",
+      "aDevice": "Een apparaat"
+    },
+    "savePairing": "Koppelbestand opslaan…",
+    "localNetwork": {
+      "open": "Instellingen voor Lokaal netwerk openen"
+    },
+    "os": {
+      "tv": "tvOS",
+      "vision": "visionOS"
+    },
+    "lineOs": "{model} · {os} {version} · {link}",
+    "modelOs": "{model} · {os} {version}",
+    "pairedByCode": "Met een code gekoppeld aan deze computer",
+    "forget": {
+      "action": "Vergeten…",
+      "title": "{name} vergeten?",
+      "body": "IPAForge verwijdert de koppeling met deze computer. Apps die er al op staan, blijven. Koppel het opnieuw om het weer te gebruiken.",
+      "confirm": "Vergeten"
+    }
+  },
+  "prompts": {
+    "cancel": "Annuleren",
+    "continue": "Doorgaan",
+    "password": {
+      "title": "Meld je opnieuw aan",
+      "body": "De opgeslagen sessie voor {appleId} is verlopen. Voer het wachtwoord in om door te gaan.",
+      "label": "Wachtwoord",
+      "checking": "Het wachtwoord wordt gecontroleerd…"
+    },
+    "method": {
+      "title": "Waar moet Apple de code naartoe sturen?",
+      "body": "Kies hoe je je verificatiecode wilt ontvangen.",
+      "trustedDevice": "Een vertrouwd apparaat",
+      "trustedDeviceHint": "Je iPhone, iPad of Mac die bij deze Apple ID is aangemeld",
+      "sms": "Sms naar {number}",
+      "smsHint": "Er kunnen standaard sms-kosten van toepassing zijn",
+      "sending": "De code wordt verstuurd…"
+    },
+    "code": {
+      "title": "Voer de verificatiecode in",
+      "body": "{length, plural, one {Voer de code van # cijfer in die Apple heeft gestuurd.} other {Voer de code van # cijfers in die Apple heeft gestuurd.}}",
+      "label": "Verificatiecode",
+      "wrong": "Die code werkte niet. Controleer hem en voer hem opnieuw in.",
+      "verify": "Verifiëren",
+      "checking": "De code wordt gecontroleerd…",
+      "deviceBody": "{length, plural, one {Voer de code van # cijfer in die op je iPhone, iPad of Mac staat.} other {Voer de code van # cijfers in die op je iPhone, iPad of Mac staat.}}",
+      "smsBody": "{length, plural, one {Voer de code van # cijfer in die naar {number} is gestuurd.} other {Voer de code van # cijfers in die naar {number} is gestuurd.}}",
+      "allowHint": "Houd het ontgrendeld en tik op Sta toe als er wordt gevraagd naar het aanmelden.",
+      "noCode": "Geen code ontvangen?",
+      "resend": "Een nieuwe code sturen",
+      "textTo": "Sms naar {number}",
+      "sending": "Een nieuwe code wordt verstuurd…",
+      "sent": "Er is een nieuwe code onderweg.",
+      "notSent": "Apple stuurde geen nieuwe code. Wacht een paar minuten en probeer het opnieuw."
+    },
+    "suggested": "Voorgesteld",
+    "team": {
+      "title": "Welk team moet de app ondertekenen?",
+      "body": "Deze Apple ID hoort bij meer dan één team. IPAForge onthoudt je keuze voor deze Apple ID.",
+      "free": "Gratis: apps verlopen na 7 dagen, 3 apps per apparaat",
+      "paid": "Betaald: apps gaan een jaar mee, geen applimiet",
+      "checking": "Dit team wordt gebruikt…"
+    },
+    "revoke": {
+      "title": "Een certificaat intrekken?",
+      "body": "Dit team heeft al het maximale aantal ontwikkelaarscertificaten, dus IPAForge moet er een intrekken om zijn eigen te maken. Apps die met het ingetrokken certificaat zijn ondertekend, worden niet meer vernieuwd.",
+      "ipaforge": "Gemaakt door IPAForge op een andere computer",
+      "sidestore": "Gemaakt door SideStore",
+      "machine": "Gemaakt op “{machine}” (meestal Xcode)",
+      "unknown": "Gemaakt door een onbekende tool",
+      "sidestoreWarning": "SideStore op je apparaat vernieuwt geen apps meer totdat het een nieuw certificaat maakt.",
+      "machineWarning": "Xcode op die computer maakt een nieuw certificaat de volgende keer dat het ondertekent.",
+      "expires": "Verloopt {date}",
+      "confirm": "Intrekken en doorgaan",
+      "revoking": "Het certificaat wordt ingetrokken…"
+    },
+    "remove": {
+      "title": "Een app verwijderen om ruimte te maken?",
+      "body": "Een gratis Apple ID kan {limit} apps op een apparaat hebben, dus er moet er een weg voordat deze past. Je kunt hem later opnieuw installeren.",
+      "confirm": "Verwijderen en doorgaan",
+      "removing": "De app wordt verwijderd…"
+    },
+    "share": {
+      "title": "Je ondertekeningscertificaat delen met “{app}”?",
+      "body": "Deze app lijkt op SideStore. Met je certificaat kan hij zelf apps op het apparaat vernieuwen. Deel het alleen met een app die je vertrouwt.",
+      "yes": "Het certificaat delen",
+      "yesHint": "Hij vernieuwt je apps zelf op het apparaat",
+      "no": "Niet delen",
+      "noHint": "Hij wordt zonder je certificaat geïnstalleerd"
+    },
+    "pairing": {
+      "title": "Welke apps krijgen het koppelbestand?",
+      "body": "Met het koppelbestand kan een app op het apparaat er via Wi-Fi mee praten, net als deze computer. Alleen de apps die je aanvinkt, krijgen het.",
+      "available": "{count, plural, one {# app op het apparaat kan het gebruiken} other {# apps op het apparaat kunnen het gebruiken}}",
+      "selectAll": "Alles selecteren",
+      "clearAll": "Alles wissen",
+      "place": "{count, plural, =0 {Kies een app} one {In # app plaatsen} other {In # apps plaatsen}}",
+      "placing": "Het koppelbestand wordt geplaatst…",
+      "purpose": {
+        "sidestore": "Vernieuwt en installeert apps via Wi-Fi",
+        "livecontainer": "Draait de apps erin met JIT",
+        "stikdebug": "Schakelt JIT in voor andere apps",
+        "stikstore": "Installeert apps uit zijn eigen bronnen"
+      }
+    }
+  },
+  "signIn": {
+    "title": "Een Apple ID toevoegen",
+    "body": "IPAForge ondertekent apps ermee. Je wachtwoord gaat alleen naar Apple.",
+    "appleId": "Apple ID",
+    "password": "Wachtwoord",
+    "submit": "Aanmelden",
+    "signingIn": "Aanmelden…",
+    "done": {
+      "title": "Apple ID toegevoegd",
+      "body": "Aangemeld als {appleId}.",
+      "close": "Klaar"
+    },
+    "rememberPassword": "Mijn wachtwoord opslaan in de systeemsleutelhanger",
+    "rememberPasswordHint": "Laat IPAForge zelf opnieuw aanmelden als de sessie verloopt.",
+    "resuming": {
+      "title": "Opnieuw aanmelden",
+      "body": "Aanmelden bij {appleId} met wat IPAForge heeft opgeslagen…",
+      "cancel": "Annuleren"
+    }
+  },
+  "accounts": {
+    "description": "De Apple ID's waarmee IPAForge apps ondertekent. De Apple ID in gebruik staat in de bovenbalk.",
+    "list": "Opgeslagen Apple ID's",
+    "empty": "Nog geen Apple ID's. Voeg er een toe om SideStore te installeren.",
+    "notSaved": {
+      "title": "Apple ID's worden niet opgeslagen",
+      "body": "IPAForge kan de systeemsleutelhanger niet gebruiken (de toegang is mogelijk geweigerd), dus je Apple ID's blijven alleen bewaard tot het afsluit. Open IPAForge opnieuw en sta toegang tot de sleutelhanger toe als erom wordt gevraagd om ze op te slaan."
+    },
+    "freeTeam": "{name} (gratis)",
+    "withState": "{line} · {state}",
+    "state": {
+      "checking": "Controleren…",
+      "signInNeeded": "Aanmelden nodig",
+      "blocked": "Geblokkeerd op dit apparaat",
+      "unreachable": "Apple niet bereikt"
+    },
+    "inUse": "In gebruik",
+    "noTeams": "Teams verschijnen zodra Apple heeft geantwoord.",
+    "use": "Gebruiken",
+    "signInAgain": "Opnieuw aanmelden",
+    "signOut": {
+      "action": "Afmelden",
+      "title": "Afmelden bij {appleId}?",
+      "forgets": "IPAForge vergeet deze Apple ID, zijn sessie en zijn opgeslagen wachtwoord.",
+      "keeps": "De ondertekeningscertificaten blijven op deze computer, dus bij opnieuw aanmelden worden ze hergebruikt. Apps die al geïnstalleerd zijn, blijven werken tot ze verlopen.",
+      "confirm": "Afmelden"
+    }
+  },
+  "apps": {
+    "description": "De apps die IPAForge op dit apparaat heeft geïnstalleerd. Vernieuwen ondertekent een app opnieuw voordat hij verloopt, met behoud van zijn gegevens.",
+    "refreshAll": "{count, plural, =0 {Alles vernieuwen} other {Alles vernieuwen (#)}}",
+    "updateAll": "{count, plural, other {Alles bijwerken (#)}}",
+    "refresh": "Vernieuwen",
+    "update": "Bijwerken",
+    "remove": "Verwijderen",
+    "removeApp": "{name} verwijderen",
+    "updateTo": "Bijwerken: {version}",
+    "from": "Van {source}",
+    "needsIpa": "Door IPAForge geïnstalleerd vanuit een .ipa op een andere computer. Voeg die .ipa één keer toe in Vooraf laden om hem hier te vernieuwen.",
+    "thisDevice": "dit apparaat",
+    "badge": "{count, plural, one {# app die binnenkort vernieuwd moet worden} other {# apps die binnenkort vernieuwd moeten worden}}",
+    "expiry": {
+      "in": "{days, plural, one {Verloopt over # dag · {date}} other {Verloopt over # dagen · {date}}}",
+      "today": "Verloopt vandaag",
+      "expired": "{days, plural, one {# dag geleden verlopen · opent niet} other {# dagen geleden verlopen · opent niet}}",
+      "unknown": "Vervaldatum onbekend",
+      "gone": "Verlopen · opent niet"
+    },
+    "run": {
+      "checking": "Bij Apple controleren…",
+      "waiting": "Wacht op zijn beurt",
+      "done": "Klaar"
+    },
+    "failed": {
+      "title": "Vernieuwen is niet voltooid: {reason}",
+      "details": "Details tonen",
+      "dismiss": "Sluiten"
+    },
+    "notConnected": {
+      "title": "Dit apparaat is niet verbonden",
+      "body": "Verbind het om de apps te zien en ze te vernieuwen of bij te werken."
+    },
+    "expired": {
+      "title": "{count, plural, one {# app is verlopen} other {# apps zijn verlopen}}",
+      "body": "Ze openen pas weer na vernieuwen. Hun gegevens blijven bewaard.",
+      "refresh": "{count, plural, one {Nu vernieuwen} other {Nu vernieuwen}}"
+    },
+    "facts": {
+      "next": "Verloopt als eerste",
+      "none": "Nog niets",
+      "nextIn": "{days, plural, one {{name} · # dag} other {{name} · # dagen}}",
+      "nextExpired": "{name} · verlopen",
+      "count": "Vernieuwd gehouden",
+      "apps": "{count, plural, one {# app} other {# apps}}",
+      "auto": "Automatisch vernieuwen",
+      "autoOn": "{days, plural, one {Aan · # dag ervoor} other {Aan · # dagen ervoor}}",
+      "autoOff": "Uit"
+    },
+    "list": {
+      "title": "Door IPAForge geïnstalleerd",
+      "count": "{count, plural, one {# app · de eerstvolgende bovenaan} other {# apps · de eerstvolgende bovenaan}}",
+      "empty": "Nog geen apps. Installeer SideStore of laad apps vooraf en ze verschijnen hier."
+    },
+    "others": {
+      "title": "Nog niet door IPAForge bijgehouden",
+      "hint": "Geïnstalleerd vóór deze versie van IPAForge, of door een andere tool",
+      "found": "Gevonden in {source}. Vernieuwen installeert hem vandaar, met behoud van zijn gegevens, en IPAForge houdt hem daarna vernieuwd.",
+      "foundMany": "Gevonden in {source} en {count, plural, one {# andere bron} other {# andere bronnen}}. Vernieuwen installeert hem vanuit de hieronder gekozen bron, met behoud van zijn gegevens, en IPAForge houdt hem daarna vernieuwd.",
+      "pickSource": "Installeren vanuit",
+      "choice": "{source} · {version}",
+      "how": "Voeg zijn .ipa één keer toe in Vooraf laden en IPAForge houdt hem daarna vernieuwd."
+    },
+    "auto": {
+      "title": "Apps automatisch vernieuwen",
+      "body": "Zolang IPAForge open is en het apparaat verbonden is, worden apps vanzelf vernieuwd voordat ze verlopen.",
+      "toggle": "Automatisch vernieuwen",
+      "when": "Vernieuwen als een app nog",
+      "days": "{count, plural, one {# dag over heeft} other {# dagen over heeft}}"
+    },
+    "removeDialog": {
+      "title": "{name} verwijderen?",
+      "body": "Hij wordt met zijn gegevens van {device} verwijderd en geeft een plek voor gratis apps vrij. Je kunt hem later opnieuw installeren via Vooraf laden."
+    },
+    "pairing": {
+      "open": "Koppelbestanden",
+      "title": "Koppelbestanden",
+      "hint": "Met een koppelbestand kan een app je apparaat zelf bereiken, om apps te vernieuwen en te installeren. Wie het bezit, kan het apparaat gebruiken, dus geef er alleen een aan je eigen apps als hun instructies erom vragen.",
+      "reading": "De koppelbestanden worden gelezen…",
+      "empty": "Er staan geen koppel-apps of door IPAForge geïnstalleerde apps op dit apparaat.",
+      "classic": {
+        "thisComputer": "Koppeling: die van deze computer",
+        "otherComputer": "Koppeling: die van een andere computer",
+        "missing": "Koppeling: ontbreekt"
+      },
+      "remote": {
+        "accepted": "Extern: geaccepteerd",
+        "rejected": "Extern: niet geaccepteerd",
+        "otherComputer": "Extern: die van een andere computer",
+        "missing": "Extern: ontbreekt"
+      },
+      "detail": {
+        "placed": "Geplaatst {date}",
+        "needed": "Heeft er een nodig om zelf te vernieuwen.",
+        "otherComputer": "Van een andere computer: het werkt zolang die computer vertrouwd blijft.",
+        "ownNone": "Geen. Voeg er alleen een toe als de app erom vraagt."
+      },
+      "place": "Plaatsen",
+      "placeOne": "Het koppelbestand in {name} plaatsen",
+      "placeAgain": "Opnieuw plaatsen",
+      "placeAgainOne": "Het koppelbestand opnieuw in {name} plaatsen",
+      "add": "Toevoegen…",
+      "addOne": "Een koppelbestand aan {name} toevoegen",
+      "remove": "Verwijderen",
+      "removeOne": "Het koppelbestand van {name} verwijderen",
+      "newRemote": "Nieuwe externe koppeling",
+      "done": "Klaar",
+      "addTitle": "Een koppelbestand aan {name} toevoegen",
+      "addBody": "IPAForge schrijft het koppelbestand van deze computer in de map van de app op je apparaat. Wie het bezit, kan het apparaat gebruiken: voeg het alleen toe aan apps die je vertrouwt.",
+      "pathLabel": "Pad in de app",
+      "pathHint": "Uit de instructies van de app; meestal in Documents. IPAForge onthoudt het voor deze app.",
+      "pathInvalid": "Gebruik een pad in Documents of Library dat eindigt op .plist of .mobiledevicepairing.",
+      "removeTitle": "Het koppelbestand van {name} verwijderen?",
+      "removeBody": "De app kan je apparaat niet meer zelf bereiken (vernieuwen, installeren) totdat er opnieuw een koppelbestand is geplaatst.",
+      "newRemoteTitle": "Een nieuwe externe koppeling maken?",
+      "newRemoteBody": "IPAForge maakt een nieuwe externe koppeling met je apparaat en plaatst die in SideStore. Het apparaat vraagt je misschien deze computer te vertrouwen. De oude externe koppeling werkt dan niet meer.",
+      "newRemoteConfirm": "Een nieuwe maken",
+      "newRemoteWaiting": "Tik op Vertrouw en voer de toegangscode in als je apparaat erom vraagt.",
+      "tag": "Geen koppelbestand",
+      "tagOne": "{name} heeft geen koppelbestand: open Koppelbestanden"
+    },
+    "cancelRefresh": "Vernieuwen annuleren"
+  },
+  "logs": {
+    "title": "Logboeken",
+    "lede": "Wat IPAForge deed, regel voor regel. Open het overal met",
+    "shortcut": {
+      "control": "Ctrl+",
+      "command": "⌘",
+      "key": "L"
+    },
+    "copy": "Kopiëren",
+    "save": "Opslaan…",
+    "clear": "Wissen",
+    "cleared": "Weergave gewist. Opslaan schrijft nog steeds elke regel die deze sessie is bewaard.",
+    "search": {
+      "label": "Logboeken doorzoeken",
+      "placeholder": "Zoek in berichten en details",
+      "key": "/"
+    },
+    "level": {
+      "label": "Niveau",
+      "all": "Alles",
+      "info": "Info",
+      "warn": "Waarschuwingen",
+      "error": "Fouten"
+    },
+    "levelName": {
+      "debug": "Debug",
+      "info": "Info",
+      "warn": "Waarschuwing",
+      "error": "Fout"
+    },
+    "area": {
+      "label": "Gebied",
+      "all": "Alle gebieden",
+      "install": "Installatie",
+      "device": "Apparaat",
+      "apple": "Apple",
+      "catalog": "Catalogus",
+      "signing": "Ondertekenen",
+      "engine": "Engine",
+      "interface": "Interface",
+      "app": "App"
+    },
+    "filters": {
+      "showing": "Alleen getoond:",
+      "run": "Deze installatie ({time})",
+      "text": "“{text}”",
+      "remove": "Het filter {filter} verwijderen"
+    },
+    "list": {
+      "label": "Logregels",
+      "loadingOlder": "Oudere regels laden…"
+    },
+    "row": {
+      "details": "{count, plural, one {# detail} other {# details}}",
+      "scope": "gebied",
+      "redacted": "[verwijderd]",
+      "copy": "Regel kopiëren"
+    },
+    "follow": {
+      "on": "Nieuwe regels volgen",
+      "off": "Gepauzeerd",
+      "pause": "Pauzeren",
+      "resume": "Volgen"
+    },
+    "jump": "{count, plural, one {# nieuwe regel} other {# nieuwe regels}} · Naar de laatste springen",
+    "count": "{matching, plural, one {# overeenkomende regel} other {# overeenkomende regels}} · de laatste {capacity, number} worden deze sessie bewaard",
+    "debug": "Debugdetails opnemen",
+    "privacy": "Wachtwoorden, tokens, sleutels, serienummers en apparaat-ID's worden nooit in de logboeken geschreven; ze worden getoond als [verwijderd]. Logboeken blijven op deze computer totdat je ze kopieert of opslaat.",
+    "empty": {
+      "none": {
+        "title": "Nog niets gelogd",
+        "body": "Regels verschijnen hier terwijl IPAForge werkt: een apparaat verbinden, aanmelden, installeren."
+      },
+      "noMatch": {
+        "title": "Geen regels komen overeen",
+        "body": "Wijzig het niveau, het gebied of de zoekopdracht.",
+        "showAll": "Alle regels tonen"
+      },
+      "cleared": {
+        "title": "Weergave gewist",
+        "body": "Nieuwe regels verschijnen hier zodra ze binnenkomen."
+      },
+      "failed": {
+        "title": "De logboeken konden niet worden gelezen",
+        "body": "De verbinding met de Engine is mogelijk gesloten. Open Logboeken opnieuw om het nog eens te proberen."
+      }
+    },
+    "export": {
+      "copyTitle": "{count, plural, one {# regel kopiëren?} other {# regels kopiëren?}}",
+      "saveTitle": "{count, plural, one {# regel in een bestand opslaan?} other {# regels in een bestand opslaan?}}",
+      "copyBody": "De getoonde regels, met de filters die je hebt ingesteld.",
+      "saveBody": "Elke regel die deze sessie is bewaard, wat de filters ook zijn.",
+      "warning": "Wachtwoorden, tokens en apparaat-ID's zijn al weggelaten, maar de logboeken noemen wel het model van je apparaat, je apps en je team. Controleer ze voordat je ze openbaar plaatst.",
+      "confirmCopy": "Kopiëren",
+      "confirmSave": "Opslaan",
+      "copied": "{count, plural, one {# regel gekopieerd} other {# regels gekopieerd}}",
+      "saved": "{count, plural, one {# regel opgeslagen} other {# regels opgeslagen}}",
+      "copyFailed": "De regels konden niet worden gekopieerd",
+      "saveFailed": "De regels konden niet worden opgeslagen"
+    }
+  },
+  "preload": {
+    "title": "Apps vooraf laden",
+    "description": "Installeer je eigen apps: ondertekend met je Apple ID, via USB geïnstalleerd, een voor een.",
+    "tabs": {
+      "label": "Vooraf laden",
+      "apps": "Apps toevoegen",
+      "sources": "Bronnen"
+    },
+    "add": {
+      "drop": "Sleep .ipa-bestanden hierheen",
+      "or": "of",
+      "choose": "Bestanden kiezen…",
+      "link": "Toevoegen via een link…"
+    },
+    "catalog": {
+      "recommended": "Aanbevolen",
+      "added": "Toegevoegd",
+      "add": "Toevoegen",
+      "sidestore": "Vernieuwt en installeert apps zelf op het apparaat.",
+      "livecontainerSidestore": "LiveContainer met SideStore erin.",
+      "livecontainer": "Draait veel apps binnen één app, voorbij de limiet van 3 apps.",
+      "stikdebug": "Schakelt JIT in op het apparaat voor apps die het nodig hebben.",
+      "feather": "Ondertekent en installeert apps op het apparaat met je certificaat."
+    },
+    "browse": {
+      "title": "Apps bladeren",
+      "count": "{apps, plural, one {# app} other {# apps}} uit {sources, plural, one {# bron} other {# bronnen}}",
+      "source": "Bron",
+      "allSources": "Alle bronnen",
+      "search": "Apps zoeken",
+      "manage": "Bronnen beheren",
+      "noMatch": "Geen apps komen overeen met “{query}”.",
+      "allOff": "Elke bron staat uit. Zet er een aan bij Bronnen.",
+      "loading": "De bronnen worden gelezen…",
+      "catalogLine": "Nieuwste release · gecontroleerd met zijn controlesom",
+      "version": "{version} · {size}",
+      "from": "{name}, ook in {others}",
+      "details": "Details van {name}",
+      "notRefreshed": {
+        "title": "{name} kon niet worden vernieuwd",
+        "body": "De apps van de laatste vernieuwing worden getoond, {when}.",
+        "retry": "Opnieuw proberen"
+      }
+    },
+    "detail": {
+      "version": "Versie",
+      "latest": "{version} (nieuwste)",
+      "size": "Grootte",
+      "needs": "Vereist",
+      "needsIos": "iOS {version}",
+      "anyIos": "Elke iOS",
+      "from": "Van",
+      "builtin": "Ingebouwd · vertrouwd",
+      "added": "Een bron die je hebt toegevoegd",
+      "untrusted": "Uit een bron die je hebt toegevoegd: IPAForge beoordeelt de apps ervan niet.",
+      "add": "Aan de lijst toevoegen",
+      "inList": "In de lijst",
+      "close": "Sluiten",
+      "loadingReleases": "De releases worden opgezocht…",
+      "noReleases": "De releases kunnen nu niet worden gelezen. Controleer de verbinding en open hem opnieuw."
+    },
+    "sources": {
+      "description": "Waar Apps bladeren apps vindt. Ingebouwde bronnen worden door IPAForge bijgehouden; voeg andere toe via hun link (AltStore-formaat).",
+      "add": "Bron toevoegen…",
+      "refreshAll": "Alles vernieuwen",
+      "list": "Bronnen",
+      "builtin": "Ingebouwd · vertrouwd",
+      "added": "Door jou toegevoegd",
+      "catalogName": "IPAForge-catalogus",
+      "apps": "{count, plural, one {# app} other {# apps}}",
+      "updated": "bijgewerkt {when}",
+      "notRead": "Nog niet gelezen",
+      "skipped": "{count, plural, one {# overgeslagen (geen .ipa)} other {# overgeslagen (geen .ipa)}}",
+      "failed": "Kon niet worden bereikt.",
+      "failedCopy": "De laatste kopie wordt getoond, van {when}.",
+      "refreshing": "Vernieuwen…",
+      "show": "Apps van {name} tonen",
+      "refresh": "{name} vernieuwen",
+      "remove": "{name} verwijderen",
+      "on": "Aan",
+      "off": "Uit",
+      "note": "IPAForge beoordeelt de apps in bronnen die je toevoegt niet. Voeg alleen bronnen toe die je vertrouwt.",
+      "refreshOne": "Vernieuwen",
+      "removeOne": "Verwijderen"
+    },
+    "addSource": {
+      "title": "Een bron toevoegen",
+      "label": "Link van de bron",
+      "placeholder": "https://example.com/apps.json",
+      "hint": "Een bron in het AltStore-formaat, zoals SideStore die leest. Eindigt meestal op .json.",
+      "check": "Controleren",
+      "checking": "De bron wordt gecontroleerd…",
+      "notLink": "Voer een link in die met https:// begint",
+      "notHttps": "Gebruik een https://-link: IPAForge leest bronnen alleen via een beveiligde verbinding.",
+      "previewTitle": "Deze bron toevoegen?",
+      "includes": "{count, plural, one {# app, waaronder:} other {# apps, waaronder:}}",
+      "skipped": "{count, plural, one {# andere weggelaten: de download is geen .ipa.} other {# andere weggelaten: hun download is geen .ipa.}}",
+      "warningTitle": "Voeg alleen bronnen toe die je vertrouwt",
+      "warningBody": "IPAForge beoordeelt de apps in bronnen die je toevoegt niet. Elke app wordt nog steeds gecontroleerd voordat hij wordt geïnstalleerd.",
+      "back": "Terug",
+      "confirm": "Bron toevoegen"
+    },
+    "removeSource": {
+      "title": "{name} verwijderen?",
+      "body": "De apps ervan verdwijnen uit Apps bladeren. Apps die ervan zijn geïnstalleerd, blijven op het apparaat en apps in de lijst Te installeren blijven daar ook staan.",
+      "confirm": "Verwijderen"
+    },
+    "list": {
+      "title": "Te installeren",
+      "count": "{count, plural, one {# app} other {# apps}}",
+      "empty": "Nog geen apps. Sleep .ipa-bestanden hierheen, kies ze, voeg een link toe of kies er een in Apps bladeren."
+    },
+    "row": {
+      "waiting": "Wacht op het apparaat en de Apple ID",
+      "checking": "Controleren…",
+      "downloading": "Downloaden en controleren…",
+      "appIds": "{count, plural, one {# App-ID} other {# App-ID's}}{extensions, plural, =0 {} one { (app + # extensie)} other { (app + # extensies)}}",
+      "updates": "Werkt {from} → {to} bij · behoudt zijn gegevens",
+      "new": "Nieuw op het apparaat",
+      "pairing": "Krijgt het koppelbestand en certificaat",
+      "fromCatalog": "Uit de catalogus · Stabiel",
+      "remove": "{name} verwijderen",
+      "cannot": "Kan niet worden geïnstalleerd.",
+      "fromSource": "Van {name}",
+      "saveInstead": "In plaats daarvan ondertekende .ipa opslaan",
+      "saveInsteadOne": "{name} als ondertekende .ipa opslaan in plaats van installeren",
+      "savedOnComputer": "Op deze computer opgeslagen, niet geïnstalleerd"
+    },
+    "problem": {
+      "notIpa": "Alleen .ipa-bestanden kunnen worden geïnstalleerd.",
+      "unreadable": "IPAForge kan dit bestand niet lezen. Voeg het in plaats daarvan toe met Bestanden kiezen….",
+      "needsIos": "Vereist iOS {needs}; dit apparaat heeft iOS {has}."
+    },
+    "summary": {
+      "appIds": "{count, plural, one {# nieuw} other {# nieuw}} · {left, plural, one {# over deze week} other {# over deze week}}",
+      "appIdsNoLimit": "{count, plural, one {# nieuw} other {# nieuw}}",
+      "notEnough": "Niet genoeg over. Verwijder een app of wacht. {next}",
+      "freeApps": "{after} van {limit} na deze installatie",
+      "freeAppsOver": "{used, plural, one {# staat er al.} other {# staan er al.}} De installatie vraagt welke app moet worden verwijderd, of verwijder er een uit deze lijst."
+    },
+    "install": "{count, plural, =0 {Installeren} one {# app installeren} other {# apps installeren}}",
+    "clear": "De lijst wissen",
+    "readiness": {
+      "busy": "Wacht op de installatie die loopt.",
+      "empty": "Voeg eerst een app toe.",
+      "checking": "De apps worden gecontroleerd…",
+      "problems": "Verwijder de apps die niet kunnen worden geïnstalleerd."
+    },
+    "link": {
+      "title": "Toevoegen via een link",
+      "body": "Een directe link naar een .ipa-bestand. IPAForge downloadt het en controleert het daarna zoals elke andere app.",
+      "label": "Link",
+      "placeholder": "https://example.com/MyApp.ipa",
+      "add": "Toevoegen",
+      "httpsOnly": "Alleen https-links kunnen worden gedownload.",
+      "invalid": "Dat is geen link.",
+      "notIpa": "De link moet naar een .ipa-bestand wijzen."
+    },
+    "elsewhere": {
+      "apps": "Er worden apps geïnstalleerd",
+      "sidestore": "SideStore wordt geïnstalleerd",
+      "body": "Een installatie tegelijk: het apparaat is daarvoor nodig. Deze kan beginnen zodra de andere klaar is.",
+      "open": "Openen"
+    },
+    "run": {
+      "title": {
+        "running": "{count, plural, one {{app} wordt geïnstalleerd} other {# apps worden geïnstalleerd}}",
+        "completed": "{count, plural, one {{app} is geïnstalleerd} other {# apps zijn geïnstalleerd}}",
+        "failed": "Niet alle apps konden worden geïnstalleerd"
+      },
+      "backToPreload": "Terug naar Vooraf laden",
+      "shared": "Dit apparaat en je Apple ID",
+      "refresh": {
+        "profile": "Alleen een nieuw profiel, niets opnieuw geïnstalleerd",
+        "certificate": "Opnieuw geïnstalleerd: het certificaat waarmee hij was ondertekend, is niet meer geldig",
+        "unmarked": "Opnieuw geïnstalleerd: IPAForge kan niet zien welk certificaat hem heeft ondertekend",
+        "appId": "Opnieuw geïnstalleerd: Apple heeft zijn App-ID verwijderd nadat hij was verlopen",
+        "sidestore": "Opnieuw geïnstalleerd, met behoud van zijn gegevens, zodat SideStore zelf de nieuwe datum toont"
+      },
+      "group": {
+        "failed": "Mislukt",
+        "done": "Klaar",
+        "active": "Bezig",
+        "pending": "Wachtend"
+      }
+    },
+    "done": {
+      "title": "{count, plural, one {{app} staat op {device}.} other {{app} staan op {device}.}}",
+      "open": "Open elke app vanaf het beginscherm."
+    },
+    "signAndSave": "{count, plural, one {# app ondertekenen en opslaan} other {# apps ondertekenen en opslaan}}",
+    "installAndSave": "{install} om te installeren · {save} om op te slaan als ondertekende .ipa"
+  },
+  "repair": {
+    "title": "SideStore repareren",
+    "description": "IPAForge controleert SideStore op {device} en herstelt wat ervoor zorgt dat het je apps niet zelf kan vernieuwen.",
+    "checkAgain": "Opnieuw controleren",
+    "checking": "SideStore wordt gecontroleerd…",
+    "checks": "Controles",
+    "failed": "SideStore kon niet worden gecontroleerd: {reason}",
+    "failedBody": "Controleer of het apparaat verbonden en ontgrendeld is en kies dan Opnieuw controleren.",
+    "ok": "OK",
+    "unknown": "Onbekend",
+    "deviceFirst": "Los eerst {device} op",
+    "device": {
+      "title": "{device} is klaar",
+      "ok": "Ontgrendeld, vertrouwd en met ontwikkelaarsmodus aan.",
+      "locked": "Het is vergrendeld. Ontgrendel het en kies dan Opnieuw controleren.",
+      "lockedTag": "Vergrendeld",
+      "developerMode": "De ontwikkelaarsmodus staat uit, dus SideStore en de apps die het installeert, openen niet. Op de iPhone: Instellingen › Privacy en beveiliging › Ontwikkelaarsmodus, en start hem daarna opnieuw op.",
+      "developerModeTag": "Ontwikkelaarsmodus uit"
+    },
+    "installed": {
+      "title": "SideStore is geïnstalleerd",
+      "missing": "SideStore staat niet op {device}.",
+      "missingTag": "Niet geïnstalleerd"
+    },
+    "signer": {
+      "title": "Het is ondertekend met het team dat je hier gebruikt",
+      "ok": "Repareren kan het opnieuw installeren, of er een nieuw profiel voor maken, zonder de gegevens te verliezen.",
+      "otherTeam": "Een ander team van deze Apple ID heeft het ondertekend. Als je het opnieuw met dit team installeert, komt er een tweede SideStore bij, zonder de gegevens of apps.",
+      "otherTeamTag": "Ander team",
+      "otherAppleId": "Een andere Apple ID heeft het ondertekend. Als je het opnieuw met deze installeert, komt er een tweede SideStore bij, zonder de gegevens of apps.",
+      "otherAppleIdTag": "Andere Apple ID"
+    },
+    "version": {
+      "title": "SideStore is up-to-date",
+      "ok": "Versie {version}, de nieuwste.",
+      "outdated": "Versie {version}; {latest} is uit. Oudere versies missen mogelijk fixes voor het vernieuwen op recente iOS-versies.",
+      "outdatedTag": "{latest} beschikbaar",
+      "unknown": "Versie {version}. De catalogus kon niet worden bereikt om te vergelijken."
+    },
+    "expiry": {
+      "title": "SideStore is niet verlopen",
+      "ok": "{days, plural, one {Verloopt over # dag.} other {Verloopt over # dagen.}}",
+      "soon": "{days, plural, =0 {Verloopt vandaag.} one {Verloopt over # dag.} other {Verloopt over # dagen.}} Als het is verlopen, kan SideStore zichzelf niet meer vernieuwen.",
+      "soonTag": "Verloopt binnenkort",
+      "expired": "{days, plural, one {# dag geleden verlopen.} other {# dagen geleden verlopen.}} Het opent niet, dus het kan je apps niet vernieuwen.",
+      "expiredTag": "Verlopen",
+      "unknown": "Het apparaat toont er geen profiel voor."
+    },
+    "signing": {
+      "title": "Het certificaat waarmee het is ondertekend is geldig",
+      "ok": "Nog steeds geldig bij Apple.",
+      "revoked": "Het is ingetrokken of verlopen. SideStore opent niet meer bij de volgende start.",
+      "revokedTag": "Ingetrokken",
+      "unknown": "Door een andere tool geïnstalleerd, dus IPAForge kan niet zien welk certificaat het heeft ondertekend. Repareren kan het opnieuw installeren om zeker te zijn."
+    },
+    "own": {
+      "title": "SideStore kan zelf apps ondertekenen",
+      "ok": "Het heeft een geldig certificaat om je apps mee te vernieuwen.",
+      "missing": "Het heeft geen certificaat, dus bij het vernieuwen wordt om aanmelden gevraagd, of het mislukt.",
+      "missingTag": "Geen certificaat",
+      "other": "Het certificaat dat het kreeg, is niet meer geldig. Mogelijk heeft het dat vervangen door een nieuwer eigen certificaat; installeer het opnieuw als vernieuwen in SideStore mislukt.",
+      "otherTag": "Mogelijk vervangen"
+    },
+    "pairing": {
+      "title": "SideStore heeft een koppelbestand",
+      "ok": "Aanwezig, en het is de koppeling van deze computer met {device}.",
+      "missing": "Ontbreekt: SideStore kan het apparaat niet bereiken om apps te installeren of te vernieuwen.",
+      "missingTag": "Ontbreekt",
+      "other": "Het is dat van een andere computer. Het werkt zolang die koppeling geldig blijft; als je Vertrouw op het apparaat reset, werkt het niet meer.",
+      "otherTag": "Andere computer"
+    },
+    "manual": {
+      "title": "Op je iPhone · IPAForge kan dit niet controleren",
+      "tag": "Zelf controleren",
+      "vpn": {
+        "title": "De VPN van SideStore staat aan als het vernieuwt",
+        "body": "Open LocalDevVPN en maak verbinding voordat je in SideStore vernieuwt."
+      },
+      "anisette": {
+        "title": "SideStore kan zijn anisette-server bereiken",
+        "body": "Kies in SideStore › Instellingen › Anisette een andere server als vernieuwen zegt dat aanmelden niet lukt."
+      }
+    },
+    "plan": {
+      "title": "Repareren zal",
+      "reinstall": "SideStore opnieuw installeren",
+      "reinstallBody": "Uit de catalogus van IPAForge, ondertekend met een geldig certificaat dat er ook in wordt geplaatst. De gegevens en je apps blijven.",
+      "profile": "SideStore een nieuw profiel geven",
+      "profileBody": "Er wordt niets opnieuw geïnstalleerd.",
+      "pairing": "Het koppelbestand van deze computer plaatsen",
+      "pairingBody": "In Documents van SideStore, ter vervanging van wat er staat.",
+      "optional": "Ook, als je wilt",
+      "offerReinstall": "SideStore opnieuw installeren, om zeker te zijn",
+      "offerPairing": "Het koppelbestand vervangen door dat van deze computer",
+      "hint": "Eén uitvoering. Houd {device} verbonden en ontgrendeld.",
+      "start": "SideStore repareren"
+    },
+    "blocked": {
+      "title": "SideStore kan niet opnieuw met deze Apple ID worden geïnstalleerd",
+      "body": "Een ander team of een andere Apple ID heeft het ondertekend, dus de gegevens zouden niet meekomen. Kies die Apple ID in de bovenbalk en kies dan Opnieuw controleren."
+    },
+    "notInstalled": {
+      "title": "SideStore staat niet op {device}",
+      "body": "Installeer het eerst via de pagina Installeren.",
+      "install": "SideStore installeren"
+    },
+    "fine": {
+      "title": "SideStore werkt",
+      "body": "Er valt niets te repareren. Als het nog steeds niet kan vernieuwen, controleer dan de twee dingen hieronder op je iPhone."
+    },
+    "run": {
+      "title": {
+        "running": "SideStore wordt gerepareerd",
+        "completed": "SideStore is gerepareerd",
+        "failed": "SideStore kon niet worden gerepareerd"
+      }
+    },
+    "done": {
+      "title": "SideStore op {device} is gerepareerd.",
+      "open": "Open SideStore en vernieuw je apps."
+    },
+    "open": "SideStore controleren",
+    "checkingTag": "Controleren…",
+    "remote": {
+      "title": "Externe koppeling voor iOS 17.4 en nieuwer",
+      "ok": "Aanwezig, en {device} accepteert het.",
+      "missing": "Ontbreekt: SideStore kan alleen de klassieke koppeling gebruiken. Het koppelbestand van deze computer plaatsen voegt het toe.",
+      "missingTag": "Ontbreekt",
+      "rejected": "{device} accepteert het niet meer (Vertrouw is gereset). Het koppelbestand van deze computer plaatsen maakt een nieuwe.",
+      "rejectedTag": "Niet geaccepteerd",
+      "other": "Het is dat van een andere computer, dus IPAForge kan het niet controleren. Het koppelbestand van deze computer plaatsen vervangt het.",
+      "otherTag": "Andere computer",
+      "notNeeded": "Niet nodig onder iOS 17.4.",
+      "notNeededTag": "Niet nodig"
+    }
+  },
+  "sidestore": {
+    "addSource": "Aan SideStore toevoegen",
+    "addAll": "Alles aan SideStore toevoegen",
+    "install": "Met SideStore installeren",
+    "sourceTitle": "{name} aan SideStore toevoegen",
+    "sourceBody": "SideStore toont de apps ervan ook en houdt ze op de iPhone up-to-date. SideStore beoordeelt de apps in een bron ook niet: voeg alleen bronnen toe die je vertrouwt.",
+    "installTitle": "{name} met SideStore installeren",
+    "installBody": "SideStore downloadt {name} {version}, ondertekent het met je Apple ID en installeert het zelf op de iPhone. Met een gratis Apple ID telt het mee voor de 3 apps. Het verschijnt in Apps zodra IPAForge het vernieuwt.",
+    "qrLabel": "QR-code van de link hieronder",
+    "steps": {
+      "camera": "Open de Camera op {device} en richt hem op de code.",
+      "banner": "Tik op de banner om SideStore te openen.",
+      "addSource": "SideStore vraagt of de bron moet worden toegevoegd: tik op Voeg toe.",
+      "install": "SideStore vraagt of de app moet worden geïnstalleerd: tik op Installeer."
+    },
+    "onPhone": "Op de iPhone zelf opent de link ook SideStore (geplakt in Safari of verstuurd in Berichten).",
+    "copy": "Kopiëren",
+    "copied": "Gekopieerd",
+    "previous": "Vorige",
+    "next": "Volgende",
+    "step": "Bron {at} van {count}",
+    "back": "Terug",
+    "done": "Klaar",
+    "offer": "{count, plural, one {Voeg de bron die je hier hebt toegevoegd ook toe aan SideStore, zodat de apps ervan op de iPhone worden getoond.} other {Voeg de # bronnen die je hier hebt toegevoegd ook toe aan SideStore, zodat de apps ervan op de iPhone worden getoond.}}"
+  },
+  "checklist": {
+    "title": "Op {device} · iOS {ios}",
+    "setUp": "{device} is ingesteld · iOS {ios}",
+    "show": "Checklist tonen",
+    "hide": "Verbergen",
+    "allSet": "Alles klaar",
+    "progress": "{left, plural, one {# ding te doen} other {# dingen te doen}} · {done} van {total} gedaan",
+    "group": {
+      "before": "Voor het installeren",
+      "after": "Na het installeren",
+      "sidestore": "Voor SideStore"
+    },
+    "onPhone": "Op de iPhone",
+    "tickedTag": "Gedaan op de iPhone",
+    "tick": "Dit heb ik gedaan",
+    "notNeeded": "Niet nodig op deze iOS",
+    "cable": {
+      "title": "Verbind {device} met deze computer",
+      "connected": "Verbonden",
+      "none": "Niet verbonden",
+      "how": "Gebruik de eerste keer een kabel; daarna werkt Wi-Fi zolang beide op hetzelfde netwerk zitten."
+    },
+    "unlock": {
+      "title": "Ontgrendel het",
+      "locked": "Vergrendeld",
+      "unlocked": "Ontgrendeld",
+      "how": "Houd het ontgrendeld terwijl IPAForge installeert."
+    },
+    "trust": {
+      "title": "Vertrouw deze computer",
+      "trusted": "Vertrouwd",
+      "notYet": "Nog niet",
+      "step1": "Ontgrendel {device}.",
+      "step2": "Tik op Vertrouw als het vraagt over deze computer.",
+      "step3": "Voer de toegangscode in.",
+      "again": "Opnieuw vragen"
+    },
+    "passcode": {
+      "title": "Stel een toegangscode in",
+      "how": "SideStore vernieuwt via Wi-Fi, wat iOS alleen met een toegangscode toestaat: Instellingen › Face ID en toegangscode."
+    },
+    "devmode": {
+      "title": "Zet de ontwikkelaarsmodus aan",
+      "on": "Aan",
+      "off": "Uit",
+      "step1": "Instellingen › Privacy en beveiliging › Ontwikkelaarsmodus (staat die er niet, kies dan Toon de optie).",
+      "step2": "Zet hem aan en start {device} opnieuw op.",
+      "step3": "Tik na het opnieuw opstarten op Zet aan en voer de toegangscode in.",
+      "reveal": "Toon de optie",
+      "revealed": "Hij staat nu in Instellingen › Privacy en beveiliging."
+    },
+    "developer": {
+      "title": "Vertrouw je Apple ID als ontwikkelaar",
+      "later": "Na de eerste installatie",
+      "step1": "Instellingen › Algemeen › VPN en apparaatbeheer.",
+      "step2": "Tik onder Ontwikkelaarsapp op {appleId}.",
+      "step3": "Tik op Vertrouw. De iPhone heeft hiervoor internet nodig."
+    },
+    "vpn": {
+      "title": "Installeer LocalDevVPN",
+      "installed": "Geïnstalleerd",
+      "notInstalled": "Niet geïnstalleerd",
+      "how": "SideStore praat via deze lokale VPN met de iPhone; er verlaat niets de telefoon. Het is gratis in de App Store.",
+      "qrLabel": "QR-code van de App Store-pagina van LocalDevVPN",
+      "scan": "Scan met de Camera, of zoek \"LocalDevVPN\" in de App Store."
+    },
+    "vpnOn": {
+      "title": "Maak verbinding met LocalDevVPN als SideStore vernieuwt",
+      "tag": "Elke keer",
+      "later": "Na het installeren ervan",
+      "how": "Open LocalDevVPN en tik op Verbind, of laat SideStore het aanzetten: het vraagt het de eerste keer."
+    },
+    "repair": {
+      "title": "SideStore kan zelf vernieuwen",
+      "tag": "Gecontroleerd in Repareren",
+      "how": "Zijn certificaat, zijn koppelbestand en zijn vervaldatum."
+    },
+    "notice": "{count, plural, one {# ding te doen op {device}} other {# dingen te doen op {device}}}",
+    "noticeBody": "Zodat installeren en vernieuwen soepel verlopen.",
+    "showChecklist": "De checklist tonen"
+  },
+  "updates": {
+    "screen": {
+      "label": "IPAForge wordt bijgewerkt"
+    },
+    "checking": {
+      "title": "Controleren op updates…"
+    },
+    "downloading": {
+      "title": "IPAForge wordt bijgewerkt",
+      "body": "Versie {version} is uit. Ze wordt nu gedownload en geïnstalleerd, daarna opent IPAForge vanzelf opnieuw.",
+      "starting": "De download wordt gestart…",
+      "percent": "{fraction, number, percent}"
+    },
+    "installing": {
+      "title": "{version} wordt geïnstalleerd…",
+      "body": "IPAForge opent zo weer."
+    },
+    "failed": {
+      "title": "De update is niet voltooid",
+      "body": "Versie {version} is uit. Probeer het opnieuw, of download haar van de releasepagina.",
+      "retry": "Opnieuw proberen",
+      "releasePage": "Releasepagina",
+      "skip": "Deze versie voorlopig gebruiken"
+    },
+    "manual": {
+      "title": "IPAForge {version} is uit",
+      "body": "Dit exemplaar is geïnstalleerd vanuit {package, select, msi {een .msi-installatieprogramma} deb {een .deb-pakket} rpm {een .rpm-pakket} other {een pakket}}, dat zichzelf niet kan bijwerken. Download de nieuwe versie en installeer die over deze heen: je Apple ID's, apps en instellingen blijven.",
+      "download": "{version} downloaden",
+      "later": "Later"
+    },
+    "nativeBuild": {
+      "title": "Dit is de Intel-build",
+      "body": "Je Mac heeft Apple silicon, dus dit exemplaar van IPAForge draait via Rosetta en alles is trager. Download de Apple silicon-build en installeer die over deze heen; je Apple ID's, apparaten en apps blijven.",
+      "file": "IPAForge-…-mac-arm64.dmg",
+      "later": "Later",
+      "download": "Downloaden voor Apple silicon"
+    }
+  },
+  "whatsNew": {
+    "link": "Wat is er nieuw",
+    "version": "Versie {version} · {date}",
+    "englishOnly": "De release-opmerkingen zijn in het Engels.",
+    "kind": {
+      "new": "Nieuw",
+      "changed": "Gewijzigd",
+      "fixed": "Opgelost",
+      "removed": "Verwijderd"
+    },
+    "dialog": {
+      "title": "Wat is er nieuw in IPAForge",
+      "everyVersion": "Elke versie",
+      "close": "Begrepen"
+    },
+    "page": {
+      "title": "Wat is er nieuw",
+      "lede": "Alles wat er in IPAForge is veranderd, de nieuwste eerst.",
+      "current": "Deze versie",
+      "release": "Release op GitHub"
+    }
+  },
+  "portal": {
+    "description": "Wat het team van je Apple ID bij Apple heeft, en de profielen op je apparaat.",
+    "tabsLabel": "Wat het team heeft",
+    "tabs": {
+      "certificates": "Certificaten",
+      "appIds": "App-ID's",
+      "profiles": "Profielen",
+      "groups": "Appgroepen",
+      "devices": "Geregistreerde apparaten"
+    },
+    "team": {
+      "pick": "Team",
+      "free": "{name} (gratis)",
+      "paid": "{name} (betaald)"
+    },
+    "refresh": "Vernieuwen",
+    "reading": "Lezen van Apple…",
+    "noAccount": {
+      "title": "Nog geen Apple ID",
+      "body": "Meld je bij Accounts aan met een Apple ID om te zien wat het team heeft."
+    },
+    "expired": "Verlopen",
+    "expires": "Verloopt {date}",
+    "expiredOn": "Verlopen {date}",
+    "certificates": {
+      "hint": "Een certificaat ondertekent de apps die je installeert. Als je er een intrekt, openen alle apps die het heeft ondertekend niet meer, totdat ze opnieuw zijn ondertekend.",
+      "usedFree": "{count} van {max} gebruikt (gratis teams kunnen er {max} hebben)",
+      "usedPaid": "{count, plural, one {# certificaat} other {# certificaten}}",
+      "maker": {
+        "thisComputer": "IPAForge op deze computer",
+        "ipaforge": "IPAForge op een andere computer",
+        "sidestore": "SideStore",
+        "machine": "“{machine}” (meestal Xcode)",
+        "unknown": "Een onbekende tool"
+      },
+      "thisComputer": "Van deze computer",
+      "signs": "Ondertekent {apps} op {device}",
+      "signsNothing": "Ondertekent niets op {device}",
+      "revoke": "Intrekken",
+      "revokeOne": "{name} intrekken",
+      "empty": "Het team heeft nog geen certificaten. IPAForge maakt er een de eerste keer dat het installeert.",
+      "import": ".p12 importeren…",
+      "export": ".p12 exporteren"
+    },
+    "revokeDialog": {
+      "title": "Dit certificaat intrekken?",
+      "apps": "Deze openen niet meer op {device} totdat ze opnieuw zijn ondertekend (Vernieuwen bij Apps doet dat):",
+      "none": "Niets op {device} is ermee ondertekend.",
+      "noDevice": "Verbind je apparaat om te zien welke apps erop door dit certificaat zijn ondertekend.",
+      "thisComputer": "IPAForge maakt een nieuw certificaat de volgende keer dat het installeert of vernieuwt.",
+      "sidestore": "SideStore heeft het gemaakt om zelf te vernieuwen: het maakt een nieuw certificaat de volgende keer dat je daar aanmeldt.",
+      "machine": "Xcode op die computer maakt een nieuw certificaat de volgende keer dat het ondertekent.",
+      "exportedToo": "Een .p12 die ervan is geëxporteerd, werkt dan ook niet meer."
+    },
+    "appIds": {
+      "hintFree": "Elke app en extensie die je installeert, heeft er een nodig. Gratis teams kunnen er 10 in 7 dagen registreren; elke telt 7 dagen mee nadat hij is gemaakt.",
+      "hintPaid": "Elke app en extensie die je installeert, heeft er een nodig. Betaalde teams hebben geen weeklimiet.",
+      "left": "{count, plural, one {# over deze week} other {# over deze week}}",
+      "leftAndNext": "{left} · de volgende komt vrij op {date}",
+      "countsUntil": "Telt mee tot {date}",
+      "unused": "Ongebruikt",
+      "delete": "Verwijderen",
+      "deleteOne": "{name} verwijderen",
+      "empty": "Het team heeft nog geen App-ID's."
+    },
+    "deleteDialog": {
+      "title": "Deze App-ID verwijderen?",
+      "free": "Bij een gratis team telt hij nog mee voor de 10 per week totdat hij verloopt: verwijderen geeft de plek niet eerder terug.",
+      "paid": "Hij kan later opnieuw worden geregistreerd."
+    },
+    "profiles": {
+      "title": "Provisioning-profielen op {device}",
+      "hint": "Een profiel laat één app (of extensie) op dit apparaat draaien. Vernieuwen geeft een app een nieuw profiel; een verlopen of ongebruikt profiel kan veilig worden verwijderd.",
+      "noDevice": "Verbind je apparaat om de provisioning-profielen ervan te zien.",
+      "noApp": "Geen enkele app gebruikt het",
+      "otherTeam": "Ander team",
+      "remove": "Verwijderen",
+      "removeOne": "Het profiel van {name} verwijderen",
+      "removeUnused": "Ongebruikte verwijderen",
+      "empty": "Er staan geen provisioning-profielen op dit apparaat."
+    },
+    "removeDialog": {
+      "title": "{count, plural, one {Dit profiel verwijderen?} other {# profielen verwijderen?}}",
+      "body": "{count, plural, one {Het wordt van {device} verwijderd. Geen enkele app daar heeft het nodig.} other {Ze worden van {device} verwijderd. Geen enkele app daar heeft ze nodig.}}"
+    },
+    "groups": {
+      "hint": "Apps in dezelfde groep delen bestanden (bijvoorbeeld SideStore en zijn widget). IPAForge maakt ze wanneer een app er een nodig heeft.",
+      "empty": "Het team heeft nog geen appgroepen."
+    },
+    "devices": {
+      "hintFree": "Apps die je ondertekent, draaien alleen hierop.",
+      "hintPaid": "Apps die je ondertekent, draaien alleen hierop. Betaalde teams kunnen er 100 per jaar registreren; een apparaat verwijderen gebeurt op de ontwikkelaarssite van Apple, eenmaal per jaar.",
+      "used": "{count} van {max} dit jaar",
+      "connected": "Verbonden",
+      "unnamed": "Apparaat zonder naam",
+      "empty": "Er zijn nog geen apparaten geregistreerd. IPAForge registreert die van jou de eerste keer dat het installeert."
+    },
+    "exportDialog": {
+      "title": "Het certificaat van deze computer exporteren",
+      "body": "Een .p12-bestand met het certificaat en zijn privésleutel, voor SideStore of een andere computer. Iedereen met het bestand en zijn wachtwoord kan apps ondertekenen als jouw team.",
+      "password": "Wachtwoord",
+      "again": "Wachtwoord opnieuw",
+      "tooShort": "{count, plural, one {Gebruik minstens # teken.} other {Gebruik minstens # tekens.}}",
+      "differ": "De twee wachtwoorden verschillen.",
+      "save": ".p12 opslaan…"
+    },
+    "importDialog": {
+      "title": "Een certificaat importeren",
+      "body": "Een .p12 van een andere computer of van SideStore. IPAForge controleert of Apple het nog voor dit team vermeldt en ondertekent er dan hier mee: geen nieuw certificaat, geen plek gebruikt.",
+      "noFile": "Geen bestand gekozen",
+      "choose": "Kiezen…",
+      "password": "Het wachtwoord ervan",
+      "import": "Importeren"
+    }
+  },
+  "guide": {
+    "title": "Installatiegids",
+    "stepsLabel": "Installatiestappen",
+    "stepDone": "(klaar)",
+    "steps": {
+      "welcome": "Welkom",
+      "computer": "Deze computer",
+      "iphone": "Je iPhone",
+      "appleid": "Apple ID",
+      "install": "SideStore installeren",
+      "onphone": "Op je iPhone",
+      "around": "Je bent klaar"
+    },
+    "back": "Terug",
+    "skip": "Deze stap overslaan",
+    "continue": "Doorgaan",
+    "later": "Later afmaken",
+    "checkAgain": "Opnieuw controleren",
+    "checking": "Controleren…",
+    "copy": "Kopiëren",
+    "copied": "Gekopieerd",
+    "welcome": {
+      "title": "Welkom bij IPAForge",
+      "lead": "Met een paar stappen maak je je computer, iPhone en Apple ID klaar, daarna kun je SideStore installeren. Kies eerst je taal.",
+      "needTitle": "Wat je nodig hebt",
+      "needDevice": "Een iPhone of iPad met iOS 15 of nieuwer, en de USB-kabel ervan",
+      "needAppleId": "Een Apple ID (een gratis werkt ook)",
+      "needPasscode": "De toegangscode van je iPhone, om deze computer te vertrouwen",
+      "skipGuide": "Ik weet de weg",
+      "start": "Beginnen"
+    },
+    "computer": {
+      "title": "Deze computer",
+      "lead": "IPAForge controleert of deze computer zich bij Apple kan aanmelden: de servers van Apple, de klok en een anisette-server. Als hij niet met iPhones kan praten, staat er ook hoe je dat oplost.",
+      "failed": "De controles zijn niet uitgevoerd. Controleer opnieuw, of sla deze stap over.",
+      "service": {
+        "title": "Verbindingsservice voor iPhones",
+        "fixMac": "macOS hoort hem zelf te draaien. Start je Mac opnieuw op en controleer opnieuw.",
+        "fixWindows": "Installeer Apple Devices uit de Microsoft Store, open het één keer en controleer opnieuw.",
+        "fixLinux": "Installeer usbmuxd, verbind je iPhone en controleer opnieuw.",
+        "openStore": "De Microsoft Store openen"
+      },
+      "apple": {
+        "title": "De servers van Apple",
+        "ok": "Bereikbaar.",
+        "fix": "IPAForge kan Apple niet bereiken. Controleer je internetverbinding, vpn of firewall."
+      },
+      "clock": {
+        "title": "Klok",
+        "ok": "Klopt.",
+        "fix": "{minutes, plural, one {Je klok loopt # minuut fout.} other {Je klok loopt # minuten fout.}} Stel de datum en tijd automatisch in en controleer opnieuw."
+      },
+      "anisette": {
+        "title": "Anisette-servers",
+        "ok": "{name} antwoordt. Aanmelden gebruikt hem.",
+        "fix": "Geen van de eerste {tried} servers in je lijst antwoordde. Controleer je verbinding, of voeg een server toe of kies er een in Instellingen › Anisette-servers."
+      }
+    },
+    "iphone": {
+      "title": "Je iPhone",
+      "lead": "Verbind je iPhone met de kabel, ontgrendel hem en tik op Vertrouw als het erom vraagt. Op iOS 16 en nieuwer moet de ontwikkelaarsmodus aan staan.",
+      "connectTitle": "Verbind je iPhone",
+      "connectText": "Wachten op een iPhone of iPad via USB…"
+    },
+    "appleid": {
+      "title": "Je Apple ID",
+      "lead": "Apple ondertekent de apps die je installeert met je Apple ID. Je wachtwoord gaat alleen naar Apple en blijft in de sleutelhanger van deze computer.",
+      "freeNote": "Een gratis Apple ID werkt: de apps gaan 7 dagen mee en IPAForge kan ze vernieuwen. Een betaald ontwikkelaarsaccount gaat een jaar mee.",
+      "signIn": "Aanmelden met Apple ID",
+      "signedIn": "Aangemeld.",
+      "team": "Team dat de apps ondertekent",
+      "free": "Gratis: apps gaan 7 dagen mee",
+      "paid": "Betaald: apps gaan een jaar mee"
+    },
+    "banner": {
+      "label": "Installatiegids",
+      "text": "Maak het instellen van IPAForge af: {done} van {total} stappen gedaan.",
+      "continue": "De gids voortzetten",
+      "notNow": "Nu niet"
+    },
+    "install": {
+      "title": "SideStore installeren",
+      "lead": "SideStore vernieuwt je apps op de iPhone zelf en installeert er meer. IPAForge geeft het het koppelbestand en certificaat dat het nodig heeft.",
+      "notNow": "Nu niet"
+    },
+    "onphone": {
+      "title": "Op je iPhone",
+      "lead": "Wat alleen jij op de iPhone kunt doen. Vink elk punt af terwijl je bezig bent; de pagina Apparaten houdt dezelfde lijst bij."
+    },
+    "around": {
+      "title": "Je bent klaar",
+      "lead": "Hier staat alles. Zolang IPAForge open is, vernieuwt het je apps voordat ze verlopen.",
+      "again": "Je kunt deze gids altijd opnieuw uitvoeren via Instellingen.",
+      "showMe": "Rondleiding",
+      "apps": {
+        "title": "Apps",
+        "text": "Wanneer elke app verloopt, met Vernieuwen en Bijwerken. Koppelbestanden staan hier ook.",
+        "where": "Zijbalk › Apps"
+      },
+      "preload": {
+        "title": "Vooraf laden",
+        "text": "Voeg je eigen apps toe: .ipa-bestanden, links, bronnen. Of sla ze op als ondertekende .ipa-bestanden.",
+        "where": "Zijbalk › Vooraf laden"
+      },
+      "repair": {
+        "title": "SideStore repareren",
+        "text": "Als SideStore niet meer zelf vernieuwt, zoekt dit uit waarom en lost het op.",
+        "where": "Apps › SideStore controleren"
+      },
+      "developer": {
+        "title": "Developer Portal",
+        "text": "Je certificaten, App-ID's en profielen, en een .p12 om je certificaat te verplaatsen.",
+        "where": "Zijbalk › Developer Portal"
+      },
+      "devices": {
+        "title": "Apparaten",
+        "text": "De checklist van elke iPhone, en het koppelbestand ervan voor andere tools.",
+        "where": "Zijbalk › Apparaten"
+      },
+      "logs": {
+        "title": "Logboeken",
+        "text": "Wat er is gebeurd, stap voor stap. Voeg ze toe aan een bugmelding.",
+        "where": "Zijbalk › Logboeken · ⌘L / Ctrl+L"
+      }
+    }
+  },
+  "tour": {
+    "count": "{current} van {total}",
+    "skip": "Rondleiding overslaan",
+    "back": "Terug",
+    "next": "Volgende",
+    "done": "Klaar",
+    "install": {
+      "title": "Installeren",
+      "text": "Installeer SideStore, of LiveContainer met SideStore, met een klik. Begin hier op een nieuwe iPhone."
+    },
+    "preload": {
+      "title": "Vooraf laden",
+      "text": "Voeg je eigen apps toe: .ipa-bestanden, links of apps uit bronnen. Vink er een aan om hem in plaats daarvan als ondertekende .ipa op te slaan."
+    },
+    "apps": {
+      "title": "Apps",
+      "text": "Wanneer elke app verloopt, met Vernieuwen en Bijwerken. IPAForge vernieuwt ze zelf zolang het open is. Koppelbestanden staan hier ook."
+    },
+    "devices": {
+      "title": "Apparaten",
+      "text": "De checklist van elke iPhone voor zijn iOS-versie, en het koppelbestand ervan voor andere tools."
+    },
+    "developer": {
+      "title": "Developer Portal",
+      "text": "De certificaten, App-ID's en profielen van je Apple ID. Ruim op wat niemand gebruikt, of verplaats je certificaat als .p12."
+    },
+    "pickers": {
+      "title": "Apparaat en Apple ID",
+      "text": "Wissel hier op elk moment van iPhone of van Apple ID die IPAForge gebruikt."
+    },
+    "logs": {
+      "title": "Logboeken",
+      "text": "Elke stap die IPAForge zette. Voeg ze toe aan een bugmelding (⌘L / Ctrl+L)."
+    },
+    "settings": {
+      "title": "Instellingen",
+      "text": "Taal, uiterlijk, anisette-servers en deze rondleiding opnieuw."
+    },
+    "showAround": {
+      "title": "Rondleiding",
+      "text": "Volg deze rondleiding hier op elk moment opnieuw. De installatiegids staat in Instellingen."
+    }
+  },
+  "pairByCode": {
+    "steps": {
+      "pair": "Koppelen met de code"
+    },
+    "open": "Apple TV of Vision Pro koppelen…",
+    "title": "Een Apple TV of Vision Pro koppelen",
+    "titleAgain": "{name} opnieuw koppelen",
+    "progress": {
+      "label": "Stappen",
+      "find": "1 Zoeken",
+      "code": "2 Code"
+    },
+    "intro": "Ze hebben geen kabel, dus ze worden via Wi-Fi met een code gekoppeld. Zet het apparaat op hetzelfde Wi-Fi-netwerk als deze computer, open dan het koppelscherm en houd het open:",
+    "where": {
+      "tv": "Apple TV",
+      "vision": "Apple Vision Pro",
+      "tvPath": "Instellingen → Afstandsbedieningen en apparaten → Remote-app en apparaten",
+      "visionPath": "Instellingen → Algemeen → Apparaten op afstand"
+    },
+    "found": "Gevonden op je netwerk",
+    "showing": "Toont zijn koppelscherm",
+    "pair": "Koppelen",
+    "searching": "Zoeken op je netwerk… Het apparaat verschijnt hier zodra het koppelscherm open is.",
+    "searchingMore": "Nog op zoek naar andere…",
+    "help": {
+      "title": "Het verschijnt niet",
+      "screen": "Houd het koppelscherm open: het apparaat is alleen te vinden terwijl het wordt getoond.",
+      "network": "Hetzelfde Wi-Fi-netwerk als deze computer: geen gastnetwerk en geen vpn aan een van beide kanten.",
+      "ipv6": "IPv6 aangezet op de router (Apple heeft het nodig om te koppelen).",
+      "macos": "macOS: Systeeminstellingen → Privacy en beveiliging → Lokaal netwerk → IPAForge aangezet.",
+      "windows": "Windows: sta IPAForge toe op privénetwerken als de firewall erom vraagt."
+    },
+    "failed": "Het zoeken op je netwerk is gestopt. Sluit dit en open het opnieuw.",
+    "code": {
+      "title": "Voer de code in op {name}",
+      "body": "{name} toont een code. Typ die hier.",
+      "label": "Code",
+      "wrong": "Die code kwam niet overeen. Controleer de code op {name} en probeer het opnieuw.",
+      "pairing": "Koppelen met {name}…",
+      "checking": "De code wordt gecontroleerd…"
+    },
+    "back": "Terug",
+    "backToList": "Terug naar de lijst",
+    "backoff": {
+      "title": "Te veel foute codes",
+      "wait": "{name} laat je het opnieuw proberen over {seconds, plural, one {# seconde} other {# seconden}}.",
+      "later": "{name} accepteert een tijdje geen codes meer. Wacht even en probeer het opnieuw."
+    },
+    "closed": {
+      "title": "{name} heeft zijn koppelscherm gesloten",
+      "body": "De code werkt alleen zolang het koppelscherm open is. Open het opnieuw op {name}:"
+    },
+    "done": {
+      "title": "{name} is gekoppeld",
+      "body": "{name} staat op je pagina Apparaten. Je kunt het koppelscherm nu sluiten.",
+      "vision": "Apps worden geïnstalleerd zodra de ontwikkelaarsmodus aan staat.",
+      "use": "{name} gebruiken",
+      "close": "Sluiten"
+    },
+    "pairNamed": "{name} koppelen"
+  }
+}
