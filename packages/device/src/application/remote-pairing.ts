@@ -207,6 +207,52 @@ export const prepareRemotePairing = async (
   return 'done'
 }
 
+/** Whether the device was found silent on remote pairing earlier in this run (see `prepareRemotePairing`). */
+export const isSilentDevice = (ctx: DeviceContext, udid: string): boolean =>
+  silentDevices.get(ctx)?.has(udid) ?? false
+
+/**
+ * `ensureRemotePairing` with a time limit, for placing a pairing file: a device that never answers would leave the
+ * install waiting for good. The limit is short until the device asks the user (Trust), then as long as pairing waits
+ * for that tap. Undefined when the time is up; the attempt is left to end on its own.
+ */
+export const ensureRemotePairingWithin = async (
+  ctx: DeviceContext,
+  session: DeviceSession,
+  options: RemotePairingOptions = {}
+): Promise<RemotePairingResult | undefined> => {
+  const { config, sleep } = ctx.deps
+  const stop = new AbortController()
+  let timer = new AbortController()
+  let expire: (value?: undefined) => void = () => undefined
+  const timeout = new Promise<undefined>((resolve) => {
+    expire = resolve
+  })
+  const restart = (ms: number) => {
+    timer.abort()
+    timer = new AbortController()
+    sleep(ms, timer.signal).then(
+      () => expire(),
+      () => undefined
+    )
+  }
+  stop.signal.addEventListener('abort', () => timer.abort())
+  restart(config.remotePairingPrepareTimeoutMs)
+  const attempt = ensureRemotePairing(ctx, session, {
+    ...options,
+    onAwaitingConsent: () => {
+      restart(config.pairingTimeoutMs)
+      options.onAwaitingConsent?.()
+    }
+  })
+  attempt.catch(() => undefined)
+  try {
+    return await Promise.race([attempt, timeout])
+  } finally {
+    stop.abort()
+  }
+}
+
 const make = async (
   ctx: DeviceContext,
   session: DeviceSession
