@@ -1,0 +1,2216 @@
+{
+  "app": {
+    "name": "IPAForge"
+  },
+  "shell": {
+    "skipToContent": "Ugrás a tartalomra",
+    "navigation": "Szakaszok",
+    "credit": {
+      "madeWith": "❤️-rel és ☕-val készült",
+      "copyright": "© {year} {name}"
+    }
+  },
+  "topBar": {
+    "device": "Eszköz",
+    "noDevice": "Nincs",
+    "deviceMenu": "Eszközök",
+    "account": "Apple ID",
+    "notSignedIn": "Nincs bejelentkezve",
+    "accountMenu": "Apple ID-k",
+    "addAppleId": "Apple ID hozzáadása…",
+    "noAccounts": "Még nincs Apple ID.",
+    "noDevicesHint": "Csatlakoztass egy iPhone-t vagy iPadet kábellel, és oldd fel a zárolását.",
+    "openDevices": "Eszközök megnyitása",
+    "tour": "Körbevezetés",
+    "pairByCode": "Apple TV vagy Vision Pro párosítása…"
+  },
+  "nav": {
+    "group": {
+      "manage": "Kezelés"
+    },
+    "install": "Telepítés",
+    "preload": "Előtöltés",
+    "apps": "Alkalmazások",
+    "devices": "Eszközök",
+    "accounts": "Fiókok",
+    "developer": "Fejlesztői portál",
+    "logs": "Naplók",
+    "settings": "Beállítások",
+    "installRunning": "Telepítés folyamatban"
+  },
+  "placeholder": {
+    "body": "Ez a szakasz még készül."
+  },
+  "install": {
+    "title": "SideStore telepítése",
+    "description": "Az Apple ID-ddel aláírva, majd USB-n telepítve.",
+    "steps": {
+      "device": "Eszköz ellenőrzése",
+      "resolve": "Kiadás megkeresése",
+      "download": "Letöltés",
+      "inspect": "Alkalmazás vizsgálata",
+      "certificate_sharing": "Tanúsítvány megosztása",
+      "sign_in": "Bejelentkezés az Apple-be",
+      "team": "Csapat kiválasztása",
+      "register_device": "Eszköz regisztrálása",
+      "certificate": "Tanúsítvány előkészítése",
+      "app_ids": "App ID-k regisztrálása",
+      "free_apps": "Ingyenes alkalmazások korlátjának ellenőrzése",
+      "provision": "Kiépítési profilok lekérése",
+      "refresh_profiles": "Új profilok lekérése",
+      "sign": "Alkalmazás aláírása",
+      "install": "Telepítés az eszközre",
+      "pairing": "Párosítási fájl elhelyezése",
+      "remember": "Telepítés megjegyzése",
+      "save": "Aláírt .ipa mentése"
+    },
+    "signInNeeded": {
+      "title": "Az Apple ID-ddel újra be kell jelentkezned",
+      "body": "A(z) {appleId} mentett munkamenete lejárt. Telepíthetsz így is: az IPAForge a jelszót a megfelelő lépésnél kéri el."
+    },
+    "blocked": {
+      "title": "Az Apple letiltotta a(z) {appleId} azonosítót ezen: {device}",
+      "body": "Az ezzel az Apple ID-vel aláírt alkalmazások nem nyílnak meg ezen az eszközön. Használj másik Apple ID-t.",
+      "use": "{appleId} használata"
+    },
+    "home": {
+      "what": "Mit telepítsünk",
+      "channel": "Csatorna",
+      "install": "{app} telepítése"
+    },
+    "variant": {
+      "sidestore": {
+        "title": "SideStore",
+        "description": "Maga frissíti és telepíti az alkalmazásokat az eszközön. 2 App ID-t használ."
+      },
+      "livecontainer": {
+        "title": "LiveContainer + SideStore",
+        "description": "Sok alkalmazást futtat egyetlen alkalmazáson belül, a 3 alkalmazásos korláton túl. 5 App ID-t használ."
+      }
+    },
+    "channel": {
+      "stable": "Stabil",
+      "nightly": "Nightly",
+      "stableRecommended": "Stabil (ajánlott)",
+      "nightlyRecommended": "Nightly (ajánlott)"
+    },
+    "plan": {
+      "title": "Ez a telepítés",
+      "waiting": "Akkor jelenik meg, ha az eszköz és az Apple ID készen áll.",
+      "checking": "{app} letöltése és ellenőrzés az Apple-nél… A letöltést megtartjuk, így a telepítés újra felhasználja.",
+      "unavailable": "Nem sikerült ellenőrizni az Apple-nél. Telepíthetsz így is: minden lépés újra ellenőriz.",
+      "appIds": "App ID-k",
+      "appIdsValue": "{created, plural, =0 {Mind a(z) {reused} már regisztrálva} other {{reused, plural, =0 {{created} új} other {{created} új, {reused} újrahasznosított}}}} · {left, plural, one {# maradt ezen a héten} other {# maradt ezen a héten}}",
+      "nextSlot": "A következő felszabadul: {date}",
+      "freeApps": "Ingyenes alkalmazások az eszközön",
+      "freeAppsValue": "{used} / {limit} használatban",
+      "freeAppsRoom": "Van hely ennek",
+      "freeAppsFull": "Egyet majd te választasz eltávolításra",
+      "noLimit": "Nincs korlát (fizetős csapat)",
+      "certificate": "Tanúsítvány",
+      "certificateReused": "Újrahasznosítva",
+      "certificateNew": "Újat készítünk",
+      "certificatesOnTeam": "{count, plural, =0 {Még egy sincs a csapatban} one {# van a csapatban} other {# van a csapatban}}",
+      "team": "Csapat",
+      "certificateNewWhy": "Az IPAForge-nak még nincs saját tanúsítványa ebben a csapatban. {count, plural, =0 {} one {A már meglévő egy másik eszközé, amely megtartja a privát kulcsát.} other {A már meglévő # más eszközöké, amelyek megtartják a privát kulcsaikat.}}"
+    },
+    "readiness": {
+      "noDevice": "Előbb csatlakoztass egy eszközt.",
+      "noSideStore": "A SideStore iPhone-on és iPaden fut. Apple TV-re vagy Vision Próra az Előtöltéssel telepíthetsz alkalmazásokat.",
+      "checking": "Eszköz ellenőrzése…",
+      "device": "Akkor érhető el, ha az eszköz készen áll.",
+      "noAccount": "Előbb adj hozzá egy Apple ID-t.",
+      "blocked": "Előbb használj másik Apple ID-t.",
+      "appIds": "Ezen a héten nincs elég App ID.",
+      "ready": "Minden készen áll."
+    },
+    "run": {
+      "title": {
+        "running": "{app} telepítése",
+        "completed": "A(z) {app} telepítve van",
+        "failed": "Nem sikerült telepíteni: {app}",
+        "cancelled": "A telepítés megszakítva"
+      },
+      "subtitle": "{channel} · {device} · {appleId}",
+      "percent": "{fraction, number, percent}",
+      "progress": "Teljes előrehaladás",
+      "steps": "Lépések",
+      "cancel": "Mégse",
+      "cancelInstall": "Telepítés megszakítása",
+      "runningHint": "Amíg ez fut, más szakaszokat is használhatsz.",
+      "waitingHint": "Válaszodra vár.",
+      "stepState": {
+        "waiting": "rád vár",
+        "skipped": "kihagyva",
+        "failed": "sikertelen"
+      },
+      "detail": {
+        "bytes": "{received} / {total}",
+        "received": "{received}",
+        "retrying": "A kapcsolat megszakadt. Új próbálkozás {seconds, plural, one {# másodperc} other {# másodperc}} múlva ({attempt}. kísérlet)"
+      },
+      "live": {
+        "header": "{percent} · {left}",
+        "installing": "{fraction, number, percent} · {phase}",
+        "count": "{done} / {total}",
+        "task": {
+          "line": "{task} · {count}",
+          "team": "Csapat ellenőrzése",
+          "appIds": "App ID-k létrehozása",
+          "appGroup": "Alkalmazáscsoport hozzáadása",
+          "profiles": "Profilok lekérése"
+        },
+        "phase": {
+          "unpacking": "Alkalmazás kicsomagolása",
+          "checking": "Alkalmazás ellenőrzése",
+          "installing": "Telepítés"
+        },
+        "speed": "{speed}/s",
+        "ios": "Az iOS telepíti",
+        "leftSeconds": "Még kb. {seconds} mp",
+        "leftMinutes": "{minutes, plural, one {Még kb. # perc} other {Még kb. # perc}}"
+      },
+      "connection": {
+        "usb": "USB",
+        "network": "Wi-Fi"
+      },
+      "wifi": {
+        "title": "Ez az eszköz Wi-Fi-n csatlakozik",
+        "body": "A nagy alkalmazások kábellel sokkal gyorsabban települnek. Wi-Fi-n az IPAForge tömörítve küldi őket, hogy időt spóroljon."
+      },
+      "unsupportedPrompt": {
+        "title": "Ehhez a lépéshez válasz kell",
+        "body": "Az IPAForge-nak választ kell adnod egy kérdésre, amelyet ez a verzió nem tud megjeleníteni. Szakítsd meg a telepítést, és frissítsd az IPAForge-ot."
+      },
+      "backToInstall": "Vissza a Telepítéshez",
+      "report": {
+        "device": "{model} · iOS {ios} · {connection}",
+        "release": "{app} {version} · {channel}",
+        "download": "{size} · ellenőrzőösszeg rendben",
+        "downloadCached": "{size} · a letöltési gyorsítótárból",
+        "app": "{app} · {extensions, plural, =0 {nincs bővítmény} one {# bővítmény} other {# bővítmény}}",
+        "session": {
+          "reused": "Mentett munkamenet újrahasznosítva",
+          "renewed": "Újra bejelentkezve a mentett jelszóval",
+          "signed-in": "Bejelentkezve"
+        },
+        "registered": "Regisztrálva a csapatnál",
+        "alreadyRegistered": "Már regisztrálva a csapatnál",
+        "certificate": {
+          "reused": "A mentett tanúsítvány újrahasznosítva",
+          "created": "Új tanúsítvány készítve",
+          "replaced": "Egy visszavonva, új tanúsítvány készítve"
+        },
+        "removed": "Eltávolítva: {app} · {used}",
+        "profiles": "{count, plural, one {# profil} other {# profil}}",
+        "signed": "{count, plural, one {# csomag aláírva} other {# csomag aláírva}}",
+        "signedCompressed": "{count, plural, one {# csomag aláírva} other {# csomag aláírva}} · Wi-Fi-hez tömörítve",
+        "phase": {
+          "uploading": "Feltöltés az eszközre",
+          "installing": "Telepítés"
+        },
+        "pairing": "Elhelyezve itt: {apps}",
+        "shared": "Tanúsítvány megosztva",
+        "notShared": "Tanúsítvány nincs megosztva",
+        "pairingRemote": "Elhelyezve itt: {apps} · távoli párosítással iOS 17.4 és újabb rendszerhez",
+        "saved": "Mentve ide: {path}"
+      },
+      "subtitleApps": "{device} · {appleId}"
+    },
+    "summary": {
+      "title": "Ez a telepítés",
+      "app": "Alkalmazás",
+      "channel": "Csatorna",
+      "device": "Eszköz",
+      "deviceValue": "{name} · iOS {ios}",
+      "account": "Apple ID",
+      "appIds": "App ID-k",
+      "appIdsValue": "{count, plural, one {# maradt ezen a héten} other {# maradt ezen a héten}}",
+      "freeApps": "Ingyenes alkalmazások",
+      "apps": "Alkalmazások"
+    },
+    "done": {
+      "title": "A(z) {app} fent van ezen: {device}.",
+      "trust": "Az eszközön: Beállítások › Általános › VPN és eszközkezelés › bízz meg itt: {appleId}.",
+      "open": "Nyisd meg a SideStore-t: a párosítási fájl és a tanúsítványod már benne van.",
+      "done": "Kész"
+    },
+    "cancelled": {
+      "title": "Megállt itt: „{step}”.",
+      "body": "Folytatáskor semmi, ami már megtörtént, nem ismétlődik.",
+      "resume": "Folytatás"
+    },
+    "failed": {
+      "continues": "A befejezett lépések megmaradnak: az újrapróbálkozás innen folytatódik: „{step}”.",
+      "copy": "Diagnosztika másolása",
+      "copied": "Átmásolva",
+      "copyFailed": "Nem sikerült átmásolni",
+      "showLogs": "Naplók megjelenítése"
+    }
+  },
+  "pairing": {
+    "steps": {
+      "targets": "Párosítást igénylő alkalmazások keresése",
+      "place": "Párosítási fájl elhelyezése"
+    }
+  },
+  "settings": {
+    "appearance": "Megjelenés és nyelv",
+    "mode": "Színmód",
+    "palette": "Paletta",
+    "language": {
+      "title": "Nyelv",
+      "system": "Rendszer ({language})",
+      "hint": "Az IPAForge a rendszer nyelvét követi, hacsak itt nem választasz másikat.",
+      "draft": "vázlat"
+    },
+    "anisette": {
+      "title": "Anisette szerverek",
+      "hint": "Az Apple-be való bejelentkezéshez anisette szerver kell, amely megmondja az Apple-nek, melyik számítógép jelentkezik be. Az IPAForge magától használ egy működőt; válassz itt, ha egy bizonyos szervert szeretnél, vagy add hozzá a sajátodat.",
+      "add": "Szerver hozzáadása",
+      "loading": "Szerverek betöltése…",
+      "modeLabel": "Hogyan választ szervert az IPAForge",
+      "mode": {
+        "automatic": "Automatikus",
+        "chosen": "Szerver kiválasztása"
+      },
+      "modeHint": {
+        "automatic": "Ebben a sorrendben próbálja a szervereket, és továbblép, ha az egyik hibázik.",
+        "chosen": "Mindig ezt használja: {name}.",
+        "none": "Válaszd ki a szervert, amelyet az IPAForge mindig használjon."
+      },
+      "noneChosen": "Még nincs kiválasztott szerver: amíg nem választasz, az IPAForge magától választ.",
+      "chosenDown": "A(z) {name} nem válaszol. A bejelentkezés addig nem fog működni, amíg újra elérhető nem lesz, vagy másik szervert nem választasz, illetve át nem váltasz Automatikusra.",
+      "count": "{count, plural, one {# szerver} other {# szerver}}",
+      "sources": "{custom, plural, =0 {} other {# általad hozzáadott, }}{list} a SideStore listájából, {backup} tartalékként ·",
+      "listUpdated": "A SideStore listája frissítve: {ago}",
+      "listNever": "A SideStore listája még nincs lekérve",
+      "updateList": "Lista frissítése",
+      "updating": "Frissítés…",
+      "testAll": "Mind tesztelése",
+      "testing": "Tesztelés…",
+      "group": {
+        "custom": "Általad hozzáadva · először ezt használja",
+        "list": "A SideStore listájából",
+        "backup": "Tartalék · csak ha a SideStore listája nem érhető el, vagy egyik sem válaszol"
+      },
+      "tag": {
+        "custom": "Általad hozzáadva",
+        "inUse": "Használatban",
+        "chosen": "Kiválasztva"
+      },
+      "position": "{position}. helyen próbálja",
+      "use": "{name} használata",
+      "chooseLabel": "Használandó szerver",
+      "status": {
+        "untested": "Nincs tesztelve",
+        "testing": "Tesztelés…",
+        "ok": "Működik · {ms} ms",
+        "bad": "Nem válaszol"
+      },
+      "test": "Teszt",
+      "testOne": "{name} tesztelése",
+      "edit": "{name} szerkesztése",
+      "remove": "{name} eltávolítása",
+      "confirmRemove": "Eltávolítod: {name}?",
+      "removeYes": "Eltávolítás",
+      "skipped": "A SideStore listájából nem használt: {names} (nincs HTTPS). Egyszerű HTTP-s szervert magad is hozzáadhatsz, például a saját számítógépeden futót.",
+      "dialog": {
+        "addTitle": "Anisette szerver hozzáadása",
+        "editTitle": "Szerver szerkesztése",
+        "body": "Bármely, a szokásos protokollt beszélő anisette szerver megfelel: egy nyilvános, vagy egy általad üzemeltetett.",
+        "name": "Név",
+        "namePlaceholder": "Az én szerverem",
+        "address": "Cím",
+        "addressPlaceholder": "https://anisette.my-server.net",
+        "addressHint": "https:// vagy, a saját üzemeltetésű szerverhez, http://",
+        "nameMissing": "Adj neki nevet.",
+        "addressInvalid": "Adj meg https:// vagy http:// kezdetű címet.",
+        "exists": "Ez a szerver már szerepel a listában.",
+        "stillAdd": "Hozzáadhatod így is.",
+        "save": "Mentés"
+      }
+    },
+    "guide": {
+      "title": "Beállítási útmutató",
+      "text": "A számítógép, az iPhone és az Apple ID ellenőrzése újra.",
+      "run": "Útmutató újrafuttatása",
+      "tour": "Körbevezetés",
+      "tourTitle": "Az oldalak bemutatása",
+      "tourHint": "Mire való az egyes oldal, egy-egy megállóval."
+    },
+    "tabs": {
+      "label": "Beállítások",
+      "general": "Általános",
+      "anisette": "Anisette szerverek"
+    },
+    "modeHint": "Világos, sötét, vagy ahogy a rendszered.",
+    "paletteHint": "Az egész alkalmazás színei, világosban és sötétben."
+  },
+  "theme": {
+    "mode": {
+      "system": "Rendszer",
+      "light": "Világos",
+      "dark": "Sötét"
+    },
+    "palette": {
+      "graphite": "Grafit",
+      "ocean": "Óceán",
+      "aurora": "Aurora",
+      "sunset": "Naplemente",
+      "forest": "Erdő",
+      "rose": "Rózsa",
+      "violet": "Ibolya",
+      "mocha": "Mokka"
+    }
+  },
+  "errors": {
+    "device": {
+      "locked": {
+        "title": "Told fel az eszköz zárolását",
+        "body": "Az eszköz zárolva van, ezért az IPAForge nem tud kommunikálni vele. Told fel a zárolását, és tartsd feloldva, amíg a telepítés véget nem ér."
+      },
+      "developer_mode_off": {
+        "title": "A Fejlesztői mód ki van kapcsolva",
+        "body": "A saját telepítésű alkalmazásokhoz Fejlesztői mód kell. Kapcsold be itt: Beállítások › Adatvédelem és biztonság › Fejlesztői mód, majd indítsd újra az eszközt."
+      },
+      "not_paired": {
+        "title": "Ez a számítógép még nem megbízható",
+        "body": "Told fel az eszköz zárolását, és koppints a Megbízom gombra, amikor megkérdezi, megbízol-e ebben a számítógépben."
+      },
+      "usbmuxd_unavailable": {
+        "title": "Az eszköztámogatás nem fut",
+        "body": "Az IPAForge nem éri el azt a rendszerszolgáltatást, amely az iPhone-okkal és iPadekkel beszél. Telepítsd vagy indítsd el, majd próbáld újra."
+      },
+      "not_found": {
+        "title": "Nem található eszköz",
+        "body": "Csatlakoztasd az iPhone-odat vagy iPadedet USB-kábellel, és told fel a zárolását."
+      },
+      "disconnected": {
+        "title": "Az eszköz le lett választva",
+        "body": "A kapcsolat megszakadt. Csatlakoztasd újra a kábelt, told fel az eszköz zárolását, és próbáld újra."
+      },
+      "pairing_pending": {
+        "title": "Várakozás a megbízásra",
+        "body": "Told fel az eszköz zárolását, és koppints a Megbízom gombra a megjelent kérdésen."
+      },
+      "pairing_denied": {
+        "title": "A megbízást elutasítottad",
+        "body": "Az eszköz elutasította, hogy megbízzon ebben a számítógépben. Párosítsd újra, és most koppints a Megbízom gombra."
+      },
+      "invalid_pair_record": {
+        "title": "A párosítás már nem érvényes",
+        "body": "Az eszköz már nem fogadja el ennek a számítógépnek a párosítását. Húzd ki, dugd vissza, told fel a zárolását, és koppints a Megbízom gombra."
+      },
+      "service_unavailable": {
+        "title": "Egy eszközszolgáltatás nem indult el",
+        "body": "Az eszköz nem volt hajlandó elindítani egy, az IPAForge-nak szükséges szolgáltatást. Told fel a zárolását, csatlakoztasd újra, és próbáld újra."
+      },
+      "protocol_error": {
+        "title": "Váratlan válasz az eszköztől",
+        "body": "Az eszköz olyat küldött, amit az IPAForge nem értett. Csatlakoztasd újra; ha megismétlődik, frissítsd az IPAForge-ot, vagy jelentsd."
+      },
+      "install_failed": {
+        "title": "A telepítés sikertelen volt",
+        "body": "Az eszköz nem volt hajlandó telepíteni az alkalmazást. Próbáld újra; ha tovább hibázik, telepítsd újra az alkalmazást, vagy jelentsd."
+      },
+      "afc_error": {
+        "title": "Nem sikerült fájlokat átvinni",
+        "body": "A fájlok másolása az eszközre nem sikerült. Told fel a zárolását, és próbáld újra."
+      },
+      "timeout": {
+        "title": "Az eszköz nem válaszol",
+        "body": "Az eszköz túl sokáig nem válaszolt. Told fel a zárolását, csatlakoztasd újra, és próbáld újra."
+      },
+      "passcode_required": {
+        "title": "Állíts be jelkódot",
+        "body": "Ehhez eszközjelkód kell. Állíts be egyet itt: Beállítások › Face ID és jelkód, majd próbáld újra."
+      },
+      "free_app_limit": {
+        "title": "Túl sok saját telepítésű alkalmazás",
+        "body": "Egy ingyenes Apple ID-vel egy eszközön csak három saját telepítésű alkalmazás lehet aktív. Távolíts el egyet, majd próbáld újra."
+      },
+      "profile_banned": {
+        "title": "Az Apple letiltotta ezt az Apple ID-t az eszközön",
+        "body": "Az eszköz nem fogad el az ezzel az Apple ID-vel aláírt alkalmazásokat. Az újrapróbálás nem segít: használj másik Apple ID-t."
+      },
+      "identity_invalid": {
+        "title": "Az aláíró tanúsítvány már nem érvényes",
+        "body": "Az eszköz elutasította a tanúsítványt, amellyel az alkalmazást aláírták. Ellenőrizd a számítógép óráját, vagy vond vissza a tanúsítványt, és próbáld újra."
+      },
+      "profile_not_found": {
+        "title": "Hiányzik a kiépítési profil",
+        "body": "Az eszköz nem találta az alkalmazás kiépítési profilját. Próbáld újra, vagy telepítsd újra az alkalmazást."
+      },
+      "pairing_path_invalid": {
+        "title": "Ez az útvonal nem tárolhat párosítási fájlt",
+        "body": "Használj az alkalmazás Documents vagy Library mappájában lévő útvonalat, amely .plist vagy .mobiledevicepairing végű."
+      },
+      "local_network_denied": {
+        "title": "Az IPAForge nem tud eszközöket keresni a hálózaton",
+        "body": "A macOS nem engedélyezte az IPAForge-nak, hogy eszközöket keressen a helyi hálózaton, ezért nem éri el az iPhone-okat Wi-Fi-n. A kábellel csatlakozó eszközök továbbra is működnek."
+      },
+      "tunnel_unavailable": {
+        "title": "Az eszköz alagútja nem nyílt meg",
+        "body": "Az IPAForge nem tudta megnyitni azt a biztonságos alagutat, amelyet az iOS 17.4 és újabb kínál kábelen. Ellenőrizd, hogy az eszköz iOS 17.4 vagy újabb rendszert futtat, csatlakoztasd újra, és próbáld újra."
+      },
+      "pairing_code_wrong": {
+        "title": "A kód nem egyezett",
+        "body": "A beírt kód nem az, amelyet az eszköz mutat. Ellenőrizd a kódot a képernyőjén, és próbáld újra."
+      },
+      "pairing_backoff": {
+        "title": "Túl sok hibás kód",
+        "body": "Az eszköz egy ideig nem fogad több kódot. Várj egy kicsit, nyisd meg újra a párosítási képernyőjét, és párosíts még egyszer."
+      },
+      "pairing_screen_closed": {
+        "title": "A párosítási képernyő bezárult",
+        "body": "Az eszköz a párosítás befejezése előtt leállította a párosítási képernyő megjelenítését. Nyisd meg újra, és tartsd nyitva: Apple TV: Beállítások → Távirányítók és eszközök → Távirányító alkalmazás és eszközök. Apple Vision Pro: Beállítások → Általános → Távoli eszközök."
+      }
+    },
+    "apple": {
+      "anisette_unavailable": {
+        "title": "Az anisette szerver nem válaszol",
+        "body": "Az Apple-be való bejelentkezéshez anisette szerver kell, és a jelenlegi nem válaszolt. Válassz másik szervert, vagy ellenőrizd a hálózatot."
+      },
+      "anisette_not_provisioned": {
+        "title": "Az anisette szerver nem áll készen",
+        "body": "Az anisette szerver nem tudta beállítani magát. Válassz másik szervert, és próbáld újra."
+      },
+      "app_id_quota": {
+        "title": "Ezen a héten nincs több App ID",
+        "body": "Egy ingyenes Apple ID 7 naponta csak 10 App ID-t regisztrálhat. Várd meg, amíg felszabadul egy hely, vagy használj másik Apple ID-t."
+      },
+      "certificate_limit": {
+        "title": "Túl sok tanúsítvány",
+        "body": "Ez az Apple ID elérte a fejlesztői tanúsítványok korlátját. Vonj vissza egyet, vagy használj másik Apple ID-t."
+      },
+      "invalid_credentials": {
+        "title": "Hibás Apple ID vagy jelszó",
+        "body": "Az Apple nem fogadta el az e-mail-címet vagy a jelszót. Ellenőrizd őket, és add meg újra a jelszót."
+      },
+      "account_locked": {
+        "title": "Ez az Apple ID zárolva van",
+        "body": "Az Apple biztonsági okokból zárolta ezt a fiókot. Oldd fel egy Apple-eszközön vagy az Apple weboldalán, vagy használj másik Apple ID-t."
+      },
+      "account_refused": {
+        "title": "Az Apple elutasította a bejelentkezést",
+        "body": "Az Apple most nem engedi, hogy ez az Apple ID innen bejelentkezzen. Várj egy kicsit, jelentkezz be egyszer egy Apple-eszközön, vagy használj másik Apple ID-t."
+      },
+      "client_rejected": {
+        "title": "Az Apple elutasította a bejelentkezési kérést",
+        "body": "Az Apple nem fogadta el a bejelentkezéssel küldött azonosítót. Válassz másik anisette szervert, vagy várj, és próbáld újra."
+      },
+      "rate_limited": {
+        "title": "Túl sok kérés",
+        "body": "Az Apple egyelőre korlátozza a kéréseket. Várj néhány percet, és próbáld újra."
+      },
+      "service_unavailable": {
+        "title": "Az Apple szerverei nem érhetők el",
+        "body": "Az Apple szerverei nem válaszoltak. Várj néhány percet, és ellenőrizd a hálózatot."
+      },
+      "two_factor_required": {
+        "title": "Add meg az ellenőrző kódot",
+        "body": "Az Apple ellenőrző kódot küldött a megbízható eszközeidre. Add meg a folytatáshoz."
+      },
+      "two_factor_invalid_code": {
+        "title": "Hibás ellenőrző kód",
+        "body": "Ez a kód nem működött. Ellenőrizd, és add meg újra."
+      },
+      "two_factor_unsupported": {
+        "title": "Ez a bejelentkezési mód nem támogatott",
+        "body": "Ez az Apple ID olyan kétlépcsős módszert használ, amelyet az IPAForge még nem kezel, például biztonsági kulcsot. Használj másik Apple ID-t."
+      },
+      "sms_unavailable": {
+        "title": "Szöveges üzenetes kódok nem érhetők el",
+        "body": "Az Apple itt nem küld kódot szöveges üzenetben. Kérd egy megbízható eszközön, vagy használj másik Apple ID-t."
+      },
+      "clock_skew": {
+        "title": "A számítógép órája téves",
+        "body": "Az Apple elutasítja a kéréseket, ha az óra eltér. Állítsd be a dátumot és az időt automatikusra, majd próbáld újra."
+      },
+      "protocol_error": {
+        "title": "Váratlan válasz az Apple-től",
+        "body": "Az Apple olyat küldött, amit az IPAForge nem értett. Frissítsd az IPAForge-ot, vagy jelentsd, ha tovább fennáll."
+      },
+      "session_expired": {
+        "title": "A munkameneted lejárt",
+        "body": "Jelentkezz be újra ebbe az Apple ID-be. Ha tovább is lejár, ellenőrizd a számítógép óráját."
+      },
+      "account_not_found": {
+        "title": "Az Apple ID nem található",
+        "body": "Az IPAForge-nak nincs mentett munkamenete ehhez az Apple ID-hez. Jelentkezz be újra."
+      },
+      "not_eligible": {
+        "title": "Ez az Apple ID nem használható fejlesztésre",
+        "body": "Az Apple nem engedi, hogy ez a fiók alkalmazásokat írjon alá, például az életkor vagy a feltételek miatt. Használj másik Apple ID-t."
+      },
+      "email_unverified": {
+        "title": "Erősítsd meg az e-mail-címed",
+        "body": "Az Apple-nek előbb meg kell erősítenie az Apple ID e-mail-címét. Erősítsd meg, majd próbáld újra."
+      },
+      "team_agreement": {
+        "title": "Fogadd el az Apple szerződését",
+        "body": "A csapat még nem fogadta el az Apple legújabb fejlesztői szerződését. Fogadd el az Apple fejlesztői weboldalán, vagy válassz másik csapatot."
+      },
+      "no_teams": {
+        "title": "Nincs fejlesztői csapat",
+        "body": "Ennek az Apple ID-nek még nincs fejlesztői csapata. Fogadd el az Apple fejlesztői szerződését, vagy használj másik Apple ID-t."
+      },
+      "device_limit": {
+        "title": "Az eszközkorlát elérve",
+        "body": "Ez a csapat nem regisztrálhat több eszközt. Válassz másik csapatot, vagy használj másik Apple ID-t."
+      },
+      "app_id_unavailable": {
+        "title": "Ez az App ID foglalt",
+        "body": "Egy másik csapat már használja ezt az App ID-t. Válassz másik csapatot, vagy használj másik Apple ID-t."
+      },
+      "invalid_app_id_name": {
+        "title": "Az Apple elutasította az App ID nevét",
+        "body": "Az Apple nem fogadta el az IPAForge által az App ID-nek választott nevet. Frissítsd az IPAForge-ot, vagy jelentsd."
+      },
+      "certificate_not_revocable": {
+        "title": "Ez a tanúsítvány itt nem vonható vissza",
+        "body": "Ezt a tanúsítványt csak az Apple vonhatja vissza. Vonj vissza inkább egy másikat."
+      },
+      "no_devices_for_profile": {
+        "title": "Az eszköz még nincs regisztrálva",
+        "body": "Az Apple még nem fejezte be az eszköz regisztrálását. Várj egy percet, és próbáld újra."
+      },
+      "developer_request_failed": {
+        "title": "Az Apple fejlesztői szolgáltatásai hibáztak",
+        "body": "Az Apple fejlesztői szolgáltatásainak küldött kérés sikertelen volt. Próbáld újra, és jelentsd, ha tovább fennáll."
+      },
+      "anisette_server_invalid": {
+        "title": "Ez az anisette szerver nem használható",
+        "body": "Ellenőrizd a nevét és a címét: a cím https:// vagy http:// kezdetű."
+      },
+      "anisette_server_exists": {
+        "title": "Ez az anisette szerver már szerepel a listában",
+        "body": "Válaszd ki inkább a Beállítások listájából."
+      },
+      "certificate_not_on_team": {
+        "title": "Ez a tanúsítvány nincs a csapatban",
+        "body": "Az Apple már nem listázza ennél a csapatnál: visszavonták, lejárt, vagy egy másik csapaté. Exportálj egy érvényeset, és azt importáld."
+      }
+    },
+    "catalog": {
+      "source_gone": {
+        "title": "A kiadás már nem érhető el",
+        "body": "A hely, ahonnan ezt az alkalmazást letöltötték, megszűnt. Válassz másik csatornát, importálj egy IPA-t, vagy frissítsd az IPAForge-ot."
+      },
+      "unavailable": {
+        "title": "Nem sikerült betölteni az alkalmazáslistát",
+        "body": "Az IPAForge nem tudta lekérni az alkalmazások listáját. Ellenőrizd a hálózatot, és próbáld újra."
+      },
+      "download_failed": {
+        "title": "A letöltés sikertelen volt",
+        "body": "Az alkalmazást nem sikerült letölteni. Ellenőrizd a hálózatot, és próbáld újra."
+      },
+      "checksum_mismatch": {
+        "title": "A letöltés sérült",
+        "body": "A letöltött fájl nem egyezik az ellenőrzőösszegével, ezért nem használtuk. Próbáld újra, vagy válassz másik csatornát."
+      },
+      "checksum_missing": {
+        "title": "A letöltés nem ellenőrizhető",
+        "body": "Ennek a kiadásnak nincs ellenőrzőösszege, így az IPAForge nem tudja ellenőrizni. Válassz másik csatornát, vagy importáld magad az IPA-t."
+      },
+      "rate_limited": {
+        "title": "Túl sok kérés a GitHubra",
+        "body": "A GitHub egyelőre korlátozza a letöltéseket. Várj néhány percet, és próbáld újra."
+      },
+      "app_source_unreachable": {
+        "title": "Ez a forrás nem érhető el",
+        "body": "Ellenőrizd a hivatkozást és az internetkapcsolatot, majd próbáld újra."
+      },
+      "app_source_invalid": {
+        "title": "Ez a hivatkozás nem alkalmazásforrás",
+        "body": "Nem listáz alkalmazásokat AltStore formátumban. Ellenőrizd a hivatkozást, vagy add hozzá inkább az alkalmazás .ipa fájlját."
+      },
+      "app_source_exists": {
+        "title": "Ez a forrás már hozzá van adva",
+        "body": "Az alkalmazásai már szerepelnek az Alkalmazások böngészése nézetben."
+      }
+    },
+    "plist": {
+      "invalid": {
+        "title": "Az alkalmazás beállításfájlja sérült",
+        "body": "Az alkalmazásban lévő tulajdonságlistát nem sikerült beolvasni. Válassz másik IPA-t, vagy jelentsd."
+      }
+    },
+    "net": {
+      "offline": {
+        "title": "Nincs kapcsolat",
+        "body": "Az IPAForge nem éri el az internetet. Ellenőrizd a hálózati kapcsolatot, és próbáld újra."
+      }
+    },
+    "signer": {
+      "invalid_macho": {
+        "title": "Az alkalmazás programja sérült",
+        "body": "Az alkalmazás futtatható fájlját nem sikerült beolvasni. Válassz másik IPA-t."
+      },
+      "encrypted_binary": {
+        "title": "Az alkalmazás titkosított",
+        "body": "Ez az IPA az App Store-ból származik, és még titkosított, ezért nem írható újra alá. Válassz visszafejtett IPA-t."
+      },
+      "unsupported_arch": {
+        "title": "Nem támogatott alkalmazásformátum",
+        "body": "Az alkalmazás futtatható fájlja olyan formátumot használ, amelyet az iOS nem tud futtatni. Válassz másik IPA-t."
+      },
+      "unsupported_ios": {
+        "title": "Újabb iOS kell hozzá",
+        "body": "Ehhez az alkalmazáshoz újabb iOS-verzió kell, mint ami az eszközön van. Frissítsd az eszközt, vagy válassz másik csatornát vagy IPA-t."
+      },
+      "unsupported_device": {
+        "title": "Nem ehhez az eszközhöz készült",
+        "body": "Ez az alkalmazás nem támogatja az ilyen típusú eszközt, például egy csak iPadre való alkalmazást iPhone-on, vagy egy iPhone-alkalmazást Apple TV-n. Válassz másik IPA-t."
+      },
+      "no_arm64_build": {
+        "title": "Nincs iPhone-ra vagy iPadre szóló build",
+        "body": "Az alkalmazásnak nincs 64 bites buildje iPhone-ra vagy iPadre, például 32 bites vagy szimulátorbuild. Válassz másik IPA-t."
+      },
+      "no_header_space": {
+        "title": "Az alkalmazás nem írható alá",
+        "body": "Az alkalmazás futtatható fájljában nincs hely az aláíráshoz. Válassz másik IPA-t, vagy jelentsd."
+      },
+      "zip_slip": {
+        "title": "Az IPA nem biztonságos",
+        "body": "Az IPA a saját mappáján kívülre próbál fájlokat írni, ezért az IPAForge elutasította. Válassz másik IPA-t."
+      },
+      "invalid_certificate": {
+        "title": "A tanúsítvány érvénytelen",
+        "body": "Az aláíró tanúsítványt nem sikerült használni. Vond vissza, hogy az IPAForge újat hozhasson létre, majd próbáld újra."
+      },
+      "unknown_issuer": {
+        "title": "Ismeretlen tanúsítványkiadó",
+        "body": "Az IPAForge nem ismeri fel, ki állította ki a tanúsítványt. Frissítsd az IPAForge-ot, és ellenőrizd a hálózatot."
+      },
+      "invalid_bundle": {
+        "title": "Az alkalmazáscsomag érvénytelen",
+        "body": "Az IPA nem tartalmaz érvényes alkalmazást. Válassz másik IPA-t."
+      },
+      "invalid_profile": {
+        "title": "A kiépítési profil érvénytelen",
+        "body": "Az Apple-től kapott kiépítési profilt nem sikerült beolvasni. Próbáld újra, és jelentsd, ha tovább fennáll."
+      },
+      "extension_prefix": {
+        "title": "Egy alkalmazásbővítmény azonosítója hibás",
+        "body": "Egy bővítmény bundle ID-ja nem az alkalmazás saját azonosítójával kezdődik. Válassz másik IPA-t."
+      },
+      "profile_mismatch": {
+        "title": "A kiépítési profil nem egyezik",
+        "body": "A profil nem egyezik azzal az alkalmazással, amelyhez készült. Próbáld újra, és jelentsd, ha tovább fennáll."
+      },
+      "profile_expired": {
+        "title": "A kiépítési profil lejárt",
+        "body": "A profil lejárt, vagy a számítógép órája téves. Ellenőrizd az órát, és próbáld újra."
+      },
+      "cert_not_in_profile": {
+        "title": "A tanúsítvány nincs a profilban",
+        "body": "A kiépítési profil nem tartalmazza az aláíró tanúsítványt. Próbáld újra, hogy friss profilt kapj."
+      },
+      "device_not_provisioned": {
+        "title": "Az eszköz nincs a profilban",
+        "body": "A kiépítési profil nem tartalmazza ezt az eszközt. Próbáld újra, hogy friss profilt kapj."
+      },
+      "pkcs12_password": {
+        "title": "A jelszó nem nyitja meg ezt a .p12-t",
+        "body": "Írd be a jelszót, amellyel exportálták, és próbáld újra."
+      }
+    },
+    "installer": {
+      "step_failed": {
+        "title": "Egy lépés sikertelen volt",
+        "body": "Hiba történt a telepítés közben. Próbáld újra, és jelentsd, ha tovább fennáll."
+      },
+      "prompt_cancelled": {
+        "title": "Megszakítva",
+        "body": "A telepítés leállt, mert egy kérdést megszakítottak. Kezdd újra, ha készen állsz."
+      },
+      "certificate_machine_id_missing": {
+        "title": "A tanúsítvány nem osztható meg",
+        "body": "Ebből a tanúsítványból hiányzik az az adat, amely a SideStore-nak a megnyitásához kell. Vond vissza, hogy az IPAForge újat hozhasson létre, majd próbáld újra."
+      },
+      "team_required": {
+        "title": "Válassz csapatot",
+        "body": "Ez az Apple ID több csapathoz tartozik. Válaszd ki, amelyikkel aláírsz."
+      },
+      "kept_ipa_missing": {
+        "title": "Ez az alkalmazás itt nem megújítható",
+        "body": "Az IPAForge nem telepítette ezen az eszközön, vagy a megőrzött példánya eltűnt. Add hozzá az .ipa fájlját az Előtöltésben, hogy újra telepíthesd."
+      },
+      "wrong_app": {
+        "title": "Ez a hivatkozás másik alkalmazást ad",
+        "body": "Nem az az alkalmazás, amelyet megújítasz vagy frissítesz, ezért nem lett telepítve, az alkalmazás és az adatai változatlanok maradnak. Add hozzá a megfelelő .ipa fájlt az Előtöltésben, hogy újra telepíthesd."
+      },
+      "version_unavailable": {
+        "title": "Ez a verzió nem tölthető le újra",
+        "body": "A Megújítás megtartja az eszközön lévő verziót, de az már nem érhető el letöltésre. A Frissítés a legújabb verziót telepíti; az alkalmazás megtartja az adatait."
+      },
+      "pairing_app_not_found": {
+        "title": "Ez az alkalmazás nincs az eszközön",
+        "body": "Eltávolították, vagy már nem az IPAForge által telepített. Zárd be a Párosítási fájlokat, és nyisd meg újra."
+      },
+      "certificate_not_stored": {
+        "title": "Még nincs tanúsítvány ezen a számítógépen",
+        "body": "Ez a számítógép megtartja a csapat tanúsítványát, miután telepít vele egy alkalmazást. Telepíts előbb egy alkalmazást, vagy importálj egy .p12-t."
+      }
+    },
+    "rpc": {
+      "invalid_message": {
+        "title": "Belső kommunikációs hiba",
+        "body": "Az IPAForge részei nem értették meg egymást. Frissítsd az IPAForge-ot, vagy jelentsd."
+      },
+      "disconnected": {
+        "title": "Megszakadt a kapcsolat a motorral",
+        "body": "Az IPAForge motorja nem válaszol. Próbáld újra, és jelentsd, ha tovább fennáll."
+      },
+      "timeout": {
+        "title": "A motor nem válaszolt",
+        "body": "Az IPAForge motorja túl sokáig nem válaszolt. Próbáld újra, és jelentsd, ha tovább fennáll."
+      }
+    },
+    "internal": {
+      "aborted": {
+        "title": "Leállítva",
+        "body": "A műveletet leállították, mielőtt befejeződött volna."
+      },
+      "unexpected": {
+        "title": "Hiba történt",
+        "body": "Váratlan hiba történt. Próbáld újra, és jelentsd, ha tovább fennáll."
+      }
+    }
+  },
+  "recovery": {
+    "retry": "Próbáld újra",
+    "wait-and-retry": "Várj, majd próbáld újra",
+    "check-network": "Ellenőrizd a hálózatot",
+    "check-clock": "Ellenőrizd a dátumot és az időt",
+    "change-anisette-server": "Válassz másik anisette szervert",
+    "re-enter-password": "Add meg újra a jelszót",
+    "re-enter-code": "Add meg újra a kódot",
+    "use-trusted-device": "Használj megbízható eszközt",
+    "sign-in-again": "Jelentkezz be újra",
+    "sign-in-on-apple-device": "Jelentkezz be egy Apple-eszközön",
+    "switch-account": "Használj másik Apple ID-t",
+    "verify-email": "Erősítsd meg az e-mail-címed",
+    "accept-agreement": "Fogadd el az Apple szerződését",
+    "choose-team": "Válassz csapatot",
+    "revoke-certificate": "Vonj vissza egy tanúsítványt",
+    "wait-for-app-id-slot": "Várj egy szabad App ID-re",
+    "try-anyway": "Próbáld meg mégis",
+    "choose-app-to-remove": "Válassz eltávolítandó alkalmazást",
+    "unlock-device": "Told fel az eszköz zárolását",
+    "enable-developer-mode": "Kapcsold be a Fejlesztői módot",
+    "trust-computer": "Bízz meg ebben a számítógépben",
+    "reconnect-device": "Csatlakoztasd újra az eszközt",
+    "pair-again": "Párosíts újra",
+    "set-passcode": "Állíts be jelkódot",
+    "install-device-support": "Eszköztámogatás telepítése",
+    "reinstall-app": "Telepítsd újra az alkalmazást",
+    "choose-another-ipa": "Válassz másik IPA-t",
+    "choose-another-channel": "Válassz másik csatornát",
+    "import-ipa": "Importálj egy IPA-t",
+    "update-ipaforge": "Az IPAForge frissítése",
+    "report-issue": "A probléma jelentése",
+    "or": "Vagy",
+    "switchAccount": {
+      "title": "Használj másik Apple ID-t",
+      "body": "A telepítés újraindul a kiválasztott Apple ID-vel."
+    },
+    "fix": {
+      "copy": "Másolás",
+      "copied": "Átmásolva",
+      "done": "Kész, próbáld újra",
+      "waitAndRetry": {
+        "how": "Az Apple elfoglalt, vagy korlátozza a kéréseket. Várj egy percet, majd próbáld újra."
+      },
+      "checkNetwork": {
+        "how": "Gondoskodj róla, hogy a számítógép online legyen, majd próbáld újra."
+      },
+      "checkClock": {
+        "step1": "Nyisd meg a számítógép dátum- és időbeállításait",
+        "step2": "Kapcsold be a dátum és idő automatikus beállítását"
+      },
+      "reEnterPassword": {
+        "how": "Az újrapróbálás elkéri a jelszót; ellenőrizd, mielőtt megadod."
+      },
+      "reEnterCode": {
+        "how": "Az újrapróbálás új ellenőrző kódot kér."
+      },
+      "useTrustedDevice": {
+        "how": "Amikor kódot kér, szöveges üzenet helyett válassz egy megbízható eszközt."
+      },
+      "signInAgain": {
+        "how": "Az újrapróbálás elkéri a jelszót az újabb bejelentkezéshez."
+      },
+      "signInOnAppleDevice": {
+        "how": "Jelentkezz be ebbe az Apple ID-be egy iPhone-on, iPaden vagy Macen, vagy az Apple weboldalán, és kövesd az utasításokat:"
+      },
+      "switchAccount": {
+        "how": "Válaszd ki az egyik mentett Apple ID-det. A telepítés vele indul újra.",
+        "button": "Apple ID kiválasztása…"
+      },
+      "verifyEmail": {
+        "how": "Erősítsd meg ennek az Apple ID-nek az e-mail-címét az Apple weboldalán:"
+      },
+      "acceptAgreement": {
+        "how": "Jelentkezz be az Apple fejlesztői weboldalán, és fogadd el a megjelenő szerződést:"
+      },
+      "revokeCertificate": {
+        "how": "Az újrapróbálás megkérdezi, melyik tanúsítványt vonja vissza."
+      },
+      "waitForAppIdSlot": {
+        "how": "Az Apple minden App ID-t a létrehozása után 7 nappal szabadít fel. Telepíts újra, ha felszabadult egy, vagy használj másik Apple ID-t.",
+        "next": "A következő App ID felszabadul: {date}."
+      },
+      "chooseAppToRemove": {
+        "how": "Az újrapróbálás megkérdezi, melyik alkalmazást távolítsa el a hely felszabadításához."
+      },
+      "unlockDevice": {
+        "how": "Told fel az eszköz zárolását, és tartsd feloldva, amíg a telepítés véget nem ér."
+      },
+      "enableDeveloperMode": {
+        "button": "Be van kapcsolva, próbáld újra"
+      },
+      "trustComputer": {
+        "how": "Told fel az eszköz zárolását. Amikor megkérdezi, megbízol-e ebben a számítógépben, koppints a Megbízom gombra, és add meg a jelkódot.",
+        "button": "Kérdezze újra az eszközön"
+      },
+      "reconnectDevice": {
+        "how": "Húzd ki az eszközt, dugd vissza, és told fel a zárolását."
+      },
+      "setPasscode": {
+        "how": "Állíts be jelkódot az eszközön itt: Beállítások › Face ID és jelkód, majd próbáld újra."
+      },
+      "installDeviceSupport": {
+        "how": "Windowson telepítsd az Apple Devices alkalmazást (vagy az iTunes-t) a Microsoft Store-ból, majd indítsd újra az IPAForge-ot."
+      },
+      "reinstallApp": {
+        "how": "Töröld az alkalmazást az eszközről, majd próbáld újra."
+      },
+      "chooseAnotherChannel": {
+        "how": "A másik csatorna buildje működhet ezen az eszközön.",
+        "button": "Telepítés innen: {channel}"
+      },
+      "open": "Megnyitás",
+      "tryAnyway": {
+        "how": "Az Apple negatív számú fennmaradó App ID-t jelzett, ami az ő oldalukon ismert hiba: a valódi szám lehet magasabb. A Próbáld meg mégis kéri az Apple-t, hogy hozza létre őket; ha tényleg elérted a korlátot, azt jelzi."
+      },
+      "changeAnisetteServer": {
+        "how": "Nyisd meg a Beállításokat, teszteld az anisette szervereket, és válassz egy működőt, vagy térj vissza az Automatikushoz.",
+        "button": "Anisette szerverek megnyitása"
+      },
+      "allowLocalNetwork": {
+        "how": "Nyisd meg a Rendszerbeállítások › Adatvédelem és biztonság › Helyi hálózat részt, kapcsold be az IPAForge-ot, majd próbáld újra. Vagy csatlakoztasd az eszközt kábellel."
+      }
+    },
+    "reportHint": "Új GitHub-hibajegyet nyit a kitöltött diagnosztikával. Semmi nem kerül elküldésre, amíg be nem küldöd.",
+    "allow-local-network": "Helyi hálózati hozzáférés engedélyezése"
+  },
+  "devices": {
+    "engine": {
+      "connecting": "Csatlakozás a motorhoz…",
+      "connected": "{count, plural, =0 {Motor csatlakoztatva · nincs eszköz} one {Motor csatlakoztatva · # eszköz} other {Motor csatlakoztatva · # eszköz}}",
+      "failed": "A motor nem érhető el: {reason}"
+    },
+    "description": "A számítógéphez csatlakoztatott iPhone-ok és iPadek, valamint a hozzá párosított Apple TV-k és Vision Pro-k. A használatban lévő a felső sávban látható.",
+    "unknownDevice": "Ismeretlen eszköz",
+    "line": "{model} · iOS {ios} · {link}",
+    "model": "{model} · iOS {ios}",
+    "withState": "{line} · {state}",
+    "link": {
+      "usb": "USB",
+      "network": "Wi-Fi",
+      "both": "USB és Wi-Fi"
+    },
+    "state": {
+      "checking": "Ellenőrzés…",
+      "ready": "Kész",
+      "locked": "Zárolva",
+      "developerModeOff": "Fejlesztői mód kikapcsolva",
+      "notTrusted": "Nem megbízható",
+      "unavailable": "Az eszköz nem olvasható",
+      "notConnected": "Nincs csatlakoztatva"
+    },
+    "inUse": "Használatban",
+    "use": "Ennek az eszköznek a használata",
+    "checkAgain": "Ellenőrzés újra",
+    "facts": {
+      "model": "Modell",
+      "ios": "iOS",
+      "connection": "Kapcsolat",
+      "udid": "UDID",
+      "pairing": "Párosítás",
+      "address": "Cím"
+    },
+    "empty": {
+      "title": "Még nincs eszköz",
+      "body": "Csatlakoztass egy iPhone-t vagy iPadet kábellel, és told fel a zárolását. Windowson az Apple Devices vagy az iTunes telepítve kell legyen."
+    },
+    "notice": {
+      "none": {
+        "title": "Nincs csatlakoztatott eszköz",
+        "body": "Csatlakoztass egy iPhone-t vagy iPadet kábellel, és told fel a zárolását. Magától megjelenik itt."
+      },
+      "notConnected": {
+        "title": "A(z) {name} nincs csatlakoztatva",
+        "body": "Dugd vissza, és automatikusan használja, vagy válassz másik eszközt a felső sávban."
+      },
+      "notTrusted": {
+        "title": "Bízz meg ebben a számítógépben ezen: {name}",
+        "body": "Told fel a zárolását, koppints a Megbízom gombra, és add meg a jelkódot.",
+        "action": "Kérdezze újra",
+        "waiting": "Várakozás a megbízásra…",
+        "titleUnnamed": "Bízz meg ebben a számítógépben az eszközön"
+      },
+      "locked": {
+        "title": "{name} feloldása",
+        "body": "Feloldva kell maradnia, amíg az alkalmazások települnek."
+      },
+      "developerModeOff": {
+        "title": "Kapcsold be a Fejlesztői módot ezen: {name}",
+        "step1": "Beállítások → Adatvédelem és biztonság → Fejlesztői mód",
+        "step2": "Kapcsold be, és indítsd újra, amikor kéri",
+        "step3": "Az újraindítás után koppints a Bekapcsolás gombra, és add meg a jelkódot"
+      },
+      "unavailable": {
+        "title": "A(z) {name} nem olvasható",
+        "body": "Húzd ki, és dugd vissza. Ha tovább fennáll, indítsd újra az eszközt.",
+        "bodyWifi": "Wi-Fi-n csatlakozik: ébreszd fel, told fel a zárolását, és tartsd ugyanazon a hálózaton, mint ezt a számítógépet, majd Ellenőrzés újra. A kábel megbízhatóbb.",
+        "reason": "Ok: {reason}",
+        "titleUnnamed": "Az eszköz nem olvasható"
+      },
+      "offNetwork": {
+        "title": "A(z) {name} nincs a hálózaton",
+        "tv": "Ébreszd fel a távirányítójával, és tartsd ugyanazon a Wi-Fi-n, mint ezt a számítógépet.",
+        "vision": "Kapcsold be, told fel a zárolását, és tartsd ugyanazon a Wi-Fi-n, mint ezt a számítógépet."
+      },
+      "pairAgain": {
+        "title": "{name} párosítása újra",
+        "body": "Már nem fogadja el ennek a számítógépnek a párosítását. Ez normális egy tvOS- vagy visionOS-frissítés után: párosítsd újra új kóddal.",
+        "action": "Párosítás újra…"
+      }
+    },
+    "notes": {
+      "connected": "A(z) {name} csatlakozott",
+      "disconnected": "A(z) {name} lecsatlakozott",
+      "aDevice": "Egy eszköz"
+    },
+    "savePairing": "Párosítási fájl mentése…",
+    "localNetwork": {
+      "open": "Helyi hálózati beállítások megnyitása"
+    },
+    "os": {
+      "tv": "tvOS",
+      "vision": "visionOS"
+    },
+    "lineOs": "{model} · {os} {version} · {link}",
+    "modelOs": "{model} · {os} {version}",
+    "pairedByCode": "Ezzel a számítógéppel párosítva, kóddal",
+    "forget": {
+      "action": "Elfelejtés…",
+      "title": "Elfelejted: {name}?",
+      "body": "Az IPAForge eltávolítja ennek a számítógépnek a párosítását. A rajta lévő alkalmazások megmaradnak. A későbbi használathoz párosítsd újra.",
+      "confirm": "Elfelejtés"
+    }
+  },
+  "prompts": {
+    "cancel": "Mégse",
+    "continue": "Tovább",
+    "password": {
+      "title": "Jelentkezz be újra",
+      "body": "A(z) {appleId} mentett munkamenete lejárt. A folytatáshoz add meg a jelszót.",
+      "label": "Jelszó",
+      "checking": "Jelszó ellenőrzése…"
+    },
+    "method": {
+      "title": "Hová küldje az Apple a kódot?",
+      "body": "Válaszd ki, hogyan kéred az ellenőrző kódot.",
+      "trustedDevice": "Megbízható eszköz",
+      "trustedDeviceHint": "Az ebbe az Apple ID-be bejelentkezett iPhone-od, iPaded vagy Maced",
+      "sms": "Szöveges üzenet erre: {number}",
+      "smsHint": "Normál SMS-díjak merülhetnek fel",
+      "sending": "Kód küldése…"
+    },
+    "code": {
+      "title": "Add meg az ellenőrző kódot",
+      "body": "{length, plural, one {Add meg az Apple által küldött #-jegyű kódot.} other {Add meg az Apple által küldött #-jegyű kódot.}}",
+      "label": "Ellenőrző kód",
+      "wrong": "Ez a kód nem működött. Ellenőrizd, és add meg újra.",
+      "verify": "Ellenőrzés",
+      "checking": "Kód ellenőrzése…",
+      "deviceBody": "{length, plural, one {Add meg az iPhone-odon, iPaden vagy Meceden megjelenő #-jegyű kódot.} other {Add meg az iPhone-odon, iPaden vagy Meceden megjelenő #-jegyű kódot.}}",
+      "smsBody": "{length, plural, one {Add meg a(z) {number} számra küldött #-jegyű kódot.} other {Add meg a(z) {number} számra küldött #-jegyű kódot.}}",
+      "allowHint": "Tartsd feloldva, és koppints az Engedélyezés gombra, amikor a bejelentkezésről kérdez.",
+      "noCode": "Nem kaptál kódot?",
+      "resend": "Új kód küldése",
+      "textTo": "SMS erre: {number}",
+      "sending": "Új kód küldése…",
+      "sent": "Új kód úton van.",
+      "notSent": "Az Apple nem küldött új kódot. Várj néhány percet, majd próbáld újra."
+    },
+    "suggested": "Javasolt",
+    "team": {
+      "title": "Melyik csapat írja alá az alkalmazást?",
+      "body": "Ez az Apple ID több csapathoz tartozik. Az IPAForge megjegyzi a választásodat ehhez az Apple ID-hez.",
+      "free": "Ingyenes: az alkalmazások 7 nap után lejárnak, eszközönként 3 alkalmazás",
+      "paid": "Fizetős: az alkalmazások egy évig érvényesek, nincs alkalmazáskorlát",
+      "checking": "A csapat használata…"
+    },
+    "revoke": {
+      "title": "Visszavonsz egy tanúsítványt?",
+      "body": "Ez a csapat már elérte a fejlesztői tanúsítványok maximumát, ezért az IPAForge-nak vissza kell vonnia egyet, hogy sajátot készíthessen. A visszavont tanúsítvánnyal aláírt alkalmazások nem frissülnek tovább.",
+      "ipaforge": "Az IPAForge készítette egy másik számítógépen",
+      "sidestore": "A SideStore készítette",
+      "machine": "Itt készült: „{machine}” (általában Xcode)",
+      "unknown": "Ismeretlen eszköz készítette",
+      "sidestoreWarning": "Az eszközödön lévő SideStore leáll az alkalmazások frissítésével, amíg újat nem készít.",
+      "machineWarning": "Az Xcode azon a számítógépen újat készít, amikor legközelebb aláír.",
+      "expires": "Lejár: {date}",
+      "confirm": "Visszavonás és tovább",
+      "revoking": "Tanúsítvány visszavonása…"
+    },
+    "remove": {
+      "title": "Eltávolítasz egy alkalmazást a hely felszabadításához?",
+      "body": "Egy ingyenes Apple ID-vel egy eszközön {limit} alkalmazás lehet, ezért egynek mennie kell, hogy ez elférjen. Később újra telepítheted.",
+      "confirm": "Eltávolítás és tovább",
+      "removing": "Alkalmazás eltávolítása…"
+    },
+    "share": {
+      "title": "Megosztod az aláíró tanúsítványodat ezzel: „{app}”?",
+      "body": "Ez az alkalmazás SideStore-nak tűnik. A tanúsítványoddal maga tudja frissíteni az alkalmazásokat az eszközön. Csak megbízható alkalmazással oszd meg.",
+      "yes": "Tanúsítvány megosztása",
+      "yesHint": "Maga frissíti az alkalmazásaidat az eszközön",
+      "no": "Ne oszd meg",
+      "noHint": "A tanúsítványod nélkül települ"
+    },
+    "pairing": {
+      "title": "Mely alkalmazások kapják meg a párosítási fájlt?",
+      "body": "A párosítási fájl lehetővé teszi, hogy az eszközön lévő alkalmazás Wi-Fi-n beszéljen vele, ahogy ez a számítógép. Csak a megjelölt alkalmazások kapják meg.",
+      "available": "{count, plural, one {# alkalmazás használhatja az eszközön} other {# alkalmazás használhatja az eszközön}}",
+      "selectAll": "Összes kijelölése",
+      "clearAll": "Kijelölés törlése",
+      "place": "{count, plural, =0 {Válassz alkalmazást} one {Elhelyezés # alkalmazásban} other {Elhelyezés # alkalmazásban}}",
+      "placing": "Párosítási fájl elhelyezése…",
+      "purpose": {
+        "sidestore": "Wi-Fi-n frissíti és telepíti az alkalmazásokat",
+        "livecontainer": "JIT-tel futtatja a benne lévő alkalmazásokat",
+        "stikdebug": "JIT-et engedélyez más alkalmazásoknak",
+        "stikstore": "Saját forrásaiból telepít alkalmazásokat"
+      }
+    }
+  },
+  "signIn": {
+    "title": "Apple ID hozzáadása",
+    "body": "Az IPAForge ezzel írja alá az alkalmazásokat. A jelszavad csak az Apple-hez kerül.",
+    "appleId": "Apple ID",
+    "password": "Jelszó",
+    "submit": "Bejelentkezés",
+    "signingIn": "Bejelentkezés…",
+    "done": {
+      "title": "Apple ID hozzáadva",
+      "body": "Bejelentkezve mint {appleId}.",
+      "close": "Kész"
+    },
+    "rememberPassword": "Jelszavam mentése a rendszer kulcstartójába",
+    "rememberPasswordHint": "Lehetővé teszi, hogy az IPAForge magától újra bejelentkezzen, amikor a munkamenet lejár.",
+    "resuming": {
+      "title": "Újra bejelentkezés",
+      "body": "Bejelentkezés ide: {appleId}, az IPAForge által mentett adatokkal…",
+      "cancel": "Mégse"
+    }
+  },
+  "accounts": {
+    "description": "Az Apple ID-k, amelyekkel az IPAForge aláírja az alkalmazásokat. A használatban lévő a felső sávban látható.",
+    "list": "Mentett Apple ID-k",
+    "empty": "Még nincs Apple ID. Adj hozzá egyet a SideStore telepítéséhez.",
+    "notSaved": {
+      "title": "Az Apple ID-k nem kerülnek mentésre",
+      "body": "Az IPAForge nem tudja használni a rendszer kulcstartóját (lehet, hogy a hozzáférést megtagadták), ezért az Apple ID-id csak a kilépésig maradnak meg. A mentéshez nyisd meg újra az IPAForge-ot, és engedélyezd a kulcstartó-hozzáférést, amikor kéri."
+    },
+    "freeTeam": "{name} (ingyenes)",
+    "withState": "{line} · {state}",
+    "state": {
+      "checking": "Ellenőrzés…",
+      "signInNeeded": "Bejelentkezés szükséges",
+      "blocked": "Letiltva ezen az eszközön",
+      "unreachable": "Az Apple nem érhető el"
+    },
+    "inUse": "Használatban",
+    "noTeams": "A csapatok akkor jelennek meg, ha az Apple válaszolt.",
+    "use": "Használat",
+    "signInAgain": "Jelentkezz be újra",
+    "signOut": {
+      "action": "Kijelentkezés",
+      "title": "Kijelentkezel innen: {appleId}?",
+      "forgets": "Az IPAForge elfelejti ezt az Apple ID-t, a munkamenetét és a mentett jelszavát.",
+      "keeps": "Az aláíró tanúsítványai a számítógépen maradnak, így az újbóli bejelentkezés újra felhasználja őket. A már telepített alkalmazások a lejáratukig működnek.",
+      "confirm": "Kijelentkezés"
+    }
+  },
+  "apps": {
+    "description": "Az IPAForge által ezen az eszközön telepített alkalmazások. A Megújítás lejárat előtt újra aláírja az alkalmazást, megtartva az adatait.",
+    "refreshAll": "{count, plural, =0 {Összes megújítása} other {Összes megújítása (#)}}",
+    "updateAll": "{count, plural, other {Összes frissítése (#)}}",
+    "refresh": "Megújítás",
+    "update": "Frissítés",
+    "remove": "Eltávolítás",
+    "removeApp": "{name} eltávolítása",
+    "updateTo": "Frissítés: {version}",
+    "from": "Forrás: {source}",
+    "needsIpa": "Az IPAForge telepítette egy másik számítógépről származó .ipa-ból. Add hozzá ezt az .ipa-t egyszer az Előtöltésben, hogy itt megújíthasd.",
+    "thisDevice": "ez az eszköz",
+    "badge": "{count, plural, one {# alkalmazás hamarosan megújítandó} other {# alkalmazás hamarosan megújítandó}}",
+    "expiry": {
+      "in": "{days, plural, one {# nap múlva lejár · {date}} other {# nap múlva lejár · {date}}}",
+      "today": "Ma lejár",
+      "expired": "{days, plural, one {# napja lejárt · nem nyílik meg} other {# napja lejárt · nem nyílik meg}}",
+      "unknown": "A lejárat ismeretlen",
+      "gone": "Lejárt · nem nyílik meg"
+    },
+    "run": {
+      "checking": "Ellenőrzés az Apple-nél…",
+      "waiting": "Várakozik a sorára",
+      "done": "Kész"
+    },
+    "failed": {
+      "title": "A megújítás nem fejeződött be: {reason}",
+      "details": "Részletek megjelenítése",
+      "dismiss": "Elvetés"
+    },
+    "notConnected": {
+      "title": "Ez az eszköz nincs csatlakoztatva",
+      "body": "Csatlakoztasd, hogy lásd az alkalmazásait, és megújíthasd vagy frissíthesd őket."
+    },
+    "expired": {
+      "title": "{count, plural, one {# alkalmazás lejárt} other {# alkalmazás lejárt}}",
+      "body": "Nem nyílnak meg, amíg meg nem újítják őket. Az adataik megmaradnak.",
+      "refresh": "{count, plural, one {Megújítás most} other {Megújításuk most}}"
+    },
+    "facts": {
+      "next": "Legközelebb lejár",
+      "none": "Még semmi",
+      "nextIn": "{days, plural, one {{name} · # nap} other {{name} · # nap}}",
+      "nextExpired": "{name} · lejárt",
+      "count": "Megújítva tartva",
+      "apps": "{count, plural, one {# alkalmazás} other {# alkalmazás}}",
+      "auto": "Automatikus megújítás",
+      "autoOn": "{days, plural, one {Be · # nappal előtte} other {Be · # nappal előtte}}",
+      "autoOff": "Ki"
+    },
+    "list": {
+      "title": "Az IPAForge telepítette",
+      "count": "{count, plural, one {# alkalmazás · a legsürgősebb elöl} other {# alkalmazás · a legsürgősebb elöl}}",
+      "empty": "Még nincs alkalmazás. Telepítsd a SideStore-t, vagy előtölts alkalmazásokat, és itt megjelennek."
+    },
+    "others": {
+      "title": "Az IPAForge még nem tartja meg",
+      "hint": "Az IPAForge ezen verziója előtt, vagy más eszközzel telepítve",
+      "found": "Itt található: {source}. A Megújítás onnan telepíti, megtartva az adatait, és az IPAForge ezután megújítva tartja.",
+      "foundMany": "Itt található: {source} és {count, plural, one {# másik forrás} other {# másik forrás}}. A Megújítás az alább kiválasztottból telepíti, megtartva az adatait, és az IPAForge ezután megújítva tartja.",
+      "pickSource": "Telepítés innen",
+      "choice": "{source} · {version}",
+      "how": "Add hozzá az .ipa fájlját egyszer az Előtöltésben, és az IPAForge ezután megújítva tartja."
+    },
+    "auto": {
+      "title": "Alkalmazások automatikus megújítása",
+      "body": "Amíg az IPAForge nyitva van és az eszköz csatlakoztatva, az alkalmazások maguktól megújulnak lejárat előtt.",
+      "toggle": "Automatikus megújítás",
+      "when": "Megújítás, ha egy alkalmazásból",
+      "days": "{count, plural, one {# nap marad} other {# nap marad}}"
+    },
+    "removeDialog": {
+      "title": "Eltávolítod: {name}?",
+      "body": "Törlődik erről: {device}, az adataival együtt, és felszabadít egy ingyenesalkalmazás-helyet. Az Előtöltésből újra telepítheted."
+    },
+    "pairing": {
+      "open": "Párosítási fájlok",
+      "title": "Párosítási fájlok",
+      "hint": "A párosítási fájl lehetővé teszi, hogy egy alkalmazás magától elérje az eszközödet az alkalmazások megújításához és telepítéséhez. Aki birtokolja, használhatja az eszközt, ezért csak akkor adj ilyet a saját alkalmazásaidnak, ha az útmutatójuk kéri.",
+      "reading": "Párosítási fájlok beolvasása…",
+      "empty": "Az eszközön nincs párosítást használó vagy az IPAForge által telepített alkalmazás.",
+      "classic": {
+        "thisComputer": "Párosítás: ennek a számítógépnek",
+        "otherComputer": "Párosítás: másik számítógépé",
+        "missing": "Párosítás: hiányzik"
+      },
+      "remote": {
+        "accepted": "Távoli: elfogadva",
+        "rejected": "Távoli: nincs elfogadva",
+        "otherComputer": "Távoli: másik számítógépé",
+        "missing": "Távoli: hiányzik"
+      },
+      "detail": {
+        "placed": "Elhelyezve: {date}",
+        "needed": "A magától való megújításhoz kell egy.",
+        "otherComputer": "Másik számítógépről: addig működik, amíg az a számítógép megbízható marad.",
+        "ownNone": "Nincs. Csak akkor adj hozzá, ha az alkalmazás kéri."
+      },
+      "place": "Elhelyezés",
+      "placeOne": "Párosítási fájl elhelyezése itt: {name}",
+      "placeAgain": "Elhelyezés újra",
+      "placeAgainOne": "Párosítási fájl újra elhelyezése itt: {name}",
+      "add": "Hozzáadás…",
+      "addOne": "Párosítási fájl hozzáadása ide: {name}",
+      "remove": "Eltávolítás",
+      "removeOne": "Párosítási fájl eltávolítása innen: {name}",
+      "newRemote": "Új távoli párosítás",
+      "done": "Kész",
+      "addTitle": "Párosítási fájl hozzáadása ide: {name}",
+      "addBody": "Az IPAForge ennek a számítógépnek a párosítási fájlját az alkalmazás mappájába írja az eszközödön. Aki birtokolja, használhatja az eszközt: csak megbízható alkalmazáshoz add hozzá.",
+      "pathLabel": "Útvonal az alkalmazáson belül",
+      "pathHint": "Az alkalmazás útmutatójából; általában a Documents mappában. Az IPAForge megjegyzi ehhez az alkalmazáshoz.",
+      "pathInvalid": "Használj a Documents vagy Library mappában lévő útvonalat, amely .plist vagy .mobiledevicepairing végű.",
+      "removeTitle": "Eltávolítod {name} párosítási fájlját?",
+      "removeBody": "Nem éri el magától az eszközödet (megújítás, telepítés), amíg újra nem helyezel el párosítási fájlt.",
+      "newRemoteTitle": "Új távoli párosítást készítesz?",
+      "newRemoteBody": "Az IPAForge új távoli párosítást készít az eszközöddel, és elhelyezi a SideStore-ban. Az eszköz kérheti, hogy bízz meg ebben a számítógépben. A régi távoli párosítás megszűnik működni.",
+      "newRemoteConfirm": "Új készítése",
+      "newRemoteWaiting": "Ha az eszköz kéri, koppints a Megbízom gombra, és add meg a jelkódját.",
+      "tag": "Nincs párosítási fájl",
+      "tagOne": "A(z) {name} nem rendelkezik párosítási fájllal: nyisd meg a Párosítási fájlokat"
+    },
+    "cancelRefresh": "Megújítás megszakítása"
+  },
+  "logs": {
+    "title": "Naplók",
+    "lede": "Amit az IPAForge csinált, soronként. Bárhonnan megnyitható ezzel:",
+    "shortcut": {
+      "control": "Ctrl+",
+      "command": "⌘",
+      "key": "L"
+    },
+    "copy": "Másolás",
+    "save": "Mentés…",
+    "clear": "Törlés",
+    "cleared": "A nézet törölve. A Mentés továbbra is minden, ebben a munkamenetben megőrzött sort kiír.",
+    "search": {
+      "label": "Keresés a naplókban",
+      "placeholder": "Keresés az üzenetekben és a részletekben",
+      "key": "/"
+    },
+    "level": {
+      "label": "Szint",
+      "all": "Mind",
+      "info": "Infó",
+      "warn": "Figyelmeztetések",
+      "error": "Hibák"
+    },
+    "levelName": {
+      "debug": "Hibakeresés",
+      "info": "Infó",
+      "warn": "Figyelmeztetés",
+      "error": "Hiba"
+    },
+    "area": {
+      "label": "Terület",
+      "all": "Minden terület",
+      "install": "Telepítés",
+      "device": "Eszköz",
+      "apple": "Apple",
+      "catalog": "Katalógus",
+      "signing": "Aláírás",
+      "engine": "Motor",
+      "interface": "Felület",
+      "app": "Alkalmazás"
+    },
+    "filters": {
+      "showing": "Csak ezek láthatók:",
+      "run": "Ez a telepítési futás ({time})",
+      "text": "„{text}”",
+      "remove": "A(z) {filter} szűrő eltávolítása"
+    },
+    "list": {
+      "label": "Naplósorok",
+      "loadingOlder": "Régebbi sorok betöltése…"
+    },
+    "row": {
+      "details": "{count, plural, one {# részlet} other {# részlet}}",
+      "scope": "terület",
+      "redacted": "[eltávolítva]",
+      "copy": "Sor másolása"
+    },
+    "follow": {
+      "on": "Új sorok követése",
+      "off": "Szüneteltetve",
+      "pause": "Szüneteltetés",
+      "resume": "Követés"
+    },
+    "jump": "{count, plural, one {# új sor} other {# új sor}} · Ugrás a legújabbra",
+    "count": "{matching, plural, one {# egyező sor} other {# egyező sor}} · az utolsó {capacity, number} marad meg ebben a munkamenetben",
+    "debug": "Hibakeresési részletek belefoglalása",
+    "privacy": "Jelszavak, tokenek, kulcsok, sorozatszámok és eszközazonosítók soha nem kerülnek a naplókba; [eltávolítva] jelöléssel jelennek meg. A naplók ezen a számítógépen maradnak, amíg nem másolod vagy mented őket.",
+    "empty": {
+      "none": {
+        "title": "Még nincs naplózva semmi",
+        "body": "A sorok itt jelennek meg, ahogy az IPAForge dolgozik: eszköz csatlakoztatása, bejelentkezés, telepítés."
+      },
+      "noMatch": {
+        "title": "Nincs egyező sor",
+        "body": "Változtasd meg a szintet, a területet vagy a keresést.",
+        "showAll": "Minden sor megjelenítése"
+      },
+      "cleared": {
+        "title": "Nézet törölve",
+        "body": "Az új sorok itt jelennek meg, ahogy érkeznek."
+      },
+      "failed": {
+        "title": "Nem sikerült beolvasni a naplókat",
+        "body": "A motorral való kapcsolat megszakadhatott. Nyisd meg újra a Naplókat a próbálkozáshoz."
+      }
+    },
+    "export": {
+      "copyTitle": "{count, plural, one {Másolsz # sort?} other {Másolsz # sort?}}",
+      "saveTitle": "{count, plural, one {Fájlba mentesz # sort?} other {Fájlba mentesz # sort?}}",
+      "copyBody": "A látható sorok, a beállított szűrőkkel.",
+      "saveBody": "Minden, ebben a munkamenetben megőrzött sor, a szűrőktől függetlenül.",
+      "warning": "A jelszavak, tokenek és eszközazonosítók már ki vannak hagyva, de a naplók megnevezik az eszközmodellt, az alkalmazásokat és a csapatot. Nézd át őket, mielőtt nyilvánosan közzéteszed.",
+      "confirmCopy": "Másolás",
+      "confirmSave": "Mentés",
+      "copied": "{count, plural, one {# sor átmásolva} other {# sor átmásolva}}",
+      "saved": "{count, plural, one {# sor mentve} other {# sor mentve}}",
+      "copyFailed": "Nem sikerült átmásolni a sorokat",
+      "saveFailed": "Nem sikerült elmenteni a sorokat"
+    }
+  },
+  "preload": {
+    "title": "Alkalmazások előtöltése",
+    "description": "Telepítsd a saját alkalmazásaidat: az Apple ID-ddel aláírva, USB-n telepítve, egymás után.",
+    "tabs": {
+      "label": "Előtöltés",
+      "apps": "Alkalmazások hozzáadása",
+      "sources": "Források"
+    },
+    "add": {
+      "drop": "Húzd ide az .ipa fájlokat",
+      "or": "vagy",
+      "choose": "Fájlok kiválasztása…",
+      "link": "Hozzáadás hivatkozásból…"
+    },
+    "catalog": {
+      "recommended": "Ajánlott",
+      "added": "Hozzáadva",
+      "add": "Hozzáadás",
+      "sidestore": "Maga frissíti és telepíti az alkalmazásokat az eszközön.",
+      "livecontainerSidestore": "LiveContainer, benne a SideStore-ral.",
+      "livecontainer": "Sok alkalmazást futtat egyetlen alkalmazáson belül, a 3 alkalmazásos korláton túl.",
+      "stikdebug": "Bekapcsolja a JIT-et az azt igénylő alkalmazásoknak az eszközön.",
+      "feather": "A tanúsítványoddal aláírja és telepíti az alkalmazásokat az eszközön."
+    },
+    "browse": {
+      "title": "Alkalmazások böngészése",
+      "count": "{apps, plural, one {# alkalmazás} other {# alkalmazás}} {sources, plural, one {# forrásból} other {# forrásból}}",
+      "source": "Forrás",
+      "allSources": "Minden forrás",
+      "search": "Alkalmazások keresése",
+      "manage": "Források kezelése",
+      "noMatch": "Nincs a(z) „{query}” kifejezésre egyező alkalmazás.",
+      "allOff": "Minden forrás ki van kapcsolva. Kapcsolj be egyet a Források alatt.",
+      "loading": "Források beolvasása…",
+      "catalogLine": "Legújabb kiadás · ellenőrzőösszeggel ellenőrizve",
+      "version": "{version} · {size}",
+      "from": "{name}, ezekben is: {others}",
+      "details": "{name} részletei",
+      "notRefreshed": {
+        "title": "Nem sikerült megújítani: {name}",
+        "body": "Az alkalmazásai az utolsó megújításból láthatók, {when}.",
+        "retry": "Próbáld újra"
+      }
+    },
+    "detail": {
+      "version": "Verzió",
+      "latest": "{version} (legújabb)",
+      "size": "Méret",
+      "needs": "Követelmény",
+      "needsIos": "iOS {version}",
+      "anyIos": "Bármely iOS",
+      "from": "Forrás",
+      "builtin": "Beépített · megbízható",
+      "added": "Általad hozzáadott forrás",
+      "untrusted": "Általad hozzáadott forrásból: az IPAForge nem vizsgálja az alkalmazásait.",
+      "add": "Hozzáadás a listához",
+      "inList": "A listában",
+      "close": "Bezárás",
+      "loadingReleases": "Kiadásainak keresése…",
+      "noReleases": "A kiadásai most nem olvashatók. Ellenőrizd a kapcsolatot, és nyisd meg újra."
+    },
+    "sources": {
+      "description": "Itt találja az alkalmazásokat az Alkalmazások böngészése. A beépített forrásokat az IPAForge gondozza; másokat a hivatkozásukkal adhatsz hozzá (AltStore formátum).",
+      "add": "Forrás hozzáadása…",
+      "refreshAll": "Mind megújítása",
+      "list": "Források",
+      "builtin": "Beépített · megbízható",
+      "added": "Általad hozzáadva",
+      "catalogName": "IPAForge katalógus",
+      "apps": "{count, plural, one {# alkalmazás} other {# alkalmazás}}",
+      "updated": "frissítve: {when}",
+      "notRead": "Még nincs beolvasva",
+      "skipped": "{count, plural, one {# kihagyva (nem .ipa)} other {# kihagyva (nem .ipa)}}",
+      "failed": "Nem érhető el.",
+      "failedCopy": "Az utolsó másolata látható, ebből: {when}.",
+      "refreshing": "Megújítás…",
+      "show": "{name} alkalmazásainak megjelenítése",
+      "refresh": "{name} megújítása",
+      "remove": "{name} eltávolítása",
+      "on": "Be",
+      "off": "Ki",
+      "note": "Az IPAForge nem vizsgálja az általad hozzáadott források alkalmazásait. Csak megbízható forrást adj hozzá.",
+      "refreshOne": "Megújítás",
+      "removeOne": "Eltávolítás"
+    },
+    "addSource": {
+      "title": "Forrás hozzáadása",
+      "label": "Forrás hivatkozása",
+      "placeholder": "https://example.com/apps.json",
+      "hint": "AltStore formátumú forrás, amilyet a SideStore olvas. Általában .json végű.",
+      "check": "Ellenőrzés",
+      "checking": "Forrás ellenőrzése…",
+      "notLink": "Adj meg https://-sel kezdődő hivatkozást",
+      "notHttps": "Használj https:// hivatkozást: az IPAForge csak biztonságos kapcsolaton olvas forrásokat.",
+      "previewTitle": "Hozzáadod ezt a forrást?",
+      "includes": "{count, plural, one {# alkalmazás, többek között:} other {# alkalmazás, többek között:}}",
+      "skipped": "{count, plural, one {# további kihagyva: a letöltése nem .ipa.} other {# további kihagyva: a letöltésük nem .ipa.}}",
+      "warningTitle": "Csak megbízható forrást adj hozzá",
+      "warningBody": "Az IPAForge nem vizsgálja az általad hozzáadott források alkalmazásait. Minden alkalmazást ellenőriz a telepítés előtt.",
+      "back": "Vissza",
+      "confirm": "Forrás hozzáadása"
+    },
+    "removeSource": {
+      "title": "Eltávolítod: {name}?",
+      "body": "Az alkalmazásai eltűnnek az Alkalmazások böngészéséből. A belőle telepített alkalmazások az eszközön maradnak, és a Telepítendő lista alkalmazásai is megmaradnak.",
+      "confirm": "Eltávolítás"
+    },
+    "list": {
+      "title": "Telepítendő",
+      "count": "{count, plural, one {# alkalmazás} other {# alkalmazás}}",
+      "empty": "Még nincs alkalmazás. Húzd ide az .ipa fájlokat, válaszd ki őket, adj hozzá hivatkozást, vagy válassz egyet az Alkalmazások böngészésében."
+    },
+    "row": {
+      "waiting": "Várakozás az eszközre és az Apple ID-re",
+      "checking": "Ellenőrzés…",
+      "downloading": "Letöltés és ellenőrzés…",
+      "appIds": "{count, plural, one {# App ID} other {# App ID}}{extensions, plural, =0 {} one { (alkalmazás + # bővítmény)} other { (alkalmazás + # bővítmény)}}",
+      "updates": "Frissíti: {from} → {to} · megtartja az adatait",
+      "new": "Új az eszközön",
+      "pairing": "Megkapja a párosítási fájlt és a tanúsítványt",
+      "fromCatalog": "A katalógusból · Stabil",
+      "remove": "{name} eltávolítása",
+      "cannot": "Nem telepíthető.",
+      "fromSource": "Forrás: {name}",
+      "saveInstead": "Inkább aláírt .ipa mentése",
+      "saveInsteadOne": "{name} mentése aláírt .ipa-ként telepítés helyett",
+      "savedOnComputer": "Ezen a számítógépen mentve, nem telepítve"
+    },
+    "problem": {
+      "notIpa": "Csak .ipa fájlok telepíthetők.",
+      "unreadable": "Az IPAForge nem tudja beolvasni ezt a fájlt. Add hozzá inkább a Fájlok kiválasztása… paranccsal.",
+      "needsIos": "iOS {needs} kell hozzá; ezen az eszközön iOS {has} van."
+    },
+    "summary": {
+      "appIds": "{count, plural, one {# új} other {# új}} · {left, plural, one {# maradt ezen a héten} other {# maradt ezen a héten}}",
+      "appIdsNoLimit": "{count, plural, one {# új} other {# új}}",
+      "notEnough": "Nincs elég hátra. Távolíts el egy alkalmazást, vagy várj. {next}",
+      "freeApps": "{after} / {limit} a telepítés után",
+      "freeAppsOver": "{used, plural, one {# már van.} other {# már van.}} A telepítés megkérdezi, melyik alkalmazást távolítsa el, vagy távolíts el egyet ebből a listából."
+    },
+    "install": "{count, plural, =0 {Telepítés} one {# alkalmazás telepítése} other {# alkalmazás telepítése}}",
+    "clear": "Lista törlése",
+    "readiness": {
+      "busy": "Várd meg a futó telepítést.",
+      "empty": "Előbb adj hozzá egy alkalmazást.",
+      "checking": "Alkalmazások ellenőrzése…",
+      "problems": "Távolítsd el a nem telepíthető alkalmazásokat."
+    },
+    "link": {
+      "title": "Hozzáadás hivatkozásból",
+      "body": "Közvetlen hivatkozás egy .ipa fájlra. Az IPAForge letölti, majd úgy ellenőrzi, mint bármely más alkalmazást.",
+      "label": "Hivatkozás",
+      "placeholder": "https://example.com/MyApp.ipa",
+      "add": "Hozzáadás",
+      "httpsOnly": "Csak https hivatkozások tölthetők le.",
+      "invalid": "Ez nem hivatkozás.",
+      "notIpa": "A hivatkozásnak egy .ipa fájlra kell mutatnia."
+    },
+    "elsewhere": {
+      "apps": "Alkalmazások telepítése folyamatban",
+      "sidestore": "A SideStore telepítése folyamatban",
+      "body": "Egyszerre egy telepítés: szüksége van az eszközre. Ez akkor indulhat, ha az véget ért.",
+      "open": "Megnyitás"
+    },
+    "run": {
+      "title": {
+        "running": "{count, plural, one {{app} telepítése} other {# alkalmazás telepítése}}",
+        "completed": "{count, plural, one {A(z) {app} telepítve van} other {# alkalmazás telepítve van}}",
+        "failed": "Nem sikerült minden alkalmazást telepíteni"
+      },
+      "backToPreload": "Vissza az Előtöltéshez",
+      "shared": "Ez az eszköz és az Apple ID-d",
+      "refresh": {
+        "profile": "Csak új profil, semmi nem települ újra",
+        "certificate": "Újra telepítve: az azt aláíró tanúsítvány már nem érvényes",
+        "unmarked": "Újra telepítve: az IPAForge nem tudja, melyik tanúsítvány írta alá",
+        "appId": "Újra telepítve: az Apple eltávolította az App ID-ját, miután lejárt",
+        "sidestore": "Újra telepítve, az adatai megtartva, így maga a SideStore mutatja az új dátumot"
+      },
+      "group": {
+        "failed": "Sikertelen",
+        "done": "Kész",
+        "active": "Folyamatban",
+        "pending": "Várakozik"
+      }
+    },
+    "done": {
+      "title": "{count, plural, one {A(z) {app} fent van ezen: {device}.} other {A(z) {app} fent vannak ezen: {device}.}}",
+      "open": "Nyisd meg az alkalmazásokat a Kezdőképernyőről."
+    },
+    "signAndSave": "{count, plural, one {# alkalmazás aláírása és mentése} other {# alkalmazás aláírása és mentése}}",
+    "installAndSave": "{install} telepítésre · {save} mentésre aláírt .ipa-ként"
+  },
+  "repair": {
+    "title": "SideStore javítása",
+    "description": "Az IPAForge ellenőrzi a SideStore-t ezen: {device}, és kijavítja, ami megakadályozza, hogy magától megújítsa az alkalmazásaidat.",
+    "checkAgain": "Ellenőrzés újra",
+    "checking": "SideStore ellenőrzése…",
+    "checks": "Ellenőrzések",
+    "failed": "Nem sikerült ellenőrizni a SideStore-t: {reason}",
+    "failedBody": "Ellenőrizd, hogy az eszköz csatlakoztatva és feloldva van-e, majd nyomd meg az Ellenőrzés újra gombot.",
+    "ok": "OK",
+    "unknown": "Nem állapítható meg",
+    "deviceFirst": "Előbb javítsd: {device}",
+    "device": {
+      "title": "A(z) {device} készen áll",
+      "ok": "Feloldva, megbízható és a Fejlesztői mód be van kapcsolva.",
+      "locked": "Zárolva van. Told fel a zárolását, majd nyomd meg az Ellenőrzés újra gombot.",
+      "lockedTag": "Zárolva",
+      "developerMode": "A Fejlesztői mód ki van kapcsolva, ezért a SideStore és az általa telepített alkalmazások nem nyílnak meg. Az iPhone-on: Beállítások › Adatvédelem és biztonság › Fejlesztői mód, majd indítsd újra.",
+      "developerModeTag": "Fejlesztői mód kikapcsolva"
+    },
+    "installed": {
+      "title": "A SideStore telepítve van",
+      "missing": "A SideStore nincs rajta ezen: {device}.",
+      "missingTag": "Nincs telepítve"
+    },
+    "signer": {
+      "title": "Az itt használt csapattal van aláírva",
+      "ok": "A Javítás újra telepítheti, vagy új profilt adhat neki az adatai elvesztése nélkül.",
+      "otherTeam": "Az Apple ID egy másik csapata írta alá. Ha ezzel a csapattal telepítenéd újra, egy második SideStore jönne létre, az adatai és alkalmazásai nélkül.",
+      "otherTeamTag": "Másik csapat",
+      "otherAppleId": "Másik Apple ID írta alá. Ha ezzel telepítenéd újra, egy második SideStore jönne létre, az adatai és alkalmazásai nélkül.",
+      "otherAppleIdTag": "Másik Apple ID"
+    },
+    "version": {
+      "title": "A SideStore naprakész",
+      "ok": "{version} verzió, a legújabb.",
+      "outdated": "{version} verzió; megjelent a(z) {latest}. A régebbi verziókból hiányozhatnak a javítások a friss iOS-en való megújításhoz.",
+      "outdatedTag": "{latest} elérhető",
+      "unknown": "{version} verzió. A katalógus nem volt elérhető az összehasonlításhoz."
+    },
+    "expiry": {
+      "title": "A SideStore nem járt le",
+      "ok": "{days, plural, one {# nap múlva lejár.} other {# nap múlva lejár.}}",
+      "soon": "{days, plural, =0 {Ma lejár.} one {# nap múlva lejár.} other {# nap múlva lejár.}} Lejárta után a SideStore nem tudja megújítani magát.",
+      "soonTag": "Hamarosan lejár",
+      "expired": "{days, plural, one {# napja lejárt.} other {# napja lejárt.}} Nem nyílik meg, ezért nem tudja megújítani az alkalmazásaidat.",
+      "expiredTag": "Lejárt",
+      "unknown": "Az eszköz nem mutat hozzá profilt."
+    },
+    "signing": {
+      "title": "Az azt aláíró tanúsítvány érvényes",
+      "ok": "Az Apple oldalán még érvényes.",
+      "revoked": "Visszavonták vagy lejárt. A SideStore a következő indításkor már nem nyílik meg.",
+      "revokedTag": "Visszavonva",
+      "unknown": "Más eszköz telepítette, ezért az IPAForge nem látja, melyik tanúsítvány írta alá. A Javítás újra telepítheti a biztonság kedvéért."
+    },
+    "own": {
+      "title": "A SideStore maga is tud alkalmazásokat aláírni",
+      "ok": "Érvényes tanúsítványt tart, amellyel megújíthatja az alkalmazásaidat.",
+      "missing": "Nincs tanúsítványa, ezért a megújításai bejelentkezést kérnek, vagy sikertelenek.",
+      "missingTag": "Nincs tanúsítvány",
+      "other": "A kapott tanúsítvány már nem érvényes. Lehet, hogy újabbra cserélte a sajátjával; ha a megújítás nem sikerül a SideStore-ban, telepítsd újra.",
+      "otherTag": "Lehet, hogy lecserélte"
+    },
+    "pairing": {
+      "title": "A SideStore-nak van párosítási fájlja",
+      "ok": "Megvan, és ez a számítógép párosítása ezzel: {device}.",
+      "missing": "Hiányzik: a SideStore nem éri el az eszközt az alkalmazások telepítéséhez vagy megújításához.",
+      "missingTag": "Hiányzik",
+      "other": "Másik számítógépé. Addig működik, amíg a párosítás érvényes marad; a Megbízás visszaállítása az eszközön megszakítja.",
+      "otherTag": "Másik számítógép"
+    },
+    "manual": {
+      "title": "Az iPhone-odon · az IPAForge ezeket nem tudja ellenőrizni",
+      "tag": "Ellenőrizd magad",
+      "vpn": {
+        "title": "A SideStore VPN-je be van kapcsolva a megújításkor",
+        "body": "Nyisd meg a LocalDevVPN-t, és csatlakoztasd, mielőtt a SideStore-ban megújítasz."
+      },
+      "anisette": {
+        "title": "A SideStore eléri az anisette szerverét",
+        "body": "A SideStore › Beállítások › Anisette alatt válassz másik szervert, ha a megújítás azt mondja, hogy nem tud bejelentkezni."
+      }
+    },
+    "plan": {
+      "title": "A Javítás ezt teszi",
+      "reinstall": "SideStore újratelepítése",
+      "reinstallBody": "Az IPAForge katalógusából, érvényes tanúsítvánnyal aláírva, amelyet bele is tesz. Az adatai és az alkalmazásaid megmaradnak.",
+      "profile": "Új profil adása a SideStore-nak",
+      "profileBody": "Semmi nem települ újra.",
+      "pairing": "Ennek a számítógépnek a párosítási fájlját helyezi el",
+      "pairingBody": "A SideStore Documents mappájában, felülírva a meglévőt.",
+      "optional": "Továbbá, ha szeretnéd",
+      "offerReinstall": "SideStore újratelepítése, a biztonság kedvéért",
+      "offerPairing": "A párosítási fájl cseréje ennek a számítógépnek a fájljára",
+      "hint": "Egy futás. Tartsd csatlakoztatva és feloldva: {device}.",
+      "start": "SideStore javítása"
+    },
+    "blocked": {
+      "title": "A SideStore ezzel az Apple ID-vel nem telepíthető újra",
+      "body": "Másik csapat vagy Apple ID írta alá, ezért az adatai nem vihetők át. Válaszd ki azt az Apple ID-t a felső sávban, majd nyomd meg az Ellenőrzés újra gombot."
+    },
+    "notInstalled": {
+      "title": "A SideStore nincs rajta ezen: {device}",
+      "body": "Telepítsd előbb, a Telepítés oldalról.",
+      "install": "SideStore telepítése"
+    },
+    "fine": {
+      "title": "A SideStore működik",
+      "body": "Nincs mit javítani. Ha még mindig nem tud megújítani, nézd meg az alábbi két dolgot az iPhone-odon."
+    },
+    "run": {
+      "title": {
+        "running": "SideStore javítása",
+        "completed": "A SideStore megjavítva",
+        "failed": "Nem sikerült megjavítani a SideStore-t"
+      }
+    },
+    "done": {
+      "title": "A(z) {device} SideStore-ja megjavítva.",
+      "open": "Nyisd meg a SideStore-t, és újítsd meg az alkalmazásaidat."
+    },
+    "open": "SideStore ellenőrzése",
+    "checkingTag": "Ellenőrzés…",
+    "remote": {
+      "title": "Távoli párosítás iOS 17.4 és újabb rendszerhez",
+      "ok": "Megvan, és a(z) {device} elfogadja.",
+      "missing": "Hiányzik: a SideStore csak a klasszikus párosítást tudja használni. Ennek a számítógépnek a párosítási fájlja ezt hozzáadja.",
+      "missingTag": "Hiányzik",
+      "rejected": "A(z) {device} már nem fogadja el (a Megbízását visszaállították). Ennek a számítógépnek a párosítási fájlja újat készít.",
+      "rejectedTag": "Nincs elfogadva",
+      "other": "Másik számítógépé, ezért az IPAForge nem tudja ellenőrizni. Ennek a számítógépnek a párosítási fájlja lecseréli.",
+      "otherTag": "Másik számítógép",
+      "notNeeded": "iOS 17.4 alatt nincs rá szükség.",
+      "notNeededTag": "Nem szükséges"
+    }
+  },
+  "sidestore": {
+    "addSource": "Hozzáadás a SideStore-hoz",
+    "addAll": "Összes hozzáadása a SideStore-hoz",
+    "install": "Telepítés a SideStore-ral",
+    "sourceTitle": "{name} hozzáadása a SideStore-hoz",
+    "sourceBody": "A SideStore is megjeleníti az alkalmazásait, és naprakészen tartja őket az iPhone-on. A SideStore sem vizsgálja egy forrás alkalmazásait: csak megbízható forrást adj hozzá.",
+    "installTitle": "{name} telepítése a SideStore-ral",
+    "installBody": "A SideStore letölti a(z) {name} {version} verzióját, aláírja az Apple ID-ddel, és maga telepíti az iPhone-ra. Ingyenes Apple ID-n beleszámít a 3 alkalmazásba. Az Alkalmazásokban akkor jelenik meg, amikor az IPAForge megújítja.",
+    "qrLabel": "Az alábbi hivatkozás QR-kódja",
+    "steps": {
+      "camera": "Nyisd meg a Kamerát ezen: {device}, és irányítsd a kódra.",
+      "banner": "Koppints a szalagra a SideStore megnyitásához.",
+      "addSource": "A SideStore megkérdezi, hozzáadja-e a forrást: koppints a Hozzáadás gombra.",
+      "install": "A SideStore megkérdezi, telepítse-e az alkalmazást: koppints a Telepítés gombra."
+    },
+    "onPhone": "Magán az iPhone-on is a SideStore-t nyitja meg a hivatkozás (Safariba illesztve, vagy Üzenetekben elküldve).",
+    "copy": "Másolás",
+    "copied": "Átmásolva",
+    "previous": "Előző",
+    "next": "Következő",
+    "step": "{at}. forrás / {count}",
+    "back": "Vissza",
+    "done": "Kész",
+    "offer": "{count, plural, one {Add hozzá a SideStore-hoz az itt hozzáadott forrást is, hogy az iPhone-on megjelenítse az alkalmazásait.} other {Add hozzá a SideStore-hoz az itt hozzáadott # forrást is, hogy az iPhone-on megjelenítse az alkalmazásaikat.}}"
+  },
+  "checklist": {
+    "title": "Ezen: {device} · iOS {ios}",
+    "setUp": "A(z) {device} be van állítva · iOS {ios}",
+    "show": "Ellenőrzőlista megjelenítése",
+    "hide": "Elrejtés",
+    "allSet": "Minden kész",
+    "progress": "{left, plural, one {# teendő} other {# teendő}} · {done} / {total} kész",
+    "group": {
+      "before": "Telepítés előtt",
+      "after": "Telepítés után",
+      "sidestore": "A SideStore-hoz"
+    },
+    "onPhone": "Az iPhone-on",
+    "tickedTag": "Megtörtént az iPhone-on",
+    "tick": "Megcsináltam",
+    "notNeeded": "Ezen az iOS-en nem szükséges",
+    "cable": {
+      "title": "Csatlakoztasd a(z) {device} eszközt ehhez a számítógéphez",
+      "connected": "Csatlakoztatva",
+      "none": "Nincs csatlakoztatva",
+      "how": "Az első alkalommal használj kábelt; utána a Wi-Fi is működik, amíg mindkettő ugyanazon a hálózaton van."
+    },
+    "unlock": {
+      "title": "Told fel a zárolását",
+      "locked": "Zárolva",
+      "unlocked": "Feloldva",
+      "how": "Tartsd feloldva, amíg az IPAForge telepít."
+    },
+    "trust": {
+      "title": "Bízz meg ebben a számítógépben",
+      "trusted": "Megbízható",
+      "notYet": "Még nem",
+      "step1": "Told fel a zárolását: {device}.",
+      "step2": "Koppints a Megbízom gombra, amikor a számítógépről kérdez.",
+      "step3": "Add meg a jelkódját.",
+      "again": "Kérdezze újra"
+    },
+    "passcode": {
+      "title": "Állíts be jelkódot",
+      "how": "A SideStore Wi-Fi-n újít meg, amit az iOS csak jelkóddal enged: Beállítások › Face ID és jelkód."
+    },
+    "devmode": {
+      "title": "Kapcsold be a Fejlesztői módot",
+      "on": "Be",
+      "off": "Ki",
+      "step1": "Beállítások › Adatvédelem és biztonság › Fejlesztői mód (ha nincs ott, nyomd meg a Lehetőség megjelenítése gombot).",
+      "step2": "Kapcsold be, és indítsd újra: {device}.",
+      "step3": "Az újraindítás után koppints a Bekapcsolás gombra, és add meg a jelkódot.",
+      "reveal": "Lehetőség megjelenítése",
+      "revealed": "Most már a Beállítások › Adatvédelem és biztonság alatt van."
+    },
+    "developer": {
+      "title": "Bízz meg az Apple ID-dben fejlesztőként",
+      "later": "Az első telepítés után",
+      "step1": "Beállítások › Általános › VPN és eszközkezelés.",
+      "step2": "A Fejlesztői alkalmazás alatt koppints erre: {appleId}.",
+      "step3": "Koppints a Megbízom gombra. Ehhez az iPhone-nak internet kell."
+    },
+    "vpn": {
+      "title": "LocalDevVPN telepítése",
+      "installed": "Telepítve",
+      "notInstalled": "Nincs telepítve",
+      "how": "A SideStore ezen a helyi VPN-en át beszél az iPhone-nal; semmi nem hagyja el a telefont. Ingyenes az App Store-ban.",
+      "qrLabel": "A LocalDevVPN App Store-oldalának QR-kódja",
+      "scan": "Olvasd be a Kamerával, vagy keresd az „LocalDevVPN” nevet az App Store-ban."
+    },
+    "vpnOn": {
+      "title": "Csatlakoztasd a LocalDevVPN-t, amikor a SideStore megújít",
+      "tag": "Minden alkalommal",
+      "later": "A telepítése után",
+      "how": "Nyisd meg a LocalDevVPN-t, és koppints a Csatlakozás gombra, vagy engedd, hogy a SideStore bekapcsolja: először megkérdezi."
+    },
+    "repair": {
+      "title": "A SideStore magától meg tud újítani",
+      "tag": "A Javításban ellenőrizve",
+      "how": "A tanúsítványa, a párosítási fájlja és a lejárata."
+    },
+    "notice": "{count, plural, one {# teendő ezen: {device}} other {# teendő ezen: {device}}}",
+    "noticeBody": "Hogy a telepítés és a megújítás zökkenőmentes legyen.",
+    "showChecklist": "Az ellenőrzőlista megjelenítése"
+  },
+  "updates": {
+    "screen": {
+      "label": "Az IPAForge frissítése"
+    },
+    "checking": {
+      "title": "Frissítések keresése…"
+    },
+    "downloading": {
+      "title": "Az IPAForge frissítése",
+      "body": "Megjelent a(z) {version} verzió. Most letöltődik és települ, majd az IPAForge magától újra megnyílik.",
+      "starting": "Letöltés indítása…",
+      "percent": "{fraction, number, percent}"
+    },
+    "installing": {
+      "title": "{version} telepítése…",
+      "body": "Az IPAForge mindjárt újra megnyílik."
+    },
+    "failed": {
+      "title": "A frissítés nem fejeződött be",
+      "body": "Megjelent a(z) {version} verzió. Próbáld újra, vagy töltsd le a kiadási oldaláról.",
+      "retry": "Próbáld újra",
+      "releasePage": "Kiadási oldal",
+      "skip": "Egyelőre ezt a verziót használom"
+    },
+    "manual": {
+      "title": "Megjelent az IPAForge {version}",
+      "body": "Ez a példány {package, select, msi {egy .msi telepítőből} deb {egy .deb csomagból} rpm {egy .rpm csomagból} other {egy csomagból}} lett telepítve, amely nem tudja magát frissíteni. Töltsd le az új verziót, és telepítsd a jelenlegi fölé: az Apple ID-id, az alkalmazásaid és a beállításaid megmaradnak.",
+      "download": "{version} letöltése",
+      "later": "Később"
+    },
+    "nativeBuild": {
+      "title": "Ez az Intel build",
+      "body": "A Macedben Apple silicon van, ezért az IPAForge ezen példánya Rosettán keresztül fut, és minden lassabb. Töltsd le az Apple silicon buildet, és telepítsd a jelenlegi fölé; az Apple ID-id, az eszközeid és az alkalmazásaid megmaradnak.",
+      "file": "IPAForge-…-mac-arm64.dmg",
+      "later": "Később",
+      "download": "Letöltés Apple siliconhoz"
+    }
+  },
+  "whatsNew": {
+    "link": "Újdonságok",
+    "version": "{version} verzió · {date}",
+    "englishOnly": "A kiadási jegyzetek angolul vannak.",
+    "kind": {
+      "new": "Új",
+      "changed": "Megváltozott",
+      "fixed": "Javítva",
+      "removed": "Eltávolítva"
+    },
+    "dialog": {
+      "title": "Újdonságok az IPAForge-ban",
+      "everyVersion": "Minden verzió",
+      "close": "Értem"
+    },
+    "page": {
+      "title": "Újdonságok",
+      "lede": "Minden, ami az IPAForge-ban változott, a legújabbal kezdve.",
+      "current": "Ez a verzió",
+      "release": "Kiadás a GitHubon"
+    }
+  },
+  "portal": {
+    "description": "Amit az Apple ID-d csapata az Apple-nél tart, és az eszközödön lévő profilok.",
+    "tabsLabel": "Amit a csapat tart",
+    "tabs": {
+      "certificates": "Tanúsítványok",
+      "appIds": "App ID-k",
+      "profiles": "Profilok",
+      "groups": "Alkalmazáscsoportok",
+      "devices": "Regisztrált eszközök"
+    },
+    "team": {
+      "pick": "Csapat",
+      "free": "{name} (ingyenes)",
+      "paid": "{name} (fizetős)"
+    },
+    "refresh": "Frissítés",
+    "reading": "Olvasás az Apple-től…",
+    "noAccount": {
+      "title": "Még nincs Apple ID",
+      "body": "Jelentkezz be egy Apple ID-vel a Fiókok oldalon, hogy lásd, mit tart a csapata."
+    },
+    "expired": "Lejárt",
+    "expires": "Lejár: {date}",
+    "expiredOn": "Lejárt: {date}",
+    "certificates": {
+      "hint": "A tanúsítvány írja alá a telepített alkalmazásokat. Egy visszavonása megakadályozza, hogy az általa aláírt alkalmazások megnyíljanak, amíg újra alá nem írják őket.",
+      "usedFree": "{count} / {max} használatban (az ingyenes csapatok {max} tanúsítványt tarthatnak)",
+      "usedPaid": "{count, plural, one {# tanúsítvány} other {# tanúsítvány}}",
+      "maker": {
+        "thisComputer": "IPAForge ezen a számítógépen",
+        "ipaforge": "IPAForge másik számítógépen",
+        "sidestore": "SideStore",
+        "machine": "„{machine}” (általában Xcode)",
+        "unknown": "Ismeretlen eszköz"
+      },
+      "thisComputer": "Ennek a számítógépnek a tanúsítványa",
+      "signs": "Aláírja: {apps} ezen: {device}",
+      "signsNothing": "Semmit nem ír alá ezen: {device}",
+      "revoke": "Visszavonás",
+      "revokeOne": "{name} visszavonása",
+      "empty": "A csapatnak még nincs tanúsítványa. Az IPAForge az első telepítéskor készít egyet.",
+      "import": ".p12 importálása…",
+      "export": ".p12 exportálása"
+    },
+    "revokeDialog": {
+      "title": "Visszavonod ezt a tanúsítványt?",
+      "apps": "Ezek nem nyílnak meg ezen: {device}, amíg újra alá nem írják őket (az Alkalmazások oldal Megújítás gombja ezt teszi):",
+      "none": "Semmi nincs vele aláírva ezen: {device}.",
+      "noDevice": "Csatlakoztasd az eszközödet, hogy lásd, mely alkalmazásait írja alá ez a tanúsítvány.",
+      "thisComputer": "Az IPAForge a következő telepítéskor vagy megújításkor újat készít.",
+      "sidestore": "A SideStore készítette, hogy magától megújítson: a következő bejelentkezéskor ott újat készít.",
+      "machine": "Az Xcode azon a számítógépen újat készít, amikor legközelebb aláír.",
+      "exportedToo": "Az ebből exportált .p12 is működésképtelenné válik."
+    },
+    "appIds": {
+      "hintFree": "Minden telepített alkalmazáshoz és bővítményhez kell egy. Az ingyenes csapatok 7 nap alatt 10-et regisztrálhatnak; mindegyik a létrehozása után 7 napig számít.",
+      "hintPaid": "Minden telepített alkalmazáshoz és bővítményhez kell egy. A fizetős csapatoknak nincs heti korlátjuk.",
+      "left": "{count, plural, one {# maradt ezen a héten} other {# maradt ezen a héten}}",
+      "leftAndNext": "{left} · a következő felszabadul: {date}",
+      "countsUntil": "Számít eddig: {date}",
+      "unused": "Nem használt",
+      "delete": "Törlés",
+      "deleteOne": "{name} törlése",
+      "empty": "A csapatnak még nincs App ID-ja."
+    },
+    "deleteDialog": {
+      "title": "Törlöd ezt az App ID-t?",
+      "free": "Ingyenes csapatnál a lejáratáig továbbra is beleszámít a heti 10-be: a törlés nem adja vissza hamarabb a helyet.",
+      "paid": "Később újra regisztrálható."
+    },
+    "profiles": {
+      "title": "Kiépítési profilok ezen: {device}",
+      "hint": "Egy profil teszi lehetővé, hogy egy alkalmazás (vagy bővítmény) fusson ezen az eszközön. A Megújítás újat ad az alkalmazásnak; a lejárt vagy nem használt profil nyugodtan eltávolítható.",
+      "noDevice": "Csatlakoztasd az eszközödet, hogy lásd a kiépítési profiljait.",
+      "noApp": "Egy alkalmazás sem használja",
+      "otherTeam": "Másik csapat",
+      "remove": "Eltávolítás",
+      "removeOne": "{name} profiljának eltávolítása",
+      "removeUnused": "Nem használtak eltávolítása",
+      "empty": "Ezen az eszközön nincsenek kiépítési profilok."
+    },
+    "removeDialog": {
+      "title": "{count, plural, one {Eltávolítod ezt a profilt?} other {Eltávolítasz # profilt?}}",
+      "body": "{count, plural, one {Eltávolításra kerül erről: {device}. Ott nem kell egyetlen alkalmazásnak sem.} other {Eltávolításra kerülnek erről: {device}. Ott nem kell őket egyetlen alkalmazásnak sem.}}"
+    },
+    "groups": {
+      "hint": "Az ugyanabban a csoportban lévő alkalmazások fájlokat osztanak meg (például a SideStore és a widgetje). Az IPAForge készít ilyet, amikor egy alkalmazásnak kell.",
+      "empty": "A csapatnak még nincs alkalmazáscsoportja."
+    },
+    "devices": {
+      "hintFree": "Az általad aláírt alkalmazások csak ezeken futnak.",
+      "hintPaid": "Az általad aláírt alkalmazások csak ezeken futnak. A fizetős csapatok évente 100-at regisztrálhatnak; az eltávolítást az Apple fejlesztői oldalán lehet elvégezni, évente egyszer.",
+      "used": "{count} / {max} idén",
+      "connected": "Csatlakoztatva",
+      "unnamed": "Névtelen eszköz",
+      "empty": "Még nincs regisztrált eszköz. Az IPAForge az első telepítéskor regisztrálja a tiédet."
+    },
+    "exportDialog": {
+      "title": "Ennek a számítógépnek a tanúsítványa exportálása",
+      "body": "Egy .p12 fájl a tanúsítvánnyal és a privát kulcsával, a SideStore-hoz vagy másik számítógéphez. Bárki, akinél megvan a fájl és a jelszava, aláírhat alkalmazásokat a csapatod nevében.",
+      "password": "Jelszó",
+      "again": "Jelszó újra",
+      "tooShort": "{count, plural, one {Legalább # karaktert használj.} other {Legalább # karaktert használj.}}",
+      "differ": "A két jelszó különbözik.",
+      "save": ".p12 mentése…"
+    },
+    "importDialog": {
+      "title": "Tanúsítvány importálása",
+      "body": "Egy .p12 másik számítógépről vagy a SideStore-ból. Az IPAForge ellenőrzi, hogy az Apple még listázza-e ennél a csapatnál, majd itt ezzel ír alá: nincs új tanúsítvány, nem fogy hely.",
+      "noFile": "Nincs kiválasztott fájl",
+      "choose": "Kiválasztás…",
+      "password": "A jelszava",
+      "import": "Importálás"
+    }
+  },
+  "guide": {
+    "title": "Beállítási útmutató",
+    "stepsLabel": "Beállítási lépések",
+    "stepDone": "(kész)",
+    "steps": {
+      "welcome": "Üdvözlünk",
+      "computer": "Ez a számítógép",
+      "iphone": "Az iPhone-od",
+      "appleid": "Apple ID",
+      "install": "SideStore telepítése",
+      "onphone": "Az iPhone-odon",
+      "around": "Minden be van állítva"
+    },
+    "back": "Vissza",
+    "skip": "Lépés kihagyása",
+    "continue": "Tovább",
+    "later": "Befejezés később",
+    "checkAgain": "Ellenőrzés újra",
+    "checking": "Ellenőrzés…",
+    "copy": "Másolás",
+    "copied": "Átmásolva",
+    "welcome": {
+      "title": "Üdvözöl az IPAForge",
+      "lead": "Néhány lépéssel előkészítjük a számítógépedet, az iPhone-odat és az Apple ID-det, aztán telepítheted a SideStore-t. Előbb válaszd ki a nyelvet.",
+      "needTitle": "Amire szükséged lesz",
+      "needDevice": "Egy iOS 15 vagy újabb rendszerű iPhone vagy iPad, és az USB-kábele",
+      "needAppleId": "Egy Apple ID (az ingyenes is jó)",
+      "needPasscode": "Az iPhone-od jelkódja, hogy megbízz ebben a számítógépben",
+      "skipGuide": "Ismerem a dolgokat",
+      "start": "Kezdés"
+    },
+    "computer": {
+      "title": "Ez a számítógép",
+      "lead": "Az IPAForge ellenőrzi, hogy ez a számítógép be tud-e jelentkezni az Apple-be: az Apple szervereit, az órát és egy anisette szervert. Ha nem tud beszélni az iPhone-okkal, azt is megmondja, hogyan javítható.",
+      "failed": "Az ellenőrzések nem futottak le. Ellenőrizd újra, vagy hagyd ki ezt a lépést.",
+      "service": {
+        "title": "iPhone-kapcsolati szolgáltatás",
+        "fixMac": "A macOS-nek magától futtatnia kell. Indítsd újra a Macet, majd ellenőrizd újra.",
+        "fixWindows": "Telepítsd az Apple Devices alkalmazást a Microsoft Store-ból, nyisd meg egyszer, majd ellenőrizd újra.",
+        "fixLinux": "Telepítsd a usbmuxd-t, csatlakoztasd az iPhone-odat, majd ellenőrizd újra.",
+        "openStore": "A Microsoft Store megnyitása"
+      },
+      "apple": {
+        "title": "Az Apple szerverei",
+        "ok": "Elérhetők.",
+        "fix": "Az IPAForge nem éri el az Apple-t. Ellenőrizd az internetkapcsolatot, a VPN-t vagy a tűzfalat."
+      },
+      "clock": {
+        "title": "Óra",
+        "ok": "Helyes.",
+        "fix": "{minutes, plural, one {Az órád # percet téved.} other {Az órád # percet téved.}} Állítsd be a dátumot és az időt automatikusra, majd ellenőrizd újra."
+      },
+      "anisette": {
+        "title": "Anisette szerverek",
+        "ok": "A(z) {name} válaszol. A bejelentkezés ezt használja.",
+        "fix": "A listád első {tried} szervere közül egyik sem válaszolt. Ellenőrizd a kapcsolatot, vagy adj hozzá vagy válassz szervert a Beállítások › Anisette szerverek alatt."
+      }
+    },
+    "iphone": {
+      "title": "Az iPhone-od",
+      "lead": "Csatlakoztasd az iPhone-odat a kábelével, told fel a zárolását, és koppints a Megbízom gombra, amikor kéri. iOS 16 és újabb rendszeren a Fejlesztői módnak be kell lennie kapcsolva.",
+      "connectTitle": "iPhone csatlakoztatása",
+      "connectText": "Várakozás iPhone-ra vagy iPadre USB-n…"
+    },
+    "appleid": {
+      "title": "Az Apple ID-d",
+      "lead": "Az Apple a telepített alkalmazásokat az Apple ID-ddel írja alá. A jelszavad csak az Apple-hez kerül, és ennek a számítógépnek a kulcstartójában marad.",
+      "freeNote": "Az ingyenes Apple ID is megfelel: az alkalmazásai 7 napig érvényesek, és az IPAForge meg tudja újítani őket. A fizetős fejlesztői fiók egy évig érvényes.",
+      "signIn": "Bejelentkezés Apple ID-vel",
+      "signedIn": "Bejelentkezve.",
+      "team": "Az alkalmazásokat aláíró csapat",
+      "free": "Ingyenes: az alkalmazások 7 napig érvényesek",
+      "paid": "Fizetős: az alkalmazások egy évig érvényesek"
+    },
+    "banner": {
+      "label": "Beállítási útmutató",
+      "text": "Fejezd be az IPAForge beállítását: {done} / {total} lépés kész.",
+      "continue": "Az útmutató folytatása",
+      "notNow": "Most nem"
+    },
+    "install": {
+      "title": "SideStore telepítése",
+      "lead": "A SideStore magától megújítja az alkalmazásaidat az iPhone-on, és továbbiakat telepít. Az IPAForge megadja neki a szükséges párosítási fájlt és tanúsítványt.",
+      "notNow": "Most nem"
+    },
+    "onphone": {
+      "title": "Az iPhone-odon",
+      "lead": "Amit csak te tehetsz meg az iPhone-on. Pipáld ki őket, ahogy haladsz; az Eszközök oldal ugyanezt a listát tartja."
+    },
+    "around": {
+      "title": "Minden be van állítva",
+      "lead": "Itt van minden. Amíg az IPAForge nyitva van, lejárat előtt megújítja az alkalmazásaidat.",
+      "again": "Az útmutatót bármikor újra futtathatod a Beállításokból.",
+      "showMe": "Körbevezetés",
+      "apps": {
+        "title": "Alkalmazások",
+        "text": "Mikor jár le az egyes alkalmazás, a Megújítással és a Frissítéssel. A párosítási fájlok is itt vannak.",
+        "where": "Oldalsáv › Alkalmazások"
+      },
+      "preload": {
+        "title": "Előtöltés",
+        "text": "Add hozzá a saját alkalmazásaidat: .ipa fájlokat, hivatkozásokat, forrásokat. Vagy mentsd őket aláírt .ipa fájlként.",
+        "where": "Oldalsáv › Előtöltés"
+      },
+      "repair": {
+        "title": "SideStore javítása",
+        "text": "Ha a SideStore nem újít meg magától, ez kideríti, miért, és kijavítja.",
+        "where": "Alkalmazások › SideStore ellenőrzése"
+      },
+      "developer": {
+        "title": "Fejlesztői portál",
+        "text": "A tanúsítványaid, App ID-id és profiljaid, valamint egy .p12 a tanúsítványod áthelyezéséhez.",
+        "where": "Oldalsáv › Fejlesztői portál"
+      },
+      "devices": {
+        "title": "Eszközök",
+        "text": "Az egyes iPhone-ok ellenőrzőlistája és a párosítási fájlja más eszközökhöz.",
+        "where": "Oldalsáv › Eszközök"
+      },
+      "logs": {
+        "title": "Naplók",
+        "text": "Mi történt, lépésről lépésre. Csatold őket a hibajelentéshez.",
+        "where": "Oldalsáv › Naplók · ⌘L / Ctrl+L"
+      }
+    }
+  },
+  "tour": {
+    "count": "{current} / {total}",
+    "skip": "Bemutató kihagyása",
+    "back": "Vissza",
+    "next": "Tovább",
+    "done": "Kész",
+    "install": {
+      "title": "Telepítés",
+      "text": "Telepítsd a SideStore-t, vagy a LiveContainert a SideStore-ral, egy kattintással. Új iPhone-nál itt kezdd."
+    },
+    "preload": {
+      "title": "Előtöltés",
+      "text": "Add hozzá a saját alkalmazásaidat: .ipa fájlokat, hivatkozásokat vagy forrásokból származó alkalmazásokat. Jelölj ki egyet, hogy inkább aláírt .ipa-ként mentsd."
+    },
+    "apps": {
+      "title": "Alkalmazások",
+      "text": "Mikor jár le az egyes alkalmazás, a Megújítással és a Frissítéssel. Az IPAForge magától megújítja őket, amíg nyitva van. A párosítási fájlok is itt vannak."
+    },
+    "devices": {
+      "title": "Eszközök",
+      "text": "Az egyes iPhone-ok ellenőrzőlistája az iOS-verziójához, és a párosítási fájlja más eszközökhöz."
+    },
+    "developer": {
+      "title": "Fejlesztői portál",
+      "text": "Az Apple ID-d tanúsítványai, App ID-i és profiljai. Takarítsd ki, amit semmi nem használ, vagy helyezd át a tanúsítványodat .p12-ként."
+    },
+    "pickers": {
+      "title": "Eszköz és Apple ID",
+      "text": "Bármikor átválthatsz másik iPhone-ra vagy Apple ID-re, amelyet az IPAForge itt használ."
+    },
+    "logs": {
+      "title": "Naplók",
+      "text": "Minden lépés, amit az IPAForge megtett. Csatold őket a hibajelentéshez (⌘L / Ctrl+L)."
+    },
+    "settings": {
+      "title": "Beállítások",
+      "text": "Nyelv, megjelenés, anisette szerverek, és ez a bemutató újra."
+    },
+    "showAround": {
+      "title": "Körbevezetés",
+      "text": "Bármikor újra végigmehetsz ezen a bemutatón innen. A beállítási útmutató a Beállításokban van."
+    }
+  },
+  "pairByCode": {
+    "steps": {
+      "pair": "Párosítás kóddal"
+    },
+    "open": "Apple TV vagy Vision Pro párosítása…",
+    "title": "Apple TV vagy Vision Pro párosítása",
+    "titleAgain": "{name} párosítása újra",
+    "progress": {
+      "label": "Lépések",
+      "find": "1 Keresés",
+      "code": "2 Kód"
+    },
+    "intro": "Nincs kábelük, ezért Wi-Fi-n párosítjuk őket kóddal. Csatlakoztasd az eszközt ugyanahhoz a Wi-Fi-hez, mint ezt a számítógépet, majd nyisd meg a párosítási képernyőjét, és tartsd nyitva:",
+    "where": {
+      "tv": "Apple TV",
+      "vision": "Apple Vision Pro",
+      "tvPath": "Beállítások → Távirányítók és eszközök → Távirányító alkalmazás és eszközök",
+      "visionPath": "Beállítások → Általános → Távoli eszközök"
+    },
+    "found": "Megtalálva a hálózatodon",
+    "showing": "Mutatja a párosítási képernyőjét",
+    "pair": "Párosítás",
+    "searching": "Keresés a hálózaton… Az eszköz itt jelenik meg, amint a párosítási képernyője nyitva van.",
+    "searchingMore": "Még keresünk másokat…",
+    "help": {
+      "title": "Nem jelenik meg",
+      "screen": "Tartsd nyitva a párosítási képernyőt: az eszköz csak akkor található meg, amíg mutatja.",
+      "network": "Ugyanaz a Wi-Fi, mint ezen a számítógépen: nem vendéghálózat, és egyik oldalon sincs VPN.",
+      "ipv6": "Az IPv6 be van kapcsolva az útválasztón (az Apple-nek kell a párosításhoz).",
+      "macos": "macOS: Rendszerbeállítások → Adatvédelem és biztonság → Helyi hálózat → az IPAForge bekapcsolva.",
+      "windows": "Windows: engedélyezd az IPAForge-ot a magánhálózatokon, amikor a tűzfal kéri."
+    },
+    "failed": "A hálózati keresés leállt. Zárd be, és nyisd meg újra.",
+    "code": {
+      "title": "Add meg a kódot ezen: {name}",
+      "body": "A(z) {name} kódot mutat. Írd be ide.",
+      "label": "Kód",
+      "wrong": "Ez a kód nem egyezett. Ellenőrizd a kódot ezen: {name}, és próbáld újra.",
+      "pairing": "Párosítás ezzel: {name}…",
+      "checking": "Kód ellenőrzése…"
+    },
+    "back": "Vissza",
+    "backToList": "Vissza a listához",
+    "backoff": {
+      "title": "Túl sok hibás kód",
+      "wait": "A(z) {name} {seconds, plural, one {# másodperc} other {# másodperc}} múlva engedi újra próbálni.",
+      "later": "A(z) {name} egy ideig nem fogad több kódot. Várj egy kicsit, majd próbáld újra."
+    },
+    "closed": {
+      "title": "A(z) {name} bezárta a párosítási képernyőjét",
+      "body": "A kód csak addig működik, amíg a párosítási képernyő nyitva van. Nyisd meg újra ezen: {name}:"
+    },
+    "done": {
+      "title": "A(z) {name} párosítva van",
+      "body": "A(z) {name} az Eszközök oldalon van. Most már bezárhatod a párosítási képernyőjét.",
+      "vision": "Az alkalmazások akkor települnek, ha a Fejlesztői mód be van kapcsolva.",
+      "use": "{name} használata",
+      "close": "Bezárás"
+    },
+    "pairNamed": "{name} párosítása"
+  }
+}
