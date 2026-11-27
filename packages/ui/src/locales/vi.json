@@ -1,0 +1,2216 @@
+{
+  "app": {
+    "name": "IPAForge"
+  },
+  "shell": {
+    "skipToContent": "Chuyển đến nội dung",
+    "navigation": "Các mục",
+    "credit": {
+      "madeWith": "Làm với ❤️ và ☕",
+      "copyright": "© {year} {name}"
+    }
+  },
+  "topBar": {
+    "device": "Thiết bị",
+    "noDevice": "Không có",
+    "deviceMenu": "Thiết bị",
+    "account": "Apple ID",
+    "notSignedIn": "Chưa đăng nhập",
+    "accountMenu": "Apple ID",
+    "addAppleId": "Thêm Apple ID…",
+    "noAccounts": "Chưa có Apple ID nào.",
+    "noDevicesHint": "Kết nối iPhone hoặc iPad bằng cáp và mở khóa thiết bị.",
+    "openDevices": "Mở Thiết bị",
+    "tour": "Xem hướng dẫn nhanh",
+    "pairByCode": "Ghép nối Apple TV hoặc Vision Pro…"
+  },
+  "nav": {
+    "group": {
+      "manage": "Quản lý"
+    },
+    "install": "Cài đặt",
+    "preload": "Tải trước",
+    "apps": "Ứng dụng",
+    "devices": "Thiết bị",
+    "accounts": "Tài khoản",
+    "developer": "Cổng nhà phát triển",
+    "logs": "Nhật ký",
+    "settings": "Cài đặt",
+    "installRunning": "Đang cài đặt"
+  },
+  "placeholder": {
+    "body": "Mục này đang được xây dựng."
+  },
+  "install": {
+    "title": "Cài đặt SideStore",
+    "description": "Được ký bằng Apple ID của bạn, rồi cài qua USB.",
+    "steps": {
+      "device": "Kiểm tra thiết bị",
+      "resolve": "Tìm bản phát hành",
+      "download": "Tải xuống",
+      "inspect": "Kiểm tra ứng dụng",
+      "certificate_sharing": "Chia sẻ chứng chỉ",
+      "sign_in": "Đăng nhập vào Apple",
+      "team": "Chọn nhóm",
+      "register_device": "Đăng ký thiết bị",
+      "certificate": "Chuẩn bị chứng chỉ",
+      "app_ids": "Đăng ký App ID",
+      "free_apps": "Kiểm tra giới hạn ứng dụng miễn phí",
+      "provision": "Lấy hồ sơ cấp phép",
+      "refresh_profiles": "Lấy hồ sơ mới",
+      "sign": "Ký ứng dụng",
+      "install": "Cài đặt lên thiết bị",
+      "pairing": "Đặt tệp ghép nối",
+      "remember": "Ghi nhớ lần cài đặt này",
+      "save": "Lưu tệp .ipa đã ký"
+    },
+    "signInNeeded": {
+      "title": "Apple ID của bạn cần đăng nhập lại",
+      "body": "Phiên đã lưu của {appleId} đã hết hạn. Bạn vẫn có thể cài đặt: IPAForge sẽ hỏi mật khẩu khi đến bước đó."
+    },
+    "blocked": {
+      "title": "Apple đã chặn {appleId} trên {device}",
+      "body": "Các ứng dụng được ký bằng Apple ID này sẽ không mở được trên thiết bị này. Hãy dùng Apple ID khác.",
+      "use": "Dùng {appleId}"
+    },
+    "home": {
+      "what": "Nội dung cần cài đặt",
+      "channel": "Kênh",
+      "install": "Cài đặt {app}"
+    },
+    "variant": {
+      "sidestore": {
+        "title": "SideStore",
+        "description": "Tự làm mới và cài đặt ứng dụng trên thiết bị. Dùng 2 App ID."
+      },
+      "livecontainer": {
+        "title": "LiveContainer + SideStore",
+        "description": "Chạy nhiều ứng dụng bên trong một ứng dụng, vượt qua giới hạn 3 ứng dụng. Dùng 5 App ID."
+      }
+    },
+    "channel": {
+      "stable": "Ổn định",
+      "nightly": "Nightly",
+      "stableRecommended": "Ổn định (khuyên dùng)",
+      "nightlyRecommended": "Nightly (khuyên dùng)"
+    },
+    "plan": {
+      "title": "Lần cài đặt này",
+      "waiting": "Sẽ hiển thị khi thiết bị và Apple ID đã sẵn sàng.",
+      "checking": "Đang tải {app} và kiểm tra với Apple… Bản tải xuống được giữ lại nên lần cài đặt sẽ dùng lại nó.",
+      "unavailable": "Không thể kiểm tra với Apple. Bạn vẫn có thể cài đặt: mỗi bước sẽ kiểm tra lại.",
+      "appIds": "App ID",
+      "appIdsValue": "{created, plural, =0 {Tất cả {reused} đã được đăng ký} other {{reused, plural, =0 {{created} mới} other {{created} mới, {reused} dùng lại}}}} · {left, plural, other {còn # trong tuần này}}",
+      "nextSlot": "Chỗ trống tiếp theo vào {date}",
+      "freeApps": "Ứng dụng miễn phí trên thiết bị",
+      "freeAppsValue": "Đã dùng {used} trên {limit}",
+      "freeAppsRoom": "Còn chỗ cho ứng dụng này",
+      "freeAppsFull": "Bạn sẽ chọn một ứng dụng để gỡ",
+      "noLimit": "Không giới hạn (nhóm trả phí)",
+      "certificate": "Chứng chỉ",
+      "certificateReused": "Dùng lại",
+      "certificateNew": "Tạo mới",
+      "certificatesOnTeam": "{count, plural, =0 {Nhóm chưa có chứng chỉ nào} other {Nhóm có #}}",
+      "team": "Nhóm",
+      "certificateNewWhy": "IPAForge chưa có chứng chỉ riêng trên nhóm này. {count, plural, =0 {} other {# chứng chỉ đã có sẵn thuộc về công cụ khác, và công cụ đó giữ khóa riêng của chúng.}}"
+    },
+    "readiness": {
+      "noDevice": "Hãy kết nối thiết bị trước.",
+      "noSideStore": "SideStore chạy trên iPhone và iPad. Hãy dùng Tải trước để cài ứng dụng lên Apple TV hoặc Vision Pro.",
+      "checking": "Đang kiểm tra thiết bị…",
+      "device": "Khả dụng khi thiết bị đã sẵn sàng.",
+      "noAccount": "Hãy thêm Apple ID trước.",
+      "blocked": "Hãy dùng Apple ID khác trước.",
+      "appIds": "Không còn đủ App ID trong tuần này.",
+      "ready": "Mọi thứ đã sẵn sàng."
+    },
+    "run": {
+      "title": {
+        "running": "Đang cài đặt {app}",
+        "completed": "Đã cài đặt {app}",
+        "failed": "Không thể cài đặt {app}",
+        "cancelled": "Đã hủy cài đặt"
+      },
+      "subtitle": "{channel} · {device} · {appleId}",
+      "percent": "{fraction, number, percent}",
+      "progress": "Tiến độ chung",
+      "steps": "Các bước",
+      "cancel": "Hủy",
+      "cancelInstall": "Hủy cài đặt",
+      "runningHint": "Bạn có thể dùng các mục khác trong khi chờ.",
+      "waitingHint": "Đang chờ câu trả lời của bạn.",
+      "stepState": {
+        "waiting": "cần bạn",
+        "skipped": "đã bỏ qua",
+        "failed": "thất bại"
+      },
+      "detail": {
+        "bytes": "{received} trên {total}",
+        "received": "{received}",
+        "retrying": "Mất kết nối. Thử lại sau {seconds, plural, other {# giây}} (lần thử {attempt})"
+      },
+      "live": {
+        "header": "{percent} · {left}",
+        "installing": "{fraction, number, percent} · {phase}",
+        "count": "{done} trên {total}",
+        "task": {
+          "line": "{task} · {count}",
+          "team": "Đang kiểm tra nhóm",
+          "appIds": "Đang tạo App ID",
+          "appGroup": "Đang thêm nhóm ứng dụng",
+          "profiles": "Đang lấy hồ sơ"
+        },
+        "phase": {
+          "unpacking": "Đang giải nén ứng dụng",
+          "checking": "Đang kiểm tra ứng dụng",
+          "installing": "Đang cài đặt"
+        },
+        "speed": "{speed}/s",
+        "ios": "iOS đang cài đặt",
+        "leftSeconds": "Còn khoảng {seconds} giây",
+        "leftMinutes": "{minutes, plural, other {Còn khoảng # phút}}"
+      },
+      "connection": {
+        "usb": "USB",
+        "network": "Wi-Fi"
+      },
+      "wifi": {
+        "title": "Thiết bị này đang kết nối qua Wi-Fi",
+        "body": "Các ứng dụng lớn cài nhanh hơn nhiều khi dùng cáp. Qua Wi-Fi, IPAForge gửi chúng ở dạng nén để tiết kiệm thời gian."
+      },
+      "unsupportedPrompt": {
+        "title": "Bước này cần câu trả lời",
+        "body": "IPAForge cần câu trả lời cho một câu hỏi mà phiên bản này không thể hiển thị. Hãy hủy cài đặt và cập nhật IPAForge."
+      },
+      "backToInstall": "Quay lại Cài đặt",
+      "report": {
+        "device": "{model} · iOS {ios} · {connection}",
+        "release": "{app} {version} · {channel}",
+        "download": "{size} · đã xác minh checksum",
+        "downloadCached": "{size} · từ bộ nhớ đệm tải xuống",
+        "app": "{app} · {extensions, plural, =0 {không có tiện ích mở rộng} other {# tiện ích mở rộng}}",
+        "session": {
+          "reused": "Đã dùng lại phiên đã lưu",
+          "renewed": "Đã đăng nhập lại bằng mật khẩu đã lưu",
+          "signed-in": "Đã đăng nhập"
+        },
+        "registered": "Đã đăng ký với nhóm",
+        "alreadyRegistered": "Đã đăng ký với nhóm từ trước",
+        "certificate": {
+          "reused": "Đã dùng lại chứng chỉ đã lưu",
+          "created": "Đã tạo chứng chỉ mới",
+          "replaced": "Đã thu hồi một chứng chỉ và tạo chứng chỉ mới"
+        },
+        "removed": "Đã gỡ {app} · {used}",
+        "profiles": "{count, plural, other {# hồ sơ}}",
+        "signed": "{count, plural, other {Đã ký # gói}}",
+        "signedCompressed": "{count, plural, other {Đã ký # gói}} · nén cho Wi-Fi",
+        "phase": {
+          "uploading": "Đang tải lên thiết bị",
+          "installing": "Đang cài đặt"
+        },
+        "pairing": "Đã đặt vào {apps}",
+        "shared": "Đã chia sẻ chứng chỉ",
+        "notShared": "Chưa chia sẻ chứng chỉ",
+        "pairingRemote": "Đã đặt vào {apps} · kèm ghép nối từ xa cho iOS 17.4 trở lên",
+        "saved": "Đã lưu vào {path}"
+      },
+      "subtitleApps": "{device} · {appleId}"
+    },
+    "summary": {
+      "title": "Lần cài đặt này",
+      "app": "Ứng dụng",
+      "channel": "Kênh",
+      "device": "Thiết bị",
+      "deviceValue": "{name} · iOS {ios}",
+      "account": "Apple ID",
+      "appIds": "App ID",
+      "appIdsValue": "{count, plural, other {còn # trong tuần này}}",
+      "freeApps": "Ứng dụng miễn phí",
+      "apps": "Ứng dụng"
+    },
+    "done": {
+      "title": "{app} đã có trên {device}.",
+      "trust": "Trên thiết bị: Cài đặt › Cài đặt chung › VPN & Quản lý thiết bị › tin cậy {appleId}.",
+      "open": "Mở SideStore: tệp ghép nối và chứng chỉ của bạn đã có sẵn bên trong.",
+      "done": "Xong"
+    },
+    "cancelled": {
+      "title": "Đã dừng ở “{step}”.",
+      "body": "Những bước đã xong sẽ không bị lặp lại khi bạn tiếp tục.",
+      "resume": "Tiếp tục"
+    },
+    "failed": {
+      "continues": "Các bước đã xong được giữ lại: thử lại sẽ tiếp tục từ “{step}”.",
+      "copy": "Sao chép thông tin chẩn đoán",
+      "copied": "Đã sao chép",
+      "copyFailed": "Không thể sao chép",
+      "showLogs": "Xem nhật ký"
+    }
+  },
+  "pairing": {
+    "steps": {
+      "targets": "Tìm các ứng dụng cần ghép nối",
+      "place": "Đặt tệp ghép nối"
+    }
+  },
+  "settings": {
+    "appearance": "Giao diện và ngôn ngữ",
+    "mode": "Chế độ màu",
+    "palette": "Bảng màu",
+    "language": {
+      "title": "Ngôn ngữ",
+      "system": "Hệ thống ({language})",
+      "hint": "IPAForge theo ngôn ngữ hệ thống của bạn trừ khi bạn chọn một ngôn ngữ ở đây.",
+      "draft": "bản nháp"
+    },
+    "anisette": {
+      "title": "Máy chủ anisette",
+      "hint": "Đăng nhập vào Apple cần một máy chủ anisette, cho Apple biết máy tính nào đang đăng nhập. IPAForge tự dùng một máy chủ hoạt động được; hãy chọn tại đây nếu bạn muốn một máy chủ cụ thể, hoặc thêm máy chủ của riêng bạn.",
+      "add": "Thêm máy chủ",
+      "loading": "Đang tải danh sách máy chủ…",
+      "modeLabel": "Cách IPAForge chọn máy chủ",
+      "mode": {
+        "automatic": "Tự động",
+        "chosen": "Chọn một máy chủ"
+      },
+      "modeHint": {
+        "automatic": "Thử các máy chủ theo thứ tự này và chuyển sang máy chủ tiếp theo khi một máy chủ thất bại.",
+        "chosen": "Luôn dùng {name}.",
+        "none": "Hãy chọn máy chủ mà IPAForge sẽ luôn dùng."
+      },
+      "noneChosen": "Chưa chọn máy chủ nào: cho đến khi bạn chọn, IPAForge sẽ tiếp tục tự chọn.",
+      "chosenDown": "{name} không phản hồi. Đăng nhập sẽ không hoạt động cho đến khi nó hoạt động lại, hoặc cho đến khi bạn chọn máy chủ khác hay chuyển sang Tự động.",
+      "count": "{count, plural, other {# máy chủ}}",
+      "sources": "{custom, plural, =0 {} other {# do bạn thêm, }}{list} từ danh sách của SideStore, {backup} dự phòng ·",
+      "listUpdated": "Danh sách của SideStore được cập nhật {ago}",
+      "listNever": "Chưa tải danh sách của SideStore",
+      "updateList": "Cập nhật danh sách",
+      "updating": "Đang cập nhật…",
+      "testAll": "Kiểm tra tất cả",
+      "testing": "Đang kiểm tra…",
+      "group": {
+        "custom": "Do bạn thêm · dùng trước",
+        "list": "Từ danh sách của SideStore",
+        "backup": "Dự phòng · chỉ khi không truy cập được danh sách của SideStore hoặc không máy chủ nào trong đó phản hồi"
+      },
+      "tag": {
+        "custom": "Do bạn thêm",
+        "inUse": "Đang dùng",
+        "chosen": "Đã chọn"
+      },
+      "position": "Được thử ở vị trí số {position}",
+      "use": "Dùng {name}",
+      "chooseLabel": "Máy chủ sẽ dùng",
+      "status": {
+        "untested": "Chưa kiểm tra",
+        "testing": "Đang kiểm tra…",
+        "ok": "Hoạt động · {ms} ms",
+        "bad": "Không phản hồi"
+      },
+      "test": "Kiểm tra",
+      "testOne": "Kiểm tra {name}",
+      "edit": "Sửa {name}",
+      "remove": "Xóa {name}",
+      "confirmRemove": "Xóa {name}?",
+      "removeYes": "Xóa",
+      "skipped": "Không dùng từ danh sách của SideStore: {names} (không có HTTPS). Bạn có thể tự thêm máy chủ HTTP thuần, ví dụ máy chủ chạy trên máy tính của bạn.",
+      "dialog": {
+        "addTitle": "Thêm máy chủ anisette",
+        "editTitle": "Sửa máy chủ",
+        "body": "Mọi máy chủ anisette dùng giao thức thông thường đều hoạt động: máy chủ công khai hoặc máy chủ bạn tự chạy.",
+        "name": "Tên",
+        "namePlaceholder": "Máy chủ của tôi",
+        "address": "Địa chỉ",
+        "addressPlaceholder": "https://anisette.my-server.net",
+        "addressHint": "https:// hoặc, với máy chủ bạn tự chạy, http://",
+        "nameMissing": "Hãy đặt tên cho nó.",
+        "addressInvalid": "Hãy nhập địa chỉ bắt đầu bằng https:// hoặc http://.",
+        "exists": "Máy chủ này đã có trong danh sách.",
+        "stillAdd": "Bạn vẫn có thể thêm nó.",
+        "save": "Lưu"
+      }
+    },
+    "guide": {
+      "title": "Hướng dẫn thiết lập",
+      "text": "Máy tính, iPhone và Apple ID sẽ được kiểm tra lại.",
+      "run": "Chạy lại hướng dẫn",
+      "tour": "Xem hướng dẫn nhanh",
+      "tourTitle": "Tham quan các trang",
+      "tourHint": "Mỗi trang dùng để làm gì, từng bước một."
+    },
+    "tabs": {
+      "label": "Cài đặt",
+      "general": "Chung",
+      "anisette": "Máy chủ anisette"
+    },
+    "modeHint": "Sáng, tối, hoặc theo hệ thống của bạn.",
+    "paletteHint": "Màu sắc của toàn bộ ứng dụng, ở chế độ sáng và tối."
+  },
+  "theme": {
+    "mode": {
+      "system": "Hệ thống",
+      "light": "Sáng",
+      "dark": "Tối"
+    },
+    "palette": {
+      "graphite": "Than chì",
+      "ocean": "Đại dương",
+      "aurora": "Cực quang",
+      "sunset": "Hoàng hôn",
+      "forest": "Rừng",
+      "rose": "Hồng",
+      "violet": "Tím",
+      "mocha": "Mocha"
+    }
+  },
+  "errors": {
+    "device": {
+      "locked": {
+        "title": "Hãy mở khóa thiết bị",
+        "body": "Thiết bị đang bị khóa nên IPAForge không thể giao tiếp với nó. Hãy mở khóa và giữ mở khóa cho đến khi cài đặt xong."
+      },
+      "developer_mode_off": {
+        "title": "Chế độ nhà phát triển đang tắt",
+        "body": "Ứng dụng sideload cần Chế độ nhà phát triển. Hãy bật nó trong Cài đặt › Quyền riêng tư & Bảo mật › Chế độ nhà phát triển, rồi khởi động lại thiết bị."
+      },
+      "not_paired": {
+        "title": "Máy tính này chưa được tin cậy",
+        "body": "Hãy mở khóa thiết bị và chạm vào Tin cậy khi thiết bị hỏi có tin cậy máy tính này không."
+      },
+      "usbmuxd_unavailable": {
+        "title": "Hỗ trợ thiết bị chưa chạy",
+        "body": "IPAForge không thể kết nối với dịch vụ hệ thống giao tiếp với iPhone và iPad. Hãy cài đặt hoặc khởi động nó, rồi thử lại."
+      },
+      "not_found": {
+        "title": "Không tìm thấy thiết bị",
+        "body": "Hãy kết nối iPhone hoặc iPad bằng cáp USB và mở khóa thiết bị."
+      },
+      "disconnected": {
+        "title": "Thiết bị đã bị ngắt kết nối",
+        "body": "Kết nối bị gián đoạn. Hãy cắm lại cáp, mở khóa thiết bị và thử lại."
+      },
+      "pairing_pending": {
+        "title": "Đang chờ Tin cậy",
+        "body": "Hãy mở khóa thiết bị và chạm vào Tin cậy trên lời nhắc vừa xuất hiện."
+      },
+      "pairing_denied": {
+        "title": "Đã từ chối tin cậy",
+        "body": "Thiết bị đã từ chối tin cậy máy tính này. Hãy ghép nối lại và lần này chạm vào Tin cậy."
+      },
+      "invalid_pair_record": {
+        "title": "Ghép nối không còn hợp lệ",
+        "body": "Thiết bị không còn chấp nhận ghép nối của máy tính này. Hãy rút ra, cắm lại, mở khóa thiết bị và chạm vào Tin cậy."
+      },
+      "service_unavailable": {
+        "title": "Một dịch vụ của thiết bị không khởi động",
+        "body": "Thiết bị đã từ chối khởi động một dịch vụ mà IPAForge cần. Hãy mở khóa, kết nối lại và thử lại."
+      },
+      "protocol_error": {
+        "title": "Phản hồi bất ngờ từ thiết bị",
+        "body": "Thiết bị đã gửi nội dung mà IPAForge không hiểu. Hãy kết nối lại; nếu vẫn xảy ra, hãy cập nhật IPAForge hoặc báo lỗi."
+      },
+      "install_failed": {
+        "title": "Cài đặt thất bại",
+        "body": "Thiết bị đã từ chối cài đặt ứng dụng. Hãy thử lại; nếu vẫn thất bại, hãy cài đặt lại ứng dụng hoặc báo lỗi."
+      },
+      "afc_error": {
+        "title": "Không thể truyền tệp",
+        "body": "Sao chép tệp sang thiết bị thất bại. Hãy mở khóa và thử lại."
+      },
+      "timeout": {
+        "title": "Thiết bị ngừng phản hồi",
+        "body": "Thiết bị mất quá nhiều thời gian để phản hồi. Hãy mở khóa, kết nối lại và thử lại."
+      },
+      "passcode_required": {
+        "title": "Hãy đặt mật mã",
+        "body": "Việc này cần mật mã thiết bị. Hãy đặt một mật mã trong Cài đặt › Face ID & Mật mã, rồi thử lại."
+      },
+      "free_app_limit": {
+        "title": "Quá nhiều ứng dụng sideload",
+        "body": "Apple ID miễn phí chỉ có thể có ba ứng dụng sideload hoạt động trên một thiết bị. Hãy gỡ một ứng dụng rồi thử lại."
+      },
+      "profile_banned": {
+        "title": "Apple đã chặn Apple ID này trên thiết bị",
+        "body": "Thiết bị sẽ không chấp nhận ứng dụng được ký bằng Apple ID này. Thử lại cũng vô ích: hãy dùng Apple ID khác."
+      },
+      "identity_invalid": {
+        "title": "Chứng chỉ ký không còn hợp lệ",
+        "body": "Thiết bị đã từ chối chứng chỉ dùng để ký ứng dụng. Hãy kiểm tra đồng hồ của máy tính, hoặc thu hồi chứng chỉ rồi thử lại."
+      },
+      "profile_not_found": {
+        "title": "Thiếu hồ sơ cấp phép",
+        "body": "Thiết bị không tìm thấy hồ sơ cấp phép của ứng dụng. Hãy thử lại, hoặc cài đặt lại ứng dụng."
+      },
+      "pairing_path_invalid": {
+        "title": "Đường dẫn đó không thể chứa tệp ghép nối",
+        "body": "Hãy dùng đường dẫn trong Documents hoặc Library của ứng dụng, kết thúc bằng .plist hoặc .mobiledevicepairing."
+      },
+      "local_network_denied": {
+        "title": "IPAForge không thể tìm thiết bị trên mạng của bạn",
+        "body": "macOS chưa cho phép IPAForge tìm thiết bị trên mạng cục bộ của bạn, nên không thể kết nối với iPhone qua Wi-Fi. Thiết bị dùng cáp vẫn hoạt động."
+      },
+      "tunnel_unavailable": {
+        "title": "Đường hầm của thiết bị không mở được",
+        "body": "IPAForge không thể mở đường hầm bảo mật mà iOS 17.4 trở lên cung cấp qua cáp. Hãy kiểm tra thiết bị chạy iOS 17.4 trở lên, kết nối lại và thử lại."
+      },
+      "pairing_code_wrong": {
+        "title": "Mã không khớp",
+        "body": "Mã đã nhập không phải mã thiết bị hiển thị. Hãy kiểm tra mã trên màn hình thiết bị và thử lại."
+      },
+      "pairing_backoff": {
+        "title": "Quá nhiều mã sai",
+        "body": "Thiết bị sẽ không nhận thêm mã trong một lúc. Hãy chờ một lát, mở lại màn hình ghép nối của thiết bị và ghép nối lần nữa."
+      },
+      "pairing_screen_closed": {
+        "title": "Màn hình ghép nối đã đóng",
+        "body": "Thiết bị đã ngừng hiển thị màn hình ghép nối trước khi ghép nối xong. Hãy mở lại và giữ nó mở: Apple TV: Cài đặt → Điều khiển từ xa và thiết bị → Ứng dụng điều khiển và thiết bị. Apple Vision Pro: Cài đặt → Cài đặt chung → Thiết bị từ xa."
+      }
+    },
+    "apple": {
+      "anisette_unavailable": {
+        "title": "Máy chủ anisette không phản hồi",
+        "body": "Đăng nhập vào Apple cần một máy chủ anisette, và máy chủ hiện tại không phản hồi. Hãy chọn máy chủ khác hoặc kiểm tra mạng của bạn."
+      },
+      "anisette_not_provisioned": {
+        "title": "Máy chủ anisette chưa sẵn sàng",
+        "body": "Máy chủ anisette không thể tự thiết lập. Hãy chọn máy chủ khác và thử lại."
+      },
+      "app_id_quota": {
+        "title": "Hết App ID trong tuần này",
+        "body": "Apple ID miễn phí chỉ có thể đăng ký 10 App ID mỗi 7 ngày. Hãy chờ có chỗ trống, hoặc dùng Apple ID khác."
+      },
+      "certificate_limit": {
+        "title": "Quá nhiều chứng chỉ",
+        "body": "Apple ID này đã đạt giới hạn chứng chỉ phát triển. Hãy thu hồi một chứng chỉ, hoặc dùng Apple ID khác."
+      },
+      "invalid_credentials": {
+        "title": "Sai Apple ID hoặc mật khẩu",
+        "body": "Apple không chấp nhận email hoặc mật khẩu. Hãy kiểm tra và nhập lại mật khẩu."
+      },
+      "account_locked": {
+        "title": "Apple ID này đã bị khóa",
+        "body": "Apple đã khóa tài khoản này vì lý do bảo mật. Hãy mở khóa trên thiết bị Apple hoặc trên trang web của Apple, hoặc dùng Apple ID khác."
+      },
+      "account_refused": {
+        "title": "Apple đã từ chối đăng nhập",
+        "body": "Hiện Apple không cho Apple ID này đăng nhập từ đây. Hãy chờ một lúc, đăng nhập một lần trên thiết bị Apple, hoặc dùng Apple ID khác."
+      },
+      "client_rejected": {
+        "title": "Apple đã từ chối yêu cầu đăng nhập",
+        "body": "Apple không chấp nhận danh tính được gửi cùng yêu cầu đăng nhập. Hãy chọn máy chủ anisette khác, hoặc chờ rồi thử lại."
+      },
+      "rate_limited": {
+        "title": "Quá nhiều yêu cầu",
+        "body": "Apple đang tạm giới hạn yêu cầu. Hãy chờ vài phút rồi thử lại."
+      },
+      "service_unavailable": {
+        "title": "Máy chủ của Apple không khả dụng",
+        "body": "Máy chủ của Apple không phản hồi. Hãy chờ vài phút và kiểm tra mạng của bạn."
+      },
+      "two_factor_required": {
+        "title": "Nhập mã xác minh",
+        "body": "Apple đã gửi mã xác minh đến các thiết bị tin cậy của bạn. Hãy nhập mã để tiếp tục."
+      },
+      "two_factor_invalid_code": {
+        "title": "Sai mã xác minh",
+        "body": "Mã đó không hợp lệ. Hãy kiểm tra và nhập lại."
+      },
+      "two_factor_unsupported": {
+        "title": "Phương thức đăng nhập này không được hỗ trợ",
+        "body": "Apple ID này dùng phương thức xác thực hai yếu tố mà IPAForge chưa xử lý được, chẳng hạn khóa bảo mật. Hãy dùng Apple ID khác."
+      },
+      "sms_unavailable": {
+        "title": "Không thể nhận mã qua tin nhắn",
+        "body": "Apple sẽ không gửi mã qua tin nhắn ở đây. Hãy nhận mã trên thiết bị tin cậy, hoặc dùng Apple ID khác."
+      },
+      "clock_skew": {
+        "title": "Đồng hồ của máy tính bị sai",
+        "body": "Apple từ chối yêu cầu khi đồng hồ bị lệch. Hãy đặt ngày và giờ tự động, rồi thử lại."
+      },
+      "protocol_error": {
+        "title": "Phản hồi bất ngờ từ Apple",
+        "body": "Apple đã gửi nội dung mà IPAForge không hiểu. Hãy cập nhật IPAForge, hoặc báo lỗi nếu vẫn tiếp diễn."
+      },
+      "session_expired": {
+        "title": "Phiên của bạn đã hết hạn",
+        "body": "Hãy đăng nhập lại Apple ID này. Nếu phiên liên tục hết hạn, hãy kiểm tra đồng hồ của máy tính."
+      },
+      "account_not_found": {
+        "title": "Không tìm thấy Apple ID",
+        "body": "IPAForge không có phiên đã lưu cho Apple ID này. Hãy đăng nhập lại."
+      },
+      "not_eligible": {
+        "title": "Apple ID này không thể dùng để phát triển",
+        "body": "Apple không cho phép tài khoản này ký ứng dụng, chẳng hạn vì độ tuổi hoặc điều khoản. Hãy dùng Apple ID khác."
+      },
+      "email_unverified": {
+        "title": "Hãy xác minh email của bạn",
+        "body": "Apple cần xác minh địa chỉ email của Apple ID này trước. Hãy xác minh rồi thử lại."
+      },
+      "team_agreement": {
+        "title": "Chấp nhận thỏa thuận của Apple",
+        "body": "Nhóm chưa chấp nhận thỏa thuận nhà phát triển mới nhất của Apple. Hãy chấp nhận trên trang web nhà phát triển của Apple, hoặc chọn nhóm khác."
+      },
+      "no_teams": {
+        "title": "Không có nhóm nhà phát triển",
+        "body": "Apple ID này chưa có nhóm nhà phát triển. Hãy chấp nhận thỏa thuận nhà phát triển của Apple, hoặc dùng Apple ID khác."
+      },
+      "device_limit": {
+        "title": "Đã đạt giới hạn thiết bị",
+        "body": "Nhóm này không thể đăng ký thêm thiết bị. Hãy chọn nhóm khác, hoặc dùng Apple ID khác."
+      },
+      "app_id_unavailable": {
+        "title": "App ID này đã có người dùng",
+        "body": "Một nhóm khác đã dùng App ID này. Hãy chọn nhóm khác, hoặc dùng Apple ID khác."
+      },
+      "invalid_app_id_name": {
+        "title": "Apple đã từ chối tên App ID",
+        "body": "Apple không chấp nhận tên mà IPAForge chọn cho App ID. Hãy cập nhật IPAForge, hoặc báo lỗi."
+      },
+      "certificate_not_revocable": {
+        "title": "Không thể thu hồi chứng chỉ này tại đây",
+        "body": "Chỉ Apple mới có thể thu hồi chứng chỉ này. Hãy thu hồi một chứng chỉ khác."
+      },
+      "no_devices_for_profile": {
+        "title": "Thiết bị chưa được đăng ký",
+        "body": "Apple chưa đăng ký xong thiết bị. Hãy chờ một phút rồi thử lại."
+      },
+      "developer_request_failed": {
+        "title": "Dịch vụ nhà phát triển của Apple thất bại",
+        "body": "Một yêu cầu đến dịch vụ nhà phát triển của Apple thất bại. Hãy thử lại, và báo lỗi nếu vẫn tiếp diễn."
+      },
+      "anisette_server_invalid": {
+        "title": "Không thể dùng máy chủ anisette này",
+        "body": "Hãy kiểm tra tên và địa chỉ của nó: địa chỉ bắt đầu bằng https:// hoặc http://."
+      },
+      "anisette_server_exists": {
+        "title": "Máy chủ anisette này đã có trong danh sách",
+        "body": "Thay vào đó hãy chọn nó từ danh sách trong Cài đặt."
+      },
+      "certificate_not_on_team": {
+        "title": "Chứng chỉ này không thuộc nhóm",
+        "body": "Apple không còn liệt kê nó cho nhóm này: nó đã bị thu hồi, đã hết hạn, hoặc thuộc nhóm khác. Hãy xuất một chứng chỉ hiện hành và nhập nó vào."
+      }
+    },
+    "catalog": {
+      "source_gone": {
+        "title": "Bản phát hành không còn khả dụng",
+        "body": "Nơi ứng dụng này được tải xuống không còn nữa. Hãy chọn kênh khác, nhập một IPA, hoặc cập nhật IPAForge."
+      },
+      "unavailable": {
+        "title": "Không thể tải danh sách ứng dụng",
+        "body": "IPAForge không thể lấy danh sách ứng dụng. Hãy kiểm tra mạng và thử lại."
+      },
+      "download_failed": {
+        "title": "Tải xuống thất bại",
+        "body": "Không thể tải ứng dụng xuống. Hãy kiểm tra mạng và thử lại."
+      },
+      "checksum_mismatch": {
+        "title": "Bản tải xuống bị hỏng",
+        "body": "Tệp đã tải không khớp với checksum nên không được dùng. Hãy thử lại hoặc chọn kênh khác."
+      },
+      "checksum_missing": {
+        "title": "Không thể xác minh bản tải xuống",
+        "body": "Bản phát hành này không có checksum nên IPAForge không thể kiểm tra. Hãy chọn kênh khác, hoặc tự nhập IPA."
+      },
+      "rate_limited": {
+        "title": "Quá nhiều yêu cầu đến GitHub",
+        "body": "GitHub đang tạm giới hạn tải xuống. Hãy chờ vài phút rồi thử lại."
+      },
+      "app_source_unreachable": {
+        "title": "Không thể truy cập nguồn này",
+        "body": "Hãy kiểm tra liên kết và kết nối mạng của bạn, rồi thử lại."
+      },
+      "app_source_invalid": {
+        "title": "Liên kết này không phải nguồn ứng dụng",
+        "body": "Nó không liệt kê ứng dụng nào ở định dạng AltStore. Hãy kiểm tra liên kết, hoặc thêm tệp .ipa của ứng dụng."
+      },
+      "app_source_exists": {
+        "title": "Nguồn này đã được thêm",
+        "body": "Các ứng dụng của nó đã có trong Duyệt ứng dụng."
+      }
+    },
+    "plist": {
+      "invalid": {
+        "title": "Tệp cài đặt của ứng dụng bị hỏng",
+        "body": "Không thể đọc một property list bên trong ứng dụng. Hãy chọn IPA khác, hoặc báo lỗi."
+      }
+    },
+    "net": {
+      "offline": {
+        "title": "Bạn đang ngoại tuyến",
+        "body": "IPAForge không thể truy cập internet. Hãy kiểm tra kết nối mạng và thử lại."
+      }
+    },
+    "signer": {
+      "invalid_macho": {
+        "title": "Chương trình của ứng dụng bị hỏng",
+        "body": "Không thể đọc tệp thực thi của ứng dụng. Hãy chọn IPA khác."
+      },
+      "encrypted_binary": {
+        "title": "Ứng dụng bị mã hóa",
+        "body": "IPA này đến từ App Store và vẫn còn được mã hóa nên không thể ký lại. Hãy chọn IPA đã giải mã."
+      },
+      "unsupported_arch": {
+        "title": "Định dạng ứng dụng không được hỗ trợ",
+        "body": "Tệp thực thi của ứng dụng dùng định dạng mà iOS không chạy được. Hãy chọn IPA khác."
+      },
+      "unsupported_ios": {
+        "title": "Cần iOS mới hơn",
+        "body": "Ứng dụng này cần phiên bản iOS mới hơn phiên bản trên thiết bị. Hãy cập nhật thiết bị, hoặc chọn kênh hay IPA khác."
+      },
+      "unsupported_device": {
+        "title": "Không dành cho thiết bị này",
+        "body": "Ứng dụng này không hỗ trợ loại thiết bị này, chẳng hạn ứng dụng chỉ dành cho iPad trên iPhone, hoặc ứng dụng iPhone trên Apple TV. Hãy chọn IPA khác."
+      },
+      "no_arm64_build": {
+        "title": "Không có bản dựng cho iPhone hoặc iPad",
+        "body": "Ứng dụng không có bản dựng 64-bit cho iPhone hoặc iPad, chẳng hạn bản dựng 32-bit hoặc bản dựng trình giả lập. Hãy chọn IPA khác."
+      },
+      "no_header_space": {
+        "title": "Không thể ký ứng dụng",
+        "body": "Tệp thực thi của ứng dụng không còn chỗ cho chữ ký. Hãy chọn IPA khác, hoặc báo lỗi."
+      },
+      "zip_slip": {
+        "title": "IPA không an toàn",
+        "body": "IPA này cố ghi tệp ra ngoài thư mục của nó nên IPAForge đã từ chối. Hãy chọn IPA khác."
+      },
+      "invalid_certificate": {
+        "title": "Chứng chỉ không hợp lệ",
+        "body": "Không thể dùng chứng chỉ ký. Hãy thu hồi nó để IPAForge tạo chứng chỉ mới, rồi thử lại."
+      },
+      "unknown_issuer": {
+        "title": "Không rõ đơn vị cấp chứng chỉ",
+        "body": "IPAForge không nhận ra ai đã cấp chứng chỉ. Hãy cập nhật IPAForge và kiểm tra mạng của bạn."
+      },
+      "invalid_bundle": {
+        "title": "Gói ứng dụng không hợp lệ",
+        "body": "IPA không chứa ứng dụng hợp lệ. Hãy chọn IPA khác."
+      },
+      "invalid_profile": {
+        "title": "Hồ sơ cấp phép không hợp lệ",
+        "body": "Không thể đọc hồ sơ cấp phép từ Apple. Hãy thử lại, và báo lỗi nếu vẫn tiếp diễn."
+      },
+      "extension_prefix": {
+        "title": "Một tiện ích mở rộng của ứng dụng có ID sai",
+        "body": "Bundle ID của một tiện ích mở rộng không bắt đầu bằng ID của chính ứng dụng. Hãy chọn IPA khác."
+      },
+      "profile_mismatch": {
+        "title": "Hồ sơ cấp phép không khớp",
+        "body": "Hồ sơ không khớp với ứng dụng mà nó được tạo cho. Hãy thử lại, và báo lỗi nếu vẫn tiếp diễn."
+      },
+      "profile_expired": {
+        "title": "Hồ sơ cấp phép đã hết hạn",
+        "body": "Hồ sơ đã hết hạn, hoặc đồng hồ của máy tính bị sai. Hãy kiểm tra đồng hồ và thử lại."
+      },
+      "cert_not_in_profile": {
+        "title": "Chứng chỉ không có trong hồ sơ",
+        "body": "Hồ sơ cấp phép không bao gồm chứng chỉ ký. Hãy thử lại để lấy hồ sơ mới."
+      },
+      "device_not_provisioned": {
+        "title": "Thiết bị không có trong hồ sơ",
+        "body": "Hồ sơ cấp phép không bao gồm thiết bị này. Hãy thử lại để lấy hồ sơ mới."
+      },
+      "pkcs12_password": {
+        "title": "Mật khẩu không mở được tệp .p12 này",
+        "body": "Hãy nhập mật khẩu đã dùng khi xuất tệp, rồi thử lại."
+      }
+    },
+    "installer": {
+      "step_failed": {
+        "title": "Một bước đã thất bại",
+        "body": "Đã xảy ra lỗi trong lúc cài đặt. Hãy thử lại, và báo lỗi nếu vẫn tiếp diễn."
+      },
+      "prompt_cancelled": {
+        "title": "Đã hủy",
+        "body": "Cài đặt đã dừng vì một câu hỏi bị hủy. Hãy bắt đầu lại khi bạn sẵn sàng."
+      },
+      "certificate_machine_id_missing": {
+        "title": "Không thể chia sẻ chứng chỉ",
+        "body": "Chứng chỉ này thiếu dữ liệu mà SideStore cần để mở nó. Hãy thu hồi nó để IPAForge tạo chứng chỉ mới, rồi thử lại."
+      },
+      "team_required": {
+        "title": "Hãy chọn một nhóm",
+        "body": "Apple ID này thuộc nhiều nhóm. Hãy chọn nhóm để ký."
+      },
+      "kept_ipa_missing": {
+        "title": "Không thể làm mới ứng dụng này tại đây",
+        "body": "IPAForge chưa cài nó lên thiết bị này, hoặc bản lưu của nó đã mất. Hãy thêm tệp .ipa của nó trong Tải trước để cài lại."
+      },
+      "wrong_app": {
+        "title": "Liên kết này cho ứng dụng khác",
+        "body": "Đó không phải ứng dụng bạn đang làm mới hoặc cập nhật nên nó không được cài, ứng dụng và dữ liệu của nó giữ nguyên. Hãy thêm đúng tệp .ipa trong Tải trước để cài lại."
+      },
+      "version_unavailable": {
+        "title": "Không thể tải lại phiên bản này",
+        "body": "Làm mới giữ nguyên phiên bản trên thiết bị của bạn, và phiên bản đó không còn được cung cấp để tải xuống. Hãy dùng Cập nhật để cài phiên bản mới nhất; ứng dụng giữ nguyên dữ liệu."
+      },
+      "pairing_app_not_found": {
+        "title": "Ứng dụng đó không có trên thiết bị",
+        "body": "Nó đã bị gỡ, hoặc không còn là ứng dụng do IPAForge cài. Hãy đóng Tệp ghép nối và mở lại."
+      },
+      "certificate_not_stored": {
+        "title": "Chưa có chứng chỉ trên máy tính này",
+        "body": "Máy tính này giữ chứng chỉ của nhóm sau khi cài một ứng dụng bằng nó. Hãy cài một ứng dụng trước, hoặc nhập tệp .p12."
+      }
+    },
+    "rpc": {
+      "invalid_message": {
+        "title": "Lỗi giao tiếp nội bộ",
+        "body": "Các phần của IPAForge không hiểu nhau. Hãy cập nhật IPAForge, hoặc báo lỗi."
+      },
+      "disconnected": {
+        "title": "Mất kết nối với engine",
+        "body": "Engine của IPAForge ngừng phản hồi. Hãy thử lại, và báo lỗi nếu vẫn tiếp diễn."
+      },
+      "timeout": {
+        "title": "Engine không phản hồi",
+        "body": "Engine của IPAForge mất quá nhiều thời gian để phản hồi. Hãy thử lại, và báo lỗi nếu vẫn tiếp diễn."
+      }
+    },
+    "internal": {
+      "aborted": {
+        "title": "Đã dừng",
+        "body": "Thao tác đã bị dừng trước khi hoàn tất."
+      },
+      "unexpected": {
+        "title": "Đã xảy ra lỗi",
+        "body": "Đã xảy ra lỗi không mong muốn. Hãy thử lại, và báo lỗi nếu vẫn tiếp diễn."
+      }
+    }
+  },
+  "recovery": {
+    "retry": "Thử lại",
+    "wait-and-retry": "Chờ rồi thử lại",
+    "check-network": "Kiểm tra mạng của bạn",
+    "check-clock": "Kiểm tra ngày và giờ",
+    "change-anisette-server": "Chọn máy chủ anisette khác",
+    "re-enter-password": "Nhập lại mật khẩu",
+    "re-enter-code": "Nhập lại mã",
+    "use-trusted-device": "Dùng thiết bị tin cậy",
+    "sign-in-again": "Đăng nhập lại",
+    "sign-in-on-apple-device": "Đăng nhập trên thiết bị Apple",
+    "switch-account": "Dùng Apple ID khác",
+    "verify-email": "Xác minh email của bạn",
+    "accept-agreement": "Chấp nhận thỏa thuận của Apple",
+    "choose-team": "Chọn một nhóm",
+    "revoke-certificate": "Thu hồi một chứng chỉ",
+    "wait-for-app-id-slot": "Chờ App ID trống",
+    "try-anyway": "Cứ thử",
+    "choose-app-to-remove": "Chọn ứng dụng để gỡ",
+    "unlock-device": "Mở khóa thiết bị",
+    "enable-developer-mode": "Bật Chế độ nhà phát triển",
+    "trust-computer": "Tin cậy máy tính này",
+    "reconnect-device": "Kết nối lại thiết bị",
+    "pair-again": "Ghép nối lại",
+    "set-passcode": "Đặt mật mã",
+    "install-device-support": "Cài đặt hỗ trợ thiết bị",
+    "reinstall-app": "Cài đặt lại ứng dụng",
+    "choose-another-ipa": "Chọn IPA khác",
+    "choose-another-channel": "Chọn kênh khác",
+    "import-ipa": "Nhập một IPA",
+    "update-ipaforge": "Cập nhật IPAForge",
+    "report-issue": "Báo lỗi",
+    "or": "Hoặc",
+    "switchAccount": {
+      "title": "Dùng Apple ID khác",
+      "body": "Cài đặt sẽ bắt đầu lại với Apple ID bạn chọn."
+    },
+    "fix": {
+      "copy": "Sao chép",
+      "copied": "Đã sao chép",
+      "done": "Xong, thử lại",
+      "waitAndRetry": {
+        "how": "Apple đang bận hoặc đang giới hạn yêu cầu. Hãy chờ một phút rồi thử lại."
+      },
+      "checkNetwork": {
+        "how": "Hãy đảm bảo máy tính này có kết nối mạng, rồi thử lại."
+      },
+      "checkClock": {
+        "step1": "Mở cài đặt ngày và giờ trên máy tính này",
+        "step2": "Bật đặt ngày và giờ tự động"
+      },
+      "reEnterPassword": {
+        "how": "Khi thử lại sẽ hỏi mật khẩu; hãy kiểm tra trước khi nhập."
+      },
+      "reEnterCode": {
+        "how": "Khi thử lại sẽ hỏi mã xác minh mới."
+      },
+      "useTrustedDevice": {
+        "how": "Khi được hỏi mã, hãy chọn thiết bị tin cậy thay vì tin nhắn."
+      },
+      "signInAgain": {
+        "how": "Khi thử lại sẽ hỏi mật khẩu để đăng nhập lại."
+      },
+      "signInOnAppleDevice": {
+        "how": "Hãy đăng nhập Apple ID này trên iPhone, iPad hoặc Mac, hoặc trên trang web của Apple, và làm theo yêu cầu:"
+      },
+      "switchAccount": {
+        "how": "Hãy chọn một trong các Apple ID đã lưu. Cài đặt sẽ bắt đầu lại với nó.",
+        "button": "Chọn một Apple ID…"
+      },
+      "verifyEmail": {
+        "how": "Hãy xác minh địa chỉ email của Apple ID này trên trang web của Apple:"
+      },
+      "acceptAgreement": {
+        "how": "Hãy đăng nhập trên trang web nhà phát triển của Apple và chấp nhận thỏa thuận được hiển thị:"
+      },
+      "revokeCertificate": {
+        "how": "Khi thử lại sẽ hỏi chứng chỉ nào cần thu hồi."
+      },
+      "waitForAppIdSlot": {
+        "how": "Apple giải phóng mỗi App ID sau 7 ngày kể từ khi tạo. Hãy cài đặt lại khi có App ID trống, hoặc dùng Apple ID khác.",
+        "next": "App ID tiếp theo sẽ trống vào {date}."
+      },
+      "chooseAppToRemove": {
+        "how": "Khi thử lại sẽ hỏi cần gỡ ứng dụng nào để lấy chỗ."
+      },
+      "unlockDevice": {
+        "how": "Hãy mở khóa thiết bị và giữ mở khóa cho đến khi cài đặt xong."
+      },
+      "enableDeveloperMode": {
+        "button": "Đã bật, thử lại"
+      },
+      "trustComputer": {
+        "how": "Hãy mở khóa thiết bị. Khi thiết bị hỏi có tin cậy máy tính này không, hãy chạm vào Tin cậy và nhập mật mã.",
+        "button": "Hỏi lại trên thiết bị"
+      },
+      "reconnectDevice": {
+        "how": "Hãy rút thiết bị ra, cắm lại và mở khóa."
+      },
+      "setPasscode": {
+        "how": "Hãy đặt mật mã trên thiết bị trong Cài đặt › Face ID & Mật mã, rồi thử lại."
+      },
+      "installDeviceSupport": {
+        "how": "Trên Windows, hãy cài Apple Devices (hoặc iTunes) từ Microsoft Store, rồi khởi động lại IPAForge."
+      },
+      "reinstallApp": {
+        "how": "Hãy xóa ứng dụng khỏi thiết bị, rồi thử lại."
+      },
+      "chooseAnotherChannel": {
+        "how": "Bản dựng của kênh kia có thể chạy được trên thiết bị này.",
+        "button": "Cài đặt từ {channel}"
+      },
+      "open": "Mở",
+      "tryAnyway": {
+        "how": "Apple báo số App ID còn lại là số âm, đây là lỗi đã biết ở phía Apple: số thực tế có thể cao hơn. Cứ thử sẽ yêu cầu Apple tạo chúng; nếu thật sự đã đến giới hạn, Apple sẽ báo."
+      },
+      "changeAnisetteServer": {
+        "how": "Hãy mở Cài đặt, kiểm tra các máy chủ anisette và chọn một máy chủ hoạt động được, hoặc quay lại Tự động.",
+        "button": "Mở máy chủ anisette"
+      },
+      "allowLocalNetwork": {
+        "how": "Hãy mở Cài đặt hệ thống › Quyền riêng tư & Bảo mật › Mạng cục bộ, bật IPAForge, rồi thử lại. Hoặc kết nối thiết bị bằng cáp."
+      }
+    },
+    "reportHint": "Mở một issue GitHub mới với thông tin chẩn đoán đã điền sẵn. Không có gì được gửi cho đến khi bạn gửi issue.",
+    "allow-local-network": "Cho phép truy cập mạng cục bộ"
+  },
+  "devices": {
+    "engine": {
+      "connecting": "Đang kết nối với Engine…",
+      "connected": "{count, plural, =0 {Đã kết nối Engine · không có thiết bị} other {Đã kết nối Engine · # thiết bị}}",
+      "failed": "Không thể kết nối với Engine: {reason}"
+    },
+    "description": "Các iPhone và iPad kết nối với máy tính này, cùng các Apple TV và Vision Pro đã ghép nối với nó. Thiết bị đang dùng được hiển thị trên thanh trên cùng.",
+    "unknownDevice": "Thiết bị không xác định",
+    "line": "{model} · iOS {ios} · {link}",
+    "model": "{model} · iOS {ios}",
+    "withState": "{line} · {state}",
+    "link": {
+      "usb": "USB",
+      "network": "Wi-Fi",
+      "both": "USB và Wi-Fi"
+    },
+    "state": {
+      "checking": "Đang kiểm tra…",
+      "ready": "Sẵn sàng",
+      "locked": "Đã khóa",
+      "developerModeOff": "Chế độ nhà phát triển đang tắt",
+      "notTrusted": "Chưa tin cậy",
+      "unavailable": "Không đọc được thiết bị",
+      "notConnected": "Chưa kết nối"
+    },
+    "inUse": "Đang dùng",
+    "use": "Dùng thiết bị này",
+    "checkAgain": "Kiểm tra lại",
+    "facts": {
+      "model": "Mẫu máy",
+      "ios": "iOS",
+      "connection": "Kết nối",
+      "udid": "UDID",
+      "pairing": "Ghép nối",
+      "address": "Địa chỉ"
+    },
+    "empty": {
+      "title": "Chưa có thiết bị nào",
+      "body": "Hãy kết nối iPhone hoặc iPad bằng cáp và mở khóa thiết bị. Trên Windows, cần cài Apple Devices hoặc iTunes."
+    },
+    "notice": {
+      "none": {
+        "title": "Chưa kết nối thiết bị nào",
+        "body": "Hãy kết nối iPhone hoặc iPad bằng cáp và mở khóa thiết bị. Nó sẽ tự hiện ở đây."
+      },
+      "notConnected": {
+        "title": "{name} chưa được kết nối",
+        "body": "Hãy cắm lại và nó sẽ được dùng tự động, hoặc chọn thiết bị khác trên thanh trên cùng."
+      },
+      "notTrusted": {
+        "title": "Hãy tin cậy máy tính này trên {name}",
+        "body": "Hãy mở khóa, chạm vào Tin cậy và nhập mật mã.",
+        "action": "Hỏi lại",
+        "waiting": "Đang chờ Tin cậy…",
+        "titleUnnamed": "Hãy tin cậy máy tính này trên thiết bị"
+      },
+      "locked": {
+        "title": "Hãy mở khóa {name}",
+        "body": "Thiết bị cần được giữ mở khóa trong khi cài ứng dụng."
+      },
+      "developerModeOff": {
+        "title": "Hãy bật Chế độ nhà phát triển trên {name}",
+        "step1": "Cài đặt → Quyền riêng tư & Bảo mật → Chế độ nhà phát triển",
+        "step2": "Bật nó và khởi động lại khi được hỏi",
+        "step3": "Sau khi khởi động lại, chạm vào Bật và nhập mật mã"
+      },
+      "unavailable": {
+        "title": "Không đọc được {name}",
+        "body": "Hãy rút ra rồi cắm lại. Nếu vẫn xảy ra, hãy khởi động lại thiết bị.",
+        "bodyWifi": "Thiết bị đang kết nối qua Wi-Fi: hãy đánh thức nó, mở khóa và giữ nó cùng mạng với máy tính này, rồi Kiểm tra lại. Dùng cáp ổn định hơn.",
+        "reason": "Lý do: {reason}",
+        "titleUnnamed": "Không đọc được thiết bị"
+      },
+      "offNetwork": {
+        "title": "{name} không ở trên mạng",
+        "tv": "Hãy đánh thức nó bằng điều khiển từ xa và giữ nó cùng Wi-Fi với máy tính này.",
+        "vision": "Hãy đeo nó lên, mở khóa và giữ nó cùng Wi-Fi với máy tính này."
+      },
+      "pairAgain": {
+        "title": "Ghép nối lại {name}",
+        "body": "Nó không còn chấp nhận ghép nối của máy tính này. Điều này bình thường sau khi cập nhật tvOS hoặc visionOS: hãy ghép nối lại bằng mã mới.",
+        "action": "Ghép nối lại…"
+      }
+    },
+    "notes": {
+      "connected": "{name} đã kết nối",
+      "disconnected": "{name} đã ngắt kết nối",
+      "aDevice": "Một thiết bị"
+    },
+    "savePairing": "Lưu tệp ghép nối…",
+    "localNetwork": {
+      "open": "Mở cài đặt Mạng cục bộ"
+    },
+    "os": {
+      "tv": "tvOS",
+      "vision": "visionOS"
+    },
+    "lineOs": "{model} · {os} {version} · {link}",
+    "modelOs": "{model} · {os} {version}",
+    "pairedByCode": "Đã ghép nối với máy tính này, bằng mã",
+    "forget": {
+      "action": "Quên…",
+      "title": "Quên {name}?",
+      "body": "IPAForge sẽ xóa ghép nối của máy tính này. Các ứng dụng đã có trên thiết bị vẫn giữ nguyên. Để dùng lại, hãy ghép nối lại.",
+      "confirm": "Quên"
+    }
+  },
+  "prompts": {
+    "cancel": "Hủy",
+    "continue": "Tiếp tục",
+    "password": {
+      "title": "Đăng nhập lại",
+      "body": "Phiên đã lưu của {appleId} đã hết hạn. Hãy nhập mật khẩu để tiếp tục.",
+      "label": "Mật khẩu",
+      "checking": "Đang kiểm tra mật khẩu…"
+    },
+    "method": {
+      "title": "Apple nên gửi mã đến đâu?",
+      "body": "Hãy chọn cách nhận mã xác minh.",
+      "trustedDevice": "Một thiết bị tin cậy",
+      "trustedDeviceHint": "iPhone, iPad hoặc Mac của bạn đã đăng nhập Apple ID này",
+      "sms": "Tin nhắn đến {number}",
+      "smsHint": "Có thể phát sinh cước SMS tiêu chuẩn",
+      "sending": "Đang gửi mã…"
+    },
+    "code": {
+      "title": "Nhập mã xác minh",
+      "body": "{length, plural, other {Nhập mã # chữ số mà Apple đã gửi.}}",
+      "label": "Mã xác minh",
+      "wrong": "Mã đó không hợp lệ. Hãy kiểm tra và nhập lại.",
+      "verify": "Xác minh",
+      "checking": "Đang kiểm tra mã…",
+      "deviceBody": "{length, plural, other {Nhập mã # chữ số hiển thị trên iPhone, iPad hoặc Mac của bạn.}}",
+      "smsBody": "{length, plural, other {Nhập mã # chữ số đã gửi đến {number}.}}",
+      "allowHint": "Hãy giữ nó mở khóa, và chạm vào Cho phép khi nó hỏi về việc đăng nhập.",
+      "noCode": "Chưa nhận được mã?",
+      "resend": "Gửi mã mới",
+      "textTo": "Nhắn tin đến {number}",
+      "sending": "Đang gửi mã mới…",
+      "sent": "Mã mới đang được gửi.",
+      "notSent": "Apple không gửi mã mới. Hãy chờ vài phút rồi thử lại."
+    },
+    "suggested": "Gợi ý",
+    "team": {
+      "title": "Nhóm nào sẽ ký ứng dụng?",
+      "body": "Apple ID này thuộc nhiều nhóm. IPAForge ghi nhớ lựa chọn của bạn cho Apple ID này.",
+      "free": "Miễn phí: ứng dụng hết hạn sau 7 ngày, 3 ứng dụng mỗi thiết bị",
+      "paid": "Trả phí: ứng dụng dùng được một năm, không giới hạn ứng dụng",
+      "checking": "Đang dùng nhóm này…"
+    },
+    "revoke": {
+      "title": "Thu hồi một chứng chỉ?",
+      "body": "Nhóm này đã đạt số chứng chỉ phát triển tối đa, nên IPAForge cần thu hồi một chứng chỉ để tạo chứng chỉ riêng. Các ứng dụng được ký bằng chứng chỉ bị thu hồi sẽ ngừng được làm mới.",
+      "ipaforge": "Do IPAForge tạo trên máy tính khác",
+      "sidestore": "Do SideStore tạo",
+      "machine": "Tạo trên “{machine}” (thường là Xcode)",
+      "unknown": "Do một công cụ không xác định tạo",
+      "sidestoreWarning": "SideStore trên thiết bị của bạn sẽ ngừng làm mới ứng dụng cho đến khi nó tạo chứng chỉ mới.",
+      "machineWarning": "Xcode trên máy tính đó sẽ tạo chứng chỉ mới vào lần ký tiếp theo.",
+      "expires": "Hết hạn {date}",
+      "confirm": "Thu hồi và tiếp tục",
+      "revoking": "Đang thu hồi chứng chỉ…"
+    },
+    "remove": {
+      "title": "Gỡ một ứng dụng để lấy chỗ?",
+      "body": "Apple ID miễn phí chỉ có thể có {limit} ứng dụng trên một thiết bị, nên phải gỡ một ứng dụng thì ứng dụng này mới vừa. Bạn có thể cài lại sau.",
+      "confirm": "Gỡ và tiếp tục",
+      "removing": "Đang gỡ ứng dụng…"
+    },
+    "share": {
+      "title": "Chia sẻ chứng chỉ ký của bạn với “{app}”?",
+      "body": "Ứng dụng này có vẻ là SideStore. Với chứng chỉ của bạn, nó có thể tự làm mới ứng dụng trên thiết bị. Chỉ chia sẻ với ứng dụng bạn tin tưởng.",
+      "yes": "Chia sẻ chứng chỉ",
+      "yesHint": "Nó tự làm mới các ứng dụng của bạn trên thiết bị",
+      "no": "Không chia sẻ",
+      "noHint": "Nó được cài mà không có chứng chỉ của bạn"
+    },
+    "pairing": {
+      "title": "Ứng dụng nào nhận tệp ghép nối?",
+      "body": "Tệp ghép nối cho phép một ứng dụng trên thiết bị giao tiếp với nó qua Wi-Fi, như máy tính này. Chỉ những ứng dụng bạn đánh dấu mới nhận được.",
+      "available": "{count, plural, other {# ứng dụng trên thiết bị có thể dùng nó}}",
+      "selectAll": "Chọn tất cả",
+      "clearAll": "Bỏ chọn tất cả",
+      "place": "{count, plural, =0 {Chọn một ứng dụng} other {Đặt vào # ứng dụng}}",
+      "placing": "Đang đặt tệp ghép nối…",
+      "purpose": {
+        "sidestore": "Làm mới và cài đặt ứng dụng qua Wi-Fi",
+        "livecontainer": "Chạy các ứng dụng bên trong nó bằng JIT",
+        "stikdebug": "Bật JIT cho các ứng dụng khác",
+        "stikstore": "Cài đặt ứng dụng từ các nguồn riêng của nó"
+      }
+    }
+  },
+  "signIn": {
+    "title": "Thêm Apple ID",
+    "body": "IPAForge dùng nó để ký ứng dụng. Mật khẩu của bạn chỉ được gửi đến Apple.",
+    "appleId": "Apple ID",
+    "password": "Mật khẩu",
+    "submit": "Đăng nhập",
+    "signingIn": "Đang đăng nhập…",
+    "done": {
+      "title": "Đã thêm Apple ID",
+      "body": "Đã đăng nhập với {appleId}.",
+      "close": "Xong"
+    },
+    "rememberPassword": "Lưu mật khẩu của tôi trong chuỗi khóa hệ thống",
+    "rememberPasswordHint": "Cho phép IPAForge tự đăng nhập lại khi phiên hết hạn.",
+    "resuming": {
+      "title": "Đang đăng nhập lại",
+      "body": "Đang đăng nhập {appleId} bằng thông tin IPAForge đã lưu…",
+      "cancel": "Hủy"
+    }
+  },
+  "accounts": {
+    "description": "Các Apple ID mà IPAForge dùng để ký ứng dụng. Apple ID đang dùng được hiển thị trên thanh trên cùng.",
+    "list": "Apple ID đã lưu",
+    "empty": "Chưa có Apple ID nào. Hãy thêm một cái để cài SideStore.",
+    "notSaved": {
+      "title": "Apple ID không được lưu",
+      "body": "IPAForge không thể dùng chuỗi khóa hệ thống (có thể quyền truy cập đã bị từ chối), nên các Apple ID của bạn chỉ được giữ cho đến khi thoát. Để lưu chúng, hãy mở lại IPAForge và cho phép truy cập chuỗi khóa khi được hỏi."
+    },
+    "freeTeam": "{name} (miễn phí)",
+    "withState": "{line} · {state}",
+    "state": {
+      "checking": "Đang kiểm tra…",
+      "signInNeeded": "Cần đăng nhập",
+      "blocked": "Bị chặn trên thiết bị này",
+      "unreachable": "Không thể kết nối với Apple"
+    },
+    "inUse": "Đang dùng",
+    "noTeams": "Các nhóm sẽ hiện khi Apple đã phản hồi.",
+    "use": "Dùng",
+    "signInAgain": "Đăng nhập lại",
+    "signOut": {
+      "action": "Đăng xuất",
+      "title": "Đăng xuất khỏi {appleId}?",
+      "forgets": "IPAForge sẽ quên Apple ID này, phiên và mật khẩu đã lưu của nó.",
+      "keeps": "Các chứng chỉ ký của nó vẫn ở trên máy tính này, nên đăng nhập lại sẽ dùng lại chúng. Các ứng dụng đã cài vẫn hoạt động cho đến khi hết hạn.",
+      "confirm": "Đăng xuất"
+    }
+  },
+  "apps": {
+    "description": "Các ứng dụng IPAForge đã cài trên thiết bị này. Làm mới sẽ ký lại một ứng dụng trước khi nó hết hạn, giữ nguyên dữ liệu.",
+    "refreshAll": "{count, plural, =0 {Làm mới tất cả} other {Làm mới tất cả (#)}}",
+    "updateAll": "{count, plural, other {Cập nhật tất cả (#)}}",
+    "refresh": "Làm mới",
+    "update": "Cập nhật",
+    "remove": "Gỡ",
+    "removeApp": "Gỡ {name}",
+    "updateTo": "Cập nhật: {version}",
+    "from": "Từ {source}",
+    "needsIpa": "Do IPAForge cài từ tệp .ipa trên máy tính khác. Hãy thêm tệp .ipa đó trong Tải trước một lần để làm mới nó tại đây.",
+    "thisDevice": "thiết bị này",
+    "badge": "{count, plural, other {# ứng dụng sắp cần làm mới}}",
+    "expiry": {
+      "in": "{days, plural, other {Hết hạn sau # ngày · {date}}}",
+      "today": "Hết hạn hôm nay",
+      "expired": "{days, plural, other {Đã hết hạn # ngày trước · không mở được}}",
+      "unknown": "Không rõ ngày hết hạn",
+      "gone": "Đã hết hạn · không mở được"
+    },
+    "run": {
+      "checking": "Đang kiểm tra với Apple…",
+      "waiting": "Đang chờ đến lượt",
+      "done": "Xong"
+    },
+    "failed": {
+      "title": "Làm mới chưa hoàn tất: {reason}",
+      "details": "Xem chi tiết",
+      "dismiss": "Bỏ qua"
+    },
+    "notConnected": {
+      "title": "Thiết bị này chưa được kết nối",
+      "body": "Hãy kết nối nó để xem ứng dụng của nó, và để làm mới hoặc cập nhật chúng."
+    },
+    "expired": {
+      "title": "{count, plural, other {# ứng dụng đã hết hạn}}",
+      "body": "Chúng sẽ không mở được cho đến khi được làm mới. Dữ liệu được giữ nguyên.",
+      "refresh": "{count, plural, other {Làm mới ngay}}"
+    },
+    "facts": {
+      "next": "Sắp hết hạn tiếp theo",
+      "none": "Chưa có gì",
+      "nextIn": "{days, plural, other {{name} · # ngày}}",
+      "nextExpired": "{name} · đã hết hạn",
+      "count": "Được giữ làm mới",
+      "apps": "{count, plural, other {# ứng dụng}}",
+      "auto": "Tự động làm mới",
+      "autoOn": "{days, plural, other {Bật · trước # ngày}}",
+      "autoOff": "Tắt"
+    },
+    "list": {
+      "title": "Do IPAForge cài",
+      "count": "{count, plural, other {# ứng dụng · sắp hết hạn nhất lên đầu}}",
+      "empty": "Chưa có ứng dụng nào. Hãy cài SideStore, hoặc tải trước ứng dụng, và chúng sẽ hiện ở đây."
+    },
+    "others": {
+      "title": "Chưa được IPAForge giữ",
+      "hint": "Được cài trước phiên bản IPAForge này, hoặc bởi công cụ khác",
+      "found": "Tìm thấy trong {source}. Làm mới sẽ cài nó từ đó, giữ nguyên dữ liệu, và từ đó IPAForge sẽ giữ nó được làm mới.",
+      "foundMany": "Tìm thấy trong {source} và {count, plural, other {# nguồn khác}}. Làm mới sẽ cài nó từ nguồn được chọn bên dưới, giữ nguyên dữ liệu, và từ đó IPAForge sẽ giữ nó được làm mới.",
+      "pickSource": "Cài đặt từ",
+      "choice": "{source} · {version}",
+      "how": "Hãy thêm tệp .ipa của nó trong Tải trước một lần, và từ đó IPAForge sẽ giữ nó được làm mới."
+    },
+    "auto": {
+      "title": "Tự động làm mới ứng dụng",
+      "body": "Khi IPAForge đang mở và thiết bị được kết nối, các ứng dụng sẽ tự được làm mới trước khi hết hạn.",
+      "toggle": "Tự động làm mới",
+      "when": "Làm mới khi ứng dụng còn",
+      "days": "{count, plural, other {còn # ngày}}"
+    },
+    "removeDialog": {
+      "title": "Gỡ {name}?",
+      "body": "Nó bị xóa khỏi {device} cùng dữ liệu, và giải phóng một chỗ ứng dụng miễn phí. Bạn có thể cài lại từ Tải trước."
+    },
+    "pairing": {
+      "open": "Tệp ghép nối",
+      "title": "Tệp ghép nối",
+      "hint": "Tệp ghép nối cho phép một ứng dụng tự truy cập thiết bị của bạn để làm mới và cài ứng dụng. Ai giữ nó đều có thể dùng thiết bị, nên chỉ đưa cho ứng dụng của bạn khi hướng dẫn của chúng yêu cầu.",
+      "reading": "Đang đọc các tệp ghép nối…",
+      "empty": "Thiết bị này không có ứng dụng ghép nối hay ứng dụng do IPAForge cài.",
+      "classic": {
+        "thisComputer": "Ghép nối: của máy tính này",
+        "otherComputer": "Ghép nối: của máy tính khác",
+        "missing": "Ghép nối: thiếu"
+      },
+      "remote": {
+        "accepted": "Từ xa: được chấp nhận",
+        "rejected": "Từ xa: không được chấp nhận",
+        "otherComputer": "Từ xa: của máy tính khác",
+        "missing": "Từ xa: thiếu"
+      },
+      "detail": {
+        "placed": "Đã đặt {date}",
+        "needed": "Cần một tệp để tự làm mới.",
+        "otherComputer": "Từ máy tính khác: nó hoạt động khi máy tính đó còn được tin cậy.",
+        "ownNone": "Không có. Chỉ thêm khi ứng dụng yêu cầu."
+      },
+      "place": "Đặt",
+      "placeOne": "Đặt tệp ghép nối vào {name}",
+      "placeAgain": "Đặt lại",
+      "placeAgainOne": "Đặt lại tệp ghép nối vào {name}",
+      "add": "Thêm…",
+      "addOne": "Thêm tệp ghép nối vào {name}",
+      "remove": "Gỡ",
+      "removeOne": "Gỡ tệp ghép nối khỏi {name}",
+      "newRemote": "Ghép nối từ xa mới",
+      "done": "Xong",
+      "addTitle": "Thêm tệp ghép nối vào {name}",
+      "addBody": "IPAForge ghi tệp ghép nối của máy tính này vào thư mục của ứng dụng trên thiết bị của bạn. Ai giữ nó đều có thể dùng thiết bị: chỉ thêm vào ứng dụng bạn tin tưởng.",
+      "pathLabel": "Đường dẫn bên trong ứng dụng",
+      "pathHint": "Theo hướng dẫn của ứng dụng; thường là trong Documents. IPAForge ghi nhớ nó cho ứng dụng này.",
+      "pathInvalid": "Hãy dùng đường dẫn trong Documents hoặc Library, kết thúc bằng .plist hoặc .mobiledevicepairing.",
+      "removeTitle": "Gỡ tệp ghép nối của {name}?",
+      "removeBody": "Nó sẽ không thể tự truy cập thiết bị của bạn (làm mới, cài đặt) cho đến khi tệp ghép nối được đặt lại.",
+      "newRemoteTitle": "Tạo ghép nối từ xa mới?",
+      "newRemoteBody": "IPAForge tạo ghép nối từ xa mới với thiết bị của bạn và đặt nó vào SideStore. Thiết bị có thể yêu cầu bạn tin cậy máy tính này. Ghép nối từ xa cũ sẽ ngừng hoạt động.",
+      "newRemoteConfirm": "Tạo cái mới",
+      "newRemoteWaiting": "Nếu thiết bị hỏi, hãy chạm vào Tin cậy và nhập mật mã.",
+      "tag": "Không có tệp ghép nối",
+      "tagOne": "{name} không có tệp ghép nối: hãy mở Tệp ghép nối"
+    },
+    "cancelRefresh": "Hủy làm mới"
+  },
+  "logs": {
+    "title": "Nhật ký",
+    "lede": "Những gì IPAForge đã làm, từng dòng một. Mở từ bất cứ đâu bằng",
+    "shortcut": {
+      "control": "Ctrl+",
+      "command": "⌘",
+      "key": "L"
+    },
+    "copy": "Sao chép",
+    "save": "Lưu…",
+    "clear": "Xóa",
+    "cleared": "Đã xóa khỏi chế độ xem. Lưu vẫn ghi mọi dòng được giữ trong phiên này.",
+    "search": {
+      "label": "Tìm trong nhật ký",
+      "placeholder": "Tìm thông báo và chi tiết",
+      "key": "/"
+    },
+    "level": {
+      "label": "Mức độ",
+      "all": "Tất cả",
+      "info": "Thông tin",
+      "warn": "Cảnh báo",
+      "error": "Lỗi"
+    },
+    "levelName": {
+      "debug": "Gỡ lỗi",
+      "info": "Thông tin",
+      "warn": "Cảnh báo",
+      "error": "Lỗi"
+    },
+    "area": {
+      "label": "Khu vực",
+      "all": "Tất cả khu vực",
+      "install": "Cài đặt",
+      "device": "Thiết bị",
+      "apple": "Apple",
+      "catalog": "Danh mục",
+      "signing": "Ký",
+      "engine": "Engine",
+      "interface": "Giao diện",
+      "app": "Ứng dụng"
+    },
+    "filters": {
+      "showing": "Chỉ hiển thị:",
+      "run": "Lần cài đặt này ({time})",
+      "text": "“{text}”",
+      "remove": "Bỏ bộ lọc {filter}"
+    },
+    "list": {
+      "label": "Các dòng nhật ký",
+      "loadingOlder": "Đang tải các dòng cũ hơn…"
+    },
+    "row": {
+      "details": "{count, plural, other {# chi tiết}}",
+      "scope": "khu vực",
+      "redacted": "[đã ẩn]",
+      "copy": "Sao chép dòng"
+    },
+    "follow": {
+      "on": "Đang theo dõi dòng mới",
+      "off": "Đã tạm dừng",
+      "pause": "Tạm dừng",
+      "resume": "Theo dõi"
+    },
+    "jump": "{count, plural, other {# dòng mới}} · Nhảy đến dòng mới nhất",
+    "count": "{matching, plural, other {# dòng khớp}} · {capacity, number} dòng cuối được giữ trong phiên này",
+    "debug": "Bao gồm chi tiết gỡ lỗi",
+    "privacy": "Mật khẩu, token, khóa, số sê-ri và mã định danh thiết bị không bao giờ được ghi vào nhật ký; chúng hiển thị là [đã ẩn]. Nhật ký chỉ nằm trên máy tính này cho đến khi bạn sao chép hoặc lưu chúng.",
+    "empty": {
+      "none": {
+        "title": "Chưa có gì được ghi",
+        "body": "Các dòng sẽ hiện ở đây khi IPAForge làm việc: kết nối thiết bị, đăng nhập, cài đặt."
+      },
+      "noMatch": {
+        "title": "Không có dòng nào khớp",
+        "body": "Hãy đổi mức độ, khu vực hoặc từ khóa tìm kiếm.",
+        "showAll": "Hiện tất cả các dòng"
+      },
+      "cleared": {
+        "title": "Đã xóa khỏi chế độ xem",
+        "body": "Các dòng mới sẽ hiện ở đây khi chúng xuất hiện."
+      },
+      "failed": {
+        "title": "Không thể đọc nhật ký",
+        "body": "Kết nối với Engine có thể đã đóng. Hãy mở lại Nhật ký để thử lại."
+      }
+    },
+    "export": {
+      "copyTitle": "{count, plural, other {Sao chép # dòng?}}",
+      "saveTitle": "{count, plural, other {Lưu # dòng vào tệp?}}",
+      "copyBody": "Các dòng đang hiển thị, với bộ lọc bạn đã đặt.",
+      "saveBody": "Mọi dòng được giữ trong phiên này, bất kể bộ lọc.",
+      "warning": "Mật khẩu, token và mã định danh thiết bị đã được loại bỏ, nhưng nhật ký có nêu mẫu thiết bị, ứng dụng và nhóm của bạn. Hãy kiểm tra trước khi đăng công khai.",
+      "confirmCopy": "Sao chép",
+      "confirmSave": "Lưu",
+      "copied": "{count, plural, other {Đã sao chép # dòng}}",
+      "saved": "{count, plural, other {Đã lưu # dòng}}",
+      "copyFailed": "Không thể sao chép các dòng",
+      "saveFailed": "Không thể lưu các dòng"
+    }
+  },
+  "preload": {
+    "title": "Tải trước ứng dụng",
+    "description": "Cài đặt ứng dụng của riêng bạn: được ký bằng Apple ID của bạn, cài qua USB, lần lượt từng cái.",
+    "tabs": {
+      "label": "Tải trước",
+      "apps": "Thêm ứng dụng",
+      "sources": "Nguồn"
+    },
+    "add": {
+      "drop": "Thả tệp .ipa vào đây",
+      "or": "hoặc",
+      "choose": "Chọn tệp…",
+      "link": "Thêm từ liên kết…"
+    },
+    "catalog": {
+      "recommended": "Đề xuất",
+      "added": "Đã thêm",
+      "add": "Thêm",
+      "sidestore": "Tự làm mới và cài đặt ứng dụng trên thiết bị.",
+      "livecontainerSidestore": "LiveContainer có SideStore bên trong.",
+      "livecontainer": "Chạy nhiều ứng dụng bên trong một ứng dụng, vượt qua giới hạn 3 ứng dụng.",
+      "stikdebug": "Bật JIT cho các ứng dụng cần nó, trên thiết bị.",
+      "feather": "Ký và cài đặt ứng dụng trên thiết bị bằng chứng chỉ của bạn."
+    },
+    "browse": {
+      "title": "Duyệt ứng dụng",
+      "count": "{apps, plural, other {# ứng dụng}} từ {sources, plural, other {# nguồn}}",
+      "source": "Nguồn",
+      "allSources": "Tất cả nguồn",
+      "search": "Tìm ứng dụng",
+      "manage": "Quản lý nguồn",
+      "noMatch": "Không có ứng dụng nào khớp với “{query}”.",
+      "allOff": "Mọi nguồn đều đang tắt. Hãy bật một nguồn trong Nguồn.",
+      "loading": "Đang đọc các nguồn…",
+      "catalogLine": "Bản phát hành mới nhất · đã đối chiếu checksum",
+      "version": "{version} · {size}",
+      "from": "{name}, cũng có trong {others}",
+      "details": "Chi tiết của {name}",
+      "notRefreshed": {
+        "title": "Không thể làm mới {name}",
+        "body": "Đang hiển thị các ứng dụng của nó từ lần làm mới gần nhất, {when}.",
+        "retry": "Thử lại"
+      }
+    },
+    "detail": {
+      "version": "Phiên bản",
+      "latest": "{version} (mới nhất)",
+      "size": "Kích thước",
+      "needs": "Yêu cầu",
+      "needsIos": "iOS {version}",
+      "anyIos": "Mọi iOS",
+      "from": "Từ",
+      "builtin": "Tích hợp sẵn · tin cậy",
+      "added": "Nguồn do bạn thêm",
+      "untrusted": "Từ nguồn do bạn thêm: IPAForge không xem xét các ứng dụng của nó.",
+      "add": "Thêm vào danh sách",
+      "inList": "Trong danh sách",
+      "close": "Đóng",
+      "loadingReleases": "Đang tra cứu các bản phát hành của nó…",
+      "noReleases": "Hiện không đọc được các bản phát hành của nó. Hãy kiểm tra kết nối và mở lại."
+    },
+    "sources": {
+      "description": "Nơi Duyệt ứng dụng tìm ứng dụng. Nguồn tích hợp sẵn do IPAForge duy trì; hãy thêm nguồn khác bằng liên kết của chúng (định dạng AltStore).",
+      "add": "Thêm nguồn…",
+      "refreshAll": "Làm mới tất cả",
+      "list": "Nguồn",
+      "builtin": "Tích hợp sẵn · tin cậy",
+      "added": "Do bạn thêm",
+      "catalogName": "Danh mục IPAForge",
+      "apps": "{count, plural, other {# ứng dụng}}",
+      "updated": "cập nhật {when}",
+      "notRead": "Chưa đọc",
+      "skipped": "{count, plural, other {# bị bỏ qua (không phải .ipa)}}",
+      "failed": "Không thể kết nối.",
+      "failedCopy": "Đang hiển thị bản sao gần nhất của nó, từ {when}.",
+      "refreshing": "Đang làm mới…",
+      "show": "Hiện ứng dụng từ {name}",
+      "refresh": "Làm mới {name}",
+      "remove": "Xóa {name}",
+      "on": "Bật",
+      "off": "Tắt",
+      "note": "IPAForge không xem xét các ứng dụng trong nguồn bạn thêm. Chỉ thêm nguồn bạn tin tưởng.",
+      "refreshOne": "Làm mới",
+      "removeOne": "Xóa"
+    },
+    "addSource": {
+      "title": "Thêm nguồn",
+      "label": "Liên kết nguồn",
+      "placeholder": "https://example.com/apps.json",
+      "hint": "Một nguồn ở định dạng AltStore, loại mà SideStore đọc. Thường kết thúc bằng .json.",
+      "check": "Kiểm tra",
+      "checking": "Đang kiểm tra nguồn…",
+      "notLink": "Hãy nhập liên kết bắt đầu bằng https://",
+      "notHttps": "Hãy dùng liên kết https://: IPAForge chỉ đọc nguồn qua kết nối an toàn.",
+      "previewTitle": "Thêm nguồn này?",
+      "includes": "{count, plural, other {# ứng dụng, bao gồm:}}",
+      "skipped": "{count, plural, other {# ứng dụng nữa bị loại: bản tải xuống của chúng không phải .ipa.}}",
+      "warningTitle": "Chỉ thêm nguồn bạn tin tưởng",
+      "warningBody": "IPAForge không xem xét các ứng dụng trong nguồn bạn thêm. Mỗi ứng dụng vẫn được kiểm tra trước khi cài đặt.",
+      "back": "Quay lại",
+      "confirm": "Thêm nguồn"
+    },
+    "removeSource": {
+      "title": "Xóa {name}?",
+      "body": "Các ứng dụng của nó biến mất khỏi Duyệt ứng dụng. Các ứng dụng đã cài từ nó vẫn ở trên thiết bị, và các ứng dụng trong danh sách Sẽ cài đặt cũng vẫn ở đó.",
+      "confirm": "Xóa"
+    },
+    "list": {
+      "title": "Sẽ cài đặt",
+      "count": "{count, plural, other {# ứng dụng}}",
+      "empty": "Chưa có ứng dụng nào. Hãy thả tệp .ipa vào đây, chọn tệp, thêm liên kết, hoặc chọn một ứng dụng trong Duyệt ứng dụng."
+    },
+    "row": {
+      "waiting": "Đang chờ thiết bị và Apple ID",
+      "checking": "Đang kiểm tra…",
+      "downloading": "Đang tải xuống và kiểm tra…",
+      "appIds": "{count, plural, other {# App ID}}{extensions, plural, =0 {} other { (ứng dụng + # tiện ích mở rộng)}}",
+      "updates": "Cập nhật {from} → {to} · giữ nguyên dữ liệu",
+      "new": "Mới trên thiết bị",
+      "pairing": "Nhận tệp ghép nối và chứng chỉ",
+      "fromCatalog": "Từ danh mục · Ổn định",
+      "remove": "Xóa {name}",
+      "cannot": "Không thể cài đặt.",
+      "fromSource": "Từ {name}",
+      "saveInstead": "Lưu tệp .ipa đã ký thay vì cài",
+      "saveInsteadOne": "Lưu {name} thành tệp .ipa đã ký thay vì cài đặt",
+      "savedOnComputer": "Đã lưu trên máy tính này, chưa cài đặt"
+    },
+    "problem": {
+      "notIpa": "Chỉ có thể cài đặt tệp .ipa.",
+      "unreadable": "IPAForge không đọc được tệp này. Hãy thêm nó bằng Chọn tệp… thay thế.",
+      "needsIos": "Cần iOS {needs}; thiết bị này có iOS {has}."
+    },
+    "summary": {
+      "appIds": "{count, plural, other {# mới}} · {left, plural, other {còn # trong tuần này}}",
+      "appIdsNoLimit": "{count, plural, other {# mới}}",
+      "notEnough": "Không còn đủ. Hãy gỡ một ứng dụng, hoặc chờ. {next}",
+      "freeApps": "{after} trên {limit} sau lần cài đặt này",
+      "freeAppsOver": "{used, plural, other {# đã có sẵn.}} Lần cài đặt sẽ hỏi cần gỡ ứng dụng nào, hoặc hãy gỡ một ứng dụng khỏi danh sách này."
+    },
+    "install": "{count, plural, =0 {Cài đặt} other {Cài đặt # ứng dụng}}",
+    "clear": "Xóa danh sách",
+    "readiness": {
+      "busy": "Hãy chờ lần cài đặt đang chạy.",
+      "empty": "Hãy thêm ứng dụng trước.",
+      "checking": "Đang kiểm tra các ứng dụng…",
+      "problems": "Hãy xóa các ứng dụng không thể cài đặt."
+    },
+    "link": {
+      "title": "Thêm từ liên kết",
+      "body": "Liên kết trực tiếp đến tệp .ipa. IPAForge tải nó xuống, rồi kiểm tra như mọi ứng dụng khác.",
+      "label": "Liên kết",
+      "placeholder": "https://example.com/MyApp.ipa",
+      "add": "Thêm",
+      "httpsOnly": "Chỉ có thể tải xuống từ liên kết https.",
+      "invalid": "Đó không phải liên kết.",
+      "notIpa": "Liên kết phải trỏ đến một tệp .ipa."
+    },
+    "elsewhere": {
+      "apps": "Đang cài đặt ứng dụng",
+      "sidestore": "Đang cài đặt SideStore",
+      "body": "Mỗi lần chỉ một cài đặt: nó cần thiết bị. Lần này có thể bắt đầu khi lần kia xong.",
+      "open": "Mở nó"
+    },
+    "run": {
+      "title": {
+        "running": "{count, plural, =1 {Đang cài đặt {app}} other {Đang cài đặt # ứng dụng}}",
+        "completed": "{count, plural, =1 {Đã cài đặt {app}} other {Đã cài đặt # ứng dụng}}",
+        "failed": "Không thể cài đặt hết các ứng dụng"
+      },
+      "backToPreload": "Quay lại Tải trước",
+      "shared": "Thiết bị này và Apple ID của bạn",
+      "refresh": {
+        "profile": "Chỉ hồ sơ mới, không cài đặt lại gì",
+        "certificate": "Đã cài đặt lại: chứng chỉ đã ký nó không còn hợp lệ",
+        "unmarked": "Đã cài đặt lại: IPAForge không biết chứng chỉ nào đã ký nó",
+        "appId": "Đã cài đặt lại: Apple đã xóa App ID của nó khi hết hạn",
+        "sidestore": "Đã cài đặt lại, giữ nguyên dữ liệu, nên chính SideStore hiển thị ngày mới"
+      },
+      "group": {
+        "failed": "Thất bại",
+        "done": "Xong",
+        "active": "Đang thực hiện",
+        "pending": "Đang chờ"
+      }
+    },
+    "done": {
+      "title": "{count, plural, =1 {{app} đã có trên {device}.} other {# ứng dụng đã có trên {device}.}}",
+      "open": "Hãy mở từng ứng dụng từ Màn hình chính."
+    },
+    "signAndSave": "{count, plural, other {Ký và lưu # ứng dụng}}",
+    "installAndSave": "{install} để cài đặt · {save} để lưu thành .ipa đã ký"
+  },
+  "repair": {
+    "title": "Sửa chữa SideStore",
+    "description": "IPAForge kiểm tra SideStore trên {device} và sửa những gì khiến nó không tự làm mới ứng dụng của bạn.",
+    "checkAgain": "Kiểm tra lại",
+    "checking": "Đang kiểm tra SideStore…",
+    "checks": "Các mục kiểm tra",
+    "failed": "Không thể kiểm tra SideStore: {reason}",
+    "failedBody": "Hãy kiểm tra thiết bị đã được kết nối và mở khóa, rồi nhấn Kiểm tra lại.",
+    "ok": "OK",
+    "unknown": "Không xác định",
+    "deviceFirst": "Hãy sửa {device} trước",
+    "device": {
+      "title": "{device} đã sẵn sàng",
+      "ok": "Đã mở khóa, đã tin cậy và đã bật Chế độ nhà phát triển.",
+      "locked": "Thiết bị đang khóa. Hãy mở khóa rồi nhấn Kiểm tra lại.",
+      "lockedTag": "Đã khóa",
+      "developerMode": "Chế độ nhà phát triển đang tắt, nên SideStore và các ứng dụng nó cài sẽ không mở được. Trên iPhone: Cài đặt › Quyền riêng tư & Bảo mật › Chế độ nhà phát triển, rồi khởi động lại.",
+      "developerModeTag": "Chế độ nhà phát triển đang tắt"
+    },
+    "installed": {
+      "title": "SideStore đã được cài đặt",
+      "missing": "SideStore không có trên {device}.",
+      "missingTag": "Chưa cài đặt"
+    },
+    "signer": {
+      "title": "Nó được ký bằng nhóm bạn dùng ở đây",
+      "ok": "Sửa chữa có thể cài lại nó, hoặc cấp hồ sơ mới, mà không mất dữ liệu.",
+      "otherTeam": "Một nhóm khác của Apple ID này đã ký nó. Cài lại bằng nhóm này sẽ thêm một SideStore thứ hai, không có dữ liệu hay ứng dụng của nó.",
+      "otherTeamTag": "Nhóm khác",
+      "otherAppleId": "Một Apple ID khác đã ký nó. Cài lại bằng Apple ID này sẽ thêm một SideStore thứ hai, không có dữ liệu hay ứng dụng của nó.",
+      "otherAppleIdTag": "Apple ID khác"
+    },
+    "version": {
+      "title": "SideStore đã được cập nhật",
+      "ok": "Phiên bản {version}, mới nhất.",
+      "outdated": "Phiên bản {version}; đã có {latest}. Phiên bản cũ hơn có thể thiếu các bản sửa lỗi làm mới trên iOS gần đây.",
+      "outdatedTag": "Có {latest}",
+      "unknown": "Phiên bản {version}. Không thể kết nối danh mục để so sánh."
+    },
+    "expiry": {
+      "title": "SideStore chưa hết hạn",
+      "ok": "{days, plural, other {Hết hạn sau # ngày.}}",
+      "soon": "{days, plural, =0 {Hết hạn hôm nay.} other {Hết hạn sau # ngày.}} Khi đã hết hạn, SideStore không thể tự làm mới.",
+      "soonTag": "Sắp hết hạn",
+      "expired": "{days, plural, other {Đã hết hạn # ngày trước.}} Nó sẽ không mở được, nên không thể làm mới ứng dụng của bạn.",
+      "expiredTag": "Đã hết hạn",
+      "unknown": "Thiết bị không hiển thị hồ sơ nào cho nó."
+    },
+    "signing": {
+      "title": "Chứng chỉ đã ký nó còn hợp lệ",
+      "ok": "Vẫn hợp lệ ở phía Apple.",
+      "revoked": "Nó đã bị thu hồi hoặc đã hết hạn. SideStore sẽ ngừng mở ở lần khởi chạy tiếp theo.",
+      "revokedTag": "Đã thu hồi",
+      "unknown": "Được cài bởi công cụ khác, nên IPAForge không thấy chứng chỉ nào đã ký nó. Sửa chữa có thể cài lại để chắc chắn."
+    },
+    "own": {
+      "title": "SideStore có thể tự ký ứng dụng",
+      "ok": "Nó giữ một chứng chỉ hợp lệ để làm mới ứng dụng của bạn.",
+      "missing": "Nó không giữ chứng chỉ nào, nên khi làm mới sẽ yêu cầu bạn đăng nhập, hoặc thất bại.",
+      "missingTag": "Không có chứng chỉ",
+      "other": "Chứng chỉ được cấp cho nó không còn hợp lệ. Có thể nó đã thay bằng chứng chỉ mới của chính nó; nếu làm mới trong SideStore thất bại, hãy cài lại.",
+      "otherTag": "Có thể đã bị thay thế"
+    },
+    "pairing": {
+      "title": "SideStore có tệp ghép nối",
+      "ok": "Có, và là ghép nối của máy tính này với {device}.",
+      "missing": "Thiếu: SideStore không thể truy cập thiết bị để cài đặt hoặc làm mới ứng dụng.",
+      "missingTag": "Thiếu",
+      "other": "Đó là của máy tính khác. Nó hoạt động khi ghép nối đó còn hợp lệ; đặt lại Tin cậy trên thiết bị sẽ làm hỏng nó.",
+      "otherTag": "Máy tính khác"
+    },
+    "manual": {
+      "title": "Trên iPhone của bạn · IPAForge không thể kiểm tra các mục này",
+      "tag": "Tự kiểm tra",
+      "vpn": {
+        "title": "VPN của SideStore đang bật khi nó làm mới",
+        "body": "Hãy mở LocalDevVPN và kết nối trước khi làm mới trong SideStore."
+      },
+      "anisette": {
+        "title": "SideStore có thể kết nối với máy chủ anisette của nó",
+        "body": "Trong SideStore › Cài đặt › Anisette, hãy chọn máy chủ khác nếu khi làm mới báo không thể đăng nhập."
+      }
+    },
+    "plan": {
+      "title": "Sửa chữa sẽ",
+      "reinstall": "Cài đặt lại SideStore",
+      "reinstallBody": "Từ danh mục IPAForge, được ký bằng chứng chỉ hợp lệ cũng được đặt vào bên trong. Dữ liệu và ứng dụng của bạn vẫn giữ nguyên.",
+      "profile": "Cấp cho SideStore hồ sơ mới",
+      "profileBody": "Không cài đặt lại gì.",
+      "pairing": "Đặt tệp ghép nối của máy tính này",
+      "pairingBody": "Vào Documents của SideStore, thay thế những gì đang có.",
+      "optional": "Ngoài ra, nếu bạn muốn",
+      "offerReinstall": "Cài đặt lại SideStore để chắc chắn",
+      "offerPairing": "Thay tệp ghép nối bằng tệp của máy tính này",
+      "hint": "Một lần chạy. Hãy giữ {device} được kết nối và mở khóa.",
+      "start": "Sửa chữa SideStore"
+    },
+    "blocked": {
+      "title": "Không thể cài lại SideStore bằng Apple ID này",
+      "body": "Một nhóm hoặc Apple ID khác đã ký nó, nên dữ liệu sẽ không được giữ lại. Hãy chọn Apple ID đó trên thanh trên cùng, rồi nhấn Kiểm tra lại."
+    },
+    "notInstalled": {
+      "title": "SideStore không có trên {device}",
+      "body": "Hãy cài đặt nó trước, từ trang Cài đặt.",
+      "install": "Cài đặt SideStore"
+    },
+    "fine": {
+      "title": "SideStore đang hoạt động",
+      "body": "Không có gì cần sửa. Nếu nó vẫn không làm mới được, hãy kiểm tra hai mục trên iPhone bên dưới."
+    },
+    "run": {
+      "title": {
+        "running": "Đang sửa chữa SideStore",
+        "completed": "SideStore đã được sửa chữa",
+        "failed": "Không thể sửa chữa SideStore"
+      }
+    },
+    "done": {
+      "title": "SideStore trên {device} đã được sửa chữa.",
+      "open": "Hãy mở SideStore và làm mới ứng dụng của bạn."
+    },
+    "open": "Kiểm tra SideStore",
+    "checkingTag": "Đang kiểm tra…",
+    "remote": {
+      "title": "Ghép nối từ xa cho iOS 17.4 trở lên",
+      "ok": "Có, và {device} chấp nhận nó.",
+      "missing": "Thiếu: SideStore chỉ có thể dùng ghép nối cổ điển. Đặt tệp ghép nối của máy tính này sẽ thêm nó.",
+      "missingTag": "Thiếu",
+      "rejected": "{device} không còn chấp nhận nó (Tin cậy đã bị đặt lại). Đặt tệp ghép nối của máy tính này sẽ tạo cái mới.",
+      "rejectedTag": "Không được chấp nhận",
+      "other": "Đó là của máy tính khác, nên IPAForge không thể kiểm tra. Đặt tệp ghép nối của máy tính này sẽ thay thế nó.",
+      "otherTag": "Máy tính khác",
+      "notNeeded": "Không cần với iOS dưới 17.4.",
+      "notNeededTag": "Không cần"
+    }
+  },
+  "sidestore": {
+    "addSource": "Thêm vào SideStore",
+    "addAll": "Thêm tất cả vào SideStore",
+    "install": "Cài đặt bằng SideStore",
+    "sourceTitle": "Thêm {name} vào SideStore",
+    "sourceBody": "SideStore cũng hiển thị các ứng dụng của nó, và giữ chúng được cập nhật trên iPhone. SideStore cũng không xem xét các ứng dụng trong nguồn: chỉ thêm nguồn bạn tin tưởng.",
+    "installTitle": "Cài đặt {name} bằng SideStore",
+    "installBody": "SideStore tải {name} {version}, ký bằng Apple ID của bạn và tự cài lên iPhone. Với Apple ID miễn phí, nó tính vào 3 ứng dụng. Nó hiện trong Ứng dụng sau khi IPAForge làm mới nó.",
+    "qrLabel": "Mã QR của liên kết bên dưới",
+    "steps": {
+      "camera": "Mở Camera trên {device} và hướng vào mã.",
+      "banner": "Chạm vào biểu ngữ để mở SideStore.",
+      "addSource": "SideStore yêu cầu thêm nguồn: hãy chạm vào Thêm.",
+      "install": "SideStore yêu cầu cài đặt ứng dụng: hãy chạm vào Cài đặt."
+    },
+    "onPhone": "Trên chính iPhone, liên kết cũng mở SideStore (dán vào Safari, hoặc gửi trong Tin nhắn).",
+    "copy": "Sao chép",
+    "copied": "Đã sao chép",
+    "previous": "Trước",
+    "next": "Tiếp",
+    "step": "Nguồn {at} trên {count}",
+    "back": "Quay lại",
+    "done": "Xong",
+    "offer": "{count, plural, other {Hãy thêm # nguồn bạn đã thêm ở đây vào SideStore nữa, để nó hiển thị các ứng dụng của chúng trên iPhone.}}"
+  },
+  "checklist": {
+    "title": "Trên {device} · iOS {ios}",
+    "setUp": "{device} đã được thiết lập · iOS {ios}",
+    "show": "Hiện danh sách kiểm tra",
+    "hide": "Ẩn",
+    "allSet": "Đã sẵn sàng",
+    "progress": "{left, plural, other {# việc cần làm}} · đã xong {done} trên {total}",
+    "group": {
+      "before": "Trước khi cài đặt",
+      "after": "Sau khi cài đặt",
+      "sidestore": "Cho SideStore"
+    },
+    "onPhone": "Trên iPhone",
+    "tickedTag": "Đã làm trên iPhone",
+    "tick": "Tôi đã làm việc này",
+    "notNeeded": "Không cần trên iOS này",
+    "cable": {
+      "title": "Kết nối {device} với máy tính này",
+      "connected": "Đã kết nối",
+      "none": "Chưa kết nối",
+      "how": "Hãy dùng cáp lần đầu; sau đó Wi-Fi hoạt động khi cả hai cùng mạng."
+    },
+    "unlock": {
+      "title": "Mở khóa thiết bị",
+      "locked": "Đã khóa",
+      "unlocked": "Đã mở khóa",
+      "how": "Hãy giữ mở khóa trong khi IPAForge cài đặt."
+    },
+    "trust": {
+      "title": "Tin cậy máy tính này",
+      "trusted": "Đã tin cậy",
+      "notYet": "Chưa",
+      "step1": "Mở khóa {device}.",
+      "step2": "Chạm vào Tin cậy khi thiết bị hỏi về máy tính này.",
+      "step3": "Nhập mật mã của thiết bị.",
+      "again": "Hỏi lại"
+    },
+    "passcode": {
+      "title": "Đặt mật mã",
+      "how": "SideStore làm mới qua Wi-Fi, mà iOS chỉ cho phép khi có mật mã: Cài đặt › Face ID & Mật mã."
+    },
+    "devmode": {
+      "title": "Bật Chế độ nhà phát triển",
+      "on": "Bật",
+      "off": "Tắt",
+      "step1": "Cài đặt › Quyền riêng tư & Bảo mật › Chế độ nhà phát triển (nếu không thấy, hãy nhấn Hiện tùy chọn).",
+      "step2": "Bật nó và khởi động lại {device}.",
+      "step3": "Sau khi khởi động lại, chạm vào Bật và nhập mật mã.",
+      "reveal": "Hiện tùy chọn",
+      "revealed": "Giờ nó đã có trong Cài đặt › Quyền riêng tư & Bảo mật."
+    },
+    "developer": {
+      "title": "Tin cậy Apple ID của bạn với tư cách nhà phát triển",
+      "later": "Sau lần cài đặt đầu tiên",
+      "step1": "Cài đặt › Cài đặt chung › VPN & Quản lý thiết bị.",
+      "step2": "Trong Ứng dụng nhà phát triển, chạm vào {appleId}.",
+      "step3": "Chạm vào Tin cậy. iPhone cần có internet cho việc này."
+    },
+    "vpn": {
+      "title": "Cài đặt LocalDevVPN",
+      "installed": "Đã cài đặt",
+      "notInstalled": "Chưa cài đặt",
+      "how": "SideStore giao tiếp với iPhone qua VPN cục bộ này; không có gì rời khỏi điện thoại. Nó miễn phí trên App Store.",
+      "qrLabel": "Mã QR của trang App Store của LocalDevVPN",
+      "scan": "Hãy quét bằng Camera, hoặc tìm \"LocalDevVPN\" trong App Store."
+    },
+    "vpnOn": {
+      "title": "Kết nối LocalDevVPN khi SideStore làm mới",
+      "tag": "Mỗi lần",
+      "later": "Sau khi cài đặt nó",
+      "how": "Hãy mở LocalDevVPN và chạm vào Kết nối, hoặc để SideStore bật nó: nó sẽ hỏi lần đầu."
+    },
+    "repair": {
+      "title": "SideStore có thể tự làm mới",
+      "tag": "Được kiểm tra trong Sửa chữa",
+      "how": "Chứng chỉ, tệp ghép nối và hạn dùng của nó."
+    },
+    "notice": "{count, plural, other {# việc cần làm trên {device}}}",
+    "noticeBody": "Để việc cài đặt và làm mới diễn ra suôn sẻ.",
+    "showChecklist": "Hiện danh sách kiểm tra"
+  },
+  "updates": {
+    "screen": {
+      "label": "Đang cập nhật IPAForge"
+    },
+    "checking": {
+      "title": "Đang kiểm tra bản cập nhật…"
+    },
+    "downloading": {
+      "title": "Đang cập nhật IPAForge",
+      "body": "Phiên bản {version} đã ra mắt. Nó được tải xuống và cài đặt ngay bây giờ, rồi IPAForge tự mở lại.",
+      "starting": "Đang bắt đầu tải xuống…",
+      "percent": "{fraction, number, percent}"
+    },
+    "installing": {
+      "title": "Đang cài đặt {version}…",
+      "body": "IPAForge sẽ mở lại trong giây lát."
+    },
+    "failed": {
+      "title": "Cập nhật chưa hoàn tất",
+      "body": "Phiên bản {version} đã ra mắt. Hãy thử lại, hoặc tải xuống từ trang phát hành của nó.",
+      "retry": "Thử lại",
+      "releasePage": "Trang phát hành",
+      "skip": "Tạm dùng phiên bản này"
+    },
+    "manual": {
+      "title": "IPAForge {version} đã ra mắt",
+      "body": "Bản này được cài từ {package, select, msi {trình cài đặt .msi} deb {gói .deb} rpm {gói .rpm} other {một gói}}, không thể tự cập nhật. Hãy tải phiên bản mới và cài đè lên bản này: Apple ID, ứng dụng và cài đặt của bạn vẫn giữ nguyên.",
+      "download": "Tải {version}",
+      "later": "Để sau"
+    },
+    "nativeBuild": {
+      "title": "Đây là bản dựng Intel",
+      "body": "Mac của bạn dùng chip Apple silicon, nên bản IPAForge này chạy qua Rosetta và mọi thứ chậm hơn. Hãy tải bản dựng Apple silicon và cài đè lên bản này; Apple ID, thiết bị và ứng dụng của bạn vẫn giữ nguyên.",
+      "file": "IPAForge-…-mac-arm64.dmg",
+      "later": "Để sau",
+      "download": "Tải bản cho Apple silicon"
+    }
+  },
+  "whatsNew": {
+    "link": "Có gì mới",
+    "version": "Phiên bản {version} · {date}",
+    "englishOnly": "Ghi chú phát hành bằng tiếng Anh.",
+    "kind": {
+      "new": "Mới",
+      "changed": "Thay đổi",
+      "fixed": "Đã sửa",
+      "removed": "Đã loại bỏ"
+    },
+    "dialog": {
+      "title": "Có gì mới trong IPAForge",
+      "everyVersion": "Mọi phiên bản",
+      "close": "Đã hiểu"
+    },
+    "page": {
+      "title": "Có gì mới",
+      "lede": "Mọi thay đổi trong IPAForge, mới nhất trước.",
+      "current": "Phiên bản này",
+      "release": "Bản phát hành trên GitHub"
+    }
+  },
+  "portal": {
+    "description": "Những gì nhóm của Apple ID bạn giữ tại Apple, và các hồ sơ trên thiết bị của bạn.",
+    "tabsLabel": "Những gì nhóm giữ",
+    "tabs": {
+      "certificates": "Chứng chỉ",
+      "appIds": "App ID",
+      "profiles": "Hồ sơ",
+      "groups": "Nhóm ứng dụng",
+      "devices": "Thiết bị đã đăng ký"
+    },
+    "team": {
+      "pick": "Nhóm",
+      "free": "{name} (miễn phí)",
+      "paid": "{name} (trả phí)"
+    },
+    "refresh": "Làm mới",
+    "reading": "Đang đọc từ Apple…",
+    "noAccount": {
+      "title": "Chưa có Apple ID",
+      "body": "Hãy đăng nhập bằng Apple ID trong Tài khoản để xem những gì nhóm của nó giữ."
+    },
+    "expired": "Đã hết hạn",
+    "expires": "Hết hạn {date}",
+    "expiredOn": "Đã hết hạn {date}",
+    "certificates": {
+      "hint": "Chứng chỉ dùng để ký các ứng dụng bạn cài. Thu hồi một chứng chỉ sẽ khiến mọi ứng dụng nó đã ký không mở được, cho đến khi được ký lại.",
+      "usedFree": "Đã dùng {count} trên {max} (nhóm miễn phí có thể giữ {max})",
+      "usedPaid": "{count, plural, other {# chứng chỉ}}",
+      "maker": {
+        "thisComputer": "IPAForge trên máy tính này",
+        "ipaforge": "IPAForge trên máy tính khác",
+        "sidestore": "SideStore",
+        "machine": "“{machine}” (thường là Xcode)",
+        "unknown": "Một công cụ không xác định"
+      },
+      "thisComputer": "Của máy tính này",
+      "signs": "Ký {apps} trên {device}",
+      "signsNothing": "Không ký gì trên {device}",
+      "revoke": "Thu hồi",
+      "revokeOne": "Thu hồi {name}",
+      "empty": "Nhóm chưa có chứng chỉ nào. IPAForge tạo một chứng chỉ vào lần cài đặt đầu tiên.",
+      "import": "Nhập .p12…",
+      "export": "Xuất .p12"
+    },
+    "revokeDialog": {
+      "title": "Thu hồi chứng chỉ này?",
+      "apps": "Những ứng dụng này sẽ không mở được trên {device} cho đến khi được ký lại (Làm mới trong Ứng dụng sẽ làm việc đó):",
+      "none": "Không có gì trên {device} được ký bằng nó.",
+      "noDevice": "Hãy kết nối thiết bị để xem chứng chỉ này ký những ứng dụng nào của nó.",
+      "thisComputer": "IPAForge tạo chứng chỉ mới vào lần cài đặt hoặc làm mới tiếp theo.",
+      "sidestore": "SideStore tạo nó để tự làm mới: nó tạo chứng chỉ mới vào lần bạn đăng nhập ở đó tiếp theo.",
+      "machine": "Xcode trên máy tính đó tạo chứng chỉ mới vào lần ký tiếp theo.",
+      "exportedToo": "Tệp .p12 đã xuất từ nó cũng ngừng hoạt động."
+    },
+    "appIds": {
+      "hintFree": "Mỗi ứng dụng và tiện ích mở rộng bạn cài cần một cái. Nhóm miễn phí có thể đăng ký 10 trong 7 ngày; mỗi cái được tính trong 7 ngày sau khi tạo.",
+      "hintPaid": "Mỗi ứng dụng và tiện ích mở rộng bạn cài cần một cái. Nhóm trả phí không giới hạn theo tuần.",
+      "left": "{count, plural, other {còn # trong tuần này}}",
+      "leftAndNext": "{left} · cái tiếp theo trống vào {date}",
+      "countsUntil": "Được tính đến {date}",
+      "unused": "Chưa dùng",
+      "delete": "Xóa",
+      "deleteOne": "Xóa {name}",
+      "empty": "Nhóm chưa có App ID nào."
+    },
+    "deleteDialog": {
+      "title": "Xóa App ID này?",
+      "free": "Với nhóm miễn phí, nó vẫn được tính vào 10 mỗi tuần cho đến khi hết hạn: xóa nó không trả lại chỗ sớm hơn.",
+      "paid": "Có thể đăng ký lại sau."
+    },
+    "profiles": {
+      "title": "Hồ sơ cấp phép trên {device}",
+      "hint": "Hồ sơ cho phép một ứng dụng (hoặc tiện ích mở rộng) chạy trên thiết bị này. Làm mới sẽ cấp cho ứng dụng hồ sơ mới; hồ sơ đã hết hạn hoặc không dùng có thể gỡ an toàn.",
+      "noDevice": "Hãy kết nối thiết bị để xem hồ sơ cấp phép của nó.",
+      "noApp": "Không ứng dụng nào dùng nó",
+      "otherTeam": "Nhóm khác",
+      "remove": "Gỡ",
+      "removeOne": "Gỡ hồ sơ của {name}",
+      "removeUnused": "Gỡ các hồ sơ không dùng",
+      "empty": "Không có hồ sơ cấp phép nào trên thiết bị này."
+    },
+    "removeDialog": {
+      "title": "{count, plural, other {Gỡ # hồ sơ?}}",
+      "body": "{count, plural, other {Chúng sẽ bị gỡ khỏi {device}. Không ứng dụng nào ở đó cần chúng.}}"
+    },
+    "groups": {
+      "hint": "Các ứng dụng trong cùng một nhóm chia sẻ tệp (ví dụ SideStore và widget của nó). IPAForge tạo chúng khi một ứng dụng cần.",
+      "empty": "Nhóm chưa có nhóm ứng dụng nào."
+    },
+    "devices": {
+      "hintFree": "Các ứng dụng bạn ký chỉ chạy trên những thiết bị này.",
+      "hintPaid": "Các ứng dụng bạn ký chỉ chạy trên những thiết bị này. Nhóm trả phí có thể đăng ký 100 mỗi năm; việc xóa một thiết bị được thực hiện trên trang web nhà phát triển của Apple, mỗi năm một lần.",
+      "used": "{count} trên {max} trong năm nay",
+      "connected": "Đã kết nối",
+      "unnamed": "Thiết bị chưa đặt tên",
+      "empty": "Chưa có thiết bị nào được đăng ký. IPAForge đăng ký thiết bị của bạn vào lần cài đặt đầu tiên."
+    },
+    "exportDialog": {
+      "title": "Xuất chứng chỉ của máy tính này",
+      "body": "Một tệp .p12 chứa chứng chỉ và khóa riêng của nó, dùng cho SideStore hoặc máy tính khác. Ai có tệp và mật khẩu của nó đều có thể ký ứng dụng dưới danh nghĩa nhóm của bạn.",
+      "password": "Mật khẩu",
+      "again": "Nhập lại mật khẩu",
+      "tooShort": "{count, plural, other {Hãy dùng ít nhất # ký tự.}}",
+      "differ": "Hai mật khẩu không khớp.",
+      "save": "Lưu .p12…"
+    },
+    "importDialog": {
+      "title": "Nhập chứng chỉ",
+      "body": "Một tệp .p12 từ máy tính khác hoặc SideStore. IPAForge kiểm tra Apple vẫn liệt kê nó cho nhóm này, rồi ký bằng nó tại đây: không tạo chứng chỉ mới, không mất chỗ.",
+      "noFile": "Chưa chọn tệp",
+      "choose": "Chọn…",
+      "password": "Mật khẩu của nó",
+      "import": "Nhập"
+    }
+  },
+  "guide": {
+    "title": "Hướng dẫn thiết lập",
+    "stepsLabel": "Các bước thiết lập",
+    "stepDone": "(xong)",
+    "steps": {
+      "welcome": "Chào mừng",
+      "computer": "Máy tính này",
+      "iphone": "iPhone của bạn",
+      "appleid": "Apple ID",
+      "install": "Cài đặt SideStore",
+      "onphone": "Trên iPhone của bạn",
+      "around": "Bạn đã thiết lập xong"
+    },
+    "back": "Quay lại",
+    "skip": "Bỏ qua bước này",
+    "continue": "Tiếp tục",
+    "later": "Hoàn tất sau",
+    "checkAgain": "Kiểm tra lại",
+    "checking": "Đang kiểm tra…",
+    "copy": "Sao chép",
+    "copied": "Đã sao chép",
+    "welcome": {
+      "title": "Chào mừng đến với IPAForge",
+      "lead": "Vài bước sẽ chuẩn bị máy tính, iPhone và Apple ID của bạn, rồi bạn có thể cài đặt SideStore. Hãy chọn ngôn ngữ của bạn trước.",
+      "needTitle": "Những gì bạn cần",
+      "needDevice": "Một iPhone hoặc iPad chạy iOS 15 trở lên, và cáp USB của nó",
+      "needAppleId": "Một Apple ID (loại miễn phí cũng được)",
+      "needPasscode": "Mật mã iPhone của bạn, để tin cậy máy tính này",
+      "skipGuide": "Tôi đã rành rồi",
+      "start": "Bắt đầu"
+    },
+    "computer": {
+      "title": "Máy tính này",
+      "lead": "IPAForge kiểm tra máy tính này có thể đăng nhập vào Apple không: máy chủ của Apple, đồng hồ và máy chủ anisette. Nếu nó không giao tiếp được với iPhone, IPAForge cũng cho biết cách khắc phục.",
+      "failed": "Các mục kiểm tra không chạy được. Hãy kiểm tra lại, hoặc bỏ qua bước này.",
+      "service": {
+        "title": "Dịch vụ kết nối iPhone",
+        "fixMac": "macOS sẽ tự chạy nó. Hãy khởi động lại Mac, rồi kiểm tra lại.",
+        "fixWindows": "Hãy cài Apple Devices từ Microsoft Store, mở một lần, rồi kiểm tra lại.",
+        "fixLinux": "Hãy cài usbmuxd, kết nối iPhone, rồi kiểm tra lại.",
+        "openStore": "Mở Microsoft Store"
+      },
+      "apple": {
+        "title": "Máy chủ của Apple",
+        "ok": "Truy cập được.",
+        "fix": "IPAForge không thể kết nối với Apple. Hãy kiểm tra kết nối internet, VPN hoặc tường lửa của bạn."
+      },
+      "clock": {
+        "title": "Đồng hồ",
+        "ok": "Chính xác.",
+        "fix": "{minutes, plural, other {Đồng hồ của bạn lệch # phút.}} Hãy đặt ngày và giờ tự động, rồi kiểm tra lại."
+      },
+      "anisette": {
+        "title": "Máy chủ anisette",
+        "ok": "{name} phản hồi. Việc đăng nhập dùng nó.",
+        "fix": "Không máy chủ nào trong {tried} máy chủ đầu tiên của danh sách phản hồi. Hãy kiểm tra kết nối, hoặc thêm hay chọn máy chủ trong Cài đặt › Máy chủ anisette."
+      }
+    },
+    "iphone": {
+      "title": "iPhone của bạn",
+      "lead": "Hãy kết nối iPhone bằng cáp, mở khóa và chạm vào Tin cậy khi được hỏi. Trên iOS 16 trở lên, phải bật Chế độ nhà phát triển.",
+      "connectTitle": "Kết nối iPhone của bạn",
+      "connectText": "Đang chờ iPhone hoặc iPad qua USB…"
+    },
+    "appleid": {
+      "title": "Apple ID của bạn",
+      "lead": "Apple ký các ứng dụng bạn cài bằng Apple ID của bạn. Mật khẩu của bạn chỉ được gửi đến Apple và được giữ trong chuỗi khóa của máy tính này.",
+      "freeNote": "Apple ID miễn phí vẫn dùng được: ứng dụng của nó dùng được 7 ngày và IPAForge có thể làm mới chúng. Tài khoản nhà phát triển trả phí dùng được một năm.",
+      "signIn": "Đăng nhập bằng Apple ID",
+      "signedIn": "Đã đăng nhập.",
+      "team": "Nhóm ký các ứng dụng",
+      "free": "Miễn phí: ứng dụng dùng được 7 ngày",
+      "paid": "Trả phí: ứng dụng dùng được một năm"
+    },
+    "banner": {
+      "label": "Hướng dẫn thiết lập",
+      "text": "Hãy hoàn tất thiết lập IPAForge: đã xong {done} trên {total} bước.",
+      "continue": "Tiếp tục hướng dẫn",
+      "notNow": "Không phải bây giờ"
+    },
+    "install": {
+      "title": "Cài đặt SideStore",
+      "lead": "SideStore tự làm mới ứng dụng của bạn trên iPhone và cài thêm ứng dụng. IPAForge cung cấp cho nó tệp ghép nối và chứng chỉ cần thiết.",
+      "notNow": "Không phải bây giờ"
+    },
+    "onphone": {
+      "title": "Trên iPhone của bạn",
+      "lead": "Những việc chỉ bạn làm được trên iPhone. Hãy đánh dấu từng việc khi làm; trang Thiết bị giữ cùng danh sách này."
+    },
+    "around": {
+      "title": "Bạn đã thiết lập xong",
+      "lead": "Đây là nơi mọi thứ nằm. Khi IPAForge đang mở, nó làm mới ứng dụng của bạn trước khi hết hạn.",
+      "again": "Bạn có thể chạy lại hướng dẫn này bất cứ lúc nào từ Cài đặt.",
+      "showMe": "Xem hướng dẫn nhanh",
+      "apps": {
+        "title": "Ứng dụng",
+        "text": "Khi nào mỗi ứng dụng hết hạn, với Làm mới và Cập nhật. Tệp ghép nối cũng ở đây.",
+        "where": "Thanh bên › Ứng dụng"
+      },
+      "preload": {
+        "title": "Tải trước",
+        "text": "Thêm ứng dụng của riêng bạn: tệp .ipa, liên kết, nguồn. Hoặc lưu chúng thành tệp .ipa đã ký.",
+        "where": "Thanh bên › Tải trước"
+      },
+      "repair": {
+        "title": "Sửa chữa SideStore",
+        "text": "Nếu SideStore ngừng tự làm mới, mục này tìm ra lý do và sửa nó.",
+        "where": "Ứng dụng › Kiểm tra SideStore"
+      },
+      "developer": {
+        "title": "Cổng nhà phát triển",
+        "text": "Chứng chỉ, App ID và hồ sơ của bạn, cùng tệp .p12 để chuyển chứng chỉ.",
+        "where": "Thanh bên › Cổng nhà phát triển"
+      },
+      "devices": {
+        "title": "Thiết bị",
+        "text": "Danh sách kiểm tra của từng iPhone, và tệp ghép nối của nó cho các công cụ khác.",
+        "where": "Thanh bên › Thiết bị"
+      },
+      "logs": {
+        "title": "Nhật ký",
+        "text": "Chuyện gì đã xảy ra, từng bước một. Hãy đính kèm chúng vào báo cáo lỗi.",
+        "where": "Thanh bên › Nhật ký · ⌘L / Ctrl+L"
+      }
+    }
+  },
+  "tour": {
+    "count": "{current} trên {total}",
+    "skip": "Bỏ qua hướng dẫn",
+    "back": "Quay lại",
+    "next": "Tiếp",
+    "done": "Xong",
+    "install": {
+      "title": "Cài đặt",
+      "text": "Cài đặt SideStore, hoặc LiveContainer với SideStore, chỉ bằng một cú nhấp. Hãy bắt đầu ở đây trên iPhone mới."
+    },
+    "preload": {
+      "title": "Tải trước",
+      "text": "Thêm ứng dụng của riêng bạn: tệp .ipa, liên kết, hoặc ứng dụng từ các nguồn. Đánh dấu một ứng dụng để lưu nó thành .ipa đã ký thay vì cài."
+    },
+    "apps": {
+      "title": "Ứng dụng",
+      "text": "Khi nào mỗi ứng dụng hết hạn, với Làm mới và Cập nhật. IPAForge tự làm mới chúng khi đang mở. Tệp ghép nối cũng ở đây."
+    },
+    "devices": {
+      "title": "Thiết bị",
+      "text": "Danh sách kiểm tra của từng iPhone theo phiên bản iOS của nó, và tệp ghép nối của nó cho các công cụ khác."
+    },
+    "developer": {
+      "title": "Cổng nhà phát triển",
+      "text": "Chứng chỉ, App ID và hồ sơ của Apple ID bạn. Dọn những gì không ai dùng, hoặc chuyển chứng chỉ của bạn thành tệp .p12."
+    },
+    "pickers": {
+      "title": "Thiết bị và Apple ID",
+      "text": "Đổi iPhone hoặc Apple ID mà IPAForge dùng ở đây, bất cứ lúc nào."
+    },
+    "logs": {
+      "title": "Nhật ký",
+      "text": "Mọi bước IPAForge đã thực hiện. Hãy đính kèm chúng vào báo cáo lỗi (⌘L / Ctrl+L)."
+    },
+    "settings": {
+      "title": "Cài đặt",
+      "text": "Ngôn ngữ, giao diện, máy chủ anisette, và hướng dẫn này lần nữa."
+    },
+    "showAround": {
+      "title": "Xem hướng dẫn nhanh",
+      "text": "Xem lại hướng dẫn này từ đây bất cứ lúc nào. Hướng dẫn thiết lập nằm trong Cài đặt."
+    }
+  },
+  "pairByCode": {
+    "steps": {
+      "pair": "Ghép nối bằng mã"
+    },
+    "open": "Ghép nối Apple TV hoặc Vision Pro…",
+    "title": "Ghép nối Apple TV hoặc Vision Pro",
+    "titleAgain": "Ghép nối lại {name}",
+    "progress": {
+      "label": "Các bước",
+      "find": "1 Tìm",
+      "code": "2 Mã"
+    },
+    "intro": "Chúng không có cáp, nên được ghép nối qua Wi-Fi bằng mã. Hãy đặt thiết bị cùng Wi-Fi với máy tính này, rồi mở màn hình ghép nối của nó và giữ nó mở:",
+    "where": {
+      "tv": "Apple TV",
+      "vision": "Apple Vision Pro",
+      "tvPath": "Cài đặt → Điều khiển từ xa và thiết bị → Ứng dụng điều khiển và thiết bị",
+      "visionPath": "Cài đặt → Cài đặt chung → Thiết bị từ xa"
+    },
+    "found": "Tìm thấy trên mạng của bạn",
+    "showing": "Đang hiển thị màn hình ghép nối",
+    "pair": "Ghép nối",
+    "searching": "Đang tìm trên mạng của bạn… Thiết bị sẽ hiện ở đây khi màn hình ghép nối của nó được mở.",
+    "searchingMore": "Vẫn đang tìm các thiết bị khác…",
+    "help": {
+      "title": "Nó không hiện ra",
+      "screen": "Hãy giữ màn hình ghép nối mở: chỉ tìm thấy thiết bị khi nó đang hiển thị.",
+      "network": "Cùng Wi-Fi với máy tính này: không phải mạng khách, và không có VPN ở cả hai phía.",
+      "ipv6": "IPv6 đã bật trên router (Apple cần nó để ghép nối).",
+      "macos": "macOS: Cài đặt hệ thống → Quyền riêng tư & Bảo mật → Mạng cục bộ → bật IPAForge.",
+      "windows": "Windows: hãy cho phép IPAForge trên mạng riêng tư khi tường lửa hỏi."
+    },
+    "failed": "Việc tìm trên mạng của bạn đã dừng. Hãy đóng cửa sổ này và mở lại.",
+    "code": {
+      "title": "Nhập mã trên {name}",
+      "body": "{name} hiển thị một mã. Hãy nhập nó ở đây.",
+      "label": "Mã",
+      "wrong": "Mã đó không khớp. Hãy kiểm tra mã trên {name} và thử lại.",
+      "pairing": "Đang ghép nối với {name}…",
+      "checking": "Đang kiểm tra mã…"
+    },
+    "back": "Quay lại",
+    "backToList": "Quay lại danh sách",
+    "backoff": {
+      "title": "Quá nhiều mã sai",
+      "wait": "{name} cho phép bạn thử lại sau {seconds, plural, other {# giây}}.",
+      "later": "{name} không nhận thêm mã trong một lúc. Hãy chờ một lát rồi thử lại."
+    },
+    "closed": {
+      "title": "{name} đã đóng màn hình ghép nối",
+      "body": "Mã chỉ hoạt động khi màn hình ghép nối đang mở. Hãy mở lại trên {name}:"
+    },
+    "done": {
+      "title": "{name} đã được ghép nối",
+      "body": "{name} nằm trong trang Thiết bị của bạn. Giờ bạn có thể đóng màn hình ghép nối của nó.",
+      "vision": "Ứng dụng sẽ được cài khi Chế độ nhà phát triển đã bật.",
+      "use": "Dùng {name}",
+      "close": "Đóng"
+    },
+    "pairNamed": "Ghép nối {name}"
+  }
+}
