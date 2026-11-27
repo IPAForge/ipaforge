@@ -4,7 +4,10 @@
 import { writeAppFile } from '@device/application/app-files.ts'
 import { installedBundleIds } from '@device/application/apps.ts'
 import type { DeviceContext } from '@device/application/context.ts'
-import { ensureRemotePairing } from '@device/application/remote-pairing.ts'
+import {
+  ensureRemotePairingWithin,
+  isSilentDevice
+} from '@device/application/remote-pairing.ts'
 import type {
   AppFileTarget,
   DeviceSession,
@@ -62,11 +65,18 @@ const placeRemotePairing = async (
 ): Promise<Omit<PlacedPairing, 'classic'>> => {
   if (targets.length === 0 || options.remotePairing === false)
     return { remote: [] }
-  const { productVersion } = await session.info()
-  if (!supportsRemotePairing(parseVersion(productVersion ?? '0')))
+  if (isSilentDevice(ctx, session.device.udid)) {
+    ctx.deps.logger.warn(
+      'remote pairing not placed: the device does not answer that service'
+    )
     return { remote: [] }
+  }
   try {
-    const { record, how } = await ensureRemotePairing(
+    // Inside the try: a device that resets the connection here must not fail an install whose files are placed.
+    const { productVersion } = await session.info()
+    if (!supportsRemotePairing(parseVersion(productVersion ?? '0')))
+      return { remote: [] }
+    const made = await ensureRemotePairingWithin(
       ctx,
       session,
       compact({
@@ -74,6 +84,13 @@ const placeRemotePairing = async (
         forceNew: options.newRemotePairing
       })
     )
+    if (!made) {
+      ctx.deps.logger.warn(
+        'remote pairing not placed: the device did not answer; SideStore keeps the classic pairing'
+      )
+      return { remote: [] }
+    }
+    const { record, how } = made
     const data = remotePairingFile(record)
     for (const target of targets) await writeAppFile(ctx, session, target, data)
 
