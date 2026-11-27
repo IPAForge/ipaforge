@@ -1,0 +1,2216 @@
+{
+  "app": {
+    "name": "IPAForge"
+  },
+  "shell": {
+    "skipToContent": "Salta al contingut",
+    "navigation": "Seccions",
+    "credit": {
+      "madeWith": "Fet amb ❤️ i ☕",
+      "copyright": "© {year} {name}"
+    }
+  },
+  "topBar": {
+    "device": "Dispositiu",
+    "noDevice": "Cap",
+    "deviceMenu": "Dispositius",
+    "account": "Apple ID",
+    "notSignedIn": "Sessió no iniciada",
+    "accountMenu": "Apple ID",
+    "addAppleId": "Afegeix un Apple ID…",
+    "noAccounts": "Encara no hi ha cap Apple ID.",
+    "noDevicesHint": "Connecta un iPhone o un iPad amb un cable i desbloqueja’l.",
+    "openDevices": "Obre Dispositius",
+    "tour": "Fes-me una visita guiada",
+    "pairByCode": "Aparella un Apple TV o un Vision Pro…"
+  },
+  "nav": {
+    "group": {
+      "manage": "Gestió"
+    },
+    "install": "Instal·la",
+    "preload": "Precàrrega",
+    "apps": "Apps",
+    "devices": "Dispositius",
+    "accounts": "Comptes",
+    "developer": "Portal per a desenvolupadors",
+    "logs": "Registre",
+    "settings": "Configuració",
+    "installRunning": "S’està fent una instal·lació"
+  },
+  "placeholder": {
+    "body": "Aquesta secció encara s’està construint."
+  },
+  "install": {
+    "title": "Instal·la SideStore",
+    "description": "Signat amb el teu Apple ID i després instal·lat per USB.",
+    "steps": {
+      "device": "Comprova el dispositiu",
+      "resolve": "Cerca la versió",
+      "download": "Descarrega",
+      "inspect": "Inspecciona l’app",
+      "certificate_sharing": "Comparteix el certificat",
+      "sign_in": "Inicia la sessió a Apple",
+      "team": "Tria l’equip",
+      "register_device": "Registra el dispositiu",
+      "certificate": "Prepara el certificat",
+      "app_ids": "Registra els App ID",
+      "free_apps": "Comprova el límit d’apps gratuïtes",
+      "provision": "Obtén els perfils d’aprovisionament",
+      "refresh_profiles": "Obtén perfils nous",
+      "sign": "Signa l’app",
+      "install": "Instal·la al dispositiu",
+      "pairing": "Col·loca el fitxer d’aparellament",
+      "remember": "Recorda aquesta instal·lació",
+      "save": "Desa l’.ipa signat"
+    },
+    "signInNeeded": {
+      "title": "El teu Apple ID necessita que tornis a iniciar la sessió",
+      "body": "La sessió desada de {appleId} ha caducat. Encara pots instal·lar: IPAForge et demanarà la contrasenya quan arribi el moment."
+    },
+    "blocked": {
+      "title": "Apple ha bloquejat {appleId} a {device}",
+      "body": "Les apps signades amb aquest Apple ID no s’obriran en aquest dispositiu. Fes servir un altre Apple ID.",
+      "use": "Fes servir {appleId}"
+    },
+    "home": {
+      "what": "Què s’instal·larà",
+      "channel": "Canal",
+      "install": "Instal·la {app}"
+    },
+    "variant": {
+      "sidestore": {
+        "title": "SideStore",
+        "description": "Renova i instal·la apps al dispositiu pel seu compte. Fa servir 2 App ID."
+      },
+      "livecontainer": {
+        "title": "LiveContainer + SideStore",
+        "description": "Executa moltes apps dins d’una de sola, més enllà del límit de 3 apps. Fa servir 5 App ID."
+      }
+    },
+    "channel": {
+      "stable": "Estable",
+      "nightly": "Nightly",
+      "stableRecommended": "Estable (recomanat)",
+      "nightlyRecommended": "Nightly (recomanat)"
+    },
+    "plan": {
+      "title": "Aquesta instal·lació",
+      "waiting": "Es mostrarà quan el dispositiu i l’Apple ID estiguin a punt.",
+      "checking": "S’està descarregant {app} i comprovant amb Apple… La descàrrega es conserva, així que la instal·lació la reutilitzarà.",
+      "unavailable": "No s’ha pogut comprovar amb Apple. Encara pots instal·lar: cada pas ho tornarà a comprovar.",
+      "appIds": "App ID",
+      "appIdsValue": "{created, plural, =0 {Tots {reused} ja registrats} other {{reused, plural, =0 {{created} de nous} other {{created} de nous, {reused} reutilitzats}}}} · {left, plural, one {# disponible aquesta setmana} other {# disponibles aquesta setmana}}",
+      "nextSlot": "El següent s’allibera el {date}",
+      "freeApps": "Apps gratuïtes al dispositiu",
+      "freeAppsValue": "{used} de {limit} en ús",
+      "freeAppsRoom": "Hi ha lloc per a aquesta",
+      "freeAppsFull": "Triaràs una app per eliminar",
+      "noLimit": "Sense límit (equip de pagament)",
+      "certificate": "Certificat",
+      "certificateReused": "Reutilitzat",
+      "certificateNew": "En fa un de nou",
+      "certificatesOnTeam": "{count, plural, =0 {Encara cap a l’equip} one {# a l’equip} other {# a l’equip}}",
+      "team": "Equip",
+      "certificateNewWhy": "IPAForge encara no té cap certificat propi en aquest equip. {count, plural, =0 {} one {El que ja hi ha pertany a una altra eina, que en guarda la clau privada.} other {Els # que ja hi ha pertanyen a altres eines, que en guarden les claus privades.}}"
+    },
+    "readiness": {
+      "noDevice": "Connecta primer un dispositiu.",
+      "noSideStore": "SideStore funciona en iPhone i iPad. Fes servir Precàrrega per instal·lar apps en un Apple TV o un Vision Pro.",
+      "checking": "S’està comprovant el dispositiu…",
+      "device": "Disponible quan el dispositiu estigui a punt.",
+      "noAccount": "Afegeix primer un Apple ID.",
+      "blocked": "Fes servir primer un altre Apple ID.",
+      "appIds": "Aquesta setmana no queden prou App ID.",
+      "ready": "Tot està a punt."
+    },
+    "run": {
+      "title": {
+        "running": "S’està instal·lant {app}",
+        "completed": "{app} està instal·lada",
+        "failed": "No s’ha pogut instal·lar {app}",
+        "cancelled": "Instal·lació cancel·lada"
+      },
+      "subtitle": "{channel} · {device} · {appleId}",
+      "percent": "{fraction, number, percent}",
+      "progress": "Progrés general",
+      "steps": "Passos",
+      "cancel": "Cancel·la",
+      "cancelInstall": "Cancel·la la instal·lació",
+      "runningHint": "Pots fer servir altres seccions mentre s’executa.",
+      "waitingHint": "Esperant la teva resposta.",
+      "stepState": {
+        "waiting": "et necessita",
+        "skipped": "omès",
+        "failed": "ha fallat"
+      },
+      "detail": {
+        "bytes": "{received} de {total}",
+        "received": "{received}",
+        "retrying": "S’ha perdut la connexió. Es tornarà a provar d’aquí a {seconds, plural, one {# segon} other {# segons}} (intent {attempt})"
+      },
+      "live": {
+        "header": "{percent} · {left}",
+        "installing": "{fraction, number, percent} · {phase}",
+        "count": "{done} de {total}",
+        "task": {
+          "line": "{task} · {count}",
+          "team": "Comprovant l’equip",
+          "appIds": "Creant els App ID",
+          "appGroup": "Afegint el grup d’apps",
+          "profiles": "Obtenint els perfils"
+        },
+        "phase": {
+          "unpacking": "Desempaquetant l’app",
+          "checking": "Comprovant l’app",
+          "installing": "Instal·lant"
+        },
+        "speed": "{speed}/s",
+        "ios": "iOS la està instal·lant",
+        "leftSeconds": "Falten uns {seconds} s",
+        "leftMinutes": "{minutes, plural, one {Falta aproximadament # min} other {Falten aproximadament # min}}"
+      },
+      "connection": {
+        "usb": "USB",
+        "network": "Wi-Fi"
+      },
+      "wifi": {
+        "title": "Aquest dispositiu està connectat per Wi-Fi",
+        "body": "Les apps grans s’instal·len molt més ràpid amb un cable. Per Wi-Fi, IPAForge les envia comprimides per estalviar temps."
+      },
+      "unsupportedPrompt": {
+        "title": "Aquest pas necessita una resposta",
+        "body": "IPAForge necessita una resposta a una pregunta que aquesta versió no pot mostrar. Cancel·la la instal·lació i actualitza IPAForge."
+      },
+      "backToInstall": "Torna a Instal·la",
+      "report": {
+        "device": "{model} · iOS {ios} · {connection}",
+        "release": "{app} {version} · {channel}",
+        "download": "{size} · suma de verificació comprovada",
+        "downloadCached": "{size} · de la memòria cau de descàrregues",
+        "app": "{app} · {extensions, plural, =0 {sense extensions} one {# extensió} other {# extensions}}",
+        "session": {
+          "reused": "S’ha reutilitzat la sessió desada",
+          "renewed": "S’ha tornat a iniciar la sessió amb la contrasenya desada",
+          "signed-in": "Sessió iniciada"
+        },
+        "registered": "Registrat a l’equip",
+        "alreadyRegistered": "Ja estava registrat a l’equip",
+        "certificate": {
+          "reused": "S’ha reutilitzat el certificat desat",
+          "created": "S’ha creat un certificat nou",
+          "replaced": "S’ha revocat un certificat i se n’ha creat un de nou"
+        },
+        "removed": "S’ha eliminat {app} · {used}",
+        "profiles": "{count, plural, one {# perfil} other {# perfils}}",
+        "signed": "{count, plural, one {# paquet signat} other {# paquets signats}}",
+        "signedCompressed": "{count, plural, one {# paquet signat} other {# paquets signats}} · comprimit per a Wi-Fi",
+        "phase": {
+          "uploading": "Pujant al dispositiu",
+          "installing": "Instal·lant"
+        },
+        "pairing": "Col·locat a {apps}",
+        "shared": "Certificat compartit",
+        "notShared": "Certificat no compartit",
+        "pairingRemote": "Col·locat a {apps} · amb aparellament remot per a iOS 17.4 i posteriors",
+        "saved": "Desat a {path}"
+      },
+      "subtitleApps": "{device} · {appleId}"
+    },
+    "summary": {
+      "title": "Aquesta instal·lació",
+      "app": "App",
+      "channel": "Canal",
+      "device": "Dispositiu",
+      "deviceValue": "{name} · iOS {ios}",
+      "account": "Apple ID",
+      "appIds": "App ID",
+      "appIdsValue": "{count, plural, one {# disponible aquesta setmana} other {# disponibles aquesta setmana}}",
+      "freeApps": "Apps gratuïtes",
+      "apps": "Apps"
+    },
+    "done": {
+      "title": "{app} és a {device}.",
+      "trust": "Al dispositiu: Configuració › General › VPN i gestió de dispositius › confia en {appleId}.",
+      "open": "Obre SideStore: el fitxer d’aparellament i el teu certificat ja són a dins.",
+      "done": "Fet"
+    },
+    "cancelled": {
+      "title": "S’ha aturat a «{step}».",
+      "body": "No es repeteix res del que ja s’ha fet quan reprenguis.",
+      "resume": "Reprèn"
+    },
+    "failed": {
+      "continues": "Els passos acabats es conserven: si ho tornes a provar, continuarà des de «{step}».",
+      "copy": "Copia els diagnòstics",
+      "copied": "Copiat",
+      "copyFailed": "No s’ha pogut copiar",
+      "showLogs": "Mostra el registre"
+    }
+  },
+  "pairing": {
+    "steps": {
+      "targets": "Cerca les apps que necessiten aparellament",
+      "place": "Col·loca el fitxer d’aparellament"
+    }
+  },
+  "settings": {
+    "appearance": "Aspecte i idioma",
+    "mode": "Mode de color",
+    "palette": "Paleta",
+    "language": {
+      "title": "Idioma",
+      "system": "Sistema ({language})",
+      "hint": "IPAForge segueix l’idioma del sistema tret que n’escullis un aquí.",
+      "draft": "esborrany"
+    },
+    "anisette": {
+      "title": "Servidors d’anisette",
+      "hint": "Per iniciar la sessió a Apple cal un servidor d’anisette, que diu a Apple des de quin ordinador s’hi entra. IPAForge en fa servir un que funcioni, pel seu compte; tria’n un aquí si prefereixes un servidor concret, o afegeix el teu.",
+      "add": "Afegeix un servidor",
+      "loading": "S’estan carregant els servidors…",
+      "modeLabel": "Com tria IPAForge un servidor",
+      "mode": {
+        "automatic": "Automàtic",
+        "chosen": "Tria un servidor"
+      },
+      "modeHint": {
+        "automatic": "Prova els servidors en aquest ordre i passa al següent quan un falla.",
+        "chosen": "Sempre fa servir {name}.",
+        "none": "Tria el servidor que IPAForge ha de fer servir sempre."
+      },
+      "noneChosen": "Encara no has triat cap servidor: fins que en triïs un, IPAForge continua triant pel seu compte.",
+      "chosenDown": "{name} no respon. No es podrà iniciar la sessió fins que torni, o fins que triïs un altre servidor o passis a Automàtic.",
+      "count": "{count, plural, one {# servidor} other {# servidors}}",
+      "sources": "{custom, plural, =0 {} other {# afegits per tu, }}{list} de la llista de SideStore, {backup} de reserva ·",
+      "listUpdated": "Llista de SideStore actualitzada {ago}",
+      "listNever": "Llista de SideStore encara no obtinguda",
+      "updateList": "Actualitza la llista",
+      "updating": "S’està actualitzant…",
+      "testAll": "Prova’ls tots",
+      "testing": "S’està provant…",
+      "group": {
+        "custom": "Afegits per tu · es fan servir primer",
+        "list": "De la llista de SideStore",
+        "backup": "Reserva · només quan no es pot accedir a la llista de SideStore o cap dels seus servidors respon"
+      },
+      "tag": {
+        "custom": "Afegit per tu",
+        "inUse": "En ús",
+        "chosen": "Triat"
+      },
+      "position": "Es prova en el lloc {position}",
+      "use": "Fes servir {name}",
+      "chooseLabel": "Servidor a fer servir",
+      "status": {
+        "untested": "Sense provar",
+        "testing": "S’està provant…",
+        "ok": "Funciona · {ms} ms",
+        "bad": "No respon"
+      },
+      "test": "Prova",
+      "testOne": "Prova {name}",
+      "edit": "Edita {name}",
+      "remove": "Elimina {name}",
+      "confirmRemove": "Vols eliminar {name}?",
+      "removeYes": "Elimina",
+      "skipped": "No s’han fet servir de la llista de SideStore: {names} (sense HTTPS). Pots afegir tu mateix un servidor HTTP simple, per exemple un del teu ordinador.",
+      "dialog": {
+        "addTitle": "Afegeix un servidor d’anisette",
+        "editTitle": "Edita el servidor",
+        "body": "Serveix qualsevol servidor d’anisette que parli el protocol habitual: un de públic o un que gestionis tu mateix.",
+        "name": "Nom",
+        "namePlaceholder": "El meu servidor",
+        "address": "Adreça",
+        "addressPlaceholder": "https://anisette.el-meu-servidor.net",
+        "addressHint": "https:// o, per a un servidor que gestiones tu mateix, http://",
+        "nameMissing": "Posa-li un nom.",
+        "addressInvalid": "Introdueix una adreça que comenci per https:// o http://.",
+        "exists": "Aquest servidor ja és a la llista.",
+        "stillAdd": "Encara el pots afegir.",
+        "save": "Desa"
+      }
+    },
+    "guide": {
+      "title": "Guia de configuració",
+      "text": "Es tornen a comprovar l’ordinador, l’iPhone i l’Apple ID.",
+      "run": "Torna a executar la guia",
+      "tour": "Fes-me una visita guiada",
+      "tourTitle": "Visita guiada de les pàgines",
+      "tourHint": "Per a què serveix cada pàgina, una parada cada vegada."
+    },
+    "tabs": {
+      "label": "Configuració",
+      "general": "General",
+      "anisette": "Servidors d’anisette"
+    },
+    "modeHint": "Clar, fosc o com tingui el sistema.",
+    "paletteHint": "Els colors de tota l’app, en clar i en fosc."
+  },
+  "theme": {
+    "mode": {
+      "system": "Sistema",
+      "light": "Clar",
+      "dark": "Fosc"
+    },
+    "palette": {
+      "graphite": "Grafit",
+      "ocean": "Oceà",
+      "aurora": "Aurora",
+      "sunset": "Capvespre",
+      "forest": "Bosc",
+      "rose": "Rosa",
+      "violet": "Violeta",
+      "mocha": "Moca"
+    }
+  },
+  "errors": {
+    "device": {
+      "locked": {
+        "title": "Desbloqueja el dispositiu",
+        "body": "El dispositiu està bloquejat, així que IPAForge no hi pot parlar. Desbloqueja’l i mantén-lo desbloquejat fins que acabi la instal·lació."
+      },
+      "developer_mode_off": {
+        "title": "El mode de desenvolupador està desactivat",
+        "body": "Les apps de càrrega lateral necessiten el mode de desenvolupador. Activa’l a Configuració › Privacitat i seguretat › Mode de desenvolupador i reinicia el dispositiu."
+      },
+      "not_paired": {
+        "title": "Aquest ordinador encara no és de confiança",
+        "body": "Desbloqueja el dispositiu i toca Confia quan et demani si confies en aquest ordinador."
+      },
+      "usbmuxd_unavailable": {
+        "title": "El suport de dispositius no s’està executant",
+        "body": "IPAForge no pot accedir al servei del sistema que es comunica amb els iPhone i els iPad. Instal·la’l o inicia’l i torna-ho a provar."
+      },
+      "not_found": {
+        "title": "No s’ha trobat cap dispositiu",
+        "body": "Connecta l’iPhone o l’iPad amb un cable USB i desbloqueja’l."
+      },
+      "disconnected": {
+        "title": "El dispositiu s’ha desconnectat",
+        "body": "S’ha perdut la connexió. Torna a connectar el cable, desbloqueja el dispositiu i torna-ho a provar."
+      },
+      "pairing_pending": {
+        "title": "Esperant la confiança",
+        "body": "Desbloqueja el dispositiu i toca Confia a l’avís que ha aparegut."
+      },
+      "pairing_denied": {
+        "title": "S’ha rebutjat la confiança",
+        "body": "El dispositiu ha rebutjat confiar en aquest ordinador. Torna a aparellar-lo i aquesta vegada toca Confia."
+      },
+      "invalid_pair_record": {
+        "title": "L’aparellament ja no és vàlid",
+        "body": "El dispositiu ja no accepta l’aparellament d’aquest ordinador. Desconnecta’l, torna’l a connectar, desbloqueja’l i toca Confia."
+      },
+      "service_unavailable": {
+        "title": "Un servei del dispositiu no s’ha iniciat",
+        "body": "El dispositiu ha refusat iniciar un servei que IPAForge necessita. Desbloqueja’l, torna’l a connectar i torna-ho a provar."
+      },
+      "protocol_error": {
+        "title": "Resposta inesperada del dispositiu",
+        "body": "El dispositiu ha enviat alguna cosa que IPAForge no ha entès. Torna’l a connectar; si torna a passar, actualitza IPAForge o informa’n."
+      },
+      "install_failed": {
+        "title": "La instal·lació ha fallat",
+        "body": "El dispositiu ha refusat instal·lar l’app. Torna-ho a provar; si continua fallant, reinstal·la l’app o informa’n."
+      },
+      "afc_error": {
+        "title": "No s’han pogut transferir els fitxers",
+        "body": "No s’han pogut copiar els fitxers al dispositiu. Desbloqueja’l i torna-ho a provar."
+      },
+      "timeout": {
+        "title": "El dispositiu ha deixat de respondre",
+        "body": "El dispositiu ha trigat massa a respondre. Desbloqueja’l, torna’l a connectar i torna-ho a provar."
+      },
+      "passcode_required": {
+        "title": "Defineix un codi d’accés",
+        "body": "Això necessita un codi d’accés al dispositiu. Defineix-ne un a Configuració › Face ID i codi i torna-ho a provar."
+      },
+      "free_app_limit": {
+        "title": "Massa apps de càrrega lateral",
+        "body": "Un Apple ID gratuït només pot tenir tres apps de càrrega lateral actives en un dispositiu. Elimina’n una i torna-ho a provar."
+      },
+      "profile_banned": {
+        "title": "Apple ha bloquejat aquest Apple ID al dispositiu",
+        "body": "El dispositiu no acceptarà apps signades amb aquest Apple ID. Tornar-ho a provar no servirà: fes servir un altre Apple ID."
+      },
+      "identity_invalid": {
+        "title": "El certificat de signatura ja no és vàlid",
+        "body": "El dispositiu ha rebutjat el certificat amb què s’ha signat l’app. Comprova el rellotge de l’ordinador, o revoca el certificat i torna-ho a provar."
+      },
+      "profile_not_found": {
+        "title": "Falta el perfil d’aprovisionament",
+        "body": "El dispositiu no ha trobat el perfil d’aprovisionament de l’app. Torna-ho a provar o reinstal·la l’app."
+      },
+      "pairing_path_invalid": {
+        "title": "Aquesta ruta no pot contenir un fitxer d’aparellament",
+        "body": "Fes servir una ruta dins de Documents o Library de l’app que acabi en .plist o .mobiledevicepairing."
+      },
+      "local_network_denied": {
+        "title": "IPAForge no pot cercar dispositius a la teva xarxa",
+        "body": "macOS no ha permès que IPAForge trobi dispositius a la teva xarxa local, així que no pot accedir als iPhone per Wi-Fi. Els dispositius connectats per cable continuen funcionant."
+      },
+      "tunnel_unavailable": {
+        "title": "El túnel del dispositiu no s’ha obert",
+        "body": "IPAForge no ha pogut obrir el túnel segur que iOS 17.4 i posteriors ofereixen per cable. Comprova que el dispositiu tingui iOS 17.4 o posterior, torna’l a connectar i torna-ho a provar."
+      },
+      "pairing_code_wrong": {
+        "title": "El codi no coincidia",
+        "body": "El codi introduït no és el que mostra el dispositiu. Comprova el codi a la pantalla i torna-ho a provar."
+      },
+      "pairing_backoff": {
+        "title": "Massa codis incorrectes",
+        "body": "El dispositiu no accepta més codis durant una estona. Espera una mica, obre de nou la seva pantalla d’aparellament i torna a aparellar-lo."
+      },
+      "pairing_screen_closed": {
+        "title": "La pantalla d’aparellament s’ha tancat",
+        "body": "El dispositiu ha deixat de mostrar la pantalla d’aparellament abans que acabés l’aparellament. Obre-la de nou i mantén-la oberta: Apple TV: Configuració → Comandaments i dispositius → App Remote i dispositius. Apple Vision Pro: Configuració → General → Dispositius remots."
+      }
+    },
+    "apple": {
+      "anisette_unavailable": {
+        "title": "El servidor d’anisette no respon",
+        "body": "Per iniciar la sessió a Apple cal un servidor d’anisette, i l’actual no ha respost. Tria un altre servidor o comprova la xarxa."
+      },
+      "anisette_not_provisioned": {
+        "title": "El servidor d’anisette no està a punt",
+        "body": "El servidor d’anisette no s’ha pogut configurar. Tria un altre servidor i torna-ho a provar."
+      },
+      "app_id_quota": {
+        "title": "Aquesta setmana no queden App ID",
+        "body": "Un Apple ID gratuït només pot registrar 10 App ID cada 7 dies. Espera que s’alliberi un lloc o fes servir un altre Apple ID."
+      },
+      "certificate_limit": {
+        "title": "Massa certificats",
+        "body": "Aquest Apple ID ha arribat al límit de certificats de desenvolupament. Revoca’n un o fes servir un altre Apple ID."
+      },
+      "invalid_credentials": {
+        "title": "Apple ID o contrasenya incorrectes",
+        "body": "Apple no ha acceptat el correu o la contrasenya. Comprova’ls i torna a introduir la contrasenya."
+      },
+      "account_locked": {
+        "title": "Aquest Apple ID està bloquejat",
+        "body": "Apple ha bloquejat aquest compte per motius de seguretat. Desbloqueja’l en un dispositiu Apple o al web d’Apple, o fes servir un altre Apple ID."
+      },
+      "account_refused": {
+        "title": "Apple ha refusat l’inici de sessió",
+        "body": "Apple no deixa que aquest Apple ID iniciï la sessió des d’aquí ara mateix. Espera una estona, inicia la sessió un cop en un dispositiu Apple o fes servir un altre Apple ID."
+      },
+      "client_rejected": {
+        "title": "Apple ha rebutjat la sol·licitud d’inici de sessió",
+        "body": "Apple no ha acceptat la identitat enviada amb l’inici de sessió. Tria un altre servidor d’anisette o espera i torna-ho a provar."
+      },
+      "rate_limited": {
+        "title": "Massa sol·licituds",
+        "body": "Apple està limitant les sol·licituds de moment. Espera uns minuts i torna-ho a provar."
+      },
+      "service_unavailable": {
+        "title": "Els servidors d’Apple no estan disponibles",
+        "body": "Els servidors d’Apple no han respost. Espera uns minuts i comprova la xarxa."
+      },
+      "two_factor_required": {
+        "title": "Introdueix el codi de verificació",
+        "body": "Apple ha enviat un codi de verificació als teus dispositius de confiança. Introdueix-lo per continuar."
+      },
+      "two_factor_invalid_code": {
+        "title": "Codi de verificació incorrecte",
+        "body": "Aquest codi no ha funcionat. Comprova’l i torna’l a introduir."
+      },
+      "two_factor_unsupported": {
+        "title": "Aquest mètode d’inici de sessió no és compatible",
+        "body": "Aquest Apple ID fa servir un mètode de verificació en dos passos que IPAForge encara no pot gestionar, com ara una clau de seguretat. Fes servir un altre Apple ID."
+      },
+      "sms_unavailable": {
+        "title": "Els codis per SMS no estan disponibles",
+        "body": "Apple no enviarà el codi per SMS aquí. Obtén-lo en un dispositiu de confiança o fes servir un altre Apple ID."
+      },
+      "clock_skew": {
+        "title": "El rellotge de l’ordinador és incorrecte",
+        "body": "Apple rebutja les sol·licituds quan el rellotge no està en hora. Configura la data i l’hora automàticament i torna-ho a provar."
+      },
+      "protocol_error": {
+        "title": "Resposta inesperada d’Apple",
+        "body": "Apple ha enviat alguna cosa que IPAForge no ha entès. Actualitza IPAForge o informa’n si continua passant."
+      },
+      "session_expired": {
+        "title": "La sessió ha caducat",
+        "body": "Torna a iniciar la sessió amb aquest Apple ID. Si continua caducant, comprova el rellotge de l’ordinador."
+      },
+      "account_not_found": {
+        "title": "No s’ha trobat l’Apple ID",
+        "body": "IPAForge no té cap sessió desada d’aquest Apple ID. Torna a iniciar la sessió."
+      },
+      "not_eligible": {
+        "title": "Aquest Apple ID no es pot fer servir per desenvolupar",
+        "body": "Apple no permet que aquest compte signi apps, per exemple per l’edat o les condicions. Fes servir un altre Apple ID."
+      },
+      "email_unverified": {
+        "title": "Verifica el correu",
+        "body": "Apple necessita que abans es verifiqui l’adreça de correu d’aquest Apple ID. Verifica-la i torna-ho a provar."
+      },
+      "team_agreement": {
+        "title": "Accepta l’acord d’Apple",
+        "body": "L’equip no ha acceptat l’últim acord de desenvolupador d’Apple. Accepta’l al web de desenvolupadors d’Apple o tria un altre equip."
+      },
+      "no_teams": {
+        "title": "Cap equip de desenvolupament",
+        "body": "Aquest Apple ID encara no té cap equip de desenvolupament. Accepta l’acord de desenvolupador d’Apple o fes servir un altre Apple ID."
+      },
+      "device_limit": {
+        "title": "S’ha arribat al límit de dispositius",
+        "body": "Aquest equip no pot registrar més dispositius. Tria un altre equip o fes servir un altre Apple ID."
+      },
+      "app_id_unavailable": {
+        "title": "Aquest App ID ja està ocupat",
+        "body": "Un altre equip ja fa servir aquest App ID. Tria un altre equip o fes servir un altre Apple ID."
+      },
+      "invalid_app_id_name": {
+        "title": "Apple ha rebutjat el nom de l’App ID",
+        "body": "Apple no ha acceptat el nom que IPAForge ha triat per a l’App ID. Actualitza IPAForge o informa’n."
+      },
+      "certificate_not_revocable": {
+        "title": "Aquest certificat no es pot revocar aquí",
+        "body": "Només Apple pot revocar aquest certificat. Revoca’n un altre."
+      },
+      "no_devices_for_profile": {
+        "title": "El dispositiu encara no està registrat",
+        "body": "Apple encara no ha acabat de registrar el dispositiu. Espera un minut i torna-ho a provar."
+      },
+      "developer_request_failed": {
+        "title": "Han fallat els serveis per a desenvolupadors d’Apple",
+        "body": "Ha fallat una sol·licitud als serveis per a desenvolupadors d’Apple. Torna-ho a provar i informa’n si continua passant."
+      },
+      "anisette_server_invalid": {
+        "title": "Aquest servidor d’anisette no es pot fer servir",
+        "body": "Comprova’n el nom i l’adreça: l’adreça comença per https:// o http://."
+      },
+      "anisette_server_exists": {
+        "title": "Aquest servidor d’anisette ja és a la llista",
+        "body": "Tria’l de la llista a Configuració."
+      },
+      "certificate_not_on_team": {
+        "title": "Aquest certificat no és a l’equip",
+        "body": "Apple ja no el mostra per a aquest equip: s’ha revocat, ha caducat o pertany a un altre equip. Exporta’n un d’actual i importa’l."
+      }
+    },
+    "catalog": {
+      "source_gone": {
+        "title": "La versió ja no està disponible",
+        "body": "El lloc d’on s’havia descarregat aquesta app ja no existeix. Tria un altre canal, importa un IPA o actualitza IPAForge."
+      },
+      "unavailable": {
+        "title": "No s’ha pogut carregar la llista d’apps",
+        "body": "IPAForge no ha pogut obtenir la llista d’apps. Comprova la xarxa i torna-ho a provar."
+      },
+      "download_failed": {
+        "title": "La descàrrega ha fallat",
+        "body": "No s’ha pogut descarregar l’app. Comprova la xarxa i torna-ho a provar."
+      },
+      "checksum_mismatch": {
+        "title": "La descàrrega està malmesa",
+        "body": "El fitxer descarregat no coincideix amb la seva suma de verificació, així que no s’ha fet servir. Torna-ho a provar o tria un altre canal."
+      },
+      "checksum_missing": {
+        "title": "La descàrrega no es pot verificar",
+        "body": "Aquesta versió no té suma de verificació, així que IPAForge no la pot comprovar. Tria un altre canal o importa tu mateix l’IPA."
+      },
+      "rate_limited": {
+        "title": "Massa sol·licituds a GitHub",
+        "body": "GitHub està limitant les descàrregues de moment. Espera uns minuts i torna-ho a provar."
+      },
+      "app_source_unreachable": {
+        "title": "No s’ha pogut accedir a aquesta font",
+        "body": "Comprova l’enllaç i que estiguis en línia i torna-ho a provar."
+      },
+      "app_source_invalid": {
+        "title": "Aquest enllaç no és una font d’apps",
+        "body": "No llista cap app en format AltStore. Comprova l’enllaç o afegeix el fitxer .ipa de l’app."
+      },
+      "app_source_exists": {
+        "title": "Aquesta font ja està afegida",
+        "body": "Les seves apps ja són a Explora apps."
+      }
+    },
+    "plist": {
+      "invalid": {
+        "title": "El fitxer de configuració de l’app està malmès",
+        "body": "No s’ha pogut llegir una llista de propietats de dins de l’app. Tria un altre IPA o informa’n."
+      }
+    },
+    "net": {
+      "offline": {
+        "title": "No tens connexió",
+        "body": "IPAForge no pot accedir a internet. Comprova la connexió de xarxa i torna-ho a provar."
+      }
+    },
+    "signer": {
+      "invalid_macho": {
+        "title": "El programa de l’app està malmès",
+        "body": "No s’ha pogut llegir l’executable de l’app. Tria un altre IPA."
+      },
+      "encrypted_binary": {
+        "title": "L’app està xifrada",
+        "body": "Aquest IPA ve de l’App Store i encara està xifrat, així que no es pot tornar a signar. Tria un IPA desxifrat."
+      },
+      "unsupported_arch": {
+        "title": "Format d’app no compatible",
+        "body": "L’executable de l’app fa servir un format que iOS no pot executar. Tria un altre IPA."
+      },
+      "unsupported_ios": {
+        "title": "Necessita un iOS més nou",
+        "body": "Aquesta app necessita una versió d’iOS més nova que la del dispositiu. Actualitza el dispositiu o tria un altre canal o IPA."
+      },
+      "unsupported_device": {
+        "title": "No està feta per a aquest dispositiu",
+        "body": "Aquesta app no és compatible amb aquest tipus de dispositiu, per exemple una app només per a iPad en un iPhone, o una app d’iPhone en un Apple TV. Tria un altre IPA."
+      },
+      "no_arm64_build": {
+        "title": "No hi ha cap versió per a iPhone o iPad",
+        "body": "L’app no té cap versió de 64 bits per a iPhone o iPad, per exemple una de 32 bits o una per al simulador. Tria un altre IPA."
+      },
+      "no_header_space": {
+        "title": "L’app no es pot signar",
+        "body": "No hi ha espai a l’executable de l’app per a una signatura. Tria un altre IPA o informa’n."
+      },
+      "zip_slip": {
+        "title": "L’IPA no és segur",
+        "body": "L’IPA intenta escriure fitxers fora de la seva pròpia carpeta, així que IPAForge l’ha refusat. Tria un altre IPA."
+      },
+      "invalid_certificate": {
+        "title": "El certificat no és vàlid",
+        "body": "No s’ha pogut fer servir el certificat de signatura. Revoca’l perquè IPAForge en pugui crear un de nou i torna-ho a provar."
+      },
+      "unknown_issuer": {
+        "title": "Emissor del certificat desconegut",
+        "body": "IPAForge no reconeix qui ha emès el certificat. Actualitza IPAForge i comprova la xarxa."
+      },
+      "invalid_bundle": {
+        "title": "El paquet de l’app no és vàlid",
+        "body": "L’IPA no conté cap app vàlida. Tria un altre IPA."
+      },
+      "invalid_profile": {
+        "title": "El perfil d’aprovisionament no és vàlid",
+        "body": "No s’ha pogut llegir el perfil d’aprovisionament d’Apple. Torna-ho a provar i informa’n si continua passant."
+      },
+      "extension_prefix": {
+        "title": "Una extensió de l’app té un ID incorrecte",
+        "body": "L’ID de paquet d’una extensió no comença per l’ID de l’app. Tria un altre IPA."
+      },
+      "profile_mismatch": {
+        "title": "El perfil d’aprovisionament no coincideix",
+        "body": "El perfil no coincideix amb l’app per a la qual s’ha creat. Torna-ho a provar i informa’n si continua passant."
+      },
+      "profile_expired": {
+        "title": "El perfil d’aprovisionament ha caducat",
+        "body": "El perfil ha caducat o el rellotge de l’ordinador no és correcte. Comprova el rellotge i torna-ho a provar."
+      },
+      "cert_not_in_profile": {
+        "title": "El certificat no és al perfil",
+        "body": "El perfil d’aprovisionament no inclou el certificat de signatura. Torna-ho a provar per obtenir un perfil nou."
+      },
+      "device_not_provisioned": {
+        "title": "El dispositiu no és al perfil",
+        "body": "El perfil d’aprovisionament no inclou aquest dispositiu. Torna-ho a provar per obtenir un perfil nou."
+      },
+      "pkcs12_password": {
+        "title": "La contrasenya no obre aquest .p12",
+        "body": "Escriu la contrasenya amb què es va exportar i torna-ho a provar."
+      }
+    },
+    "installer": {
+      "step_failed": {
+        "title": "Un pas ha fallat",
+        "body": "Alguna cosa ha anat malament durant la instal·lació. Torna-ho a provar i informa’n si continua passant."
+      },
+      "prompt_cancelled": {
+        "title": "Cancel·lat",
+        "body": "La instal·lació s’ha aturat perquè s’ha cancel·lat una pregunta. Torna a començar quan vulguis."
+      },
+      "certificate_machine_id_missing": {
+        "title": "El certificat no es pot compartir",
+        "body": "Aquest certificat no té les dades que SideStore necessita per obrir-lo. Revoca’l perquè IPAForge en pugui crear un de nou i torna-ho a provar."
+      },
+      "team_required": {
+        "title": "Tria un equip",
+        "body": "Aquest Apple ID pertany a diversos equips. Tria amb quin s’ha de signar."
+      },
+      "kept_ipa_missing": {
+        "title": "Aquesta app no es pot renovar aquí",
+        "body": "IPAForge no l’ha instal·lat en aquest dispositiu, o la còpia que en conservava ja no hi és. Afegeix-ne l’.ipa a Precàrrega per tornar-la a instal·lar."
+      },
+      "wrong_app": {
+        "title": "Aquest enllaç dona una app diferent",
+        "body": "No és l’app que estàs renovant o actualitzant, així que no s’ha instal·lat i l’app i les seves dades es queden tal com són. Afegeix l’.ipa correcte a Precàrrega per tornar-la a instal·lar."
+      },
+      "version_unavailable": {
+        "title": "Aquesta versió no es pot tornar a descarregar",
+        "body": "Renova conserva la versió que tens al dispositiu, i ja no s’ofereix per descarregar. Fes servir Actualitza per instal·lar la versió més recent; l’app conserva les seves dades."
+      },
+      "pairing_app_not_found": {
+        "title": "Aquesta app no és al dispositiu",
+        "body": "S’ha eliminat o ja no és una app que hagi instal·lat IPAForge. Tanca Fitxers d’aparellament i torna’l a obrir."
+      },
+      "certificate_not_stored": {
+        "title": "Encara no hi ha cap certificat en aquest ordinador",
+        "body": "Aquest ordinador conserva el certificat de l’equip un cop hi instal·la una app. Instal·la primer una app o importa un .p12."
+      }
+    },
+    "rpc": {
+      "invalid_message": {
+        "title": "Error de comunicació interna",
+        "body": "Parts d’IPAForge no s’han entès entre elles. Actualitza IPAForge o informa’n."
+      },
+      "disconnected": {
+        "title": "S’ha perdut la connexió amb el motor",
+        "body": "El motor d’IPAForge ha deixat de respondre. Torna-ho a provar i informa’n si continua passant."
+      },
+      "timeout": {
+        "title": "El motor no ha respost",
+        "body": "El motor d’IPAForge ha trigat massa a respondre. Torna-ho a provar i informa’n si continua passant."
+      }
+    },
+    "internal": {
+      "aborted": {
+        "title": "Aturat",
+        "body": "L’operació s’ha aturat abans d’acabar."
+      },
+      "unexpected": {
+        "title": "Alguna cosa ha anat malament",
+        "body": "Ha passat un error inesperat. Torna-ho a provar i informa’n si continua passant."
+      }
+    }
+  },
+  "recovery": {
+    "retry": "Torna-ho a provar",
+    "wait-and-retry": "Espera i torna-ho a provar",
+    "check-network": "Comprova la xarxa",
+    "check-clock": "Comprova la data i l’hora",
+    "change-anisette-server": "Tria un altre servidor d’anisette",
+    "re-enter-password": "Torna a introduir la contrasenya",
+    "re-enter-code": "Torna a introduir el codi",
+    "use-trusted-device": "Fes servir un dispositiu de confiança",
+    "sign-in-again": "Torna a iniciar la sessió",
+    "sign-in-on-apple-device": "Inicia la sessió en un dispositiu Apple",
+    "switch-account": "Fes servir un altre Apple ID",
+    "verify-email": "Verifica el correu",
+    "accept-agreement": "Accepta l’acord d’Apple",
+    "choose-team": "Tria un equip",
+    "revoke-certificate": "Revoca un certificat",
+    "wait-for-app-id-slot": "Espera que hi hagi un App ID lliure",
+    "try-anyway": "Prova-ho igualment",
+    "choose-app-to-remove": "Tria una app per eliminar",
+    "unlock-device": "Desbloqueja el dispositiu",
+    "enable-developer-mode": "Activa el mode de desenvolupador",
+    "trust-computer": "Confia en aquest ordinador",
+    "reconnect-device": "Torna a connectar el dispositiu",
+    "pair-again": "Torna a aparellar",
+    "set-passcode": "Defineix un codi d’accés",
+    "install-device-support": "Instal·la el suport de dispositius",
+    "reinstall-app": "Reinstal·la l’app",
+    "choose-another-ipa": "Tria un altre IPA",
+    "choose-another-channel": "Tria un altre canal",
+    "import-ipa": "Importa un IPA",
+    "update-ipaforge": "Actualitza IPAForge",
+    "report-issue": "Informa del problema",
+    "or": "O",
+    "switchAccount": {
+      "title": "Fes servir un altre Apple ID",
+      "body": "La instal·lació torna a començar amb l’Apple ID que triïs."
+    },
+    "fix": {
+      "copy": "Copia",
+      "copied": "Copiat",
+      "done": "Fet, torna-ho a provar",
+      "waitAndRetry": {
+        "how": "Apple està ocupat o limita les sol·licituds. Espera un minut i torna-ho a provar."
+      },
+      "checkNetwork": {
+        "how": "Assegura’t que aquest ordinador estigui en línia i torna-ho a provar."
+      },
+      "checkClock": {
+        "step1": "Obre la configuració de data i hora d’aquest ordinador",
+        "step2": "Activa l’ajust automàtic de la data i l’hora"
+      },
+      "reEnterPassword": {
+        "how": "En tornar-ho a provar et demanarà la contrasenya; comprova-la abans d’introduir-la."
+      },
+      "reEnterCode": {
+        "how": "En tornar-ho a provar et demanarà un codi de verificació nou."
+      },
+      "useTrustedDevice": {
+        "how": "Quan et demani el codi, tria un dispositiu de confiança en lloc d’un SMS."
+      },
+      "signInAgain": {
+        "how": "En tornar-ho a provar et demanarà la contrasenya per iniciar la sessió de nou."
+      },
+      "signInOnAppleDevice": {
+        "how": "Inicia la sessió amb aquest Apple ID en un iPhone, un iPad o un Mac, o al web d’Apple, i segueix el que et demani:"
+      },
+      "switchAccount": {
+        "how": "Tria un dels teus Apple ID desats. La instal·lació torna a començar amb aquest.",
+        "button": "Tria un Apple ID…"
+      },
+      "verifyEmail": {
+        "how": "Verifica l’adreça de correu d’aquest Apple ID al web d’Apple:"
+      },
+      "acceptAgreement": {
+        "how": "Inicia la sessió al web de desenvolupadors d’Apple i accepta l’acord que et mostri:"
+      },
+      "revokeCertificate": {
+        "how": "En tornar-ho a provar et demanarà quin certificat vols revocar."
+      },
+      "waitForAppIdSlot": {
+        "how": "Apple allibera cada App ID 7 dies després d’haver-lo creat. Torna a instal·lar quan n’hi hagi un de lliure o fes servir un altre Apple ID.",
+        "next": "El següent App ID s’allibera el {date}."
+      },
+      "chooseAppToRemove": {
+        "how": "En tornar-ho a provar et demanarà quina app vols eliminar per fer lloc."
+      },
+      "unlockDevice": {
+        "how": "Desbloqueja el dispositiu i mantén-lo desbloquejat fins que acabi la instal·lació."
+      },
+      "enableDeveloperMode": {
+        "button": "Està activat, torna-ho a provar"
+      },
+      "trustComputer": {
+        "how": "Desbloqueja el dispositiu. Quan et demani si confies en aquest ordinador, toca Confia i introdueix el codi.",
+        "button": "Torna-ho a demanar al dispositiu"
+      },
+      "reconnectDevice": {
+        "how": "Desconnecta el dispositiu, torna’l a connectar i desbloqueja’l."
+      },
+      "setPasscode": {
+        "how": "Defineix un codi d’accés al dispositiu a Configuració › Face ID i codi i torna-ho a provar."
+      },
+      "installDeviceSupport": {
+        "how": "A Windows, instal·la Dispositius Apple (o iTunes) des de Microsoft Store i reinicia IPAForge."
+      },
+      "reinstallApp": {
+        "how": "Elimina l’app del dispositiu i torna-ho a provar."
+      },
+      "chooseAnotherChannel": {
+        "how": "És possible que la versió de l’altre canal funcioni en aquest dispositiu.",
+        "button": "Instal·la des de {channel}"
+      },
+      "open": "Obre",
+      "tryAnyway": {
+        "how": "Apple ha informat d’un nombre negatiu d’App ID restants, un error conegut per part seva: el nombre real pot ser més alt. Prova-ho igualment demana a Apple que els creï; si realment s’ha arribat al límit, ho dirà."
+      },
+      "changeAnisetteServer": {
+        "how": "Obre la configuració, prova els servidors d’anisette i tria’n un que funcioni, o torna a Automàtic.",
+        "button": "Obre els servidors d’anisette"
+      },
+      "allowLocalNetwork": {
+        "how": "Obre Configuració del sistema › Privacitat i seguretat › Xarxa local, activa IPAForge i torna-ho a provar. O connecta el dispositiu amb un cable."
+      }
+    },
+    "reportHint": "S’obre una incidència nova a GitHub amb els diagnòstics ja emplenats. No s’envia res fins que no la trametis.",
+    "allow-local-network": "Permet l’accés a la xarxa local"
+  },
+  "devices": {
+    "engine": {
+      "connecting": "Connectant amb el motor…",
+      "connected": "{count, plural, =0 {Motor connectat · cap dispositiu} one {Motor connectat · # dispositiu} other {Motor connectat · # dispositius}}",
+      "failed": "No es pot accedir al motor: {reason}"
+    },
+    "description": "Els iPhone i els iPad connectats a aquest ordinador, i els Apple TV i els Vision Pro aparellats amb ell. El que es fa servir es mostra a la barra superior.",
+    "unknownDevice": "Dispositiu desconegut",
+    "line": "{model} · iOS {ios} · {link}",
+    "model": "{model} · iOS {ios}",
+    "withState": "{line} · {state}",
+    "link": {
+      "usb": "USB",
+      "network": "Wi-Fi",
+      "both": "USB i Wi-Fi"
+    },
+    "state": {
+      "checking": "Comprovant…",
+      "ready": "A punt",
+      "locked": "Bloquejat",
+      "developerModeOff": "Mode de desenvolupador desactivat",
+      "notTrusted": "No és de confiança",
+      "unavailable": "No es pot llegir el dispositiu",
+      "notConnected": "No connectat"
+    },
+    "inUse": "En ús",
+    "use": "Fes servir aquest dispositiu",
+    "checkAgain": "Torna a comprovar",
+    "facts": {
+      "model": "Model",
+      "ios": "iOS",
+      "connection": "Connexió",
+      "udid": "UDID",
+      "pairing": "Aparellament",
+      "address": "Adreça"
+    },
+    "empty": {
+      "title": "Encara no hi ha cap dispositiu",
+      "body": "Connecta un iPhone o un iPad amb un cable i desbloqueja’l. A Windows, cal tenir instal·lat Dispositius Apple o iTunes."
+    },
+    "notice": {
+      "none": {
+        "title": "Cap dispositiu connectat",
+        "body": "Connecta un iPhone o un iPad amb un cable i desbloqueja’l. Apareixerà aquí pel seu compte."
+      },
+      "notConnected": {
+        "title": "{name} no està connectat",
+        "body": "Torna’l a connectar i es fa servir automàticament, o tria un altre dispositiu a la barra superior."
+      },
+      "notTrusted": {
+        "title": "Confia en aquest ordinador a {name}",
+        "body": "Desbloqueja’l, toca Confia i introdueix el codi.",
+        "action": "Torna-ho a demanar",
+        "waiting": "Esperant la confiança…",
+        "titleUnnamed": "Confia en aquest ordinador al dispositiu"
+      },
+      "locked": {
+        "title": "Desbloqueja {name}",
+        "body": "Ha de continuar desbloquejat mentre s’instal·len apps."
+      },
+      "developerModeOff": {
+        "title": "Activa el mode de desenvolupador a {name}",
+        "step1": "Configuració → Privacitat i seguretat → Mode de desenvolupador",
+        "step2": "Activa’l i reinicia quan ho demani",
+        "step3": "Després del reinici, toca Activa i introdueix el codi"
+      },
+      "unavailable": {
+        "title": "No es pot llegir {name}",
+        "body": "Desconnecta’l i torna’l a connectar. Si continua passant, reinicia el dispositiu.",
+        "bodyWifi": "Està connectat per Wi-Fi: desperta’l, desbloqueja’l i mantén-lo a la mateixa xarxa que aquest ordinador, i després prem Torna a comprovar. Un cable és més fiable.",
+        "reason": "Motiu: {reason}",
+        "titleUnnamed": "No es pot llegir el dispositiu"
+      },
+      "offNetwork": {
+        "title": "{name} no és a la xarxa",
+        "tv": "Desperta’l amb el comandament i mantén-lo al mateix Wi-Fi que aquest ordinador.",
+        "vision": "Posa-te’l, desbloqueja’l i mantén-lo al mateix Wi-Fi que aquest ordinador."
+      },
+      "pairAgain": {
+        "title": "Torna a aparellar {name}",
+        "body": "Ja no accepta l’aparellament d’aquest ordinador. És normal després d’una actualització de tvOS o visionOS: torna’l a aparellar amb un codi nou.",
+        "action": "Torna a aparellar…"
+      }
+    },
+    "notes": {
+      "connected": "{name} connectat",
+      "disconnected": "{name} desconnectat",
+      "aDevice": "Un dispositiu"
+    },
+    "savePairing": "Desa el fitxer d’aparellament…",
+    "localNetwork": {
+      "open": "Obre la configuració de la xarxa local"
+    },
+    "os": {
+      "tv": "tvOS",
+      "vision": "visionOS"
+    },
+    "lineOs": "{model} · {os} {version} · {link}",
+    "modelOs": "{model} · {os} {version}",
+    "pairedByCode": "Aparellat amb aquest ordinador, per codi",
+    "forget": {
+      "action": "Oblida…",
+      "title": "Vols oblidar {name}?",
+      "body": "IPAForge elimina l’aparellament d’aquest ordinador. Les apps que ja hi ha es queden. Per tornar-lo a fer servir, aparella’l de nou.",
+      "confirm": "Oblida"
+    }
+  },
+  "prompts": {
+    "cancel": "Cancel·la",
+    "continue": "Continua",
+    "password": {
+      "title": "Torna a iniciar la sessió",
+      "body": "La sessió desada de {appleId} ha caducat. Introdueix la contrasenya per continuar.",
+      "label": "Contrasenya",
+      "checking": "Comprovant la contrasenya…"
+    },
+    "method": {
+      "title": "On ha d’enviar Apple el codi?",
+      "body": "Tria com vols obtenir el codi de verificació.",
+      "trustedDevice": "Un dispositiu de confiança",
+      "trustedDeviceHint": "El teu iPhone, iPad o Mac amb la sessió iniciada amb aquest Apple ID",
+      "sms": "SMS al {number}",
+      "smsHint": "Es poden aplicar les tarifes habituals dels SMS",
+      "sending": "Enviant el codi…"
+    },
+    "code": {
+      "title": "Introdueix el codi de verificació",
+      "body": "{length, plural, one {Introdueix el codi de # dígit que ha enviat Apple.} other {Introdueix el codi de # dígits que ha enviat Apple.}}",
+      "label": "Codi de verificació",
+      "wrong": "Aquest codi no ha funcionat. Comprova’l i torna’l a introduir.",
+      "verify": "Verifica",
+      "checking": "Comprovant el codi…",
+      "deviceBody": "{length, plural, one {Introdueix el codi de # dígit que es mostra al teu iPhone, iPad o Mac.} other {Introdueix el codi de # dígits que es mostra al teu iPhone, iPad o Mac.}}",
+      "smsBody": "{length, plural, one {Introdueix el codi de # dígit enviat al {number}.} other {Introdueix el codi de # dígits enviat al {number}.}}",
+      "allowHint": "Mantén-lo desbloquejat i toca Permet quan et pregunti per l’inici de sessió.",
+      "noCode": "No has rebut cap codi?",
+      "resend": "Envia un codi nou",
+      "textTo": "Envia un SMS al {number}",
+      "sending": "Enviant un codi nou…",
+      "sent": "Un codi nou està de camí.",
+      "notSent": "Apple no ha enviat cap codi nou. Espera uns minuts i torna-ho a provar."
+    },
+    "suggested": "Suggerit",
+    "team": {
+      "title": "Quin equip ha de signar l’app?",
+      "body": "Aquest Apple ID pertany a més d’un equip. IPAForge recorda la teva elecció per a aquest Apple ID.",
+      "free": "Gratuït: les apps caduquen als 7 dies, 3 apps per dispositiu",
+      "paid": "De pagament: les apps duren un any, sense límit d’apps",
+      "checking": "Fent servir aquest equip…"
+    },
+    "revoke": {
+      "title": "Vols revocar un certificat?",
+      "body": "Aquest equip ja té el màxim de certificats de desenvolupament, així que IPAForge n’ha de revocar un per fer el seu. Les apps signades amb el certificat revocat deixen de renovar-se.",
+      "ipaforge": "Fet per IPAForge en un altre ordinador",
+      "sidestore": "Fet per SideStore",
+      "machine": "Fet a «{machine}» (normalment Xcode)",
+      "unknown": "Fet per una eina desconeguda",
+      "sidestoreWarning": "SideStore al dispositiu deixa de renovar apps fins que en faci un de nou.",
+      "machineWarning": "Xcode d’aquell ordinador en fa un de nou la propera vegada que signi.",
+      "expires": "Caduca el {date}",
+      "confirm": "Revoca i continua",
+      "revoking": "Revocant el certificat…"
+    },
+    "remove": {
+      "title": "Vols eliminar una app per fer lloc?",
+      "body": "Un Apple ID gratuït pot tenir {limit} apps en un dispositiu, així que n’ha de marxar una perquè aquesta hi càpiga. Més tard la pots tornar a instal·lar.",
+      "confirm": "Elimina i continua",
+      "removing": "Eliminant l’app…"
+    },
+    "share": {
+      "title": "Vols compartir el teu certificat de signatura amb «{app}»?",
+      "body": "Aquesta app sembla SideStore. Amb el teu certificat pot renovar apps al dispositiu pel seu compte. Comparteix-lo només amb una app de confiança.",
+      "yes": "Comparteix el certificat",
+      "yesHint": "Renova les teves apps al dispositiu pel seu compte",
+      "no": "No el comparteixis",
+      "noHint": "S’instal·la sense el teu certificat"
+    },
+    "pairing": {
+      "title": "Quines apps reben el fitxer d’aparellament?",
+      "body": "El fitxer d’aparellament permet que una app del dispositiu s’hi comuniqui per Wi-Fi, com fa aquest ordinador. Només el reben les apps que marquis.",
+      "available": "{count, plural, one {# app del dispositiu el pot fer servir} other {# apps del dispositiu el poden fer servir}}",
+      "selectAll": "Selecciona-ho tot",
+      "clearAll": "Esborra la selecció",
+      "place": "{count, plural, =0 {Tria una app} one {Col·loca a # app} other {Col·loca a # apps}}",
+      "placing": "Col·locant el fitxer d’aparellament…",
+      "purpose": {
+        "sidestore": "Renova i instal·la apps per Wi-Fi",
+        "livecontainer": "Executa les apps de dins amb JIT",
+        "stikdebug": "Activa JIT per a altres apps",
+        "stikstore": "Instal·la apps de les seves pròpies fonts"
+      }
+    }
+  },
+  "signIn": {
+    "title": "Afegeix un Apple ID",
+    "body": "IPAForge hi signa apps. La teva contrasenya només va a Apple.",
+    "appleId": "Apple ID",
+    "password": "Contrasenya",
+    "submit": "Inicia la sessió",
+    "signingIn": "Iniciant la sessió…",
+    "done": {
+      "title": "Apple ID afegit",
+      "body": "Sessió iniciada com a {appleId}.",
+      "close": "Fet"
+    },
+    "rememberPassword": "Desa la meva contrasenya al clauer del sistema",
+    "rememberPasswordHint": "Permet que IPAForge torni a iniciar la sessió pel seu compte quan caduqui.",
+    "resuming": {
+      "title": "Tornant a iniciar la sessió",
+      "body": "Iniciant la sessió a {appleId} amb el que IPAForge ha desat…",
+      "cancel": "Cancel·la"
+    }
+  },
+  "accounts": {
+    "description": "Els Apple ID amb què IPAForge signa apps. El que es fa servir es mostra a la barra superior.",
+    "list": "Apple ID desats",
+    "empty": "Encara no hi ha cap Apple ID. Afegeix-ne un per instal·lar SideStore.",
+    "notSaved": {
+      "title": "Els Apple ID no s’estan desant",
+      "body": "IPAForge no pot fer servir el clauer del sistema (potser s’ha denegat l’accés), així que els teus Apple ID només es conserven fins que es tanqui. Per desar-los, torna a obrir IPAForge i permet l’accés al clauer quan et ho demani."
+    },
+    "freeTeam": "{name} (gratuït)",
+    "withState": "{line} · {state}",
+    "state": {
+      "checking": "Comprovant…",
+      "signInNeeded": "Cal iniciar la sessió",
+      "blocked": "Bloquejat en aquest dispositiu",
+      "unreachable": "No s’ha pogut accedir a Apple"
+    },
+    "inUse": "En ús",
+    "noTeams": "Els equips apareixen quan Apple ha respost.",
+    "use": "Fes servir",
+    "signInAgain": "Torna a iniciar la sessió",
+    "signOut": {
+      "action": "Tanca la sessió",
+      "title": "Vols tancar la sessió de {appleId}?",
+      "forgets": "IPAForge oblida aquest Apple ID, la seva sessió i la contrasenya desada.",
+      "keeps": "Els certificats de signatura es queden en aquest ordinador, així que en tornar a iniciar la sessió es reutilitzen. Les apps ja instal·lades continuen funcionant fins que caduquin.",
+      "confirm": "Tanca la sessió"
+    }
+  },
+  "apps": {
+    "description": "Les apps que IPAForge ha instal·lat en aquest dispositiu. Renova en torna a signar una abans que caduqui, conservant-ne les dades.",
+    "refreshAll": "{count, plural, =0 {Renova-ho tot} other {Renova-ho tot (#)}}",
+    "updateAll": "{count, plural, other {Actualitza-ho tot (#)}}",
+    "refresh": "Renova",
+    "update": "Actualitza",
+    "remove": "Elimina",
+    "removeApp": "Elimina {name}",
+    "updateTo": "Actualitza: {version}",
+    "from": "De {source}",
+    "needsIpa": "Instal·lada per IPAForge des d’un .ipa d’un altre ordinador. Afegeix aquest .ipa a Precàrrega una vegada per renovar-la aquí.",
+    "thisDevice": "aquest dispositiu",
+    "badge": "{count, plural, one {# app per renovar aviat} other {# apps per renovar aviat}}",
+    "expiry": {
+      "in": "{days, plural, one {Caduca d’aquí a # dia · {date}} other {Caduca d’aquí a # dies · {date}}}",
+      "today": "Caduca avui",
+      "expired": "{days, plural, one {Ha caducat fa # dia · no s’obrirà} other {Ha caducat fa # dies · no s’obrirà}}",
+      "unknown": "Caducitat desconeguda",
+      "gone": "Caducada · no s’obrirà"
+    },
+    "run": {
+      "checking": "Comprovant amb Apple…",
+      "waiting": "Esperant el seu torn",
+      "done": "Fet"
+    },
+    "failed": {
+      "title": "La renovació no ha acabat: {reason}",
+      "details": "Mostra els detalls",
+      "dismiss": "Ignora"
+    },
+    "notConnected": {
+      "title": "Aquest dispositiu no està connectat",
+      "body": "Connecta’l per veure’n les apps i per renovar-les o actualitzar-les."
+    },
+    "expired": {
+      "title": "{count, plural, one {# app ha caducat} other {# apps han caducat}}",
+      "body": "No s’obriran fins que es renovin. Se’n conserven les dades.",
+      "refresh": "{count, plural, one {Renova-la ara} other {Renova-les ara}}"
+    },
+    "facts": {
+      "next": "La propera a caducar",
+      "none": "Encara cap",
+      "nextIn": "{days, plural, one {{name} · # dia} other {{name} · # dies}}",
+      "nextExpired": "{name} · caducada",
+      "count": "Mantingudes renovades",
+      "apps": "{count, plural, one {# app} other {# apps}}",
+      "auto": "Renovació automàtica",
+      "autoOn": "{days, plural, one {Activada · # dia abans} other {Activada · # dies abans}}",
+      "autoOff": "Desactivada"
+    },
+    "list": {
+      "title": "Instal·lades per IPAForge",
+      "count": "{count, plural, one {# app · les més properes primer} other {# apps · les més properes primer}}",
+      "empty": "Encara no hi ha cap app. Instal·la SideStore o precarrega apps i es mostraran aquí."
+    },
+    "others": {
+      "title": "Encara no les manté IPAForge",
+      "hint": "Instal·lades abans d’aquesta versió d’IPAForge o per una altra eina",
+      "found": "Trobada a {source}. Renova la instal·la des d’allà, conservant-ne les dades, i a partir d’aleshores IPAForge la manté renovada.",
+      "foundMany": "Trobada a {source} i {count, plural, one {# altra font} other {# altres fonts}}. Renova la instal·la des de la que triïs a sota, conservant-ne les dades, i a partir d’aleshores IPAForge la manté renovada.",
+      "pickSource": "Instal·la-la des de",
+      "choice": "{source} · {version}",
+      "how": "Afegeix-ne l’.ipa a Precàrrega una vegada i a partir d’aleshores IPAForge la manté renovada."
+    },
+    "auto": {
+      "title": "Renova les apps automàticament",
+      "body": "Mentre IPAForge estigui obert i el dispositiu connectat, les apps es renoven soles abans que caduquin.",
+      "toggle": "Renova automàticament",
+      "when": "Renova quan una app tingui",
+      "days": "{count, plural, one {# dia restant} other {# dies restants}}"
+    },
+    "removeDialog": {
+      "title": "Vols eliminar {name}?",
+      "body": "S’elimina de {device} amb les seves dades i allibera un lloc d’app gratuïta. La pots tornar a instal·lar des de Precàrrega."
+    },
+    "pairing": {
+      "open": "Fitxers d’aparellament",
+      "title": "Fitxers d’aparellament",
+      "hint": "Un fitxer d’aparellament permet que una app accedeixi al teu dispositiu pel seu compte, per renovar i instal·lar apps. Qui el té pot fer servir el dispositiu, així que dona’n un només a les teves pròpies apps quan les seves instruccions ho demanin.",
+      "reading": "Llegint els fitxers d’aparellament…",
+      "empty": "En aquest dispositiu no hi ha apps d’aparellament ni apps instal·lades per IPAForge.",
+      "classic": {
+        "thisComputer": "Aparellament: el d’aquest ordinador",
+        "otherComputer": "Aparellament: el d’un altre ordinador",
+        "missing": "Aparellament: falta"
+      },
+      "remote": {
+        "accepted": "Remot: acceptat",
+        "rejected": "Remot: no acceptat",
+        "otherComputer": "Remot: el d’un altre ordinador",
+        "missing": "Remot: falta"
+      },
+      "detail": {
+        "placed": "Col·locat el {date}",
+        "needed": "En necessita un per renovar-se pel seu compte.",
+        "otherComputer": "D’un altre ordinador: funciona mentre aquest ordinador continuï sent de confiança.",
+        "ownNone": "Cap. Afegeix-ne un només si l’app ho demana."
+      },
+      "place": "Col·loca",
+      "placeOne": "Col·loca el fitxer d’aparellament a {name}",
+      "placeAgain": "Torna a col·locar",
+      "placeAgainOne": "Torna a col·locar el fitxer d’aparellament a {name}",
+      "add": "Afegeix…",
+      "addOne": "Afegeix un fitxer d’aparellament a {name}",
+      "remove": "Elimina",
+      "removeOne": "Elimina el fitxer d’aparellament de {name}",
+      "newRemote": "Aparellament remot nou",
+      "done": "Fet",
+      "addTitle": "Afegeix un fitxer d’aparellament a {name}",
+      "addBody": "IPAForge escriu el fitxer d’aparellament d’aquest ordinador a la carpeta de l’app al teu dispositiu. Qui el té pot fer servir el dispositiu: afegeix-lo només a apps de confiança.",
+      "pathLabel": "Ruta dins de l’app",
+      "pathHint": "De les instruccions de l’app; normalment a Documents. IPAForge se’n recorda per a aquesta app.",
+      "pathInvalid": "Fes servir una ruta dins de Documents o Library que acabi en .plist o .mobiledevicepairing.",
+      "removeTitle": "Vols eliminar el fitxer d’aparellament de {name}?",
+      "removeBody": "Ja no podrà accedir al teu dispositiu pel seu compte (renovar, instal·lar) fins que es torni a col·locar un fitxer d’aparellament.",
+      "newRemoteTitle": "Vols crear un aparellament remot nou?",
+      "newRemoteBody": "IPAForge crea un aparellament remot nou amb el teu dispositiu i el col·loca a SideStore. És possible que el dispositiu et demani que confiïs en aquest ordinador. L’aparellament remot antic deixa de funcionar.",
+      "newRemoteConfirm": "Crea’n un de nou",
+      "newRemoteWaiting": "Si el dispositiu t’ho demana, toca Confia i introdueix-ne el codi.",
+      "tag": "Sense fitxer d’aparellament",
+      "tagOne": "{name} no té cap fitxer d’aparellament: obre Fitxers d’aparellament"
+    },
+    "cancelRefresh": "Cancel·la la renovació"
+  },
+  "logs": {
+    "title": "Registre",
+    "lede": "El que ha fet IPAForge, línia a línia. Obre’l des de qualsevol lloc amb",
+    "shortcut": {
+      "control": "Ctrl+",
+      "command": "⌘",
+      "key": "L"
+    },
+    "copy": "Copia",
+    "save": "Desa…",
+    "clear": "Neteja",
+    "cleared": "S’ha netejat la vista. Desa continua escrivint totes les línies conservades en aquesta sessió.",
+    "search": {
+      "label": "Cerca als registres",
+      "placeholder": "Cerca als missatges i als detalls",
+      "key": "/"
+    },
+    "level": {
+      "label": "Nivell",
+      "all": "Tots",
+      "info": "Informació",
+      "warn": "Avisos",
+      "error": "Errors"
+    },
+    "levelName": {
+      "debug": "Depuració",
+      "info": "Informació",
+      "warn": "Avís",
+      "error": "Error"
+    },
+    "area": {
+      "label": "Àrea",
+      "all": "Totes les àrees",
+      "install": "Instal·lació",
+      "device": "Dispositiu",
+      "apple": "Apple",
+      "catalog": "Catàleg",
+      "signing": "Signatura",
+      "engine": "Motor",
+      "interface": "Interfície",
+      "app": "App"
+    },
+    "filters": {
+      "showing": "Es mostra només:",
+      "run": "Aquesta instal·lació ({time})",
+      "text": "«{text}»",
+      "remove": "Elimina el filtre {filter}"
+    },
+    "list": {
+      "label": "Línies del registre",
+      "loadingOlder": "Carregant línies més antigues…"
+    },
+    "row": {
+      "details": "{count, plural, one {# detall} other {# detalls}}",
+      "scope": "àrea",
+      "redacted": "[ocultat]",
+      "copy": "Copia la línia"
+    },
+    "follow": {
+      "on": "Seguint les línies noves",
+      "off": "En pausa",
+      "pause": "Pausa",
+      "resume": "Segueix"
+    },
+    "jump": "{count, plural, one {# línia nova} other {# línies noves}} · Ves a la més recent",
+    "count": "{matching, plural, one {# línia coincident} other {# línies coincidents}} · es conserven les últimes {capacity, number} en aquesta sessió",
+    "debug": "Inclou els detalls de depuració",
+    "privacy": "Les contrasenyes, els testimonis, les claus, els números de sèrie i els identificadors de dispositiu mai s’escriuen als registres; es mostren com a [ocultat]. Els registres es queden en aquest ordinador fins que els copiïs o els desis.",
+    "empty": {
+      "none": {
+        "title": "Encara no hi ha res registrat",
+        "body": "Les línies apareixen aquí mentre IPAForge treballa: connectar un dispositiu, iniciar la sessió, instal·lar."
+      },
+      "noMatch": {
+        "title": "Cap línia coincideix",
+        "body": "Canvia el nivell, l’àrea o la cerca.",
+        "showAll": "Mostra totes les línies"
+      },
+      "cleared": {
+        "title": "S’ha netejat la vista",
+        "body": "Les línies noves apareixen aquí a mesura que arriben."
+      },
+      "failed": {
+        "title": "No s’han pogut llegir els registres",
+        "body": "Potser s’ha tancat la connexió amb el motor. Torna a obrir Registre per tornar-ho a provar."
+      }
+    },
+    "export": {
+      "copyTitle": "{count, plural, one {Vols copiar # línia?} other {Vols copiar # línies?}}",
+      "saveTitle": "{count, plural, one {Vols desar # línia en un fitxer?} other {Vols desar # línies en un fitxer?}}",
+      "copyBody": "Les línies mostrades, amb els filtres que has definit.",
+      "saveBody": "Totes les línies conservades en aquesta sessió, sense tenir en compte els filtres.",
+      "warning": "Les contrasenyes, els testimonis i els identificadors de dispositiu ja s’han exclòs, però els registres sí que esmenten el model del dispositiu, les apps i l’equip. Comprova’ls abans de publicar-los.",
+      "confirmCopy": "Copia",
+      "confirmSave": "Desa",
+      "copied": "{count, plural, one {S’ha copiat # línia} other {S’han copiat # línies}}",
+      "saved": "{count, plural, one {S’ha desat # línia} other {S’han desat # línies}}",
+      "copyFailed": "No s’han pogut copiar les línies",
+      "saveFailed": "No s’han pogut desar les línies"
+    }
+  },
+  "preload": {
+    "title": "Precarrega apps",
+    "description": "Instal·la les teves pròpies apps: signades amb el teu Apple ID, instal·lades per USB, una darrere l’altra.",
+    "tabs": {
+      "label": "Precàrrega",
+      "apps": "Afegeix apps",
+      "sources": "Fonts"
+    },
+    "add": {
+      "drop": "Deixa anar aquí els fitxers .ipa",
+      "or": "o",
+      "choose": "Tria fitxers…",
+      "link": "Afegeix des d’un enllaç…"
+    },
+    "catalog": {
+      "recommended": "Recomanades",
+      "added": "Afegida",
+      "add": "Afegeix",
+      "sidestore": "Renova i instal·la apps al dispositiu pel seu compte.",
+      "livecontainerSidestore": "LiveContainer amb SideStore a dins.",
+      "livecontainer": "Executa moltes apps dins d’una de sola, més enllà del límit de 3 apps.",
+      "stikdebug": "Activa JIT al dispositiu per a les apps que el necessiten.",
+      "feather": "Signa i instal·la apps al dispositiu amb el teu certificat."
+    },
+    "browse": {
+      "title": "Explora apps",
+      "count": "{apps, plural, one {# app} other {# apps}} de {sources, plural, one {# font} other {# fonts}}",
+      "source": "Font",
+      "allSources": "Totes les fonts",
+      "search": "Cerca apps",
+      "manage": "Gestiona les fonts",
+      "noMatch": "Cap app coincideix amb «{query}».",
+      "allOff": "Totes les fonts estan desactivades. Activa’n una a Fonts.",
+      "loading": "Llegint les fonts…",
+      "catalogLine": "Última versió · comprovada amb la seva suma de verificació",
+      "version": "{version} · {size}",
+      "from": "{name}, també a {others}",
+      "details": "Detalls de {name}",
+      "notRefreshed": {
+        "title": "No s’ha pogut actualitzar {name}",
+        "body": "Es mostren les seves apps de l’última actualització, {when}.",
+        "retry": "Torna-ho a provar"
+      }
+    },
+    "detail": {
+      "version": "Versió",
+      "latest": "{version} (l’última)",
+      "size": "Mida",
+      "needs": "Necessita",
+      "needsIos": "iOS {version}",
+      "anyIos": "Qualsevol iOS",
+      "from": "De",
+      "builtin": "Integrada · de confiança",
+      "added": "Una font que has afegit",
+      "untrusted": "D’una font que has afegit: IPAForge no en revisa les apps.",
+      "add": "Afegeix a la llista",
+      "inList": "A la llista",
+      "close": "Tanca",
+      "loadingReleases": "Cercant-ne les versions…",
+      "noReleases": "Ara mateix no se’n poden llegir les versions. Comprova la connexió i torna-la a obrir."
+    },
+    "sources": {
+      "description": "On Explora apps troba apps. IPAForge manté les fonts integrades; afegeix-ne d’altres amb el seu enllaç (format AltStore).",
+      "add": "Afegeix una font…",
+      "refreshAll": "Actualitza-ho tot",
+      "list": "Fonts",
+      "builtin": "Integrada · de confiança",
+      "added": "Afegida per tu",
+      "catalogName": "Catàleg d’IPAForge",
+      "apps": "{count, plural, one {# app} other {# apps}}",
+      "updated": "actualitzada {when}",
+      "notRead": "Encara no s’ha llegit",
+      "skipped": "{count, plural, one {# omesa (no és .ipa)} other {# omeses (no són .ipa)}}",
+      "failed": "No s’hi ha pogut accedir.",
+      "failedCopy": "Es mostra l’última còpia, de {when}.",
+      "refreshing": "Actualitzant…",
+      "show": "Mostra les apps de {name}",
+      "refresh": "Actualitza {name}",
+      "remove": "Elimina {name}",
+      "on": "Activada",
+      "off": "Desactivada",
+      "note": "IPAForge no revisa les apps de les fonts que afegeixes. Afegeix només fonts de confiança.",
+      "refreshOne": "Actualitza",
+      "removeOne": "Elimina"
+    },
+    "addSource": {
+      "title": "Afegeix una font",
+      "label": "Enllaç de la font",
+      "placeholder": "https://example.com/apps.json",
+      "hint": "Una font en format AltStore, el que llegeix SideStore. Normalment acaba en .json.",
+      "check": "Comprova",
+      "checking": "Comprovant la font…",
+      "notLink": "Introdueix un enllaç que comenci per https://",
+      "notHttps": "Fes servir un enllaç https://: IPAForge només llegeix fonts mitjançant una connexió segura.",
+      "previewTitle": "Vols afegir aquesta font?",
+      "includes": "{count, plural, one {# app, entre les quals:} other {# apps, entre les quals:}}",
+      "skipped": "{count, plural, one {# més exclosa: la seva descàrrega no és un .ipa.} other {# més excloses: la seva descàrrega no és un .ipa.}}",
+      "warningTitle": "Afegeix només fonts de confiança",
+      "warningBody": "IPAForge no revisa les apps de les fonts que afegeixes. Cada app es comprova igualment abans d’instal·lar-la.",
+      "back": "Enrere",
+      "confirm": "Afegeix la font"
+    },
+    "removeSource": {
+      "title": "Vols eliminar {name}?",
+      "body": "Les seves apps desapareixen d’Explora apps. Les apps instal·lades des d’aquesta font es queden al dispositiu, i les apps de la llista Per instal·lar també hi continuen.",
+      "confirm": "Elimina"
+    },
+    "list": {
+      "title": "Per instal·lar",
+      "count": "{count, plural, one {# app} other {# apps}}",
+      "empty": "Encara no hi ha cap app. Deixa anar fitxers .ipa aquí, tria’ls, afegeix un enllaç o escull una app a Explora apps."
+    },
+    "row": {
+      "waiting": "Esperant el dispositiu i l’Apple ID",
+      "checking": "Comprovant…",
+      "downloading": "Descarregant i comprovant…",
+      "appIds": "{count, plural, one {# App ID} other {# App ID}}{extensions, plural, =0 {} one { (app + # extensió)} other { (app + # extensions)}}",
+      "updates": "Actualitza {from} → {to} · conserva les dades",
+      "new": "Nova al dispositiu",
+      "pairing": "Rep el fitxer d’aparellament i el certificat",
+      "fromCatalog": "Del catàleg · Estable",
+      "remove": "Elimina {name}",
+      "cannot": "No es pot instal·lar.",
+      "fromSource": "De {name}",
+      "saveInstead": "Desa en lloc d’això un .ipa signat",
+      "saveInsteadOne": "Desa {name} com a .ipa signat en lloc d’instal·lar-la",
+      "savedOnComputer": "Desat en aquest ordinador, no instal·lat"
+    },
+    "problem": {
+      "notIpa": "Només es poden instal·lar fitxers .ipa.",
+      "unreadable": "IPAForge no pot llegir aquest fitxer. Afegeix-lo amb Tria fitxers… en lloc d’això.",
+      "needsIos": "Necessita iOS {needs}; aquest dispositiu té iOS {has}."
+    },
+    "summary": {
+      "appIds": "{count, plural, one {# de nou} other {# de nous}} · {left, plural, one {# disponible aquesta setmana} other {# disponibles aquesta setmana}}",
+      "appIdsNoLimit": "{count, plural, one {# de nou} other {# de nous}}",
+      "notEnough": "No en queden prou. Elimina una app o espera. {next}",
+      "freeApps": "{after} de {limit} després d’aquesta instal·lació",
+      "freeAppsOver": "{used, plural, one {# ja hi és.} other {# ja hi són.}} La instal·lació et demanarà quina app s’ha d’eliminar, o elimina’n una d’aquesta llista."
+    },
+    "install": "{count, plural, =0 {Instal·la} one {Instal·la # app} other {Instal·la # apps}}",
+    "clear": "Neteja la llista",
+    "readiness": {
+      "busy": "Espera que acabi la instal·lació en curs.",
+      "empty": "Afegeix primer una app.",
+      "checking": "Comprovant les apps…",
+      "problems": "Elimina les apps que no es poden instal·lar."
+    },
+    "link": {
+      "title": "Afegeix des d’un enllaç",
+      "body": "Un enllaç directe a un fitxer .ipa. IPAForge el descarrega i el comprova com qualsevol altra app.",
+      "label": "Enllaç",
+      "placeholder": "https://example.com/MyApp.ipa",
+      "add": "Afegeix",
+      "httpsOnly": "Només es poden descarregar enllaços https.",
+      "invalid": "Això no és un enllaç.",
+      "notIpa": "L’enllaç ha d’apuntar a un fitxer .ipa."
+    },
+    "elsewhere": {
+      "apps": "S’estan instal·lant apps",
+      "sidestore": "S’està instal·lant SideStore",
+      "body": "Una instal·lació cada vegada: necessita el dispositiu. Aquesta podrà començar quan l’altra acabi.",
+      "open": "Obre-la"
+    },
+    "run": {
+      "title": {
+        "running": "{count, plural, one {Instal·lant {app}} other {Instal·lant # apps}}",
+        "completed": "{count, plural, one {{app} està instal·lada} other {# apps estan instal·lades}}",
+        "failed": "No s’han pogut instal·lar totes les apps"
+      },
+      "backToPreload": "Torna a Precàrrega",
+      "shared": "Aquest dispositiu i el teu Apple ID",
+      "refresh": {
+        "profile": "Només perfil nou, no s’ha tornat a instal·lar res",
+        "certificate": "Instal·lada de nou: el certificat amb què es va signar ja no és vàlid",
+        "unmarked": "Instal·lada de nou: IPAForge no pot saber quin certificat la va signar",
+        "appId": "Instal·lada de nou: Apple va eliminar el seu App ID quan va caducar",
+        "sidestore": "Instal·lada de nou, conservant-ne les dades, de manera que el mateix SideStore mostra la data nova"
+      },
+      "group": {
+        "failed": "Han fallat",
+        "done": "Fetes",
+        "active": "En curs",
+        "pending": "En espera"
+      }
+    },
+    "done": {
+      "title": "{count, plural, one {{app} és a {device}.} other {{app} són a {device}.}}",
+      "open": "Obre cada app des de la pantalla d’inici."
+    },
+    "signAndSave": "{count, plural, one {Signa i desa # app} other {Signa i desa # apps}}",
+    "installAndSave": "{install} per instal·lar · {save} per desar com a .ipa signat"
+  },
+  "repair": {
+    "title": "Repara SideStore",
+    "description": "IPAForge comprova SideStore a {device} i arregla el que li impedeix renovar les teves apps pel seu compte.",
+    "checkAgain": "Torna a comprovar",
+    "checking": "Comprovant SideStore…",
+    "checks": "Comprovacions",
+    "failed": "No s’ha pogut comprovar SideStore: {reason}",
+    "failedBody": "Comprova que el dispositiu estigui connectat i desbloquejat i prem Torna a comprovar.",
+    "ok": "D’acord",
+    "unknown": "No es pot saber",
+    "deviceFirst": "Arregla primer {device}",
+    "device": {
+      "title": "{device} està a punt",
+      "ok": "Desbloquejat, de confiança i amb el mode de desenvolupador activat.",
+      "locked": "Està bloquejat. Desbloqueja’l i prem Torna a comprovar.",
+      "lockedTag": "Bloquejat",
+      "developerMode": "El mode de desenvolupador està desactivat, així que SideStore i les apps que instal·la no s’obriran. A l’iPhone: Configuració › Privacitat i seguretat › Mode de desenvolupador, i reinicia’l.",
+      "developerModeTag": "Mode de desenvolupador desactivat"
+    },
+    "installed": {
+      "title": "SideStore està instal·lat",
+      "missing": "SideStore no és a {device}.",
+      "missingTag": "No instal·lat"
+    },
+    "signer": {
+      "title": "Està signat amb l’equip que fas servir aquí",
+      "ok": "Repara pot tornar-lo a instal·lar o donar-li un perfil nou sense perdre’n les dades.",
+      "otherTeam": "L’ha signat un altre equip d’aquest Apple ID. Tornar-lo a instal·lar amb aquest equip afegiria un segon SideStore, sense les seves dades ni apps.",
+      "otherTeamTag": "Un altre equip",
+      "otherAppleId": "L’ha signat un altre Apple ID. Tornar-lo a instal·lar amb aquest afegiria un segon SideStore, sense les seves dades ni apps.",
+      "otherAppleIdTag": "Un altre Apple ID"
+    },
+    "version": {
+      "title": "SideStore està al dia",
+      "ok": "Versió {version}, l’última.",
+      "outdated": "Versió {version}; ja ha sortit la {latest}. Les versions més antigues poden no tenir les correccions per renovar en iOS recents.",
+      "outdatedTag": "{latest} disponible",
+      "unknown": "Versió {version}. No s’ha pogut accedir al catàleg per comparar."
+    },
+    "expiry": {
+      "title": "SideStore no ha caducat",
+      "ok": "{days, plural, one {Caduca d’aquí a # dia.} other {Caduca d’aquí a # dies.}}",
+      "soon": "{days, plural, =0 {Caduca avui.} one {Caduca d’aquí a # dia.} other {Caduca d’aquí a # dies.}} Un cop hagi caducat, SideStore no es pot renovar sol.",
+      "soonTag": "Caduca aviat",
+      "expired": "{days, plural, one {Ha caducat fa # dia.} other {Ha caducat fa # dies.}} No s’obrirà, així que no pot renovar les teves apps.",
+      "expiredTag": "Caducat",
+      "unknown": "El dispositiu no mostra cap perfil per a ell."
+    },
+    "signing": {
+      "title": "El certificat que el va signar és vàlid",
+      "ok": "Encara és vàlid per a Apple.",
+      "revoked": "S’ha revocat o ha caducat. SideStore deixa d’obrir-se la propera vegada que s’iniciï.",
+      "revokedTag": "Revocat",
+      "unknown": "Instal·lat per una altra eina, així que IPAForge no pot veure quin certificat el va signar. Repara el pot tornar a instal·lar per assegurar-ho."
+    },
+    "own": {
+      "title": "SideStore pot signar apps pel seu compte",
+      "ok": "Té un certificat vàlid per renovar les teves apps.",
+      "missing": "No té cap certificat, així que les seves renovacions et demanen que iniciïs la sessió, o fallen.",
+      "missingTag": "Sense certificat",
+      "other": "El certificat que se li va donar ja no és vàlid. Potser l’ha substituït per un de més nou propi; si la renovació falla a SideStore, torna’l a instal·lar.",
+      "otherTag": "Potser s’ha substituït"
+    },
+    "pairing": {
+      "title": "SideStore té un fitxer d’aparellament",
+      "ok": "Hi és, i és l’aparellament d’aquest ordinador amb {device}.",
+      "missing": "Falta: SideStore no pot accedir al dispositiu per instal·lar o renovar apps.",
+      "missingTag": "Falta",
+      "other": "És el d’un altre ordinador. Funciona mentre aquest aparellament continuï sent vàlid; restablir la confiança al dispositiu el trenca.",
+      "otherTag": "Un altre ordinador"
+    },
+    "manual": {
+      "title": "Al teu iPhone · IPAForge no ho pot comprovar",
+      "tag": "Comprova-ho tu mateix",
+      "vpn": {
+        "title": "La VPN de SideStore està activada quan renova",
+        "body": "Obre LocalDevVPN i connecta’l abans de renovar a SideStore."
+      },
+      "anisette": {
+        "title": "SideStore pot accedir al seu servidor d’anisette",
+        "body": "A SideStore › Configuració › Anisette, tria un altre servidor si en renovar diu que no pot iniciar la sessió."
+      }
+    },
+    "plan": {
+      "title": "Repara farà això",
+      "reinstall": "Torna a instal·lar SideStore",
+      "reinstallBody": "Del catàleg d’IPAForge, signat amb un certificat vàlid que també es posa a dins. Se’n conserven les dades i les teves apps.",
+      "profile": "Dona un perfil nou a SideStore",
+      "profileBody": "No es torna a instal·lar res.",
+      "pairing": "Col·loca el fitxer d’aparellament d’aquest ordinador",
+      "pairingBody": "A Documents de SideStore, substituint el que hi hagi.",
+      "optional": "A més, si ho vols",
+      "offerReinstall": "Torna a instal·lar SideStore, per assegurar-ho",
+      "offerPairing": "Substitueix el fitxer d’aparellament pel d’aquest ordinador",
+      "hint": "Una sola execució. Mantén {device} connectat i desbloquejat.",
+      "start": "Repara SideStore"
+    },
+    "blocked": {
+      "title": "SideStore no es pot tornar a instal·lar amb aquest Apple ID",
+      "body": "L’ha signat un altre equip o Apple ID, així que no se’n podrien traslladar les dades. Tria aquell Apple ID a la barra superior i prem Torna a comprovar."
+    },
+    "notInstalled": {
+      "title": "SideStore no és a {device}",
+      "body": "Instal·la’l primer, des de la pàgina Instal·la.",
+      "install": "Instal·la SideStore"
+    },
+    "fine": {
+      "title": "SideStore funciona",
+      "body": "No hi ha res a reparar. Si encara no es pot renovar, comprova les dues coses al teu iPhone, a sota."
+    },
+    "run": {
+      "title": {
+        "running": "Reparant SideStore",
+        "completed": "SideStore està reparat",
+        "failed": "No s’ha pogut reparar SideStore"
+      }
+    },
+    "done": {
+      "title": "SideStore a {device} està reparat.",
+      "open": "Obre SideStore i renova les teves apps."
+    },
+    "open": "Comprova SideStore",
+    "checkingTag": "Comprovant…",
+    "remote": {
+      "title": "Aparellament remot per a iOS 17.4 i posteriors",
+      "ok": "Hi és, i {device} l’accepta.",
+      "missing": "Falta: SideStore només pot fer servir l’aparellament clàssic. Col·locar-hi el fitxer d’aparellament d’aquest ordinador l’afegeix.",
+      "missingTag": "Falta",
+      "rejected": "{device} ja no l’accepta (se n’ha restablert la confiança). Col·locar-hi el fitxer d’aparellament d’aquest ordinador en crea un de nou.",
+      "rejectedTag": "No acceptat",
+      "other": "És el d’un altre ordinador, així que IPAForge no el pot comprovar. Col·locar-hi el fitxer d’aparellament d’aquest ordinador el substitueix.",
+      "otherTag": "Un altre ordinador",
+      "notNeeded": "No cal per sota d’iOS 17.4.",
+      "notNeededTag": "No cal"
+    }
+  },
+  "sidestore": {
+    "addSource": "Afegeix a SideStore",
+    "addAll": "Afegeix-ho tot a SideStore",
+    "install": "Instal·la amb SideStore",
+    "sourceTitle": "Afegeix {name} a SideStore",
+    "sourceBody": "SideStore també en mostra les apps i les manté al dia a l’iPhone. SideStore tampoc revisa les apps d’una font: afegeix només fonts de confiança.",
+    "installTitle": "Instal·la {name} amb SideStore",
+    "installBody": "SideStore descarrega {name} {version}, el signa amb el teu Apple ID i l’instal·la ell mateix a l’iPhone. Amb un Apple ID gratuït compta dins del límit de 3 apps. Es mostra a Apps quan IPAForge el renovi.",
+    "qrLabel": "Codi QR de l’enllaç de sota",
+    "steps": {
+      "camera": "Obre la Càmera a {device} i apunta-la al codi.",
+      "banner": "Toca el bàner per obrir SideStore.",
+      "addSource": "SideStore demana afegir la font: toca Afegeix.",
+      "install": "SideStore demana instal·lar l’app: toca Instal·la."
+    },
+    "onPhone": "Al mateix iPhone, l’enllaç també obre SideStore (enganxat a Safari o enviat per Missatges).",
+    "copy": "Copia",
+    "copied": "Copiat",
+    "previous": "Anterior",
+    "next": "Següent",
+    "step": "Font {at} de {count}",
+    "back": "Enrere",
+    "done": "Fet",
+    "offer": "{count, plural, one {Afegeix també a SideStore la font que has afegit aquí, perquè en mostri les apps a l’iPhone.} other {Afegeix també a SideStore les # fonts que has afegit aquí, perquè en mostri les apps a l’iPhone.}}"
+  },
+  "checklist": {
+    "title": "A {device} · iOS {ios}",
+    "setUp": "{device} està configurat · iOS {ios}",
+    "show": "Mostra la llista de comprovació",
+    "hide": "Amaga",
+    "allSet": "Tot a punt",
+    "progress": "{left, plural, one {# cosa per fer} other {# coses per fer}} · {done} de {total} fetes",
+    "group": {
+      "before": "Abans d’instal·lar",
+      "after": "Després d’instal·lar",
+      "sidestore": "Per a SideStore"
+    },
+    "onPhone": "A l’iPhone",
+    "tickedTag": "Fet a l’iPhone",
+    "tick": "Ja ho he fet",
+    "notNeeded": "No cal en aquest iOS",
+    "cable": {
+      "title": "Connecta {device} a aquest ordinador",
+      "connected": "Connectat",
+      "none": "No connectat",
+      "how": "Fes servir un cable la primera vegada; després, el Wi-Fi funciona mentre tots dos estiguin a la mateixa xarxa."
+    },
+    "unlock": {
+      "title": "Desbloqueja’l",
+      "locked": "Bloquejat",
+      "unlocked": "Desbloquejat",
+      "how": "Mantén-lo desbloquejat mentre IPAForge instal·la."
+    },
+    "trust": {
+      "title": "Confia en aquest ordinador",
+      "trusted": "De confiança",
+      "notYet": "Encara no",
+      "step1": "Desbloqueja {device}.",
+      "step2": "Toca Confia quan et pregunti per aquest ordinador.",
+      "step3": "Introdueix-ne el codi.",
+      "again": "Torna-ho a demanar"
+    },
+    "passcode": {
+      "title": "Defineix un codi d’accés",
+      "how": "SideStore renova per Wi-Fi, cosa que iOS només permet amb un codi d’accés: Configuració › Face ID i codi."
+    },
+    "devmode": {
+      "title": "Activa el mode de desenvolupador",
+      "on": "Activat",
+      "off": "Desactivat",
+      "step1": "Configuració › Privacitat i seguretat › Mode de desenvolupador (si no hi és, prem Mostra l’opció).",
+      "step2": "Activa’l i reinicia {device}.",
+      "step3": "Després del reinici, toca Activa i introdueix el codi.",
+      "reveal": "Mostra l’opció",
+      "revealed": "Ara és a Configuració › Privacitat i seguretat."
+    },
+    "developer": {
+      "title": "Confia en el teu Apple ID com a desenvolupador",
+      "later": "Després de la primera instal·lació",
+      "step1": "Configuració › General › VPN i gestió de dispositius.",
+      "step2": "A Apps de desenvolupador, toca {appleId}.",
+      "step3": "Toca Confia. L’iPhone necessita internet per fer-ho."
+    },
+    "vpn": {
+      "title": "Instal·la LocalDevVPN",
+      "installed": "Instal·lat",
+      "notInstalled": "No instal·lat",
+      "how": "SideStore es comunica amb l’iPhone mitjançant aquesta VPN local; res no surt del telèfon. És gratuïta a l’App Store.",
+      "qrLabel": "Codi QR de la pàgina de LocalDevVPN a l’App Store",
+      "scan": "Escaneja’l amb la Càmera o cerca «LocalDevVPN» a l’App Store."
+    },
+    "vpnOn": {
+      "title": "Connecta LocalDevVPN quan SideStore renovi",
+      "tag": "Cada vegada",
+      "later": "Després d’instal·lar-lo",
+      "how": "Obre LocalDevVPN i toca Connecta, o deixa que SideStore l’activi: ho demana la primera vegada."
+    },
+    "repair": {
+      "title": "SideStore pot renovar pel seu compte",
+      "tag": "Es comprova a Repara",
+      "how": "El seu certificat, el seu fitxer d’aparellament i la seva caducitat."
+    },
+    "notice": "{count, plural, one {# cosa per fer a {device}} other {# coses per fer a {device}}}",
+    "noticeBody": "Perquè instal·lar i renovar vagin sense problemes.",
+    "showChecklist": "Mostra la llista de comprovació"
+  },
+  "updates": {
+    "screen": {
+      "label": "Actualització d’IPAForge"
+    },
+    "checking": {
+      "title": "Cercant actualitzacions…"
+    },
+    "downloading": {
+      "title": "Actualitzant IPAForge",
+      "body": "Ja ha sortit la versió {version}. Ara es descarrega i s’instal·la, i després IPAForge s’obre de nou pel seu compte.",
+      "starting": "Iniciant la descàrrega…",
+      "percent": "{fraction, number, percent}"
+    },
+    "installing": {
+      "title": "Instal·lant {version}…",
+      "body": "IPAForge s’obrirà de nou d’aquí a un moment."
+    },
+    "failed": {
+      "title": "L’actualització no ha acabat",
+      "body": "Ja ha sortit la versió {version}. Torna-ho a provar o descarrega-la des de la seva pàgina de versions.",
+      "retry": "Torna-ho a provar",
+      "releasePage": "Pàgina de versions",
+      "skip": "Fes servir aquesta versió de moment"
+    },
+    "manual": {
+      "title": "Ja ha sortit IPAForge {version}",
+      "body": "Aquesta còpia es va instal·lar des de {package, select, msi {un instal·lador .msi} deb {un paquet .deb} rpm {un paquet .rpm} other {un paquet}}, que no es pot actualitzar sol. Descarrega la versió nova i instal·la-la a sobre d’aquesta: els teus Apple ID, apps i paràmetres es conserven.",
+      "download": "Descarrega {version}",
+      "later": "Més tard"
+    },
+    "nativeBuild": {
+      "title": "Aquesta és la versió per a Intel",
+      "body": "El teu Mac té Apple silicon, així que aquesta còpia d’IPAForge s’executa mitjançant Rosetta i tot va més lent. Descarrega la versió per a Apple silicon i instal·la-la a sobre d’aquesta; els teus Apple ID, dispositius i apps es conserven.",
+      "file": "IPAForge-…-mac-arm64.dmg",
+      "later": "Més tard",
+      "download": "Descarrega per a Apple silicon"
+    }
+  },
+  "whatsNew": {
+    "link": "Novetats",
+    "version": "Versió {version} · {date}",
+    "englishOnly": "Les notes de la versió estan en anglès.",
+    "kind": {
+      "new": "Novetat",
+      "changed": "Canvi",
+      "fixed": "Correcció",
+      "removed": "Eliminat"
+    },
+    "dialog": {
+      "title": "Novetats d’IPAForge",
+      "everyVersion": "Totes les versions",
+      "close": "Entesos"
+    },
+    "page": {
+      "title": "Novetats",
+      "lede": "Tot el que ha canviat a IPAForge, des del més recent.",
+      "current": "Aquesta versió",
+      "release": "Versió a GitHub"
+    }
+  },
+  "portal": {
+    "description": "El que l’equip del teu Apple ID té a Apple, i els perfils del teu dispositiu.",
+    "tabsLabel": "El que té l’equip",
+    "tabs": {
+      "certificates": "Certificats",
+      "appIds": "App ID",
+      "profiles": "Perfils",
+      "groups": "Grups d’apps",
+      "devices": "Dispositius registrats"
+    },
+    "team": {
+      "pick": "Equip",
+      "free": "{name} (gratuït)",
+      "paid": "{name} (de pagament)"
+    },
+    "refresh": "Actualitza",
+    "reading": "Llegint des d’Apple…",
+    "noAccount": {
+      "title": "Encara no hi ha cap Apple ID",
+      "body": "Inicia la sessió amb un Apple ID a Comptes per veure què té el seu equip."
+    },
+    "expired": "Caducat",
+    "expires": "Caduca el {date}",
+    "expiredOn": "Va caducar el {date}",
+    "certificates": {
+      "hint": "Un certificat signa les apps que instal·les. Revocar-ne un fa que deixin d’obrir-se totes les apps que ha signat, fins que es tornin a signar.",
+      "usedFree": "{count} de {max} en ús (els equips gratuïts en poden tenir {max})",
+      "usedPaid": "{count, plural, one {# certificat} other {# certificats}}",
+      "maker": {
+        "thisComputer": "IPAForge en aquest ordinador",
+        "ipaforge": "IPAForge en un altre ordinador",
+        "sidestore": "SideStore",
+        "machine": "«{machine}» (normalment Xcode)",
+        "unknown": "Una eina desconeguda"
+      },
+      "thisComputer": "El d’aquest ordinador",
+      "signs": "Signa {apps} a {device}",
+      "signsNothing": "No signa res a {device}",
+      "revoke": "Revoca",
+      "revokeOne": "Revoca {name}",
+      "empty": "L’equip encara no té cap certificat. IPAForge en crea un la primera vegada que instal·la.",
+      "import": "Importa .p12…",
+      "export": "Exporta .p12"
+    },
+    "revokeDialog": {
+      "title": "Vols revocar aquest certificat?",
+      "apps": "Deixaran d’obrir-se a {device} fins que es tornin a signar (Renova a Apps ho fa):",
+      "none": "Res a {device} no està signat amb aquest certificat.",
+      "noDevice": "Connecta el dispositiu per veure quines de les seves apps signa aquest certificat.",
+      "thisComputer": "IPAForge en crea un de nou la propera vegada que instal·li o renovi.",
+      "sidestore": "SideStore el va crear per renovar pel seu compte: en crea un de nou la propera vegada que hi iniciïs la sessió.",
+      "machine": "Xcode d’aquell ordinador en fa un de nou la propera vegada que signi.",
+      "exportedToo": "Un .p12 exportat d’aquest certificat també deixa de funcionar."
+    },
+    "appIds": {
+      "hintFree": "Cada app i extensió que instal·les en necessita un. Els equips gratuïts en poden registrar 10 en 7 dies; cadascun compta durant 7 dies des que es crea.",
+      "hintPaid": "Cada app i extensió que instal·les en necessita un. Els equips de pagament no tenen límit setmanal.",
+      "left": "{count, plural, one {# disponible aquesta setmana} other {# disponibles aquesta setmana}}",
+      "leftAndNext": "{left} · el següent s’allibera el {date}",
+      "countsUntil": "Compta fins al {date}",
+      "unused": "Sense ús",
+      "delete": "Suprimeix",
+      "deleteOne": "Suprimeix {name}",
+      "empty": "L’equip encara no té cap App ID."
+    },
+    "deleteDialog": {
+      "title": "Vols suprimir aquest App ID?",
+      "free": "En un equip gratuït continua comptant dins dels 10 per setmana fins que caduqui: suprimir-lo no allibera el lloc abans.",
+      "paid": "Es pot tornar a registrar més tard."
+    },
+    "profiles": {
+      "title": "Perfils d’aprovisionament a {device}",
+      "hint": "Un perfil permet que una app (o extensió) s’executi en aquest dispositiu. Renova en dona un de nou a una app; un de caducat o sense ús es pot eliminar sense problema.",
+      "noDevice": "Connecta el dispositiu per veure’n els perfils d’aprovisionament.",
+      "noApp": "Cap app el fa servir",
+      "otherTeam": "Un altre equip",
+      "remove": "Elimina",
+      "removeOne": "Elimina el perfil de {name}",
+      "removeUnused": "Elimina els que no es fan servir",
+      "empty": "En aquest dispositiu no hi ha cap perfil d’aprovisionament."
+    },
+    "removeDialog": {
+      "title": "{count, plural, one {Vols eliminar aquest perfil?} other {Vols eliminar # perfils?}}",
+      "body": "{count, plural, one {S’elimina de {device}. Cap app no el necessita.} other {S’eliminen de {device}. Cap app no els necessita.}}"
+    },
+    "groups": {
+      "hint": "Les apps del mateix grup comparteixen fitxers (SideStore i el seu widget, per exemple). IPAForge els crea quan una app en necessita un.",
+      "empty": "L’equip encara no té cap grup d’apps."
+    },
+    "devices": {
+      "hintFree": "Les apps que signes només s’executen en aquests.",
+      "hintPaid": "Les apps que signes només s’executen en aquests. Els equips de pagament en poden registrar 100 per any; eliminar-ne un es fa al web de desenvolupadors d’Apple, un cop l’any.",
+      "used": "{count} de {max} aquest any",
+      "connected": "Connectat",
+      "unnamed": "Dispositiu sense nom",
+      "empty": "Encara no hi ha cap dispositiu registrat. IPAForge registra el teu la primera vegada que instal·la."
+    },
+    "exportDialog": {
+      "title": "Exporta el certificat d’aquest ordinador",
+      "body": "Un fitxer .p12 amb el certificat i la seva clau privada, per a SideStore o un altre ordinador. Qui tingui el fitxer i la contrasenya pot signar apps com el teu equip.",
+      "password": "Contrasenya",
+      "again": "Torna a escriure la contrasenya",
+      "tooShort": "{count, plural, one {Fes servir almenys # caràcter.} other {Fes servir almenys # caràcters.}}",
+      "differ": "Les dues contrasenyes no coincideixen.",
+      "save": "Desa .p12…"
+    },
+    "importDialog": {
+      "title": "Importa un certificat",
+      "body": "Un .p12 d’un altre ordinador o de SideStore. IPAForge comprova que Apple encara el mostri per a aquest equip i després hi signa aquí: cap certificat nou, cap lloc ocupat.",
+      "noFile": "No s’ha triat cap fitxer",
+      "choose": "Tria…",
+      "password": "La seva contrasenya",
+      "import": "Importa"
+    }
+  },
+  "guide": {
+    "title": "Guia de configuració",
+    "stepsLabel": "Passos de configuració",
+    "stepDone": "(fet)",
+    "steps": {
+      "welcome": "Et donem la benvinguda",
+      "computer": "Aquest ordinador",
+      "iphone": "El teu iPhone",
+      "appleid": "Apple ID",
+      "install": "Instal·la SideStore",
+      "onphone": "Al teu iPhone",
+      "around": "Tot a punt"
+    },
+    "back": "Enrere",
+    "skip": "Omet aquest pas",
+    "continue": "Continua",
+    "later": "Acaba més tard",
+    "checkAgain": "Torna a comprovar",
+    "checking": "Comprovant…",
+    "copy": "Copia",
+    "copied": "Copiat",
+    "welcome": {
+      "title": "Et donem la benvinguda a IPAForge",
+      "lead": "Uns quants passos deixen a punt l’ordinador, l’iPhone i l’Apple ID, i després ja pots instal·lar SideStore. Tria primer l’idioma.",
+      "needTitle": "El que necessitaràs",
+      "needDevice": "Un iPhone o un iPad amb iOS 15 o posterior, i el seu cable USB",
+      "needAppleId": "Un Apple ID (un de gratuït serveix)",
+      "needPasscode": "El codi de l’iPhone, per confiar en aquest ordinador",
+      "skipGuide": "Ja sé com va",
+      "start": "Comença"
+    },
+    "computer": {
+      "title": "Aquest ordinador",
+      "lead": "IPAForge comprova que aquest ordinador pot iniciar la sessió a Apple: els servidors d’Apple, el rellotge i un servidor d’anisette. Si no es pot comunicar amb els iPhone, també t’explica com arreglar-ho.",
+      "failed": "Les comprovacions no s’han executat. Torna a comprovar o omet aquest pas.",
+      "service": {
+        "title": "Servei de connexió d’iPhone",
+        "fixMac": "macOS l’hauria d’executar pel seu compte. Reinicia el Mac i torna a comprovar.",
+        "fixWindows": "Instal·la Dispositius Apple des de Microsoft Store, obre’l una vegada i torna a comprovar.",
+        "fixLinux": "Instal·la usbmuxd, connecta l’iPhone i torna a comprovar.",
+        "openStore": "Obre Microsoft Store"
+      },
+      "apple": {
+        "title": "Servidors d’Apple",
+        "ok": "S’hi pot accedir.",
+        "fix": "IPAForge no pot accedir a Apple. Comprova la connexió a internet, la VPN o el tallafocs."
+      },
+      "clock": {
+        "title": "Rellotge",
+        "ok": "Correcte.",
+        "fix": "{minutes, plural, one {El rellotge està # minut desajustat.} other {El rellotge està # minuts desajustat.}} Configura la data i l’hora automàticament i torna a comprovar."
+      },
+      "anisette": {
+        "title": "Servidors d’anisette",
+        "ok": "{name} respon. L’inici de sessió el fa servir.",
+        "fix": "Cap dels primers {tried} servidors de la teva llista ha respost. Comprova la connexió o afegeix o tria un servidor a Configuració › Servidors d’anisette."
+      }
+    },
+    "iphone": {
+      "title": "El teu iPhone",
+      "lead": "Connecta l’iPhone amb el cable, desbloqueja’l i toca Confia quan ho demani. A iOS 16 i posteriors, cal tenir activat el mode de desenvolupador.",
+      "connectTitle": "Connecta l’iPhone",
+      "connectText": "Esperant un iPhone o un iPad per USB…"
+    },
+    "appleid": {
+      "title": "El teu Apple ID",
+      "lead": "Apple signa les apps que instal·les amb el teu Apple ID. La teva contrasenya només va a Apple i es queda al clauer d’aquest ordinador.",
+      "freeNote": "Un Apple ID gratuït serveix: les seves apps duren 7 dies i IPAForge les pot renovar. Un compte de desenvolupador de pagament dura un any.",
+      "signIn": "Inicia la sessió amb l’Apple ID",
+      "signedIn": "Sessió iniciada.",
+      "team": "Equip que signa les apps",
+      "free": "Gratuït: les apps duren 7 dies",
+      "paid": "De pagament: les apps duren un any"
+    },
+    "banner": {
+      "label": "Guia de configuració",
+      "text": "Acaba de configurar IPAForge: {done} de {total} passos fets.",
+      "continue": "Continua la guia",
+      "notNow": "Ara no"
+    },
+    "install": {
+      "title": "Instal·la SideStore",
+      "lead": "SideStore renova les teves apps a l’iPhone pel seu compte i n’instal·la més. IPAForge li dona el fitxer d’aparellament i el certificat que necessita.",
+      "notNow": "Ara no"
+    },
+    "onphone": {
+      "title": "Al teu iPhone",
+      "lead": "El que només pots fer tu a l’iPhone. Marca cada cosa a mesura que la facis; la pàgina Dispositius conserva la mateixa llista."
+    },
+    "around": {
+      "title": "Tot a punt",
+      "lead": "Aquí tens on és tot. Mentre IPAForge estigui obert, renova les teves apps abans que caduquin.",
+      "again": "Pots tornar a executar aquesta guia quan vulguis des de Configuració.",
+      "showMe": "Fes-me una visita guiada",
+      "apps": {
+        "title": "Apps",
+        "text": "Quan caduca cada app, amb Renova i Actualitza. Aquí també hi ha els fitxers d’aparellament.",
+        "where": "Barra lateral › Apps"
+      },
+      "preload": {
+        "title": "Precàrrega",
+        "text": "Afegeix les teves pròpies apps: fitxers .ipa, enllaços, fonts. O desa-les com a fitxers .ipa signats.",
+        "where": "Barra lateral › Precàrrega"
+      },
+      "repair": {
+        "title": "Repara SideStore",
+        "text": "Si SideStore deixa de renovar-se pel seu compte, això en descobreix el motiu i ho arregla.",
+        "where": "Apps › Comprova SideStore"
+      },
+      "developer": {
+        "title": "Portal per a desenvolupadors",
+        "text": "Els teus certificats, App ID i perfils, i un .p12 per moure el certificat.",
+        "where": "Barra lateral › Portal per a desenvolupadors"
+      },
+      "devices": {
+        "title": "Dispositius",
+        "text": "La llista de comprovació de cada iPhone i el seu fitxer d’aparellament per a altres eines.",
+        "where": "Barra lateral › Dispositius"
+      },
+      "logs": {
+        "title": "Registre",
+        "text": "Què ha passat, pas a pas. Adjunta’l a un informe d’error.",
+        "where": "Barra lateral › Registre · ⌘L / Ctrl+L"
+      }
+    }
+  },
+  "tour": {
+    "count": "{current} de {total}",
+    "skip": "Omet la visita",
+    "back": "Enrere",
+    "next": "Següent",
+    "done": "Fet",
+    "install": {
+      "title": "Instal·la",
+      "text": "Instal·la SideStore, o LiveContainer amb SideStore, amb un sol clic. Comença aquí amb un iPhone nou."
+    },
+    "preload": {
+      "title": "Precàrrega",
+      "text": "Afegeix les teves pròpies apps: fitxers .ipa, enllaços o apps de fonts. Marca’n una per desar-la com a .ipa signat en lloc d’això."
+    },
+    "apps": {
+      "title": "Apps",
+      "text": "Quan caduca cada app, amb Renova i Actualitza. IPAForge les renova soles mentre està obert. Aquí també hi ha els fitxers d’aparellament."
+    },
+    "devices": {
+      "title": "Dispositius",
+      "text": "La llista de comprovació de cada iPhone per a la seva versió d’iOS i el seu fitxer d’aparellament per a altres eines."
+    },
+    "developer": {
+      "title": "Portal per a desenvolupadors",
+      "text": "Els certificats, App ID i perfils del teu Apple ID. Neteja el que no fa servir res o mou el certificat com a .p12."
+    },
+    "pickers": {
+      "title": "Dispositiu i Apple ID",
+      "text": "Canvia en qualsevol moment l’iPhone o l’Apple ID que IPAForge fa servir aquí."
+    },
+    "logs": {
+      "title": "Registre",
+      "text": "Cada pas que ha fet IPAForge. Adjunta’l a un informe d’error (⌘L / Ctrl+L)."
+    },
+    "settings": {
+      "title": "Configuració",
+      "text": "Idioma, aspecte, servidors d’anisette i aquesta visita una altra vegada."
+    },
+    "showAround": {
+      "title": "Fes-me una visita guiada",
+      "text": "Fes aquesta visita una altra vegada des d’aquí quan vulguis. La guia de configuració és a Configuració."
+    }
+  },
+  "pairByCode": {
+    "steps": {
+      "pair": "Aparella amb el codi"
+    },
+    "open": "Aparella un Apple TV o un Vision Pro…",
+    "title": "Aparella un Apple TV o un Vision Pro",
+    "titleAgain": "Torna a aparellar {name}",
+    "progress": {
+      "label": "Passos",
+      "find": "1 Cerca",
+      "code": "2 Codi"
+    },
+    "intro": "No tenen cable, així que s’aparellen per Wi-Fi amb un codi. Posa el dispositiu al mateix Wi-Fi que aquest ordinador, obre’n la pantalla d’aparellament i mantén-la oberta:",
+    "where": {
+      "tv": "Apple TV",
+      "vision": "Apple Vision Pro",
+      "tvPath": "Configuració → Comandaments i dispositius → App Remote i dispositius",
+      "visionPath": "Configuració → General → Dispositius remots"
+    },
+    "found": "Trobat a la teva xarxa",
+    "showing": "Mostra la pantalla d’aparellament",
+    "pair": "Aparella",
+    "searching": "Cercant a la teva xarxa… El dispositiu apareix aquí quan la seva pantalla d’aparellament és oberta.",
+    "searchingMore": "Encara se’n cerquen d’altres…",
+    "help": {
+      "title": "No apareix",
+      "screen": "Mantén oberta la pantalla d’aparellament: el dispositiu només es pot trobar mentre la mostra.",
+      "network": "El mateix Wi-Fi que aquest ordinador: no una xarxa de convidats, i sense VPN a cap dels dos costats.",
+      "ipv6": "IPv6 activat al router (Apple el necessita per aparellar).",
+      "macos": "macOS: Configuració del sistema → Privacitat i seguretat → Xarxa local → IPAForge activat.",
+      "windows": "Windows: permet IPAForge a les xarxes privades quan el tallafocs ho demani."
+    },
+    "failed": "La cerca a la teva xarxa s’ha aturat. Tanca això i torna-ho a obrir.",
+    "code": {
+      "title": "Introdueix el codi a {name}",
+      "body": "{name} mostra un codi. Escriu-lo aquí.",
+      "label": "Codi",
+      "wrong": "Aquest codi no coincidia. Comprova el codi a {name} i torna-ho a provar.",
+      "pairing": "Aparellant amb {name}…",
+      "checking": "Comprovant el codi…"
+    },
+    "back": "Enrere",
+    "backToList": "Torna a la llista",
+    "backoff": {
+      "title": "Massa codis incorrectes",
+      "wait": "{name} et deixa tornar-ho a provar d’aquí a {seconds, plural, one {# segon} other {# segons}}.",
+      "later": "{name} no accepta més codis durant una estona. Espera una mica i torna-ho a provar."
+    },
+    "closed": {
+      "title": "{name} ha tancat la pantalla d’aparellament",
+      "body": "El codi només funciona mentre la pantalla d’aparellament és oberta. Torna-la a obrir a {name}:"
+    },
+    "done": {
+      "title": "{name} està aparellat",
+      "body": "{name} és a la pàgina Dispositius. Ara pots tancar-ne la pantalla d’aparellament.",
+      "vision": "Les apps s’instal·len quan el mode de desenvolupador està activat.",
+      "use": "Fes servir {name}",
+      "close": "Tanca"
+    },
+    "pairNamed": "Aparella {name}"
+  }
+}
