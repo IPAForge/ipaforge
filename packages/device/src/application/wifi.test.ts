@@ -1,7 +1,7 @@
 // Wi-Fi without usbmuxd: what a session sets up, and finding and opening a known device on the network.
 import { describe, expect, it } from 'vitest'
 
-import { WIFI_MAC } from '@device/__tests__/fake-device/fake-device.ts'
+import { addApp, WIFI_MAC } from '@device/__tests__/fake-device/fake-device.ts'
 import { createRig, type TestRig } from '@device/__tests__/setup.ts'
 import { createDeviceManager } from '@device/application/manager.ts'
 import {
@@ -318,6 +318,23 @@ describe('Wi-Fi on iOS 17 and later', () => {
       'remote pairing for Wi-Fi skipped: the device did not answer'
     )
     expect((await handle.check()).info.productVersion).toBe('26.6.1')
+    await handle.close()
+  })
+
+  it('places the pairing file without waiting on a device that never answers for the remote pairing', async () => {
+    const rig = await createRig({ productVersion: '26.6.1' })
+    rig.device.silentServices.add(REMOTE_PAIRING_SERVICE)
+    addApp(rig.device, 'com.SideStore.SideStore.ABCDE12345')
+    const { manager, logs } = loggedManager(rig, true)
+
+    const handle = await manager.open(rig.device.udid)
+    const targets = await handle.pairingTargets(['ABCDE12345'])
+    const placed = await handle.placePairingFile(targets)
+    expect(placed.classic.length).toBeGreaterThan(0)
+    expect(placed.remote).toEqual([])
+    expect(logs).toContain(
+      'remote pairing not placed: the device does not answer that service'
+    )
     await handle.close()
   })
 
