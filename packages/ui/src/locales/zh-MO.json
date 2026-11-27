@@ -1,0 +1,2216 @@
+{
+  "app": {
+    "name": "IPAForge"
+  },
+  "shell": {
+    "skipToContent": "跳到內容",
+    "navigation": "版面",
+    "credit": {
+      "madeWith": "以 ❤️ 和 ☕ 製作",
+      "copyright": "© {year} {name}"
+    }
+  },
+  "topBar": {
+    "device": "裝置",
+    "noDevice": "無",
+    "deviceMenu": "裝置",
+    "account": "Apple ID",
+    "notSignedIn": "未登入",
+    "accountMenu": "Apple ID",
+    "addAppleId": "新增 Apple ID…",
+    "noAccounts": "尚未有 Apple ID。",
+    "noDevicesHint": "用線連接 iPhone 或 iPad 並解鎖。",
+    "openDevices": "開啟「裝置」",
+    "tour": "帶我逛逛",
+    "pairByCode": "配對 Apple TV 或 Vision Pro…"
+  },
+  "nav": {
+    "group": {
+      "manage": "管理"
+    },
+    "install": "安裝",
+    "preload": "預載",
+    "apps": "應用程式",
+    "devices": "裝置",
+    "accounts": "帳戶",
+    "developer": "開發者入口",
+    "logs": "日誌",
+    "settings": "設定",
+    "installRunning": "正在安裝"
+  },
+  "placeholder": {
+    "body": "此部分仍在建設中。"
+  },
+  "install": {
+    "title": "安裝 SideStore",
+    "description": "以你的 Apple ID 簽署，再經 USB 安裝。",
+    "steps": {
+      "device": "檢查裝置",
+      "resolve": "尋找版本",
+      "download": "下載",
+      "inspect": "檢查應用程式",
+      "certificate_sharing": "分享憑證",
+      "sign_in": "登入 Apple",
+      "team": "選擇團隊",
+      "register_device": "註冊裝置",
+      "certificate": "準備憑證",
+      "app_ids": "註冊 App ID",
+      "free_apps": "檢查免費應用程式上限",
+      "provision": "取得描述檔",
+      "refresh_profiles": "取得新描述檔",
+      "sign": "簽署應用程式",
+      "install": "安裝到裝置",
+      "pairing": "放置配對檔案",
+      "remember": "記住此次安裝",
+      "save": "儲存已簽署的 .ipa"
+    },
+    "signInNeeded": {
+      "title": "你的 Apple ID 需要重新登入",
+      "body": "{appleId} 已儲存的登入階段已過期。你仍可繼續安裝：屆時 IPAForge 會詢問密碼。"
+    },
+    "blocked": {
+      "title": "Apple 已在 {device} 上封鎖 {appleId}",
+      "body": "以此 Apple ID 簽署的應用程式無法在此裝置上開啟。請改用另一個 Apple ID。",
+      "use": "使用 {appleId}"
+    },
+    "home": {
+      "what": "要安裝的內容",
+      "channel": "頻道",
+      "install": "安裝 {app}"
+    },
+    "variant": {
+      "sidestore": {
+        "title": "SideStore",
+        "description": "自行在裝置上刷新及安裝應用程式。使用 2 個 App ID。"
+      },
+      "livecontainer": {
+        "title": "LiveContainer + SideStore",
+        "description": "在一個應用程式內運行多個應用程式，突破 3 個應用程式的上限。使用 5 個 App ID。"
+      }
+    },
+    "channel": {
+      "stable": "穩定版",
+      "nightly": "每夜版",
+      "stableRecommended": "穩定版（建議）",
+      "nightlyRecommended": "每夜版（建議）"
+    },
+    "plan": {
+      "title": "此次安裝",
+      "waiting": "裝置和 Apple ID 就緒後顯示。",
+      "checking": "正在下載 {app} 並向 Apple 查核… 下載內容會保留，安裝時會直接使用。",
+      "unavailable": "無法向 Apple 查核。你仍可繼續安裝：每個步驟都會再次查核。",
+      "appIds": "App ID",
+      "appIdsValue": "{created, plural, =0 {{reused} 個已全部註冊} other {{reused, plural, =0 {新增 {created} 個} other {新增 {created} 個，重用 {reused} 個}}}} · {left, plural, other {本週尚餘 # 個}}",
+      "nextSlot": "下一個名額將於 {date} 釋出",
+      "freeApps": "裝置上的免費應用程式",
+      "freeAppsValue": "已使用 {used} / {limit}",
+      "freeAppsRoom": "尚有空位",
+      "freeAppsFull": "你需要選一個移除",
+      "noLimit": "無上限（付費團隊）",
+      "certificate": "憑證",
+      "certificateReused": "重用",
+      "certificateNew": "將建立新憑證",
+      "certificatesOnTeam": "{count, plural, =0 {團隊中尚無憑證} other {團隊中有 # 個}}",
+      "team": "團隊",
+      "certificateNewWhy": "IPAForge 在此團隊中尚無自己的憑證。{count, plural, =0 {} other {已有的 # 個屬於其他工具，私密金鑰由該工具保管。}}"
+    },
+    "readiness": {
+      "noDevice": "請先連接裝置。",
+      "noSideStore": "SideStore 運行於 iPhone 和 iPad。如要在 Apple TV 或 Vision Pro 上安裝應用程式，請使用「預載」。",
+      "checking": "正在檢查裝置…",
+      "device": "裝置就緒後可用。",
+      "noAccount": "請先新增 Apple ID。",
+      "blocked": "請先改用另一個 Apple ID。",
+      "appIds": "本週剩餘的 App ID 不足。",
+      "ready": "一切就緒。"
+    },
+    "run": {
+      "title": {
+        "running": "正在安裝 {app}",
+        "completed": "{app} 已安裝",
+        "failed": "無法安裝 {app}",
+        "cancelled": "安裝已取消"
+      },
+      "subtitle": "{channel} · {device} · {appleId}",
+      "percent": "{fraction, number, percent}",
+      "progress": "整體進度",
+      "steps": "步驟",
+      "cancel": "取消",
+      "cancelInstall": "取消安裝",
+      "runningHint": "運行期間你可以使用其他部分。",
+      "waitingHint": "正在等待你的回應。",
+      "stepState": {
+        "waiting": "需要你處理",
+        "skipped": "已略過",
+        "failed": "失敗"
+      },
+      "detail": {
+        "bytes": "{received} / {total}",
+        "received": "{received}",
+        "retrying": "連線中斷。{seconds, plural, other {# 秒}}後重試（第 {attempt} 次）"
+      },
+      "live": {
+        "header": "{percent} · {left}",
+        "installing": "{fraction, number, percent} · {phase}",
+        "count": "{done} / {total}",
+        "task": {
+          "line": "{task} · {count}",
+          "team": "正在檢查團隊",
+          "appIds": "正在建立 App ID",
+          "appGroup": "正在加入 App Group",
+          "profiles": "正在取得描述檔"
+        },
+        "phase": {
+          "unpacking": "正在解壓應用程式",
+          "checking": "正在檢查應用程式",
+          "installing": "正在安裝"
+        },
+        "speed": "{speed}/秒",
+        "ios": "iOS 正在安裝",
+        "leftSeconds": "尚餘約 {seconds} 秒",
+        "leftMinutes": "{minutes, plural, other {尚餘約 # 分鐘}}"
+      },
+      "connection": {
+        "usb": "USB",
+        "network": "Wi-Fi"
+      },
+      "wifi": {
+        "title": "此裝置透過 Wi-Fi 連接",
+        "body": "大型應用程式用線連接安裝快得多。透過 Wi-Fi 時，IPAForge 會壓縮後再傳送以節省時間。"
+      },
+      "unsupportedPrompt": {
+        "title": "此步驟需要你回應",
+        "body": "IPAForge 需要你回答一個此版本無法顯示的問題。請取消安裝並更新 IPAForge。"
+      },
+      "backToInstall": "返回「安裝」",
+      "report": {
+        "device": "{model} · iOS {ios} · {connection}",
+        "release": "{app} {version} · {channel}",
+        "download": "{size} · 校驗碼已驗證",
+        "downloadCached": "{size} · 來自下載快取",
+        "app": "{app} · {extensions, plural, =0 {無擴充功能} other {# 個擴充功能}}",
+        "session": {
+          "reused": "已重用儲存的登入階段",
+          "renewed": "已用儲存的密碼重新登入",
+          "signed-in": "已登入"
+        },
+        "registered": "已向團隊註冊",
+        "alreadyRegistered": "已向團隊註冊過",
+        "certificate": {
+          "reused": "已重用儲存的憑證",
+          "created": "已建立新憑證",
+          "replaced": "已撤銷一個憑證並建立新憑證"
+        },
+        "removed": "已移除 {app} · {used}",
+        "profiles": "{count, plural, other {# 個描述檔}}",
+        "signed": "{count, plural, other {已簽署 # 個套件}}",
+        "signedCompressed": "{count, plural, other {已簽署 # 個套件}} · 已為 Wi-Fi 壓縮",
+        "phase": {
+          "uploading": "正在上傳到裝置",
+          "installing": "正在安裝"
+        },
+        "pairing": "已放置於 {apps}",
+        "shared": "憑證已分享",
+        "notShared": "憑證未分享",
+        "pairingRemote": "已放置於 {apps} · 並為 iOS 17.4 及更新版本使用遠端配對",
+        "saved": "已儲存至 {path}"
+      },
+      "subtitleApps": "{device} · {appleId}"
+    },
+    "summary": {
+      "title": "此次安裝",
+      "app": "應用程式",
+      "channel": "頻道",
+      "device": "裝置",
+      "deviceValue": "{name} · iOS {ios}",
+      "account": "Apple ID",
+      "appIds": "App ID",
+      "appIdsValue": "{count, plural, other {本週尚餘 # 個}}",
+      "freeApps": "免費應用程式",
+      "apps": "應用程式"
+    },
+    "done": {
+      "title": "{app} 已安裝到 {device}。",
+      "trust": "在裝置上：設定 › 一般 › VPN 與裝置管理 › 信任 {appleId}。",
+      "open": "開啟 SideStore：配對檔案和你的憑證已在其中。",
+      "done": "完成"
+    },
+    "cancelled": {
+      "title": "已停在「{step}」。",
+      "body": "繼續時不會重複已完成的部分。",
+      "resume": "繼續"
+    },
+    "failed": {
+      "continues": "已完成的步驟會保留：重試會從「{step}」繼續。",
+      "copy": "複製診斷資料",
+      "copied": "已複製",
+      "copyFailed": "無法複製",
+      "showLogs": "顯示日誌"
+    }
+  },
+  "pairing": {
+    "steps": {
+      "targets": "尋找需要配對的應用程式",
+      "place": "放置配對檔案"
+    }
+  },
+  "settings": {
+    "appearance": "外觀與語言",
+    "mode": "色彩模式",
+    "palette": "色盤",
+    "language": {
+      "title": "語言",
+      "system": "系統（{language}）",
+      "hint": "除非你在此選擇語言，否則 IPAForge 會跟隨系統語言。",
+      "draft": "草稿"
+    },
+    "anisette": {
+      "title": "Anisette 伺服器",
+      "hint": "登入 Apple 需要 anisette 伺服器，它會告知 Apple 是哪部電腦在登入。IPAForge 會自動使用可用的伺服器；如你偏好特定伺服器，可在此選擇，或新增自己的伺服器。",
+      "add": "新增伺服器",
+      "loading": "正在載入伺服器…",
+      "modeLabel": "IPAForge 如何選擇伺服器",
+      "mode": {
+        "automatic": "自動",
+        "chosen": "選擇伺服器"
+      },
+      "modeHint": {
+        "automatic": "依此順序嘗試各伺服器，失敗時換下一個。",
+        "chosen": "一律使用 {name}。",
+        "none": "選擇 IPAForge 應一律使用的伺服器。"
+      },
+      "noneChosen": "尚未選擇伺服器：在你選擇之前，IPAForge 會自行選擇。",
+      "chosenDown": "{name} 沒有回應。在它恢復之前，或在你選擇另一個伺服器或改用「自動」之前，無法登入。",
+      "count": "{count, plural, other {# 個伺服器}}",
+      "sources": "{custom, plural, =0 {} other {你自行新增 # 個，}}來自 SideStore 清單 {list} 個，後備 {backup} 個 ·",
+      "listUpdated": "SideStore 清單於{ago}更新",
+      "listNever": "尚未取得 SideStore 清單",
+      "updateList": "更新清單",
+      "updating": "正在更新…",
+      "testAll": "全部測試",
+      "testing": "正在測試…",
+      "group": {
+        "custom": "你自行新增 · 優先使用",
+        "list": "來自 SideStore 清單",
+        "backup": "後備 · 僅在無法連上 SideStore 清單或清單中的伺服器全部無回應時使用"
+      },
+      "tag": {
+        "custom": "你自行新增",
+        "inUse": "使用中",
+        "chosen": "已選擇"
+      },
+      "position": "第 {position} 個嘗試",
+      "use": "使用 {name}",
+      "chooseLabel": "要使用的伺服器",
+      "status": {
+        "untested": "未測試",
+        "testing": "正在測試…",
+        "ok": "運作正常 · {ms} 毫秒",
+        "bad": "沒有回應"
+      },
+      "test": "測試",
+      "testOne": "測試 {name}",
+      "edit": "編輯 {name}",
+      "remove": "移除 {name}",
+      "confirmRemove": "移除 {name}？",
+      "removeYes": "移除",
+      "skipped": "未使用 SideStore 清單中的：{names}（沒有 HTTPS）。你可以自行新增純 HTTP 伺服器，例如你自己電腦上的伺服器。",
+      "dialog": {
+        "addTitle": "新增 anisette 伺服器",
+        "editTitle": "編輯伺服器",
+        "body": "任何使用常規協定的 anisette 伺服器都適用：公開的，或你自己架設的。",
+        "name": "名稱",
+        "namePlaceholder": "我的伺服器",
+        "address": "位址",
+        "addressPlaceholder": "https://anisette.my-server.net",
+        "addressHint": "https://，或如為你自己架設的伺服器，則為 http://",
+        "nameMissing": "請為它命名。",
+        "addressInvalid": "請輸入以 https:// 或 http:// 開頭的位址。",
+        "exists": "此伺服器已在清單中。",
+        "stillAdd": "你仍可新增它。",
+        "save": "儲存"
+      }
+    },
+    "guide": {
+      "title": "設定指南",
+      "text": "重新檢查電腦、iPhone 和 Apple ID。",
+      "run": "再次執行指南",
+      "tour": "帶我逛逛",
+      "tourTitle": "頁面導覽",
+      "tourHint": "逐步介紹每個頁面的用途。"
+    },
+    "tabs": {
+      "label": "設定",
+      "general": "一般",
+      "anisette": "Anisette 伺服器"
+    },
+    "modeHint": "淺色、深色，或跟隨系統。",
+    "paletteHint": "整個應用程式的色彩，包括淺色和深色。"
+  },
+  "theme": {
+    "mode": {
+      "system": "系統",
+      "light": "淺色",
+      "dark": "深色"
+    },
+    "palette": {
+      "graphite": "石墨",
+      "ocean": "海洋",
+      "aurora": "極光",
+      "sunset": "日落",
+      "forest": "森林",
+      "rose": "玫瑰",
+      "violet": "紫羅蘭",
+      "mocha": "摩卡"
+    }
+  },
+  "errors": {
+    "device": {
+      "locked": {
+        "title": "解鎖你的裝置",
+        "body": "裝置已鎖定，IPAForge 無法與它通訊。請解鎖，並在安裝完成前保持解鎖。"
+      },
+      "developer_mode_off": {
+        "title": "開發者模式已關閉",
+        "body": "旁載的應用程式需要開發者模式。請在「設定 › 私隱與安全性 › 開發者模式」中開啟，然後重新啟動裝置。"
+      },
+      "not_paired": {
+        "title": "此電腦尚未受信任",
+        "body": "解鎖裝置，並在詢問是否信任此電腦時點一下「信任」。"
+      },
+      "usbmuxd_unavailable": {
+        "title": "裝置支援未運行",
+        "body": "IPAForge 無法連上與 iPhone 和 iPad 通訊的系統服務。請安裝或啟動它，然後再試。"
+      },
+      "not_found": {
+        "title": "找不到裝置",
+        "body": "用 USB 線連接你的 iPhone 或 iPad 並解鎖。"
+      },
+      "disconnected": {
+        "title": "裝置已中斷連接",
+        "body": "連線中斷。請重新接上線、解鎖裝置，然後再試。"
+      },
+      "pairing_pending": {
+        "title": "正在等待「信任」",
+        "body": "解鎖裝置，並點一下出現的提示上的「信任」。"
+      },
+      "pairing_denied": {
+        "title": "信任已被拒絕",
+        "body": "裝置拒絕信任此電腦。請再次配對，這次請點一下「信任」。"
+      },
+      "invalid_pair_record": {
+        "title": "配對已失效",
+        "body": "裝置不再接受此電腦的配對。請拔出再插入、解鎖並點一下「信任」。"
+      },
+      "service_unavailable": {
+        "title": "裝置服務未能啟動",
+        "body": "裝置拒絕啟動 IPAForge 所需的服務。請解鎖、重新連接，然後再試。"
+      },
+      "protocol_error": {
+        "title": "裝置傳來非預期的回應",
+        "body": "裝置傳來 IPAForge 無法理解的內容。請重新連接；如再次發生，請更新 IPAForge 或回報。"
+      },
+      "install_failed": {
+        "title": "安裝失敗",
+        "body": "裝置拒絕安裝此應用程式。請再試一次；如持續失敗，請重新安裝該應用程式或回報。"
+      },
+      "afc_error": {
+        "title": "無法傳輸檔案",
+        "body": "複製檔案到裝置失敗。請解鎖後再試。"
+      },
+      "timeout": {
+        "title": "裝置沒有回應",
+        "body": "裝置回應時間過長。請解鎖、重新連接，然後再試。"
+      },
+      "passcode_required": {
+        "title": "請設定密碼",
+        "body": "此操作需要裝置密碼。請在「設定 › Face ID 與密碼」中設定，然後再試。"
+      },
+      "free_app_limit": {
+        "title": "旁載的應用程式過多",
+        "body": "免費 Apple ID 在一部裝置上只能同時啟用三個旁載應用程式。請移除一個，然後再試。"
+      },
+      "profile_banned": {
+        "title": "Apple 已在裝置上封鎖此 Apple ID",
+        "body": "裝置不接受以此 Apple ID 簽署的應用程式。重試無效：請改用另一個 Apple ID。"
+      },
+      "identity_invalid": {
+        "title": "簽署憑證已失效",
+        "body": "裝置拒絕了簽署應用程式所用的憑證。請檢查電腦的時鐘，或撤銷憑證後再試。"
+      },
+      "profile_not_found": {
+        "title": "缺少描述檔",
+        "body": "裝置找不到此應用程式的描述檔。請再試一次，或重新安裝該應用程式。"
+      },
+      "pairing_path_invalid": {
+        "title": "該路徑無法存放配對檔案",
+        "body": "請使用應用程式的 Documents 或 Library 內、以 .plist 或 .mobiledevicepairing 結尾的路徑。"
+      },
+      "local_network_denied": {
+        "title": "IPAForge 無法搜尋你網絡上的裝置",
+        "body": "macOS 未允許 IPAForge 尋找你本地網絡上的裝置，因此無法經 Wi-Fi 連上 iPhone。用線連接的裝置仍可使用。"
+      },
+      "tunnel_unavailable": {
+        "title": "裝置的通道未能開啟",
+        "body": "IPAForge 無法開啟 iOS 17.4 及更新版本經由連接線提供的安全通道。請確認裝置運行 iOS 17.4 或更新版本，重新連接後再試。"
+      },
+      "pairing_code_wrong": {
+        "title": "驗證碼不符",
+        "body": "輸入的驗證碼與裝置顯示的不同。請查看其螢幕上的驗證碼，然後再試。"
+      },
+      "pairing_backoff": {
+        "title": "錯誤驗證碼過多",
+        "body": "裝置暫時不再接受驗證碼。請稍候，重新開啟其配對畫面，然後再次配對。"
+      },
+      "pairing_screen_closed": {
+        "title": "配對畫面已關閉",
+        "body": "裝置在配對完成前停止顯示配對畫面。請重新開啟並保持開啟：Apple TV：設定 → 遙控器與裝置 → 遙控器 App 與裝置。Apple Vision Pro：設定 → 一般 → 遠端裝置。"
+      }
+    },
+    "apple": {
+      "anisette_unavailable": {
+        "title": "Anisette 伺服器沒有回應",
+        "body": "登入 Apple 需要 anisette 伺服器，而目前的伺服器沒有回應。請選擇另一個伺服器或檢查你的網絡。"
+      },
+      "anisette_not_provisioned": {
+        "title": "Anisette 伺服器尚未就緒",
+        "body": "Anisette 伺服器無法完成自身設定。請選擇另一個伺服器，然後再試。"
+      },
+      "app_id_quota": {
+        "title": "本週沒有剩餘的 App ID",
+        "body": "免費 Apple ID 每 7 天只能註冊 10 個 App ID。請等待名額釋出，或使用另一個 Apple ID。"
+      },
+      "certificate_limit": {
+        "title": "憑證過多",
+        "body": "此 Apple ID 已達開發憑證的上限。請撤銷一個，或使用另一個 Apple ID。"
+      },
+      "invalid_credentials": {
+        "title": "Apple ID 或密碼錯誤",
+        "body": "Apple 不接受該電郵或密碼。請檢查後重新輸入密碼。"
+      },
+      "account_locked": {
+        "title": "此 Apple ID 已被鎖定",
+        "body": "Apple 因安全理由鎖定了此帳戶。請在 Apple 裝置上或 Apple 網站解鎖，或使用另一個 Apple ID。"
+      },
+      "account_refused": {
+        "title": "Apple 拒絕了登入",
+        "body": "Apple 目前不允許此 Apple ID 從這裡登入。請稍候，先在 Apple 裝置上登入一次，或使用另一個 Apple ID。"
+      },
+      "client_rejected": {
+        "title": "Apple 拒絕了登入請求",
+        "body": "Apple 不接受隨登入送出的身分資料。請選擇另一個 anisette 伺服器，或稍後再試。"
+      },
+      "rate_limited": {
+        "title": "請求過多",
+        "body": "Apple 目前正在限制請求。請等幾分鐘後再試。"
+      },
+      "service_unavailable": {
+        "title": "Apple 的伺服器無法使用",
+        "body": "Apple 的伺服器沒有回應。請等幾分鐘，並檢查你的網絡。"
+      },
+      "two_factor_required": {
+        "title": "輸入驗證碼",
+        "body": "Apple 已將驗證碼傳送到你的受信任裝置。請輸入以繼續。"
+      },
+      "two_factor_invalid_code": {
+        "title": "驗證碼錯誤",
+        "body": "該驗證碼無效。請檢查後重新輸入。"
+      },
+      "two_factor_unsupported": {
+        "title": "不支援此登入方式",
+        "body": "此 Apple ID 使用的雙重認證方式 IPAForge 尚無法處理，例如安全密鑰。請使用另一個 Apple ID。"
+      },
+      "sms_unavailable": {
+        "title": "無法使用簡訊接收驗證碼",
+        "body": "Apple 不會在這裡以簡訊傳送驗證碼。請在受信任裝置上取得，或使用另一個 Apple ID。"
+      },
+      "clock_skew": {
+        "title": "電腦的時鐘不正確",
+        "body": "時鐘不準時 Apple 會拒絕請求。請設定自動日期和時間，然後再試。"
+      },
+      "protocol_error": {
+        "title": "Apple 傳來非預期的回應",
+        "body": "Apple 傳來 IPAForge 無法理解的內容。請更新 IPAForge，如持續發生請回報。"
+      },
+      "session_expired": {
+        "title": "你的登入階段已過期",
+        "body": "請重新登入此 Apple ID。如持續過期，請檢查電腦的時鐘。"
+      },
+      "account_not_found": {
+        "title": "找不到 Apple ID",
+        "body": "IPAForge 沒有此 Apple ID 已儲存的登入階段。請重新登入。"
+      },
+      "not_eligible": {
+        "title": "此 Apple ID 不能用於開發",
+        "body": "Apple 不允許此帳戶簽署應用程式，例如因其年齡或條款。請使用另一個 Apple ID。"
+      },
+      "email_unverified": {
+        "title": "請驗證你的電郵",
+        "body": "Apple 需要先驗證此 Apple ID 的電郵地址。驗證後再試。"
+      },
+      "team_agreement": {
+        "title": "接受 Apple 的協議",
+        "body": "團隊尚未接受 Apple 最新的開發者協議。請到 Apple 開發者網站接受，或選擇另一個團隊。"
+      },
+      "no_teams": {
+        "title": "沒有開發者團隊",
+        "body": "此 Apple ID 尚未有開發者團隊。請接受 Apple 的開發者協議，或使用另一個 Apple ID。"
+      },
+      "device_limit": {
+        "title": "已達裝置上限",
+        "body": "此團隊無法再註冊更多裝置。請選擇另一個團隊，或使用另一個 Apple ID。"
+      },
+      "app_id_unavailable": {
+        "title": "此 App ID 已被使用",
+        "body": "另一個團隊已使用此 App ID。請選擇另一個團隊，或使用另一個 Apple ID。"
+      },
+      "invalid_app_id_name": {
+        "title": "Apple 拒絕了 App ID 名稱",
+        "body": "Apple 不接受 IPAForge 為 App ID 所選的名稱。請更新 IPAForge 或回報。"
+      },
+      "certificate_not_revocable": {
+        "title": "無法在此撤銷此憑證",
+        "body": "只有 Apple 可以撤銷此憑證。請改為撤銷另一個。"
+      },
+      "no_devices_for_profile": {
+        "title": "裝置尚未註冊",
+        "body": "Apple 尚未完成註冊裝置。請等一分鐘後再試。"
+      },
+      "developer_request_failed": {
+        "title": "Apple 開發者服務失敗",
+        "body": "向 Apple 開發者服務發出的請求失敗。請再試一次，如持續發生請回報。"
+      },
+      "anisette_server_invalid": {
+        "title": "無法使用此 anisette 伺服器",
+        "body": "請檢查其名稱和位址：位址以 https:// 或 http:// 開頭。"
+      },
+      "anisette_server_exists": {
+        "title": "此 anisette 伺服器已在清單中",
+        "body": "請改在「設定」的清單中選擇它。"
+      },
+      "certificate_not_on_team": {
+        "title": "此憑證不在團隊中",
+        "body": "Apple 不再為此團隊列出它：它已被撤銷、已過期，或屬於另一個團隊。請匯出目前的憑證並匯入。"
+      }
+    },
+    "catalog": {
+      "source_gone": {
+        "title": "此版本已不再提供",
+        "body": "此應用程式的下載來源已不存在。請選擇另一個頻道、匯入 IPA，或更新 IPAForge。"
+      },
+      "unavailable": {
+        "title": "無法載入應用程式清單",
+        "body": "IPAForge 無法取得應用程式清單。請檢查你的網絡後再試。"
+      },
+      "download_failed": {
+        "title": "下載失敗",
+        "body": "無法下載此應用程式。請檢查你的網絡後再試。"
+      },
+      "checksum_mismatch": {
+        "title": "下載的檔案已損壞",
+        "body": "下載的檔案與其校驗碼不符，因此未使用。請再試一次或選擇另一個頻道。"
+      },
+      "checksum_missing": {
+        "title": "無法驗證下載內容",
+        "body": "此版本沒有校驗碼，IPAForge 無法檢查。請選擇另一個頻道，或自行匯入 IPA。"
+      },
+      "rate_limited": {
+        "title": "向 GitHub 發出的請求過多",
+        "body": "GitHub 目前正在限制下載。請等幾分鐘後再試。"
+      },
+      "app_source_unreachable": {
+        "title": "無法連上此來源",
+        "body": "請檢查連結以及你是否已連線，然後再試。"
+      },
+      "app_source_invalid": {
+        "title": "此連結不是應用程式來源",
+        "body": "它沒有列出任何 AltStore 格式的應用程式。請檢查連結，或改為新增該應用程式的 .ipa 檔案。"
+      },
+      "app_source_exists": {
+        "title": "此來源已新增",
+        "body": "其應用程式已在「瀏覽應用程式」中。"
+      }
+    },
+    "plist": {
+      "invalid": {
+        "title": "應用程式的設定檔已損壞",
+        "body": "無法讀取應用程式內的屬性列表。請選擇另一個 IPA，或回報。"
+      }
+    },
+    "net": {
+      "offline": {
+        "title": "你處於離線狀態",
+        "body": "IPAForge 無法連上互聯網。請檢查你的網絡連線後再試。"
+      }
+    },
+    "signer": {
+      "invalid_macho": {
+        "title": "應用程式的程式已損壞",
+        "body": "無法讀取應用程式的可執行檔。請選擇另一個 IPA。"
+      },
+      "encrypted_binary": {
+        "title": "應用程式已加密",
+        "body": "此 IPA 來自 App Store 且仍處於加密狀態，因此無法重新簽署。請選擇已解密的 IPA。"
+      },
+      "unsupported_arch": {
+        "title": "不支援的應用程式格式",
+        "body": "應用程式的可執行檔使用 iOS 無法運行的格式。請選擇另一個 IPA。"
+      },
+      "unsupported_ios": {
+        "title": "需要較新的 iOS",
+        "body": "此應用程式需要比裝置更新的 iOS 版本。請更新裝置，或選擇另一個頻道或 IPA。"
+      },
+      "unsupported_device": {
+        "title": "不適用於此裝置",
+        "body": "此應用程式不支援此類裝置，例如在 iPhone 上安裝僅限 iPad 的應用程式，或在 Apple TV 上安裝 iPhone 應用程式。請選擇另一個 IPA。"
+      },
+      "no_arm64_build": {
+        "title": "沒有適用於 iPhone 或 iPad 的版本",
+        "body": "此應用程式沒有適用於 iPhone 或 iPad 的 64 位元版本，例如 32 位元或模擬器版本。請選擇另一個 IPA。"
+      },
+      "no_header_space": {
+        "title": "無法簽署此應用程式",
+        "body": "應用程式的可執行檔中沒有空間存放簽名。請選擇另一個 IPA，或回報。"
+      },
+      "zip_slip": {
+        "title": "此 IPA 不安全",
+        "body": "此 IPA 嘗試把檔案寫到自己的資料夾以外，因此 IPAForge 拒絕了它。請選擇另一個 IPA。"
+      },
+      "invalid_certificate": {
+        "title": "憑證無效",
+        "body": "無法使用簽署憑證。請撤銷它讓 IPAForge 建立新的憑證，然後再試。"
+      },
+      "unknown_issuer": {
+        "title": "未知的憑證簽發者",
+        "body": "IPAForge 不認得憑證的簽發者。請更新 IPAForge 並檢查你的網絡。"
+      },
+      "invalid_bundle": {
+        "title": "應用程式套件無效",
+        "body": "此 IPA 不包含有效的應用程式。請選擇另一個 IPA。"
+      },
+      "invalid_profile": {
+        "title": "描述檔無效",
+        "body": "無法讀取 Apple 提供的描述檔。請再試一次，如持續發生請回報。"
+      },
+      "extension_prefix": {
+        "title": "應用程式擴充功能的 ID 錯誤",
+        "body": "擴充功能的 bundle ID 不是以應用程式本身的 ID 開頭。請選擇另一個 IPA。"
+      },
+      "profile_mismatch": {
+        "title": "描述檔不相符",
+        "body": "此描述檔與其所屬的應用程式不相符。請再試一次，如持續發生請回報。"
+      },
+      "profile_expired": {
+        "title": "描述檔已過期",
+        "body": "描述檔已過期，或電腦的時鐘不正確。請檢查時鐘後再試。"
+      },
+      "cert_not_in_profile": {
+        "title": "憑證不在描述檔中",
+        "body": "描述檔不包含簽署憑證。請再試一次以取得新的描述檔。"
+      },
+      "device_not_provisioned": {
+        "title": "裝置不在描述檔中",
+        "body": "描述檔不包含此裝置。請再試一次以取得新的描述檔。"
+      },
+      "pkcs12_password": {
+        "title": "密碼無法開啟此 .p12",
+        "body": "請輸入匯出時使用的密碼，然後再試。"
+      }
+    },
+    "installer": {
+      "step_failed": {
+        "title": "某個步驟失敗",
+        "body": "安裝期間出現問題。請再試一次，如持續發生請回報。"
+      },
+      "prompt_cancelled": {
+        "title": "已取消",
+        "body": "由於某個問題被取消，安裝已停止。準備好時請重新開始。"
+      },
+      "certificate_machine_id_missing": {
+        "title": "無法分享此憑證",
+        "body": "此憑證缺少 SideStore 開啟它所需的資料。請撤銷它讓 IPAForge 建立新的憑證，然後再試。"
+      },
+      "team_required": {
+        "title": "請選擇團隊",
+        "body": "此 Apple ID 屬於多個團隊。請選擇用來簽署的團隊。"
+      },
+      "kept_ipa_missing": {
+        "title": "無法在此刷新此應用程式",
+        "body": "IPAForge 沒有在此裝置上安裝過它，或其保留的副本已不存在。請在「預載」中新增其 .ipa 以重新安裝。"
+      },
+      "wrong_app": {
+        "title": "此連結提供的是另一個應用程式",
+        "body": "它不是你正在刷新或更新的應用程式，因此沒有安裝，應用程式及其資料保持原狀。請在「預載」中新增正確的 .ipa 以重新安裝。"
+      },
+      "version_unavailable": {
+        "title": "無法再次下載此版本",
+        "body": "「刷新」會保留你裝置上的版本，而它已不再提供下載。請使用「更新」安裝最新版本；應用程式會保留其資料。"
+      },
+      "pairing_app_not_found": {
+        "title": "該應用程式不在裝置上",
+        "body": "它已被移除，或已不是 IPAForge 安裝的應用程式。請關閉「配對檔案」再重新開啟。"
+      },
+      "certificate_not_stored": {
+        "title": "此電腦上尚無憑證",
+        "body": "此電腦在用團隊憑證安裝應用程式後才會保留它。請先安裝一個應用程式，或匯入 .p12。"
+      }
+    },
+    "rpc": {
+      "invalid_message": {
+        "title": "內部通訊錯誤",
+        "body": "IPAForge 的各部分無法互相理解。請更新 IPAForge 或回報。"
+      },
+      "disconnected": {
+        "title": "與引擎的連線中斷",
+        "body": "IPAForge 的引擎沒有回應。請再試一次，如持續發生請回報。"
+      },
+      "timeout": {
+        "title": "引擎沒有回應",
+        "body": "IPAForge 的引擎回應時間過長。請再試一次，如持續發生請回報。"
+      }
+    },
+    "internal": {
+      "aborted": {
+        "title": "已停止",
+        "body": "操作在完成前已被停止。"
+      },
+      "unexpected": {
+        "title": "出現問題",
+        "body": "發生非預期的錯誤。請再試一次，如持續發生請回報。"
+      }
+    }
+  },
+  "recovery": {
+    "retry": "重試",
+    "wait-and-retry": "稍候再試",
+    "check-network": "檢查你的網絡",
+    "check-clock": "檢查日期和時間",
+    "change-anisette-server": "選擇另一個 anisette 伺服器",
+    "re-enter-password": "重新輸入密碼",
+    "re-enter-code": "重新輸入驗證碼",
+    "use-trusted-device": "使用受信任裝置",
+    "sign-in-again": "重新登入",
+    "sign-in-on-apple-device": "在 Apple 裝置上登入",
+    "switch-account": "使用另一個 Apple ID",
+    "verify-email": "驗證你的電郵",
+    "accept-agreement": "接受 Apple 的協議",
+    "choose-team": "選擇團隊",
+    "revoke-certificate": "撤銷憑證",
+    "wait-for-app-id-slot": "等待空出 App ID",
+    "try-anyway": "仍然嘗試",
+    "choose-app-to-remove": "選擇要移除的應用程式",
+    "unlock-device": "解鎖裝置",
+    "enable-developer-mode": "開啟開發者模式",
+    "trust-computer": "信任此電腦",
+    "reconnect-device": "重新連接裝置",
+    "pair-again": "重新配對",
+    "set-passcode": "設定密碼",
+    "install-device-support": "安裝裝置支援",
+    "reinstall-app": "重新安裝應用程式",
+    "choose-another-ipa": "選擇另一個 IPA",
+    "choose-another-channel": "選擇另一個頻道",
+    "import-ipa": "匯入 IPA",
+    "update-ipaforge": "更新 IPAForge",
+    "report-issue": "回報問題",
+    "or": "或",
+    "switchAccount": {
+      "title": "使用另一個 Apple ID",
+      "body": "安裝會以你選擇的 Apple ID 重新開始。"
+    },
+    "fix": {
+      "copy": "複製",
+      "copied": "已複製",
+      "done": "完成，重試",
+      "waitAndRetry": {
+        "how": "Apple 正忙碌或正在限制請求。請等一分鐘後再試。"
+      },
+      "checkNetwork": {
+        "how": "請確認此電腦已連線，然後再試。"
+      },
+      "checkClock": {
+        "step1": "打開此電腦的日期和時間設定",
+        "step2": "開啟自動設定日期和時間"
+      },
+      "reEnterPassword": {
+        "how": "重試時會要求輸入密碼；輸入前請先核對。"
+      },
+      "reEnterCode": {
+        "how": "重試時會要求新的驗證碼。"
+      },
+      "useTrustedDevice": {
+        "how": "被要求輸入驗證碼時，請選擇受信任裝置，而不是簡訊。"
+      },
+      "signInAgain": {
+        "how": "重試時會要求輸入密碼以重新登入。"
+      },
+      "signInOnAppleDevice": {
+        "how": "請在 iPhone、iPad 或 Mac 上，或在 Apple 網站登入此 Apple ID，並依指示操作："
+      },
+      "switchAccount": {
+        "how": "從你已儲存的 Apple ID 中選一個。安裝會以它重新開始。",
+        "button": "選擇 Apple ID…"
+      },
+      "verifyEmail": {
+        "how": "請在 Apple 網站驗證此 Apple ID 的電郵地址："
+      },
+      "acceptAgreement": {
+        "how": "請在 Apple 開發者網站登入，並接受顯示的協議："
+      },
+      "revokeCertificate": {
+        "how": "重試時會詢問要撤銷哪個憑證。"
+      },
+      "waitForAppIdSlot": {
+        "how": "Apple 會在每個 App ID 建立 7 天後釋出它。有名額後再安裝，或使用另一個 Apple ID。",
+        "next": "下一個 App ID 將於 {date} 釋出。"
+      },
+      "chooseAppToRemove": {
+        "how": "重試時會詢問要移除哪個應用程式以騰出空間。"
+      },
+      "unlockDevice": {
+        "how": "解鎖裝置，並在安裝完成前保持解鎖。"
+      },
+      "enableDeveloperMode": {
+        "button": "已開啟，重試"
+      },
+      "trustComputer": {
+        "how": "解鎖裝置。在詢問是否信任此電腦時，點一下「信任」並輸入密碼。",
+        "button": "在裝置上再次詢問"
+      },
+      "reconnectDevice": {
+        "how": "拔出裝置，重新插入並解鎖。"
+      },
+      "setPasscode": {
+        "how": "在裝置的「設定 › Face ID 與密碼」中設定密碼，然後再試。"
+      },
+      "installDeviceSupport": {
+        "how": "在 Windows 上，請從 Microsoft Store 安裝 Apple 裝置（或 iTunes），然後重新啟動 IPAForge。"
+      },
+      "reinstallApp": {
+        "how": "從裝置上刪除該應用程式，然後再試。"
+      },
+      "chooseAnotherChannel": {
+        "how": "另一個頻道的版本可能適用於此裝置。",
+        "button": "從 {channel} 安裝"
+      },
+      "open": "開啟",
+      "tryAnyway": {
+        "how": "Apple 回報剩餘的 App ID 數量為負數，這是其端已知的故障：實際數量可能更多。「仍然嘗試」會要求 Apple 建立；如確實已達上限，它會說明。"
+      },
+      "changeAnisetteServer": {
+        "how": "開啟「設定」，測試 anisette 伺服器，並選擇一個可用的，或改回「自動」。",
+        "button": "開啟 anisette 伺服器"
+      },
+      "allowLocalNetwork": {
+        "how": "開啟「系統設定 › 私隱與安全性 › 本地網絡」，開啟 IPAForge，然後再試。或用線連接裝置。"
+      }
+    },
+    "reportHint": "會開啟新的 GitHub issue，並填入診斷資料。在你提交之前不會傳送任何內容。",
+    "allow-local-network": "允許本地網絡存取"
+  },
+  "devices": {
+    "engine": {
+      "connecting": "正在連接引擎…",
+      "connected": "{count, plural, =0 {引擎已連接 · 沒有裝置} other {引擎已連接 · # 部裝置}}",
+      "failed": "無法連上引擎：{reason}"
+    },
+    "description": "已連接到此電腦的 iPhone 和 iPad，以及與它配對的 Apple TV 和 Vision Pro。使用中的裝置顯示在頂部列。",
+    "unknownDevice": "未知裝置",
+    "line": "{model} · iOS {ios} · {link}",
+    "model": "{model} · iOS {ios}",
+    "withState": "{line} · {state}",
+    "link": {
+      "usb": "USB",
+      "network": "Wi-Fi",
+      "both": "USB 和 Wi-Fi"
+    },
+    "state": {
+      "checking": "正在檢查…",
+      "ready": "就緒",
+      "locked": "已鎖定",
+      "developerModeOff": "開發者模式已關閉",
+      "notTrusted": "未受信任",
+      "unavailable": "無法讀取裝置",
+      "notConnected": "未連接"
+    },
+    "inUse": "使用中",
+    "use": "使用此裝置",
+    "checkAgain": "重新檢查",
+    "facts": {
+      "model": "型號",
+      "ios": "iOS",
+      "connection": "連接方式",
+      "udid": "UDID",
+      "pairing": "配對",
+      "address": "位址"
+    },
+    "empty": {
+      "title": "尚無裝置",
+      "body": "用線連接 iPhone 或 iPad 並解鎖。在 Windows 上，必須安裝 Apple 裝置或 iTunes。"
+    },
+    "notice": {
+      "none": {
+        "title": "沒有已連接的裝置",
+        "body": "用線連接 iPhone 或 iPad 並解鎖。它會自動出現在這裡。"
+      },
+      "notConnected": {
+        "title": "{name} 未連接",
+        "body": "重新插入後會自動使用，或在頂部列選擇另一部裝置。"
+      },
+      "notTrusted": {
+        "title": "在 {name} 上信任此電腦",
+        "body": "解鎖、點一下「信任」並輸入密碼。",
+        "action": "再次詢問",
+        "waiting": "正在等待「信任」…",
+        "titleUnnamed": "在裝置上信任此電腦"
+      },
+      "locked": {
+        "title": "解鎖 {name}",
+        "body": "安裝應用程式期間它需要保持解鎖。"
+      },
+      "developerModeOff": {
+        "title": "在 {name} 上開啟開發者模式",
+        "step1": "設定 → 私隱與安全性 → 開發者模式",
+        "step2": "開啟，並在詢問時重新啟動",
+        "step3": "重新啟動後，點一下「開啟」並輸入密碼"
+      },
+      "unavailable": {
+        "title": "無法讀取 {name}",
+        "body": "拔出再插入。如持續發生，請重新啟動裝置。",
+        "bodyWifi": "它透過 Wi-Fi 連接：請喚醒並解鎖它，並讓它與此電腦保持在同一網絡，然後按「重新檢查」。用線連接更可靠。",
+        "reason": "原因：{reason}",
+        "titleUnnamed": "無法讀取裝置"
+      },
+      "offNetwork": {
+        "title": "{name} 不在網絡上",
+        "tv": "用遙控器喚醒它，並讓它與此電腦保持在同一個 Wi-Fi。",
+        "vision": "戴上並解鎖它，並讓它與此電腦保持在同一個 Wi-Fi。"
+      },
+      "pairAgain": {
+        "title": "重新配對 {name}",
+        "body": "它不再接受此電腦的配對。tvOS 或 visionOS 更新後這很正常：請用新的驗證碼重新配對。",
+        "action": "重新配對…"
+      }
+    },
+    "notes": {
+      "connected": "{name} 已連接",
+      "disconnected": "{name} 已中斷連接",
+      "aDevice": "一部裝置"
+    },
+    "savePairing": "儲存配對檔案…",
+    "localNetwork": {
+      "open": "開啟本地網絡設定"
+    },
+    "os": {
+      "tv": "tvOS",
+      "vision": "visionOS"
+    },
+    "lineOs": "{model} · {os} {version} · {link}",
+    "modelOs": "{model} · {os} {version}",
+    "pairedByCode": "已用驗證碼與此電腦配對",
+    "forget": {
+      "action": "忘記…",
+      "title": "忘記 {name}？",
+      "body": "IPAForge 會移除此電腦的配對。裝置上已有的應用程式會保留。如要再次使用，請重新配對。",
+      "confirm": "忘記"
+    }
+  },
+  "prompts": {
+    "cancel": "取消",
+    "continue": "繼續",
+    "password": {
+      "title": "重新登入",
+      "body": "{appleId} 已儲存的登入階段已過期。請輸入密碼以繼續。",
+      "label": "密碼",
+      "checking": "正在檢查密碼…"
+    },
+    "method": {
+      "title": "Apple 應將驗證碼傳送到哪裡？",
+      "body": "選擇取得驗證碼的方式。",
+      "trustedDevice": "受信任裝置",
+      "trustedDeviceHint": "已登入此 Apple ID 的 iPhone、iPad 或 Mac",
+      "sms": "傳送簡訊到 {number}",
+      "smsHint": "可能會收取標準簡訊費用",
+      "sending": "正在傳送驗證碼…"
+    },
+    "code": {
+      "title": "輸入驗證碼",
+      "body": "輸入 Apple 傳來的 {length, plural, other {# 位數}}驗證碼。",
+      "label": "驗證碼",
+      "wrong": "該驗證碼無效。請檢查後重新輸入。",
+      "verify": "驗證",
+      "checking": "正在檢查驗證碼…",
+      "deviceBody": "輸入 iPhone、iPad 或 Mac 上顯示的 {length, plural, other {# 位數}}驗證碼。",
+      "smsBody": "輸入傳送到 {number} 的 {length, plural, other {# 位數}}驗證碼。",
+      "allowHint": "保持解鎖，並在詢問登入時點一下「允許」。",
+      "noCode": "沒有收到驗證碼？",
+      "resend": "傳送新的驗證碼",
+      "textTo": "傳簡訊到 {number}",
+      "sending": "正在傳送新的驗證碼…",
+      "sent": "新的驗證碼正在傳送途中。",
+      "notSent": "Apple 沒有傳送新的驗證碼。請等幾分鐘後再試。"
+    },
+    "suggested": "建議",
+    "team": {
+      "title": "由哪個團隊簽署應用程式？",
+      "body": "此 Apple ID 屬於多個團隊。IPAForge 會記住你為此 Apple ID 所作的選擇。",
+      "free": "免費：應用程式 7 天後到期，每部裝置 3 個應用程式",
+      "paid": "付費：應用程式有效一年，沒有應用程式上限",
+      "checking": "正在使用此團隊…"
+    },
+    "revoke": {
+      "title": "撤銷憑證？",
+      "body": "此團隊的開發憑證已達上限，因此 IPAForge 需要撤銷一個才能建立自己的憑證。以被撤銷的憑證簽署的應用程式將停止刷新。",
+      "ipaforge": "由另一部電腦上的 IPAForge 建立",
+      "sidestore": "由 SideStore 建立",
+      "machine": "在「{machine}」上建立（通常是 Xcode）",
+      "unknown": "由未知工具建立",
+      "sidestoreWarning": "裝置上的 SideStore 在建立新憑證之前會停止刷新應用程式。",
+      "machineWarning": "那部電腦上的 Xcode 會在下次簽署時建立新憑證。",
+      "expires": "到期日 {date}",
+      "confirm": "撤銷並繼續",
+      "revoking": "正在撤銷憑證…"
+    },
+    "remove": {
+      "title": "移除一個應用程式以騰出空間？",
+      "body": "免費 Apple ID 在一部裝置上最多可有 {limit} 個應用程式，因此需要先移除一個才能放下這個。你之後可以再安裝它。",
+      "confirm": "移除並繼續",
+      "removing": "正在移除應用程式…"
+    },
+    "share": {
+      "title": "與「{app}」分享你的簽署憑證？",
+      "body": "此應用程式看起來是 SideStore。有了你的憑證，它可以自行在裝置上刷新應用程式。只與你信任的應用程式分享。",
+      "yes": "分享憑證",
+      "yesHint": "它會自行在裝置上刷新你的應用程式",
+      "no": "不分享",
+      "noHint": "安裝時不附帶你的憑證"
+    },
+    "pairing": {
+      "title": "哪些應用程式要取得配對檔案？",
+      "body": "配對檔案讓裝置上的應用程式能像此電腦一樣經 Wi-Fi 與裝置通訊。只有你勾選的應用程式會取得。",
+      "available": "{count, plural, other {裝置上有 # 個應用程式可使用}}",
+      "selectAll": "全選",
+      "clearAll": "全部清除",
+      "place": "{count, plural, =0 {選擇應用程式} other {放置到 # 個應用程式}}",
+      "placing": "正在放置配對檔案…",
+      "purpose": {
+        "sidestore": "經 Wi-Fi 刷新及安裝應用程式",
+        "livecontainer": "以 JIT 運行其中的應用程式",
+        "stikdebug": "為其他應用程式啟用 JIT",
+        "stikstore": "從自己的來源安裝應用程式"
+      }
+    }
+  },
+  "signIn": {
+    "title": "新增 Apple ID",
+    "body": "IPAForge 以它簽署應用程式。你的密碼只會傳送給 Apple。",
+    "appleId": "Apple ID",
+    "password": "密碼",
+    "submit": "登入",
+    "signingIn": "正在登入…",
+    "done": {
+      "title": "已新增 Apple ID",
+      "body": "已以 {appleId} 登入。",
+      "close": "完成"
+    },
+    "rememberPassword": "將我的密碼儲存在系統鑰匙圈",
+    "rememberPasswordHint": "讓 IPAForge 在登入階段過期時自行重新登入。",
+    "resuming": {
+      "title": "正在重新登入",
+      "body": "正在以 IPAForge 儲存的資料登入 {appleId}…",
+      "cancel": "取消"
+    }
+  },
+  "accounts": {
+    "description": "IPAForge 用來簽署應用程式的 Apple ID。使用中的帳戶顯示在頂部列。",
+    "list": "已儲存的 Apple ID",
+    "empty": "尚未有 Apple ID。新增一個以安裝 SideStore。",
+    "notSaved": {
+      "title": "Apple ID 沒有被儲存",
+      "body": "IPAForge 無法使用系統鑰匙圈（可能已被拒絕存取），因此你的 Apple ID 只會保留到它結束為止。如要儲存，請重新開啟 IPAForge，並在詢問時允許存取鑰匙圈。"
+    },
+    "freeTeam": "{name}（免費）",
+    "withState": "{line} · {state}",
+    "state": {
+      "checking": "正在檢查…",
+      "signInNeeded": "需要登入",
+      "blocked": "在此裝置上被封鎖",
+      "unreachable": "無法連上 Apple"
+    },
+    "inUse": "使用中",
+    "noTeams": "Apple 回應後才會顯示團隊。",
+    "use": "使用",
+    "signInAgain": "重新登入",
+    "signOut": {
+      "action": "登出",
+      "title": "登出 {appleId}？",
+      "forgets": "IPAForge 會忘記此 Apple ID、其登入階段和已儲存的密碼。",
+      "keeps": "其簽署憑證會保留在此電腦上，因此重新登入時會重用。已安裝的應用程式在到期前仍可使用。",
+      "confirm": "登出"
+    }
+  },
+  "apps": {
+    "description": "IPAForge 在此裝置上安裝的應用程式。「刷新」會在應用程式到期前重新簽署，並保留其資料。",
+    "refreshAll": "{count, plural, =0 {全部刷新} other {全部刷新（#）}}",
+    "updateAll": "{count, plural, other {全部更新（#）}}",
+    "refresh": "刷新",
+    "update": "更新",
+    "remove": "移除",
+    "removeApp": "移除 {name}",
+    "updateTo": "更新：{version}",
+    "from": "來自 {source}",
+    "needsIpa": "由 IPAForge 從另一部電腦上的 .ipa 安裝。請在「預載」中新增該 .ipa 一次，即可在此刷新。",
+    "thisDevice": "此裝置",
+    "badge": "{count, plural, other {# 個應用程式即將需要刷新}}",
+    "expiry": {
+      "in": "{days, plural, other {# 天後到期 · {date}}}",
+      "today": "今天到期",
+      "expired": "{days, plural, other {已於 # 天前到期 · 無法開啟}}",
+      "unknown": "到期日未知",
+      "gone": "已到期 · 無法開啟"
+    },
+    "run": {
+      "checking": "正在向 Apple 查核…",
+      "waiting": "等待輪到它",
+      "done": "完成"
+    },
+    "failed": {
+      "title": "刷新未完成：{reason}",
+      "details": "顯示詳情",
+      "dismiss": "關閉"
+    },
+    "notConnected": {
+      "title": "此裝置未連接",
+      "body": "連接後可查看其應用程式，並刷新或更新它們。"
+    },
+    "expired": {
+      "title": "{count, plural, other {# 個應用程式已到期}}",
+      "body": "刷新之前它們無法開啟。其資料會保留。",
+      "refresh": "{count, plural, other {立即刷新}}"
+    },
+    "facts": {
+      "next": "下一個到期",
+      "none": "暫時沒有",
+      "nextIn": "{days, plural, other {{name} · # 天}}",
+      "nextExpired": "{name} · 已到期",
+      "count": "持續刷新",
+      "apps": "{count, plural, other {# 個應用程式}}",
+      "auto": "自動刷新",
+      "autoOn": "{days, plural, other {已開啟 · 提前 # 天}}",
+      "autoOff": "已關閉"
+    },
+    "list": {
+      "title": "由 IPAForge 安裝",
+      "count": "{count, plural, other {# 個應用程式 · 最快到期的在前}}",
+      "empty": "尚無應用程式。安裝 SideStore 或預載應用程式後，它們會顯示在這裡。"
+    },
+    "others": {
+      "title": "尚未由 IPAForge 維護",
+      "hint": "在此版本 IPAForge 之前安裝，或由其他工具安裝",
+      "found": "在 {source} 中找到。「刷新」會從那裡安裝，並保留其資料，此後 IPAForge 會持續刷新它。",
+      "foundMany": "在 {source} 及{count, plural, other {另外 # 個來源}}中找到。「刷新」會從下方選擇的來源安裝，並保留其資料，此後 IPAForge 會持續刷新它。",
+      "pickSource": "安裝來源",
+      "choice": "{source} · {version}",
+      "how": "請在「預載」中新增其 .ipa 一次，此後 IPAForge 會持續刷新它。"
+    },
+    "auto": {
+      "title": "自動刷新應用程式",
+      "body": "IPAForge 開啟且裝置已連接時，應用程式會在到期前自動刷新。",
+      "toggle": "自動刷新",
+      "when": "在應用程式剩餘以下時間時刷新",
+      "days": "{count, plural, other {剩餘 # 天}}"
+    },
+    "removeDialog": {
+      "title": "移除 {name}？",
+      "body": "它會連同其資料從 {device} 刪除，並空出一個免費應用程式名額。你之後可從「預載」再次安裝。"
+    },
+    "pairing": {
+      "open": "配對檔案",
+      "title": "配對檔案",
+      "hint": "配對檔案讓應用程式能自行連上你的裝置，以刷新和安裝應用程式。持有它的人可以使用該裝置，因此只在應用程式的說明要求時，才為你自己的應用程式提供。",
+      "reading": "正在讀取配對檔案…",
+      "empty": "此裝置上沒有配對應用程式，也沒有由 IPAForge 安裝的應用程式。",
+      "classic": {
+        "thisComputer": "配對：此電腦的",
+        "otherComputer": "配對：另一部電腦的",
+        "missing": "配對：缺少"
+      },
+      "remote": {
+        "accepted": "遠端：已接受",
+        "rejected": "遠端：未被接受",
+        "otherComputer": "遠端：另一部電腦的",
+        "missing": "遠端：缺少"
+      },
+      "detail": {
+        "placed": "已於 {date} 放置",
+        "needed": "需要一個才能自行刷新。",
+        "otherComputer": "來自另一部電腦：只要那部電腦保持受信任就能運作。",
+        "ownNone": "沒有。只有在應用程式要求時才新增。"
+      },
+      "place": "放置",
+      "placeOne": "將配對檔案放置到 {name}",
+      "placeAgain": "重新放置",
+      "placeAgainOne": "將配對檔案重新放置到 {name}",
+      "add": "新增…",
+      "addOne": "為 {name} 新增配對檔案",
+      "remove": "移除",
+      "removeOne": "從 {name} 移除配對檔案",
+      "newRemote": "新的遠端配對",
+      "done": "完成",
+      "addTitle": "為 {name} 新增配對檔案",
+      "addBody": "IPAForge 會把此電腦的配對檔案寫入你裝置上該應用程式的資料夾。持有它的人可以使用該裝置：只新增到你信任的應用程式。",
+      "pathLabel": "應用程式內的路徑",
+      "pathHint": "見應用程式的說明；通常在 Documents 中。IPAForge 會為此應用程式記住它。",
+      "pathInvalid": "請使用 Documents 或 Library 內、以 .plist 或 .mobiledevicepairing 結尾的路徑。",
+      "removeTitle": "移除 {name} 的配對檔案？",
+      "removeBody": "在再次放置配對檔案之前，它無法自行連上你的裝置（刷新、安裝）。",
+      "newRemoteTitle": "建立新的遠端配對？",
+      "newRemoteBody": "IPAForge 會與你的裝置建立新的遠端配對，並放置到 SideStore。裝置可能會詢問你是否信任此電腦。舊的遠端配對將失效。",
+      "newRemoteConfirm": "建立新的",
+      "newRemoteWaiting": "如裝置詢問，請點一下「信任」並輸入其密碼。",
+      "tag": "沒有配對檔案",
+      "tagOne": "{name} 沒有配對檔案：開啟「配對檔案」"
+    },
+    "cancelRefresh": "取消刷新"
+  },
+  "logs": {
+    "title": "日誌",
+    "lede": "IPAForge 所做的一切，逐行記錄。隨時可用以下按鍵開啟：",
+    "shortcut": {
+      "control": "Ctrl+",
+      "command": "⌘",
+      "key": "L"
+    },
+    "copy": "複製",
+    "save": "儲存…",
+    "clear": "清除",
+    "cleared": "檢視已清除。「儲存」仍會寫入本次作業階段保留的每一行。",
+    "search": {
+      "label": "搜尋日誌",
+      "placeholder": "搜尋訊息和詳情",
+      "key": "/"
+    },
+    "level": {
+      "label": "等級",
+      "all": "全部",
+      "info": "資訊",
+      "warn": "警告",
+      "error": "錯誤"
+    },
+    "levelName": {
+      "debug": "除錯",
+      "info": "資訊",
+      "warn": "警告",
+      "error": "錯誤"
+    },
+    "area": {
+      "label": "範圍",
+      "all": "所有範圍",
+      "install": "安裝",
+      "device": "裝置",
+      "apple": "Apple",
+      "catalog": "目錄",
+      "signing": "簽署",
+      "engine": "引擎",
+      "interface": "介面",
+      "app": "應用程式"
+    },
+    "filters": {
+      "showing": "僅顯示：",
+      "run": "此次安裝運行（{time}）",
+      "text": "「{text}」",
+      "remove": "移除篩選條件 {filter}"
+    },
+    "list": {
+      "label": "日誌行",
+      "loadingOlder": "正在載入較舊的行…"
+    },
+    "row": {
+      "details": "{count, plural, other {# 項詳情}}",
+      "scope": "範圍",
+      "redacted": "[已隱去]",
+      "copy": "複製此行"
+    },
+    "follow": {
+      "on": "正在跟隨新行",
+      "off": "已暫停",
+      "pause": "暫停",
+      "resume": "跟隨"
+    },
+    "jump": "{count, plural, other {# 行新內容}} · 跳到最新",
+    "count": "{matching, plural, other {# 行符合}} · 本次作業階段保留最後 {capacity, number} 行",
+    "debug": "包含除錯詳情",
+    "privacy": "密碼、權杖、密鑰、序號和裝置識別碼絕不會寫入日誌，它們會顯示為 [已隱去]。日誌在你複製或儲存之前只會留在此電腦上。",
+    "empty": {
+      "none": {
+        "title": "尚無日誌",
+        "body": "IPAForge 運作時，這裡會出現記錄：連接裝置、登入、安裝。"
+      },
+      "noMatch": {
+        "title": "沒有符合的行",
+        "body": "請更改等級、範圍或搜尋條件。",
+        "showAll": "顯示所有行"
+      },
+      "cleared": {
+        "title": "檢視已清除",
+        "body": "新的記錄會在產生時出現在這裡。"
+      },
+      "failed": {
+        "title": "無法讀取日誌",
+        "body": "與引擎的連線可能已關閉。請重新開啟「日誌」再試。"
+      }
+    },
+    "export": {
+      "copyTitle": "{count, plural, other {複製 # 行？}}",
+      "saveTitle": "{count, plural, other {將 # 行儲存到檔案？}}",
+      "copyBody": "顯示的行，並套用你設定的篩選條件。",
+      "saveBody": "本次作業階段保留的每一行，不論篩選條件。",
+      "warning": "密碼、權杖和裝置識別碼已被排除，但日誌會提到你的裝置型號、應用程式和團隊。公開張貼前請先檢查。",
+      "confirmCopy": "複製",
+      "confirmSave": "儲存",
+      "copied": "{count, plural, other {已複製 # 行}}",
+      "saved": "{count, plural, other {已儲存 # 行}}",
+      "copyFailed": "無法複製這些行",
+      "saveFailed": "無法儲存這些行"
+    }
+  },
+  "preload": {
+    "title": "預載應用程式",
+    "description": "安裝你自己的應用程式：以你的 Apple ID 簽署，經 USB 逐一安裝。",
+    "tabs": {
+      "label": "預載",
+      "apps": "新增應用程式",
+      "sources": "來源"
+    },
+    "add": {
+      "drop": "將 .ipa 檔案拖放到這裡",
+      "or": "或",
+      "choose": "選擇檔案…",
+      "link": "從連結新增…"
+    },
+    "catalog": {
+      "recommended": "推薦",
+      "added": "已新增",
+      "add": "新增",
+      "sidestore": "自行在裝置上刷新及安裝應用程式。",
+      "livecontainerSidestore": "內含 SideStore 的 LiveContainer。",
+      "livecontainer": "在一個應用程式內運行多個應用程式，突破 3 個應用程式的上限。",
+      "stikdebug": "在裝置上為需要 JIT 的應用程式開啟 JIT。",
+      "feather": "用你的憑證在裝置上簽署並安裝應用程式。"
+    },
+    "browse": {
+      "title": "瀏覽應用程式",
+      "count": "來自 {sources, plural, other {# 個來源}}的 {apps, plural, other {# 個應用程式}}",
+      "source": "來源",
+      "allSources": "所有來源",
+      "search": "搜尋應用程式",
+      "manage": "管理來源",
+      "noMatch": "沒有應用程式符合「{query}」。",
+      "allOff": "所有來源均已關閉。請在「來源」中開啟一個。",
+      "loading": "正在讀取來源…",
+      "catalogLine": "最新版本 · 已對照校驗碼檢查",
+      "version": "{version} · {size}",
+      "from": "{name}，亦見於 {others}",
+      "details": "{name} 的詳情",
+      "notRefreshed": {
+        "title": "無法刷新 {name}",
+        "body": "顯示上次刷新（{when}）的應用程式。",
+        "retry": "重試"
+      }
+    },
+    "detail": {
+      "version": "版本",
+      "latest": "{version}（最新）",
+      "size": "大小",
+      "needs": "需要",
+      "needsIos": "iOS {version}",
+      "anyIos": "任何 iOS",
+      "from": "來源",
+      "builtin": "內建 · 受信任",
+      "added": "你新增的來源",
+      "untrusted": "來自你新增的來源：IPAForge 不會審核其應用程式。",
+      "add": "新增到清單",
+      "inList": "已在清單中",
+      "close": "關閉",
+      "loadingReleases": "正在查詢其版本…",
+      "noReleases": "目前無法讀取其版本。請檢查連線後再開啟。"
+    },
+    "sources": {
+      "description": "「瀏覽應用程式」尋找應用程式的位置。內建來源由 IPAForge 維護；其他來源可用連結新增（AltStore 格式）。",
+      "add": "新增來源…",
+      "refreshAll": "全部刷新",
+      "list": "來源",
+      "builtin": "內建 · 受信任",
+      "added": "由你新增",
+      "catalogName": "IPAForge 目錄",
+      "apps": "{count, plural, other {# 個應用程式}}",
+      "updated": "{when}更新",
+      "notRead": "尚未讀取",
+      "skipped": "{count, plural, other {已略過 #（不是 .ipa）}}",
+      "failed": "無法連上。",
+      "failedCopy": "顯示其最後一份副本，來自 {when}。",
+      "refreshing": "正在刷新…",
+      "show": "顯示 {name} 的應用程式",
+      "refresh": "刷新 {name}",
+      "remove": "移除 {name}",
+      "on": "開",
+      "off": "關",
+      "note": "IPAForge 不會審核你新增的來源中的應用程式。只新增你信任的來源。",
+      "refreshOne": "刷新",
+      "removeOne": "移除"
+    },
+    "addSource": {
+      "title": "新增來源",
+      "label": "來源連結",
+      "placeholder": "https://example.com/apps.json",
+      "hint": "AltStore 格式的來源，即 SideStore 讀取的那種。通常以 .json 結尾。",
+      "check": "檢查",
+      "checking": "正在檢查來源…",
+      "notLink": "請輸入以 https:// 開頭的連結",
+      "notHttps": "請使用 https:// 連結：IPAForge 只會經安全連線讀取來源。",
+      "previewTitle": "新增此來源？",
+      "includes": "{count, plural, other {# 個應用程式，包括：}}",
+      "skipped": "{count, plural, other {另有 # 個被排除：其下載內容不是 .ipa。}}",
+      "warningTitle": "只新增你信任的來源",
+      "warningBody": "IPAForge 不會審核你新增的來源中的應用程式。每個應用程式在安裝前仍會經過檢查。",
+      "back": "返回",
+      "confirm": "新增來源"
+    },
+    "removeSource": {
+      "title": "移除 {name}？",
+      "body": "其應用程式會從「瀏覽應用程式」中消失。從它安裝的應用程式會留在裝置上，「待安裝」清單中的應用程式也會保留。",
+      "confirm": "移除"
+    },
+    "list": {
+      "title": "待安裝",
+      "count": "{count, plural, other {# 個應用程式}}",
+      "empty": "尚無應用程式。將 .ipa 檔案拖放到這裡、選擇檔案、新增連結，或在「瀏覽應用程式」中挑選。"
+    },
+    "row": {
+      "waiting": "正在等待裝置和 Apple ID",
+      "checking": "正在檢查…",
+      "downloading": "正在下載並檢查…",
+      "appIds": "{count, plural, other {# 個 App ID}}{extensions, plural, =0 {} other {（應用程式 + # 個擴充功能）}}",
+      "updates": "更新 {from} → {to} · 保留其資料",
+      "new": "裝置上的新增項目",
+      "pairing": "取得配對檔案和憑證",
+      "fromCatalog": "來自目錄 · 穩定版",
+      "remove": "移除 {name}",
+      "cannot": "無法安裝。",
+      "fromSource": "來自 {name}",
+      "saveInstead": "改為儲存已簽署的 .ipa",
+      "saveInsteadOne": "將 {name} 儲存為已簽署的 .ipa，而不安裝",
+      "savedOnComputer": "已儲存在此電腦上，未安裝"
+    },
+    "problem": {
+      "notIpa": "只能安裝 .ipa 檔案。",
+      "unreadable": "IPAForge 無法讀取此檔案。請改用「選擇檔案…」新增。",
+      "needsIos": "需要 iOS {needs}；此裝置為 iOS {has}。"
+    },
+    "summary": {
+      "appIds": "{count, plural, other {新增 #}} · {left, plural, other {本週尚餘 #}}",
+      "appIdsNoLimit": "{count, plural, other {新增 #}}",
+      "notEnough": "剩餘不足。請移除一個應用程式，或等待。{next}",
+      "freeApps": "此次安裝後為 {after} / {limit}",
+      "freeAppsOver": "{used, plural, other {已有 # 個。}}安裝時會詢問要移除哪個應用程式，或從此清單中移除一個。"
+    },
+    "install": "{count, plural, =0 {安裝} other {安裝 # 個應用程式}}",
+    "clear": "清空清單",
+    "readiness": {
+      "busy": "請等待正在運行的安裝完成。",
+      "empty": "請先新增應用程式。",
+      "checking": "正在檢查應用程式…",
+      "problems": "請移除無法安裝的應用程式。"
+    },
+    "link": {
+      "title": "從連結新增",
+      "body": ".ipa 檔案的直接連結。IPAForge 會下載它，然後像其他應用程式一樣檢查。",
+      "label": "連結",
+      "placeholder": "https://example.com/MyApp.ipa",
+      "add": "新增",
+      "httpsOnly": "只能下載 https 連結。",
+      "invalid": "那不是連結。",
+      "notIpa": "連結必須指向 .ipa 檔案。"
+    },
+    "elsewhere": {
+      "apps": "正在安裝應用程式",
+      "sidestore": "正在安裝 SideStore",
+      "body": "一次只能進行一項安裝：它需要使用裝置。待它完成後，這項才能開始。",
+      "open": "開啟"
+    },
+    "run": {
+      "title": {
+        "running": "{count, plural, =1 {正在安裝 {app}} other {正在安裝 # 個應用程式}}",
+        "completed": "{count, plural, =1 {{app} 已安裝} other {# 個應用程式已安裝}}",
+        "failed": "無法安裝所有應用程式"
+      },
+      "backToPreload": "返回「預載」",
+      "shared": "此裝置和你的 Apple ID",
+      "refresh": {
+        "profile": "只有新描述檔，沒有重新安裝任何內容",
+        "certificate": "已重新安裝：簽署它的憑證已失效",
+        "unmarked": "已重新安裝：IPAForge 無法判斷是哪個憑證簽署了它",
+        "appId": "已重新安裝：Apple 在其 App ID 過期後將它移除",
+        "sidestore": "已重新安裝並保留其資料，因此 SideStore 本身會顯示新日期"
+      },
+      "group": {
+        "failed": "失敗",
+        "done": "完成",
+        "active": "進行中",
+        "pending": "等待中"
+      }
+    },
+    "done": {
+      "title": "{count, plural, other {{app} 已安裝到 {device}。}}",
+      "open": "從主畫面開啟各個應用程式。"
+    },
+    "signAndSave": "{count, plural, other {簽署並儲存 # 個應用程式}}",
+    "installAndSave": "按 {install} 安裝 · 按 {save} 儲存為已簽署的 .ipa"
+  },
+  "repair": {
+    "title": "修復 SideStore",
+    "description": "IPAForge 會檢查 {device} 上的 SideStore，並修復令它無法自行刷新應用程式的問題。",
+    "checkAgain": "重新檢查",
+    "checking": "正在檢查 SideStore…",
+    "checks": "檢查項目",
+    "failed": "無法檢查 SideStore：{reason}",
+    "failedBody": "請確認裝置已連接並解鎖，然後按「重新檢查」。",
+    "ok": "正常",
+    "unknown": "無法判斷",
+    "deviceFirst": "請先修復 {device}",
+    "device": {
+      "title": "{device} 已就緒",
+      "ok": "已解鎖、已信任，且已開啟開發者模式。",
+      "locked": "裝置已鎖定。請解鎖，然後按「重新檢查」。",
+      "lockedTag": "已鎖定",
+      "developerMode": "開發者模式已關閉，因此 SideStore 及其安裝的應用程式無法開啟。在 iPhone 上：設定 › 私隱與安全性 › 開發者模式，然後重新啟動。",
+      "developerModeTag": "開發者模式已關閉"
+    },
+    "installed": {
+      "title": "SideStore 已安裝",
+      "missing": "SideStore 不在 {device} 上。",
+      "missingTag": "未安裝"
+    },
+    "signer": {
+      "title": "它由你在此使用的團隊簽署",
+      "ok": "「修復」可以重新安裝它，或給它新的描述檔，而不會遺失其資料。",
+      "otherTeam": "它由此 Apple ID 的另一個團隊簽署。用此團隊重新安裝會多出第二個 SideStore，且沒有其資料和應用程式。",
+      "otherTeamTag": "另一個團隊",
+      "otherAppleId": "它由另一個 Apple ID 簽署。用此 Apple ID 重新安裝會多出第二個 SideStore，且沒有其資料和應用程式。",
+      "otherAppleIdTag": "另一個 Apple ID"
+    },
+    "version": {
+      "title": "SideStore 是最新版本",
+      "ok": "版本 {version}，即最新版本。",
+      "outdated": "版本 {version}；{latest} 已發布。舊版本可能缺少針對較新 iOS 上刷新問題的修正。",
+      "outdatedTag": "{latest} 可用",
+      "unknown": "版本 {version}。無法連上目錄進行比較。"
+    },
+    "expiry": {
+      "title": "SideStore 尚未到期",
+      "ok": "{days, plural, other {# 天後到期。}}",
+      "soon": "{days, plural, =0 {今天到期。} other {# 天後到期。}}到期後 SideStore 就無法自行刷新。",
+      "soonTag": "即將到期",
+      "expired": "{days, plural, other {已於 # 天前到期。}}它無法開啟，因此無法刷新你的應用程式。",
+      "expiredTag": "已到期",
+      "unknown": "裝置上沒有顯示它的描述檔。"
+    },
+    "signing": {
+      "title": "簽署它的憑證有效",
+      "ok": "在 Apple 端仍然有效。",
+      "revoked": "它已被撤銷或已過期。SideStore 在下次啟動時將無法開啟。",
+      "revokedTag": "已撤銷",
+      "unknown": "由其他工具安裝，因此 IPAForge 無法看到是哪個憑證簽署了它。「修復」可以重新安裝它以確保無誤。"
+    },
+    "own": {
+      "title": "SideStore 可自行簽署應用程式",
+      "ok": "它持有有效的憑證，可用來刷新你的應用程式。",
+      "missing": "它沒有持有憑證，因此刷新時會要求你登入，或失敗。",
+      "missingTag": "沒有憑證",
+      "other": "給它的憑證已不再有效。它可能已用自己的新憑證取代；如果在 SideStore 中刷新失敗，請重新安裝它。",
+      "otherTag": "可能已被取代"
+    },
+    "pairing": {
+      "title": "SideStore 有配對檔案",
+      "ok": "存在，且是此電腦與 {device} 的配對。",
+      "missing": "缺少：SideStore 無法連上裝置來安裝或刷新應用程式。",
+      "missingTag": "缺少",
+      "other": "它屬於另一部電腦。只要該配對保持有效就能運作；重設裝置上的「信任」會使它失效。",
+      "otherTag": "另一部電腦"
+    },
+    "manual": {
+      "title": "在你的 iPhone 上 · IPAForge 無法檢查這些",
+      "tag": "請自行檢查",
+      "vpn": {
+        "title": "SideStore 刷新時 VPN 已開啟",
+        "body": "在 SideStore 中刷新之前，請先開啟 LocalDevVPN 並連接。"
+      },
+      "anisette": {
+        "title": "SideStore 能連上其 anisette 伺服器",
+        "body": "如果刷新時提示無法登入，請在 SideStore › 設定 › Anisette 中選擇另一個伺服器。"
+      }
+    },
+    "plan": {
+      "title": "「修復」將會",
+      "reinstall": "重新安裝 SideStore",
+      "reinstallBody": "從 IPAForge 目錄安裝，以有效憑證簽署，並把該憑證一併放入其中。其資料和你的應用程式會保留。",
+      "profile": "給 SideStore 新的描述檔",
+      "profileBody": "不會重新安裝任何內容。",
+      "pairing": "放置此電腦的配對檔案",
+      "pairingBody": "放到 SideStore 的 Documents，並取代原有的檔案。",
+      "optional": "另外，如你需要",
+      "offerReinstall": "重新安裝 SideStore 以確保無誤",
+      "offerPairing": "以此電腦的配對檔案取代原有的",
+      "hint": "一次運行。請讓 {device} 保持連接並解鎖。",
+      "start": "修復 SideStore"
+    },
+    "blocked": {
+      "title": "無法用此 Apple ID 重新安裝 SideStore",
+      "body": "它由另一個團隊或 Apple ID 簽署，因此其資料無法延續。請在頂部列選擇該 Apple ID，然後按「重新檢查」。"
+    },
+    "notInstalled": {
+      "title": "SideStore 不在 {device} 上",
+      "body": "請先從「安裝」頁面安裝它。",
+      "install": "安裝 SideStore"
+    },
+    "fine": {
+      "title": "SideStore 運作正常",
+      "body": "沒有需要修復的地方。如果它仍然無法刷新，請檢查下方 iPhone 上的兩項。"
+    },
+    "run": {
+      "title": {
+        "running": "正在修復 SideStore",
+        "completed": "SideStore 已修復",
+        "failed": "無法修復 SideStore"
+      }
+    },
+    "done": {
+      "title": "{device} 上的 SideStore 已修復。",
+      "open": "開啟 SideStore 並刷新你的應用程式。"
+    },
+    "open": "檢查 SideStore",
+    "checkingTag": "正在檢查…",
+    "remote": {
+      "title": "適用於 iOS 17.4 及更新版本的遠端配對",
+      "ok": "存在，且 {device} 接受它。",
+      "missing": "缺少：SideStore 只能使用傳統配對。放置此電腦的配對檔案即可加入。",
+      "missingTag": "缺少",
+      "rejected": "{device} 已不再接受它（其「信任」已被重設）。放置此電腦的配對檔案會建立新的配對。",
+      "rejectedTag": "未被接受",
+      "other": "它屬於另一部電腦，因此 IPAForge 無法檢查。放置此電腦的配對檔案會取代它。",
+      "otherTag": "另一部電腦",
+      "notNeeded": "iOS 17.4 以下不需要。",
+      "notNeededTag": "不需要"
+    }
+  },
+  "sidestore": {
+    "addSource": "新增到 SideStore",
+    "addAll": "全部新增到 SideStore",
+    "install": "用 SideStore 安裝",
+    "sourceTitle": "將 {name} 新增到 SideStore",
+    "sourceBody": "SideStore 也會顯示其應用程式，並在 iPhone 上保持更新。SideStore 同樣不會審核來源中的應用程式：只新增你信任的來源。",
+    "installTitle": "用 SideStore 安裝 {name}",
+    "installBody": "SideStore 會下載 {name} {version}，以你的 Apple ID 簽署，並自行安裝到 iPhone 上。使用免費 Apple ID 時，它計入 3 個應用程式的上限。IPAForge 刷新它之後，它會顯示在「應用程式」中。",
+    "qrLabel": "下方連結的 QR 碼",
+    "steps": {
+      "camera": "在 {device} 上開啟相機並對準 QR 碼。",
+      "banner": "點一下橫幅以開啟 SideStore。",
+      "addSource": "SideStore 會詢問是否新增來源：點一下「新增」。",
+      "install": "SideStore 會詢問是否安裝應用程式：點一下「安裝」。"
+    },
+    "onPhone": "在 iPhone 上，該連結同樣可開啟 SideStore（貼到 Safari，或經訊息傳送）。",
+    "copy": "複製",
+    "copied": "已複製",
+    "previous": "上一個",
+    "next": "下一個",
+    "step": "來源 {at} / {count}",
+    "back": "返回",
+    "done": "完成",
+    "offer": "{count, plural, other {也把你在這裡新增的 # 個來源新增到 SideStore，讓它在 iPhone 上顯示其應用程式。}}"
+  },
+  "checklist": {
+    "title": "在 {device} 上 · iOS {ios}",
+    "setUp": "{device} 已設定完成 · iOS {ios}",
+    "show": "顯示檢查清單",
+    "hide": "隱藏",
+    "allSet": "全部就緒",
+    "progress": "{left, plural, other {還有 # 項待辦}} · 已完成 {done} / {total}",
+    "group": {
+      "before": "安裝前",
+      "after": "安裝後",
+      "sidestore": "SideStore 專用"
+    },
+    "onPhone": "在 iPhone 上",
+    "tickedTag": "已在 iPhone 上完成",
+    "tick": "我已完成",
+    "notNeeded": "此 iOS 不需要",
+    "cable": {
+      "title": "將 {device} 連接到此電腦",
+      "connected": "已連接",
+      "none": "未連接",
+      "how": "第一次請用線連接；之後只要兩者在同一網絡，Wi-Fi 也可使用。"
+    },
+    "unlock": {
+      "title": "解鎖它",
+      "locked": "已鎖定",
+      "unlocked": "已解鎖",
+      "how": "IPAForge 安裝期間請保持解鎖。"
+    },
+    "trust": {
+      "title": "信任此電腦",
+      "trusted": "已信任",
+      "notYet": "尚未",
+      "step1": "解鎖 {device}。",
+      "step2": "在詢問是否信任此電腦時，點一下「信任」。",
+      "step3": "輸入其密碼。",
+      "again": "再次詢問"
+    },
+    "passcode": {
+      "title": "設定密碼",
+      "how": "SideStore 經 Wi-Fi 刷新，而 iOS 只在設定了密碼時才允許：設定 › Face ID 與密碼。"
+    },
+    "devmode": {
+      "title": "開啟開發者模式",
+      "on": "開",
+      "off": "關",
+      "step1": "設定 › 私隱與安全性 › 開發者模式（如果沒有，請按「顯示此選項」）。",
+      "step2": "開啟它並重新啟動 {device}。",
+      "step3": "重新啟動後，點一下「開啟」並輸入密碼。",
+      "reveal": "顯示此選項",
+      "revealed": "它現在位於「設定 › 私隱與安全性」。"
+    },
+    "developer": {
+      "title": "以開發者身分信任你的 Apple ID",
+      "later": "首次安裝後",
+      "step1": "設定 › 一般 › VPN 與裝置管理。",
+      "step2": "在「開發者 App」下，點一下 {appleId}。",
+      "step3": "點一下「信任」。此操作需要 iPhone 連上互聯網。"
+    },
+    "vpn": {
+      "title": "安裝 LocalDevVPN",
+      "installed": "已安裝",
+      "notInstalled": "未安裝",
+      "how": "SideStore 透過這個本地 VPN 與 iPhone 通訊；沒有任何內容會離開手機。App Store 上免費提供。",
+      "qrLabel": "LocalDevVPN 的 App Store 頁面 QR 碼",
+      "scan": "用相機掃描，或在 App Store 中搜尋「LocalDevVPN」。"
+    },
+    "vpnOn": {
+      "title": "SideStore 刷新時連接 LocalDevVPN",
+      "tag": "每次",
+      "later": "安裝後",
+      "how": "開啟 LocalDevVPN 並點一下「連接」，或讓 SideStore 為你開啟：第一次它會詢問。"
+    },
+    "repair": {
+      "title": "SideStore 可自行刷新",
+      "tag": "於「修復」中檢查",
+      "how": "其憑證、配對檔案和到期日。"
+    },
+    "notice": "{count, plural, other {{device} 上有 # 項待辦}}",
+    "noticeBody": "讓安裝和刷新順利進行。",
+    "showChecklist": "顯示檢查清單"
+  },
+  "updates": {
+    "screen": {
+      "label": "正在更新 IPAForge"
+    },
+    "checking": {
+      "title": "正在檢查更新…"
+    },
+    "downloading": {
+      "title": "正在更新 IPAForge",
+      "body": "版本 {version} 已發布。現在會下載並安裝，然後 IPAForge 會自行重新開啟。",
+      "starting": "正在開始下載…",
+      "percent": "{fraction, number, percent}"
+    },
+    "installing": {
+      "title": "正在安裝 {version}…",
+      "body": "IPAForge 稍後會重新開啟。"
+    },
+    "failed": {
+      "title": "更新未完成",
+      "body": "版本 {version} 已發布。請再試一次，或從其發布頁面下載。",
+      "retry": "重試",
+      "releasePage": "發布頁面",
+      "skip": "暫時使用此版本"
+    },
+    "manual": {
+      "title": "IPAForge {version} 已發布",
+      "body": "此副本是從{package, select, msi {.msi 安裝程式} deb {.deb 套件} rpm {.rpm 套件} other {套件}}安裝的，無法自行更新。請下載新版本並安裝在此版本之上：你的 Apple ID、應用程式和設定會保留。",
+      "download": "下載 {version}",
+      "later": "稍後"
+    },
+    "nativeBuild": {
+      "title": "這是 Intel 版本",
+      "body": "你的 Mac 使用 Apple 晶片，因此此 IPAForge 副本經 Rosetta 運行，所有操作都較慢。請下載 Apple 晶片版本並安裝在此版本之上；你的 Apple ID、裝置和應用程式會保留。",
+      "file": "IPAForge-…-mac-arm64.dmg",
+      "later": "稍後",
+      "download": "下載 Apple 晶片版本"
+    }
+  },
+  "whatsNew": {
+    "link": "新功能",
+    "version": "版本 {version} · {date}",
+    "englishOnly": "發行說明為英文。",
+    "kind": {
+      "new": "新增",
+      "changed": "變更",
+      "fixed": "修正",
+      "removed": "移除"
+    },
+    "dialog": {
+      "title": "IPAForge 的新功能",
+      "everyVersion": "所有版本",
+      "close": "知道了"
+    },
+    "page": {
+      "title": "新功能",
+      "lede": "IPAForge 的所有變更，由新到舊。",
+      "current": "此版本",
+      "release": "GitHub 上的發布"
+    }
+  },
+  "portal": {
+    "description": "你的 Apple ID 團隊在 Apple 持有的內容，以及你裝置上的描述檔。",
+    "tabsLabel": "團隊持有的內容",
+    "tabs": {
+      "certificates": "憑證",
+      "appIds": "App ID",
+      "profiles": "描述檔",
+      "groups": "App Group",
+      "devices": "已註冊的裝置"
+    },
+    "team": {
+      "pick": "團隊",
+      "free": "{name}（免費）",
+      "paid": "{name}（付費）"
+    },
+    "refresh": "刷新",
+    "reading": "正在從 Apple 讀取…",
+    "noAccount": {
+      "title": "尚未有 Apple ID",
+      "body": "請在「帳戶」中以 Apple ID 登入，查看其團隊持有的內容。"
+    },
+    "expired": "已到期",
+    "expires": "到期日 {date}",
+    "expiredOn": "已於 {date} 到期",
+    "certificates": {
+      "hint": "憑證用來簽署你安裝的應用程式。撤銷憑證會使其簽署的所有應用程式無法開啟，直到重新簽署。",
+      "usedFree": "已使用 {count} / {max}（免費團隊最多可持有 {max} 個）",
+      "usedPaid": "{count, plural, other {# 個憑證}}",
+      "maker": {
+        "thisComputer": "此電腦上的 IPAForge",
+        "ipaforge": "另一部電腦上的 IPAForge",
+        "sidestore": "SideStore",
+        "machine": "「{machine}」（通常是 Xcode）",
+        "unknown": "未知工具"
+      },
+      "thisComputer": "此電腦的",
+      "signs": "在 {device} 上簽署 {apps}",
+      "signsNothing": "沒有在 {device} 上簽署任何內容",
+      "revoke": "撤銷",
+      "revokeOne": "撤銷 {name}",
+      "empty": "團隊尚無憑證。IPAForge 會在第一次安裝時建立一個。",
+      "import": "匯入 .p12…",
+      "export": "匯出 .p12"
+    },
+    "revokeDialog": {
+      "title": "撤銷此憑證？",
+      "apps": "這些在重新簽署之前將無法在 {device} 上開啟（「應用程式」中的「刷新」會執行此操作）：",
+      "none": "{device} 上沒有以它簽署的內容。",
+      "noDevice": "連接你的裝置，查看此憑證簽署了其中哪些應用程式。",
+      "thisComputer": "IPAForge 會在下次安裝或刷新時建立新的憑證。",
+      "sidestore": "SideStore 為了自行刷新而建立了它：你下次在 SideStore 登入時它會建立新的憑證。",
+      "machine": "那部電腦上的 Xcode 會在下次簽署時建立新的憑證。",
+      "exportedToo": "從它匯出的 .p12 也會失效。"
+    },
+    "appIds": {
+      "hintFree": "你安裝的每個應用程式和擴充功能都需要一個。免費團隊 7 天內可註冊 10 個；每個在建立後計算 7 天。",
+      "hintPaid": "你安裝的每個應用程式和擴充功能都需要一個。付費團隊沒有每週上限。",
+      "left": "{count, plural, other {本週尚餘 # 個}}",
+      "leftAndNext": "{left} · 下一個將於 {date} 釋出",
+      "countsUntil": "計算至 {date}",
+      "unused": "未使用",
+      "delete": "刪除",
+      "deleteOne": "刪除 {name}",
+      "empty": "團隊尚無 App ID。"
+    },
+    "deleteDialog": {
+      "title": "刪除此 App ID？",
+      "free": "在免費團隊中，它在過期前仍計入每週 10 個的限額：刪除它不會更快歸還名額。",
+      "paid": "之後可以再次註冊。"
+    },
+    "profiles": {
+      "title": "{device} 上的描述檔",
+      "hint": "描述檔讓一個應用程式（或擴充功能）可在此裝置上運行。「刷新」會給應用程式新的描述檔；已過期或未使用的可以放心移除。",
+      "noDevice": "連接你的裝置，查看其描述檔。",
+      "noApp": "沒有應用程式使用它",
+      "otherTeam": "另一個團隊",
+      "remove": "移除",
+      "removeOne": "移除 {name} 的描述檔",
+      "removeUnused": "移除未使用的",
+      "empty": "此裝置上沒有描述檔。"
+    },
+    "removeDialog": {
+      "title": "{count, plural, other {移除 # 個描述檔？}}",
+      "body": "{count, plural, other {會從 {device} 移除。那裡沒有應用程式需要它們。}}"
+    },
+    "groups": {
+      "hint": "同一個 Group 中的應用程式共用檔案（例如 SideStore 及其小工具）。IPAForge 會在應用程式需要時建立。",
+      "empty": "團隊尚無 App Group。"
+    },
+    "devices": {
+      "hintFree": "你簽署的應用程式只能在這些裝置上運行。",
+      "hintPaid": "你簽署的應用程式只能在這些裝置上運行。付費團隊每年可註冊 100 部；移除裝置須在 Apple 的開發者網站進行，每年一次。",
+      "used": "今年已使用 {count} / {max}",
+      "connected": "已連接",
+      "unnamed": "未命名的裝置",
+      "empty": "尚未註冊任何裝置。IPAForge 會在第一次安裝時註冊你的裝置。"
+    },
+    "exportDialog": {
+      "title": "匯出此電腦的憑證",
+      "body": "內含憑證及其私密金鑰的 .p12 檔案，供 SideStore 或另一部電腦使用。任何持有該檔案及其密碼的人都可以以你的團隊身分簽署應用程式。",
+      "password": "密碼",
+      "again": "再次輸入密碼",
+      "tooShort": "{count, plural, other {請至少使用 # 個字元。}}",
+      "differ": "兩次輸入的密碼不同。",
+      "save": "儲存 .p12…"
+    },
+    "importDialog": {
+      "title": "匯入憑證",
+      "body": "來自另一部電腦或 SideStore 的 .p12。IPAForge 會檢查 Apple 是否仍為此團隊列出它，然後在這裡用它簽署：不建立新憑證，不佔用名額。",
+      "noFile": "尚未選擇檔案",
+      "choose": "選擇…",
+      "password": "其密碼",
+      "import": "匯入"
+    }
+  },
+  "guide": {
+    "title": "設定指南",
+    "stepsLabel": "設定步驟",
+    "stepDone": "（已完成）",
+    "steps": {
+      "welcome": "歡迎",
+      "computer": "此電腦",
+      "iphone": "你的 iPhone",
+      "appleid": "Apple ID",
+      "install": "安裝 SideStore",
+      "onphone": "在你的 iPhone 上",
+      "around": "已設定完成"
+    },
+    "back": "返回",
+    "skip": "略過此步驟",
+    "continue": "繼續",
+    "later": "稍後完成",
+    "checkAgain": "重新檢查",
+    "checking": "正在檢查…",
+    "copy": "複製",
+    "copied": "已複製",
+    "welcome": {
+      "title": "歡迎使用 IPAForge",
+      "lead": "只需幾個步驟，就能準備好你的電腦、iPhone 和 Apple ID，然後即可安裝 SideStore。請先選擇你的語言。",
+      "needTitle": "你需要準備",
+      "needDevice": "一部 iOS 15 或更新版本的 iPhone 或 iPad，及其 USB 線",
+      "needAppleId": "一個 Apple ID（免費的也可以）",
+      "needPasscode": "你 iPhone 的密碼，用來信任此電腦",
+      "skipGuide": "我已熟悉操作",
+      "start": "開始"
+    },
+    "computer": {
+      "title": "此電腦",
+      "lead": "IPAForge 會檢查此電腦能否登入 Apple：Apple 的伺服器、時鐘和 anisette 伺服器。如果它無法與 iPhone 通訊，也會說明如何修復。",
+      "failed": "檢查沒有執行。請重新檢查，或略過此步驟。",
+      "service": {
+        "title": "iPhone 連接服務",
+        "fixMac": "macOS 應會自行運行它。請重新啟動 Mac，然後再檢查。",
+        "fixWindows": "從 Microsoft Store 安裝 Apple 裝置，開啟一次，然後再檢查。",
+        "fixLinux": "安裝 usbmuxd，連接你的 iPhone，然後再檢查。",
+        "openStore": "開啟 Microsoft Store"
+      },
+      "apple": {
+        "title": "Apple 的伺服器",
+        "ok": "可以連上。",
+        "fix": "IPAForge 無法連上 Apple。請檢查你的互聯網連線、VPN 或防火牆。"
+      },
+      "clock": {
+        "title": "時鐘",
+        "ok": "正確。",
+        "fix": "{minutes, plural, other {你的時鐘相差 # 分鐘。}}請設定自動日期和時間，然後再檢查。"
+      },
+      "anisette": {
+        "title": "Anisette 伺服器",
+        "ok": "{name} 有回應。登入會使用它。",
+        "fix": "你清單中的前 {tried} 個伺服器都沒有回應。請檢查你的連線，或在「設定 › Anisette 伺服器」中新增或選擇伺服器。"
+      }
+    },
+    "iphone": {
+      "title": "你的 iPhone",
+      "lead": "用線連接你的 iPhone，解鎖，並在詢問時點一下「信任」。在 iOS 16 及更新版本上，必須開啟開發者模式。",
+      "connectTitle": "連接你的 iPhone",
+      "connectText": "正在等待經 USB 連接的 iPhone 或 iPad…"
+    },
+    "appleid": {
+      "title": "你的 Apple ID",
+      "lead": "Apple 以你的 Apple ID 簽署你安裝的應用程式。你的密碼只會傳送給 Apple，並保存在此電腦的鑰匙圈中。",
+      "freeNote": "免費 Apple ID 也可以：其應用程式有效 7 天，IPAForge 可以刷新它們。付費開發者帳戶則有效一年。",
+      "signIn": "以 Apple ID 登入",
+      "signedIn": "已登入。",
+      "team": "簽署應用程式的團隊",
+      "free": "免費：應用程式有效 7 天",
+      "paid": "付費：應用程式有效一年"
+    },
+    "banner": {
+      "label": "設定指南",
+      "text": "完成 IPAForge 的設定：已完成 {done} / {total} 個步驟。",
+      "continue": "繼續指南",
+      "notNow": "暫時不要"
+    },
+    "install": {
+      "title": "安裝 SideStore",
+      "lead": "SideStore 會自行刷新 iPhone 上的應用程式，並可安裝更多應用程式。IPAForge 會給它所需的配對檔案和憑證。",
+      "notNow": "暫時不要"
+    },
+    "onphone": {
+      "title": "在你的 iPhone 上",
+      "lead": "只有你能在 iPhone 上進行的操作。完成一項就勾選一項；「裝置」頁面保留同一份清單。"
+    },
+    "around": {
+      "title": "已設定完成",
+      "lead": "以下是各項功能的位置。IPAForge 開啟期間，會在應用程式到期前刷新它們。",
+      "again": "隨時可從「設定」再次執行此指南。",
+      "showMe": "帶我逛逛",
+      "apps": {
+        "title": "應用程式",
+        "text": "查看各應用程式的到期時間，並可刷新和更新。配對檔案也在這裡。",
+        "where": "側邊欄 › 應用程式"
+      },
+      "preload": {
+        "title": "預載",
+        "text": "新增你自己的應用程式：.ipa 檔案、連結、來源。或將它們儲存為已簽署的 .ipa 檔案。",
+        "where": "側邊欄 › 預載"
+      },
+      "repair": {
+        "title": "修復 SideStore",
+        "text": "如果 SideStore 無法自行刷新，這裡會找出原因並修復。",
+        "where": "應用程式 › 檢查 SideStore"
+      },
+      "developer": {
+        "title": "開發者入口",
+        "text": "你的憑證、App ID 和描述檔，以及用來轉移憑證的 .p12。",
+        "where": "側邊欄 › 開發者入口"
+      },
+      "devices": {
+        "title": "裝置",
+        "text": "每部 iPhone 的檢查清單，以及供其他工具使用的配對檔案。",
+        "where": "側邊欄 › 裝置"
+      },
+      "logs": {
+        "title": "日誌",
+        "text": "逐步記錄發生的事。可附在錯誤報告中。",
+        "where": "側邊欄 › 日誌 · ⌘L / Ctrl+L"
+      }
+    }
+  },
+  "tour": {
+    "count": "{current} / {total}",
+    "skip": "略過導覽",
+    "back": "返回",
+    "next": "下一步",
+    "done": "完成",
+    "install": {
+      "title": "安裝",
+      "text": "一鍵安裝 SideStore，或內含 SideStore 的 LiveContainer。新 iPhone 請從這裡開始。"
+    },
+    "preload": {
+      "title": "預載",
+      "text": "新增你自己的應用程式：.ipa 檔案、連結，或來源中的應用程式。勾選一個可改為儲存為已簽署的 .ipa。"
+    },
+    "apps": {
+      "title": "應用程式",
+      "text": "查看各應用程式的到期時間，並可刷新和更新。IPAForge 開啟期間會自動刷新它們。配對檔案也在這裡。"
+    },
+    "devices": {
+      "title": "裝置",
+      "text": "每部 iPhone 依其 iOS 版本而定的檢查清單，以及供其他工具使用的配對檔案。"
+    },
+    "developer": {
+      "title": "開發者入口",
+      "text": "你的 Apple ID 的憑證、App ID 和描述檔。清理沒有被使用的項目，或將你的憑證以 .p12 轉移。"
+    },
+    "pickers": {
+      "title": "裝置和 Apple ID",
+      "text": "隨時可在這裡切換 IPAForge 使用的 iPhone 或 Apple ID。"
+    },
+    "logs": {
+      "title": "日誌",
+      "text": "IPAForge 執行的每個步驟。可附在錯誤報告中（⌘L / Ctrl+L）。"
+    },
+    "settings": {
+      "title": "設定",
+      "text": "語言、外觀、anisette 伺服器，以及再次進行此導覽。"
+    },
+    "showAround": {
+      "title": "帶我逛逛",
+      "text": "隨時可從這裡再次進行此導覽。設定指南在「設定」中。"
+    }
+  },
+  "pairByCode": {
+    "steps": {
+      "pair": "用驗證碼配對"
+    },
+    "open": "配對 Apple TV 或 Vision Pro…",
+    "title": "配對 Apple TV 或 Vision Pro",
+    "titleAgain": "重新配對 {name}",
+    "progress": {
+      "label": "步驟",
+      "find": "1 尋找",
+      "code": "2 驗證碼"
+    },
+    "intro": "它們沒有連接線，因此以驗證碼經 Wi-Fi 配對。讓裝置與此電腦連上同一個 Wi-Fi，然後開啟其配對畫面並保持開啟：",
+    "where": {
+      "tv": "Apple TV",
+      "vision": "Apple Vision Pro",
+      "tvPath": "設定 → 遙控器與裝置 → 遙控器 App 與裝置",
+      "visionPath": "設定 → 一般 → 遠端裝置"
+    },
+    "found": "在你的網絡上找到",
+    "showing": "正在顯示其配對畫面",
+    "pair": "配對",
+    "searching": "正在你的網絡上尋找… 裝置的配對畫面開啟後會出現在這裡。",
+    "searchingMore": "仍在尋找其他裝置…",
+    "help": {
+      "title": "沒有出現",
+      "screen": "請保持配對畫面開啟：裝置只有在顯示時才能被找到。",
+      "network": "與此電腦在同一個 Wi-Fi：不是訪客網絡，且兩邊都沒有 VPN。",
+      "ipv6": "路由器已開啟 IPv6（Apple 配對需要它）。",
+      "macos": "macOS：系統設定 → 私隱與安全性 → 本地網絡 → 已開啟 IPAForge。",
+      "windows": "Windows：防火牆詢問時，允許 IPAForge 使用私人網絡。"
+    },
+    "failed": "在你的網絡上的搜尋已停止。請關閉此視窗再重新開啟。",
+    "code": {
+      "title": "在 {name} 上輸入驗證碼",
+      "body": "{name} 會顯示驗證碼。請在這裡輸入。",
+      "label": "驗證碼",
+      "wrong": "驗證碼不符。請查看 {name} 上的驗證碼，然後再試。",
+      "pairing": "正在與 {name} 配對…",
+      "checking": "正在檢查驗證碼…"
+    },
+    "back": "返回",
+    "backToList": "返回清單",
+    "backoff": {
+      "title": "錯誤驗證碼過多",
+      "wait": "{name} 會讓你在{seconds, plural, other {# 秒}}後再試。",
+      "later": "{name} 暫時不再接受驗證碼。請稍候，然後再試。"
+    },
+    "closed": {
+      "title": "{name} 已關閉其配對畫面",
+      "body": "驗證碼只在配對畫面開啟時有效。請在 {name} 上重新開啟："
+    },
+    "done": {
+      "title": "{name} 已配對",
+      "body": "{name} 在你的「裝置」頁面上。現在可以關閉其配對畫面。",
+      "vision": "開啟開發者模式後即可安裝應用程式。",
+      "use": "使用 {name}",
+      "close": "關閉"
+    },
+    "pairNamed": "配對 {name}"
+  }
+}
