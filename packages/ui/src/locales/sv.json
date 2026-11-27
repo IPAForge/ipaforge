@@ -1,0 +1,2216 @@
+{
+  "app": {
+    "name": "IPAForge"
+  },
+  "shell": {
+    "skipToContent": "Hoppa till innehållet",
+    "navigation": "Avsnitt",
+    "credit": {
+      "madeWith": "Gjort med ❤️ och ☕",
+      "copyright": "© {year} {name}"
+    }
+  },
+  "topBar": {
+    "device": "Enhet",
+    "noDevice": "Ingen",
+    "deviceMenu": "Enheter",
+    "account": "Apple-ID",
+    "notSignedIn": "Inte inloggad",
+    "accountMenu": "Apple-ID:n",
+    "addAppleId": "Lägg till Apple-ID…",
+    "noAccounts": "Inga Apple-ID:n än.",
+    "noDevicesHint": "Anslut en iPhone eller iPad med en kabel och lås upp den.",
+    "openDevices": "Öppna Enheter",
+    "tour": "Visa mig runt",
+    "pairByCode": "Para ihop Apple TV eller Vision Pro…"
+  },
+  "nav": {
+    "group": {
+      "manage": "Hantera"
+    },
+    "install": "Installera",
+    "preload": "Förladda",
+    "apps": "Appar",
+    "devices": "Enheter",
+    "accounts": "Konton",
+    "developer": "Utvecklarportal",
+    "logs": "Loggar",
+    "settings": "Inställningar",
+    "installRunning": "En installation pågår"
+  },
+  "placeholder": {
+    "body": "Det här avsnittet är under utveckling."
+  },
+  "install": {
+    "title": "Installera SideStore",
+    "description": "Signeras med ditt Apple-ID och installeras sedan via USB.",
+    "steps": {
+      "device": "Kontrollera enheten",
+      "resolve": "Hitta versionen",
+      "download": "Ladda ned",
+      "inspect": "Granska appen",
+      "certificate_sharing": "Dela certifikatet",
+      "sign_in": "Logga in hos Apple",
+      "team": "Välj teamet",
+      "register_device": "Registrera enheten",
+      "certificate": "Förbered certifikatet",
+      "app_ids": "Registrera App-ID:n",
+      "free_apps": "Kontrollera gränsen för gratisappar",
+      "provision": "Hämta etableringsprofiler",
+      "refresh_profiles": "Hämta nya profiler",
+      "sign": "Signera appen",
+      "install": "Installera på enheten",
+      "pairing": "Lägg ut ihopparningsfilen",
+      "remember": "Kom ihåg den här installationen",
+      "save": "Spara den signerade .ipa-filen"
+    },
+    "signInNeeded": {
+      "title": "Ditt Apple-ID behöver att du loggar in igen",
+      "body": "Den sparade sessionen för {appleId} har gått ut. Du kan ändå installera: IPAForge frågar efter lösenordet när det behövs."
+    },
+    "blocked": {
+      "title": "Apple har spärrat {appleId} på {device}",
+      "body": "Appar som signerats med det här Apple-ID:t öppnas inte på den här enheten. Använd ett annat Apple-ID.",
+      "use": "Använd {appleId}"
+    },
+    "home": {
+      "what": "Vad som ska installeras",
+      "channel": "Kanal",
+      "install": "Installera {app}"
+    },
+    "variant": {
+      "sidestore": {
+        "title": "SideStore",
+        "description": "Förnyar och installerar appar på enheten själv. Använder 2 App-ID:n."
+      },
+      "livecontainer": {
+        "title": "LiveContainer + SideStore",
+        "description": "Kör många appar inuti en, förbi gränsen på 3 appar. Använder 5 App-ID:n."
+      }
+    },
+    "channel": {
+      "stable": "Stabil",
+      "nightly": "Nightly",
+      "stableRecommended": "Stabil (rekommenderas)",
+      "nightlyRecommended": "Nightly (rekommenderas)"
+    },
+    "plan": {
+      "title": "Den här installationen",
+      "waiting": "Visas när enheten och Apple-ID:t är redo.",
+      "checking": "Laddar ned {app} och kontrollerar med Apple… Nedladdningen sparas, så installationen återanvänder den.",
+      "unavailable": "Kunde inte kontrollera med Apple. Du kan ändå installera: varje steg kontrollerar igen.",
+      "appIds": "App-ID:n",
+      "appIdsValue": "{created, plural, =0 {Alla {reused} redan registrerade} other {{reused, plural, =0 {{created} nya} other {{created} nya, {reused} återanvända}}}} · {left, plural, one {# kvar den här veckan} other {# kvar den här veckan}}",
+      "nextSlot": "Nästa blir ledigt {date}",
+      "freeApps": "Gratisappar på enheten",
+      "freeAppsValue": "{used} av {limit} används",
+      "freeAppsRoom": "Det finns plats för den här",
+      "freeAppsFull": "Du väljer en att ta bort",
+      "noLimit": "Ingen gräns (betalt team)",
+      "certificate": "Certifikat",
+      "certificateReused": "Återanvänt",
+      "certificateNew": "Ett nytt skapas",
+      "certificatesOnTeam": "{count, plural, =0 {Inga i teamet än} one {# i teamet} other {# i teamet}}",
+      "team": "Team",
+      "certificateNewWhy": "IPAForge har inget eget certifikat i det här teamet än. {count, plural, =0 {} one {Det som redan finns tillhör ett annat verktyg, som behåller sin privata nyckel.} other {De # som redan finns tillhör andra verktyg, som behåller sina privata nycklar.}}"
+    },
+    "readiness": {
+      "noDevice": "Anslut en enhet först.",
+      "noSideStore": "SideStore körs på iPhone och iPad. Använd Förladda för att installera appar på en Apple TV eller Vision Pro.",
+      "checking": "Kontrollerar enheten…",
+      "device": "Tillgängligt när enheten är redo.",
+      "noAccount": "Lägg till ett Apple-ID först.",
+      "blocked": "Använd ett annat Apple-ID först.",
+      "appIds": "Inte tillräckligt många App-ID:n kvar den här veckan.",
+      "ready": "Allt är klart."
+    },
+    "run": {
+      "title": {
+        "running": "Installerar {app}",
+        "completed": "{app} är installerad",
+        "failed": "Kunde inte installera {app}",
+        "cancelled": "Installationen avbröts"
+      },
+      "subtitle": "{channel} · {device} · {appleId}",
+      "percent": "{fraction, number, percent}",
+      "progress": "Total förlopp",
+      "steps": "Steg",
+      "cancel": "Avbryt",
+      "cancelInstall": "Avbryt installationen",
+      "runningHint": "Du kan använda andra avsnitt medan detta pågår.",
+      "waitingHint": "Väntar på ditt svar.",
+      "stepState": {
+        "waiting": "behöver dig",
+        "skipped": "hoppades över",
+        "failed": "misslyckades"
+      },
+      "detail": {
+        "bytes": "{received} av {total}",
+        "received": "{received}",
+        "retrying": "Anslutningen bröts. Försöker igen om {seconds, plural, one {# sekund} other {# sekunder}} (försök {attempt})"
+      },
+      "live": {
+        "header": "{percent} · {left}",
+        "installing": "{fraction, number, percent} · {phase}",
+        "count": "{done} av {total}",
+        "task": {
+          "line": "{task} · {count}",
+          "team": "Kontrollerar teamet",
+          "appIds": "Skapar App-ID:n",
+          "appGroup": "Lägger till appgruppen",
+          "profiles": "Hämtar profiler"
+        },
+        "phase": {
+          "unpacking": "Packar upp appen",
+          "checking": "Kontrollerar appen",
+          "installing": "Installerar"
+        },
+        "speed": "{speed}/s",
+        "ios": "iOS installerar den",
+        "leftSeconds": "Ungefär {seconds} s kvar",
+        "leftMinutes": "{minutes, plural, one {Ungefär # min kvar} other {Ungefär # min kvar}}"
+      },
+      "connection": {
+        "usb": "USB",
+        "network": "Wi-Fi"
+      },
+      "wifi": {
+        "title": "Den här enheten är ansluten via Wi-Fi",
+        "body": "Stora appar installeras mycket snabbare med kabel. Över Wi-Fi skickar IPAForge dem komprimerade för att spara tid."
+      },
+      "unsupportedPrompt": {
+        "title": "Det här steget behöver ett svar",
+        "body": "IPAForge behöver ett svar på en fråga som den här versionen inte kan visa. Avbryt installationen och uppdatera IPAForge."
+      },
+      "backToInstall": "Tillbaka till Installera",
+      "report": {
+        "device": "{model} · iOS {ios} · {connection}",
+        "release": "{app} {version} · {channel}",
+        "download": "{size} · kontrollsumma verifierad",
+        "downloadCached": "{size} · från nedladdningscachen",
+        "app": "{app} · {extensions, plural, =0 {inga tillägg} one {# tillägg} other {# tillägg}}",
+        "session": {
+          "reused": "Sparad session återanvänd",
+          "renewed": "Inloggad igen med det sparade lösenordet",
+          "signed-in": "Inloggad"
+        },
+        "registered": "Registrerad hos teamet",
+        "alreadyRegistered": "Redan registrerad hos teamet",
+        "certificate": {
+          "reused": "Återanvände det sparade certifikatet",
+          "created": "Skapade ett nytt certifikat",
+          "replaced": "Återkallade ett och skapade ett nytt certifikat"
+        },
+        "removed": "Tog bort {app} · {used}",
+        "profiles": "{count, plural, one {# profil} other {# profiler}}",
+        "signed": "{count, plural, one {# bundle signerad} other {# bundles signerade}}",
+        "signedCompressed": "{count, plural, one {# bundle signerad} other {# bundles signerade}} · komprimerade för Wi-Fi",
+        "phase": {
+          "uploading": "Laddar upp till enheten",
+          "installing": "Installerar"
+        },
+        "pairing": "Utlagd i {apps}",
+        "shared": "Certifikatet delades",
+        "notShared": "Certifikatet delades inte",
+        "pairingRemote": "Utlagd i {apps} · med fjärrihopparning för iOS 17.4 och senare",
+        "saved": "Sparad i {path}"
+      },
+      "subtitleApps": "{device} · {appleId}"
+    },
+    "summary": {
+      "title": "Den här installationen",
+      "app": "App",
+      "channel": "Kanal",
+      "device": "Enhet",
+      "deviceValue": "{name} · iOS {ios}",
+      "account": "Apple-ID",
+      "appIds": "App-ID:n",
+      "appIdsValue": "{count, plural, one {# kvar den här veckan} other {# kvar den här veckan}}",
+      "freeApps": "Gratisappar",
+      "apps": "Appar"
+    },
+    "done": {
+      "title": "{app} finns på {device}.",
+      "trust": "På enheten: Inställningar › Allmänt › VPN och enhetshantering › lita på {appleId}.",
+      "open": "Öppna SideStore: ihopparningsfilen och ditt certifikat finns redan där.",
+      "done": "Klart"
+    },
+    "cancelled": {
+      "title": "Stoppades vid “{step}”.",
+      "body": "Det som redan är gjort upprepas inte när du återupptar.",
+      "resume": "Återuppta"
+    },
+    "failed": {
+      "continues": "Slutförda steg behålls: ett nytt försök fortsätter från “{step}”.",
+      "copy": "Kopiera diagnostik",
+      "copied": "Kopierat",
+      "copyFailed": "Kunde inte kopiera",
+      "showLogs": "Visa loggar"
+    }
+  },
+  "pairing": {
+    "steps": {
+      "targets": "Hitta appar som behöver ihopparning",
+      "place": "Lägg ut ihopparningsfilen"
+    }
+  },
+  "settings": {
+    "appearance": "Utseende och språk",
+    "mode": "Färgläge",
+    "palette": "Palett",
+    "language": {
+      "title": "Språk",
+      "system": "System ({language})",
+      "hint": "IPAForge följer ditt systemspråk om du inte väljer ett här.",
+      "draft": "utkast"
+    },
+    "anisette": {
+      "title": "Anisette-servrar",
+      "hint": "För att logga in hos Apple behövs en anisette-server, som talar om för Apple vilken dator som loggar in. IPAForge använder en som fungerar, helt av sig själv; välj en här om du föredrar en viss server, eller lägg till din egen.",
+      "add": "Lägg till server",
+      "loading": "Läser in servrarna…",
+      "modeLabel": "Hur IPAForge väljer server",
+      "mode": {
+        "automatic": "Automatiskt",
+        "chosen": "Välj en server"
+      },
+      "modeHint": {
+        "automatic": "Provar servrarna i den här ordningen och går vidare när en misslyckas.",
+        "chosen": "Använder alltid {name}.",
+        "none": "Välj den server som IPAForge alltid ska använda."
+      },
+      "noneChosen": "Ingen server vald än: tills du väljer en fortsätter IPAForge att välja själv.",
+      "chosenDown": "{name} svarar inte. Det går inte att logga in förrän den är tillbaka, eller förrän du väljer en annan server eller byter till Automatiskt.",
+      "count": "{count, plural, one {# server} other {# servrar}}",
+      "sources": "{custom, plural, =0 {} other {# tillagda av dig, }}{list} från SideStores lista, {backup} som reserv ·",
+      "listUpdated": "SideStores lista uppdaterades {ago}",
+      "listNever": "SideStores lista har inte hämtats än",
+      "updateList": "Uppdatera listan",
+      "updating": "Uppdaterar…",
+      "testAll": "Testa alla",
+      "testing": "Testar…",
+      "group": {
+        "custom": "Tillagda av dig · används först",
+        "list": "Från SideStores lista",
+        "backup": "Reserv · bara när SideStores lista inte kan nås eller ingen av dem svarar"
+      },
+      "tag": {
+        "custom": "Tillagd av dig",
+        "inUse": "Används",
+        "chosen": "Vald"
+      },
+      "position": "Provas som nummer {position}",
+      "use": "Använd {name}",
+      "chooseLabel": "Server att använda",
+      "status": {
+        "untested": "Inte testad",
+        "testing": "Testar…",
+        "ok": "Fungerar · {ms} ms",
+        "bad": "Svarar inte"
+      },
+      "test": "Testa",
+      "testOne": "Testa {name}",
+      "edit": "Redigera {name}",
+      "remove": "Ta bort {name}",
+      "confirmRemove": "Ta bort {name}?",
+      "removeYes": "Ta bort",
+      "skipped": "Används inte från SideStores lista: {names} (inget HTTPS). Du kan lägga till en server med vanlig HTTP själv, till exempel en på din egen dator.",
+      "dialog": {
+        "addTitle": "Lägg till en anisette-server",
+        "editTitle": "Redigera server",
+        "body": "Alla anisette-servrar som talar det vanliga protokollet fungerar: en offentlig eller en du driver själv.",
+        "name": "Namn",
+        "namePlaceholder": "Min server",
+        "address": "Adress",
+        "addressPlaceholder": "https://anisette.my-server.net",
+        "addressHint": "https:// eller, för en server du driver själv, http://",
+        "nameMissing": "Ge den ett namn.",
+        "addressInvalid": "Ange en adress som börjar med https:// eller http://.",
+        "exists": "Den här servern finns redan i listan.",
+        "stillAdd": "Du kan ändå lägga till den.",
+        "save": "Spara"
+      }
+    },
+    "guide": {
+      "title": "Installationsguide",
+      "text": "Datorn, iPhonen och Apple-ID:t kontrolleras igen.",
+      "run": "Kör guiden igen",
+      "tour": "Visa mig runt",
+      "tourTitle": "Rundtur bland sidorna",
+      "tourHint": "Vad varje sida är till för, ett stopp i taget."
+    },
+    "tabs": {
+      "label": "Inställningar",
+      "general": "Allmänt",
+      "anisette": "Anisette-servrar"
+    },
+    "modeHint": "Ljust, mörkt eller som ditt system är.",
+    "paletteHint": "Färgerna i hela appen, i ljust och mörkt."
+  },
+  "theme": {
+    "mode": {
+      "system": "System",
+      "light": "Ljust",
+      "dark": "Mörkt"
+    },
+    "palette": {
+      "graphite": "Grafit",
+      "ocean": "Hav",
+      "aurora": "Nordljus",
+      "sunset": "Solnedgång",
+      "forest": "Skog",
+      "rose": "Ros",
+      "violet": "Violett",
+      "mocha": "Mocka"
+    }
+  },
+  "errors": {
+    "device": {
+      "locked": {
+        "title": "Lås upp din enhet",
+        "body": "Enheten är låst, så IPAForge kan inte prata med den. Lås upp den och håll den upplåst tills installationen är klar."
+      },
+      "developer_mode_off": {
+        "title": "Utvecklarläget är av",
+        "body": "Sideloadade appar kräver utvecklarläge. Slå på det i Inställningar › Integritet och säkerhet › Utvecklarläge och starta sedan om enheten."
+      },
+      "not_paired": {
+        "title": "Den här datorn är inte betrodd än",
+        "body": "Lås upp enheten och tryck på Lita på när den frågar om den ska lita på den här datorn."
+      },
+      "usbmuxd_unavailable": {
+        "title": "Enhetsstödet körs inte",
+        "body": "IPAForge når inte systemtjänsten som pratar med iPhone och iPad. Installera eller starta den och försök igen."
+      },
+      "not_found": {
+        "title": "Ingen enhet hittades",
+        "body": "Anslut din iPhone eller iPad med en USB-kabel och lås upp den."
+      },
+      "disconnected": {
+        "title": "Enheten kopplades från",
+        "body": "Anslutningen bröts. Anslut kabeln igen, lås upp enheten och försök igen."
+      },
+      "pairing_pending": {
+        "title": "Väntar på Lita på",
+        "body": "Lås upp enheten och tryck på Lita på i frågan som visades."
+      },
+      "pairing_denied": {
+        "title": "Förtroendet nekades",
+        "body": "Enheten nekade att lita på den här datorn. Para ihop igen och tryck på Lita på den här gången."
+      },
+      "invalid_pair_record": {
+        "title": "Ihopparningen är inte längre giltig",
+        "body": "Enheten godtar inte längre den här datorns ihopparning. Koppla ur den, anslut den igen, lås upp den och tryck på Lita på."
+      },
+      "service_unavailable": {
+        "title": "En enhetstjänst startade inte",
+        "body": "Enheten vägrade starta en tjänst som IPAForge behöver. Lås upp den, anslut den igen och försök igen."
+      },
+      "protocol_error": {
+        "title": "Oväntat svar från enheten",
+        "body": "Enheten skickade något som IPAForge inte förstod. Anslut den igen; om det händer igen, uppdatera IPAForge eller rapportera det."
+      },
+      "install_failed": {
+        "title": "Installationen misslyckades",
+        "body": "Enheten vägrade installera appen. Försök igen; om det fortsätter att misslyckas, installera om appen eller rapportera det."
+      },
+      "afc_error": {
+        "title": "Kunde inte överföra filer",
+        "body": "Det gick inte att kopiera filer till enheten. Lås upp den och försök igen."
+      },
+      "timeout": {
+        "title": "Enheten slutade svara",
+        "body": "Enheten tog för lång tid på sig att svara. Lås upp den, anslut den igen och försök igen."
+      },
+      "passcode_required": {
+        "title": "Ställ in en lösenkod",
+        "body": "Det här kräver en enhetslösenkod. Ställ in en i Inställningar › Face ID och lösenkod och försök sedan igen."
+      },
+      "free_app_limit": {
+        "title": "För många sideloadade appar",
+        "body": "Ett gratis Apple-ID kan bara ha tre aktiva sideloadade appar på en enhet. Ta bort en och försök igen."
+      },
+      "profile_banned": {
+        "title": "Apple har spärrat det här Apple-ID:t på enheten",
+        "body": "Enheten godtar inte appar som signerats med det här Apple-ID:t. Det hjälper inte att försöka igen: använd ett annat Apple-ID."
+      },
+      "identity_invalid": {
+        "title": "Signeringscertifikatet är inte längre giltigt",
+        "body": "Enheten avvisade certifikatet som appen signerades med. Kontrollera datorns klocka, eller återkalla certifikatet och försök igen."
+      },
+      "profile_not_found": {
+        "title": "Etableringsprofil saknas",
+        "body": "Enheten hittade inte appens etableringsprofil. Försök igen, eller installera om appen."
+      },
+      "pairing_path_invalid": {
+        "title": "Den sökvägen kan inte innehålla en ihopparningsfil",
+        "body": "Använd en sökväg i appens Documents eller Library som slutar på .plist eller .mobiledevicepairing."
+      },
+      "local_network_denied": {
+        "title": "IPAForge kan inte leta efter enheter i ditt nätverk",
+        "body": "macOS har inte gett IPAForge tillstånd att hitta enheter i ditt lokala nätverk, så den når inte iPhone över Wi-Fi. Enheter med kabel fungerar fortfarande."
+      },
+      "tunnel_unavailable": {
+        "title": "Enhetens tunnel öppnades inte",
+        "body": "IPAForge kunde inte öppna den säkra tunnel som iOS 17.4 och senare erbjuder över kabeln. Kontrollera att enheten kör iOS 17.4 eller senare, anslut den igen och försök igen."
+      },
+      "pairing_code_wrong": {
+        "title": "Koden stämde inte",
+        "body": "Koden du skrev är inte den som enheten visar. Kontrollera koden på dess skärm och försök igen."
+      },
+      "pairing_backoff": {
+        "title": "För många felaktiga koder",
+        "body": "Enheten tar inte emot fler koder på ett tag. Vänta en stund, öppna dess ihopparningsskärm igen och para ihop på nytt."
+      },
+      "pairing_screen_closed": {
+        "title": "Ihopparningsskärmen stängdes",
+        "body": "Enheten slutade visa sin ihopparningsskärm innan ihopparningen var klar. Öppna den igen och håll den öppen: Apple TV: Inställningar → Fjärrkontroller och enheter → Remote App och enheter. Apple Vision Pro: Inställningar → Allmänt → Fjärrenheter."
+      }
+    },
+    "apple": {
+      "anisette_unavailable": {
+        "title": "Anisette-servern svarar inte",
+        "body": "För att logga in hos Apple behövs en anisette-server, och den nuvarande svarade inte. Välj en annan server eller kontrollera ditt nätverk."
+      },
+      "anisette_not_provisioned": {
+        "title": "Anisette-servern är inte redo",
+        "body": "Anisette-servern kunde inte ställa in sig själv. Välj en annan server och försök igen."
+      },
+      "app_id_quota": {
+        "title": "Inga App-ID:n kvar den här veckan",
+        "body": "Ett gratis Apple-ID kan bara registrera 10 App-ID:n var 7:e dag. Vänta tills en plats blir ledig, eller använd ett annat Apple-ID."
+      },
+      "certificate_limit": {
+        "title": "För många certifikat",
+        "body": "Det här Apple-ID:t har nått sin gräns för utvecklingscertifikat. Återkalla ett, eller använd ett annat Apple-ID."
+      },
+      "invalid_credentials": {
+        "title": "Fel Apple-ID eller lösenord",
+        "body": "Apple godtog inte e-postadressen eller lösenordet. Kontrollera dem och ange lösenordet igen."
+      },
+      "account_locked": {
+        "title": "Det här Apple-ID:t är låst",
+        "body": "Apple låste kontot av säkerhetsskäl. Lås upp det på en Apple-enhet eller på Apples webbplats, eller använd ett annat Apple-ID."
+      },
+      "account_refused": {
+        "title": "Apple vägrade inloggningen",
+        "body": "Apple låter inte det här Apple-ID:t logga in härifrån just nu. Vänta en stund, logga in en gång på en Apple-enhet, eller använd ett annat Apple-ID."
+      },
+      "client_rejected": {
+        "title": "Apple avvisade inloggningsbegäran",
+        "body": "Apple godtog inte identiteten som skickades med inloggningen. Välj en annan anisette-server, eller vänta och försök igen."
+      },
+      "rate_limited": {
+        "title": "För många förfrågningar",
+        "body": "Apple begränsar förfrågningar just nu. Vänta några minuter och försök igen."
+      },
+      "service_unavailable": {
+        "title": "Apples servrar är inte tillgängliga",
+        "body": "Apples servrar svarade inte. Vänta några minuter och kontrollera ditt nätverk."
+      },
+      "two_factor_required": {
+        "title": "Ange verifieringskoden",
+        "body": "Apple skickade en verifieringskod till dina betrodda enheter. Ange den för att fortsätta."
+      },
+      "two_factor_invalid_code": {
+        "title": "Fel verifieringskod",
+        "body": "Den koden fungerade inte. Kontrollera den och ange den igen."
+      },
+      "two_factor_unsupported": {
+        "title": "Den här inloggningsmetoden stöds inte",
+        "body": "Det här Apple-ID:t använder en tvåfaktorsmetod som IPAForge inte kan hantera än, till exempel en säkerhetsnyckel. Använd ett annat Apple-ID."
+      },
+      "sms_unavailable": {
+        "title": "Koder via sms är inte tillgängliga",
+        "body": "Apple skickar inte koden via sms här. Hämta den på en betrodd enhet, eller använd ett annat Apple-ID."
+      },
+      "clock_skew": {
+        "title": "Datorns klocka går fel",
+        "body": "Apple avvisar förfrågningar när klockan går fel. Ställ in datum och tid automatiskt och försök igen."
+      },
+      "protocol_error": {
+        "title": "Oväntat svar från Apple",
+        "body": "Apple skickade något som IPAForge inte förstod. Uppdatera IPAForge, eller rapportera det om det fortsätter att hända."
+      },
+      "session_expired": {
+        "title": "Din session har gått ut",
+        "body": "Logga in på det här Apple-ID:t igen. Om den fortsätter att gå ut, kontrollera datorns klocka."
+      },
+      "account_not_found": {
+        "title": "Apple-ID hittades inte",
+        "body": "IPAForge har ingen sparad session för det här Apple-ID:t. Logga in igen."
+      },
+      "not_eligible": {
+        "title": "Det här Apple-ID:t kan inte användas för utveckling",
+        "body": "Apple tillåter inte att det här kontot signerar appar, till exempel på grund av ålder eller villkor. Använd ett annat Apple-ID."
+      },
+      "email_unverified": {
+        "title": "Verifiera din e-postadress",
+        "body": "Apple behöver först att det här Apple-ID:ts e-postadress verifieras. Verifiera den och försök igen."
+      },
+      "team_agreement": {
+        "title": "Godkänn Apples avtal",
+        "body": "Teamet har inte godkänt Apples senaste utvecklaravtal. Godkänn det på Apples utvecklarwebbplats, eller välj ett annat team."
+      },
+      "no_teams": {
+        "title": "Inget utvecklarteam",
+        "body": "Det här Apple-ID:t har inget utvecklarteam än. Godkänn Apples utvecklaravtal, eller använd ett annat Apple-ID."
+      },
+      "device_limit": {
+        "title": "Enhetsgränsen är nådd",
+        "body": "Det här teamet kan inte registrera fler enheter. Välj ett annat team, eller använd ett annat Apple-ID."
+      },
+      "app_id_unavailable": {
+        "title": "Det här App-ID:t är upptaget",
+        "body": "Ett annat team använder redan det här App-ID:t. Välj ett annat team, eller använd ett annat Apple-ID."
+      },
+      "invalid_app_id_name": {
+        "title": "Apple avvisade App-ID-namnet",
+        "body": "Apple godtog inte namnet som IPAForge valde för App-ID:t. Uppdatera IPAForge, eller rapportera det."
+      },
+      "certificate_not_revocable": {
+        "title": "Det här certifikatet kan inte återkallas här",
+        "body": "Bara Apple kan återkalla det här certifikatet. Återkalla ett annat i stället."
+      },
+      "no_devices_for_profile": {
+        "title": "Enheten är inte registrerad än",
+        "body": "Apple har inte slutfört registreringen av enheten. Vänta en minut och försök igen."
+      },
+      "developer_request_failed": {
+        "title": "Apples utvecklartjänster misslyckades",
+        "body": "En förfrågan till Apples utvecklartjänster misslyckades. Försök igen och rapportera det om det fortsätter att hända."
+      },
+      "anisette_server_invalid": {
+        "title": "Den här anisette-servern kan inte användas",
+        "body": "Kontrollera dess namn och adress: adressen börjar med https:// eller http://."
+      },
+      "anisette_server_exists": {
+        "title": "Den här anisette-servern finns redan i listan",
+        "body": "Välj den från listan i Inställningar i stället."
+      },
+      "certificate_not_on_team": {
+        "title": "Det här certifikatet finns inte i teamet",
+        "body": "Apple listar det inte längre för det här teamet: det har återkallats, har gått ut eller tillhör ett annat team. Exportera ett aktuellt och importera det."
+      }
+    },
+    "catalog": {
+      "source_gone": {
+        "title": "Versionen är inte längre tillgänglig",
+        "body": "Platsen som appen laddades ned från finns inte längre. Välj en annan kanal, importera en IPA eller uppdatera IPAForge."
+      },
+      "unavailable": {
+        "title": "Kunde inte läsa in applistan",
+        "body": "IPAForge kunde inte hämta listan med appar. Kontrollera ditt nätverk och försök igen."
+      },
+      "download_failed": {
+        "title": "Nedladdningen misslyckades",
+        "body": "Appen kunde inte laddas ned. Kontrollera ditt nätverk och försök igen."
+      },
+      "checksum_mismatch": {
+        "title": "Nedladdningen är skadad",
+        "body": "Den nedladdade filen stämmer inte med sin kontrollsumma, så den användes inte. Försök igen eller välj en annan kanal."
+      },
+      "checksum_missing": {
+        "title": "Nedladdningen kan inte verifieras",
+        "body": "Den här versionen har ingen kontrollsumma, så IPAForge kan inte kontrollera den. Välj en annan kanal, eller importera IPA-filen själv."
+      },
+      "rate_limited": {
+        "title": "För många förfrågningar till GitHub",
+        "body": "GitHub begränsar nedladdningar just nu. Vänta några minuter och försök igen."
+      },
+      "app_source_unreachable": {
+        "title": "Kunde inte nå den här källan",
+        "body": "Kontrollera länken och att du är online och försök igen."
+      },
+      "app_source_invalid": {
+        "title": "Den här länken är ingen appkälla",
+        "body": "Den listar inga appar i AltStore-format. Kontrollera länken, eller lägg till appens .ipa-fil i stället."
+      },
+      "app_source_exists": {
+        "title": "Den här källan är redan tillagd",
+        "body": "Dess appar finns redan i Bläddra bland appar."
+      }
+    },
+    "plist": {
+      "invalid": {
+        "title": "Appens inställningsfil är skadad",
+        "body": "En egenskapslista inuti appen kunde inte läsas. Välj en annan IPA, eller rapportera det."
+      }
+    },
+    "net": {
+      "offline": {
+        "title": "Du är offline",
+        "body": "IPAForge når inte internet. Kontrollera din nätverksanslutning och försök igen."
+      }
+    },
+    "signer": {
+      "invalid_macho": {
+        "title": "Appens program är skadat",
+        "body": "Appens körbara fil kunde inte läsas. Välj en annan IPA."
+      },
+      "encrypted_binary": {
+        "title": "Appen är krypterad",
+        "body": "Den här IPA-filen kommer från App Store och är fortfarande krypterad, så den kan inte signeras om. Välj en dekrypterad IPA."
+      },
+      "unsupported_arch": {
+        "title": "Appformatet stöds inte",
+        "body": "Appens körbara fil använder ett format som iOS inte kan köra. Välj en annan IPA."
+      },
+      "unsupported_ios": {
+        "title": "Kräver en nyare iOS",
+        "body": "Den här appen kräver en nyare iOS-version än enheten har. Uppdatera enheten, eller välj en annan kanal eller IPA."
+      },
+      "unsupported_device": {
+        "title": "Inte gjord för den här enheten",
+        "body": "Den här appen stöder inte den här typen av enhet, till exempel en app bara för iPad på en iPhone, eller en iPhone-app på en Apple TV. Välj en annan IPA."
+      },
+      "no_arm64_build": {
+        "title": "Ingen version för iPhone eller iPad",
+        "body": "Appen har ingen 64-bitarsversion för iPhone eller iPad, till exempel en 32-bitars- eller simulatorversion. Välj en annan IPA."
+      },
+      "no_header_space": {
+        "title": "Appen kan inte signeras",
+        "body": "Det finns inget utrymme i appens körbara fil för en signatur. Välj en annan IPA, eller rapportera det."
+      },
+      "zip_slip": {
+        "title": "IPA-filen är osäker",
+        "body": "IPA-filen försöker skriva filer utanför sin egen mapp, så IPAForge vägrade den. Välj en annan IPA."
+      },
+      "invalid_certificate": {
+        "title": "Certifikatet är ogiltigt",
+        "body": "Signeringscertifikatet kunde inte användas. Återkalla det så att IPAForge kan skapa ett nytt och försök igen."
+      },
+      "unknown_issuer": {
+        "title": "Okänd certifikatutfärdare",
+        "body": "IPAForge känner inte igen vem som utfärdade certifikatet. Uppdatera IPAForge och kontrollera ditt nätverk."
+      },
+      "invalid_bundle": {
+        "title": "Appbundlen är ogiltig",
+        "body": "IPA-filen innehåller ingen giltig app. Välj en annan IPA."
+      },
+      "invalid_profile": {
+        "title": "Etableringsprofilen är ogiltig",
+        "body": "Etableringsprofilen från Apple kunde inte läsas. Försök igen och rapportera det om det fortsätter att hända."
+      },
+      "extension_prefix": {
+        "title": "Ett apptillägg har fel ID",
+        "body": "Ett tilläggs bundle-ID börjar inte med appens eget ID. Välj en annan IPA."
+      },
+      "profile_mismatch": {
+        "title": "Etableringsprofilen stämmer inte",
+        "body": "Profilen stämmer inte med appen den gjordes för. Försök igen och rapportera det om det fortsätter att hända."
+      },
+      "profile_expired": {
+        "title": "Etableringsprofilen har gått ut",
+        "body": "Profilen har gått ut, eller datorns klocka går fel. Kontrollera klockan och försök igen."
+      },
+      "cert_not_in_profile": {
+        "title": "Certifikatet finns inte i profilen",
+        "body": "Etableringsprofilen innehåller inte signeringscertifikatet. Försök igen för att få en ny profil."
+      },
+      "device_not_provisioned": {
+        "title": "Enheten finns inte i profilen",
+        "body": "Etableringsprofilen innehåller inte den här enheten. Försök igen för att få en ny profil."
+      },
+      "pkcs12_password": {
+        "title": "Lösenordet öppnar inte den här .p12-filen",
+        "body": "Skriv lösenordet som den exporterades med och försök igen."
+      }
+    },
+    "installer": {
+      "step_failed": {
+        "title": "Ett steg misslyckades",
+        "body": "Något gick fel under installationen. Försök igen och rapportera det om det fortsätter att hända."
+      },
+      "prompt_cancelled": {
+        "title": "Avbrutet",
+        "body": "Installationen stoppades eftersom en fråga avbröts. Börja om när du är redo."
+      },
+      "certificate_machine_id_missing": {
+        "title": "Certifikatet kan inte delas",
+        "body": "Det här certifikatet saknar de data som SideStore behöver för att öppna det. Återkalla det så att IPAForge kan skapa ett nytt och försök igen."
+      },
+      "team_required": {
+        "title": "Välj ett team",
+        "body": "Det här Apple-ID:t tillhör flera team. Välj det som ska signera."
+      },
+      "kept_ipa_missing": {
+        "title": "Den här appen kan inte förnyas här",
+        "body": "IPAForge installerade den inte på den här enheten, eller så finns den sparade kopian inte kvar. Lägg till dess .ipa i Förladda för att installera den igen."
+      },
+      "wrong_app": {
+        "title": "Den här länken ger en annan app",
+        "body": "Det är inte appen du förnyar eller uppdaterar, så den installerades inte och appen och dess data förblir som de är. Lägg till rätt .ipa i Förladda för att installera den igen."
+      },
+      "version_unavailable": {
+        "title": "Den här versionen kan inte laddas ned igen",
+        "body": "Förnya behåller versionen på din enhet, och den erbjuds inte längre för nedladdning. Använd Uppdatera för att installera den senaste versionen; appen behåller sina data."
+      },
+      "pairing_app_not_found": {
+        "title": "Den appen finns inte på enheten",
+        "body": "Den togs bort, eller så är den inte längre en som IPAForge installerade. Stäng Ihopparningsfiler och öppna dem igen."
+      },
+      "certificate_not_stored": {
+        "title": "Inget certifikat på den här datorn än",
+        "body": "Den här datorn behåller teamets certifikat när den har installerat en app med det. Installera en app först, eller importera en .p12."
+      }
+    },
+    "rpc": {
+      "invalid_message": {
+        "title": "Internt kommunikationsfel",
+        "body": "Delar av IPAForge kunde inte förstå varandra. Uppdatera IPAForge, eller rapportera det."
+      },
+      "disconnected": {
+        "title": "Tappade anslutningen till motorn",
+        "body": "IPAForges motor slutade svara. Försök igen och rapportera det om det fortsätter att hända."
+      },
+      "timeout": {
+        "title": "Motorn svarade inte",
+        "body": "IPAForges motor tog för lång tid på sig att svara. Försök igen och rapportera det om det fortsätter att hända."
+      }
+    },
+    "internal": {
+      "aborted": {
+        "title": "Stoppad",
+        "body": "Åtgärden stoppades innan den blev klar."
+      },
+      "unexpected": {
+        "title": "Något gick fel",
+        "body": "Ett oväntat fel inträffade. Försök igen och rapportera det om det fortsätter att hända."
+      }
+    }
+  },
+  "recovery": {
+    "retry": "Försök igen",
+    "wait-and-retry": "Vänta och försök sedan igen",
+    "check-network": "Kontrollera ditt nätverk",
+    "check-clock": "Kontrollera datum och tid",
+    "change-anisette-server": "Välj en annan anisette-server",
+    "re-enter-password": "Ange lösenordet igen",
+    "re-enter-code": "Ange koden igen",
+    "use-trusted-device": "Använd en betrodd enhet",
+    "sign-in-again": "Logga in igen",
+    "sign-in-on-apple-device": "Logga in på en Apple-enhet",
+    "switch-account": "Använd ett annat Apple-ID",
+    "verify-email": "Verifiera din e-postadress",
+    "accept-agreement": "Godkänn Apples avtal",
+    "choose-team": "Välj ett team",
+    "revoke-certificate": "Återkalla ett certifikat",
+    "wait-for-app-id-slot": "Vänta på ett ledigt App-ID",
+    "try-anyway": "Försök ändå",
+    "choose-app-to-remove": "Välj en app att ta bort",
+    "unlock-device": "Lås upp enheten",
+    "enable-developer-mode": "Slå på utvecklarläge",
+    "trust-computer": "Lita på den här datorn",
+    "reconnect-device": "Anslut enheten igen",
+    "pair-again": "Para ihop igen",
+    "set-passcode": "Ställ in en lösenkod",
+    "install-device-support": "Installera enhetsstöd",
+    "reinstall-app": "Installera om appen",
+    "choose-another-ipa": "Välj en annan IPA",
+    "choose-another-channel": "Välj en annan kanal",
+    "import-ipa": "Importera en IPA",
+    "update-ipaforge": "Uppdatera IPAForge",
+    "report-issue": "Rapportera problemet",
+    "or": "Eller",
+    "switchAccount": {
+      "title": "Använd ett annat Apple-ID",
+      "body": "Installationen börjar om med det Apple-ID du väljer."
+    },
+    "fix": {
+      "copy": "Kopiera",
+      "copied": "Kopierat",
+      "done": "Klart, försök igen",
+      "waitAndRetry": {
+        "how": "Apple är upptaget eller begränsar förfrågningar. Vänta en minut och försök sedan igen."
+      },
+      "checkNetwork": {
+        "how": "Kontrollera att den här datorn är online och försök sedan igen."
+      },
+      "checkClock": {
+        "step1": "Öppna inställningarna för datum och tid på den här datorn",
+        "step2": "Slå på att datum och tid ställs in automatiskt"
+      },
+      "reEnterPassword": {
+        "how": "Nästa försök frågar efter lösenordet; kontrollera det innan du anger det."
+      },
+      "reEnterCode": {
+        "how": "Nästa försök frågar efter en ny verifieringskod."
+      },
+      "useTrustedDevice": {
+        "how": "När koden efterfrågas, välj en betrodd enhet i stället för ett sms."
+      },
+      "signInAgain": {
+        "how": "Nästa försök frågar efter lösenordet för att logga in igen."
+      },
+      "signInOnAppleDevice": {
+        "how": "Logga in på det här Apple-ID:t på en iPhone, iPad eller Mac, eller på Apples webbplats, och följ det som den ber om:"
+      },
+      "switchAccount": {
+        "how": "Välj ett av dina sparade Apple-ID:n. Installationen börjar om med det.",
+        "button": "Välj ett Apple-ID…"
+      },
+      "verifyEmail": {
+        "how": "Verifiera e-postadressen för det här Apple-ID:t på Apples webbplats:"
+      },
+      "acceptAgreement": {
+        "how": "Logga in på Apples utvecklarwebbplats och godkänn avtalet som visas:"
+      },
+      "revokeCertificate": {
+        "how": "Nästa försök frågar vilket certifikat som ska återkallas."
+      },
+      "waitForAppIdSlot": {
+        "how": "Apple frigör varje App-ID 7 dagar efter att det skapades. Installera igen när ett är ledigt, eller använd ett annat Apple-ID.",
+        "next": "Nästa App-ID blir ledigt {date}."
+      },
+      "chooseAppToRemove": {
+        "how": "Nästa försök frågar vilken app som ska tas bort för att ge plats."
+      },
+      "unlockDevice": {
+        "how": "Lås upp enheten och håll den upplåst tills installationen är klar."
+      },
+      "enableDeveloperMode": {
+        "button": "Det är på, försök igen"
+      },
+      "trustComputer": {
+        "how": "Lås upp enheten. När den frågar om den ska lita på den här datorn, tryck på Lita på och ange lösenkoden.",
+        "button": "Fråga igen på enheten"
+      },
+      "reconnectDevice": {
+        "how": "Koppla ur enheten, anslut den igen och lås upp den."
+      },
+      "setPasscode": {
+        "how": "Ställ in en lösenkod på enheten i Inställningar › Face ID och lösenkod och försök sedan igen."
+      },
+      "installDeviceSupport": {
+        "how": "På Windows, installera Apple Devices (eller iTunes) från Microsoft Store och starta sedan om IPAForge."
+      },
+      "reinstallApp": {
+        "how": "Ta bort appen från enheten och försök sedan igen."
+      },
+      "chooseAnotherChannel": {
+        "how": "Den andra kanalens version kan fungera på den här enheten.",
+        "button": "Installera från {channel}"
+      },
+      "open": "Öppna",
+      "tryAnyway": {
+        "how": "Apple rapporterade ett negativt antal App-ID:n kvar, vilket är ett känt fel hos Apple: det verkliga antalet kan vara högre. Försök ändå ber Apple skapa dem; om gränsen verkligen är nådd säger Apple det."
+      },
+      "changeAnisetteServer": {
+        "how": "Öppna Inställningar, testa anisette-servrarna och välj en som fungerar, eller gå tillbaka till Automatiskt.",
+        "button": "Öppna anisette-servrar"
+      },
+      "allowLocalNetwork": {
+        "how": "Öppna Systeminställningar › Integritet och säkerhet › Lokalt nätverk, slå på IPAForge och försök igen. Eller anslut enheten med en kabel."
+      }
+    },
+    "reportHint": "Öppnar ett nytt GitHub-ärende med diagnostiken ifylld. Inget skickas förrän du skickar in det.",
+    "allow-local-network": "Tillåt åtkomst till lokalt nätverk"
+  },
+  "devices": {
+    "engine": {
+      "connecting": "Ansluter till motorn…",
+      "connected": "{count, plural, =0 {Motorn ansluten · inga enheter} one {Motorn ansluten · # enhet} other {Motorn ansluten · # enheter}}",
+      "failed": "Kan inte nå motorn: {reason}"
+    },
+    "description": "iPhone och iPad som är anslutna till den här datorn, och de Apple TV och Vision Pro som är ihopparade med den. Den som används visas i det övre fältet.",
+    "unknownDevice": "Okänd enhet",
+    "line": "{model} · iOS {ios} · {link}",
+    "model": "{model} · iOS {ios}",
+    "withState": "{line} · {state}",
+    "link": {
+      "usb": "USB",
+      "network": "Wi-Fi",
+      "both": "USB och Wi-Fi"
+    },
+    "state": {
+      "checking": "Kontrollerar…",
+      "ready": "Redo",
+      "locked": "Låst",
+      "developerModeOff": "Utvecklarläge av",
+      "notTrusted": "Inte betrodd",
+      "unavailable": "Kan inte läsa enheten",
+      "notConnected": "Inte ansluten"
+    },
+    "inUse": "Används",
+    "use": "Använd den här enheten",
+    "checkAgain": "Kontrollera igen",
+    "facts": {
+      "model": "Modell",
+      "ios": "iOS",
+      "connection": "Anslutning",
+      "udid": "UDID",
+      "pairing": "Ihopparning",
+      "address": "Adress"
+    },
+    "empty": {
+      "title": "Inga enheter än",
+      "body": "Anslut en iPhone eller iPad med en kabel och lås upp den. På Windows måste Apple Devices eller iTunes vara installerat."
+    },
+    "notice": {
+      "none": {
+        "title": "Ingen enhet ansluten",
+        "body": "Anslut en iPhone eller iPad med en kabel och lås upp den. Den dyker upp här av sig själv."
+      },
+      "notConnected": {
+        "title": "{name} är inte ansluten",
+        "body": "Anslut den igen så används den automatiskt, eller välj en annan enhet i det övre fältet."
+      },
+      "notTrusted": {
+        "title": "Lita på den här datorn på {name}",
+        "body": "Lås upp den, tryck på Lita på och ange lösenkoden.",
+        "action": "Fråga igen",
+        "waiting": "Väntar på Lita på…",
+        "titleUnnamed": "Lita på den här datorn på enheten"
+      },
+      "locked": {
+        "title": "Lås upp {name}",
+        "body": "Den måste förbli upplåst medan appar installeras."
+      },
+      "developerModeOff": {
+        "title": "Slå på utvecklarläge på {name}",
+        "step1": "Inställningar → Integritet och säkerhet → Utvecklarläge",
+        "step2": "Slå på det och starta om när du blir ombedd",
+        "step3": "Efter omstarten, tryck på Slå på och ange lösenkoden"
+      },
+      "unavailable": {
+        "title": "Kan inte läsa {name}",
+        "body": "Koppla ur den och anslut den igen. Om det fortsätter, starta om enheten.",
+        "bodyWifi": "Den är ansluten via Wi-Fi: väck den, lås upp den och håll den på samma nätverk som den här datorn, och kontrollera sedan igen. En kabel är mer pålitlig.",
+        "reason": "Orsak: {reason}",
+        "titleUnnamed": "Kan inte läsa enheten"
+      },
+      "offNetwork": {
+        "title": "{name} är inte på nätverket",
+        "tv": "Väck den med dess fjärrkontroll och håll den på samma Wi-Fi som den här datorn.",
+        "vision": "Sätt på den, lås upp den och håll den på samma Wi-Fi som den här datorn."
+      },
+      "pairAgain": {
+        "title": "Para ihop {name} igen",
+        "body": "Den godtar inte längre den här datorns ihopparning. Det är normalt efter en uppdatering av tvOS eller visionOS: para ihop den igen med en ny kod.",
+        "action": "Para ihop igen…"
+      }
+    },
+    "notes": {
+      "connected": "{name} ansluten",
+      "disconnected": "{name} frånkopplad",
+      "aDevice": "En enhet"
+    },
+    "savePairing": "Spara ihopparningsfil…",
+    "localNetwork": {
+      "open": "Öppna inställningar för lokalt nätverk"
+    },
+    "os": {
+      "tv": "tvOS",
+      "vision": "visionOS"
+    },
+    "lineOs": "{model} · {os} {version} · {link}",
+    "modelOs": "{model} · {os} {version}",
+    "pairedByCode": "Ihopparad med den här datorn, via kod",
+    "forget": {
+      "action": "Glöm…",
+      "title": "Glöm {name}?",
+      "body": "IPAForge tar bort den här datorns ihopparning. Appar som redan finns på den ligger kvar. För att använda den igen, para ihop den på nytt.",
+      "confirm": "Glöm"
+    }
+  },
+  "prompts": {
+    "cancel": "Avbryt",
+    "continue": "Fortsätt",
+    "password": {
+      "title": "Logga in igen",
+      "body": "Den sparade sessionen för {appleId} har gått ut. Ange lösenordet för att fortsätta.",
+      "label": "Lösenord",
+      "checking": "Kontrollerar lösenordet…"
+    },
+    "method": {
+      "title": "Vart ska Apple skicka koden?",
+      "body": "Välj hur du vill få din verifieringskod.",
+      "trustedDevice": "En betrodd enhet",
+      "trustedDeviceHint": "Din iPhone, iPad eller Mac som är inloggad på det här Apple-ID:t",
+      "sms": "Sms till {number}",
+      "smsHint": "Vanliga sms-avgifter kan tillkomma",
+      "sending": "Skickar koden…"
+    },
+    "code": {
+      "title": "Ange verifieringskoden",
+      "body": "{length, plural, one {Ange den #-siffriga koden som Apple skickade.} other {Ange den #-siffriga koden som Apple skickade.}}",
+      "label": "Verifieringskod",
+      "wrong": "Den koden fungerade inte. Kontrollera den och ange den igen.",
+      "verify": "Verifiera",
+      "checking": "Kontrollerar koden…",
+      "deviceBody": "{length, plural, one {Ange den #-siffriga koden som visas på din iPhone, iPad eller Mac.} other {Ange den #-siffriga koden som visas på din iPhone, iPad eller Mac.}}",
+      "smsBody": "{length, plural, one {Ange den #-siffriga koden som skickades till {number}.} other {Ange den #-siffriga koden som skickades till {number}.}}",
+      "allowHint": "Håll den upplåst och tryck på Tillåt när den frågar om inloggningen.",
+      "noCode": "Fick du ingen kod?",
+      "resend": "Skicka en ny kod",
+      "textTo": "Sms till {number}",
+      "sending": "Skickar en ny kod…",
+      "sent": "En ny kod är på väg.",
+      "notSent": "Apple skickade ingen ny kod. Vänta några minuter och försök igen."
+    },
+    "suggested": "Föreslagen",
+    "team": {
+      "title": "Vilket team ska signera appen?",
+      "body": "Det här Apple-ID:t tillhör fler än ett team. IPAForge kommer ihåg ditt val för det här Apple-ID:t.",
+      "free": "Gratis: appar går ut efter 7 dagar, 3 appar per enhet",
+      "paid": "Betalt: appar gäller i ett år, ingen appgräns",
+      "checking": "Använder det här teamet…"
+    },
+    "revoke": {
+      "title": "Återkalla ett certifikat?",
+      "body": "Det här teamet har redan det maximala antalet utvecklingscertifikat, så IPAForge måste återkalla ett för att skapa sitt eget. Appar som signerats med det återkallade slutar förnyas.",
+      "ipaforge": "Skapat av IPAForge på en annan dator",
+      "sidestore": "Skapat av SideStore",
+      "machine": "Skapat på “{machine}” (oftast Xcode)",
+      "unknown": "Skapat av ett okänt verktyg",
+      "sidestoreWarning": "SideStore på din enhet slutar förnya appar tills det skapar ett nytt.",
+      "machineWarning": "Xcode på den datorn skapar ett nytt nästa gång det signerar.",
+      "expires": "Går ut {date}",
+      "confirm": "Återkalla och fortsätt",
+      "revoking": "Återkallar certifikatet…"
+    },
+    "remove": {
+      "title": "Ta bort en app för att ge plats?",
+      "body": "Ett gratis Apple-ID kan ha {limit} appar på en enhet, så en måste bort innan den här får plats. Du kan installera den igen senare.",
+      "confirm": "Ta bort och fortsätt",
+      "removing": "Tar bort appen…"
+    },
+    "share": {
+      "title": "Dela ditt signeringscertifikat med “{app}”?",
+      "body": "Den här appen ser ut att vara SideStore. Med ditt certifikat kan den förnya appar på enheten själv. Dela det bara med en app du litar på.",
+      "yes": "Dela certifikatet",
+      "yesHint": "Den förnyar dina appar på enheten själv",
+      "no": "Dela inte",
+      "noHint": "Den installeras utan ditt certifikat"
+    },
+    "pairing": {
+      "title": "Vilka appar får ihopparningsfilen?",
+      "body": "Ihopparningsfilen låter en app på enheten prata med den över Wi-Fi, som den här datorn gör. Bara de appar du kryssar i får den.",
+      "available": "{count, plural, one {# app på enheten kan använda den} other {# appar på enheten kan använda den}}",
+      "selectAll": "Markera alla",
+      "clearAll": "Avmarkera alla",
+      "place": "{count, plural, =0 {Välj en app} one {Lägg ut i # app} other {Lägg ut i # appar}}",
+      "placing": "Lägger ut ihopparningsfilen…",
+      "purpose": {
+        "sidestore": "Förnyar och installerar appar över Wi-Fi",
+        "livecontainer": "Kör apparna inuti den med JIT",
+        "stikdebug": "Aktiverar JIT för andra appar",
+        "stikstore": "Installerar appar från sina egna källor"
+      }
+    }
+  },
+  "signIn": {
+    "title": "Lägg till ett Apple-ID",
+    "body": "IPAForge signerar appar med det. Ditt lösenord går bara till Apple.",
+    "appleId": "Apple-ID",
+    "password": "Lösenord",
+    "submit": "Logga in",
+    "signingIn": "Loggar in…",
+    "done": {
+      "title": "Apple-ID tillagt",
+      "body": "Inloggad som {appleId}.",
+      "close": "Klart"
+    },
+    "rememberPassword": "Spara mitt lösenord i systemets nyckelring",
+    "rememberPasswordHint": "Låter IPAForge logga in igen på egen hand när sessionen går ut.",
+    "resuming": {
+      "title": "Loggar in igen",
+      "body": "Loggar in på {appleId} med det IPAForge sparade…",
+      "cancel": "Avbryt"
+    }
+  },
+  "accounts": {
+    "description": "De Apple-ID:n som IPAForge signerar appar med. Det som används visas i det övre fältet.",
+    "list": "Sparade Apple-ID:n",
+    "empty": "Inga Apple-ID:n än. Lägg till ett för att installera SideStore.",
+    "notSaved": {
+      "title": "Apple-ID:n sparas inte",
+      "body": "IPAForge kan inte använda systemets nyckelring (åtkomsten kan ha nekats), så dina Apple-ID:n behålls bara tills programmet avslutas. För att spara dem, öppna IPAForge igen och tillåt åtkomst till nyckelringen när du blir tillfrågad."
+    },
+    "freeTeam": "{name} (gratis)",
+    "withState": "{line} · {state}",
+    "state": {
+      "checking": "Kontrollerar…",
+      "signInNeeded": "Inloggning behövs",
+      "blocked": "Spärrat på den här enheten",
+      "unreachable": "Kunde inte nå Apple"
+    },
+    "inUse": "Används",
+    "noTeams": "Team visas när Apple har svarat.",
+    "use": "Använd",
+    "signInAgain": "Logga in igen",
+    "signOut": {
+      "action": "Logga ut",
+      "title": "Logga ut från {appleId}?",
+      "forgets": "IPAForge glömmer det här Apple-ID:t, dess session och dess sparade lösenord.",
+      "keeps": "Dess signeringscertifikat ligger kvar på den här datorn, så en ny inloggning återanvänder dem. Appar som redan är installerade fortsätter fungera tills de går ut.",
+      "confirm": "Logga ut"
+    }
+  },
+  "apps": {
+    "description": "De appar som IPAForge installerade på den här enheten. Förnya signerar en igen innan den går ut och behåller dess data.",
+    "refreshAll": "{count, plural, =0 {Förnya alla} other {Förnya alla (#)}}",
+    "updateAll": "{count, plural, other {Uppdatera alla (#)}}",
+    "refresh": "Förnya",
+    "update": "Uppdatera",
+    "remove": "Ta bort",
+    "removeApp": "Ta bort {name}",
+    "updateTo": "Uppdatera: {version}",
+    "from": "Från {source}",
+    "needsIpa": "Installerad av IPAForge från en .ipa på en annan dator. Lägg till den .ipa i Förladda en gång för att förnya den här.",
+    "thisDevice": "den här enheten",
+    "badge": "{count, plural, one {# app att förnya snart} other {# appar att förnya snart}}",
+    "expiry": {
+      "in": "{days, plural, one {Går ut om # dag · {date}} other {Går ut om # dagar · {date}}}",
+      "today": "Går ut i dag",
+      "expired": "{days, plural, one {Gick ut för # dag sedan · öppnas inte} other {Gick ut för # dagar sedan · öppnas inte}}",
+      "unknown": "Utgångsdatum okänt",
+      "gone": "Utgången · öppnas inte"
+    },
+    "run": {
+      "checking": "Kontrollerar med Apple…",
+      "waiting": "Väntar på sin tur",
+      "done": "Klart"
+    },
+    "failed": {
+      "title": "Förnyelsen blev inte klar: {reason}",
+      "details": "Visa detaljer",
+      "dismiss": "Stäng"
+    },
+    "notConnected": {
+      "title": "Den här enheten är inte ansluten",
+      "body": "Anslut den för att se dess appar och för att förnya eller uppdatera dem."
+    },
+    "expired": {
+      "title": "{count, plural, one {# app har gått ut} other {# appar har gått ut}}",
+      "body": "De öppnas inte förrän de har förnyats. Deras data behålls.",
+      "refresh": "{count, plural, one {Förnya den nu} other {Förnya dem nu}}"
+    },
+    "facts": {
+      "next": "Nästa som går ut",
+      "none": "Inget än",
+      "nextIn": "{days, plural, one {{name} · # dag} other {{name} · # dagar}}",
+      "nextExpired": "{name} · utgången",
+      "count": "Hålls förnyade",
+      "apps": "{count, plural, one {# app} other {# appar}}",
+      "auto": "Automatisk förnyelse",
+      "autoOn": "{days, plural, one {På · # dag innan} other {På · # dagar innan}}",
+      "autoOff": "Av"
+    },
+    "list": {
+      "title": "Installerade av IPAForge",
+      "count": "{count, plural, one {# app · den som går ut först överst} other {# appar · de som går ut först överst}}",
+      "empty": "Inga appar än. Installera SideStore, eller förladda appar, så visas de här."
+    },
+    "others": {
+      "title": "Inte hållna av IPAForge än",
+      "hint": "Installerade före den här versionen av IPAForge, eller av ett annat verktyg",
+      "found": "Hittad i {source}. Förnya installerar den därifrån och behåller dess data, och IPAForge håller den förnyad från och med då.",
+      "foundMany": "Hittad i {source} och {count, plural, one {# annan källa} other {# andra källor}}. Förnya installerar den från den som väljs nedan och behåller dess data, och IPAForge håller den förnyad från och med då.",
+      "pickSource": "Installera den från",
+      "choice": "{source} · {version}",
+      "how": "Lägg till dess .ipa i Förladda en gång, så håller IPAForge den förnyad från och med då."
+    },
+    "auto": {
+      "title": "Förnya appar automatiskt",
+      "body": "Medan IPAForge är öppet och enheten är ansluten förnyas appar av sig själva innan de går ut.",
+      "toggle": "Förnya automatiskt",
+      "when": "Förnya när en app har",
+      "days": "{count, plural, one {# dag kvar} other {# dagar kvar}}"
+    },
+    "removeDialog": {
+      "title": "Ta bort {name}?",
+      "body": "Den tas bort från {device} med sina data och frigör en plats för gratisappar. Du kan installera den igen från Förladda."
+    },
+    "pairing": {
+      "open": "Ihopparningsfiler",
+      "title": "Ihopparningsfiler",
+      "hint": "En ihopparningsfil låter en app nå din enhet själv, för att förnya och installera appar. Den som har den kan använda enheten, så ge en till dina egna appar bara när deras instruktioner ber om det.",
+      "reading": "Läser ihopparningsfilerna…",
+      "empty": "Det finns inga ihopparningsappar eller appar installerade av IPAForge på den här enheten.",
+      "classic": {
+        "thisComputer": "Ihopparning: den här datorns",
+        "otherComputer": "Ihopparning: en annan dators",
+        "missing": "Ihopparning: saknas"
+      },
+      "remote": {
+        "accepted": "Fjärr: godtagen",
+        "rejected": "Fjärr: inte godtagen",
+        "otherComputer": "Fjärr: en annan dators",
+        "missing": "Fjärr: saknas"
+      },
+      "detail": {
+        "placed": "Utlagd {date}",
+        "needed": "Behöver en för att förnya sig själv.",
+        "otherComputer": "Från en annan dator: den fungerar så länge den datorn förblir betrodd.",
+        "ownNone": "Ingen. Lägg till en bara om appen ber om det."
+      },
+      "place": "Lägg ut",
+      "placeOne": "Lägg ut ihopparningsfilen i {name}",
+      "placeAgain": "Lägg ut igen",
+      "placeAgainOne": "Lägg ut ihopparningsfilen i {name} igen",
+      "add": "Lägg till…",
+      "addOne": "Lägg till en ihopparningsfil i {name}",
+      "remove": "Ta bort",
+      "removeOne": "Ta bort ihopparningsfilen från {name}",
+      "newRemote": "Ny fjärrihopparning",
+      "done": "Klart",
+      "addTitle": "Lägg till en ihopparningsfil i {name}",
+      "addBody": "IPAForge skriver den här datorns ihopparningsfil till appens mapp på din enhet. Den som har den kan använda enheten: lägg bara till den i appar du litar på.",
+      "pathLabel": "Sökväg inuti appen",
+      "pathHint": "Från appens instruktioner; oftast i Documents. IPAForge kommer ihåg den för den här appen.",
+      "pathInvalid": "Använd en sökväg i Documents eller Library som slutar på .plist eller .mobiledevicepairing.",
+      "removeTitle": "Ta bort ihopparningsfilen för {name}?",
+      "removeBody": "Den kan inte nå din enhet själv längre (förnya, installera) förrän en ihopparningsfil läggs ut igen.",
+      "newRemoteTitle": "Skapa en ny fjärrihopparning?",
+      "newRemoteBody": "IPAForge skapar en ny fjärrihopparning med din enhet och lägger ut den i SideStore. Enheten kan be dig lita på den här datorn. Den gamla fjärrihopparningen slutar fungera.",
+      "newRemoteConfirm": "Skapa en ny",
+      "newRemoteWaiting": "Om din enhet frågar, tryck på Lita på och ange dess lösenkod.",
+      "tag": "Ingen ihopparningsfil",
+      "tagOne": "{name} har ingen ihopparningsfil: öppna Ihopparningsfiler"
+    },
+    "cancelRefresh": "Avbryt förnyelsen"
+  },
+  "logs": {
+    "title": "Loggar",
+    "lede": "Vad IPAForge gjorde, rad för rad. Öppna den var som helst med",
+    "shortcut": {
+      "control": "Ctrl+",
+      "command": "⌘",
+      "key": "L"
+    },
+    "copy": "Kopiera",
+    "save": "Spara…",
+    "clear": "Rensa",
+    "cleared": "Vyn har rensats. Spara skriver fortfarande varje rad som behållits under den här sessionen.",
+    "search": {
+      "label": "Sök i loggarna",
+      "placeholder": "Sök i meddelanden och detaljer",
+      "key": "/"
+    },
+    "level": {
+      "label": "Nivå",
+      "all": "Alla",
+      "info": "Info",
+      "warn": "Varningar",
+      "error": "Fel"
+    },
+    "levelName": {
+      "debug": "Felsökning",
+      "info": "Info",
+      "warn": "Varning",
+      "error": "Fel"
+    },
+    "area": {
+      "label": "Område",
+      "all": "Alla områden",
+      "install": "Installation",
+      "device": "Enhet",
+      "apple": "Apple",
+      "catalog": "Katalog",
+      "signing": "Signering",
+      "engine": "Motor",
+      "interface": "Gränssnitt",
+      "app": "App"
+    },
+    "filters": {
+      "showing": "Visar bara:",
+      "run": "Den här installationskörningen ({time})",
+      "text": "“{text}”",
+      "remove": "Ta bort filtret {filter}"
+    },
+    "list": {
+      "label": "Loggrader",
+      "loadingOlder": "Läser in äldre rader…"
+    },
+    "row": {
+      "details": "{count, plural, one {# detalj} other {# detaljer}}",
+      "scope": "område",
+      "redacted": "[redigerad bort]",
+      "copy": "Kopiera raden"
+    },
+    "follow": {
+      "on": "Följer nya rader",
+      "off": "Pausad",
+      "pause": "Pausa",
+      "resume": "Följ"
+    },
+    "jump": "{count, plural, one {# ny rad} other {# nya rader}} · Hoppa till senaste",
+    "count": "{matching, plural, one {# matchande rad} other {# matchande rader}} · de senaste {capacity, number} behålls under den här sessionen",
+    "debug": "Ta med felsökningsdetaljer",
+    "privacy": "Lösenord, tokens, nycklar, serienummer och enhetsidentifierare skrivs aldrig till loggarna; de visas som [redigerad bort]. Loggarna stannar på den här datorn tills du kopierar eller sparar dem.",
+    "empty": {
+      "none": {
+        "title": "Inget loggat än",
+        "body": "Rader dyker upp här medan IPAForge arbetar: ansluter en enhet, loggar in, installerar."
+      },
+      "noMatch": {
+        "title": "Inga rader matchar",
+        "body": "Ändra nivån, området eller sökningen.",
+        "showAll": "Visa alla rader"
+      },
+      "cleared": {
+        "title": "Vyn har rensats",
+        "body": "Nya rader dyker upp här allteftersom de kommer."
+      },
+      "failed": {
+        "title": "Kunde inte läsa loggarna",
+        "body": "Anslutningen till motorn kan ha stängts. Öppna Loggar igen för att försöka på nytt."
+      }
+    },
+    "export": {
+      "copyTitle": "{count, plural, one {Kopiera # rad?} other {Kopiera # rader?}}",
+      "saveTitle": "{count, plural, one {Spara # rad till en fil?} other {Spara # rader till en fil?}}",
+      "copyBody": "De rader som visas, med de filter du har ställt in.",
+      "saveBody": "Varje rad som behållits under den här sessionen, oavsett filter.",
+      "warning": "Lösenord, tokens och enhetsidentifierare är redan utelämnade, men loggarna nämner din enhetsmodell, dina appar och ditt team. Kontrollera dem innan du lägger ut dem offentligt.",
+      "confirmCopy": "Kopiera",
+      "confirmSave": "Spara",
+      "copied": "{count, plural, one {Kopierade # rad} other {Kopierade # rader}}",
+      "saved": "{count, plural, one {Sparade # rad} other {Sparade # rader}}",
+      "copyFailed": "Kunde inte kopiera raderna",
+      "saveFailed": "Kunde inte spara raderna"
+    }
+  },
+  "preload": {
+    "title": "Förladda appar",
+    "description": "Installera dina egna appar: signerade med ditt Apple-ID, installerade via USB, en i taget.",
+    "tabs": {
+      "label": "Förladda",
+      "apps": "Lägg till appar",
+      "sources": "Källor"
+    },
+    "add": {
+      "drop": "Släpp .ipa-filer här",
+      "or": "eller",
+      "choose": "Välj filer…",
+      "link": "Lägg till från en länk…"
+    },
+    "catalog": {
+      "recommended": "Rekommenderas",
+      "added": "Tillagd",
+      "add": "Lägg till",
+      "sidestore": "Förnyar och installerar appar på enheten själv.",
+      "livecontainerSidestore": "LiveContainer med SideStore inuti.",
+      "livecontainer": "Kör många appar inuti en, förbi gränsen på 3 appar.",
+      "stikdebug": "Slår på JIT på enheten för appar som behöver det.",
+      "feather": "Signerar och installerar appar på enheten med ditt certifikat."
+    },
+    "browse": {
+      "title": "Bläddra bland appar",
+      "count": "{apps, plural, one {# app} other {# appar}} från {sources, plural, one {# källa} other {# källor}}",
+      "source": "Källa",
+      "allSources": "Alla källor",
+      "search": "Sök appar",
+      "manage": "Hantera källor",
+      "noMatch": "Inga appar matchar “{query}”.",
+      "allOff": "Alla källor är avstängda. Slå på en i Källor.",
+      "loading": "Läser källorna…",
+      "catalogLine": "Senaste version · kontrollerad mot sin kontrollsumma",
+      "version": "{version} · {size}",
+      "from": "{name}, finns också i {others}",
+      "details": "Detaljer om {name}",
+      "notRefreshed": {
+        "title": "Kunde inte uppdatera {name}",
+        "body": "Visar dess appar från den senaste uppdateringen, {when}.",
+        "retry": "Försök igen"
+      }
+    },
+    "detail": {
+      "version": "Version",
+      "latest": "{version} (senaste)",
+      "size": "Storlek",
+      "needs": "Kräver",
+      "needsIos": "iOS {version}",
+      "anyIos": "Valfri iOS",
+      "from": "Från",
+      "builtin": "Inbyggd · betrodd",
+      "added": "En källa du har lagt till",
+      "untrusted": "Från en källa du har lagt till: IPAForge granskar inte dess appar.",
+      "add": "Lägg till i listan",
+      "inList": "I listan",
+      "close": "Stäng",
+      "loadingReleases": "Slår upp dess versioner…",
+      "noReleases": "Dess versioner kan inte läsas just nu. Kontrollera anslutningen och öppna den igen."
+    },
+    "sources": {
+      "description": "Var Bläddra bland appar hittar appar. Inbyggda källor underhålls av IPAForge; lägg till andra med deras länk (AltStore-format).",
+      "add": "Lägg till källa…",
+      "refreshAll": "Uppdatera alla",
+      "list": "Källor",
+      "builtin": "Inbyggd · betrodd",
+      "added": "Tillagd av dig",
+      "catalogName": "IPAForge-katalog",
+      "apps": "{count, plural, one {# app} other {# appar}}",
+      "updated": "uppdaterad {when}",
+      "notRead": "Inte läst än",
+      "skipped": "{count, plural, one {# hoppades över (inte .ipa)} other {# hoppades över (inte .ipa)}}",
+      "failed": "Kunde inte nås.",
+      "failedCopy": "Visar dess senaste kopia, från {when}.",
+      "refreshing": "Uppdaterar…",
+      "show": "Visa appar från {name}",
+      "refresh": "Uppdatera {name}",
+      "remove": "Ta bort {name}",
+      "on": "På",
+      "off": "Av",
+      "note": "IPAForge granskar inte appar i källor du lägger till. Lägg bara till källor du litar på.",
+      "refreshOne": "Uppdatera",
+      "removeOne": "Ta bort"
+    },
+    "addSource": {
+      "title": "Lägg till en källa",
+      "label": "Källlänk",
+      "placeholder": "https://example.com/apps.json",
+      "hint": "En källa i AltStore-format, den sort som SideStore läser. Slutar oftast på .json.",
+      "check": "Kontrollera",
+      "checking": "Kontrollerar källan…",
+      "notLink": "Ange en länk som börjar med https://",
+      "notHttps": "Använd en https://-länk: IPAForge läser bara källor över en säker anslutning.",
+      "previewTitle": "Lägga till den här källan?",
+      "includes": "{count, plural, one {# app, bland annat:} other {# appar, bland annat:}}",
+      "skipped": "{count, plural, one {# till utelämnades: dess nedladdning är ingen .ipa.} other {# till utelämnades: deras nedladdning är ingen .ipa.}}",
+      "warningTitle": "Lägg bara till källor du litar på",
+      "warningBody": "IPAForge granskar inte apparna i källor du lägger till. Varje app kontrolleras ändå innan den installeras.",
+      "back": "Tillbaka",
+      "confirm": "Lägg till källa"
+    },
+    "removeSource": {
+      "title": "Ta bort {name}?",
+      "body": "Dess appar försvinner från Bläddra bland appar. Appar som installerats från den ligger kvar på enheten, och appar i listan Att installera ligger också kvar.",
+      "confirm": "Ta bort"
+    },
+    "list": {
+      "title": "Att installera",
+      "count": "{count, plural, one {# app} other {# appar}}",
+      "empty": "Inga appar än. Släpp .ipa-filer här, välj dem, lägg till en länk eller välj en i Bläddra bland appar."
+    },
+    "row": {
+      "waiting": "Väntar på enheten och Apple-ID:t",
+      "checking": "Kontrollerar…",
+      "downloading": "Laddar ned och kontrollerar…",
+      "appIds": "{count, plural, one {# App-ID} other {# App-ID:n}}{extensions, plural, =0 {} one { (app + # tillägg)} other { (app + # tillägg)}}",
+      "updates": "Uppdaterar {from} → {to} · behåller sina data",
+      "new": "Ny på enheten",
+      "pairing": "Får ihopparningsfilen och certifikatet",
+      "fromCatalog": "Från katalogen · Stabil",
+      "remove": "Ta bort {name}",
+      "cannot": "Kan inte installeras.",
+      "fromSource": "Från {name}",
+      "saveInstead": "Spara signerad .ipa i stället",
+      "saveInsteadOne": "Spara {name} som en signerad .ipa i stället för att installera den",
+      "savedOnComputer": "Sparad på den här datorn, inte installerad"
+    },
+    "problem": {
+      "notIpa": "Bara .ipa-filer kan installeras.",
+      "unreadable": "IPAForge kan inte läsa den här filen. Lägg till den med Välj filer… i stället.",
+      "needsIos": "Kräver iOS {needs}; den här enheten har iOS {has}."
+    },
+    "summary": {
+      "appIds": "{count, plural, one {# ny} other {# nya}} · {left, plural, one {# kvar den här veckan} other {# kvar den här veckan}}",
+      "appIdsNoLimit": "{count, plural, one {# ny} other {# nya}}",
+      "notEnough": "Inte tillräckligt många kvar. Ta bort en app, eller vänta. {next}",
+      "freeApps": "{after} av {limit} efter den här installationen",
+      "freeAppsOver": "{used, plural, one {# finns redan.} other {# finns redan.}} Installationen frågar vilken app som ska tas bort, eller så tar du bort en från den här listan."
+    },
+    "install": "{count, plural, =0 {Installera} one {Installera # app} other {Installera # appar}}",
+    "clear": "Rensa listan",
+    "readiness": {
+      "busy": "Vänta på installationen som pågår.",
+      "empty": "Lägg till en app först.",
+      "checking": "Kontrollerar apparna…",
+      "problems": "Ta bort de appar som inte kan installeras."
+    },
+    "link": {
+      "title": "Lägg till från en länk",
+      "body": "En direktlänk till en .ipa-fil. IPAForge laddar ned den och kontrollerar den sedan som vilken annan app som helst.",
+      "label": "Länk",
+      "placeholder": "https://example.com/MyApp.ipa",
+      "add": "Lägg till",
+      "httpsOnly": "Bara https-länkar kan laddas ned.",
+      "invalid": "Det är ingen länk.",
+      "notIpa": "Länken måste peka på en .ipa-fil."
+    },
+    "elsewhere": {
+      "apps": "Appar installeras",
+      "sidestore": "SideStore installeras",
+      "body": "En installation i taget: den behöver enheten. Den här kan starta när den andra är klar.",
+      "open": "Öppna den"
+    },
+    "run": {
+      "title": {
+        "running": "{count, plural, one {Installerar {app}} other {Installerar # appar}}",
+        "completed": "{count, plural, one {{app} är installerad} other {# appar är installerade}}",
+        "failed": "Kunde inte installera alla appar"
+      },
+      "backToPreload": "Tillbaka till Förladda",
+      "shared": "Den här enheten och ditt Apple-ID",
+      "refresh": {
+        "profile": "Bara en ny profil, inget installeras igen",
+        "certificate": "Installerad igen: certifikatet som signerade den är inte längre giltigt",
+        "unmarked": "Installerad igen: IPAForge kan inte avgöra vilket certifikat som signerade den",
+        "appId": "Installerad igen: Apple tog bort dess App-ID när det gick ut",
+        "sidestore": "Installerad igen, med sina data kvar, så SideStore själv visar det nya datumet"
+      },
+      "group": {
+        "failed": "Misslyckades",
+        "done": "Klart",
+        "active": "Pågår",
+        "pending": "Väntar"
+      }
+    },
+    "done": {
+      "title": "{count, plural, one {{app} finns på {device}.} other {{app} finns på {device}.}}",
+      "open": "Öppna varje app från hemskärmen."
+    },
+    "signAndSave": "{count, plural, one {Signera och spara # app} other {Signera och spara # appar}}",
+    "installAndSave": "{install} att installera · {save} att spara som signerad .ipa"
+  },
+  "repair": {
+    "title": "Reparera SideStore",
+    "description": "IPAForge kontrollerar SideStore på {device} och åtgärdar det som hindrar den från att förnya dina appar själv.",
+    "checkAgain": "Kontrollera igen",
+    "checking": "Kontrollerar SideStore…",
+    "checks": "Kontroller",
+    "failed": "Kunde inte kontrollera SideStore: {reason}",
+    "failedBody": "Kontrollera att enheten är ansluten och upplåst och tryck sedan på Kontrollera igen.",
+    "ok": "OK",
+    "unknown": "Kan inte avgöra",
+    "deviceFirst": "Åtgärda {device} först",
+    "device": {
+      "title": "{device} är redo",
+      "ok": "Upplåst, betrodd och med utvecklarläge på.",
+      "locked": "Den är låst. Lås upp den och tryck sedan på Kontrollera igen.",
+      "lockedTag": "Låst",
+      "developerMode": "Utvecklarläget är av, så SideStore och apparna den installerar öppnas inte. På iPhone: Inställningar › Integritet och säkerhet › Utvecklarläge och starta sedan om den.",
+      "developerModeTag": "Utvecklarläge av"
+    },
+    "installed": {
+      "title": "SideStore är installerad",
+      "missing": "SideStore finns inte på {device}.",
+      "missingTag": "Inte installerad"
+    },
+    "signer": {
+      "title": "Den är signerad med teamet du använder här",
+      "ok": "Reparera kan installera den igen, eller ge den en ny profil, utan att förlora dess data.",
+      "otherTeam": "Ett annat av det här Apple-ID:ts team signerade den. Att installera den igen med det här teamet skulle lägga till en andra SideStore, utan dess data eller appar.",
+      "otherTeamTag": "Annat team",
+      "otherAppleId": "Ett annat Apple-ID signerade den. Att installera den igen med det här skulle lägga till en andra SideStore, utan dess data eller appar.",
+      "otherAppleIdTag": "Annat Apple-ID"
+    },
+    "version": {
+      "title": "SideStore är uppdaterad",
+      "ok": "Version {version}, den senaste.",
+      "outdated": "Version {version}; {latest} finns ute. Äldre versioner kan sakna rättningar för förnyelse på senaste iOS.",
+      "outdatedTag": "{latest} tillgänglig",
+      "unknown": "Version {version}. Katalogen kunde inte nås för jämförelse."
+    },
+    "expiry": {
+      "title": "SideStore har inte gått ut",
+      "ok": "{days, plural, one {Går ut om # dag.} other {Går ut om # dagar.}}",
+      "soon": "{days, plural, =0 {Går ut i dag.} one {Går ut om # dag.} other {Går ut om # dagar.}} När den har gått ut kan SideStore inte förnya sig själv.",
+      "soonTag": "Går snart ut",
+      "expired": "{days, plural, one {Gick ut för # dag sedan.} other {Gick ut för # dagar sedan.}} Den öppnas inte, så den kan inte förnya dina appar.",
+      "expiredTag": "Utgången",
+      "unknown": "Enheten visar ingen profil för den."
+    },
+    "signing": {
+      "title": "Certifikatet som signerade den är giltigt",
+      "ok": "Fortfarande giltigt hos Apple.",
+      "revoked": "Det har återkallats eller har gått ut. SideStore slutar öppnas vid nästa start.",
+      "revokedTag": "Återkallat",
+      "unknown": "Installerad av ett annat verktyg, så IPAForge kan inte se vilket certifikat som signerade den. Reparera kan installera den igen för säkerhets skull."
+    },
+    "own": {
+      "title": "SideStore kan signera appar själv",
+      "ok": "Den har ett giltigt certifikat att förnya dina appar med.",
+      "missing": "Den har inget certifikat, så dess förnyelser ber dig logga in, eller misslyckas.",
+      "missingTag": "Inget certifikat",
+      "other": "Certifikatet den fick är inte giltigt längre. Den kan ha ersatt det med ett nyare eget; om förnyelsen misslyckas i SideStore, installera den igen.",
+      "otherTag": "Kan ha ersatts"
+    },
+    "pairing": {
+      "title": "SideStore har en ihopparningsfil",
+      "ok": "Finns, och är den här datorns ihopparning med {device}.",
+      "missing": "Saknas: SideStore kan inte nå enheten för att installera eller förnya appar.",
+      "missingTag": "Saknas",
+      "other": "Den är en annan dators. Den fungerar så länge den ihopparningen förblir giltig; att återställa Lita på på enheten bryter den.",
+      "otherTag": "En annan dator"
+    },
+    "manual": {
+      "title": "På din iPhone · IPAForge kan inte kontrollera detta",
+      "tag": "Kontrollera själv",
+      "vpn": {
+        "title": "SideStores VPN är på när den förnyar",
+        "body": "Öppna LocalDevVPN och anslut det innan du förnyar i SideStore."
+      },
+      "anisette": {
+        "title": "SideStore kan nå sin anisette-server",
+        "body": "I SideStore › Inställningar › Anisette, välj en annan server om förnyelsen säger att den inte kan logga in."
+      }
+    },
+    "plan": {
+      "title": "Reparera kommer att",
+      "reinstall": "Installera SideStore igen",
+      "reinstallBody": "Från IPAForge-katalogen, signerad med ett giltigt certifikat som också läggs in i den. Dess data och dina appar ligger kvar.",
+      "profile": "Ge SideStore en ny profil",
+      "profileBody": "Inget installeras igen.",
+      "pairing": "Lägg ut den här datorns ihopparningsfil",
+      "pairingBody": "I SideStores Documents, och ersätter det som finns där.",
+      "optional": "Dessutom, om du vill",
+      "offerReinstall": "Installera SideStore igen, för säkerhets skull",
+      "offerPairing": "Ersätt ihopparningsfilen med den här datorns",
+      "hint": "En körning. Håll {device} ansluten och upplåst.",
+      "start": "Reparera SideStore"
+    },
+    "blocked": {
+      "title": "SideStore kan inte installeras igen med det här Apple-ID:t",
+      "body": "Ett annat team eller Apple-ID signerade den, så dess data skulle inte följa med. Välj det Apple-ID:t i det övre fältet och tryck sedan på Kontrollera igen."
+    },
+    "notInstalled": {
+      "title": "SideStore finns inte på {device}",
+      "body": "Installera den först, från sidan Installera.",
+      "install": "Installera SideStore"
+    },
+    "fine": {
+      "title": "SideStore fungerar",
+      "body": "Inget att reparera. Om den fortfarande inte kan förnya, kontrollera de två sakerna på din iPhone nedan."
+    },
+    "run": {
+      "title": {
+        "running": "Reparerar SideStore",
+        "completed": "SideStore är reparerad",
+        "failed": "Kunde inte reparera SideStore"
+      }
+    },
+    "done": {
+      "title": "SideStore på {device} är reparerad.",
+      "open": "Öppna SideStore och förnya dina appar."
+    },
+    "open": "Kontrollera SideStore",
+    "checkingTag": "Kontrollerar…",
+    "remote": {
+      "title": "Fjärrihopparning för iOS 17.4 och senare",
+      "ok": "Finns, och {device} godtar den.",
+      "missing": "Saknas: SideStore kan bara använda den klassiska ihopparningen. Att lägga ut den här datorns ihopparningsfil lägger till den.",
+      "missingTag": "Saknas",
+      "rejected": "{device} godtar den inte längre (dess Lita på återställdes). Att lägga ut den här datorns ihopparningsfil skapar en ny.",
+      "rejectedTag": "Inte godtagen",
+      "other": "Den är en annan dators, så IPAForge kan inte kontrollera den. Att lägga ut den här datorns ihopparningsfil ersätter den.",
+      "otherTag": "En annan dator",
+      "notNeeded": "Behövs inte under iOS 17.4.",
+      "notNeededTag": "Behövs inte"
+    }
+  },
+  "sidestore": {
+    "addSource": "Lägg till i SideStore",
+    "addAll": "Lägg till alla i SideStore",
+    "install": "Installera med SideStore",
+    "sourceTitle": "Lägg till {name} i SideStore",
+    "sourceBody": "SideStore visar också dess appar och håller dem uppdaterade på iPhone. SideStore granskar inte heller apparna i en källa: lägg bara till källor du litar på.",
+    "installTitle": "Installera {name} med SideStore",
+    "installBody": "SideStore laddar ned {name} {version}, signerar den med ditt Apple-ID och installerar den på iPhone själv. Med ett gratis Apple-ID räknas den mot de 3 apparna. Den visas i Appar när IPAForge har förnyat den.",
+    "qrLabel": "QR-kod för länken nedan",
+    "steps": {
+      "camera": "Öppna Kameran på {device} och rikta den mot koden.",
+      "banner": "Tryck på banderollen för att öppna SideStore.",
+      "addSource": "SideStore frågar om källan ska läggas till: tryck på Lägg till.",
+      "install": "SideStore frågar om appen ska installeras: tryck på Installera."
+    },
+    "onPhone": "På själva iPhone öppnar länken också SideStore (inklistrad i Safari eller skickad i Meddelanden).",
+    "copy": "Kopiera",
+    "copied": "Kopierat",
+    "previous": "Föregående",
+    "next": "Nästa",
+    "step": "Källa {at} av {count}",
+    "back": "Tillbaka",
+    "done": "Klart",
+    "offer": "{count, plural, one {Lägg till källan du lade till här i SideStore också, så att den visar dess appar på iPhone.} other {Lägg till de # källor du lade till här i SideStore också, så att den visar deras appar på iPhone.}}"
+  },
+  "checklist": {
+    "title": "På {device} · iOS {ios}",
+    "setUp": "{device} är konfigurerad · iOS {ios}",
+    "show": "Visa checklistan",
+    "hide": "Dölj",
+    "allSet": "Allt klart",
+    "progress": "{left, plural, one {# sak att göra} other {# saker att göra}} · {done} av {total} klara",
+    "group": {
+      "before": "Före installationen",
+      "after": "Efter installationen",
+      "sidestore": "För SideStore"
+    },
+    "onPhone": "På iPhone",
+    "tickedTag": "Gjort på iPhone",
+    "tick": "Jag har gjort detta",
+    "notNeeded": "Behövs inte på den här iOS-versionen",
+    "cable": {
+      "title": "Anslut {device} till den här datorn",
+      "connected": "Ansluten",
+      "none": "Inte ansluten",
+      "how": "Använd en kabel första gången; efter det fungerar Wi-Fi så länge båda är på samma nätverk."
+    },
+    "unlock": {
+      "title": "Lås upp den",
+      "locked": "Låst",
+      "unlocked": "Upplåst",
+      "how": "Håll den upplåst medan IPAForge installerar."
+    },
+    "trust": {
+      "title": "Lita på den här datorn",
+      "trusted": "Betrodd",
+      "notYet": "Inte än",
+      "step1": "Lås upp {device}.",
+      "step2": "Tryck på Lita på när den frågar om den här datorn.",
+      "step3": "Ange dess lösenkod.",
+      "again": "Fråga igen"
+    },
+    "passcode": {
+      "title": "Ställ in en lösenkod",
+      "how": "SideStore förnyar över Wi-Fi, vilket iOS bara tillåter med en lösenkod: Inställningar › Face ID och lösenkod."
+    },
+    "devmode": {
+      "title": "Slå på utvecklarläge",
+      "on": "På",
+      "off": "Av",
+      "step1": "Inställningar › Integritet och säkerhet › Utvecklarläge (om det inte finns där, tryck på Visa alternativet).",
+      "step2": "Slå på det och starta om {device}.",
+      "step3": "Efter omstarten, tryck på Slå på och ange lösenkoden.",
+      "reveal": "Visa alternativet",
+      "revealed": "Det finns nu i Inställningar › Integritet och säkerhet."
+    },
+    "developer": {
+      "title": "Lita på ditt Apple-ID som utvecklare",
+      "later": "Efter första installationen",
+      "step1": "Inställningar › Allmänt › VPN och enhetshantering.",
+      "step2": "Under Utvecklarapp, tryck på {appleId}.",
+      "step3": "Tryck på Lita på. iPhone behöver internet för detta."
+    },
+    "vpn": {
+      "title": "Installera LocalDevVPN",
+      "installed": "Installerad",
+      "notInstalled": "Inte installerad",
+      "how": "SideStore pratar med iPhone via detta lokala VPN; inget lämnar telefonen. Det är gratis i App Store.",
+      "qrLabel": "QR-kod för LocalDevVPN:s sida i App Store",
+      "scan": "Skanna med Kameran, eller sök efter “LocalDevVPN” i App Store."
+    },
+    "vpnOn": {
+      "title": "Anslut LocalDevVPN när SideStore förnyar",
+      "tag": "Varje gång",
+      "later": "Efter att du installerat det",
+      "how": "Öppna LocalDevVPN och tryck på Anslut, eller låt SideStore slå på det: den frågar första gången."
+    },
+    "repair": {
+      "title": "SideStore kan förnya själv",
+      "tag": "Kontrolleras i Reparera",
+      "how": "Dess certifikat, dess ihopparningsfil och dess utgångsdatum."
+    },
+    "notice": "{count, plural, one {# sak att göra på {device}} other {# saker att göra på {device}}}",
+    "noticeBody": "Så att installation och förnyelse går smidigt.",
+    "showChecklist": "Visa checklistan"
+  },
+  "updates": {
+    "screen": {
+      "label": "Uppdaterar IPAForge"
+    },
+    "checking": {
+      "title": "Söker efter uppdateringar…"
+    },
+    "downloading": {
+      "title": "Uppdaterar IPAForge",
+      "body": "Version {version} finns ute. Den laddas ned och installeras nu, sedan öppnas IPAForge igen av sig själv.",
+      "starting": "Startar nedladdningen…",
+      "percent": "{fraction, number, percent}"
+    },
+    "installing": {
+      "title": "Installerar {version}…",
+      "body": "IPAForge öppnas igen om en stund."
+    },
+    "failed": {
+      "title": "Uppdateringen blev inte klar",
+      "body": "Version {version} finns ute. Försök igen, eller ladda ned den från dess utgivningssida.",
+      "retry": "Försök igen",
+      "releasePage": "Utgivningssida",
+      "skip": "Använd den här versionen tills vidare"
+    },
+    "manual": {
+      "title": "IPAForge {version} finns ute",
+      "body": "Den här kopian installerades från {package, select, msi {ett .msi-installationsprogram} deb {ett .deb-paket} rpm {ett .rpm-paket} other {ett paket}}, som inte kan uppdatera sig själv. Ladda ned den nya versionen och installera den över den här: dina Apple-ID:n, appar och inställningar ligger kvar.",
+      "download": "Ladda ned {version}",
+      "later": "Senare"
+    },
+    "nativeBuild": {
+      "title": "Det här är Intel-versionen",
+      "body": "Din Mac har Apple silicon, så den här kopian av IPAForge körs via Rosetta och allt går långsammare. Ladda ned versionen för Apple silicon och installera den över den här; dina Apple-ID:n, enheter och appar ligger kvar.",
+      "file": "IPAForge-…-mac-arm64.dmg",
+      "later": "Senare",
+      "download": "Ladda ned för Apple silicon"
+    }
+  },
+  "whatsNew": {
+    "link": "Nyheter",
+    "version": "Version {version} · {date}",
+    "englishOnly": "Versionsanteckningarna är på engelska.",
+    "kind": {
+      "new": "Nytt",
+      "changed": "Ändrat",
+      "fixed": "Åtgärdat",
+      "removed": "Borttaget"
+    },
+    "dialog": {
+      "title": "Nytt i IPAForge",
+      "everyVersion": "Alla versioner",
+      "close": "Okej"
+    },
+    "page": {
+      "title": "Nyheter",
+      "lede": "Allt som har ändrats i IPAForge, de senaste först.",
+      "current": "Den här versionen",
+      "release": "Utgåva på GitHub"
+    }
+  },
+  "portal": {
+    "description": "Vad ditt Apple-ID:s team har hos Apple, och profilerna på din enhet.",
+    "tabsLabel": "Vad teamet har",
+    "tabs": {
+      "certificates": "Certifikat",
+      "appIds": "App-ID:n",
+      "profiles": "Profiler",
+      "groups": "Appgrupper",
+      "devices": "Registrerade enheter"
+    },
+    "team": {
+      "pick": "Team",
+      "free": "{name} (gratis)",
+      "paid": "{name} (betalt)"
+    },
+    "refresh": "Uppdatera",
+    "reading": "Läser från Apple…",
+    "noAccount": {
+      "title": "Inget Apple-ID än",
+      "body": "Logga in med ett Apple-ID under Konton för att se vad dess team har."
+    },
+    "expired": "Utgången",
+    "expires": "Går ut {date}",
+    "expiredOn": "Gick ut {date}",
+    "certificates": {
+      "hint": "Ett certifikat signerar apparna du installerar. Att återkalla ett gör att varje app det signerade slutar öppnas, tills de signeras igen.",
+      "usedFree": "{count} av {max} används (gratisteam kan ha {max})",
+      "usedPaid": "{count, plural, one {# certifikat} other {# certifikat}}",
+      "maker": {
+        "thisComputer": "IPAForge på den här datorn",
+        "ipaforge": "IPAForge på en annan dator",
+        "sidestore": "SideStore",
+        "machine": "“{machine}” (oftast Xcode)",
+        "unknown": "Ett okänt verktyg"
+      },
+      "thisComputer": "Den här datorns",
+      "signs": "Signerar {apps} på {device}",
+      "signsNothing": "Signerar ingenting på {device}",
+      "revoke": "Återkalla",
+      "revokeOne": "Återkalla {name}",
+      "empty": "Teamet har inga certifikat än. IPAForge skapar ett första gången det installerar.",
+      "import": "Importera .p12…",
+      "export": "Exportera .p12"
+    },
+    "revokeDialog": {
+      "title": "Återkalla det här certifikatet?",
+      "apps": "Dessa slutar öppnas på {device} tills de signeras igen (Förnya under Appar gör det):",
+      "none": "Inget på {device} är signerat med det.",
+      "noDevice": "Anslut din enhet för att se vilka av dess appar det här certifikatet signerar.",
+      "thisComputer": "IPAForge skapar ett nytt nästa gång det installerar eller förnyar.",
+      "sidestore": "SideStore skapade det för att förnya själv: den skapar ett nytt nästa gång du loggar in där.",
+      "machine": "Xcode på den datorn skapar ett nytt nästa gång det signerar.",
+      "exportedToo": "En .p12 som exporterats från det slutar också fungera."
+    },
+    "appIds": {
+      "hintFree": "Varje app och tillägg du installerar behöver ett. Gratisteam kan registrera 10 på 7 dagar; varje räknas i 7 dagar efter att det skapats.",
+      "hintPaid": "Varje app och tillägg du installerar behöver ett. Betalda team har ingen veckogräns.",
+      "left": "{count, plural, one {# kvar den här veckan} other {# kvar den här veckan}}",
+      "leftAndNext": "{left} · nästa blir ledigt {date}",
+      "countsUntil": "Räknas till {date}",
+      "unused": "Oanvänt",
+      "delete": "Ta bort",
+      "deleteOne": "Ta bort {name}",
+      "empty": "Teamet har inga App-ID:n än."
+    },
+    "deleteDialog": {
+      "title": "Ta bort det här App-ID:t?",
+      "free": "I ett gratisteam räknas det fortfarande mot de 10 per vecka tills det går ut: att ta bort det ger inte tillbaka platsen snabbare.",
+      "paid": "Det kan registreras igen senare."
+    },
+    "profiles": {
+      "title": "Etableringsprofiler på {device}",
+      "hint": "En profil låter en app (eller ett tillägg) köras på den här enheten. Förnya ger en app en ny; en utgången eller oanvänd kan tas bort utan risk.",
+      "noDevice": "Anslut din enhet för att se dess etableringsprofiler.",
+      "noApp": "Ingen app använder den",
+      "otherTeam": "Annat team",
+      "remove": "Ta bort",
+      "removeOne": "Ta bort profilen för {name}",
+      "removeUnused": "Ta bort oanvända",
+      "empty": "Det finns inga etableringsprofiler på den här enheten."
+    },
+    "removeDialog": {
+      "title": "{count, plural, one {Ta bort den här profilen?} other {Ta bort # profiler?}}",
+      "body": "{count, plural, one {Den tas bort från {device}. Ingen app där behöver den.} other {De tas bort från {device}. Ingen app där behöver dem.}}"
+    },
+    "groups": {
+      "hint": "Appar i samma grupp delar filer (SideStore och dess widget, till exempel). IPAForge skapar dem när en app behöver en.",
+      "empty": "Teamet har inga appgrupper än."
+    },
+    "devices": {
+      "hintFree": "Appar du signerar körs bara på dessa.",
+      "hintPaid": "Appar du signerar körs bara på dessa. Betalda team kan registrera 100 per år; att ta bort en görs på Apples utvecklarwebbplats, en gång per år.",
+      "used": "{count} av {max} i år",
+      "connected": "Ansluten",
+      "unnamed": "Enhet utan namn",
+      "empty": "Inga enheter är registrerade än. IPAForge registrerar din första gången det installerar."
+    },
+    "exportDialog": {
+      "title": "Exportera den här datorns certifikat",
+      "body": "En .p12-fil med certifikatet och dess privata nyckel, för SideStore eller en annan dator. Den som har filen och dess lösenord kan signera appar som ditt team.",
+      "password": "Lösenord",
+      "again": "Lösenord igen",
+      "tooShort": "{count, plural, one {Använd minst # tecken.} other {Använd minst # tecken.}}",
+      "differ": "De två lösenorden skiljer sig åt.",
+      "save": "Spara .p12…"
+    },
+    "importDialog": {
+      "title": "Importera ett certifikat",
+      "body": "En .p12 från en annan dator eller SideStore. IPAForge kontrollerar att Apple fortfarande listar den för det här teamet och signerar sedan med den här: inget nytt certifikat, ingen plats används.",
+      "noFile": "Ingen fil vald",
+      "choose": "Välj…",
+      "password": "Dess lösenord",
+      "import": "Importera"
+    }
+  },
+  "guide": {
+    "title": "Installationsguide",
+    "stepsLabel": "Installationssteg",
+    "stepDone": "(klart)",
+    "steps": {
+      "welcome": "Välkommen",
+      "computer": "Den här datorn",
+      "iphone": "Din iPhone",
+      "appleid": "Apple-ID",
+      "install": "Installera SideStore",
+      "onphone": "På din iPhone",
+      "around": "Allt är klart"
+    },
+    "back": "Tillbaka",
+    "skip": "Hoppa över det här steget",
+    "continue": "Fortsätt",
+    "later": "Avsluta senare",
+    "checkAgain": "Kontrollera igen",
+    "checking": "Kontrollerar…",
+    "copy": "Kopiera",
+    "copied": "Kopierat",
+    "welcome": {
+      "title": "Välkommen till IPAForge",
+      "lead": "Några steg gör din dator, iPhone och ditt Apple-ID redo, sedan kan du installera SideStore. Välj ditt språk först.",
+      "needTitle": "Det här behöver du",
+      "needDevice": "En iPhone eller iPad med iOS 15 eller senare, och dess USB-kabel",
+      "needAppleId": "Ett Apple-ID (ett gratis fungerar)",
+      "needPasscode": "Din iPhones lösenkod, för att lita på den här datorn",
+      "skipGuide": "Jag hittar själv",
+      "start": "Starta"
+    },
+    "computer": {
+      "title": "Den här datorn",
+      "lead": "IPAForge kontrollerar att den här datorn kan logga in hos Apple: Apples servrar, klockan och en anisette-server. Om den inte kan prata med iPhone säger den också hur du åtgärdar det.",
+      "failed": "Kontrollerna kördes inte. Kontrollera igen, eller hoppa över det här steget.",
+      "service": {
+        "title": "Anslutningstjänst för iPhone",
+        "fixMac": "macOS bör köra den själv. Starta om din Mac och kontrollera sedan igen.",
+        "fixWindows": "Installera Apple Devices från Microsoft Store, öppna det en gång och kontrollera sedan igen.",
+        "fixLinux": "Installera usbmuxd, anslut din iPhone och kontrollera sedan igen.",
+        "openStore": "Öppna Microsoft Store"
+      },
+      "apple": {
+        "title": "Apples servrar",
+        "ok": "Nåbara.",
+        "fix": "IPAForge når inte Apple. Kontrollera din internetanslutning, ditt VPN eller din brandvägg."
+      },
+      "clock": {
+        "title": "Klocka",
+        "ok": "Rätt.",
+        "fix": "{minutes, plural, one {Din klocka går fel med # minut.} other {Din klocka går fel med # minuter.}} Ställ in datum och tid automatiskt och kontrollera sedan igen."
+      },
+      "anisette": {
+        "title": "Anisette-servrar",
+        "ok": "{name} svarar. Inloggningen använder den.",
+        "fix": "Ingen av de första {tried} servrarna i din lista svarade. Kontrollera din anslutning, eller lägg till eller välj en server i Inställningar › Anisette-servrar."
+      }
+    },
+    "iphone": {
+      "title": "Din iPhone",
+      "lead": "Anslut din iPhone med dess kabel, lås upp den och tryck på Lita på när den frågar. På iOS 16 och senare måste utvecklarläge vara på.",
+      "connectTitle": "Anslut din iPhone",
+      "connectText": "Väntar på en iPhone eller iPad via USB…"
+    },
+    "appleid": {
+      "title": "Ditt Apple-ID",
+      "lead": "Apple signerar apparna du installerar med ditt Apple-ID. Ditt lösenord går bara till Apple och stannar i den här datorns nyckelring.",
+      "freeNote": "Ett gratis Apple-ID fungerar: dess appar gäller i 7 dagar och IPAForge kan förnya dem. Ett betalt utvecklarkonto gäller i ett år.",
+      "signIn": "Logga in med Apple-ID",
+      "signedIn": "Inloggad.",
+      "team": "Team som signerar apparna",
+      "free": "Gratis: appar gäller i 7 dagar",
+      "paid": "Betalt: appar gäller i ett år"
+    },
+    "banner": {
+      "label": "Installationsguide",
+      "text": "Slutför konfigurationen av IPAForge: {done} av {total} steg klara.",
+      "continue": "Fortsätt guiden",
+      "notNow": "Inte nu"
+    },
+    "install": {
+      "title": "Installera SideStore",
+      "lead": "SideStore förnyar dina appar på iPhone själv och installerar fler. IPAForge ger den ihopparningsfilen och certifikatet den behöver.",
+      "notNow": "Inte nu"
+    },
+    "onphone": {
+      "title": "På din iPhone",
+      "lead": "Det som bara du kan göra på iPhone. Bocka av varje allteftersom; sidan Enheter har samma lista."
+    },
+    "around": {
+      "title": "Allt är klart",
+      "lead": "Här finns allt. Medan IPAForge är öppet förnyar det dina appar innan de går ut.",
+      "again": "Kör den här guiden igen när som helst från Inställningar.",
+      "showMe": "Visa mig runt",
+      "apps": {
+        "title": "Appar",
+        "text": "När varje app går ut, med Förnya och Uppdatera. Ihopparningsfiler finns också här.",
+        "where": "Sidofält › Appar"
+      },
+      "preload": {
+        "title": "Förladda",
+        "text": "Lägg till dina egna appar: .ipa-filer, länkar, källor. Eller spara dem som signerade .ipa-filer.",
+        "where": "Sidofält › Förladda"
+      },
+      "repair": {
+        "title": "Reparera SideStore",
+        "text": "Om SideStore slutar förnya själv tar den reda på varför och åtgärdar det.",
+        "where": "Appar › Kontrollera SideStore"
+      },
+      "developer": {
+        "title": "Utvecklarportal",
+        "text": "Dina certifikat, App-ID:n och profiler, och en .p12 för att flytta ditt certifikat.",
+        "where": "Sidofält › Utvecklarportal"
+      },
+      "devices": {
+        "title": "Enheter",
+        "text": "Varje iPhones checklista, och dess ihopparningsfil för andra verktyg.",
+        "where": "Sidofält › Enheter"
+      },
+      "logs": {
+        "title": "Loggar",
+        "text": "Vad som hände, steg för steg. Bifoga dem till en buggrapport.",
+        "where": "Sidofält › Loggar · ⌘L / Ctrl+L"
+      }
+    }
+  },
+  "tour": {
+    "count": "{current} av {total}",
+    "skip": "Hoppa över rundturen",
+    "back": "Tillbaka",
+    "next": "Nästa",
+    "done": "Klart",
+    "install": {
+      "title": "Installera",
+      "text": "Installera SideStore, eller LiveContainer med SideStore, med ett klick. Börja här på en ny iPhone."
+    },
+    "preload": {
+      "title": "Förladda",
+      "text": "Lägg till dina egna appar: .ipa-filer, länkar eller appar från källor. Bocka i en för att spara den som en signerad .ipa i stället."
+    },
+    "apps": {
+      "title": "Appar",
+      "text": "När varje app går ut, med Förnya och Uppdatera. IPAForge förnyar dem själv medan det är öppet. Ihopparningsfiler finns också här."
+    },
+    "devices": {
+      "title": "Enheter",
+      "text": "Varje iPhones checklista för dess iOS-version, och dess ihopparningsfil för andra verktyg."
+    },
+    "developer": {
+      "title": "Utvecklarportal",
+      "text": "Ditt Apple-ID:s certifikat, App-ID:n och profiler. Städa bort det som inget använder, eller flytta ditt certifikat som en .p12."
+    },
+    "pickers": {
+      "title": "Enhet och Apple-ID",
+      "text": "Byt iPhone eller Apple-ID som IPAForge använder här, när som helst."
+    },
+    "logs": {
+      "title": "Loggar",
+      "text": "Varje steg IPAForge tog. Bifoga dem till en buggrapport (⌘L / Ctrl+L)."
+    },
+    "settings": {
+      "title": "Inställningar",
+      "text": "Språk, utseende, anisette-servrar och den här rundturen igen."
+    },
+    "showAround": {
+      "title": "Visa mig runt",
+      "text": "Gör den här rundturen igen härifrån, när som helst. Installationsguiden finns i Inställningar."
+    }
+  },
+  "pairByCode": {
+    "steps": {
+      "pair": "Para ihop med koden"
+    },
+    "open": "Para ihop Apple TV eller Vision Pro…",
+    "title": "Para ihop en Apple TV eller Vision Pro",
+    "titleAgain": "Para ihop {name} igen",
+    "progress": {
+      "label": "Steg",
+      "find": "1 Hitta",
+      "code": "2 Kod"
+    },
+    "intro": "De har ingen kabel, så de paras ihop över Wi-Fi med en kod. Sätt enheten på samma Wi-Fi som den här datorn, öppna sedan dess ihopparningsskärm och håll den öppen:",
+    "where": {
+      "tv": "Apple TV",
+      "vision": "Apple Vision Pro",
+      "tvPath": "Inställningar → Fjärrkontroller och enheter → Remote App och enheter",
+      "visionPath": "Inställningar → Allmänt → Fjärrenheter"
+    },
+    "found": "Hittad på ditt nätverk",
+    "showing": "Visar sin ihopparningsskärm",
+    "pair": "Para ihop",
+    "searching": "Letar på ditt nätverk… Enheten dyker upp här när dess ihopparningsskärm är öppen.",
+    "searchingMore": "Letar fortfarande efter fler…",
+    "help": {
+      "title": "Den dyker inte upp",
+      "screen": "Håll ihopparningsskärmen öppen: enheten kan bara hittas medan den visas.",
+      "network": "Samma Wi-Fi som den här datorn: inte ett gästnätverk, och inget VPN på någon sida.",
+      "ipv6": "IPv6 påslaget i routern (Apple kräver det för ihopparning).",
+      "macos": "macOS: Systeminställningar → Integritet och säkerhet → Lokalt nätverk → IPAForge påslaget.",
+      "windows": "Windows: tillåt IPAForge på privata nätverk när brandväggen frågar."
+    },
+    "failed": "Sökningen på ditt nätverk stoppades. Stäng detta och öppna det igen.",
+    "code": {
+      "title": "Ange koden på {name}",
+      "body": "{name} visar en kod. Skriv den här.",
+      "label": "Kod",
+      "wrong": "Koden stämde inte. Kontrollera koden på {name} och försök igen.",
+      "pairing": "Paras ihop med {name}…",
+      "checking": "Kontrollerar koden…"
+    },
+    "back": "Tillbaka",
+    "backToList": "Tillbaka till listan",
+    "backoff": {
+      "title": "För många felaktiga koder",
+      "wait": "{name} låter dig försöka igen om {seconds, plural, one {# sekund} other {# sekunder}}.",
+      "later": "{name} tar inte emot fler koder på ett tag. Vänta en stund och försök igen."
+    },
+    "closed": {
+      "title": "{name} stängde sin ihopparningsskärm",
+      "body": "Koden fungerar bara medan ihopparningsskärmen är öppen. Öppna den igen på {name}:"
+    },
+    "done": {
+      "title": "{name} är ihopparad",
+      "body": "{name} finns på din sida Enheter. Du kan stänga dess ihopparningsskärm nu.",
+      "vision": "Appar installeras när utvecklarläge är på.",
+      "use": "Använd {name}",
+      "close": "Stäng"
+    },
+    "pairNamed": "Para ihop {name}"
+  }
+}
