@@ -1,0 +1,2216 @@
+{
+  "app": {
+    "name": "IPAForge"
+  },
+  "shell": {
+    "skipToContent": "İçeriğe geç",
+    "navigation": "Bölümler",
+    "credit": {
+      "madeWith": "❤️ ve ☕ ile yapıldı",
+      "copyright": "© {year} {name}"
+    }
+  },
+  "topBar": {
+    "device": "Cihaz",
+    "noDevice": "Yok",
+    "deviceMenu": "Cihazlar",
+    "account": "Apple ID",
+    "notSignedIn": "Oturum açılmadı",
+    "accountMenu": "Apple ID’ler",
+    "addAppleId": "Apple ID ekle…",
+    "noAccounts": "Henüz Apple ID yok.",
+    "noDevicesHint": "Bir iPhone veya iPad’i kabloyla bağlayın ve kilidini açın.",
+    "openDevices": "Cihazları aç",
+    "tour": "Bana etrafı göster",
+    "pairByCode": "Apple TV veya Vision Pro eşleştir…"
+  },
+  "nav": {
+    "group": {
+      "manage": "Yönet"
+    },
+    "install": "Yükle",
+    "preload": "Ön yükleme",
+    "apps": "Uygulamalar",
+    "devices": "Cihazlar",
+    "accounts": "Hesaplar",
+    "developer": "Geliştirici Portalı",
+    "logs": "Günlük",
+    "settings": "Ayarlar",
+    "installRunning": "Bir yükleme sürüyor"
+  },
+  "placeholder": {
+    "body": "Bu bölüm yapım aşamasında."
+  },
+  "install": {
+    "title": "SideStore’u yükle",
+    "description": "Apple ID’nizle imzalanır, ardından USB ile yüklenir.",
+    "steps": {
+      "device": "Cihazı denetle",
+      "resolve": "Sürümü bul",
+      "download": "İndir",
+      "inspect": "Uygulamayı incele",
+      "certificate_sharing": "Sertifikayı paylaş",
+      "sign_in": "Apple’da oturum aç",
+      "team": "Takımı seç",
+      "register_device": "Cihazı kaydet",
+      "certificate": "Sertifikayı hazırla",
+      "app_ids": "App ID’leri kaydet",
+      "free_apps": "Ücretsiz uygulama sınırını denetle",
+      "provision": "Sağlama profillerini al",
+      "refresh_profiles": "Yeni profilleri al",
+      "sign": "Uygulamayı imzala",
+      "install": "Cihaza yükle",
+      "pairing": "Eşleştirme dosyasını yerleştir",
+      "remember": "Bu yüklemeyi hatırla",
+      "save": "İmzalı .ipa’yı kaydet"
+    },
+    "signInNeeded": {
+      "title": "Apple ID’nizle yeniden oturum açmanız gerekiyor",
+      "body": "{appleId} için kayıtlı oturumun süresi doldu. Yine de yükleyebilirsiniz: IPAForge sırası gelince parolayı sorar."
+    },
+    "blocked": {
+      "title": "Apple, {device} üzerinde {appleId} hesabını engelledi",
+      "body": "Bu Apple ID ile imzalanan uygulamalar bu cihazda açılmaz. Başka bir Apple ID kullanın.",
+      "use": "{appleId} kullan"
+    },
+    "home": {
+      "what": "Neyin yükleneceği",
+      "channel": "Kanal",
+      "install": "{app} yükle"
+    },
+    "variant": {
+      "sidestore": {
+        "title": "SideStore",
+        "description": "Uygulamaları cihazda kendi kendine yeniler ve yükler. 2 App ID kullanır."
+      },
+      "livecontainer": {
+        "title": "LiveContainer + SideStore",
+        "description": "Birçok uygulamayı tek bir uygulamanın içinde çalıştırır, 3 uygulama sınırını aşar. 5 App ID kullanır."
+      }
+    },
+    "channel": {
+      "stable": "Kararlı",
+      "nightly": "Nightly",
+      "stableRecommended": "Kararlı (önerilen)",
+      "nightlyRecommended": "Nightly (önerilen)"
+    },
+    "plan": {
+      "title": "Bu yükleme",
+      "waiting": "Cihaz ve Apple ID hazır olunca gösterilir.",
+      "checking": "{app} indiriliyor ve Apple ile denetleniyor… İndirilen dosya saklanır, yükleme onu yeniden kullanır.",
+      "unavailable": "Apple ile denetlenemedi. Yine de yükleyebilirsiniz: her adım yeniden denetler.",
+      "appIds": "App ID’ler",
+      "appIdsValue": "{created, plural, =0 {{reused} tanesi zaten kayıtlı} other {{reused, plural, =0 {{created} yeni} other {{created} yeni, {reused} yeniden kullanılan}}}} · {left, plural, one {bu hafta # kaldı} other {bu hafta # kaldı}}",
+      "nextSlot": "Bir sonraki {date} tarihinde boşalır",
+      "freeApps": "Cihazdaki ücretsiz uygulamalar",
+      "freeAppsValue": "{limit} içinden {used} kullanıldı",
+      "freeAppsRoom": "Buna yer var",
+      "freeAppsFull": "Kaldırılacak birini seçeceksiniz",
+      "noLimit": "Sınır yok (ücretli takım)",
+      "certificate": "Sertifika",
+      "certificateReused": "Yeniden kullanılır",
+      "certificateNew": "Yenisi oluşturulur",
+      "certificatesOnTeam": "{count, plural, =0 {Takımda henüz yok} one {Takımda #} other {Takımda #}}",
+      "team": "Takım",
+      "certificateNewWhy": "IPAForge’un bu takımda henüz kendine ait bir sertifikası yok. {count, plural, =0 {} one {Orada zaten bulunan sertifika, özel anahtarını kendisi saklayan başka bir araca ait.} other {Orada zaten bulunan # sertifika, özel anahtarlarını kendileri saklayan başka araçlara ait.}}"
+    },
+    "readiness": {
+      "noDevice": "Önce bir cihaz bağlayın.",
+      "noSideStore": "SideStore iPhone ve iPad üzerinde çalışır. Apple TV veya Vision Pro’ya uygulama yüklemek için Ön yükleme’yi kullanın.",
+      "checking": "Cihaz denetleniyor…",
+      "device": "Cihaz hazır olunca kullanılabilir.",
+      "noAccount": "Önce bir Apple ID ekleyin.",
+      "blocked": "Önce başka bir Apple ID kullanın.",
+      "appIds": "Bu hafta yeterli App ID kalmadı.",
+      "ready": "Her şey hazır."
+    },
+    "run": {
+      "title": {
+        "running": "{app} yükleniyor",
+        "completed": "{app} yüklendi",
+        "failed": "{app} yüklenemedi",
+        "cancelled": "Yükleme iptal edildi"
+      },
+      "subtitle": "{channel} · {device} · {appleId}",
+      "percent": "{fraction, number, percent}",
+      "progress": "Genel ilerleme",
+      "steps": "Adımlar",
+      "cancel": "İptal",
+      "cancelInstall": "Yüklemeyi iptal et",
+      "runningHint": "Bu sürerken diğer bölümleri kullanabilirsiniz.",
+      "waitingHint": "Yanıtınız bekleniyor.",
+      "stepState": {
+        "waiting": "sizi bekliyor",
+        "skipped": "atlandı",
+        "failed": "başarısız"
+      },
+      "detail": {
+        "bytes": "{total} içinden {received}",
+        "received": "{received}",
+        "retrying": "Bağlantı koptu. {seconds, plural, one {# saniye} other {# saniye}} sonra yeniden denenecek (deneme {attempt})"
+      },
+      "live": {
+        "header": "{percent} · {left}",
+        "installing": "{fraction, number, percent} · {phase}",
+        "count": "{total} içinden {done}",
+        "task": {
+          "line": "{task} · {count}",
+          "team": "Takım denetleniyor",
+          "appIds": "App ID’ler oluşturuluyor",
+          "appGroup": "Uygulama grubu ekleniyor",
+          "profiles": "Profiller alınıyor"
+        },
+        "phase": {
+          "unpacking": "Uygulama açılıyor",
+          "checking": "Uygulama denetleniyor",
+          "installing": "Yükleniyor"
+        },
+        "speed": "{speed}/sn",
+        "ios": "iOS yüklüyor",
+        "leftSeconds": "Yaklaşık {seconds} sn kaldı",
+        "leftMinutes": "{minutes, plural, one {Yaklaşık # dk kaldı} other {Yaklaşık # dk kaldı}}"
+      },
+      "connection": {
+        "usb": "USB",
+        "network": "Wi-Fi"
+      },
+      "wifi": {
+        "title": "Bu cihaz Wi-Fi üzerinden bağlı",
+        "body": "Büyük uygulamalar kabloyla çok daha hızlı yüklenir. Wi-Fi’de IPAForge, zaman kazanmak için uygulamaları sıkıştırarak gönderir."
+      },
+      "unsupportedPrompt": {
+        "title": "Bu adım bir yanıt gerektiriyor",
+        "body": "IPAForge’un, bu sürümün gösteremediği bir soruya yanıta ihtiyacı var. Yüklemeyi iptal edin ve IPAForge’u güncelleyin."
+      },
+      "backToInstall": "Yükle’ye dön",
+      "report": {
+        "device": "{model} · iOS {ios} · {connection}",
+        "release": "{app} {version} · {channel}",
+        "download": "{size} · sağlama toplamı doğrulandı",
+        "downloadCached": "{size} · indirme önbelleğinden",
+        "app": "{app} · {extensions, plural, =0 {uzantı yok} one {# uzantı} other {# uzantı}}",
+        "session": {
+          "reused": "Kayıtlı oturum yeniden kullanıldı",
+          "renewed": "Kayıtlı parolayla yeniden oturum açıldı",
+          "signed-in": "Oturum açıldı"
+        },
+        "registered": "Takıma kaydedildi",
+        "alreadyRegistered": "Takıma zaten kayıtlı",
+        "certificate": {
+          "reused": "Kayıtlı sertifika yeniden kullanıldı",
+          "created": "Yeni sertifika oluşturuldu",
+          "replaced": "Biri iptal edildi ve yeni sertifika oluşturuldu"
+        },
+        "removed": "{app} kaldırıldı · {used}",
+        "profiles": "{count, plural, one {# profil} other {# profil}}",
+        "signed": "{count, plural, one {# paket imzalandı} other {# paket imzalandı}}",
+        "signedCompressed": "{count, plural, one {# paket imzalandı} other {# paket imzalandı}} · Wi-Fi için sıkıştırıldı",
+        "phase": {
+          "uploading": "Cihaza gönderiliyor",
+          "installing": "Yükleniyor"
+        },
+        "pairing": "{apps} içine yerleştirildi",
+        "shared": "Sertifika paylaşıldı",
+        "notShared": "Sertifika paylaşılmadı",
+        "pairingRemote": "{apps} içine yerleştirildi · iOS 17.4 ve sonrası için uzak eşleştirmeyle",
+        "saved": "{path} konumuna kaydedildi"
+      },
+      "subtitleApps": "{device} · {appleId}"
+    },
+    "summary": {
+      "title": "Bu yükleme",
+      "app": "Uygulama",
+      "channel": "Kanal",
+      "device": "Cihaz",
+      "deviceValue": "{name} · iOS {ios}",
+      "account": "Apple ID",
+      "appIds": "App ID’ler",
+      "appIdsValue": "{count, plural, one {bu hafta # kaldı} other {bu hafta # kaldı}}",
+      "freeApps": "Ücretsiz uygulamalar",
+      "apps": "Uygulamalar"
+    },
+    "done": {
+      "title": "{app}, {device} cihazında.",
+      "trust": "Cihazda: Ayarlar › Genel › VPN ve Aygıt Yönetimi › {appleId} hesabına güvenin.",
+      "open": "SideStore’u açın: eşleştirme dosyası ve sertifikanız zaten içinde.",
+      "done": "Bitti"
+    },
+    "cancelled": {
+      "title": "“{step}” adımında durduruldu.",
+      "body": "Sürdürdüğünüzde, daha önce yapılan hiçbir şey yinelenmez.",
+      "resume": "Sürdür"
+    },
+    "failed": {
+      "continues": "Tamamlanan adımlar korunur: yeniden denemek “{step}” adımından devam eder.",
+      "copy": "Tanılama bilgilerini kopyala",
+      "copied": "Kopyalandı",
+      "copyFailed": "Kopyalanamadı",
+      "showLogs": "Günlüğü göster"
+    }
+  },
+  "pairing": {
+    "steps": {
+      "targets": "Eşleştirme gereken uygulamaları bul",
+      "place": "Eşleştirme dosyasını yerleştir"
+    }
+  },
+  "settings": {
+    "appearance": "Görünüm ve dil",
+    "mode": "Renk modu",
+    "palette": "Palet",
+    "language": {
+      "title": "Dil",
+      "system": "Sistem ({language})",
+      "hint": "Burada bir dil seçmezseniz IPAForge sistem dilinizi izler.",
+      "draft": "taslak"
+    },
+    "anisette": {
+      "title": "Anisette sunucuları",
+      "hint": "Apple’da oturum açmak, Apple’a hangi bilgisayarın oturum açtığını bildiren bir anisette sunucusu gerektirir. IPAForge çalışan birini kendiliğinden kullanır; belirli bir sunucuyu tercih ediyorsanız burada seçin ya da kendi sunucunuzu ekleyin.",
+      "add": "Sunucu ekle",
+      "loading": "Sunucular yükleniyor…",
+      "modeLabel": "IPAForge’un sunucuyu seçme biçimi",
+      "mode": {
+        "automatic": "Otomatik",
+        "chosen": "Bir sunucu seç"
+      },
+      "modeHint": {
+        "automatic": "Sunucuları bu sırayla dener, biri başarısız olunca sonrakine geçer.",
+        "chosen": "Her zaman {name} kullanılır.",
+        "none": "IPAForge’un her zaman kullanacağı sunucuyu seçin."
+      },
+      "noneChosen": "Henüz sunucu seçilmedi: siz seçene kadar IPAForge kendisi seçmeyi sürdürür.",
+      "chosenDown": "{name} yanıt vermiyor. Geri gelene, başka bir sunucu seçene ya da Otomatik’e geçene kadar oturum açma çalışmaz.",
+      "count": "{count, plural, one {# sunucu} other {# sunucu}}",
+      "sources": "{custom, plural, =0 {} other {sizin eklediğiniz #, }}SideStore listesinden {list}, yedek olarak {backup} ·",
+      "listUpdated": "SideStore listesi {ago} güncellendi",
+      "listNever": "SideStore listesi henüz alınmadı",
+      "updateList": "Listeyi güncelle",
+      "updating": "Güncelleniyor…",
+      "testAll": "Tümünü sına",
+      "testing": "Sınanıyor…",
+      "group": {
+        "custom": "Sizin eklediğiniz · ilk bunlar kullanılır",
+        "list": "SideStore listesinden",
+        "backup": "Yedek · yalnızca SideStore listesine ulaşılamadığında ya da hiçbiri yanıt vermediğinde"
+      },
+      "tag": {
+        "custom": "Sizin eklediğiniz",
+        "inUse": "Kullanımda",
+        "chosen": "Seçili"
+      },
+      "position": "{position}. sırada denenir",
+      "use": "{name} kullan",
+      "chooseLabel": "Kullanılacak sunucu",
+      "status": {
+        "untested": "Sınanmadı",
+        "testing": "Sınanıyor…",
+        "ok": "Çalışıyor · {ms} ms",
+        "bad": "Yanıt vermiyor"
+      },
+      "test": "Sına",
+      "testOne": "{name} sına",
+      "edit": "{name} düzenle",
+      "remove": "{name} kaldır",
+      "confirmRemove": "{name} kaldırılsın mı?",
+      "removeYes": "Kaldır",
+      "skipped": "SideStore listesinden kullanılmayanlar: {names} (HTTPS yok). Düz HTTP kullanan bir sunucuyu, örneğin kendi bilgisayarınızdakini, kendiniz ekleyebilirsiniz.",
+      "dialog": {
+        "addTitle": "Anisette sunucusu ekle",
+        "editTitle": "Sunucuyu düzenle",
+        "body": "Olağan protokolü konuşan her anisette sunucusu çalışır: herkese açık biri ya da kendi çalıştırdığınız biri.",
+        "name": "Ad",
+        "namePlaceholder": "Sunucum",
+        "address": "Adres",
+        "addressPlaceholder": "https://anisette.my-server.net",
+        "addressHint": "https:// ya da kendi çalıştırdığınız bir sunucu için http://",
+        "nameMissing": "Bir ad verin.",
+        "addressInvalid": "https:// veya http:// ile başlayan bir adres girin.",
+        "exists": "Bu sunucu zaten listede.",
+        "stillAdd": "Yine de ekleyebilirsiniz.",
+        "save": "Kaydet"
+      }
+    },
+    "guide": {
+      "title": "Kurulum rehberi",
+      "text": "Bilgisayar, iPhone ve Apple ID yeniden denetlenir.",
+      "run": "Rehberi yeniden çalıştır",
+      "tour": "Bana etrafı göster",
+      "tourTitle": "Sayfa turu",
+      "tourHint": "Her sayfanın ne işe yaradığı, adım adım."
+    },
+    "tabs": {
+      "label": "Ayarlar",
+      "general": "Genel",
+      "anisette": "Anisette sunucuları"
+    },
+    "modeHint": "Açık, koyu ya da sisteminiz nasılsa öyle.",
+    "paletteHint": "Tüm uygulamanın renkleri, açık ve koyu modda."
+  },
+  "theme": {
+    "mode": {
+      "system": "Sistem",
+      "light": "Açık",
+      "dark": "Koyu"
+    },
+    "palette": {
+      "graphite": "Grafit",
+      "ocean": "Okyanus",
+      "aurora": "Aurora",
+      "sunset": "Gün batımı",
+      "forest": "Orman",
+      "rose": "Gül",
+      "violet": "Mor",
+      "mocha": "Mokka"
+    }
+  },
+  "errors": {
+    "device": {
+      "locked": {
+        "title": "Cihazınızın kilidini açın",
+        "body": "Cihaz kilitli olduğundan IPAForge onunla konuşamıyor. Kilidini açın ve yükleme bitene kadar açık tutun."
+      },
+      "developer_mode_off": {
+        "title": "Geliştirici Modu kapalı",
+        "body": "Yandan yüklenen uygulamalar Geliştirici Modu gerektirir. Ayarlar › Gizlilik ve Güvenlik › Geliştirici Modu’ndan açın, sonra cihazı yeniden başlatın."
+      },
+      "not_paired": {
+        "title": "Bu bilgisayara henüz güvenilmiyor",
+        "body": "Cihazın kilidini açın ve bu bilgisayara güvenip güvenmeyeceğini sorduğunda Güven’e dokunun."
+      },
+      "usbmuxd_unavailable": {
+        "title": "Cihaz desteği çalışmıyor",
+        "body": "IPAForge, iPhone ve iPad’lerle konuşan sistem hizmetine ulaşamıyor. Hizmeti kurun veya başlatın, sonra yeniden deneyin."
+      },
+      "not_found": {
+        "title": "Cihaz bulunamadı",
+        "body": "iPhone veya iPad’inizi USB kablosuyla bağlayın ve kilidini açın."
+      },
+      "disconnected": {
+        "title": "Cihazın bağlantısı kesildi",
+        "body": "Bağlantı koptu. Kabloyu yeniden takın, cihazın kilidini açın ve yeniden deneyin."
+      },
+      "pairing_pending": {
+        "title": "Güven bekleniyor",
+        "body": "Cihazın kilidini açın ve görünen istemde Güven’e dokunun."
+      },
+      "pairing_denied": {
+        "title": "Güven reddedildi",
+        "body": "Cihaz bu bilgisayara güvenmeyi reddetti. Yeniden eşleştirin ve bu kez Güven’e dokunun."
+      },
+      "invalid_pair_record": {
+        "title": "Eşleştirme artık geçerli değil",
+        "body": "Cihaz artık bu bilgisayarın eşleştirmesini kabul etmiyor. Fişini çekin, yeniden takın, kilidini açın ve Güven’e dokunun."
+      },
+      "service_unavailable": {
+        "title": "Bir cihaz hizmeti başlamadı",
+        "body": "Cihaz, IPAForge’un ihtiyaç duyduğu bir hizmeti başlatmayı reddetti. Kilidini açın, yeniden bağlayın ve yeniden deneyin."
+      },
+      "protocol_error": {
+        "title": "Cihazdan beklenmedik yanıt",
+        "body": "Cihaz, IPAForge’un anlamadığı bir şey gönderdi. Yeniden bağlayın; yine olursa IPAForge’u güncelleyin veya bildirin."
+      },
+      "install_failed": {
+        "title": "Yükleme başarısız oldu",
+        "body": "Cihaz uygulamayı yüklemeyi reddetti. Yeniden deneyin; başarısız olmaya devam ederse uygulamayı yeniden yükleyin veya bildirin."
+      },
+      "afc_error": {
+        "title": "Dosyalar aktarılamadı",
+        "body": "Dosyaların cihaza kopyalanması başarısız oldu. Kilidini açın ve yeniden deneyin."
+      },
+      "timeout": {
+        "title": "Cihaz yanıt vermeyi bıraktı",
+        "body": "Cihazın yanıtı çok uzun sürdü. Kilidini açın, yeniden bağlayın ve yeniden deneyin."
+      },
+      "passcode_required": {
+        "title": "Bir parola belirleyin",
+        "body": "Bunun için cihaz parolası gerekir. Ayarlar › Face ID ve Parola’dan bir parola belirleyin, sonra yeniden deneyin."
+      },
+      "free_app_limit": {
+        "title": "Çok fazla yandan yüklenmiş uygulama",
+        "body": "Ücretsiz bir Apple ID, bir cihazda yalnızca üç yandan yüklenmiş uygulamayı etkin tutabilir. Birini kaldırın, sonra yeniden deneyin."
+      },
+      "profile_banned": {
+        "title": "Apple bu Apple ID’yi cihazda engelledi",
+        "body": "Cihaz, bu Apple ID ile imzalanan uygulamaları kabul etmiyor. Yeniden denemek işe yaramaz: başka bir Apple ID kullanın."
+      },
+      "identity_invalid": {
+        "title": "İmzalama sertifikası artık geçerli değil",
+        "body": "Cihaz, uygulamanın imzalandığı sertifikayı reddetti. Bilgisayarın saatini denetleyin ya da sertifikayı iptal edip yeniden deneyin."
+      },
+      "profile_not_found": {
+        "title": "Sağlama profili eksik",
+        "body": "Cihaz, uygulamanın sağlama profilini bulamadı. Yeniden deneyin veya uygulamayı yeniden yükleyin."
+      },
+      "pairing_path_invalid": {
+        "title": "Bu yola bir eşleştirme dosyası konamaz",
+        "body": "Uygulamanın Documents veya Library klasöründe, .plist ya da .mobiledevicepairing ile biten bir yol kullanın."
+      },
+      "local_network_denied": {
+        "title": "IPAForge ağınızdaki cihazları arayamıyor",
+        "body": "macOS, IPAForge’un yerel ağınızdaki cihazları bulmasına izin vermedi; bu yüzden iPhone’lara Wi-Fi üzerinden ulaşamıyor. Kabloyla bağlı cihazlar yine çalışır."
+      },
+      "tunnel_unavailable": {
+        "title": "Cihazın tüneli açılmadı",
+        "body": "IPAForge, iOS 17.4 ve sonrasının kablo üzerinden sunduğu güvenli tüneli açamadı. Cihazın iOS 17.4 veya üstünü çalıştırdığını denetleyin, yeniden bağlayın ve yeniden deneyin."
+      },
+      "pairing_code_wrong": {
+        "title": "Kod eşleşmedi",
+        "body": "Yazılan kod, cihazın gösterdiği kod değil. Cihazın ekranındaki kodu denetleyin ve yeniden deneyin."
+      },
+      "pairing_backoff": {
+        "title": "Çok fazla yanlış kod",
+        "body": "Cihaz bir süre daha kod kabul etmiyor. Biraz bekleyin, eşleştirme ekranını yeniden açın ve bir kez daha eşleştirin."
+      },
+      "pairing_screen_closed": {
+        "title": "Eşleştirme ekranı kapandı",
+        "body": "Cihaz, eşleştirme bitmeden eşleştirme ekranını göstermeyi bıraktı. Yeniden açın ve açık tutun: Apple TV: Ayarlar → Uzaktan Kumandalar ve Aygıtlar → Remote Uygulaması ve Aygıtlar. Apple Vision Pro: Ayarlar → Genel → Uzak Aygıtlar."
+      }
+    },
+    "apple": {
+      "anisette_unavailable": {
+        "title": "Anisette sunucusu yanıt vermiyor",
+        "body": "Apple’da oturum açmak için bir anisette sunucusu gerekir ve şu anki sunucu yanıt vermedi. Başka bir sunucu seçin veya ağınızı denetleyin."
+      },
+      "anisette_not_provisioned": {
+        "title": "Anisette sunucusu hazır değil",
+        "body": "Anisette sunucusu kendini kuramadı. Başka bir sunucu seçin ve yeniden deneyin."
+      },
+      "app_id_quota": {
+        "title": "Bu hafta App ID kalmadı",
+        "body": "Ücretsiz bir Apple ID, her 7 günde yalnızca 10 App ID kaydedebilir. Bir yuvanın boşalmasını bekleyin veya başka bir Apple ID kullanın."
+      },
+      "certificate_limit": {
+        "title": "Çok fazla sertifika",
+        "body": "Bu Apple ID, geliştirme sertifikası sınırına ulaştı. Birini iptal edin veya başka bir Apple ID kullanın."
+      },
+      "invalid_credentials": {
+        "title": "Apple ID veya parola yanlış",
+        "body": "Apple e-postayı veya parolayı kabul etmedi. Bunları denetleyin ve parolayı yeniden girin."
+      },
+      "account_locked": {
+        "title": "Bu Apple ID kilitli",
+        "body": "Apple bu hesabı güvenlik nedeniyle kilitledi. Bir Apple aygıtında veya Apple’ın web sitesinde kilidini açın ya da başka bir Apple ID kullanın."
+      },
+      "account_refused": {
+        "title": "Apple oturum açmayı reddetti",
+        "body": "Apple şu anda bu Apple ID’nin buradan oturum açmasına izin vermiyor. Bir süre bekleyin, bir Apple aygıtında bir kez oturum açın veya başka bir Apple ID kullanın."
+      },
+      "client_rejected": {
+        "title": "Apple oturum açma isteğini reddetti",
+        "body": "Apple, oturum açmayla gönderilen kimliği kabul etmedi. Başka bir anisette sunucusu seçin veya bekleyip yeniden deneyin."
+      },
+      "rate_limited": {
+        "title": "Çok fazla istek",
+        "body": "Apple şimdilik istekleri sınırlıyor. Birkaç dakika bekleyin ve yeniden deneyin."
+      },
+      "service_unavailable": {
+        "title": "Apple’ın sunucularına ulaşılamıyor",
+        "body": "Apple’ın sunucuları yanıt vermedi. Birkaç dakika bekleyin ve ağınızı denetleyin."
+      },
+      "two_factor_required": {
+        "title": "Doğrulama kodunu girin",
+        "body": "Apple, güvenilen aygıtlarınıza bir doğrulama kodu gönderdi. Devam etmek için kodu girin."
+      },
+      "two_factor_invalid_code": {
+        "title": "Doğrulama kodu yanlış",
+        "body": "Bu kod işe yaramadı. Denetleyin ve yeniden girin."
+      },
+      "two_factor_unsupported": {
+        "title": "Bu oturum açma yöntemi desteklenmiyor",
+        "body": "Bu Apple ID, IPAForge’un henüz işleyemediği bir iki faktörlü yöntem, örneğin güvenlik anahtarı kullanıyor. Başka bir Apple ID kullanın."
+      },
+      "sms_unavailable": {
+        "title": "Kısa mesajla kod gönderilemiyor",
+        "body": "Apple burada kodu kısa mesajla göndermiyor. Kodu güvenilen bir aygıtta alın veya başka bir Apple ID kullanın."
+      },
+      "clock_skew": {
+        "title": "Bilgisayarın saati yanlış",
+        "body": "Saat doğru değilse Apple istekleri reddeder. Tarih ve saati otomatik ayarlayın, sonra yeniden deneyin."
+      },
+      "protocol_error": {
+        "title": "Apple’dan beklenmedik yanıt",
+        "body": "Apple, IPAForge’un anlamadığı bir şey gönderdi. IPAForge’u güncelleyin; sürekli olursa bildirin."
+      },
+      "session_expired": {
+        "title": "Oturumunuzun süresi doldu",
+        "body": "Bu Apple ID’de yeniden oturum açın. Süresi dolmaya devam ederse bilgisayarın saatini denetleyin."
+      },
+      "account_not_found": {
+        "title": "Apple ID bulunamadı",
+        "body": "IPAForge’un bu Apple ID için kayıtlı oturumu yok. Yeniden oturum açın."
+      },
+      "not_eligible": {
+        "title": "Bu Apple ID geliştirme için kullanılamaz",
+        "body": "Apple bu hesabın uygulama imzalamasına izin vermiyor; örneğin yaşı veya koşulları nedeniyle. Başka bir Apple ID kullanın."
+      },
+      "email_unverified": {
+        "title": "E-postanızı doğrulayın",
+        "body": "Apple, önce bu Apple ID’nin e-posta adresinin doğrulanmasını istiyor. Doğrulayın, sonra yeniden deneyin."
+      },
+      "team_agreement": {
+        "title": "Apple’ın sözleşmesini kabul edin",
+        "body": "Takım, Apple’ın en son geliştirici sözleşmesini kabul etmemiş. Apple’ın geliştirici web sitesinden kabul edin veya başka bir takım seçin."
+      },
+      "no_teams": {
+        "title": "Geliştirici takımı yok",
+        "body": "Bu Apple ID’nin henüz bir geliştirici takımı yok. Apple’ın geliştirici sözleşmesini kabul edin veya başka bir Apple ID kullanın."
+      },
+      "device_limit": {
+        "title": "Cihaz sınırına ulaşıldı",
+        "body": "Bu takım artık cihaz kaydedemez. Başka bir takım seçin veya başka bir Apple ID kullanın."
+      },
+      "app_id_unavailable": {
+        "title": "Bu App ID alınmış",
+        "body": "Bu App ID’yi başka bir takım zaten kullanıyor. Başka bir takım seçin veya başka bir Apple ID kullanın."
+      },
+      "invalid_app_id_name": {
+        "title": "Apple App ID adını reddetti",
+        "body": "Apple, IPAForge’un App ID için seçtiği adı kabul etmedi. IPAForge’u güncelleyin veya bildirin."
+      },
+      "certificate_not_revocable": {
+        "title": "Bu sertifika buradan iptal edilemez",
+        "body": "Bu sertifikayı yalnızca Apple iptal edebilir. Bunun yerine farklı birini iptal edin."
+      },
+      "no_devices_for_profile": {
+        "title": "Cihaz henüz kayıtlı değil",
+        "body": "Apple cihazı kaydetmeyi henüz bitirmedi. Bir dakika bekleyin ve yeniden deneyin."
+      },
+      "developer_request_failed": {
+        "title": "Apple’ın geliştirici hizmetleri başarısız oldu",
+        "body": "Apple’ın geliştirici hizmetlerine yapılan bir istek başarısız oldu. Yeniden deneyin; sürekli olursa bildirin."
+      },
+      "anisette_server_invalid": {
+        "title": "Bu anisette sunucusu kullanılamaz",
+        "body": "Adını ve adresini denetleyin: adres https:// veya http:// ile başlar."
+      },
+      "anisette_server_exists": {
+        "title": "Bu anisette sunucusu zaten listede",
+        "body": "Bunun yerine Ayarlar’daki listeden seçin."
+      },
+      "certificate_not_on_team": {
+        "title": "Bu sertifika takımda değil",
+        "body": "Apple bunu artık bu takım için listelemiyor: iptal edilmiş, süresi dolmuş ya da başka bir takıma ait. Güncel bir sertifika dışa aktarın ve onu içe aktarın."
+      }
+    },
+    "catalog": {
+      "source_gone": {
+        "title": "Sürüm artık mevcut değil",
+        "body": "Bu uygulamanın indirildiği yer kalmamış. Başka bir kanal seçin, bir IPA içe aktarın veya IPAForge’u güncelleyin."
+      },
+      "unavailable": {
+        "title": "Uygulama listesi yüklenemedi",
+        "body": "IPAForge uygulama listesini alamadı. Ağınızı denetleyin ve yeniden deneyin."
+      },
+      "download_failed": {
+        "title": "İndirme başarısız oldu",
+        "body": "Uygulama indirilemedi. Ağınızı denetleyin ve yeniden deneyin."
+      },
+      "checksum_mismatch": {
+        "title": "İndirilen dosya bozuk",
+        "body": "İndirilen dosya sağlama toplamıyla eşleşmiyor, bu yüzden kullanılmadı. Yeniden deneyin veya başka bir kanal seçin."
+      },
+      "checksum_missing": {
+        "title": "İndirilen dosya doğrulanamıyor",
+        "body": "Bu sürümün sağlama toplamı yok, bu yüzden IPAForge denetleyemiyor. Başka bir kanal seçin veya IPA’yı kendiniz içe aktarın."
+      },
+      "rate_limited": {
+        "title": "GitHub’a çok fazla istek",
+        "body": "GitHub şimdilik indirmeleri sınırlıyor. Birkaç dakika bekleyin ve yeniden deneyin."
+      },
+      "app_source_unreachable": {
+        "title": "Bu kaynağa ulaşılamadı",
+        "body": "Bağlantıyı ve çevrimiçi olduğunuzu denetleyin, sonra yeniden deneyin."
+      },
+      "app_source_invalid": {
+        "title": "Bu bağlantı bir uygulama kaynağı değil",
+        "body": "AltStore biçiminde hiçbir uygulama listelemiyor. Bağlantıyı denetleyin veya bunun yerine uygulamanın .ipa dosyasını ekleyin."
+      },
+      "app_source_exists": {
+        "title": "Bu kaynak zaten ekli",
+        "body": "Uygulamaları zaten Uygulamalara göz at’ta."
+      }
+    },
+    "plist": {
+      "invalid": {
+        "title": "Uygulamanın ayar dosyası bozuk",
+        "body": "Uygulamanın içindeki bir özellik listesi okunamadı. Başka bir IPA seçin veya bildirin."
+      }
+    },
+    "net": {
+      "offline": {
+        "title": "Çevrimdışısınız",
+        "body": "IPAForge internete ulaşamıyor. Ağ bağlantınızı denetleyin ve yeniden deneyin."
+      }
+    },
+    "signer": {
+      "invalid_macho": {
+        "title": "Uygulamanın programı bozuk",
+        "body": "Uygulamanın yürütülebilir dosyası okunamadı. Başka bir IPA seçin."
+      },
+      "encrypted_binary": {
+        "title": "Uygulama şifreli",
+        "body": "Bu IPA App Store’dan geliyor ve hâlâ şifreli, bu yüzden yeniden imzalanamaz. Şifresi çözülmüş bir IPA seçin."
+      },
+      "unsupported_arch": {
+        "title": "Desteklenmeyen uygulama biçimi",
+        "body": "Uygulamanın yürütülebilir dosyası, iOS’un çalıştıramadığı bir biçim kullanıyor. Başka bir IPA seçin."
+      },
+      "unsupported_ios": {
+        "title": "Daha yeni bir iOS gerekiyor",
+        "body": "Bu uygulama, cihazdakinden daha yeni bir iOS sürümü gerektiriyor. Cihazı güncelleyin veya başka bir kanal ya da IPA seçin."
+      },
+      "unsupported_device": {
+        "title": "Bu cihaz için yapılmamış",
+        "body": "Bu uygulama bu tür cihazı desteklemiyor; örneğin iPhone’da yalnızca iPad’e özel bir uygulama ya da Apple TV’de bir iPhone uygulaması. Başka bir IPA seçin."
+      },
+      "no_arm64_build": {
+        "title": "iPhone veya iPad için derleme yok",
+        "body": "Uygulamanın iPhone veya iPad için 64 bit derlemesi yok; örneğin 32 bit ya da simülatör derlemesi. Başka bir IPA seçin."
+      },
+      "no_header_space": {
+        "title": "Uygulama imzalanamıyor",
+        "body": "Uygulamanın yürütülebilir dosyasında imza için yer yok. Başka bir IPA seçin veya bildirin."
+      },
+      "zip_slip": {
+        "title": "IPA güvenli değil",
+        "body": "IPA, kendi klasörünün dışına dosya yazmaya çalışıyor, bu yüzden IPAForge onu reddetti. Başka bir IPA seçin."
+      },
+      "invalid_certificate": {
+        "title": "Sertifika geçersiz",
+        "body": "İmzalama sertifikası kullanılamadı. IPAForge’un yenisini oluşturabilmesi için onu iptal edin, sonra yeniden deneyin."
+      },
+      "unknown_issuer": {
+        "title": "Bilinmeyen sertifika vereni",
+        "body": "IPAForge sertifikayı kimin verdiğini tanımıyor. IPAForge’u güncelleyin ve ağınızı denetleyin."
+      },
+      "invalid_bundle": {
+        "title": "Uygulama paketi geçersiz",
+        "body": "IPA geçerli bir uygulama içermiyor. Başka bir IPA seçin."
+      },
+      "invalid_profile": {
+        "title": "Sağlama profili geçersiz",
+        "body": "Apple’dan gelen sağlama profili okunamadı. Yeniden deneyin; sürekli olursa bildirin."
+      },
+      "extension_prefix": {
+        "title": "Bir uygulama uzantısının kimliği yanlış",
+        "body": "Bir uzantının paket kimliği, uygulamanın kendi kimliğiyle başlamıyor. Başka bir IPA seçin."
+      },
+      "profile_mismatch": {
+        "title": "Sağlama profili eşleşmiyor",
+        "body": "Profil, yapıldığı uygulamayla eşleşmiyor. Yeniden deneyin; sürekli olursa bildirin."
+      },
+      "profile_expired": {
+        "title": "Sağlama profilinin süresi doldu",
+        "body": "Profilin süresi dolmuş ya da bilgisayarın saati yanlış. Saati denetleyin ve yeniden deneyin."
+      },
+      "cert_not_in_profile": {
+        "title": "Sertifika profilde yok",
+        "body": "Sağlama profili imzalama sertifikasını içermiyor. Yeni bir profil almak için yeniden deneyin."
+      },
+      "device_not_provisioned": {
+        "title": "Cihaz profilde yok",
+        "body": "Sağlama profili bu cihazı içermiyor. Yeni bir profil almak için yeniden deneyin."
+      },
+      "pkcs12_password": {
+        "title": "Parola bu .p12 dosyasını açmıyor",
+        "body": "Dosyanın dışa aktarıldığı parolayı yazın ve yeniden deneyin."
+      }
+    },
+    "installer": {
+      "step_failed": {
+        "title": "Bir adım başarısız oldu",
+        "body": "Yükleme sırasında bir şeyler ters gitti. Yeniden deneyin; sürekli olursa bildirin."
+      },
+      "prompt_cancelled": {
+        "title": "İptal edildi",
+        "body": "Bir soru iptal edildiği için yükleme durdu. Hazır olduğunuzda yeniden başlatın."
+      },
+      "certificate_machine_id_missing": {
+        "title": "Sertifika paylaşılamıyor",
+        "body": "Bu sertifikada SideStore’un onu açmak için ihtiyaç duyduğu veri yok. IPAForge’un yenisini oluşturabilmesi için onu iptal edin, sonra yeniden deneyin."
+      },
+      "team_required": {
+        "title": "Bir takım seçin",
+        "body": "Bu Apple ID birkaç takıma ait. İmzalamada kullanılacak olanı seçin."
+      },
+      "kept_ipa_missing": {
+        "title": "Bu uygulama buradan yenilenemiyor",
+        "body": "IPAForge bunu bu cihaza yüklemedi ya da saklanan kopyası kayıp. Yeniden yüklemek için .ipa dosyasını Ön yükleme’de ekleyin."
+      },
+      "wrong_app": {
+        "title": "Bu bağlantı farklı bir uygulama veriyor",
+        "body": "Yenilediğiniz veya güncellediğiniz uygulama değil, bu yüzden yüklenmedi; uygulama ve verileri olduğu gibi kalır. Yeniden yüklemek için doğru .ipa dosyasını Ön yükleme’de ekleyin."
+      },
+      "version_unavailable": {
+        "title": "Bu sürüm yeniden indirilemiyor",
+        "body": "Yenile, cihazınızdaki sürümü korur ve o sürüm artık indirmeye sunulmuyor. En yeni sürümü yüklemek için Güncelle’yi kullanın; uygulama verilerini korur."
+      },
+      "pairing_app_not_found": {
+        "title": "Bu uygulama cihazda yok",
+        "body": "Kaldırılmış ya da artık IPAForge’un yüklediği bir uygulama değil. Eşleştirme dosyaları penceresini kapatıp yeniden açın."
+      },
+      "certificate_not_stored": {
+        "title": "Bu bilgisayarda henüz sertifika yok",
+        "body": "Bu bilgisayar, takımın sertifikasıyla bir uygulama yüklediğinde onu saklar. Önce bir uygulama yükleyin ya da bir .p12 içe aktarın."
+      }
+    },
+    "rpc": {
+      "invalid_message": {
+        "title": "Dahili iletişim hatası",
+        "body": "IPAForge’un parçaları birbirini anlayamadı. IPAForge’u güncelleyin veya bildirin."
+      },
+      "disconnected": {
+        "title": "Motorla bağlantı kesildi",
+        "body": "IPAForge’un motoru yanıt vermeyi bıraktı. Yeniden deneyin; sürekli olursa bildirin."
+      },
+      "timeout": {
+        "title": "Motor yanıt vermedi",
+        "body": "IPAForge’un motorunun yanıtı çok uzun sürdü. Yeniden deneyin; sürekli olursa bildirin."
+      }
+    },
+    "internal": {
+      "aborted": {
+        "title": "Durduruldu",
+        "body": "İşlem bitmeden durduruldu."
+      },
+      "unexpected": {
+        "title": "Bir şeyler ters gitti",
+        "body": "Beklenmedik bir hata oluştu. Yeniden deneyin; sürekli olursa bildirin."
+      }
+    }
+  },
+  "recovery": {
+    "retry": "Yeniden dene",
+    "wait-and-retry": "Bekle, sonra yeniden dene",
+    "check-network": "Ağınızı denetleyin",
+    "check-clock": "Tarih ve saati denetleyin",
+    "change-anisette-server": "Başka bir anisette sunucusu seçin",
+    "re-enter-password": "Parolayı yeniden girin",
+    "re-enter-code": "Kodu yeniden girin",
+    "use-trusted-device": "Güvenilen bir aygıt kullanın",
+    "sign-in-again": "Yeniden oturum açın",
+    "sign-in-on-apple-device": "Bir Apple aygıtında oturum açın",
+    "switch-account": "Başka bir Apple ID kullanın",
+    "verify-email": "E-postanızı doğrulayın",
+    "accept-agreement": "Apple’ın sözleşmesini kabul edin",
+    "choose-team": "Bir takım seçin",
+    "revoke-certificate": "Bir sertifikayı iptal edin",
+    "wait-for-app-id-slot": "Boş bir App ID’yi bekleyin",
+    "try-anyway": "Yine de dene",
+    "choose-app-to-remove": "Kaldırılacak bir uygulama seçin",
+    "unlock-device": "Cihazın kilidini açın",
+    "enable-developer-mode": "Geliştirici Modu’nu açın",
+    "trust-computer": "Bu bilgisayara güvenin",
+    "reconnect-device": "Cihazı yeniden bağlayın",
+    "pair-again": "Yeniden eşleştirin",
+    "set-passcode": "Bir parola belirleyin",
+    "install-device-support": "Cihaz desteğini kurun",
+    "reinstall-app": "Uygulamayı yeniden yükleyin",
+    "choose-another-ipa": "Başka bir IPA seçin",
+    "choose-another-channel": "Başka bir kanal seçin",
+    "import-ipa": "Bir IPA içe aktarın",
+    "update-ipaforge": "IPAForge’u güncelleyin",
+    "report-issue": "Sorunu bildirin",
+    "or": "Ya da",
+    "switchAccount": {
+      "title": "Başka bir Apple ID kullanın",
+      "body": "Yükleme, seçtiğiniz Apple ID ile yeniden başlar."
+    },
+    "fix": {
+      "copy": "Kopyala",
+      "copied": "Kopyalandı",
+      "done": "Bitti, yeniden dene",
+      "waitAndRetry": {
+        "how": "Apple meşgul veya istekleri sınırlıyor. Bir dakika bekleyin, sonra yeniden deneyin."
+      },
+      "checkNetwork": {
+        "how": "Bu bilgisayarın çevrimiçi olduğundan emin olun, sonra yeniden deneyin."
+      },
+      "checkClock": {
+        "step1": "Bu bilgisayarda tarih ve saat ayarlarını açın",
+        "step2": "Tarih ve saati otomatik ayarlamayı açın"
+      },
+      "reEnterPassword": {
+        "how": "Yeniden denediğinizde parola sorulur; girmeden önce denetleyin."
+      },
+      "reEnterCode": {
+        "how": "Yeniden denediğinizde yeni bir doğrulama kodu istenir."
+      },
+      "useTrustedDevice": {
+        "how": "Kod istendiğinde kısa mesaj yerine güvenilen bir aygıt seçin."
+      },
+      "signInAgain": {
+        "how": "Yeniden denediğinizde yeniden oturum açmak için parola sorulur."
+      },
+      "signInOnAppleDevice": {
+        "how": "Bu Apple ID ile bir iPhone, iPad veya Mac’te ya da Apple’ın web sitesinde oturum açın ve istenenleri yapın:"
+      },
+      "switchAccount": {
+        "how": "Kayıtlı Apple ID’lerinizden birini seçin. Yükleme onunla yeniden başlar.",
+        "button": "Bir Apple ID seç…"
+      },
+      "verifyEmail": {
+        "how": "Bu Apple ID’nin e-posta adresini Apple’ın web sitesinde doğrulayın:"
+      },
+      "acceptAgreement": {
+        "how": "Apple’ın geliştirici web sitesinde oturum açın ve gösterdiği sözleşmeyi kabul edin:"
+      },
+      "revokeCertificate": {
+        "how": "Yeniden denediğinizde hangi sertifikanın iptal edileceği sorulur."
+      },
+      "waitForAppIdSlot": {
+        "how": "Apple her App ID’yi oluşturulmasından 7 gün sonra boşaltır. Biri boşalınca yeniden yükleyin veya başka bir Apple ID kullanın.",
+        "next": "Bir sonraki App ID {date} tarihinde boşalır."
+      },
+      "chooseAppToRemove": {
+        "how": "Yeniden denediğinizde yer açmak için hangi uygulamanın kaldırılacağı sorulur."
+      },
+      "unlockDevice": {
+        "how": "Cihazın kilidini açın ve yükleme bitene kadar açık tutun."
+      },
+      "enableDeveloperMode": {
+        "button": "Açık, yeniden dene"
+      },
+      "trustComputer": {
+        "how": "Cihazın kilidini açın. Bu bilgisayara güvenip güvenmeyeceğini sorduğunda Güven’e dokunun ve parolayı girin.",
+        "button": "Cihazda yeniden sor"
+      },
+      "reconnectDevice": {
+        "how": "Cihazın fişini çekin, yeniden takın ve kilidini açın."
+      },
+      "setPasscode": {
+        "how": "Cihazda Ayarlar › Face ID ve Parola’dan bir parola belirleyin, sonra yeniden deneyin."
+      },
+      "installDeviceSupport": {
+        "how": "Windows’ta Microsoft Store’dan Apple Cihazlar’ı (veya iTunes’u) kurun, sonra IPAForge’u yeniden başlatın."
+      },
+      "reinstallApp": {
+        "how": "Uygulamayı cihazdan silin, sonra yeniden deneyin."
+      },
+      "chooseAnotherChannel": {
+        "how": "Diğer kanalın derlemesi bu cihazda çalışabilir.",
+        "button": "{channel} kanalından yükle"
+      },
+      "open": "Aç",
+      "tryAnyway": {
+        "how": "Apple kalan App ID sayısını negatif bildirdi; bu, Apple tarafında bilinen bir aksaklık: gerçek sayı daha yüksek olabilir. Yine de dene, Apple’dan bunları oluşturmasını ister; gerçekten sınırdaysa bunu söyler."
+      },
+      "changeAnisetteServer": {
+        "how": "Ayarlar’ı açın, anisette sunucularını sınayın ve çalışan birini seçin ya da Otomatik’e dönün.",
+        "button": "Anisette sunucularını aç"
+      },
+      "allowLocalNetwork": {
+        "how": "Sistem Ayarları › Gizlilik ve Güvenlik › Yerel Ağ’ı açın, IPAForge’u etkinleştirin, sonra yeniden deneyin. Ya da cihazı kabloyla bağlayın."
+      }
+    },
+    "reportHint": "Tanılama bilgileri doldurulmuş yeni bir GitHub sorunu açar. Siz göndermeden hiçbir şey gönderilmez.",
+    "allow-local-network": "Yerel ağ erişimine izin verin"
+  },
+  "devices": {
+    "engine": {
+      "connecting": "Motora bağlanılıyor…",
+      "connected": "{count, plural, =0 {Motor bağlı · cihaz yok} one {Motor bağlı · # cihaz} other {Motor bağlı · # cihaz}}",
+      "failed": "Motora ulaşılamıyor: {reason}"
+    },
+    "description": "Bu bilgisayara bağlı iPhone ve iPad’ler ile onunla eşleştirilmiş Apple TV’ler ve Vision Pro’lar. Kullanımda olan, üst çubukta gösterilir.",
+    "unknownDevice": "Bilinmeyen cihaz",
+    "line": "{model} · iOS {ios} · {link}",
+    "model": "{model} · iOS {ios}",
+    "withState": "{line} · {state}",
+    "link": {
+      "usb": "USB",
+      "network": "Wi-Fi",
+      "both": "USB ve Wi-Fi"
+    },
+    "state": {
+      "checking": "Denetleniyor…",
+      "ready": "Hazır",
+      "locked": "Kilitli",
+      "developerModeOff": "Geliştirici Modu kapalı",
+      "notTrusted": "Güvenilmiyor",
+      "unavailable": "Cihaz okunamıyor",
+      "notConnected": "Bağlı değil"
+    },
+    "inUse": "Kullanımda",
+    "use": "Bu cihazı kullan",
+    "checkAgain": "Yeniden denetle",
+    "facts": {
+      "model": "Model",
+      "ios": "iOS",
+      "connection": "Bağlantı",
+      "udid": "UDID",
+      "pairing": "Eşleştirme",
+      "address": "Adres"
+    },
+    "empty": {
+      "title": "Henüz cihaz yok",
+      "body": "Bir iPhone veya iPad’i kabloyla bağlayın ve kilidini açın. Windows’ta Apple Cihazlar ya da iTunes kurulu olmalıdır."
+    },
+    "notice": {
+      "none": {
+        "title": "Bağlı cihaz yok",
+        "body": "Bir iPhone veya iPad’i kabloyla bağlayın ve kilidini açın. Burada kendiliğinden görünür."
+      },
+      "notConnected": {
+        "title": "{name} bağlı değil",
+        "body": "Yeniden takın, otomatik olarak kullanılır; ya da üst çubuktan başka bir cihaz seçin."
+      },
+      "notTrusted": {
+        "title": "{name} üzerinde bu bilgisayara güvenin",
+        "body": "Kilidini açın, Güven’e dokunun ve parolayı girin.",
+        "action": "Yeniden sor",
+        "waiting": "Güven bekleniyor…",
+        "titleUnnamed": "Cihazda bu bilgisayara güvenin"
+      },
+      "locked": {
+        "title": "{name} kilidini açın",
+        "body": "Uygulamalar yüklenirken kilidinin açık kalması gerekir."
+      },
+      "developerModeOff": {
+        "title": "{name} üzerinde Geliştirici Modu’nu açın",
+        "step1": "Ayarlar → Gizlilik ve Güvenlik → Geliştirici Modu",
+        "step2": "Açın ve istendiğinde yeniden başlatın",
+        "step3": "Yeniden başlattıktan sonra Aç’a dokunun ve parolayı girin"
+      },
+      "unavailable": {
+        "title": "{name} okunamıyor",
+        "body": "Fişini çekip yeniden takın. Sürekli olursa cihazı yeniden başlatın.",
+        "bodyWifi": "Wi-Fi üzerinden bağlı: uyandırın, kilidini açın ve bu bilgisayarla aynı ağda tutun, sonra Yeniden denetle’ye basın. Kablo daha güvenilirdir.",
+        "reason": "Neden: {reason}",
+        "titleUnnamed": "Cihaz okunamıyor"
+      },
+      "offNetwork": {
+        "title": "{name} ağda değil",
+        "tv": "Uzaktan kumandasıyla uyandırın ve bu bilgisayarla aynı Wi-Fi’da tutun.",
+        "vision": "Takın, kilidini açın ve bu bilgisayarla aynı Wi-Fi’da tutun."
+      },
+      "pairAgain": {
+        "title": "{name} cihazını yeniden eşleştirin",
+        "body": "Artık bu bilgisayarın eşleştirmesini kabul etmiyor. Bir tvOS veya visionOS güncellemesinden sonra bu normaldir: yeni bir kodla yeniden eşleştirin.",
+        "action": "Yeniden eşleştir…"
+      }
+    },
+    "notes": {
+      "connected": "{name} bağlandı",
+      "disconnected": "{name} bağlantısı kesildi",
+      "aDevice": "Bir cihaz"
+    },
+    "savePairing": "Eşleştirme dosyasını kaydet…",
+    "localNetwork": {
+      "open": "Yerel Ağ ayarlarını aç"
+    },
+    "os": {
+      "tv": "tvOS",
+      "vision": "visionOS"
+    },
+    "lineOs": "{model} · {os} {version} · {link}",
+    "modelOs": "{model} · {os} {version}",
+    "pairedByCode": "Bu bilgisayarla kodla eşleştirildi",
+    "forget": {
+      "action": "Unut…",
+      "title": "{name} unutulsun mu?",
+      "body": "IPAForge bu bilgisayarın eşleştirmesini kaldırır. İçindeki uygulamalar kalır. Yeniden kullanmak için yeniden eşleştirin.",
+      "confirm": "Unut"
+    }
+  },
+  "prompts": {
+    "cancel": "İptal",
+    "continue": "Devam",
+    "password": {
+      "title": "Yeniden oturum açın",
+      "body": "{appleId} için kayıtlı oturumun süresi doldu. Devam etmek için parolayı girin.",
+      "label": "Parola",
+      "checking": "Parola denetleniyor…"
+    },
+    "method": {
+      "title": "Apple kodu nereye göndersin?",
+      "body": "Doğrulama kodunu nasıl alacağınızı seçin.",
+      "trustedDevice": "Güvenilen bir aygıt",
+      "trustedDeviceHint": "Bu Apple ID ile oturum açmış iPhone, iPad veya Mac’iniz",
+      "sms": "{number} numarasına kısa mesaj",
+      "smsHint": "Standart SMS ücretleri uygulanabilir",
+      "sending": "Kod gönderiliyor…"
+    },
+    "code": {
+      "title": "Doğrulama kodunu girin",
+      "body": "{length, plural, one {Apple’ın gönderdiği # haneli kodu girin.} other {Apple’ın gönderdiği # haneli kodu girin.}}",
+      "label": "Doğrulama kodu",
+      "wrong": "Bu kod işe yaramadı. Denetleyin ve yeniden girin.",
+      "verify": "Doğrula",
+      "checking": "Kod denetleniyor…",
+      "deviceBody": "{length, plural, one {iPhone, iPad veya Mac’inizde görünen # haneli kodu girin.} other {iPhone, iPad veya Mac’inizde görünen # haneli kodu girin.}}",
+      "smsBody": "{length, plural, one {{number} numarasına gönderilen # haneli kodu girin.} other {{number} numarasına gönderilen # haneli kodu girin.}}",
+      "allowHint": "Kilidini açık tutun ve oturum açmayı sorduğunda İzin Ver’e dokunun.",
+      "noCode": "Kod gelmedi mi?",
+      "resend": "Yeni kod gönder",
+      "textTo": "{number} numarasına mesaj gönder",
+      "sending": "Yeni kod gönderiliyor…",
+      "sent": "Yeni kod yolda.",
+      "notSent": "Apple yeni kod göndermedi. Birkaç dakika bekleyin, sonra yeniden deneyin."
+    },
+    "suggested": "Önerilen",
+    "team": {
+      "title": "Uygulamayı hangi takım imzalasın?",
+      "body": "Bu Apple ID birden fazla takıma ait. IPAForge seçiminizi bu Apple ID için hatırlar.",
+      "free": "Ücretsiz: uygulamaların süresi 7 günde dolar, cihaz başına 3 uygulama",
+      "paid": "Ücretli: uygulamalar bir yıl geçerlidir, uygulama sınırı yok",
+      "checking": "Bu takım kullanılıyor…"
+    },
+    "revoke": {
+      "title": "Bir sertifika iptal edilsin mi?",
+      "body": "Bu takım en fazla sayıda geliştirme sertifikasına zaten sahip, bu yüzden IPAForge kendi sertifikasını yapmak için birini iptal etmeli. İptal edilenle imzalanan uygulamalar yenilenmez.",
+      "ipaforge": "IPAForge tarafından başka bir bilgisayarda yapıldı",
+      "sidestore": "SideStore tarafından yapıldı",
+      "machine": "“{machine}” üzerinde yapıldı (genellikle Xcode)",
+      "unknown": "Bilinmeyen bir araç tarafından yapıldı",
+      "sidestoreWarning": "Cihazınızdaki SideStore, yenisini yapana kadar uygulamaları yenilemeyi bırakır.",
+      "machineWarning": "O bilgisayardaki Xcode, bir sonraki imzalayışında yenisini yapar.",
+      "expires": "Bitiş: {date}",
+      "confirm": "İptal et ve devam et",
+      "revoking": "Sertifika iptal ediliyor…"
+    },
+    "remove": {
+      "title": "Yer açmak için bir uygulama kaldırılsın mı?",
+      "body": "Ücretsiz bir Apple ID, bir cihazda {limit} uygulamaya sahip olabilir; bu yüzden bu uygulama sığmadan önce biri gitmeli. Daha sonra yeniden yükleyebilirsiniz.",
+      "confirm": "Kaldır ve devam et",
+      "removing": "Uygulama kaldırılıyor…"
+    },
+    "share": {
+      "title": "İmzalama sertifikanız “{app}” ile paylaşılsın mı?",
+      "body": "Bu uygulama SideStore’a benziyor. Sertifikanızla cihazdaki uygulamaları kendi kendine yenileyebilir. Sertifikayı yalnızca güvendiğiniz bir uygulamayla paylaşın.",
+      "yes": "Sertifikayı paylaş",
+      "yesHint": "Cihazdaki uygulamalarınızı kendi kendine yeniler",
+      "no": "Paylaşma",
+      "noHint": "Sertifikanız olmadan yüklenir"
+    },
+    "pairing": {
+      "title": "Eşleştirme dosyasını hangi uygulamalar alsın?",
+      "body": "Eşleştirme dosyası, cihazdaki bir uygulamanın bu bilgisayar gibi cihazla Wi-Fi üzerinden konuşmasını sağlar. Yalnızca işaretlediğiniz uygulamalar alır.",
+      "available": "{count, plural, one {Cihazdaki # uygulama bunu kullanabilir} other {Cihazdaki # uygulama bunu kullanabilir}}",
+      "selectAll": "Tümünü seç",
+      "clearAll": "Tümünü temizle",
+      "place": "{count, plural, =0 {Bir uygulama seçin} one {# uygulamaya yerleştir} other {# uygulamaya yerleştir}}",
+      "placing": "Eşleştirme dosyası yerleştiriliyor…",
+      "purpose": {
+        "sidestore": "Uygulamaları Wi-Fi üzerinden yeniler ve yükler",
+        "livecontainer": "İçindeki uygulamaları JIT ile çalıştırır",
+        "stikdebug": "Diğer uygulamalar için JIT’i etkinleştirir",
+        "stikstore": "Uygulamaları kendi kaynaklarından yükler"
+      }
+    }
+  },
+  "signIn": {
+    "title": "Apple ID ekle",
+    "body": "IPAForge uygulamaları onunla imzalar. Parolanız yalnızca Apple’a gider.",
+    "appleId": "Apple ID",
+    "password": "Parola",
+    "submit": "Oturum aç",
+    "signingIn": "Oturum açılıyor…",
+    "done": {
+      "title": "Apple ID eklendi",
+      "body": "{appleId} olarak oturum açıldı.",
+      "close": "Bitti"
+    },
+    "rememberPassword": "Parolamı sistem anahtar zincirine kaydet",
+    "rememberPasswordHint": "Oturumun süresi dolduğunda IPAForge’un kendiliğinden yeniden oturum açmasını sağlar.",
+    "resuming": {
+      "title": "Yeniden oturum açılıyor",
+      "body": "IPAForge’un kaydettikleriyle {appleId} hesabında oturum açılıyor…",
+      "cancel": "İptal"
+    }
+  },
+  "accounts": {
+    "description": "IPAForge’un uygulamaları imzalamak için kullandığı Apple ID’ler. Kullanımda olan, üst çubukta gösterilir.",
+    "list": "Kayıtlı Apple ID’ler",
+    "empty": "Henüz Apple ID yok. SideStore’u yüklemek için bir tane ekleyin.",
+    "notSaved": {
+      "title": "Apple ID’ler kaydedilmiyor",
+      "body": "IPAForge sistem anahtar zincirini kullanamıyor (erişim reddedilmiş olabilir), bu yüzden Apple ID’leriniz yalnızca IPAForge kapanana kadar tutulur. Kaydetmek için IPAForge’u yeniden açın ve sorulduğunda anahtar zinciri erişimine izin verin."
+    },
+    "freeTeam": "{name} (ücretsiz)",
+    "withState": "{line} · {state}",
+    "state": {
+      "checking": "Denetleniyor…",
+      "signInNeeded": "Oturum açmak gerekiyor",
+      "blocked": "Bu cihazda engellendi",
+      "unreachable": "Apple’a ulaşılamadı"
+    },
+    "inUse": "Kullanımda",
+    "noTeams": "Takımlar, Apple yanıt verdikten sonra görünür.",
+    "use": "Kullan",
+    "signInAgain": "Yeniden oturum aç",
+    "signOut": {
+      "action": "Oturumu kapat",
+      "title": "{appleId} oturumu kapatılsın mı?",
+      "forgets": "IPAForge bu Apple ID’yi, oturumunu ve kayıtlı parolasını unutur.",
+      "keeps": "İmzalama sertifikaları bu bilgisayarda kalır, bu yüzden yeniden oturum açmak onları yeniden kullanır. Zaten yüklü uygulamalar süreleri dolana kadar çalışmayı sürdürür.",
+      "confirm": "Oturumu kapat"
+    }
+  },
+  "apps": {
+    "description": "IPAForge’un bu cihaza yüklediği uygulamalar. Yenile, süresi dolmadan bir uygulamayı verilerini koruyarak yeniden imzalar.",
+    "refreshAll": "{count, plural, =0 {Tümünü yenile} other {Tümünü yenile (#)}}",
+    "updateAll": "{count, plural, other {Tümünü güncelle (#)}}",
+    "refresh": "Yenile",
+    "update": "Güncelle",
+    "remove": "Kaldır",
+    "removeApp": "{name} kaldır",
+    "updateTo": "Güncelle: {version}",
+    "from": "Kaynak: {source}",
+    "needsIpa": "IPAForge tarafından başka bir bilgisayardaki bir .ipa’dan yüklendi. Burada yenilemek için o .ipa’yı bir kez Ön yükleme’de ekleyin.",
+    "thisDevice": "bu cihaz",
+    "badge": "{count, plural, one {Yakında yenilenecek # uygulama} other {Yakında yenilenecek # uygulama}}",
+    "expiry": {
+      "in": "{days, plural, one {# gün sonra sona erer · {date}} other {# gün sonra sona erer · {date}}}",
+      "today": "Bugün sona eriyor",
+      "expired": "{days, plural, one {# gün önce sona erdi · açılmaz} other {# gün önce sona erdi · açılmaz}}",
+      "unknown": "Bitiş bilinmiyor",
+      "gone": "Süresi doldu · açılmaz"
+    },
+    "run": {
+      "checking": "Apple ile denetleniyor…",
+      "waiting": "Sırası bekleniyor",
+      "done": "Bitti"
+    },
+    "failed": {
+      "title": "Yenileme tamamlanmadı: {reason}",
+      "details": "Ayrıntıları göster",
+      "dismiss": "Kapat"
+    },
+    "notConnected": {
+      "title": "Bu cihaz bağlı değil",
+      "body": "Uygulamalarını görmek, yenilemek veya güncellemek için bağlayın."
+    },
+    "expired": {
+      "title": "{count, plural, one {# uygulamanın süresi doldu} other {# uygulamanın süresi doldu}}",
+      "body": "Yenilenene kadar açılmazlar. Verileri korunur.",
+      "refresh": "{count, plural, one {Şimdi yenile} other {Şimdi yenile}}"
+    },
+    "facts": {
+      "next": "Sıradaki bitiş",
+      "none": "Henüz yok",
+      "nextIn": "{days, plural, one {{name} · # gün} other {{name} · # gün}}",
+      "nextExpired": "{name} · süresi doldu",
+      "count": "Yenilenen",
+      "apps": "{count, plural, one {# uygulama} other {# uygulama}}",
+      "auto": "Otomatik yenileme",
+      "autoOn": "{days, plural, one {Açık · # gün önce} other {Açık · # gün önce}}",
+      "autoOff": "Kapalı"
+    },
+    "list": {
+      "title": "IPAForge ile yüklenenler",
+      "count": "{count, plural, one {# uygulama · en yakın bitiş önce} other {# uygulama · en yakın bitiş önce}}",
+      "empty": "Henüz uygulama yok. SideStore’u yükleyin ya da uygulamaları ön yükleyin, burada görünürler."
+    },
+    "others": {
+      "title": "IPAForge henüz yenilemiyor",
+      "hint": "IPAForge’un bu sürümünden önce ya da başka bir araçla yüklendi",
+      "found": "{source} içinde bulundu. Yenile, onu oradan verilerini koruyarak yükler ve IPAForge o andan sonra yenilemeyi sürdürür.",
+      "foundMany": "{source} ve {count, plural, one {# başka kaynakta} other {# başka kaynakta}} bulundu. Yenile, onu aşağıda seçilen kaynaktan verilerini koruyarak yükler ve IPAForge o andan sonra yenilemeyi sürdürür.",
+      "pickSource": "Şuradan yükle",
+      "choice": "{source} · {version}",
+      "how": ".ipa dosyasını bir kez Ön yükleme’de ekleyin, IPAForge o andan sonra yenilemeyi sürdürür."
+    },
+    "auto": {
+      "title": "Uygulamaları otomatik yenile",
+      "body": "IPAForge açıkken ve cihaz bağlıyken uygulamalar süreleri dolmadan kendiliğinden yenilenir.",
+      "toggle": "Otomatik yenile",
+      "when": "Bir uygulamanın kalan süresi",
+      "days": "{count, plural, one {# gün kaldığında} other {# gün kaldığında}}"
+    },
+    "removeDialog": {
+      "title": "{name} kaldırılsın mı?",
+      "body": "{device} cihazından verileriyle birlikte silinir ve bir ücretsiz uygulama yuvasını boşaltır. Ön yükleme’den yeniden yükleyebilirsiniz."
+    },
+    "pairing": {
+      "open": "Eşleştirme dosyaları",
+      "title": "Eşleştirme dosyaları",
+      "hint": "Eşleştirme dosyası, bir uygulamanın uygulamaları yenilemek ve yüklemek için cihazınıza kendi kendine ulaşmasını sağlar. Ona sahip olan cihazı kullanabilir; bu yüzden kendi uygulamalarınıza yalnızca talimatları istediğinde verin.",
+      "reading": "Eşleştirme dosyaları okunuyor…",
+      "empty": "Bu cihazda eşleştirme uygulaması ya da IPAForge ile yüklenmiş uygulama yok.",
+      "classic": {
+        "thisComputer": "Eşleştirme: bu bilgisayarınki",
+        "otherComputer": "Eşleştirme: başka bir bilgisayarınki",
+        "missing": "Eşleştirme: yok"
+      },
+      "remote": {
+        "accepted": "Uzak: kabul edildi",
+        "rejected": "Uzak: kabul edilmedi",
+        "otherComputer": "Uzak: başka bir bilgisayarınki",
+        "missing": "Uzak: yok"
+      },
+      "detail": {
+        "placed": "{date} tarihinde yerleştirildi",
+        "needed": "Kendi kendine yenilemek için bir tane gerekir.",
+        "otherComputer": "Başka bir bilgisayardan: o bilgisayar güvenilir kaldığı sürece çalışır.",
+        "ownNone": "Yok. Yalnızca uygulama isterse ekleyin."
+      },
+      "place": "Yerleştir",
+      "placeOne": "Eşleştirme dosyasını {name} içine yerleştir",
+      "placeAgain": "Yeniden yerleştir",
+      "placeAgainOne": "Eşleştirme dosyasını {name} içine yeniden yerleştir",
+      "add": "Ekle…",
+      "addOne": "{name} için eşleştirme dosyası ekle",
+      "remove": "Kaldır",
+      "removeOne": "Eşleştirme dosyasını {name} içinden kaldır",
+      "newRemote": "Yeni uzak eşleştirme",
+      "done": "Bitti",
+      "addTitle": "{name} için eşleştirme dosyası ekle",
+      "addBody": "IPAForge, bu bilgisayarın eşleştirme dosyasını cihazınızdaki uygulamanın klasörüne yazar. Ona sahip olan cihazı kullanabilir: yalnızca güvendiğiniz uygulamalara ekleyin.",
+      "pathLabel": "Uygulama içindeki yol",
+      "pathHint": "Uygulamanın talimatlarından; genellikle Documents içinde. IPAForge bunu bu uygulama için hatırlar.",
+      "pathInvalid": "Documents veya Library içinde, .plist ya da .mobiledevicepairing ile biten bir yol kullanın.",
+      "removeTitle": "{name} uygulamasının eşleştirme dosyası kaldırılsın mı?",
+      "removeBody": "Eşleştirme dosyası yeniden yerleştirilene kadar cihazınıza kendi kendine ulaşamaz (yenileme, yükleme).",
+      "newRemoteTitle": "Yeni bir uzak eşleştirme yapılsın mı?",
+      "newRemoteBody": "IPAForge cihazınızla yeni bir uzak eşleştirme yapar ve SideStore içine yerleştirir. Cihaz bu bilgisayara güvenmenizi isteyebilir. Eski uzak eşleştirme çalışmayı bırakır.",
+      "newRemoteConfirm": "Yenisini yap",
+      "newRemoteWaiting": "Cihazınız isterse Güven’e dokunun ve parolasını girin.",
+      "tag": "Eşleştirme dosyası yok",
+      "tagOne": "{name} uygulamasının eşleştirme dosyası yok: Eşleştirme dosyaları’nı açın"
+    },
+    "cancelRefresh": "Yenilemeyi iptal et"
+  },
+  "logs": {
+    "title": "Günlük",
+    "lede": "IPAForge’un yaptıkları, satır satır. Her yerden şununla açın:",
+    "shortcut": {
+      "control": "Ctrl+",
+      "command": "⌘",
+      "key": "L"
+    },
+    "copy": "Kopyala",
+    "save": "Kaydet…",
+    "clear": "Temizle",
+    "cleared": "Görünüm temizlendi. Kaydet, bu oturumda tutulan her satırı yine de yazar.",
+    "search": {
+      "label": "Günlüklerde ara",
+      "placeholder": "İletilerde ve ayrıntılarda ara",
+      "key": "/"
+    },
+    "level": {
+      "label": "Düzey",
+      "all": "Tümü",
+      "info": "Bilgi",
+      "warn": "Uyarılar",
+      "error": "Hatalar"
+    },
+    "levelName": {
+      "debug": "Hata ayıklama",
+      "info": "Bilgi",
+      "warn": "Uyarı",
+      "error": "Hata"
+    },
+    "area": {
+      "label": "Alan",
+      "all": "Tüm alanlar",
+      "install": "Yükleme",
+      "device": "Cihaz",
+      "apple": "Apple",
+      "catalog": "Katalog",
+      "signing": "İmzalama",
+      "engine": "Motor",
+      "interface": "Arayüz",
+      "app": "Uygulama"
+    },
+    "filters": {
+      "showing": "Yalnızca gösterilen:",
+      "run": "Bu yükleme çalışması ({time})",
+      "text": "“{text}”",
+      "remove": "{filter} süzgecini kaldır"
+    },
+    "list": {
+      "label": "Günlük satırları",
+      "loadingOlder": "Eski satırlar yükleniyor…"
+    },
+    "row": {
+      "details": "{count, plural, one {# ayrıntı} other {# ayrıntı}}",
+      "scope": "alan",
+      "redacted": "[gizlendi]",
+      "copy": "Satırı kopyala"
+    },
+    "follow": {
+      "on": "Yeni satırlar izleniyor",
+      "off": "Duraklatıldı",
+      "pause": "Duraklat",
+      "resume": "İzle"
+    },
+    "jump": "{count, plural, one {# yeni satır} other {# yeni satır}} · En yeniye git",
+    "count": "{matching, plural, one {# eşleşen satır} other {# eşleşen satır}} · bu oturumda son {capacity, number} satır tutulur",
+    "debug": "Hata ayıklama ayrıntılarını ekle",
+    "privacy": "Parolalar, belirteçler, anahtarlar, seri numaraları ve cihaz tanımlayıcıları günlüğe asla yazılmaz; [gizlendi] olarak görünürler. Siz kopyalayana veya kaydedene kadar günlükler bu bilgisayarda kalır.",
+    "empty": {
+      "none": {
+        "title": "Henüz günlük kaydı yok",
+        "body": "IPAForge çalıştıkça satırlar burada görünür: cihaz bağlama, oturum açma, yükleme."
+      },
+      "noMatch": {
+        "title": "Eşleşen satır yok",
+        "body": "Düzeyi, alanı veya aramayı değiştirin.",
+        "showAll": "Tüm satırları göster"
+      },
+      "cleared": {
+        "title": "Görünüm temizlendi",
+        "body": "Yeni satırlar geldikçe burada görünür."
+      },
+      "failed": {
+        "title": "Günlükler okunamadı",
+        "body": "Motorla bağlantı kapanmış olabilir. Yeniden denemek için Günlük’ü yeniden açın."
+      }
+    },
+    "export": {
+      "copyTitle": "{count, plural, one {# satır kopyalansın mı?} other {# satır kopyalansın mı?}}",
+      "saveTitle": "{count, plural, one {# satır bir dosyaya kaydedilsin mi?} other {# satır bir dosyaya kaydedilsin mi?}}",
+      "copyBody": "Gösterilen satırlar, belirlediğiniz süzgeçlerle.",
+      "saveBody": "Süzgeçlerden bağımsız olarak bu oturumda tutulan her satır.",
+      "warning": "Parolalar, belirteçler ve cihaz tanımlayıcıları zaten çıkarılmıştır, ancak günlükler cihaz modelinizi, uygulamalarınızı ve takımınızı gösterir. Herkese açık paylaşmadan önce denetleyin.",
+      "confirmCopy": "Kopyala",
+      "confirmSave": "Kaydet",
+      "copied": "{count, plural, one {# satır kopyalandı} other {# satır kopyalandı}}",
+      "saved": "{count, plural, one {# satır kaydedildi} other {# satır kaydedildi}}",
+      "copyFailed": "Satırlar kopyalanamadı",
+      "saveFailed": "Satırlar kaydedilemedi"
+    }
+  },
+  "preload": {
+    "title": "Uygulamaları ön yükle",
+    "description": "Kendi uygulamalarınızı yükleyin: Apple ID’nizle imzalanır, USB ile sırayla yüklenir.",
+    "tabs": {
+      "label": "Ön yükleme",
+      "apps": "Uygulama ekle",
+      "sources": "Kaynaklar"
+    },
+    "add": {
+      "drop": ".ipa dosyalarını buraya bırakın",
+      "or": "veya",
+      "choose": "Dosya seç…",
+      "link": "Bağlantıdan ekle…"
+    },
+    "catalog": {
+      "recommended": "Önerilen",
+      "added": "Eklendi",
+      "add": "Ekle",
+      "sidestore": "Uygulamaları cihazda kendi kendine yeniler ve yükler.",
+      "livecontainerSidestore": "İçinde SideStore bulunan LiveContainer.",
+      "livecontainer": "Birçok uygulamayı tek bir uygulamanın içinde çalıştırır, 3 uygulama sınırını aşar.",
+      "stikdebug": "JIT gerektiren uygulamalar için cihazda JIT’i açar.",
+      "feather": "Uygulamaları cihazda sertifikanızla imzalar ve yükler."
+    },
+    "browse": {
+      "title": "Uygulamalara göz at",
+      "count": "{sources, plural, one {# kaynaktan} other {# kaynaktan}} {apps, plural, one {# uygulama} other {# uygulama}}",
+      "source": "Kaynak",
+      "allSources": "Tüm kaynaklar",
+      "search": "Uygulama ara",
+      "manage": "Kaynakları yönet",
+      "noMatch": "“{query}” ile eşleşen uygulama yok.",
+      "allOff": "Tüm kaynaklar kapalı. Kaynaklar’dan birini açın.",
+      "loading": "Kaynaklar okunuyor…",
+      "catalogLine": "Son sürüm · sağlama toplamına karşı denetlendi",
+      "version": "{version} · {size}",
+      "from": "{name}, ayrıca {others} içinde",
+      "details": "{name} ayrıntıları",
+      "notRefreshed": {
+        "title": "{name} yenilenemedi",
+        "body": "Uygulamaları son yenilemeden, {when}, gösteriliyor.",
+        "retry": "Yeniden dene"
+      }
+    },
+    "detail": {
+      "version": "Sürüm",
+      "latest": "{version} (en son)",
+      "size": "Boyut",
+      "needs": "Gerektirir",
+      "needsIos": "iOS {version}",
+      "anyIos": "Herhangi bir iOS",
+      "from": "Kaynak",
+      "builtin": "Yerleşik · güvenilir",
+      "added": "Sizin eklediğiniz kaynak",
+      "untrusted": "Sizin eklediğiniz bir kaynaktan: IPAForge uygulamalarını incelemez.",
+      "add": "Listeye ekle",
+      "inList": "Listede",
+      "close": "Kapat",
+      "loadingReleases": "Sürümleri aranıyor…",
+      "noReleases": "Sürümleri şu anda okunamıyor. Bağlantıyı denetleyin ve yeniden açın."
+    },
+    "sources": {
+      "description": "Uygulamalara göz at’ın uygulamaları bulduğu yerler. Yerleşik kaynakları IPAForge yönetir; diğerlerini bağlantılarıyla ekleyin (AltStore biçimi).",
+      "add": "Kaynak ekle…",
+      "refreshAll": "Tümünü yenile",
+      "list": "Kaynaklar",
+      "builtin": "Yerleşik · güvenilir",
+      "added": "Sizin eklediğiniz",
+      "catalogName": "IPAForge kataloğu",
+      "apps": "{count, plural, one {# uygulama} other {# uygulama}}",
+      "updated": "{when} güncellendi",
+      "notRead": "Henüz okunmadı",
+      "skipped": "{count, plural, one {# atlandı (.ipa değil)} other {# atlandı (.ipa değil)}}",
+      "failed": "Ulaşılamadı.",
+      "failedCopy": "Son kopyası, {when}, gösteriliyor.",
+      "refreshing": "Yenileniyor…",
+      "show": "{name} uygulamalarını göster",
+      "refresh": "{name} yenile",
+      "remove": "{name} kaldır",
+      "on": "Açık",
+      "off": "Kapalı",
+      "note": "IPAForge, eklediğiniz kaynaklardaki uygulamaları incelemez. Yalnızca güvendiğiniz kaynakları ekleyin.",
+      "refreshOne": "Yenile",
+      "removeOne": "Kaldır"
+    },
+    "addSource": {
+      "title": "Kaynak ekle",
+      "label": "Kaynak bağlantısı",
+      "placeholder": "https://example.com/apps.json",
+      "hint": "AltStore biçiminde, SideStore’un okuduğu türden bir kaynak. Genellikle .json ile biter.",
+      "check": "Denetle",
+      "checking": "Kaynak denetleniyor…",
+      "notLink": "https:// ile başlayan bir bağlantı girin",
+      "notHttps": "https:// bağlantısı kullanın: IPAForge kaynakları yalnızca güvenli bağlantıyla okur.",
+      "previewTitle": "Bu kaynak eklensin mi?",
+      "includes": "{count, plural, one {# uygulama, şunlar dahil:} other {# uygulama, şunlar dahil:}}",
+      "skipped": "{count, plural, one {# tane daha dışarıda bırakıldı: indirmesi bir .ipa değil.} other {# tane daha dışarıda bırakıldı: indirmeleri bir .ipa değil.}}",
+      "warningTitle": "Yalnızca güvendiğiniz kaynakları ekleyin",
+      "warningBody": "IPAForge, eklediğiniz kaynaklardaki uygulamaları incelemez. Yine de her uygulama yüklenmeden önce denetlenir.",
+      "back": "Geri",
+      "confirm": "Kaynak ekle"
+    },
+    "removeSource": {
+      "title": "{name} kaldırılsın mı?",
+      "body": "Uygulamaları Uygulamalara göz at’tan kaybolur. Ondan yüklenen uygulamalar cihazda kalır, Yüklenecekler listesindeki uygulamalar da orada kalır.",
+      "confirm": "Kaldır"
+    },
+    "list": {
+      "title": "Yüklenecekler",
+      "count": "{count, plural, one {# uygulama} other {# uygulama}}",
+      "empty": "Henüz uygulama yok. .ipa dosyalarını buraya bırakın, seçin, bir bağlantı ekleyin ya da Uygulamalara göz at’ta birini seçin."
+    },
+    "row": {
+      "waiting": "Cihaz ve Apple ID bekleniyor",
+      "checking": "Denetleniyor…",
+      "downloading": "İndiriliyor ve denetleniyor…",
+      "appIds": "{count, plural, one {# App ID} other {# App ID}}{extensions, plural, =0 {} one { (uygulama + # uzantı)} other { (uygulama + # uzantı)}}",
+      "updates": "Güncellenir {from} → {to} · verilerini korur",
+      "new": "Cihazda yeni",
+      "pairing": "Eşleştirme dosyasını ve sertifikayı alır",
+      "fromCatalog": "Katalogdan · Kararlı",
+      "remove": "{name} kaldır",
+      "cannot": "Yüklenemez.",
+      "fromSource": "Kaynak: {name}",
+      "saveInstead": "Bunun yerine imzalı .ipa kaydet",
+      "saveInsteadOne": "{name} uygulamasını yüklemek yerine imzalı .ipa olarak kaydet",
+      "savedOnComputer": "Bu bilgisayara kaydedildi, yüklenmedi"
+    },
+    "problem": {
+      "notIpa": "Yalnızca .ipa dosyaları yüklenebilir.",
+      "unreadable": "IPAForge bu dosyayı okuyamıyor. Bunun yerine Dosya seç… ile ekleyin.",
+      "needsIos": "iOS {needs} gerekiyor; bu cihazda iOS {has} var."
+    },
+    "summary": {
+      "appIds": "{count, plural, one {# yeni} other {# yeni}} · {left, plural, one {bu hafta # kaldı} other {bu hafta # kaldı}}",
+      "appIdsNoLimit": "{count, plural, one {# yeni} other {# yeni}}",
+      "notEnough": "Yeterince kalmadı. Bir uygulama kaldırın ya da bekleyin. {next}",
+      "freeApps": "Bu yüklemeden sonra {limit} içinden {after}",
+      "freeAppsOver": "{used, plural, one {# zaten var.} other {# zaten var.}} Yükleme hangi uygulamanın kaldırılacağını soracak, ya da bu listeden birini kaldırın."
+    },
+    "install": "{count, plural, =0 {Yükle} one {# uygulamayı yükle} other {# uygulamayı yükle}}",
+    "clear": "Listeyi temizle",
+    "readiness": {
+      "busy": "Sürmekte olan yüklemeyi bekleyin.",
+      "empty": "Önce bir uygulama ekleyin.",
+      "checking": "Uygulamalar denetleniyor…",
+      "problems": "Yüklenemeyen uygulamaları kaldırın."
+    },
+    "link": {
+      "title": "Bağlantıdan ekle",
+      "body": "Bir .ipa dosyasına doğrudan bağlantı. IPAForge onu indirir, sonra diğer uygulamalar gibi denetler.",
+      "label": "Bağlantı",
+      "placeholder": "https://example.com/MyApp.ipa",
+      "add": "Ekle",
+      "httpsOnly": "Yalnızca https bağlantıları indirilebilir.",
+      "invalid": "Bu bir bağlantı değil.",
+      "notIpa": "Bağlantı bir .ipa dosyasını göstermelidir."
+    },
+    "elsewhere": {
+      "apps": "Uygulamalar yükleniyor",
+      "sidestore": "SideStore yükleniyor",
+      "body": "Aynı anda tek yükleme: cihaza ihtiyaç duyar. Bu, diğeri bitince başlayabilir.",
+      "open": "Aç"
+    },
+    "run": {
+      "title": {
+        "running": "{count, plural, one {{app} yükleniyor} other {# uygulama yükleniyor}}",
+        "completed": "{count, plural, one {{app} yüklendi} other {# uygulama yüklendi}}",
+        "failed": "Tüm uygulamalar yüklenemedi"
+      },
+      "backToPreload": "Ön yükleme’ye dön",
+      "shared": "Bu cihaz ve Apple ID’niz",
+      "refresh": {
+        "profile": "Yalnızca yeni profil, hiçbir şey yeniden yüklenmedi",
+        "certificate": "Yeniden yüklendi: onu imzalayan sertifika artık geçerli değil",
+        "unmarked": "Yeniden yüklendi: IPAForge onu hangi sertifikanın imzaladığını bilemiyor",
+        "appId": "Yeniden yüklendi: Apple, süresi dolunca App ID’sini kaldırdı",
+        "sidestore": "Yeniden yüklendi, verileri korundu; böylece SideStore’un kendisi yeni tarihi gösterir"
+      },
+      "group": {
+        "failed": "Başarısız",
+        "done": "Bitti",
+        "active": "Sürüyor",
+        "pending": "Bekliyor"
+      }
+    },
+    "done": {
+      "title": "{count, plural, one {{app}, {device} cihazında.} other {{app}, {device} cihazında.}}",
+      "open": "Her uygulamayı Ana Ekran’dan açın."
+    },
+    "signAndSave": "{count, plural, one {# uygulamayı imzala ve kaydet} other {# uygulamayı imzala ve kaydet}}",
+    "installAndSave": "{install} yüklenecek · {save} imzalı .ipa olarak kaydedilecek"
+  },
+  "repair": {
+    "title": "SideStore’u onar",
+    "description": "IPAForge, {device} üzerindeki SideStore’u denetler ve uygulamalarınızı kendi kendine yenilemesini engelleyenleri düzeltir.",
+    "checkAgain": "Yeniden denetle",
+    "checking": "SideStore denetleniyor…",
+    "checks": "Denetimler",
+    "failed": "SideStore denetlenemedi: {reason}",
+    "failedBody": "Cihazın bağlı ve kilidinin açık olduğunu denetleyin, sonra Yeniden denetle’ye basın.",
+    "ok": "Tamam",
+    "unknown": "Anlaşılamıyor",
+    "deviceFirst": "Önce {device} cihazını düzeltin",
+    "device": {
+      "title": "{device} hazır",
+      "ok": "Kilidi açık, güvenilir ve Geliştirici Modu açık.",
+      "locked": "Kilitli. Kilidini açın, sonra Yeniden denetle’ye basın.",
+      "lockedTag": "Kilitli",
+      "developerMode": "Geliştirici Modu kapalı, bu yüzden SideStore ve yüklediği uygulamalar açılmaz. iPhone’da: Ayarlar › Gizlilik ve Güvenlik › Geliştirici Modu, sonra yeniden başlatın.",
+      "developerModeTag": "Geliştirici Modu kapalı"
+    },
+    "installed": {
+      "title": "SideStore yüklü",
+      "missing": "SideStore, {device} üzerinde değil.",
+      "missingTag": "Yüklü değil"
+    },
+    "signer": {
+      "title": "Burada kullandığınız takımla imzalı",
+      "ok": "Onar, verilerini kaybetmeden onu yeniden yükleyebilir ya da yeni bir profil verebilir.",
+      "otherTeam": "Bu Apple ID’nin başka bir takımı imzalamış. Bu takımla yeniden yüklemek, verileri ve uygulamaları olmayan ikinci bir SideStore ekler.",
+      "otherTeamTag": "Başka takım",
+      "otherAppleId": "Başka bir Apple ID imzalamış. Bununla yeniden yüklemek, verileri ve uygulamaları olmayan ikinci bir SideStore ekler.",
+      "otherAppleIdTag": "Başka Apple ID"
+    },
+    "version": {
+      "title": "SideStore güncel",
+      "ok": "Sürüm {version}, en sonuncusu.",
+      "outdated": "Sürüm {version}; {latest} çıktı. Eski sürümlerde, yeni iOS’ta yenilemeye ilişkin düzeltmeler eksik olabilir.",
+      "outdatedTag": "{latest} mevcut",
+      "unknown": "Sürüm {version}. Karşılaştırmak için kataloğa ulaşılamadı."
+    },
+    "expiry": {
+      "title": "SideStore’un süresi dolmamış",
+      "ok": "{days, plural, one {# gün sonra sona erer.} other {# gün sonra sona erer.}}",
+      "soon": "{days, plural, =0 {Bugün sona eriyor.} one {# gün sonra sona erer.} other {# gün sonra sona erer.}} Süresi dolunca SideStore kendini yenileyemez.",
+      "soonTag": "Yakında sona erecek",
+      "expired": "{days, plural, one {# gün önce sona erdi.} other {# gün önce sona erdi.}} Açılmaz, bu yüzden uygulamalarınızı yenileyemez.",
+      "expiredTag": "Süresi doldu",
+      "unknown": "Cihaz onun için bir profil göstermiyor."
+    },
+    "signing": {
+      "title": "Onu imzalayan sertifika geçerli",
+      "ok": "Apple tarafında hâlâ geçerli.",
+      "revoked": "İptal edilmiş ya da süresi dolmuş. SideStore bir sonraki açılışında açılmayı bırakır.",
+      "revokedTag": "İptal edildi",
+      "unknown": "Başka bir araçla yüklendi, bu yüzden IPAForge onu hangi sertifikanın imzaladığını göremiyor. Onar, emin olmak için yeniden yükleyebilir."
+    },
+    "own": {
+      "title": "SideStore uygulamaları kendi kendine imzalayabilir",
+      "ok": "Uygulamalarınızı yenilemek için geçerli bir sertifikası var.",
+      "missing": "Hiç sertifikası yok, bu yüzden yenilemeleri oturum açmanızı ister ya da başarısız olur.",
+      "missingTag": "Sertifika yok",
+      "other": "Kendisine verilen sertifika artık geçerli değil. Onu kendi yaptığı daha yeni bir sertifikayla değiştirmiş olabilir; SideStore’da yenileme başarısız olursa yeniden yükleyin.",
+      "otherTag": "Değiştirilmiş olabilir"
+    },
+    "pairing": {
+      "title": "SideStore’un bir eşleştirme dosyası var",
+      "ok": "Var ve {device} ile bu bilgisayarın eşleştirmesi.",
+      "missing": "Yok: SideStore, uygulamaları yüklemek veya yenilemek için cihaza ulaşamaz.",
+      "missingTag": "Yok",
+      "other": "Başka bir bilgisayarınki. O eşleştirme geçerli kaldığı sürece çalışır; cihazda Güven’i sıfırlamak onu bozar.",
+      "otherTag": "Başka bilgisayar"
+    },
+    "manual": {
+      "title": "iPhone’unuzda · IPAForge bunları denetleyemez",
+      "tag": "Kendiniz denetleyin",
+      "vpn": {
+        "title": "SideStore’un VPN’i yenilerken açık",
+        "body": "SideStore’da yenilemeden önce LocalDevVPN’i açın ve bağlayın."
+      },
+      "anisette": {
+        "title": "SideStore anisette sunucusuna ulaşabiliyor",
+        "body": "Yenileme oturum açamadığını söylüyorsa SideStore › Ayarlar › Anisette’ten başka bir sunucu seçin."
+      }
+    },
+    "plan": {
+      "title": "Onar şunları yapacak",
+      "reinstall": "SideStore’u yeniden yükle",
+      "reinstallBody": "IPAForge kataloğundan, içine de konan geçerli bir sertifikayla imzalanarak. Verileri ve uygulamalarınız kalır.",
+      "profile": "SideStore’a yeni bir profil ver",
+      "profileBody": "Hiçbir şey yeniden yüklenmez.",
+      "pairing": "Bu bilgisayarın eşleştirme dosyasını yerleştir",
+      "pairingBody": "SideStore’un Documents klasörüne, oradakinin yerine.",
+      "optional": "İsterseniz ayrıca",
+      "offerReinstall": "Emin olmak için SideStore’u yeniden yükle",
+      "offerPairing": "Eşleştirme dosyasını bu bilgisayarınkiyle değiştir",
+      "hint": "Tek seferde. {device} cihazını bağlı ve kilidi açık tutun.",
+      "start": "SideStore’u onar"
+    },
+    "blocked": {
+      "title": "SideStore bu Apple ID ile yeniden yüklenemez",
+      "body": "Başka bir takım ya da Apple ID imzalamış, bu yüzden verileri taşınmaz. Üst çubuktan o Apple ID’yi seçin, sonra Yeniden denetle’ye basın."
+    },
+    "notInstalled": {
+      "title": "SideStore, {device} üzerinde değil",
+      "body": "Önce Yükle sayfasından yükleyin.",
+      "install": "SideStore’u yükle"
+    },
+    "fine": {
+      "title": "SideStore çalışıyor",
+      "body": "Onarılacak bir şey yok. Hâlâ yenileyemiyorsa aşağıdaki, iPhone’unuzdaki iki şeyi denetleyin."
+    },
+    "run": {
+      "title": {
+        "running": "SideStore onarılıyor",
+        "completed": "SideStore onarıldı",
+        "failed": "SideStore onarılamadı"
+      }
+    },
+    "done": {
+      "title": "{device} üzerindeki SideStore onarıldı.",
+      "open": "SideStore’u açın ve uygulamalarınızı yenileyin."
+    },
+    "open": "SideStore’u denetle",
+    "checkingTag": "Denetleniyor…",
+    "remote": {
+      "title": "iOS 17.4 ve sonrası için uzak eşleştirme",
+      "ok": "Var ve {device} kabul ediyor.",
+      "missing": "Yok: SideStore yalnızca klasik eşleştirmeyi kullanabilir. Bu bilgisayarın eşleştirme dosyasını yerleştirmek onu ekler.",
+      "missingTag": "Yok",
+      "rejected": "{device} artık kabul etmiyor (Güven’i sıfırlanmış). Bu bilgisayarın eşleştirme dosyasını yerleştirmek yenisini yapar.",
+      "rejectedTag": "Kabul edilmiyor",
+      "other": "Başka bir bilgisayarınki, bu yüzden IPAForge denetleyemiyor. Bu bilgisayarın eşleştirme dosyasını yerleştirmek onun yerine geçer.",
+      "otherTag": "Başka bilgisayar",
+      "notNeeded": "iOS 17.4’ün altında gerekmez.",
+      "notNeededTag": "Gerekmez"
+    }
+  },
+  "sidestore": {
+    "addSource": "SideStore’a ekle",
+    "addAll": "Tümünü SideStore’a ekle",
+    "install": "SideStore ile yükle",
+    "sourceTitle": "{name} kaynağını SideStore’a ekle",
+    "sourceBody": "SideStore da bunun uygulamalarını gösterir ve iPhone’da güncel tutar. SideStore da bir kaynaktaki uygulamaları incelemez: yalnızca güvendiğiniz kaynakları ekleyin.",
+    "installTitle": "{name} uygulamasını SideStore ile yükle",
+    "installBody": "SideStore, {name} {version} sürümünü indirir, Apple ID’nizle imzalar ve iPhone’a kendisi yükler. Ücretsiz bir Apple ID’de 3 uygulama sınırından sayılır. IPAForge onu yenileyince Uygulamalar’da görünür.",
+    "qrLabel": "Aşağıdaki bağlantının QR kodu",
+    "steps": {
+      "camera": "{device} üzerinde Kamera’yı açın ve koda doğrultun.",
+      "banner": "SideStore’u açmak için bildirime dokunun.",
+      "addSource": "SideStore kaynağı eklemeyi sorar: Ekle’ye dokunun.",
+      "install": "SideStore uygulamayı yüklemeyi sorar: Yükle’ye dokunun."
+    },
+    "onPhone": "iPhone’un kendisinde de bağlantı SideStore’u açar (Safari’ye yapıştırılınca ya da Mesajlar’da gönderilince).",
+    "copy": "Kopyala",
+    "copied": "Kopyalandı",
+    "previous": "Önceki",
+    "next": "Sonraki",
+    "step": "Kaynak {at} / {count}",
+    "back": "Geri",
+    "done": "Bitti",
+    "offer": "{count, plural, one {Burada eklediğiniz kaynağı SideStore’a da ekleyin, böylece uygulamalarını iPhone’da gösterir.} other {Burada eklediğiniz # kaynağı SideStore’a da ekleyin, böylece uygulamalarını iPhone’da gösterir.}}"
+  },
+  "checklist": {
+    "title": "{device} üzerinde · iOS {ios}",
+    "setUp": "{device} kurulu · iOS {ios}",
+    "show": "Kontrol listesini göster",
+    "hide": "Gizle",
+    "allSet": "Hepsi tamam",
+    "progress": "{left, plural, one {yapılacak # şey} other {yapılacak # şey}} · {total} içinden {done} tamam",
+    "group": {
+      "before": "Yüklemeden önce",
+      "after": "Yüklemeden sonra",
+      "sidestore": "SideStore için"
+    },
+    "onPhone": "iPhone’da",
+    "tickedTag": "iPhone’da yapıldı",
+    "tick": "Bunu yaptım",
+    "notNeeded": "Bu iOS’ta gerekmez",
+    "cable": {
+      "title": "{device} cihazını bu bilgisayara bağlayın",
+      "connected": "Bağlı",
+      "none": "Bağlı değil",
+      "how": "İlk seferde kablo kullanın; sonrasında ikisi de aynı ağdayken Wi-Fi çalışır."
+    },
+    "unlock": {
+      "title": "Kilidini açın",
+      "locked": "Kilitli",
+      "unlocked": "Kilidi açık",
+      "how": "IPAForge yüklerken kilidini açık tutun."
+    },
+    "trust": {
+      "title": "Bu bilgisayara güvenin",
+      "trusted": "Güvenilir",
+      "notYet": "Henüz değil",
+      "step1": "{device} cihazının kilidini açın.",
+      "step2": "Bu bilgisayarı sorduğunda Güven’e dokunun.",
+      "step3": "Parolasını girin.",
+      "again": "Yeniden sor"
+    },
+    "passcode": {
+      "title": "Bir parola belirleyin",
+      "how": "SideStore Wi-Fi üzerinden yeniler ve iOS buna yalnızca parolayla izin verir: Ayarlar › Face ID ve Parola."
+    },
+    "devmode": {
+      "title": "Geliştirici Modu’nu açın",
+      "on": "Açık",
+      "off": "Kapalı",
+      "step1": "Ayarlar › Gizlilik ve Güvenlik › Geliştirici Modu (orada yoksa Seçeneği göster’e basın).",
+      "step2": "Açın ve {device} cihazını yeniden başlatın.",
+      "step3": "Yeniden başlattıktan sonra Aç’a dokunun ve parolayı girin.",
+      "reveal": "Seçeneği göster",
+      "revealed": "Artık Ayarlar › Gizlilik ve Güvenlik içinde."
+    },
+    "developer": {
+      "title": "Apple ID’nize geliştirici olarak güvenin",
+      "later": "İlk yüklemeden sonra",
+      "step1": "Ayarlar › Genel › VPN ve Aygıt Yönetimi.",
+      "step2": "Geliştirici Uygulaması altında {appleId} öğesine dokunun.",
+      "step3": "Güven’e dokunun. iPhone’un bunun için internete ihtiyacı var."
+    },
+    "vpn": {
+      "title": "LocalDevVPN’i yükleyin",
+      "installed": "Yüklü",
+      "notInstalled": "Yüklü değil",
+      "how": "SideStore iPhone ile bu yerel VPN üzerinden konuşur; hiçbir şey telefondan çıkmaz. App Store’da ücretsizdir.",
+      "qrLabel": "LocalDevVPN’in App Store sayfasının QR kodu",
+      "scan": "Kamera ile tarayın ya da App Store’da “LocalDevVPN” arayın."
+    },
+    "vpnOn": {
+      "title": "SideStore yenilerken LocalDevVPN’i bağlayın",
+      "tag": "Her seferinde",
+      "later": "Yükledikten sonra",
+      "how": "LocalDevVPN’i açıp Bağlan’a dokunun ya da SideStore’un açmasına izin verin: ilk seferde sorar."
+    },
+    "repair": {
+      "title": "SideStore kendi kendine yenileyebilir",
+      "tag": "Onar’da denetlenir",
+      "how": "Sertifikası, eşleştirme dosyası ve bitiş tarihi."
+    },
+    "notice": "{count, plural, one {{device} üzerinde yapılacak # şey} other {{device} üzerinde yapılacak # şey}}",
+    "noticeBody": "Böylece yükleme ve yenileme sorunsuz geçer.",
+    "showChecklist": "Kontrol listesini göster"
+  },
+  "updates": {
+    "screen": {
+      "label": "IPAForge güncelleniyor"
+    },
+    "checking": {
+      "title": "Güncellemeler denetleniyor…"
+    },
+    "downloading": {
+      "title": "IPAForge güncelleniyor",
+      "body": "{version} sürümü çıktı. Şimdi indirilip yüklenir, sonra IPAForge kendiliğinden yeniden açılır.",
+      "starting": "İndirme başlıyor…",
+      "percent": "{fraction, number, percent}"
+    },
+    "installing": {
+      "title": "{version} yükleniyor…",
+      "body": "IPAForge birazdan yeniden açılır."
+    },
+    "failed": {
+      "title": "Güncelleme tamamlanmadı",
+      "body": "{version} sürümü çıktı. Yeniden deneyin ya da sürüm sayfasından indirin.",
+      "retry": "Yeniden dene",
+      "releasePage": "Sürüm sayfası",
+      "skip": "Şimdilik bu sürümü kullan"
+    },
+    "manual": {
+      "title": "IPAForge {version} çıktı",
+      "body": "Bu kopya {package, select, msi {bir .msi yükleyicisinden} deb {bir .deb paketinden} rpm {bir .rpm paketinden} other {bir paketten}} yüklendi ve kendini güncelleyemez. Yeni sürümü indirip bunun üzerine yükleyin: Apple ID’leriniz, uygulamalarınız ve ayarlarınız kalır.",
+      "download": "{version} indir",
+      "later": "Sonra"
+    },
+    "nativeBuild": {
+      "title": "Bu, Intel sürümü",
+      "body": "Mac’iniz Apple silikon içeriyor, bu yüzden bu IPAForge kopyası Rosetta üzerinden çalışır ve her şey daha yavaştır. Apple silikon sürümünü indirip bunun üzerine yükleyin; Apple ID’leriniz, cihazlarınız ve uygulamalarınız kalır.",
+      "file": "IPAForge-…-mac-arm64.dmg",
+      "later": "Sonra",
+      "download": "Apple silikon için indir"
+    }
+  },
+  "whatsNew": {
+    "link": "Yenilikler",
+    "version": "Sürüm {version} · {date}",
+    "englishOnly": "Sürüm notları İngilizcedir.",
+    "kind": {
+      "new": "Yeni",
+      "changed": "Değişti",
+      "fixed": "Düzeltildi",
+      "removed": "Kaldırıldı"
+    },
+    "dialog": {
+      "title": "IPAForge’da yenilikler",
+      "everyVersion": "Tüm sürümler",
+      "close": "Anladım"
+    },
+    "page": {
+      "title": "Yenilikler",
+      "lede": "IPAForge’da değişen her şey, en yenisi başta.",
+      "current": "Bu sürüm",
+      "release": "GitHub’da sürüm"
+    }
+  },
+  "portal": {
+    "description": "Apple ID’nizin takımının Apple’da tuttukları ve cihazınızdaki profiller.",
+    "tabsLabel": "Takımın tuttukları",
+    "tabs": {
+      "certificates": "Sertifikalar",
+      "appIds": "App ID’ler",
+      "profiles": "Profiller",
+      "groups": "Uygulama Grupları",
+      "devices": "Kayıtlı cihazlar"
+    },
+    "team": {
+      "pick": "Takım",
+      "free": "{name} (ücretsiz)",
+      "paid": "{name} (ücretli)"
+    },
+    "refresh": "Yenile",
+    "reading": "Apple’dan okunuyor…",
+    "noAccount": {
+      "title": "Henüz Apple ID yok",
+      "body": "Takımının tuttuklarını görmek için Hesaplar’da bir Apple ID ile oturum açın."
+    },
+    "expired": "Süresi doldu",
+    "expires": "Bitiş: {date}",
+    "expiredOn": "{date} tarihinde sona erdi",
+    "certificates": {
+      "hint": "Bir sertifika, yüklediğiniz uygulamaları imzalar. Birini iptal etmek, imzaladığı her uygulamanın yeniden imzalanana kadar açılmasını engeller.",
+      "usedFree": "{max} içinden {count} kullanıldı (ücretsiz takımlar {max} tutabilir)",
+      "usedPaid": "{count, plural, one {# sertifika} other {# sertifika}}",
+      "maker": {
+        "thisComputer": "Bu bilgisayardaki IPAForge",
+        "ipaforge": "Başka bir bilgisayardaki IPAForge",
+        "sidestore": "SideStore",
+        "machine": "“{machine}” (genellikle Xcode)",
+        "unknown": "Bilinmeyen bir araç"
+      },
+      "thisComputer": "Bu bilgisayarın",
+      "signs": "{device} üzerinde {apps} imzalar",
+      "signsNothing": "{device} üzerinde hiçbir şey imzalamaz",
+      "revoke": "İptal et",
+      "revokeOne": "{name} iptal et",
+      "empty": "Takımın henüz sertifikası yok. IPAForge ilk yüklemede bir tane yapar.",
+      "import": ".p12 içe aktar…",
+      "export": ".p12 dışa aktar"
+    },
+    "revokeDialog": {
+      "title": "Bu sertifika iptal edilsin mi?",
+      "apps": "Şunlar, yeniden imzalanana kadar {device} üzerinde açılmaz (Uygulamalar’daki Yenile bunu yapar):",
+      "none": "{device} üzerinde bununla imzalanmış hiçbir şey yok.",
+      "noDevice": "Bu sertifikanın hangi uygulamalarını imzaladığını görmek için cihazınızı bağlayın.",
+      "thisComputer": "IPAForge bir sonraki yüklemede veya yenilemede yenisini yapar.",
+      "sidestore": "SideStore bunu kendi kendine yenilemek için yaptı: orada bir sonraki oturum açışınızda yenisini yapar.",
+      "machine": "O bilgisayardaki Xcode bir sonraki imzalayışında yenisini yapar.",
+      "exportedToo": "Ondan dışa aktarılan bir .p12 de çalışmaz olur."
+    },
+    "appIds": {
+      "hintFree": "Yüklediğiniz her uygulama ve uzantı bir tane gerektirir. Ücretsiz takımlar 7 günde 10 kaydedebilir; her biri oluşturulduktan sonra 7 gün sayılır.",
+      "hintPaid": "Yüklediğiniz her uygulama ve uzantı bir tane gerektirir. Ücretli takımlarda haftalık sınır yoktur.",
+      "left": "{count, plural, one {bu hafta # kaldı} other {bu hafta # kaldı}}",
+      "leftAndNext": "{left} · bir sonraki {date} tarihinde boşalır",
+      "countsUntil": "{date} tarihine kadar sayılır",
+      "unused": "Kullanılmıyor",
+      "delete": "Sil",
+      "deleteOne": "{name} sil",
+      "empty": "Takımın henüz App ID’si yok."
+    },
+    "deleteDialog": {
+      "title": "Bu App ID silinsin mi?",
+      "free": "Ücretsiz takımda, süresi dolana kadar haftalık 10 sınırından sayılmaya devam eder: silmek yuvayı daha erken geri vermez.",
+      "paid": "Daha sonra yeniden kaydedilebilir."
+    },
+    "profiles": {
+      "title": "{device} üzerindeki sağlama profilleri",
+      "hint": "Bir profil, tek bir uygulamanın (veya uzantının) bu cihazda çalışmasını sağlar. Yenile bir uygulamaya yenisini verir; süresi dolmuş ya da kullanılmayan bir profili kaldırmak güvenlidir.",
+      "noDevice": "Sağlama profillerini görmek için cihazınızı bağlayın.",
+      "noApp": "Hiçbir uygulama kullanmıyor",
+      "otherTeam": "Başka takım",
+      "remove": "Kaldır",
+      "removeOne": "{name} profilini kaldır",
+      "removeUnused": "Kullanılmayanları kaldır",
+      "empty": "Bu cihazda sağlama profili yok."
+    },
+    "removeDialog": {
+      "title": "{count, plural, one {Bu profil kaldırılsın mı?} other {# profil kaldırılsın mı?}}",
+      "body": "{count, plural, one {{device} üzerinden kaldırılır. Orada hiçbir uygulamanın buna ihtiyacı yok.} other {{device} üzerinden kaldırılırlar. Orada hiçbir uygulamanın bunlara ihtiyacı yok.}}"
+    },
+    "groups": {
+      "hint": "Aynı gruptaki uygulamalar dosyaları paylaşır (örneğin SideStore ve widget’ı). IPAForge, bir uygulama gerektirdiğinde bunları yapar.",
+      "empty": "Takımın henüz uygulama grubu yok."
+    },
+    "devices": {
+      "hintFree": "İmzaladığınız uygulamalar yalnızca bunlarda çalışır.",
+      "hintPaid": "İmzaladığınız uygulamalar yalnızca bunlarda çalışır. Ücretli takımlar yılda 100 kaydedebilir; birini kaldırma Apple’ın geliştirici sitesinde, yılda bir kez yapılır.",
+      "used": "Bu yıl {max} içinden {count}",
+      "connected": "Bağlı",
+      "unnamed": "Adsız cihaz",
+      "empty": "Henüz kayıtlı cihaz yok. IPAForge ilk yüklemede sizinkini kaydeder."
+    },
+    "exportDialog": {
+      "title": "Bu bilgisayarın sertifikasını dışa aktar",
+      "body": "SideStore ya da başka bir bilgisayar için, sertifikayı ve özel anahtarını içeren bir .p12 dosyası. Dosyaya ve parolasına sahip olan herkes takımınız adına uygulama imzalayabilir.",
+      "password": "Parola",
+      "again": "Parola (yeniden)",
+      "tooShort": "{count, plural, one {En az # karakter kullanın.} other {En az # karakter kullanın.}}",
+      "differ": "İki parola farklı.",
+      "save": ".p12 kaydet…"
+    },
+    "importDialog": {
+      "title": "Sertifika içe aktar",
+      "body": "Başka bir bilgisayardan ya da SideStore’dan bir .p12. IPAForge, Apple’ın bunu hâlâ bu takım için listelediğini denetler, sonra burada onunla imzalar: yeni sertifika yok, yuva kullanılmaz.",
+      "noFile": "Dosya seçilmedi",
+      "choose": "Seç…",
+      "password": "Parolası",
+      "import": "İçe aktar"
+    }
+  },
+  "guide": {
+    "title": "Kurulum rehberi",
+    "stepsLabel": "Kurulum adımları",
+    "stepDone": "(tamam)",
+    "steps": {
+      "welcome": "Hoş geldiniz",
+      "computer": "Bu bilgisayar",
+      "iphone": "iPhone’unuz",
+      "appleid": "Apple ID",
+      "install": "SideStore’u yükle",
+      "onphone": "iPhone’unuzda",
+      "around": "Kurulum tamam"
+    },
+    "back": "Geri",
+    "skip": "Bu adımı atla",
+    "continue": "Devam",
+    "later": "Sonra bitir",
+    "checkAgain": "Yeniden denetle",
+    "checking": "Denetleniyor…",
+    "copy": "Kopyala",
+    "copied": "Kopyalandı",
+    "welcome": {
+      "title": "IPAForge’a hoş geldiniz",
+      "lead": "Birkaç adım bilgisayarınızı, iPhone’unuzu ve Apple ID’nizi hazırlar, sonra SideStore’u yükleyebilirsiniz. Önce dilinizi seçin.",
+      "needTitle": "Neye ihtiyacınız var",
+      "needDevice": "iOS 15 veya üstünü çalıştıran bir iPhone ya da iPad ve USB kablosu",
+      "needAppleId": "Bir Apple ID (ücretsiz olan da olur)",
+      "needPasscode": "Bu bilgisayara güvenmek için iPhone’unuzun parolası",
+      "skipGuide": "Ben kendi yolumu biliyorum",
+      "start": "Başla"
+    },
+    "computer": {
+      "title": "Bu bilgisayar",
+      "lead": "IPAForge, bu bilgisayarın Apple’da oturum açıp açamayacağını denetler: Apple’ın sunucuları, saat ve bir anisette sunucusu. iPhone’larla konuşamıyorsa bunu nasıl düzelteceğinizi de söyler.",
+      "failed": "Denetimler çalışmadı. Yeniden denetleyin ya da bu adımı atlayın.",
+      "service": {
+        "title": "iPhone bağlantı hizmeti",
+        "fixMac": "macOS bunu kendiliğinden çalıştırmalıdır. Mac’inizi yeniden başlatın, sonra yeniden denetleyin.",
+        "fixWindows": "Microsoft Store’dan Apple Cihazlar’ı kurun, bir kez açın, sonra yeniden denetleyin.",
+        "fixLinux": "usbmuxd’yi kurun, iPhone’unuzu bağlayın, sonra yeniden denetleyin.",
+        "openStore": "Microsoft Store’u aç"
+      },
+      "apple": {
+        "title": "Apple’ın sunucuları",
+        "ok": "Erişilebilir.",
+        "fix": "IPAForge Apple’a ulaşamıyor. İnternet bağlantınızı, VPN’inizi veya güvenlik duvarınızı denetleyin."
+      },
+      "clock": {
+        "title": "Saat",
+        "ok": "Doğru.",
+        "fix": "{minutes, plural, one {Saatiniz # dakika yanlış.} other {Saatiniz # dakika yanlış.}} Tarih ve saati otomatik ayarlayın, sonra yeniden denetleyin."
+      },
+      "anisette": {
+        "title": "Anisette sunucuları",
+        "ok": "{name} yanıt veriyor. Oturum açma onu kullanır.",
+        "fix": "Listenizdeki ilk {tried} sunucunun hiçbiri yanıt vermedi. Bağlantınızı denetleyin ya da Ayarlar › Anisette sunucuları’ndan bir sunucu ekleyin veya seçin."
+      }
+    },
+    "iphone": {
+      "title": "iPhone’unuz",
+      "lead": "iPhone’unuzu kablosuyla bağlayın, kilidini açın ve sorduğunda Güven’e dokunun. iOS 16 ve sonrasında Geliştirici Modu açık olmalıdır.",
+      "connectTitle": "iPhone’unuzu bağlayın",
+      "connectText": "USB üzerinden bir iPhone veya iPad bekleniyor…"
+    },
+    "appleid": {
+      "title": "Apple ID’niz",
+      "lead": "Apple, yüklediğiniz uygulamaları Apple ID’nizle imzalar. Parolanız yalnızca Apple’a gider ve bu bilgisayarın anahtar zincirinde kalır.",
+      "freeNote": "Ücretsiz bir Apple ID de çalışır: uygulamaları 7 gün geçerlidir ve IPAForge bunları yenileyebilir. Ücretli bir geliştirici hesabı bir yıl geçerlidir.",
+      "signIn": "Apple ID ile oturum aç",
+      "signedIn": "Oturum açıldı.",
+      "team": "Uygulamaları imzalayan takım",
+      "free": "Ücretsiz: uygulamalar 7 gün geçerli",
+      "paid": "Ücretli: uygulamalar bir yıl geçerli"
+    },
+    "banner": {
+      "label": "Kurulum rehberi",
+      "text": "IPAForge kurulumunu bitirin: {total} adımdan {done} tamam.",
+      "continue": "Rehbere devam et",
+      "notNow": "Şimdi değil"
+    },
+    "install": {
+      "title": "SideStore’u yükle",
+      "lead": "SideStore iPhone’daki uygulamalarınızı kendi kendine yeniler ve daha fazlasını yükler. IPAForge ona ihtiyaç duyduğu eşleştirme dosyasını ve sertifikayı verir.",
+      "notNow": "Şimdi değil"
+    },
+    "onphone": {
+      "title": "iPhone’unuzda",
+      "lead": "iPhone’da yalnızca sizin yapabildikleriniz. İlerledikçe her birini işaretleyin; Cihazlar sayfası aynı listeyi tutar."
+    },
+    "around": {
+      "title": "Kurulum tamam",
+      "lead": "Her şeyin yeri burada. IPAForge açıkken uygulamalarınızı süreleri dolmadan yeniler.",
+      "again": "Bu rehberi istediğiniz zaman Ayarlar’dan yeniden çalıştırın.",
+      "showMe": "Bana etrafı göster",
+      "apps": {
+        "title": "Uygulamalar",
+        "text": "Her uygulamanın ne zaman sona ereceği, Yenile ve Güncelle ile. Eşleştirme dosyaları da burada.",
+        "where": "Kenar çubuğu › Uygulamalar"
+      },
+      "preload": {
+        "title": "Ön yükleme",
+        "text": "Kendi uygulamalarınızı ekleyin: .ipa dosyaları, bağlantılar, kaynaklar. Ya da bunları imzalı .ipa dosyaları olarak kaydedin.",
+        "where": "Kenar çubuğu › Ön yükleme"
+      },
+      "repair": {
+        "title": "SideStore’u onar",
+        "text": "SideStore kendi kendine yenilemeyi bırakırsa bu, nedenini bulur ve düzeltir.",
+        "where": "Uygulamalar › SideStore’u denetle"
+      },
+      "developer": {
+        "title": "Geliştirici Portalı",
+        "text": "Sertifikalarınız, App ID’leriniz ve profilleriniz ile sertifikanızı taşımak için bir .p12.",
+        "where": "Kenar çubuğu › Geliştirici Portalı"
+      },
+      "devices": {
+        "title": "Cihazlar",
+        "text": "Her iPhone’un kontrol listesi ve diğer araçlar için eşleştirme dosyası.",
+        "where": "Kenar çubuğu › Cihazlar"
+      },
+      "logs": {
+        "title": "Günlük",
+        "text": "Ne olduğu, adım adım. Hata bildirimine ekleyin.",
+        "where": "Kenar çubuğu › Günlük · ⌘L / Ctrl+L"
+      }
+    }
+  },
+  "tour": {
+    "count": "{total} içinden {current}",
+    "skip": "Turu atla",
+    "back": "Geri",
+    "next": "İleri",
+    "done": "Bitti",
+    "install": {
+      "title": "Yükle",
+      "text": "SideStore’u ya da SideStore’lu LiveContainer’ı tek tıkla yükleyin. Yeni bir iPhone’da buradan başlayın."
+    },
+    "preload": {
+      "title": "Ön yükleme",
+      "text": "Kendi uygulamalarınızı ekleyin: .ipa dosyaları, bağlantılar ya da kaynaklardaki uygulamalar. Bunun yerine imzalı .ipa olarak kaydetmek için birini işaretleyin."
+    },
+    "apps": {
+      "title": "Uygulamalar",
+      "text": "Her uygulamanın ne zaman sona ereceği, Yenile ve Güncelle ile. IPAForge açıkken bunları kendiliğinden yeniler. Eşleştirme dosyaları da burada."
+    },
+    "devices": {
+      "title": "Cihazlar",
+      "text": "Her iPhone’un iOS sürümüne göre kontrol listesi ve diğer araçlar için eşleştirme dosyası."
+    },
+    "developer": {
+      "title": "Geliştirici Portalı",
+      "text": "Apple ID’nizin sertifikaları, App ID’leri ve profilleri. Hiçbir şeyin kullanmadıklarını temizleyin ya da sertifikanızı .p12 olarak taşıyın."
+    },
+    "pickers": {
+      "title": "Cihaz ve Apple ID",
+      "text": "IPAForge’un burada kullandığı iPhone’u ya da Apple ID’yi istediğiniz zaman değiştirin."
+    },
+    "logs": {
+      "title": "Günlük",
+      "text": "IPAForge’un attığı her adım. Hata bildirimine ekleyin (⌘L / Ctrl+L)."
+    },
+    "settings": {
+      "title": "Ayarlar",
+      "text": "Dil, görünüm, anisette sunucuları ve bu turu yeniden başlatma."
+    },
+    "showAround": {
+      "title": "Bana etrafı göster",
+      "text": "Bu turu istediğiniz zaman buradan yeniden başlatın. Kurulum rehberi Ayarlar’da."
+    }
+  },
+  "pairByCode": {
+    "steps": {
+      "pair": "Kodla eşleştir"
+    },
+    "open": "Apple TV veya Vision Pro eşleştir…",
+    "title": "Apple TV veya Vision Pro eşleştir",
+    "titleAgain": "{name} cihazını yeniden eşleştirin",
+    "progress": {
+      "label": "Adımlar",
+      "find": "1 Bul",
+      "code": "2 Kod"
+    },
+    "intro": "Bunların kablosu yoktur, bu yüzden Wi-Fi üzerinden kodla eşleştirilir. Cihazı bu bilgisayarla aynı Wi-Fi’a bağlayın, sonra eşleştirme ekranını açın ve açık tutun:",
+    "where": {
+      "tv": "Apple TV",
+      "vision": "Apple Vision Pro",
+      "tvPath": "Ayarlar → Uzaktan Kumandalar ve Aygıtlar → Remote Uygulaması ve Aygıtlar",
+      "visionPath": "Ayarlar → Genel → Uzak Aygıtlar"
+    },
+    "found": "Ağınızda bulundu",
+    "showing": "Eşleştirme ekranını gösteriyor",
+    "pair": "Eşleştir",
+    "searching": "Ağınızda aranıyor… Eşleştirme ekranı açılınca cihaz burada görünür.",
+    "searchingMore": "Diğerleri hâlâ aranıyor…",
+    "help": {
+      "title": "Görünmüyor",
+      "screen": "Eşleştirme ekranını açık tutun: cihaz yalnızca bu ekranı gösterirken bulunabilir.",
+      "network": "Bu bilgisayarla aynı Wi-Fi: konuk ağı olmasın ve iki tarafta da VPN olmasın.",
+      "ipv6": "Yönlendiricide IPv6 açık (Apple eşleştirme için buna ihtiyaç duyar).",
+      "macos": "macOS: Sistem Ayarları → Gizlilik ve Güvenlik → Yerel Ağ → IPAForge açık.",
+      "windows": "Windows: güvenlik duvarı sorduğunda IPAForge’a özel ağlarda izin verin."
+    },
+    "failed": "Ağınızdaki arama durdu. Bunu kapatıp yeniden açın.",
+    "code": {
+      "title": "{name} üzerindeki kodu girin",
+      "body": "{name} bir kod gösteriyor. Buraya yazın.",
+      "label": "Kod",
+      "wrong": "Bu kod eşleşmedi. {name} üzerindeki kodu denetleyin ve yeniden deneyin.",
+      "pairing": "{name} ile eşleştiriliyor…",
+      "checking": "Kod denetleniyor…"
+    },
+    "back": "Geri",
+    "backToList": "Listeye dön",
+    "backoff": {
+      "title": "Çok fazla yanlış kod",
+      "wait": "{name}, {seconds, plural, one {# saniye} other {# saniye}} sonra yeniden denemenize izin verir.",
+      "later": "{name} bir süre daha kod kabul etmiyor. Biraz bekleyin, sonra yeniden deneyin."
+    },
+    "closed": {
+      "title": "{name} eşleştirme ekranını kapattı",
+      "body": "Kod yalnızca eşleştirme ekranı açıkken çalışır. {name} üzerinde yeniden açın:"
+    },
+    "done": {
+      "title": "{name} eşleştirildi",
+      "body": "{name}, Cihazlar sayfanızda. Eşleştirme ekranını şimdi kapatabilirsiniz.",
+      "vision": "Uygulamalar, Geliştirici Modu açılınca yüklenir.",
+      "use": "{name} kullan",
+      "close": "Kapat"
+    },
+    "pairNamed": "{name} eşleştir"
+  }
+}
