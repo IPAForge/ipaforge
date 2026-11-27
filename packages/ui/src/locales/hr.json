@@ -1,0 +1,2216 @@
+{
+  "app": {
+    "name": "IPAForge"
+  },
+  "shell": {
+    "skipToContent": "Preskoči na sadržaj",
+    "navigation": "Odjeljci",
+    "credit": {
+      "madeWith": "Napravljeno s ❤️ i ☕",
+      "copyright": "© {year} {name}"
+    }
+  },
+  "topBar": {
+    "device": "Uređaj",
+    "noDevice": "Nijedan",
+    "deviceMenu": "Uređaji",
+    "account": "Apple ID",
+    "notSignedIn": "Nisi prijavljen/a",
+    "accountMenu": "Apple ID-jevi",
+    "addAppleId": "Dodaj Apple ID…",
+    "noAccounts": "Još nema Apple ID-jeva.",
+    "noDevicesHint": "Spoji iPhone ili iPad kabelom i otključaj ga.",
+    "openDevices": "Otvori uređaje",
+    "tour": "Pokaži mi okolo",
+    "pairByCode": "Upari Apple TV ili Vision Pro…"
+  },
+  "nav": {
+    "group": {
+      "manage": "Upravljanje"
+    },
+    "install": "Instalacija",
+    "preload": "Predinstalacija",
+    "apps": "Aplikacije",
+    "devices": "Uređaji",
+    "accounts": "Računi",
+    "developer": "Portal za razvojne programere",
+    "logs": "Zapisnik",
+    "settings": "Postavke",
+    "installRunning": "Instalacija je u tijeku"
+  },
+  "placeholder": {
+    "body": "Ovaj odjeljak je još u izradi."
+  },
+  "install": {
+    "title": "Instaliraj SideStore",
+    "description": "Potpisan tvojim Apple ID-jem, zatim instaliran putem USB-a.",
+    "steps": {
+      "device": "Provjera uređaja",
+      "resolve": "Traženje izdanja",
+      "download": "Preuzimanje",
+      "inspect": "Pregled aplikacije",
+      "certificate_sharing": "Dijeljenje certifikata",
+      "sign_in": "Prijava u Apple",
+      "team": "Odabir tima",
+      "register_device": "Registracija uređaja",
+      "certificate": "Priprema certifikata",
+      "app_ids": "Registracija App ID-jeva",
+      "free_apps": "Provjera ograničenja za besplatne aplikacije",
+      "provision": "Dohvaćanje provisioning profila",
+      "refresh_profiles": "Dohvaćanje novih profila",
+      "sign": "Potpisivanje aplikacije",
+      "install": "Instalacija na uređaj",
+      "pairing": "Postavljanje datoteke za uparivanje",
+      "remember": "Pamćenje ove instalacije",
+      "save": "Spremanje potpisanog .ipa"
+    },
+    "signInNeeded": {
+      "title": "Tvoj Apple ID treba ponovnu prijavu",
+      "body": "Spremljena sesija za {appleId} je istekla. I dalje možeš instalirati: IPAForge će zatražiti lozinku kad dođe do toga."
+    },
+    "blocked": {
+      "title": "Apple je blokirao {appleId} na uređaju {device}",
+      "body": "Aplikacije potpisane ovim Apple ID-jem neće se otvarati na ovom uređaju. Koristi drugi Apple ID.",
+      "use": "Koristi {appleId}"
+    },
+    "home": {
+      "what": "Što se instalira",
+      "channel": "Kanal",
+      "install": "Instaliraj {app}"
+    },
+    "variant": {
+      "sidestore": {
+        "title": "SideStore",
+        "description": "Sam osvježava i instalira aplikacije na uređaju. Koristi 2 App ID-ja."
+      },
+      "livecontainer": {
+        "title": "LiveContainer + SideStore",
+        "description": "Pokreće mnogo aplikacija unutar jedne, mimo ograničenja od 3 aplikacije. Koristi 5 App ID-jeva."
+      }
+    },
+    "channel": {
+      "stable": "Stabilna",
+      "nightly": "Nightly",
+      "stableRecommended": "Stabilna (preporučeno)",
+      "nightlyRecommended": "Nightly (preporučeno)"
+    },
+    "plan": {
+      "title": "Ova instalacija",
+      "waiting": "Prikazuje se kad su uređaj i Apple ID spremni.",
+      "checking": "Preuzimanje aplikacije {app} i provjera kod Applea… Preuzimanje se zadržava pa ga instalacija ponovno koristi.",
+      "unavailable": "Provjera kod Applea nije uspjela. I dalje možeš instalirati: svaki korak ponovno provjerava.",
+      "appIds": "App ID-jevi",
+      "appIdsValue": "{created, plural, =0 {Svih {reused} već je registrirano} other {{reused, plural, =0 {{created} novih} other {{created} novih, {reused} ponovno korištenih}}}} · {left, plural, one {# preostao ovaj tjedan} few {# preostala ovaj tjedan} other {# preostalih ovaj tjedan}}",
+      "nextSlot": "Sljedeći se oslobađa {date}",
+      "freeApps": "Besplatne aplikacije na uređaju",
+      "freeAppsValue": "Iskorišteno {used} od {limit}",
+      "freeAppsRoom": "Ima mjesta za ovu",
+      "freeAppsFull": "Birat ćeš koju ukloniti",
+      "noLimit": "Bez ograničenja (plaćeni tim)",
+      "certificate": "Certifikat",
+      "certificateReused": "Ponovno korišten",
+      "certificateNew": "Izrađuje se novi",
+      "certificatesOnTeam": "{count, plural, =0 {Još nijedan u timu} one {# u timu} few {# u timu} other {# u timu}}",
+      "team": "Tim",
+      "certificateNewWhy": "IPAForge još nema vlastiti certifikat u ovom timu. {count, plural, =0 {} one {Onaj koji već postoji pripada drugom alatu, koji zadržava svoj privatni ključ.} few {Ona # koja već postoje pripadaju drugim alatima, koji zadržavaju svoje privatne ključeve.} other {Onih # koji već postoje pripadaju drugim alatima, koji zadržavaju svoje privatne ključeve.}}"
+    },
+    "readiness": {
+      "noDevice": "Prvo spoji uređaj.",
+      "noSideStore": "SideStore radi na iPhoneu i iPadu. Za instalaciju aplikacija na Apple TV ili Vision Pro koristi Predinstalaciju.",
+      "checking": "Provjera uređaja…",
+      "device": "Dostupno kad uređaj bude spreman.",
+      "noAccount": "Prvo dodaj Apple ID.",
+      "blocked": "Prvo koristi drugi Apple ID.",
+      "appIds": "Ovaj tjedan nema dovoljno preostalih App ID-jeva.",
+      "ready": "Sve je spremno."
+    },
+    "run": {
+      "title": {
+        "running": "Instalacija aplikacije {app}",
+        "completed": "{app} je instaliran",
+        "failed": "Instalacija aplikacije {app} nije uspjela",
+        "cancelled": "Instalacija je otkazana"
+      },
+      "subtitle": "{channel} · {device} · {appleId}",
+      "percent": "{fraction, number, percent}",
+      "progress": "Ukupni napredak",
+      "steps": "Koraci",
+      "cancel": "Odustani",
+      "cancelInstall": "Otkaži instalaciju",
+      "runningHint": "Dok ovo traje, možeš koristiti druge odjeljke.",
+      "waitingHint": "Čeka se tvoj odgovor.",
+      "stepState": {
+        "waiting": "treba tebe",
+        "skipped": "preskočeno",
+        "failed": "nije uspjelo"
+      },
+      "detail": {
+        "bytes": "{received} od {total}",
+        "received": "{received}",
+        "retrying": "Veza je prekinuta. Ponovni pokušaj za {seconds, plural, one {# sekundu} few {# sekunde} other {# sekundi}} (pokušaj {attempt})"
+      },
+      "live": {
+        "header": "{percent} · {left}",
+        "installing": "{fraction, number, percent} · {phase}",
+        "count": "{done} od {total}",
+        "task": {
+          "line": "{task} · {count}",
+          "team": "Provjera tima",
+          "appIds": "Izrada App ID-jeva",
+          "appGroup": "Dodavanje grupe aplikacija",
+          "profiles": "Dohvaćanje profila"
+        },
+        "phase": {
+          "unpacking": "Raspakiravanje aplikacije",
+          "checking": "Provjera aplikacije",
+          "installing": "Instalacija"
+        },
+        "speed": "{speed}/s",
+        "ios": "iOS je instalira",
+        "leftSeconds": "Preostalo oko {seconds} s",
+        "leftMinutes": "{minutes, plural, one {Preostalo oko # min} few {Preostalo oko # min} other {Preostalo oko # min}}"
+      },
+      "connection": {
+        "usb": "USB",
+        "network": "Wi-Fi"
+      },
+      "wifi": {
+        "title": "Ovaj je uređaj povezan putem Wi-Fi-ja",
+        "body": "Velike aplikacije instaliraju se puno brže kabelom. Putem Wi-Fi-ja IPAForge ih šalje komprimirane kako bi uštedio vrijeme."
+      },
+      "unsupportedPrompt": {
+        "title": "Ovaj korak treba odgovor",
+        "body": "IPAForge treba odgovor na pitanje koje ova verzija ne može prikazati. Otkaži instalaciju i ažuriraj IPAForge."
+      },
+      "backToInstall": "Natrag na Instalaciju",
+      "report": {
+        "device": "{model} · iOS {ios} · {connection}",
+        "release": "{app} {version} · {channel}",
+        "download": "{size} · kontrolni zbroj provjeren",
+        "downloadCached": "{size} · iz predmemorije preuzimanja",
+        "app": "{app} · {extensions, plural, =0 {bez proširenja} one {# proširenje} few {# proširenja} other {# proširenja}}",
+        "session": {
+          "reused": "Spremljena sesija ponovno je iskorištena",
+          "renewed": "Ponovno prijavljen spremljenom lozinkom",
+          "signed-in": "Prijavljen"
+        },
+        "registered": "Registrirano u timu",
+        "alreadyRegistered": "Već registrirano u timu",
+        "certificate": {
+          "reused": "Ponovno iskorišten spremljeni certifikat",
+          "created": "Izrađen novi certifikat",
+          "replaced": "Jedan je opozvan i izrađen novi certifikat"
+        },
+        "removed": "Uklonjeno {app} · {used}",
+        "profiles": "{count, plural, one {# profil} few {# profila} other {# profila}}",
+        "signed": "{count, plural, one {potpisan # paket} few {potpisana # paketa} other {potpisano # paketa}}",
+        "signedCompressed": "{count, plural, one {potpisan # paket} few {potpisana # paketa} other {potpisano # paketa}} · komprimirano za Wi-Fi",
+        "phase": {
+          "uploading": "Slanje na uređaj",
+          "installing": "Instalacija"
+        },
+        "pairing": "Postavljeno u {apps}",
+        "shared": "Certifikat je podijeljen",
+        "notShared": "Certifikat nije podijeljen",
+        "pairingRemote": "Postavljeno u {apps} · s udaljenim uparivanjem za iOS 17.4 i novije",
+        "saved": "Spremljeno u {path}"
+      },
+      "subtitleApps": "{device} · {appleId}"
+    },
+    "summary": {
+      "title": "Ova instalacija",
+      "app": "Aplikacija",
+      "channel": "Kanal",
+      "device": "Uređaj",
+      "deviceValue": "{name} · iOS {ios}",
+      "account": "Apple ID",
+      "appIds": "App ID-jevi",
+      "appIdsValue": "{count, plural, one {# preostao ovaj tjedan} few {# preostala ovaj tjedan} other {# preostalih ovaj tjedan}}",
+      "freeApps": "Besplatne aplikacije",
+      "apps": "Aplikacije"
+    },
+    "done": {
+      "title": "{app} je na uređaju {device}.",
+      "trust": "Na uređaju: Postavke › Općenito › VPN i upravljanje uređajem › vjeruj {appleId}.",
+      "open": "Otvori SideStore: datoteka za uparivanje i tvoj certifikat već su unutra.",
+      "done": "Gotovo"
+    },
+    "cancelled": {
+      "title": "Zaustavljeno na koraku “{step}”.",
+      "body": "Ništa što je već učinjeno ne ponavlja se kad nastaviš.",
+      "resume": "Nastavi"
+    },
+    "failed": {
+      "continues": "Završeni koraci se zadržavaju: novi pokušaj nastavlja od koraka “{step}”.",
+      "copy": "Kopiraj dijagnostiku",
+      "copied": "Kopirano",
+      "copyFailed": "Kopiranje nije uspjelo",
+      "showLogs": "Prikaži zapisnik"
+    }
+  },
+  "pairing": {
+    "steps": {
+      "targets": "Traženje aplikacija koje trebaju uparivanje",
+      "place": "Postavljanje datoteke za uparivanje"
+    }
+  },
+  "settings": {
+    "appearance": "Izgled i jezik",
+    "mode": "Način boja",
+    "palette": "Paleta",
+    "language": {
+      "title": "Jezik",
+      "system": "Sustav ({language})",
+      "hint": "IPAForge slijedi jezik tvog sustava osim ako ovdje ne odabereš drugi.",
+      "draft": "nacrt"
+    },
+    "anisette": {
+      "title": "Anisette poslužitelji",
+      "hint": "Za prijavu u Apple potreban je anisette poslužitelj, koji Appleu govori s kojeg se računala prijavljuješ. IPAForge sam koristi onaj koji radi; ovdje odaberi određeni poslužitelj ako ti je draži ili dodaj vlastiti.",
+      "add": "Dodaj poslužitelj",
+      "loading": "Učitavanje poslužitelja…",
+      "modeLabel": "Kako IPAForge bira poslužitelj",
+      "mode": {
+        "automatic": "Automatski",
+        "chosen": "Odaberi poslužitelj"
+      },
+      "modeHint": {
+        "automatic": "Isprobava poslužitelje ovim redoslijedom i prelazi na sljedeći kad jedan zakaže.",
+        "chosen": "Uvijek koristi {name}.",
+        "none": "Odaberi poslužitelj koji IPAForge uvijek treba koristiti."
+      },
+      "noneChosen": "Još nije odabran nijedan poslužitelj: dok ga ne odabereš, IPAForge i dalje bira sam.",
+      "chosenDown": "{name} ne odgovara. Prijava neće raditi dok se ne vrati, ili dok ne odabereš drugi poslužitelj ili se vratiš na Automatski.",
+      "count": "{count, plural, one {# poslužitelj} few {# poslužitelja} other {# poslužitelja}}",
+      "sources": "{custom, plural, =0 {} other {# koje si ti dodao/la, }}{list} s SideStoreovog popisa, {backup} kao rezerva ·",
+      "listUpdated": "SideStoreov popis ažuriran {ago}",
+      "listNever": "SideStoreov popis još nije dohvaćen",
+      "updateList": "Ažuriraj popis",
+      "updating": "Ažuriranje…",
+      "testAll": "Testiraj sve",
+      "testing": "Testiranje…",
+      "group": {
+        "custom": "Dodao/la si ti · koristi se prvi",
+        "list": "S SideStoreovog popisa",
+        "backup": "Rezerva · samo kad SideStoreov popis nije dostupan ili nijedan njegov poslužitelj ne odgovara"
+      },
+      "tag": {
+        "custom": "Dodao/la si ti",
+        "inUse": "Koristi se",
+        "chosen": "Odabran"
+      },
+      "position": "Isprobava se kao broj {position}",
+      "use": "Koristi {name}",
+      "chooseLabel": "Poslužitelj koji se koristi",
+      "status": {
+        "untested": "Nije testiran",
+        "testing": "Testiranje…",
+        "ok": "Radi · {ms} ms",
+        "bad": "Ne odgovara"
+      },
+      "test": "Testiraj",
+      "testOne": "Testiraj {name}",
+      "edit": "Uredi {name}",
+      "remove": "Ukloni {name}",
+      "confirmRemove": "Ukloniti {name}?",
+      "removeYes": "Ukloni",
+      "skipped": "Ne koristi se sa SideStoreovog popisa: {names} (bez HTTPS-a). Poslužitelj s običnim HTTP-om možeš dodati sam, na primjer onaj na svom računalu.",
+      "dialog": {
+        "addTitle": "Dodaj anisette poslužitelj",
+        "editTitle": "Uredi poslužitelj",
+        "body": "Radi svaki anisette poslužitelj koji govori uobičajeni protokol: javni ili onaj koji sam pokrećeš.",
+        "name": "Naziv",
+        "namePlaceholder": "Moj poslužitelj",
+        "address": "Adresa",
+        "addressPlaceholder": "https://anisette.my-server.net",
+        "addressHint": "https:// ili, za poslužitelj koji sam pokrećeš, http://",
+        "nameMissing": "Daj mu naziv.",
+        "addressInvalid": "Unesi adresu koja počinje s https:// ili http://.",
+        "exists": "Ovaj poslužitelj već je na popisu.",
+        "stillAdd": "I dalje ga možeš dodati.",
+        "save": "Spremi"
+      }
+    },
+    "guide": {
+      "title": "Vodič za postavljanje",
+      "text": "Računalo, iPhone i Apple ID ponovno se provjeravaju.",
+      "run": "Ponovno pokreni vodič",
+      "tour": "Pokaži mi okolo",
+      "tourTitle": "Obilazak stranica",
+      "tourHint": "Čemu služi svaka stranica, korak po korak."
+    },
+    "tabs": {
+      "label": "Postavke",
+      "general": "Općenito",
+      "anisette": "Anisette poslužitelji"
+    },
+    "modeHint": "Svijetlo, tamno ili kao tvoj sustav.",
+    "paletteHint": "Boje cijele aplikacije, u svijetlom i tamnom načinu."
+  },
+  "theme": {
+    "mode": {
+      "system": "Sustav",
+      "light": "Svijetlo",
+      "dark": "Tamno"
+    },
+    "palette": {
+      "graphite": "Grafit",
+      "ocean": "Ocean",
+      "aurora": "Aurora",
+      "sunset": "Zalazak sunca",
+      "forest": "Šuma",
+      "rose": "Ruža",
+      "violet": "Ljubičasta",
+      "mocha": "Moka"
+    }
+  },
+  "errors": {
+    "device": {
+      "locked": {
+        "title": "Otključaj uređaj",
+        "body": "Uređaj je zaključan pa IPAForge ne može komunicirati s njim. Otključaj ga i drži otključanim dok se instalacija ne završi."
+      },
+      "developer_mode_off": {
+        "title": "Način rada za razvojne programere je isključen",
+        "body": "Sideloadane aplikacije trebaju način rada za razvojne programere. Uključi ga u Postavke › Privatnost i sigurnost › Način rada za razvojne programere, zatim ponovno pokreni uređaj."
+      },
+      "not_paired": {
+        "title": "Ovom računalu se još ne vjeruje",
+        "body": "Otključaj uređaj i dodirni Vjeruj kad pita vjeruješ li ovom računalu."
+      },
+      "usbmuxd_unavailable": {
+        "title": "Podrška za uređaje ne radi",
+        "body": "IPAForge ne može doći do sistemske usluge koja komunicira s iPhoneima i iPadima. Instaliraj je ili pokreni, zatim pokušaj ponovno."
+      },
+      "not_found": {
+        "title": "Nijedan uređaj nije pronađen",
+        "body": "Spoji iPhone ili iPad USB kabelom i otključaj ga."
+      },
+      "disconnected": {
+        "title": "Uređaj je odspojen",
+        "body": "Veza je prekinuta. Ponovno spoji kabel, otključaj uređaj i pokušaj ponovno."
+      },
+      "pairing_pending": {
+        "title": "Čeka se Vjeruj",
+        "body": "Otključaj uređaj i dodirni Vjeruj na upitu koji se pojavio."
+      },
+      "pairing_denied": {
+        "title": "Povjerenje je odbijeno",
+        "body": "Uređaj je odbio vjerovati ovom računalu. Upari ponovno i ovaj put dodirni Vjeruj."
+      },
+      "invalid_pair_record": {
+        "title": "Uparivanje više ne vrijedi",
+        "body": "Uređaj više ne prihvaća uparivanje ovog računala. Odspoji ga, ponovno spoji, otključaj i dodirni Vjeruj."
+      },
+      "service_unavailable": {
+        "title": "Usluga uređaja nije se pokrenula",
+        "body": "Uređaj je odbio pokrenuti uslugu koju IPAForge treba. Otključaj ga, ponovno spoji i pokušaj ponovno."
+      },
+      "protocol_error": {
+        "title": "Neočekivan odgovor uređaja",
+        "body": "Uređaj je poslao nešto što IPAForge nije razumio. Ponovno ga spoji; ako se ponovi, ažuriraj IPAForge ili prijavi problem."
+      },
+      "install_failed": {
+        "title": "Instalacija nije uspjela",
+        "body": "Uređaj je odbio instalirati aplikaciju. Pokušaj ponovno; ako i dalje ne uspijeva, ponovno instaliraj aplikaciju ili prijavi problem."
+      },
+      "afc_error": {
+        "title": "Prijenos datoteka nije uspio",
+        "body": "Kopiranje datoteka na uređaj nije uspjelo. Otključaj ga i pokušaj ponovno."
+      },
+      "timeout": {
+        "title": "Uređaj je prestao odgovarati",
+        "body": "Uređaju je trebalo predugo za odgovor. Otključaj ga, ponovno spoji i pokušaj ponovno."
+      },
+      "passcode_required": {
+        "title": "Postavi šifru",
+        "body": "Za ovo je potrebna šifra uređaja. Postavi je u Postavke › Face ID i šifra, zatim pokušaj ponovno."
+      },
+      "free_app_limit": {
+        "title": "Previše sideloadanih aplikacija",
+        "body": "Besplatni Apple ID može imati samo tri aktivne sideloadane aplikacije na uređaju. Ukloni jednu, zatim pokušaj ponovno."
+      },
+      "profile_banned": {
+        "title": "Apple je blokirao ovaj Apple ID na uređaju",
+        "body": "Uređaj neće prihvatiti aplikacije potpisane ovim Apple ID-jem. Ponovni pokušaj neće pomoći: koristi drugi Apple ID."
+      },
+      "identity_invalid": {
+        "title": "Certifikat za potpisivanje više ne vrijedi",
+        "body": "Uređaj je odbio certifikat kojim je aplikacija potpisana. Provjeri sat računala ili opozovi certifikat i pokušaj ponovno."
+      },
+      "profile_not_found": {
+        "title": "Nedostaje provisioning profil",
+        "body": "Uređaj nije pronašao provisioning profil aplikacije. Pokušaj ponovno ili ponovno instaliraj aplikaciju."
+      },
+      "pairing_path_invalid": {
+        "title": "Ta putanja ne može sadržavati datoteku za uparivanje",
+        "body": "Koristi putanju u mapi Documents ili Library aplikacije koja završava na .plist ili .mobiledevicepairing."
+      },
+      "local_network_denied": {
+        "title": "IPAForge ne može tražiti uređaje na tvojoj mreži",
+        "body": "macOS nije dopustio IPAForgeu pronalazak uređaja na tvojoj lokalnoj mreži pa ne može doći do iPhonea putem Wi-Fi-ja. Uređaji na kabelu i dalje rade."
+      },
+      "tunnel_unavailable": {
+        "title": "Tunel uređaja nije se otvorio",
+        "body": "IPAForge nije mogao otvoriti sigurni tunel koji iOS 17.4 i noviji nude preko kabela. Provjeri radi li uređaj na iOS-u 17.4 ili novijem, ponovno ga spoji i pokušaj ponovno."
+      },
+      "pairing_code_wrong": {
+        "title": "Kôd se nije podudarao",
+        "body": "Upisani kôd nije onaj koji uređaj prikazuje. Provjeri kôd na njegovu zaslonu i pokušaj ponovno."
+      },
+      "pairing_backoff": {
+        "title": "Previše pogrešnih kodova",
+        "body": "Uređaj neko vrijeme ne prima nove kodove. Pričekaj trenutak, ponovno otvori njegov zaslon za uparivanje i upari ponovno."
+      },
+      "pairing_screen_closed": {
+        "title": "Zaslon za uparivanje se zatvorio",
+        "body": "Uređaj je prestao prikazivati zaslon za uparivanje prije kraja uparivanja. Ponovno ga otvori i drži otvorenim: Apple TV: Postavke → Daljinski upravljači i uređaji → Aplikacija Remote i uređaji. Apple Vision Pro: Postavke → Općenito → Udaljeni uređaji."
+      }
+    },
+    "apple": {
+      "anisette_unavailable": {
+        "title": "Anisette poslužitelj ne odgovara",
+        "body": "Za prijavu u Apple potreban je anisette poslužitelj, a trenutni nije odgovorio. Odaberi drugi poslužitelj ili provjeri mrežu."
+      },
+      "anisette_not_provisioned": {
+        "title": "Anisette poslužitelj nije spreman",
+        "body": "Anisette poslužitelj nije se uspio postaviti. Odaberi drugi poslužitelj i pokušaj ponovno."
+      },
+      "app_id_quota": {
+        "title": "Ovaj tjedan nema više App ID-jeva",
+        "body": "Besplatni Apple ID može registrirati samo 10 App ID-jeva svakih 7 dana. Pričekaj da se oslobodi mjesto ili koristi drugi Apple ID."
+      },
+      "certificate_limit": {
+        "title": "Previše certifikata",
+        "body": "Ovaj Apple ID dosegao je ograničenje razvojnih certifikata. Opozovi jedan ili koristi drugi Apple ID."
+      },
+      "invalid_credentials": {
+        "title": "Pogrešan Apple ID ili lozinka",
+        "body": "Apple nije prihvatio e-adresu ili lozinku. Provjeri ih i ponovno unesi lozinku."
+      },
+      "account_locked": {
+        "title": "Ovaj Apple ID je zaključan",
+        "body": "Apple je zaključao ovaj račun iz sigurnosnih razloga. Otključaj ga na Apple uređaju ili na Appleovoj web stranici ili koristi drugi Apple ID."
+      },
+      "account_refused": {
+        "title": "Apple je odbio prijavu",
+        "body": "Apple trenutno ne dopušta ovom Apple ID-ju prijavu odavde. Pričekaj neko vrijeme, jednom se prijavi na Apple uređaju ili koristi drugi Apple ID."
+      },
+      "client_rejected": {
+        "title": "Apple je odbio zahtjev za prijavu",
+        "body": "Apple nije prihvatio identitet poslan uz prijavu. Odaberi drugi anisette poslužitelj ili pričekaj i pokušaj ponovno."
+      },
+      "rate_limited": {
+        "title": "Previše zahtjeva",
+        "body": "Apple trenutno ograničava zahtjeve. Pričekaj nekoliko minuta i pokušaj ponovno."
+      },
+      "service_unavailable": {
+        "title": "Appleovi poslužitelji nisu dostupni",
+        "body": "Appleovi poslužitelji nisu odgovorili. Pričekaj nekoliko minuta i provjeri mrežu."
+      },
+      "two_factor_required": {
+        "title": "Unesi kôd za provjeru",
+        "body": "Apple je poslao kôd za provjeru na tvoje pouzdane uređaje. Unesi ga za nastavak."
+      },
+      "two_factor_invalid_code": {
+        "title": "Pogrešan kôd za provjeru",
+        "body": "Taj kôd nije radio. Provjeri ga i ponovno unesi."
+      },
+      "two_factor_unsupported": {
+        "title": "Ova metoda prijave nije podržana",
+        "body": "Ovaj Apple ID koristi metodu dvofaktorske provjere koju IPAForge još ne podržava, na primjer sigurnosni ključ. Koristi drugi Apple ID."
+      },
+      "sms_unavailable": {
+        "title": "Kodovi tekstualnom porukom nisu dostupni",
+        "body": "Apple ovdje neće poslati kôd tekstualnom porukom. Dohvati ga na pouzdanom uređaju ili koristi drugi Apple ID."
+      },
+      "clock_skew": {
+        "title": "Sat računala nije točan",
+        "body": "Apple odbija zahtjeve kad sat nije točan. Postavi datum i vrijeme automatski, zatim pokušaj ponovno."
+      },
+      "protocol_error": {
+        "title": "Neočekivan odgovor Applea",
+        "body": "Apple je poslao nešto što IPAForge nije razumio. Ažuriraj IPAForge ili prijavi problem ako se ponavlja."
+      },
+      "session_expired": {
+        "title": "Tvoja sesija je istekla",
+        "body": "Ponovno se prijavi u ovaj Apple ID. Ako stalno ističe, provjeri sat računala."
+      },
+      "account_not_found": {
+        "title": "Apple ID nije pronađen",
+        "body": "IPAForge nema spremljenu sesiju za ovaj Apple ID. Prijavi se ponovno."
+      },
+      "not_eligible": {
+        "title": "Ovaj Apple ID ne može se koristiti za razvoj",
+        "body": "Apple ne dopušta ovom računu potpisivanje aplikacija, na primjer zbog dobi ili uvjeta. Koristi drugi Apple ID."
+      },
+      "email_unverified": {
+        "title": "Potvrdi svoju e-adresu",
+        "body": "Apple prvo treba potvrditi e-adresu ovog Apple ID-ja. Potvrdi je, zatim pokušaj ponovno."
+      },
+      "team_agreement": {
+        "title": "Prihvati Appleov ugovor",
+        "body": "Tim nije prihvatio Appleov najnoviji ugovor za razvojne programere. Prihvati ga na Appleovoj web stranici za razvojne programere ili odaberi drugi tim."
+      },
+      "no_teams": {
+        "title": "Nema razvojnog tima",
+        "body": "Ovaj Apple ID još nema razvojni tim. Prihvati Appleov ugovor za razvojne programere ili koristi drugi Apple ID."
+      },
+      "device_limit": {
+        "title": "Dosegnuto je ograničenje uređaja",
+        "body": "Ovaj tim ne može registrirati više uređaja. Odaberi drugi tim ili koristi drugi Apple ID."
+      },
+      "app_id_unavailable": {
+        "title": "Ovaj App ID je zauzet",
+        "body": "Drugi tim već koristi ovaj App ID. Odaberi drugi tim ili koristi drugi Apple ID."
+      },
+      "invalid_app_id_name": {
+        "title": "Apple je odbio naziv App ID-ja",
+        "body": "Apple nije prihvatio naziv koji je IPAForge odabrao za App ID. Ažuriraj IPAForge ili prijavi problem."
+      },
+      "certificate_not_revocable": {
+        "title": "Ovaj certifikat se ovdje ne može opozvati",
+        "body": "Ovaj certifikat može opozvati samo Apple. Umjesto toga opozovi neki drugi."
+      },
+      "no_devices_for_profile": {
+        "title": "Uređaj još nije registriran",
+        "body": "Apple još nije dovršio registraciju uređaja. Pričekaj minutu i pokušaj ponovno."
+      },
+      "developer_request_failed": {
+        "title": "Appleove usluge za razvojne programere nisu uspjele",
+        "body": "Zahtjev Appleovim uslugama za razvojne programere nije uspio. Pokušaj ponovno i prijavi problem ako se ponavlja."
+      },
+      "anisette_server_invalid": {
+        "title": "Ovaj anisette poslužitelj ne može se koristiti",
+        "body": "Provjeri njegov naziv i adresu: adresa počinje s https:// ili http://."
+      },
+      "anisette_server_exists": {
+        "title": "Ovaj anisette poslužitelj već je na popisu",
+        "body": "Umjesto toga odaberi ga s popisa u Postavkama."
+      },
+      "certificate_not_on_team": {
+        "title": "Ovaj certifikat nije u timu",
+        "body": "Apple ga više ne navodi za ovaj tim: opozvan je, istekao je ili pripada drugom timu. Izvezi aktualni i uvezi njega."
+      }
+    },
+    "catalog": {
+      "source_gone": {
+        "title": "Izdanje više nije dostupno",
+        "body": "Mjesto s kojeg je aplikacija preuzeta više ne postoji. Odaberi drugi kanal, uvezi IPA ili ažuriraj IPAForge."
+      },
+      "unavailable": {
+        "title": "Popis aplikacija nije se učitao",
+        "body": "IPAForge nije mogao dohvatiti popis aplikacija. Provjeri mrežu i pokušaj ponovno."
+      },
+      "download_failed": {
+        "title": "Preuzimanje nije uspjelo",
+        "body": "Aplikaciju nije bilo moguće preuzeti. Provjeri mrežu i pokušaj ponovno."
+      },
+      "checksum_mismatch": {
+        "title": "Preuzimanje je oštećeno",
+        "body": "Preuzeta datoteka ne odgovara svom kontrolnom zbroju pa nije korištena. Pokušaj ponovno ili odaberi drugi kanal."
+      },
+      "checksum_missing": {
+        "title": "Preuzimanje se ne može provjeriti",
+        "body": "Ovo izdanje nema kontrolni zbroj pa ga IPAForge ne može provjeriti. Odaberi drugi kanal ili sam uvezi IPA."
+      },
+      "rate_limited": {
+        "title": "Previše zahtjeva prema GitHubu",
+        "body": "GitHub trenutno ograničava preuzimanja. Pričekaj nekoliko minuta i pokušaj ponovno."
+      },
+      "app_source_unreachable": {
+        "title": "Ovaj izvor nije dostupan",
+        "body": "Provjeri poveznicu i jesi li na mreži, zatim pokušaj ponovno."
+      },
+      "app_source_invalid": {
+        "title": "Ova poveznica nije izvor aplikacija",
+        "body": "Ne navodi nijednu aplikaciju u AltStore formatu. Provjeri poveznicu ili umjesto toga dodaj .ipa datoteku aplikacije."
+      },
+      "app_source_exists": {
+        "title": "Ovaj izvor je već dodan",
+        "body": "Njegove aplikacije već su u Pregledu aplikacija."
+      }
+    },
+    "plist": {
+      "invalid": {
+        "title": "Datoteka postavki aplikacije je oštećena",
+        "body": "Popis svojstava unutar aplikacije nije se mogao pročitati. Odaberi drugi IPA ili prijavi problem."
+      }
+    },
+    "net": {
+      "offline": {
+        "title": "Nisi na mreži",
+        "body": "IPAForge ne može doći do interneta. Provjeri mrežnu vezu i pokušaj ponovno."
+      }
+    },
+    "signer": {
+      "invalid_macho": {
+        "title": "Program aplikacije je oštećen",
+        "body": "Izvršna datoteka aplikacije nije se mogla pročitati. Odaberi drugi IPA."
+      },
+      "encrypted_binary": {
+        "title": "Aplikacija je šifrirana",
+        "body": "Ovaj IPA dolazi iz App Storea i još je šifriran pa se ne može ponovno potpisati. Odaberi dešifrirani IPA."
+      },
+      "unsupported_arch": {
+        "title": "Nepodržani format aplikacije",
+        "body": "Izvršna datoteka aplikacije koristi format koji iOS ne može pokrenuti. Odaberi drugi IPA."
+      },
+      "unsupported_ios": {
+        "title": "Treba noviji iOS",
+        "body": "Ova aplikacija treba noviju verziju iOS-a nego što je ima uređaj. Ažuriraj uređaj ili odaberi drugi kanal ili IPA."
+      },
+      "unsupported_device": {
+        "title": "Nije napravljeno za ovaj uređaj",
+        "body": "Ova aplikacija ne podržava ovu vrstu uređaja, na primjer aplikacija samo za iPad na iPhoneu ili aplikacija za iPhone na Apple TV-u. Odaberi drugi IPA."
+      },
+      "no_arm64_build": {
+        "title": "Nema izdanja za iPhone ili iPad",
+        "body": "Aplikacija nema 64-bitno izdanje za iPhone ili iPad, na primjer ima 32-bitno ili izdanje za simulator. Odaberi drugi IPA."
+      },
+      "no_header_space": {
+        "title": "Aplikacija se ne može potpisati",
+        "body": "U izvršnoj datoteci aplikacije nema mjesta za potpis. Odaberi drugi IPA ili prijavi problem."
+      },
+      "zip_slip": {
+        "title": "IPA nije siguran",
+        "body": "IPA pokušava pisati datoteke izvan vlastite mape pa ga je IPAForge odbio. Odaberi drugi IPA."
+      },
+      "invalid_certificate": {
+        "title": "Certifikat nije valjan",
+        "body": "Certifikat za potpisivanje nije se mogao koristiti. Opozovi ga kako bi IPAForge mogao izraditi novi, zatim pokušaj ponovno."
+      },
+      "unknown_issuer": {
+        "title": "Nepoznati izdavatelj certifikata",
+        "body": "IPAForge ne prepoznaje tko je izdao certifikat. Ažuriraj IPAForge i provjeri mrežu."
+      },
+      "invalid_bundle": {
+        "title": "Paket aplikacije nije valjan",
+        "body": "IPA ne sadrži valjanu aplikaciju. Odaberi drugi IPA."
+      },
+      "invalid_profile": {
+        "title": "Provisioning profil nije valjan",
+        "body": "Provisioning profil od Applea nije se mogao pročitati. Pokušaj ponovno i prijavi problem ako se ponavlja."
+      },
+      "extension_prefix": {
+        "title": "Proširenje aplikacije ima pogrešan ID",
+        "body": "ID paketa proširenja ne počinje ID-jem same aplikacije. Odaberi drugi IPA."
+      },
+      "profile_mismatch": {
+        "title": "Provisioning profil se ne podudara",
+        "body": "Profil se ne podudara s aplikacijom za koju je izrađen. Pokušaj ponovno i prijavi problem ako se ponavlja."
+      },
+      "profile_expired": {
+        "title": "Provisioning profil je istekao",
+        "body": "Profil je istekao ili je sat računala pogrešan. Provjeri sat i pokušaj ponovno."
+      },
+      "cert_not_in_profile": {
+        "title": "Certifikata nema u profilu",
+        "body": "Provisioning profil ne sadrži certifikat za potpisivanje. Pokušaj ponovno kako bi dohvatio svjež profil."
+      },
+      "device_not_provisioned": {
+        "title": "Uređaja nema u profilu",
+        "body": "Provisioning profil ne sadrži ovaj uređaj. Pokušaj ponovno kako bi dohvatio svjež profil."
+      },
+      "pkcs12_password": {
+        "title": "Lozinka ne otvara ovaj .p12",
+        "body": "Upiši lozinku s kojom je izvezen i pokušaj ponovno."
+      }
+    },
+    "installer": {
+      "step_failed": {
+        "title": "Korak nije uspio",
+        "body": "Nešto je pošlo po zlu tijekom instalacije. Pokušaj ponovno i prijavi problem ako se ponavlja."
+      },
+      "prompt_cancelled": {
+        "title": "Otkazano",
+        "body": "Instalacija je zaustavljena jer je pitanje otkazano. Počni ponovno kad budeš spreman/na."
+      },
+      "certificate_machine_id_missing": {
+        "title": "Certifikat se ne može podijeliti",
+        "body": "Ovom certifikatu nedostaju podaci koje SideStore treba da bi ga otvorio. Opozovi ga kako bi IPAForge mogao izraditi novi, zatim pokušaj ponovno."
+      },
+      "team_required": {
+        "title": "Odaberi tim",
+        "body": "Ovaj Apple ID pripada nekoliko timova. Odaberi onaj kojim će se potpisivati."
+      },
+      "kept_ipa_missing": {
+        "title": "Ova se aplikacija ovdje ne može osvježiti",
+        "body": "IPAForge je nije instalirao na ovaj uređaj ili je njezina zadržana kopija nestala. Dodaj njezin .ipa u Predinstalaciji kako bi je ponovno instalirao."
+      },
+      "wrong_app": {
+        "title": "Ova poveznica daje drugu aplikaciju",
+        "body": "To nije aplikacija koju osvježavaš ili ažuriraš pa nije instalirana, a aplikacija i njezini podaci ostaju kakvi jesu. Dodaj ispravan .ipa u Predinstalaciji kako bi je ponovno instalirao."
+      },
+      "version_unavailable": {
+        "title": "Ova se verzija ne može ponovno preuzeti",
+        "body": "Osvježavanje zadržava verziju na tvom uređaju, a ona se više ne nudi za preuzimanje. Koristi Ažuriraj za instalaciju najnovije verzije; aplikacija zadržava svoje podatke."
+      },
+      "pairing_app_not_found": {
+        "title": "Te aplikacije nema na uređaju",
+        "body": "Uklonjena je ili više nije aplikacija koju je instalirao IPAForge. Zatvori Datoteke za uparivanje i ponovno ih otvori."
+      },
+      "certificate_not_stored": {
+        "title": "Na ovom računalu još nema certifikata",
+        "body": "Ovo računalo zadržava certifikat tima nakon što instalira aplikaciju s njim. Prvo instaliraj aplikaciju ili uvezi .p12."
+      }
+    },
+    "rpc": {
+      "invalid_message": {
+        "title": "Pogreška unutarnje komunikacije",
+        "body": "Dijelovi IPAForgea nisu se razumjeli. Ažuriraj IPAForge ili prijavi problem."
+      },
+      "disconnected": {
+        "title": "Veza s engineom je izgubljena",
+        "body": "IPAForgeov engine je prestao odgovarati. Pokušaj ponovno i prijavi problem ako se ponavlja."
+      },
+      "timeout": {
+        "title": "Engine nije odgovorio",
+        "body": "IPAForgeovom engineu trebalo je predugo za odgovor. Pokušaj ponovno i prijavi problem ako se ponavlja."
+      }
+    },
+    "internal": {
+      "aborted": {
+        "title": "Zaustavljeno",
+        "body": "Radnja je zaustavljena prije završetka."
+      },
+      "unexpected": {
+        "title": "Nešto je pošlo po zlu",
+        "body": "Dogodila se neočekivana pogreška. Pokušaj ponovno i prijavi problem ako se ponavlja."
+      }
+    }
+  },
+  "recovery": {
+    "retry": "Pokušaj ponovno",
+    "wait-and-retry": "Pričekaj, zatim pokušaj ponovno",
+    "check-network": "Provjeri mrežu",
+    "check-clock": "Provjeri datum i vrijeme",
+    "change-anisette-server": "Odaberi drugi anisette poslužitelj",
+    "re-enter-password": "Ponovno unesi lozinku",
+    "re-enter-code": "Ponovno unesi kôd",
+    "use-trusted-device": "Koristi pouzdani uređaj",
+    "sign-in-again": "Prijavi se ponovno",
+    "sign-in-on-apple-device": "Prijavi se na Apple uređaju",
+    "switch-account": "Koristi drugi Apple ID",
+    "verify-email": "Potvrdi e-adresu",
+    "accept-agreement": "Prihvati Appleov ugovor",
+    "choose-team": "Odaberi tim",
+    "revoke-certificate": "Opozovi certifikat",
+    "wait-for-app-id-slot": "Pričekaj slobodan App ID",
+    "try-anyway": "Ipak pokušaj",
+    "choose-app-to-remove": "Odaberi aplikaciju za uklanjanje",
+    "unlock-device": "Otključaj uređaj",
+    "enable-developer-mode": "Uključi način rada za razvojne programere",
+    "trust-computer": "Vjeruj ovom računalu",
+    "reconnect-device": "Ponovno spoji uređaj",
+    "pair-again": "Upari ponovno",
+    "set-passcode": "Postavi šifru",
+    "install-device-support": "Instaliraj podršku za uređaje",
+    "reinstall-app": "Ponovno instaliraj aplikaciju",
+    "choose-another-ipa": "Odaberi drugi IPA",
+    "choose-another-channel": "Odaberi drugi kanal",
+    "import-ipa": "Uvezi IPA",
+    "update-ipaforge": "Ažuriraj IPAForge",
+    "report-issue": "Prijavi problem",
+    "or": "Ili",
+    "switchAccount": {
+      "title": "Koristi drugi Apple ID",
+      "body": "Instalacija počinje ponovno s Apple ID-jem koji odabereš."
+    },
+    "fix": {
+      "copy": "Kopiraj",
+      "copied": "Kopirano",
+      "done": "Gotovo, pokušaj ponovno",
+      "waitAndRetry": {
+        "how": "Apple je zauzet ili ograničava zahtjeve. Pričekaj minutu, zatim pokušaj ponovno."
+      },
+      "checkNetwork": {
+        "how": "Provjeri je li ovo računalo na mreži, zatim pokušaj ponovno."
+      },
+      "checkClock": {
+        "step1": "Otvori postavke datuma i vremena na ovom računalu",
+        "step2": "Uključi automatsko postavljanje datuma i vremena"
+      },
+      "reEnterPassword": {
+        "how": "Novi pokušaj traži lozinku; provjeri je prije unosa."
+      },
+      "reEnterCode": {
+        "how": "Novi pokušaj traži novi kôd za provjeru."
+      },
+      "useTrustedDevice": {
+        "how": "Kad se zatraži kôd, umjesto tekstualne poruke odaberi pouzdani uređaj."
+      },
+      "signInAgain": {
+        "how": "Novi pokušaj traži lozinku za ponovnu prijavu."
+      },
+      "signInOnAppleDevice": {
+        "how": "Prijavi se u ovaj Apple ID na iPhoneu, iPadu ili Macu ili na Appleovoj web stranici i slijedi što traži:"
+      },
+      "switchAccount": {
+        "how": "Odaberi jedan od svojih spremljenih Apple ID-jeva. Instalacija počinje ponovno s njim.",
+        "button": "Odaberi Apple ID…"
+      },
+      "verifyEmail": {
+        "how": "Potvrdi e-adresu ovog Apple ID-ja na Appleovoj web stranici:"
+      },
+      "acceptAgreement": {
+        "how": "Prijavi se na Appleovoj web stranici za razvojne programere i prihvati ugovor koji prikaže:"
+      },
+      "revokeCertificate": {
+        "how": "Novi pokušaj pita koji certifikat opozvati."
+      },
+      "waitForAppIdSlot": {
+        "how": "Apple oslobađa svaki App ID 7 dana nakon što je izrađen. Instaliraj ponovno kad se jedan oslobodi ili koristi drugi Apple ID.",
+        "next": "Sljedeći App ID oslobađa se {date}."
+      },
+      "chooseAppToRemove": {
+        "how": "Novi pokušaj pita koju aplikaciju ukloniti da bi se oslobodilo mjesto."
+      },
+      "unlockDevice": {
+        "how": "Otključaj uređaj i drži ga otključanim dok se instalacija ne završi."
+      },
+      "enableDeveloperMode": {
+        "button": "Uključeno je, pokušaj ponovno"
+      },
+      "trustComputer": {
+        "how": "Otključaj uređaj. Kad pita vjeruješ li ovom računalu, dodirni Vjeruj i unesi šifru.",
+        "button": "Pitaj ponovno na uređaju"
+      },
+      "reconnectDevice": {
+        "how": "Odspoji uređaj, ponovno ga spoji i otključaj."
+      },
+      "setPasscode": {
+        "how": "Postavi šifru na uređaju u Postavke › Face ID i šifra, zatim pokušaj ponovno."
+      },
+      "installDeviceSupport": {
+        "how": "Na Windowsima instaliraj Apple Devices (ili iTunes) iz Microsoft Storea, zatim ponovno pokreni IPAForge."
+      },
+      "reinstallApp": {
+        "how": "Izbriši aplikaciju s uređaja, zatim pokušaj ponovno."
+      },
+      "chooseAnotherChannel": {
+        "how": "Izdanje s drugog kanala možda radi na ovom uređaju.",
+        "button": "Instaliraj s kanala {channel}"
+      },
+      "open": "Otvori",
+      "tryAnyway": {
+        "how": "Apple je javio negativan broj preostalih App ID-jeva, što je poznata greška na njegovoj strani: pravi broj možda je veći. Ipak pokušaj traži od Applea da ih izradi; ako je doista na ograničenju, to će javiti."
+      },
+      "changeAnisetteServer": {
+        "how": "Otvori Postavke, testiraj anisette poslužitelje i odaberi onaj koji radi ili se vrati na Automatski.",
+        "button": "Otvori anisette poslužitelje"
+      },
+      "allowLocalNetwork": {
+        "how": "Otvori Postavke sustava › Privatnost i sigurnost › Lokalna mreža, uključi IPAForge, zatim pokušaj ponovno. Ili spoji uređaj kabelom."
+      }
+    },
+    "reportHint": "Otvara novi GitHub issue s popunjenom dijagnostikom. Ništa se ne šalje dok ga ne pošalješ.",
+    "allow-local-network": "Dopusti pristup lokalnoj mreži"
+  },
+  "devices": {
+    "engine": {
+      "connecting": "Povezivanje s Engineom…",
+      "connected": "{count, plural, =0 {Engine povezan · nema uređaja} one {Engine povezan · # uređaj} few {Engine povezan · # uređaja} other {Engine povezan · # uređaja}}",
+      "failed": "Ne mogu doći do Enginea: {reason}"
+    },
+    "description": "iPhonei i iPadi spojeni na ovo računalo te Apple TV i Vision Pro uređaji upareni s njim. Onaj koji se koristi prikazan je u gornjoj traci.",
+    "unknownDevice": "Nepoznati uređaj",
+    "line": "{model} · iOS {ios} · {link}",
+    "model": "{model} · iOS {ios}",
+    "withState": "{line} · {state}",
+    "link": {
+      "usb": "USB",
+      "network": "Wi-Fi",
+      "both": "USB i Wi-Fi"
+    },
+    "state": {
+      "checking": "Provjera…",
+      "ready": "Spreman",
+      "locked": "Zaključan",
+      "developerModeOff": "Način za razvojne programere isključen",
+      "notTrusted": "Nije pouzdan",
+      "unavailable": "Uređaj se ne može pročitati",
+      "notConnected": "Nije spojen"
+    },
+    "inUse": "Koristi se",
+    "use": "Koristi ovaj uređaj",
+    "checkAgain": "Provjeri ponovno",
+    "facts": {
+      "model": "Model",
+      "ios": "iOS",
+      "connection": "Veza",
+      "udid": "UDID",
+      "pairing": "Uparivanje",
+      "address": "Adresa"
+    },
+    "empty": {
+      "title": "Još nema uređaja",
+      "body": "Spoji iPhone ili iPad kabelom i otključaj ga. Na Windowsima moraju biti instalirani Apple Devices ili iTunes."
+    },
+    "notice": {
+      "none": {
+        "title": "Nijedan uređaj nije spojen",
+        "body": "Spoji iPhone ili iPad kabelom i otključaj ga. Pojavit će se ovdje sam od sebe."
+      },
+      "notConnected": {
+        "title": "{name} nije spojen",
+        "body": "Ponovno ga spoji i koristit će se automatski ili odaberi drugi uređaj u gornjoj traci."
+      },
+      "notTrusted": {
+        "title": "Vjeruj ovom računalu na uređaju {name}",
+        "body": "Otključaj ga, dodirni Vjeruj i unesi šifru.",
+        "action": "Pitaj ponovno",
+        "waiting": "Čeka se Vjeruj…",
+        "titleUnnamed": "Vjeruj ovom računalu na uređaju"
+      },
+      "locked": {
+        "title": "Otključaj {name}",
+        "body": "Mora ostati otključan dok se instaliraju aplikacije."
+      },
+      "developerModeOff": {
+        "title": "Uključi način rada za razvojne programere na uređaju {name}",
+        "step1": "Postavke → Privatnost i sigurnost → Način rada za razvojne programere",
+        "step2": "Uključi ga i ponovno pokreni kad se zatraži",
+        "step3": "Nakon ponovnog pokretanja dodirni Uključi i unesi šifru"
+      },
+      "unavailable": {
+        "title": "Ne mogu pročitati {name}",
+        "body": "Odspoji ga i ponovno spoji. Ako se ponavlja, ponovno pokreni uređaj.",
+        "bodyWifi": "Spojen je putem Wi-Fi-ja: probudi ga, otključaj i drži na istoj mreži kao ovo računalo, zatim Provjeri ponovno. Kabel je pouzdaniji.",
+        "reason": "Razlog: {reason}",
+        "titleUnnamed": "Ne mogu pročitati uređaj"
+      },
+      "offNetwork": {
+        "title": "{name} nije na mreži",
+        "tv": "Probudi ga daljinskim upravljačem i drži na istom Wi-Fi-ju kao ovo računalo.",
+        "vision": "Stavi ga, otključaj i drži na istom Wi-Fi-ju kao ovo računalo."
+      },
+      "pairAgain": {
+        "title": "Upari {name} ponovno",
+        "body": "Više ne prihvaća uparivanje ovog računala. To je normalno nakon ažuriranja tvOS-a ili visionOS-a: upari ga ponovno s novim kodom.",
+        "action": "Upari ponovno…"
+      }
+    },
+    "notes": {
+      "connected": "{name} je spojen",
+      "disconnected": "{name} je odspojen",
+      "aDevice": "Uređaj"
+    },
+    "savePairing": "Spremi datoteku za uparivanje…",
+    "localNetwork": {
+      "open": "Otvori postavke lokalne mreže"
+    },
+    "os": {
+      "tv": "tvOS",
+      "vision": "visionOS"
+    },
+    "lineOs": "{model} · {os} {version} · {link}",
+    "modelOs": "{model} · {os} {version}",
+    "pairedByCode": "Upareno s ovim računalom, putem koda",
+    "forget": {
+      "action": "Zaboravi…",
+      "title": "Zaboraviti {name}?",
+      "body": "IPAForge uklanja uparivanje ovog računala. Aplikacije koje su već na njemu ostaju. Za ponovnu upotrebu ponovno ga upari.",
+      "confirm": "Zaboravi"
+    }
+  },
+  "prompts": {
+    "cancel": "Odustani",
+    "continue": "Nastavi",
+    "password": {
+      "title": "Prijavi se ponovno",
+      "body": "Spremljena sesija za {appleId} je istekla. Unesi lozinku za nastavak.",
+      "label": "Lozinka",
+      "checking": "Provjera lozinke…"
+    },
+    "method": {
+      "title": "Kamo Apple treba poslati kôd?",
+      "body": "Odaberi kako želiš dobiti kôd za provjeru.",
+      "trustedDevice": "Pouzdani uređaj",
+      "trustedDeviceHint": "Tvoj iPhone, iPad ili Mac prijavljen u ovaj Apple ID",
+      "sms": "Tekstualna poruka na {number}",
+      "smsHint": "Mogu se naplatiti uobičajene SMS naknade",
+      "sending": "Slanje koda…"
+    },
+    "code": {
+      "title": "Unesi kôd za provjeru",
+      "body": "{length, plural, one {Unesi # znamenku koda koji je Apple poslao.} few {Unesi kôd od # znamenke koji je Apple poslao.} other {Unesi kôd od # znamenki koji je Apple poslao.}}",
+      "label": "Kôd za provjeru",
+      "wrong": "Taj kôd nije radio. Provjeri ga i ponovno unesi.",
+      "verify": "Provjeri",
+      "checking": "Provjera koda…",
+      "deviceBody": "{length, plural, one {Unesi # znamenku koda prikazanog na tvom iPhoneu, iPadu ili Macu.} few {Unesi kôd od # znamenke prikazan na tvom iPhoneu, iPadu ili Macu.} other {Unesi kôd od # znamenki prikazan na tvom iPhoneu, iPadu ili Macu.}}",
+      "smsBody": "{length, plural, one {Unesi # znamenku koda poslanog na {number}.} few {Unesi kôd od # znamenke poslan na {number}.} other {Unesi kôd od # znamenki poslan na {number}.}}",
+      "allowHint": "Drži ga otključanim i dodirni Dopusti kad pita o prijavi.",
+      "noCode": "Nisi dobio/la kôd?",
+      "resend": "Pošalji novi kôd",
+      "textTo": "Pošalji poruku na {number}",
+      "sending": "Slanje novog koda…",
+      "sent": "Novi kôd je na putu.",
+      "notSent": "Apple nije poslao novi kôd. Pričekaj nekoliko minuta, zatim pokušaj ponovno."
+    },
+    "suggested": "Predloženo",
+    "team": {
+      "title": "Koji tim treba potpisati aplikaciju?",
+      "body": "Ovaj Apple ID pripada više od jednom timu. IPAForge pamti tvoj odabir za ovaj Apple ID.",
+      "free": "Besplatno: aplikacije ističu nakon 7 dana, 3 aplikacije po uređaju",
+      "paid": "Plaćeno: aplikacije traju godinu dana, bez ograničenja broja aplikacija",
+      "checking": "Korištenje ovog tima…"
+    },
+    "revoke": {
+      "title": "Opozvati certifikat?",
+      "body": "Ovaj tim već ima najveći dopušteni broj razvojnih certifikata pa IPAForge mora opozvati jedan da bi izradio vlastiti. Aplikacije potpisane opozvanim certifikatom prestaju se osvježavati.",
+      "ipaforge": "Izradio IPAForge na drugom računalu",
+      "sidestore": "Izradio SideStore",
+      "machine": "Izrađen na “{machine}” (obično Xcode)",
+      "unknown": "Izradio nepoznati alat",
+      "sidestoreWarning": "SideStore na tvom uređaju prestaje osvježavati aplikacije dok ne izradi novi.",
+      "machineWarning": "Xcode na tom računalu izradit će novi pri sljedećem potpisivanju.",
+      "expires": "Ističe {date}",
+      "confirm": "Opozovi i nastavi",
+      "revoking": "Opoziv certifikata…"
+    },
+    "remove": {
+      "title": "Ukloniti aplikaciju da se oslobodi mjesto?",
+      "body": "Besplatni Apple ID može imati {limit} aplikacija na uređaju pa jedna mora otići da bi ova stala. Možeš je kasnije ponovno instalirati.",
+      "confirm": "Ukloni i nastavi",
+      "removing": "Uklanjanje aplikacije…"
+    },
+    "share": {
+      "title": "Podijeliti svoj certifikat za potpisivanje s aplikacijom “{app}”?",
+      "body": "Ova aplikacija izgleda kao SideStore. S tvojim certifikatom može sama osvježavati aplikacije na uređaju. Dijeli ga samo s aplikacijom kojoj vjeruješ.",
+      "yes": "Podijeli certifikat",
+      "yesHint": "Sam osvježava tvoje aplikacije na uređaju",
+      "no": "Ne dijeli",
+      "noHint": "Instalira se bez tvog certifikata"
+    },
+    "pairing": {
+      "title": "Koje aplikacije dobivaju datoteku za uparivanje?",
+      "body": "Datoteka za uparivanje omogućuje aplikaciji na uređaju da komunicira s njim putem Wi-Fi-ja, kao i ovo računalo. Dobivaju je samo aplikacije koje označiš.",
+      "available": "{count, plural, one {# aplikacija na uređaju može je koristiti} few {# aplikacije na uređaju mogu je koristiti} other {# aplikacija na uređaju može je koristiti}}",
+      "selectAll": "Odaberi sve",
+      "clearAll": "Poništi sve",
+      "place": "{count, plural, =0 {Odaberi aplikaciju} one {Postavi u # aplikaciju} few {Postavi u # aplikacije} other {Postavi u # aplikacija}}",
+      "placing": "Postavljanje datoteke za uparivanje…",
+      "purpose": {
+        "sidestore": "Osvježava i instalira aplikacije putem Wi-Fi-ja",
+        "livecontainer": "Pokreće aplikacije unutar sebe s JIT-om",
+        "stikdebug": "Omogućuje JIT za druge aplikacije",
+        "stikstore": "Instalira aplikacije iz vlastitih izvora"
+      }
+    }
+  },
+  "signIn": {
+    "title": "Dodaj Apple ID",
+    "body": "IPAForge njime potpisuje aplikacije. Tvoja lozinka ide samo Appleu.",
+    "appleId": "Apple ID",
+    "password": "Lozinka",
+    "submit": "Prijavi se",
+    "signingIn": "Prijava…",
+    "done": {
+      "title": "Apple ID je dodan",
+      "body": "Prijavljen kao {appleId}.",
+      "close": "Gotovo"
+    },
+    "rememberPassword": "Spremi moju lozinku u sistemski privjesak ključeva",
+    "rememberPasswordHint": "Omogućuje IPAForgeu da se sam ponovno prijavi kad sesija istekne.",
+    "resuming": {
+      "title": "Ponovna prijava",
+      "body": "Prijava u {appleId} onim što je IPAForge spremio…",
+      "cancel": "Odustani"
+    }
+  },
+  "accounts": {
+    "description": "Apple ID-jevi kojima IPAForge potpisuje aplikacije. Onaj koji se koristi prikazan je u gornjoj traci.",
+    "list": "Spremljeni Apple ID-jevi",
+    "empty": "Još nema Apple ID-jeva. Dodaj jedan za instalaciju SideStorea.",
+    "notSaved": {
+      "title": "Apple ID-jevi se ne spremaju",
+      "body": "IPAForge ne može koristiti sistemski privjesak ključeva (pristup je možda odbijen) pa se tvoji Apple ID-jevi čuvaju samo dok se ne zatvori. Za spremanje ponovno otvori IPAForge i dopusti pristup privjesku ključeva kad se zatraži."
+    },
+    "freeTeam": "{name} (besplatno)",
+    "withState": "{line} · {state}",
+    "state": {
+      "checking": "Provjera…",
+      "signInNeeded": "Potrebna prijava",
+      "blocked": "Blokiran na ovom uređaju",
+      "unreachable": "Apple nije dostupan"
+    },
+    "inUse": "Koristi se",
+    "noTeams": "Timovi se pojavljuju kad Apple odgovori.",
+    "use": "Koristi",
+    "signInAgain": "Prijavi se ponovno",
+    "signOut": {
+      "action": "Odjavi se",
+      "title": "Odjaviti se iz {appleId}?",
+      "forgets": "IPAForge zaboravlja ovaj Apple ID, njegovu sesiju i spremljenu lozinku.",
+      "keeps": "Njegovi certifikati za potpisivanje ostaju na ovom računalu pa ih ponovna prijava koristi ponovno. Već instalirane aplikacije rade dok ne isteknu.",
+      "confirm": "Odjavi se"
+    }
+  },
+  "apps": {
+    "description": "Aplikacije koje je IPAForge instalirao na ovaj uređaj. Osvježavanje ponovno potpisuje aplikaciju prije isteka, zadržavajući njezine podatke.",
+    "refreshAll": "{count, plural, =0 {Osvježi sve} other {Osvježi sve (#)}}",
+    "updateAll": "{count, plural, other {Ažuriraj sve (#)}}",
+    "refresh": "Osvježi",
+    "update": "Ažuriraj",
+    "remove": "Ukloni",
+    "removeApp": "Ukloni {name}",
+    "updateTo": "Ažuriranje: {version}",
+    "from": "Iz izvora {source}",
+    "needsIpa": "IPAForge ju je instalirao iz .ipa datoteke na drugom računalu. Dodaj taj .ipa u Predinstalaciji jednom da bi se ovdje mogla osvježavati.",
+    "thisDevice": "ovaj uređaj",
+    "badge": "{count, plural, one {# aplikaciju treba uskoro osvježiti} few {# aplikacije treba uskoro osvježiti} other {# aplikacija treba uskoro osvježiti}}",
+    "expiry": {
+      "in": "{days, plural, one {Ističe za # dan · {date}} few {Ističe za # dana · {date}} other {Ističe za # dana · {date}}}",
+      "today": "Ističe danas",
+      "expired": "{days, plural, one {Isteklo prije # dan · neće se otvoriti} few {Isteklo prije # dana · neće se otvoriti} other {Isteklo prije # dana · neće se otvoriti}}",
+      "unknown": "Istek nepoznat",
+      "gone": "Isteklo · neće se otvoriti"
+    },
+    "run": {
+      "checking": "Provjera kod Applea…",
+      "waiting": "Čeka svoj red",
+      "done": "Gotovo"
+    },
+    "failed": {
+      "title": "Osvježavanje nije završilo: {reason}",
+      "details": "Prikaži pojedinosti",
+      "dismiss": "Odbaci"
+    },
+    "notConnected": {
+      "title": "Ovaj uređaj nije spojen",
+      "body": "Spoji ga da vidiš njegove aplikacije te da ih osvježiš ili ažuriraš."
+    },
+    "expired": {
+      "title": "{count, plural, one {# aplikacija je istekla} few {# aplikacije su istekle} other {# aplikacija je isteklo}}",
+      "body": "Neće se otvarati dok se ne osvježe. Njihovi podaci se zadržavaju.",
+      "refresh": "{count, plural, one {Osvježi je sada} other {Osvježi ih sada}}"
+    },
+    "facts": {
+      "next": "Sljedeća ističe",
+      "none": "Još ništa",
+      "nextIn": "{days, plural, one {{name} · # dan} few {{name} · # dana} other {{name} · # dana}}",
+      "nextExpired": "{name} · isteklo",
+      "count": "Održava se osvježenim",
+      "apps": "{count, plural, one {# aplikacija} few {# aplikacije} other {# aplikacija}}",
+      "auto": "Automatsko osvježavanje",
+      "autoOn": "{days, plural, one {Uključeno · # dan prije} few {Uključeno · # dana prije} other {Uključeno · # dana prije}}",
+      "autoOff": "Isključeno"
+    },
+    "list": {
+      "title": "Instalirao IPAForge",
+      "count": "{count, plural, one {# aplikacija · najskorije prve} few {# aplikacije · najskorije prve} other {# aplikacija · najskorije prve}}",
+      "empty": "Još nema aplikacija. Instaliraj SideStore ili predinstaliraj aplikacije i prikazat će se ovdje."
+    },
+    "others": {
+      "title": "IPAForge ih još ne održava",
+      "hint": "Instalirano prije ove verzije IPAForgea ili drugim alatom",
+      "found": "Pronađeno u izvoru {source}. Osvježavanje je instalira odande, zadržavajući njezine podatke, a IPAForge je od tada održava osvježenom.",
+      "foundMany": "Pronađeno u izvoru {source} i {count, plural, one {# drugom izvoru} few {# druga izvora} other {# drugih izvora}}. Osvježavanje je instalira iz onog odabranog ispod, zadržavajući njezine podatke, a IPAForge je od tada održava osvježenom.",
+      "pickSource": "Instaliraj iz",
+      "choice": "{source} · {version}",
+      "how": "Dodaj njezin .ipa u Predinstalaciji jednom i IPAForge je od tada održava osvježenom."
+    },
+    "auto": {
+      "title": "Automatsko osvježavanje aplikacija",
+      "body": "Dok je IPAForge otvoren i uređaj spojen, aplikacije se same osvježavaju prije isteka.",
+      "toggle": "Osvježavaj automatski",
+      "when": "Osvježi kad aplikaciji preostane",
+      "days": "{count, plural, one {# dan} few {# dana} other {# dana}}"
+    },
+    "removeDialog": {
+      "title": "Ukloniti {name}?",
+      "body": "Briše se s uređaja {device} zajedno s podacima i oslobađa mjesto za besplatnu aplikaciju. Možeš je ponovno instalirati iz Predinstalacije."
+    },
+    "pairing": {
+      "open": "Datoteke za uparivanje",
+      "title": "Datoteke za uparivanje",
+      "hint": "Datoteka za uparivanje omogućuje aplikaciji da sama dođe do tvog uređaja kako bi osvježavala i instalirala aplikacije. Tko je ima, može koristiti uređaj pa je svojim aplikacijama daj samo kad njihove upute to traže.",
+      "reading": "Čitanje datoteka za uparivanje…",
+      "empty": "Na ovom uređaju nema aplikacija za uparivanje ni aplikacija koje je instalirao IPAForge.",
+      "classic": {
+        "thisComputer": "Uparivanje: ovog računala",
+        "otherComputer": "Uparivanje: drugog računala",
+        "missing": "Uparivanje: nedostaje"
+      },
+      "remote": {
+        "accepted": "Udaljeno: prihvaćeno",
+        "rejected": "Udaljeno: nije prihvaćeno",
+        "otherComputer": "Udaljeno: drugog računala",
+        "missing": "Udaljeno: nedostaje"
+      },
+      "detail": {
+        "placed": "Postavljeno {date}",
+        "needed": "Treba je da bi se sama osvježavala.",
+        "otherComputer": "S drugog računala: radi dok to računalo ostaje pouzdano.",
+        "ownNone": "Nema je. Dodaj je samo ako aplikacija to traži."
+      },
+      "place": "Postavi",
+      "placeOne": "Postavi datoteku za uparivanje u {name}",
+      "placeAgain": "Postavi ponovno",
+      "placeAgainOne": "Ponovno postavi datoteku za uparivanje u {name}",
+      "add": "Dodaj…",
+      "addOne": "Dodaj datoteku za uparivanje u {name}",
+      "remove": "Ukloni",
+      "removeOne": "Ukloni datoteku za uparivanje iz {name}",
+      "newRemote": "Novo udaljeno uparivanje",
+      "done": "Gotovo",
+      "addTitle": "Dodaj datoteku za uparivanje u {name}",
+      "addBody": "IPAForge zapisuje datoteku za uparivanje ovog računala u mapu aplikacije na tvom uređaju. Tko je ima, može koristiti uređaj: dodaj je samo aplikacijama kojima vjeruješ.",
+      "pathLabel": "Putanja unutar aplikacije",
+      "pathHint": "Iz uputa aplikacije; obično u Documents. IPAForge je pamti za ovu aplikaciju.",
+      "pathInvalid": "Koristi putanju u Documents ili Library koja završava na .plist ili .mobiledevicepairing.",
+      "removeTitle": "Ukloniti datoteku za uparivanje aplikacije {name}?",
+      "removeBody": "Aplikacija više neće sama moći doći do tvog uređaja (osvježavanje, instalacija) dok se datoteka za uparivanje ponovno ne postavi.",
+      "newRemoteTitle": "Napraviti novo udaljeno uparivanje?",
+      "newRemoteBody": "IPAForge izrađuje novo udaljeno uparivanje s tvojim uređajem i postavlja ga u SideStore. Uređaj će možda tražiti da vjeruješ ovom računalu. Staro udaljeno uparivanje prestaje raditi.",
+      "newRemoteConfirm": "Napravi novo",
+      "newRemoteWaiting": "Ako uređaj pita, dodirni Vjeruj i unesi njegovu šifru.",
+      "tag": "Nema datoteke za uparivanje",
+      "tagOne": "{name} nema datoteku za uparivanje: otvori Datoteke za uparivanje"
+    },
+    "cancelRefresh": "Otkaži osvježavanje"
+  },
+  "logs": {
+    "title": "Zapisnik",
+    "lede": "Što je IPAForge radio, redak po redak. Otvori ga odasvud pomoću",
+    "shortcut": {
+      "control": "Ctrl+",
+      "command": "⌘",
+      "key": "L"
+    },
+    "copy": "Kopiraj",
+    "save": "Spremi…",
+    "clear": "Očisti",
+    "cleared": "Prikaz je očišćen. Spremanje i dalje zapisuje svaki redak zadržan tijekom ove sesije.",
+    "search": {
+      "label": "Pretraži zapisnik",
+      "placeholder": "Pretraži poruke i pojedinosti",
+      "key": "/"
+    },
+    "level": {
+      "label": "Razina",
+      "all": "Sve",
+      "info": "Informacije",
+      "warn": "Upozorenja",
+      "error": "Pogreške"
+    },
+    "levelName": {
+      "debug": "Otklanjanje pogrešaka",
+      "info": "Informacije",
+      "warn": "Upozorenje",
+      "error": "Pogreška"
+    },
+    "area": {
+      "label": "Područje",
+      "all": "Sva područja",
+      "install": "Instalacija",
+      "device": "Uređaj",
+      "apple": "Apple",
+      "catalog": "Katalog",
+      "signing": "Potpisivanje",
+      "engine": "Engine",
+      "interface": "Sučelje",
+      "app": "Aplikacija"
+    },
+    "filters": {
+      "showing": "Prikazuje se samo:",
+      "run": "Ovo izvršavanje instalacije ({time})",
+      "text": "“{text}”",
+      "remove": "Ukloni filtar {filter}"
+    },
+    "list": {
+      "label": "Retci zapisnika",
+      "loadingOlder": "Učitavanje starijih redaka…"
+    },
+    "row": {
+      "details": "{count, plural, one {# pojedinost} few {# pojedinosti} other {# pojedinosti}}",
+      "scope": "područje",
+      "redacted": "[uklonjeno]",
+      "copy": "Kopiraj redak"
+    },
+    "follow": {
+      "on": "Prati nove retke",
+      "off": "Pauzirano",
+      "pause": "Pauziraj",
+      "resume": "Prati"
+    },
+    "jump": "{count, plural, one {# novi redak} few {# nova retka} other {# novih redaka}} · Skoči na najnovije",
+    "count": "{matching, plural, one {# redak odgovara} few {# retka odgovaraju} other {# redaka odgovara}} · tijekom ove sesije zadržava se zadnjih {capacity, number}",
+    "debug": "Uključi pojedinosti za otklanjanje pogrešaka",
+    "privacy": "Lozinke, tokeni, ključevi, serijski brojevi i identifikatori uređaja nikad se ne zapisuju u zapisnik; prikazuju se kao [uklonjeno]. Zapisnik ostaje na ovom računalu dok ga ne kopiraš ili spremiš.",
+    "empty": {
+      "none": {
+        "title": "Još ništa nije zapisano",
+        "body": "Retci se pojavljuju ovdje dok IPAForge radi: spajanje uređaja, prijava, instalacija."
+      },
+      "noMatch": {
+        "title": "Nijedan redak ne odgovara",
+        "body": "Promijeni razinu, područje ili pretragu.",
+        "showAll": "Prikaži sve retke"
+      },
+      "cleared": {
+        "title": "Prikaz je očišćen",
+        "body": "Novi retci pojavljuju se ovdje kako stižu."
+      },
+      "failed": {
+        "title": "Zapisnik se nije mogao pročitati",
+        "body": "Veza s Engineom možda se zatvorila. Ponovno otvori Zapisnik da pokušaš opet."
+      }
+    },
+    "export": {
+      "copyTitle": "{count, plural, one {Kopirati # redak?} few {Kopirati # retka?} other {Kopirati # redaka?}}",
+      "saveTitle": "{count, plural, one {Spremiti # redak u datoteku?} few {Spremiti # retka u datoteku?} other {Spremiti # redaka u datoteku?}}",
+      "copyBody": "Prikazani retci, s filtrima koje si postavio/la.",
+      "saveBody": "Svaki redak zadržan tijekom ove sesije, bez obzira na filtre.",
+      "warning": "Lozinke, tokeni i identifikatori uređaja već su izostavljeni, ali zapisnik navodi model tvog uređaja, aplikacije i tim. Provjeri ga prije javnog objavljivanja.",
+      "confirmCopy": "Kopiraj",
+      "confirmSave": "Spremi",
+      "copied": "{count, plural, one {Kopiran # redak} few {Kopirana # retka} other {Kopirano # redaka}}",
+      "saved": "{count, plural, one {Spremljen # redak} few {Spremljena # retka} other {Spremljeno # redaka}}",
+      "copyFailed": "Retke nije bilo moguće kopirati",
+      "saveFailed": "Retke nije bilo moguće spremiti"
+    }
+  },
+  "preload": {
+    "title": "Predinstalacija aplikacija",
+    "description": "Instaliraj vlastite aplikacije: potpisane tvojim Apple ID-jem, instalirane putem USB-a, jednu za drugom.",
+    "tabs": {
+      "label": "Predinstalacija",
+      "apps": "Dodaj aplikacije",
+      "sources": "Izvori"
+    },
+    "add": {
+      "drop": "Ovdje ispusti .ipa datoteke",
+      "or": "ili",
+      "choose": "Odaberi datoteke…",
+      "link": "Dodaj s poveznice…"
+    },
+    "catalog": {
+      "recommended": "Preporučeno",
+      "added": "Dodano",
+      "add": "Dodaj",
+      "sidestore": "Sam osvježava i instalira aplikacije na uređaju.",
+      "livecontainerSidestore": "LiveContainer sa SideStoreom unutar sebe.",
+      "livecontainer": "Pokreće mnogo aplikacija unutar jedne, mimo ograničenja od 3 aplikacije.",
+      "stikdebug": "Uključuje JIT za aplikacije koje ga trebaju, na uređaju.",
+      "feather": "Potpisuje i instalira aplikacije na uređaju tvojim certifikatom."
+    },
+    "browse": {
+      "title": "Pregled aplikacija",
+      "count": "{apps, plural, one {# aplikacija} few {# aplikacije} other {# aplikacija}} iz {sources, plural, one {# izvor} few {# izvora} other {# izvora}}",
+      "source": "Izvor",
+      "allSources": "Svi izvori",
+      "search": "Pretraži aplikacije",
+      "manage": "Upravljaj izvorima",
+      "noMatch": "Nijedna aplikacija ne odgovara upitu “{query}”.",
+      "allOff": "Svi su izvori isključeni. Uključi jedan u Izvorima.",
+      "loading": "Čitanje izvora…",
+      "catalogLine": "Najnovije izdanje · provjereno prema kontrolnom zbroju",
+      "version": "{version} · {size}",
+      "from": "{name}, također u {others}",
+      "details": "Pojedinosti aplikacije {name}",
+      "notRefreshed": {
+        "title": "Izvor {name} nije se mogao osvježiti",
+        "body": "Prikazuju se njegove aplikacije od zadnjeg osvježavanja, {when}.",
+        "retry": "Pokušaj ponovno"
+      }
+    },
+    "detail": {
+      "version": "Verzija",
+      "latest": "{version} (najnovija)",
+      "size": "Veličina",
+      "needs": "Zahtijeva",
+      "needsIos": "iOS {version}",
+      "anyIos": "Bilo koji iOS",
+      "from": "Iz",
+      "builtin": "Ugrađeno · pouzdano",
+      "added": "Izvor koji si dodao/la",
+      "untrusted": "Iz izvora koji si dodao/la: IPAForge ne pregledava njegove aplikacije.",
+      "add": "Dodaj na popis",
+      "inList": "Na popisu",
+      "close": "Zatvori",
+      "loadingReleases": "Traženje njegovih izdanja…",
+      "noReleases": "Njegova izdanja trenutno se ne mogu pročitati. Provjeri vezu i ponovno ga otvori."
+    },
+    "sources": {
+      "description": "Odakle Pregled aplikacija dohvaća aplikacije. Ugrađene izvore održava IPAForge; ostale dodaj prema poveznici (AltStore format).",
+      "add": "Dodaj izvor…",
+      "refreshAll": "Osvježi sve",
+      "list": "Izvori",
+      "builtin": "Ugrađeno · pouzdano",
+      "added": "Dodao/la si ti",
+      "catalogName": "IPAForge katalog",
+      "apps": "{count, plural, one {# aplikacija} few {# aplikacije} other {# aplikacija}}",
+      "updated": "ažurirano {when}",
+      "notRead": "Još nije pročitano",
+      "skipped": "{count, plural, one {# preskočena (nije .ipa)} few {# preskočene (nisu .ipa)} other {# preskočenih (nisu .ipa)}}",
+      "failed": "Nije bilo moguće doći do njega.",
+      "failedCopy": "Prikazuje se zadnja kopija, od {when}.",
+      "refreshing": "Osvježavanje…",
+      "show": "Prikaži aplikacije iz izvora {name}",
+      "refresh": "Osvježi {name}",
+      "remove": "Ukloni {name}",
+      "on": "Uključeno",
+      "off": "Isključeno",
+      "note": "IPAForge ne pregledava aplikacije u izvorima koje dodaš. Dodaj samo izvore kojima vjeruješ.",
+      "refreshOne": "Osvježi",
+      "removeOne": "Ukloni"
+    },
+    "addSource": {
+      "title": "Dodaj izvor",
+      "label": "Poveznica izvora",
+      "placeholder": "https://example.com/apps.json",
+      "hint": "Izvor u AltStore formatu, onom koji čita SideStore. Obično završava na .json.",
+      "check": "Provjeri",
+      "checking": "Provjera izvora…",
+      "notLink": "Unesi poveznicu koja počinje s https://",
+      "notHttps": "Koristi poveznicu https://: IPAForge čita izvore samo putem sigurne veze.",
+      "previewTitle": "Dodati ovaj izvor?",
+      "includes": "{count, plural, one {# aplikacija, uključujući:} few {# aplikacije, uključujući:} other {# aplikacija, uključujući:}}",
+      "skipped": "{count, plural, one {Izostavljena je još # aplikacija: njezino preuzimanje nije .ipa.} few {Izostavljene su još # aplikacije: njihovo preuzimanje nije .ipa.} other {Izostavljeno je još # aplikacija: njihovo preuzimanje nije .ipa.}}",
+      "warningTitle": "Dodaj samo izvore kojima vjeruješ",
+      "warningBody": "IPAForge ne pregledava aplikacije u izvorima koje dodaš. Svaka se aplikacija i dalje provjerava prije instalacije.",
+      "back": "Natrag",
+      "confirm": "Dodaj izvor"
+    },
+    "removeSource": {
+      "title": "Ukloniti {name}?",
+      "body": "Njegove aplikacije nestaju iz Pregleda aplikacija. Aplikacije instalirane iz njega ostaju na uređaju, a aplikacije na popisu Za instalaciju također ostaju.",
+      "confirm": "Ukloni"
+    },
+    "list": {
+      "title": "Za instalaciju",
+      "count": "{count, plural, one {# aplikacija} few {# aplikacije} other {# aplikacija}}",
+      "empty": "Još nema aplikacija. Ispusti .ipa datoteke ovdje, odaberi ih, dodaj poveznicu ili odaberi jednu u Pregledu aplikacija."
+    },
+    "row": {
+      "waiting": "Čeka se uređaj i Apple ID",
+      "checking": "Provjera…",
+      "downloading": "Preuzimanje i provjera…",
+      "appIds": "{count, plural, one {# App ID} few {# App ID-ja} other {# App ID-jeva}}{extensions, plural, =0 {} one { (aplikacija + # proširenje)} few { (aplikacija + # proširenja)} other { (aplikacija + # proširenja)}}",
+      "updates": "Ažurira {from} → {to} · zadržava podatke",
+      "new": "Novo na uređaju",
+      "pairing": "Dobiva datoteku za uparivanje i certifikat",
+      "fromCatalog": "Iz kataloga · Stabilna",
+      "remove": "Ukloni {name}",
+      "cannot": "Ne može se instalirati.",
+      "fromSource": "Iz izvora {name}",
+      "saveInstead": "Umjesto toga spremi potpisani .ipa",
+      "saveInsteadOne": "Spremi {name} kao potpisani .ipa umjesto instalacije",
+      "savedOnComputer": "Spremljeno na ovo računalo, nije instalirano"
+    },
+    "problem": {
+      "notIpa": "Mogu se instalirati samo .ipa datoteke.",
+      "unreadable": "IPAForge ne može pročitati ovu datoteku. Umjesto toga dodaj je pomoću Odaberi datoteke…",
+      "needsIos": "Zahtijeva iOS {needs}; ovaj uređaj ima iOS {has}."
+    },
+    "summary": {
+      "appIds": "{count, plural, one {# novi} few {# nova} other {# novih}} · {left, plural, one {# preostao ovaj tjedan} few {# preostala ovaj tjedan} other {# preostalih ovaj tjedan}}",
+      "appIdsNoLimit": "{count, plural, one {# novi} few {# nova} other {# novih}}",
+      "notEnough": "Nema dovoljno preostalih. Ukloni aplikaciju ili pričekaj. {next}",
+      "freeApps": "{after} od {limit} nakon ove instalacije",
+      "freeAppsOver": "{used, plural, one {# je već tamo.} few {# su već tamo.} other {# je već tamo.}} Instalacija će pitati koju aplikaciju ukloniti ili ukloni jednu s ovog popisa."
+    },
+    "install": "{count, plural, =0 {Instaliraj} one {Instaliraj # aplikaciju} few {Instaliraj # aplikacije} other {Instaliraj # aplikacija}}",
+    "clear": "Očisti popis",
+    "readiness": {
+      "busy": "Pričekaj instalaciju koja je u tijeku.",
+      "empty": "Prvo dodaj aplikaciju.",
+      "checking": "Provjera aplikacija…",
+      "problems": "Ukloni aplikacije koje se ne mogu instalirati."
+    },
+    "link": {
+      "title": "Dodaj s poveznice",
+      "body": "Izravna poveznica na .ipa datoteku. IPAForge je preuzima, zatim je provjerava kao i svaku drugu aplikaciju.",
+      "label": "Poveznica",
+      "placeholder": "https://example.com/MyApp.ipa",
+      "add": "Dodaj",
+      "httpsOnly": "Mogu se preuzeti samo https poveznice.",
+      "invalid": "To nije poveznica.",
+      "notIpa": "Poveznica mora upućivati na .ipa datoteku."
+    },
+    "elsewhere": {
+      "apps": "Aplikacije se instaliraju",
+      "sidestore": "SideStore se instalira",
+      "body": "Jedna instalacija odjednom: treba uređaj. Ova može početi kad ona završi.",
+      "open": "Otvori je"
+    },
+    "run": {
+      "title": {
+        "running": "{count, plural, one {Instalacija aplikacije {app}} other {Instalacija # aplikacija}}",
+        "completed": "{count, plural, one {{app} je instaliran} few {# aplikacije su instalirane} other {# aplikacija je instalirano}}",
+        "failed": "Nisu se mogle instalirati sve aplikacije"
+      },
+      "backToPreload": "Natrag na Predinstalaciju",
+      "shared": "Ovaj uređaj i tvoj Apple ID",
+      "refresh": {
+        "profile": "Samo novi profil, ništa se ne instalira ponovno",
+        "certificate": "Instalirano ponovno: certifikat kojim je potpisana više ne vrijedi",
+        "unmarked": "Instalirano ponovno: IPAForge ne može utvrditi koji ju je certifikat potpisao",
+        "appId": "Instalirano ponovno: Apple je uklonio njezin App ID nakon isteka",
+        "sidestore": "Instalirano ponovno, podaci zadržani, pa sam SideStore prikazuje novi datum"
+      },
+      "group": {
+        "failed": "Nije uspjelo",
+        "done": "Gotovo",
+        "active": "U tijeku",
+        "pending": "Čeka"
+      }
+    },
+    "done": {
+      "title": "{count, plural, one {{app} je na uređaju {device}.} other {{app} su na uređaju {device}.}}",
+      "open": "Otvori svaku aplikaciju s početnog zaslona."
+    },
+    "signAndSave": "{count, plural, one {Potpiši i spremi # aplikaciju} few {Potpiši i spremi # aplikacije} other {Potpiši i spremi # aplikacija}}",
+    "installAndSave": "{install} za instalaciju · {save} za spremanje kao potpisani .ipa"
+  },
+  "repair": {
+    "title": "Popravi SideStore",
+    "description": "IPAForge provjerava SideStore na uređaju {device} i popravlja ono što ga sprječava da sam osvježava tvoje aplikacije.",
+    "checkAgain": "Provjeri ponovno",
+    "checking": "Provjera SideStorea…",
+    "checks": "Provjere",
+    "failed": "SideStore se nije mogao provjeriti: {reason}",
+    "failedBody": "Provjeri je li uređaj spojen i otključan, zatim pritisni Provjeri ponovno.",
+    "ok": "U redu",
+    "unknown": "Ne može se utvrditi",
+    "deviceFirst": "Prvo popravi {device}",
+    "device": {
+      "title": "{device} je spreman",
+      "ok": "Otključan, pouzdan i s uključenim načinom rada za razvojne programere.",
+      "locked": "Zaključan je. Otključaj ga, zatim pritisni Provjeri ponovno.",
+      "lockedTag": "Zaključan",
+      "developerMode": "Način rada za razvojne programere je isključen pa se SideStore i aplikacije koje instalira neće otvarati. Na iPhoneu: Postavke › Privatnost i sigurnost › Način rada za razvojne programere, zatim ga ponovno pokreni.",
+      "developerModeTag": "Način za razvojne programere isključen"
+    },
+    "installed": {
+      "title": "SideStore je instaliran",
+      "missing": "SideStorea nema na uređaju {device}.",
+      "missingTag": "Nije instaliran"
+    },
+    "signer": {
+      "title": "Potpisan je timom koji ovdje koristiš",
+      "ok": "Popravak ga može ponovno instalirati ili mu dati novi profil bez gubitka njegovih podataka.",
+      "otherTeam": "Potpisao ga je drugi tim ovog Apple ID-ja. Ponovna instalacija s ovim timom dodala bi drugi SideStore, bez njegovih podataka i aplikacija.",
+      "otherTeamTag": "Drugi tim",
+      "otherAppleId": "Potpisao ga je drugi Apple ID. Ponovna instalacija s ovim dodala bi drugi SideStore, bez njegovih podataka i aplikacija.",
+      "otherAppleIdTag": "Drugi Apple ID"
+    },
+    "version": {
+      "title": "SideStore je ažuran",
+      "ok": "Verzija {version}, najnovija.",
+      "outdated": "Verzija {version}; dostupna je {latest}. Starijim verzijama mogu nedostajati ispravci za osvježavanje na novijim iOS-ima.",
+      "outdatedTag": "Dostupna je {latest}",
+      "unknown": "Verzija {version}. Katalog nije bio dostupan za usporedbu."
+    },
+    "expiry": {
+      "title": "SideStore nije istekao",
+      "ok": "{days, plural, one {Ističe za # dan.} few {Ističe za # dana.} other {Ističe za # dana.}}",
+      "soon": "{days, plural, =0 {Ističe danas.} one {Ističe za # dan.} few {Ističe za # dana.} other {Ističe za # dana.}} Kad istekne, SideStore se ne može sam osvježiti.",
+      "soonTag": "Uskoro ističe",
+      "expired": "{days, plural, one {Isteklo prije # dan.} few {Isteklo prije # dana.} other {Isteklo prije # dana.}} Neće se otvarati pa ne može osvježavati tvoje aplikacije.",
+      "expiredTag": "Istekao",
+      "unknown": "Uređaj ne prikazuje profil za njega."
+    },
+    "signing": {
+      "title": "Certifikat kojim je potpisan vrijedi",
+      "ok": "I dalje vrijedi na Appleovoj strani.",
+      "revoked": "Opozvan je ili je istekao. SideStore se prestaje otvarati pri sljedećem pokretanju.",
+      "revokedTag": "Opozvan",
+      "unknown": "Instaliran drugim alatom pa IPAForge ne vidi koji ga je certifikat potpisao. Popravak ga može ponovno instalirati da bi se bio siguran."
+    },
+    "own": {
+      "title": "SideStore može sam potpisivati aplikacije",
+      "ok": "Ima valjan certifikat kojim osvježava tvoje aplikacije.",
+      "missing": "Nema certifikat pa njegova osvježavanja traže da se prijaviš ili ne uspijevaju.",
+      "missingTag": "Nema certifikata",
+      "other": "Certifikat koji je dobio više ne vrijedi. Možda ga je zamijenio novijim vlastitim; ako osvježavanje u SideStoreu ne uspijeva, instaliraj ga ponovno.",
+      "otherTag": "Možda je zamijenjen"
+    },
+    "pairing": {
+      "title": "SideStore ima datoteku za uparivanje",
+      "ok": "Postoji i to je uparivanje ovog računala s uređajem {device}.",
+      "missing": "Nedostaje: SideStore ne može doći do uređaja da bi instalirao ili osvježavao aplikacije.",
+      "missingTag": "Nedostaje",
+      "other": "Pripada drugom računalu. Radi dok to uparivanje ostaje valjano; vraćanje povjerenja na uređaju prekida ga.",
+      "otherTag": "Drugo računalo"
+    },
+    "manual": {
+      "title": "Na tvom iPhoneu · IPAForge ovo ne može provjeriti",
+      "tag": "Provjeri sam",
+      "vpn": {
+        "title": "VPN SideStorea je uključen kad osvježava",
+        "body": "Otvori LocalDevVPN i spoji ga prije osvježavanja u SideStoreu."
+      },
+      "anisette": {
+        "title": "SideStore može doći do svog anisette poslužitelja",
+        "body": "U SideStore › Postavke › Anisette odaberi drugi poslužitelj ako osvježavanje javlja da se ne može prijaviti."
+      }
+    },
+    "plan": {
+      "title": "Popravak će",
+      "reinstall": "Ponovno instalirati SideStore",
+      "reinstallBody": "Iz IPAForge kataloga, potpisan valjanim certifikatom koji se postavlja i unutar njega. Njegovi podaci i tvoje aplikacije ostaju.",
+      "profile": "Dati SideStoreu novi profil",
+      "profileBody": "Ništa se ne instalira ponovno.",
+      "pairing": "Postaviti datoteku za uparivanje ovog računala",
+      "pairingBody": "U SideStoreov Documents, zamjenjujući ono što je tamo.",
+      "optional": "Također, ako želiš",
+      "offerReinstall": "Ponovno instaliraj SideStore, da se bude siguran",
+      "offerPairing": "Zamijeni datoteku za uparivanje onom ovog računala",
+      "hint": "Jedno izvršavanje. Drži {device} spojenim i otključanim.",
+      "start": "Popravi SideStore"
+    },
+    "blocked": {
+      "title": "SideStore se ne može ponovno instalirati s ovim Apple ID-jem",
+      "body": "Potpisao ga je drugi tim ili Apple ID pa se njegovi podaci ne bi prenijeli. Odaberi taj Apple ID u gornjoj traci, zatim pritisni Provjeri ponovno."
+    },
+    "notInstalled": {
+      "title": "SideStorea nema na uređaju {device}",
+      "body": "Prvo ga instaliraj, sa stranice Instalacija.",
+      "install": "Instaliraj SideStore"
+    },
+    "fine": {
+      "title": "SideStore radi",
+      "body": "Nema se što popraviti. Ako se i dalje ne može osvježiti, provjeri dvije stvari na svom iPhoneu ispod."
+    },
+    "run": {
+      "title": {
+        "running": "Popravak SideStorea",
+        "completed": "SideStore je popravljen",
+        "failed": "SideStore se nije mogao popraviti"
+      }
+    },
+    "done": {
+      "title": "SideStore na uređaju {device} je popravljen.",
+      "open": "Otvori SideStore i osvježi svoje aplikacije."
+    },
+    "open": "Provjeri SideStore",
+    "checkingTag": "Provjera…",
+    "remote": {
+      "title": "Udaljeno uparivanje za iOS 17.4 i novije",
+      "ok": "Postoji i {device} ga prihvaća.",
+      "missing": "Nedostaje: SideStore može koristiti samo klasično uparivanje. Postavljanje datoteke za uparivanje ovog računala dodaje ga.",
+      "missingTag": "Nedostaje",
+      "rejected": "{device} ga više ne prihvaća (povjerenje je poništeno). Postavljanje datoteke za uparivanje ovog računala izrađuje novo.",
+      "rejectedTag": "Nije prihvaćeno",
+      "other": "Pripada drugom računalu pa ga IPAForge ne može provjeriti. Postavljanje datoteke za uparivanje ovog računala zamjenjuje ga.",
+      "otherTag": "Drugo računalo",
+      "notNeeded": "Nije potrebno ispod iOS-a 17.4.",
+      "notNeededTag": "Nije potrebno"
+    }
+  },
+  "sidestore": {
+    "addSource": "Dodaj u SideStore",
+    "addAll": "Dodaj sve u SideStore",
+    "install": "Instaliraj putem SideStorea",
+    "sourceTitle": "Dodaj {name} u SideStore",
+    "sourceBody": "SideStore također prikazuje njegove aplikacije i održava ih ažurnima na iPhoneu. Ni SideStore ne pregledava aplikacije u izvoru: dodaj samo izvore kojima vjeruješ.",
+    "installTitle": "Instaliraj {name} putem SideStorea",
+    "installBody": "SideStore preuzima {name} {version}, potpisuje ga tvojim Apple ID-jem i sam ga instalira na iPhone. S besplatnim Apple ID-jem ulazi u ograničenje od 3 aplikacije. Prikazuje se u Aplikacijama kad ga IPAForge osvježi.",
+    "qrLabel": "QR kôd poveznice ispod",
+    "steps": {
+      "camera": "Otvori Kameru na uređaju {device} i usmjeri je na kôd.",
+      "banner": "Dodirni obavijest da otvoriš SideStore.",
+      "addSource": "SideStore traži da doda izvor: dodirni Dodaj.",
+      "install": "SideStore traži da instalira aplikaciju: dodirni Instaliraj."
+    },
+    "onPhone": "Na samom iPhoneu poveznica također otvara SideStore (zalijepljena u Safari ili poslana u Porukama).",
+    "copy": "Kopiraj",
+    "copied": "Kopirano",
+    "previous": "Prethodni",
+    "next": "Sljedeći",
+    "step": "Izvor {at} od {count}",
+    "back": "Natrag",
+    "done": "Gotovo",
+    "offer": "{count, plural, one {Dodaj izvor koji si ovdje dodao/la i u SideStore, da prikazuje njegove aplikacije na iPhoneu.} few {Dodaj # izvora koje si ovdje dodao/la i u SideStore, da prikazuje njihove aplikacije na iPhoneu.} other {Dodaj # izvora koje si ovdje dodao/la i u SideStore, da prikazuje njihove aplikacije na iPhoneu.}}"
+  },
+  "checklist": {
+    "title": "Na uređaju {device} · iOS {ios}",
+    "setUp": "{device} je postavljen · iOS {ios}",
+    "show": "Prikaži popis",
+    "hide": "Sakrij",
+    "allSet": "Sve je spremno",
+    "progress": "{left, plural, one {# stvar za napraviti} few {# stvari za napraviti} other {# stvari za napraviti}} · gotovo {done} od {total}",
+    "group": {
+      "before": "Prije instalacije",
+      "after": "Nakon instalacije",
+      "sidestore": "Za SideStore"
+    },
+    "onPhone": "Na iPhoneu",
+    "tickedTag": "Učinjeno na iPhoneu",
+    "tick": "Učinio/la sam ovo",
+    "notNeeded": "Nije potrebno na ovom iOS-u",
+    "cable": {
+      "title": "Spoji {device} s ovim računalom",
+      "connected": "Spojen",
+      "none": "Nije spojen",
+      "how": "Prvi put koristi kabel; poslije Wi-Fi radi dok su oba na istoj mreži."
+    },
+    "unlock": {
+      "title": "Otključaj ga",
+      "locked": "Zaključan",
+      "unlocked": "Otključan",
+      "how": "Drži ga otključanim dok IPAForge instalira."
+    },
+    "trust": {
+      "title": "Vjeruj ovom računalu",
+      "trusted": "Pouzdano",
+      "notYet": "Još ne",
+      "step1": "Otključaj {device}.",
+      "step2": "Dodirni Vjeruj kad pita o ovom računalu.",
+      "step3": "Unesi njegovu šifru.",
+      "again": "Pitaj ponovno"
+    },
+    "passcode": {
+      "title": "Postavi šifru",
+      "how": "SideStore osvježava putem Wi-Fi-ja, što iOS dopušta samo sa šifrom: Postavke › Face ID i šifra."
+    },
+    "devmode": {
+      "title": "Uključi način rada za razvojne programere",
+      "on": "Uključeno",
+      "off": "Isključeno",
+      "step1": "Postavke › Privatnost i sigurnost › Način rada za razvojne programere (ako ga nema, pritisni Prikaži opciju).",
+      "step2": "Uključi ga i ponovno pokreni {device}.",
+      "step3": "Nakon ponovnog pokretanja dodirni Uključi i unesi šifru.",
+      "reveal": "Prikaži opciju",
+      "revealed": "Sada je u Postavke › Privatnost i sigurnost."
+    },
+    "developer": {
+      "title": "Vjeruj svom Apple ID-ju kao razvojnom programeru",
+      "later": "Nakon prve instalacije",
+      "step1": "Postavke › Općenito › VPN i upravljanje uređajem.",
+      "step2": "Pod Developer App dodirni {appleId}.",
+      "step3": "Dodirni Vjeruj. iPhone za to treba internet."
+    },
+    "vpn": {
+      "title": "Instaliraj LocalDevVPN",
+      "installed": "Instalirano",
+      "notInstalled": "Nije instalirano",
+      "how": "SideStore komunicira s iPhoneom putem ovog lokalnog VPN-a; ništa ne izlazi iz telefona. Besplatan je u App Storeu.",
+      "qrLabel": "QR kôd stranice LocalDevVPN-a u App Storeu",
+      "scan": "Skeniraj Kamerom ili potraži \"LocalDevVPN\" u App Storeu."
+    },
+    "vpnOn": {
+      "title": "Spoji LocalDevVPN kad SideStore osvježava",
+      "tag": "Svaki put",
+      "later": "Nakon instalacije",
+      "how": "Otvori LocalDevVPN i dodirni Connect ili pusti da ga SideStore uključi: pita prvi put."
+    },
+    "repair": {
+      "title": "SideStore se može sam osvježavati",
+      "tag": "Provjereno u Popravku",
+      "how": "Njegov certifikat, datoteka za uparivanje i istek."
+    },
+    "notice": "{count, plural, one {# stvar za napraviti na uređaju {device}} few {# stvari za napraviti na uređaju {device}} other {# stvari za napraviti na uređaju {device}}}",
+    "noticeBody": "Da instalacija i osvježavanje prođu glatko.",
+    "showChecklist": "Prikaži popis"
+  },
+  "updates": {
+    "screen": {
+      "label": "Ažuriranje IPAForgea"
+    },
+    "checking": {
+      "title": "Provjera ažuriranja…"
+    },
+    "downloading": {
+      "title": "Ažuriranje IPAForgea",
+      "body": "Dostupna je verzija {version}. Preuzima se i instalira sada, zatim se IPAForge sam ponovno otvara.",
+      "starting": "Pokretanje preuzimanja…",
+      "percent": "{fraction, number, percent}"
+    },
+    "installing": {
+      "title": "Instalacija {version}…",
+      "body": "IPAForge će se ponovno otvoriti za trenutak."
+    },
+    "failed": {
+      "title": "Ažuriranje nije završilo",
+      "body": "Dostupna je verzija {version}. Pokušaj ponovno ili je preuzmi sa stranice izdanja.",
+      "retry": "Pokušaj ponovno",
+      "releasePage": "Stranica izdanja",
+      "skip": "Zasad koristi ovu verziju"
+    },
+    "manual": {
+      "title": "Dostupan je IPAForge {version}",
+      "body": "Ova je kopija instalirana iz {package, select, msi {.msi instalacijskog programa} deb {.deb paketa} rpm {.rpm paketa} other {paketa}}, koji se ne može sam ažurirati. Preuzmi novu verziju i instaliraj je preko ove: tvoji Apple ID-jevi, aplikacije i postavke ostaju.",
+      "download": "Preuzmi {version}",
+      "later": "Kasnije"
+    },
+    "nativeBuild": {
+      "title": "Ovo je Intel izdanje",
+      "body": "Tvoj Mac ima Apple silicon pa se ova kopija IPAForgea pokreće putem Rosette i sve je sporije. Preuzmi izdanje za Apple silicon i instaliraj ga preko ovog; tvoji Apple ID-jevi, uređaji i aplikacije ostaju.",
+      "file": "IPAForge-…-mac-arm64.dmg",
+      "later": "Kasnije",
+      "download": "Preuzmi za Apple silicon"
+    }
+  },
+  "whatsNew": {
+    "link": "Što je novo",
+    "version": "Verzija {version} · {date}",
+    "englishOnly": "Bilješke o izdanju su na engleskom.",
+    "kind": {
+      "new": "Novo",
+      "changed": "Promijenjeno",
+      "fixed": "Ispravljeno",
+      "removed": "Uklonjeno"
+    },
+    "dialog": {
+      "title": "Što je novo u IPAForgeu",
+      "everyVersion": "Svaka verzija",
+      "close": "Razumijem"
+    },
+    "page": {
+      "title": "Što je novo",
+      "lede": "Sve što se promijenilo u IPAForgeu, najnovije prvo.",
+      "current": "Ova verzija",
+      "release": "Izdanje na GitHubu"
+    }
+  },
+  "portal": {
+    "description": "Što tim tvog Apple ID-ja drži kod Applea i profili na tvom uređaju.",
+    "tabsLabel": "Što tim drži",
+    "tabs": {
+      "certificates": "Certifikati",
+      "appIds": "App ID-jevi",
+      "profiles": "Profili",
+      "groups": "Grupe aplikacija",
+      "devices": "Registrirani uređaji"
+    },
+    "team": {
+      "pick": "Tim",
+      "free": "{name} (besplatno)",
+      "paid": "{name} (plaćeno)"
+    },
+    "refresh": "Osvježi",
+    "reading": "Čitanje od Applea…",
+    "noAccount": {
+      "title": "Još nema Apple ID-ja",
+      "body": "Prijavi se Apple ID-jem na Računima da vidiš što njegov tim drži."
+    },
+    "expired": "Isteklo",
+    "expires": "Ističe {date}",
+    "expiredOn": "Isteklo {date}",
+    "certificates": {
+      "hint": "Certifikat potpisuje aplikacije koje instaliraš. Opoziv certifikata prekida otvaranje svih aplikacija koje je potpisao, dok se ponovno ne potpišu.",
+      "usedFree": "Iskorišteno {count} od {max} (besplatni timovi mogu imati {max})",
+      "usedPaid": "{count, plural, one {# certifikat} few {# certifikata} other {# certifikata}}",
+      "maker": {
+        "thisComputer": "IPAForge na ovom računalu",
+        "ipaforge": "IPAForge na drugom računalu",
+        "sidestore": "SideStore",
+        "machine": "“{machine}” (obično Xcode)",
+        "unknown": "Nepoznati alat"
+      },
+      "thisComputer": "Ovog računala",
+      "signs": "Potpisuje {apps} na uređaju {device}",
+      "signsNothing": "Ništa ne potpisuje na uređaju {device}",
+      "revoke": "Opozovi",
+      "revokeOne": "Opozovi {name}",
+      "empty": "Tim još nema certifikata. IPAForge ga izrađuje pri prvoj instalaciji.",
+      "import": "Uvezi .p12…",
+      "export": "Izvezi .p12"
+    },
+    "revokeDialog": {
+      "title": "Opozvati ovaj certifikat?",
+      "apps": "One se prestaju otvarati na uređaju {device} dok se ponovno ne potpišu (to radi Osvježi u Aplikacijama):",
+      "none": "Ništa na uređaju {device} nije potpisano njime.",
+      "noDevice": "Spoji uređaj da vidiš koje aplikacije ovaj certifikat potpisuje.",
+      "thisComputer": "IPAForge izrađuje novi pri sljedećoj instalaciji ili osvježavanju.",
+      "sidestore": "SideStore ga je izradio da bi se sam osvježavao: izrađuje novi pri sljedećoj prijavi u njemu.",
+      "machine": "Xcode na tom računalu izrađuje novi pri sljedećem potpisivanju.",
+      "exportedToo": ".p12 izvezen iz njega također prestaje raditi."
+    },
+    "appIds": {
+      "hintFree": "Svaka aplikacija i proširenje koje instaliraš treba jedan. Besplatni timovi mogu registrirati 10 u 7 dana; svaki se računa 7 dana nakon izrade.",
+      "hintPaid": "Svaka aplikacija i proširenje koje instaliraš treba jedan. Plaćeni timovi nemaju tjedno ograničenje.",
+      "left": "{count, plural, one {# preostao ovaj tjedan} few {# preostala ovaj tjedan} other {# preostalih ovaj tjedan}}",
+      "leftAndNext": "{left} · sljedeći se oslobađa {date}",
+      "countsUntil": "Računa se do {date}",
+      "unused": "Neiskorišten",
+      "delete": "Izbriši",
+      "deleteOne": "Izbriši {name}",
+      "empty": "Tim još nema App ID-jeva."
+    },
+    "deleteDialog": {
+      "title": "Izbrisati ovaj App ID?",
+      "free": "U besplatnom timu i dalje se računa u 10 tjedno dok ne istekne: brisanje ne vraća mjesto ranije.",
+      "paid": "Može se kasnije ponovno registrirati."
+    },
+    "profiles": {
+      "title": "Provisioning profili na uređaju {device}",
+      "hint": "Profil omogućuje jednoj aplikaciji (ili proširenju) da radi na ovom uređaju. Osvježavanje daje aplikaciji novi; istekao ili neiskorišten profil može se sigurno ukloniti.",
+      "noDevice": "Spoji uređaj da vidiš njegove provisioning profile.",
+      "noApp": "Nijedna aplikacija ga ne koristi",
+      "otherTeam": "Drugi tim",
+      "remove": "Ukloni",
+      "removeOne": "Ukloni profil aplikacije {name}",
+      "removeUnused": "Ukloni neiskorištene",
+      "empty": "Na ovom uređaju nema provisioning profila."
+    },
+    "removeDialog": {
+      "title": "{count, plural, one {Ukloniti ovaj profil?} few {Ukloniti # profila?} other {Ukloniti # profila?}}",
+      "body": "{count, plural, one {Uklanja se s uređaja {device}. Nijedna aplikacija na njemu ga ne treba.} other {Uklanjaju se s uređaja {device}. Nijedna aplikacija na njemu ih ne treba.}}"
+    },
+    "groups": {
+      "hint": "Aplikacije u istoj grupi dijele datoteke (na primjer SideStore i njegov widget). IPAForge ih izrađuje kad aplikacija treba jednu.",
+      "empty": "Tim još nema grupa aplikacija."
+    },
+    "devices": {
+      "hintFree": "Aplikacije koje potpišeš rade samo na ovima.",
+      "hintPaid": "Aplikacije koje potpišeš rade samo na ovima. Plaćeni timovi mogu registrirati 100 godišnje; uklanjanje se radi na Appleovoj stranici za razvojne programere, jednom godišnje.",
+      "used": "{count} od {max} ove godine",
+      "connected": "Spojen",
+      "unnamed": "Neimenovani uređaj",
+      "empty": "Još nema registriranih uređaja. IPAForge registrira tvoj pri prvoj instalaciji."
+    },
+    "exportDialog": {
+      "title": "Izvezi certifikat ovog računala",
+      "body": ".p12 datoteka s certifikatom i njegovim privatnim ključem, za SideStore ili drugo računalo. Tko ima datoteku i njezinu lozinku, može potpisivati aplikacije kao tvoj tim.",
+      "password": "Lozinka",
+      "again": "Lozinka ponovno",
+      "tooShort": "{count, plural, one {Koristi barem # znak.} few {Koristi barem # znaka.} other {Koristi barem # znakova.}}",
+      "differ": "Dvije lozinke se razlikuju.",
+      "save": "Spremi .p12…"
+    },
+    "importDialog": {
+      "title": "Uvezi certifikat",
+      "body": ".p12 s drugog računala ili iz SideStorea. IPAForge provjerava navodi li ga Apple i dalje za ovaj tim, zatim njime ovdje potpisuje: bez novog certifikata, bez iskorištenog mjesta.",
+      "noFile": "Nijedna datoteka nije odabrana",
+      "choose": "Odaberi…",
+      "password": "Njegova lozinka",
+      "import": "Uvezi"
+    }
+  },
+  "guide": {
+    "title": "Vodič za postavljanje",
+    "stepsLabel": "Koraci postavljanja",
+    "stepDone": "(gotovo)",
+    "steps": {
+      "welcome": "Dobro došao/la",
+      "computer": "Ovo računalo",
+      "iphone": "Tvoj iPhone",
+      "appleid": "Apple ID",
+      "install": "Instaliraj SideStore",
+      "onphone": "Na tvom iPhoneu",
+      "around": "Sve je postavljeno"
+    },
+    "back": "Natrag",
+    "skip": "Preskoči ovaj korak",
+    "continue": "Nastavi",
+    "later": "Završi kasnije",
+    "checkAgain": "Provjeri ponovno",
+    "checking": "Provjera…",
+    "copy": "Kopiraj",
+    "copied": "Kopirano",
+    "welcome": {
+      "title": "Dobro došao/la u IPAForge",
+      "lead": "Nekoliko koraka priprema tvoje računalo, iPhone i Apple ID, a zatim možeš instalirati SideStore. Prvo odaberi svoj jezik.",
+      "needTitle": "Što ti treba",
+      "needDevice": "iPhone ili iPad s iOS-om 15 ili novijim i njegov USB kabel",
+      "needAppleId": "Apple ID (besplatni radi)",
+      "needPasscode": "Šifra tvog iPhonea, da bi vjerovao ovom računalu",
+      "skipGuide": "Snalazim se",
+      "start": "Počni"
+    },
+    "computer": {
+      "title": "Ovo računalo",
+      "lead": "IPAForge provjerava može li se ovo računalo prijaviti u Apple: Appleovi poslužitelji, sat i anisette poslužitelj. Ako ne može komunicirati s iPhoneima, kaže i kako to popraviti.",
+      "failed": "Provjere se nisu izvršile. Provjeri ponovno ili preskoči ovaj korak.",
+      "service": {
+        "title": "Usluga za povezivanje s iPhoneom",
+        "fixMac": "macOS bi je trebao sam pokrenuti. Ponovno pokreni Mac, zatim provjeri ponovno.",
+        "fixWindows": "Instaliraj Apple Devices iz Microsoft Storea, jednom ga otvori, zatim provjeri ponovno.",
+        "fixLinux": "Instaliraj usbmuxd, spoji iPhone, zatim provjeri ponovno.",
+        "openStore": "Otvori Microsoft Store"
+      },
+      "apple": {
+        "title": "Appleovi poslužitelji",
+        "ok": "Dostupni.",
+        "fix": "IPAForge ne može doći do Applea. Provjeri internetsku vezu, VPN ili vatrozid."
+      },
+      "clock": {
+        "title": "Sat",
+        "ok": "Točan.",
+        "fix": "{minutes, plural, one {Tvoj sat odstupa # minutu.} few {Tvoj sat odstupa # minute.} other {Tvoj sat odstupa # minuta.}} Postavi datum i vrijeme automatski, zatim provjeri ponovno."
+      },
+      "anisette": {
+        "title": "Anisette poslužitelji",
+        "ok": "{name} odgovara. Prijava ga koristi.",
+        "fix": "Nijedan od prvih {tried} poslužitelja na tvom popisu nije odgovorio. Provjeri vezu ili dodaj ili odaberi poslužitelj u Postavke › Anisette poslužitelji."
+      }
+    },
+    "iphone": {
+      "title": "Tvoj iPhone",
+      "lead": "Spoji iPhone kabelom, otključaj ga i dodirni Vjeruj kad pita. Na iOS-u 16 i novijem način rada za razvojne programere mora biti uključen.",
+      "connectTitle": "Spoji svoj iPhone",
+      "connectText": "Čekanje iPhonea ili iPada putem USB-a…"
+    },
+    "appleid": {
+      "title": "Tvoj Apple ID",
+      "lead": "Apple potpisuje aplikacije koje instaliraš tvojim Apple ID-jem. Tvoja lozinka ide samo Appleu i ostaje u privjesku ključeva ovog računala.",
+      "freeNote": "Besplatni Apple ID radi: njegove aplikacije traju 7 dana, a IPAForge ih može osvježavati. Plaćeni razvojni račun traje godinu dana.",
+      "signIn": "Prijavi se Apple ID-jem",
+      "signedIn": "Prijavljen.",
+      "team": "Tim koji potpisuje aplikacije",
+      "free": "Besplatno: aplikacije traju 7 dana",
+      "paid": "Plaćeno: aplikacije traju godinu dana"
+    },
+    "banner": {
+      "label": "Vodič za postavljanje",
+      "text": "Dovrši postavljanje IPAForgea: gotovo {done} od {total} koraka.",
+      "continue": "Nastavi vodič",
+      "notNow": "Ne sada"
+    },
+    "install": {
+      "title": "Instaliraj SideStore",
+      "lead": "SideStore sam osvježava tvoje aplikacije na iPhoneu i instalira nove. IPAForge mu daje datoteku za uparivanje i certifikat koji treba.",
+      "notNow": "Ne sada"
+    },
+    "onphone": {
+      "title": "Na tvom iPhoneu",
+      "lead": "Ono što samo ti možeš učiniti na iPhoneu. Označi svaku stavku kako ide; stranica Uređaji čuva isti popis."
+    },
+    "around": {
+      "title": "Sve je postavljeno",
+      "lead": "Evo gdje je što. Dok je IPAForge otvoren, osvježava tvoje aplikacije prije isteka.",
+      "again": "Ovaj vodič možeš pokrenuti ponovno bilo kada iz Postavki.",
+      "showMe": "Pokaži mi okolo",
+      "apps": {
+        "title": "Aplikacije",
+        "text": "Kad koja aplikacija ističe, uz Osvježi i Ažuriraj. Ovdje su i datoteke za uparivanje.",
+        "where": "Bočna traka › Aplikacije"
+      },
+      "preload": {
+        "title": "Predinstalacija",
+        "text": "Dodaj vlastite aplikacije: .ipa datoteke, poveznice, izvore. Ili ih spremi kao potpisane .ipa datoteke.",
+        "where": "Bočna traka › Predinstalacija"
+      },
+      "repair": {
+        "title": "Popravi SideStore",
+        "text": "Ako se SideStore prestane sam osvježavati, ovo utvrđuje zašto i popravlja.",
+        "where": "Aplikacije › Provjeri SideStore"
+      },
+      "developer": {
+        "title": "Portal za razvojne programere",
+        "text": "Tvoji certifikati, App ID-jevi i profili te .p12 za prijenos certifikata.",
+        "where": "Bočna traka › Portal za razvojne programere"
+      },
+      "devices": {
+        "title": "Uređaji",
+        "text": "Popis za svaki iPhone i njegova datoteka za uparivanje za druge alate.",
+        "where": "Bočna traka › Uređaji"
+      },
+      "logs": {
+        "title": "Zapisnik",
+        "text": "Što se dogodilo, korak po korak. Priloži ga prijavi greške.",
+        "where": "Bočna traka › Zapisnik · ⌘L / Ctrl+L"
+      }
+    }
+  },
+  "tour": {
+    "count": "{current} od {total}",
+    "skip": "Preskoči obilazak",
+    "back": "Natrag",
+    "next": "Dalje",
+    "done": "Gotovo",
+    "install": {
+      "title": "Instalacija",
+      "text": "Instaliraj SideStore ili LiveContainer sa SideStoreom jednim klikom. Počni ovdje na novom iPhoneu."
+    },
+    "preload": {
+      "title": "Predinstalacija",
+      "text": "Dodaj vlastite aplikacije: .ipa datoteke, poveznice ili aplikacije iz izvora. Označi jednu da je umjesto toga spremiš kao potpisani .ipa."
+    },
+    "apps": {
+      "title": "Aplikacije",
+      "text": "Kad koja aplikacija ističe, uz Osvježi i Ažuriraj. IPAForge ih sam osvježava dok je otvoren. Ovdje su i datoteke za uparivanje."
+    },
+    "devices": {
+      "title": "Uređaji",
+      "text": "Popis za svaki iPhone prema njegovoj verziji iOS-a i njegova datoteka za uparivanje za druge alate."
+    },
+    "developer": {
+      "title": "Portal za razvojne programere",
+      "text": "Certifikati, App ID-jevi i profili tvog Apple ID-ja. Očisti što ništa ne koristi ili prenesi svoj certifikat kao .p12."
+    },
+    "pickers": {
+      "title": "Uređaj i Apple ID",
+      "text": "Promijeni iPhone ili Apple ID koji IPAForge ovdje koristi, bilo kada."
+    },
+    "logs": {
+      "title": "Zapisnik",
+      "text": "Svaki korak koji je IPAForge poduzeo. Priloži ga prijavi greške (⌘L / Ctrl+L)."
+    },
+    "settings": {
+      "title": "Postavke",
+      "text": "Jezik, izgled, anisette poslužitelji i ovaj obilazak ponovno."
+    },
+    "showAround": {
+      "title": "Pokaži mi okolo",
+      "text": "Ponovno pokreni ovaj obilazak odavde, bilo kada. Vodič za postavljanje je u Postavkama."
+    }
+  },
+  "pairByCode": {
+    "steps": {
+      "pair": "Uparivanje kodom"
+    },
+    "open": "Upari Apple TV ili Vision Pro…",
+    "title": "Upari Apple TV ili Vision Pro",
+    "titleAgain": "Upari {name} ponovno",
+    "progress": {
+      "label": "Koraci",
+      "find": "1 Pronađi",
+      "code": "2 Kôd"
+    },
+    "intro": "Nemaju kabel pa se uparuju putem Wi-Fi-ja kodom. Stavi uređaj na isti Wi-Fi kao ovo računalo, zatim otvori njegov zaslon za uparivanje i drži ga otvorenim:",
+    "where": {
+      "tv": "Apple TV",
+      "vision": "Apple Vision Pro",
+      "tvPath": "Postavke → Daljinski upravljači i uređaji → Aplikacija Remote i uređaji",
+      "visionPath": "Postavke → Općenito → Udaljeni uređaji"
+    },
+    "found": "Pronađeno na tvojoj mreži",
+    "showing": "Prikazuje zaslon za uparivanje",
+    "pair": "Upari",
+    "searching": "Traženje na tvojoj mreži… Uređaj se ovdje pojavljuje kad otvoriš njegov zaslon za uparivanje.",
+    "searchingMore": "Još tražim druge…",
+    "help": {
+      "title": "Ne pojavljuje se",
+      "screen": "Drži zaslon za uparivanje otvorenim: uređaj se može pronaći samo dok ga prikazuje.",
+      "network": "Isti Wi-Fi kao ovo računalo: ne gostujuća mreža i bez VPN-a s bilo koje strane.",
+      "ipv6": "IPv6 uključen na usmjerivaču (Apple ga treba za uparivanje).",
+      "macos": "macOS: Postavke sustava → Privatnost i sigurnost → Lokalna mreža → IPAForge uključen.",
+      "windows": "Windows: dopusti IPAForge na privatnim mrežama kad vatrozid pita."
+    },
+    "failed": "Traženje na tvojoj mreži je zaustavljeno. Zatvori ovo i ponovno otvori.",
+    "code": {
+      "title": "Unesi kôd na uređaju {name}",
+      "body": "{name} prikazuje kôd. Upiši ga ovdje.",
+      "label": "Kôd",
+      "wrong": "Taj kôd se nije podudarao. Provjeri kôd na uređaju {name} i pokušaj ponovno.",
+      "pairing": "Uparivanje s uređajem {name}…",
+      "checking": "Provjera koda…"
+    },
+    "back": "Natrag",
+    "backToList": "Natrag na popis",
+    "backoff": {
+      "title": "Previše pogrešnih kodova",
+      "wait": "{name} dopušta novi pokušaj za {seconds, plural, one {# sekundu} few {# sekunde} other {# sekundi}}.",
+      "later": "{name} neko vrijeme ne prima kodove. Pričekaj trenutak, zatim pokušaj ponovno."
+    },
+    "closed": {
+      "title": "{name} je zatvorio zaslon za uparivanje",
+      "body": "Kôd radi samo dok je zaslon za uparivanje otvoren. Ponovno ga otvori na uređaju {name}:"
+    },
+    "done": {
+      "title": "{name} je uparen",
+      "body": "{name} je na tvojoj stranici Uređaji. Sada možeš zatvoriti njegov zaslon za uparivanje.",
+      "vision": "Aplikacije se instaliraju kad je uključen način rada za razvojne programere.",
+      "use": "Koristi {name}",
+      "close": "Zatvori"
+    },
+    "pairNamed": "Upari {name}"
+  }
+}
