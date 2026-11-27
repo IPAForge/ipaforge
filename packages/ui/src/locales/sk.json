@@ -1,0 +1,2216 @@
+{
+  "app": {
+    "name": "IPAForge"
+  },
+  "shell": {
+    "skipToContent": "Preskočiť na obsah",
+    "navigation": "Sekcie",
+    "credit": {
+      "madeWith": "Vytvorené s ❤️ a ☕",
+      "copyright": "© {year} {name}"
+    }
+  },
+  "topBar": {
+    "device": "Zariadenie",
+    "noDevice": "Žiadne",
+    "deviceMenu": "Zariadenia",
+    "account": "Apple ID",
+    "notSignedIn": "Nie si prihlásený",
+    "accountMenu": "Apple ID",
+    "addAppleId": "Pridať Apple ID…",
+    "noAccounts": "Zatiaľ žiadne Apple ID.",
+    "noDevicesHint": "Pripoj iPhone alebo iPad káblom a odomkni ho.",
+    "openDevices": "Otvoriť Zariadenia",
+    "tour": "Ukáž mi, kde čo je",
+    "pairByCode": "Spárovať Apple TV alebo Vision Pro…"
+  },
+  "nav": {
+    "group": {
+      "manage": "Správa"
+    },
+    "install": "Inštalácia",
+    "preload": "Predinštalácia",
+    "apps": "Aplikácie",
+    "devices": "Zariadenia",
+    "accounts": "Účty",
+    "developer": "Vývojársky portál",
+    "logs": "Záznamy",
+    "settings": "Nastavenia",
+    "installRunning": "Prebieha inštalácia"
+  },
+  "placeholder": {
+    "body": "Táto sekcia je vo výstavbe."
+  },
+  "install": {
+    "title": "Inštalácia SideStore",
+    "description": "Podpísané tvojím Apple ID a potom nainštalované cez USB.",
+    "steps": {
+      "device": "Kontrola zariadenia",
+      "resolve": "Hľadanie vydania",
+      "download": "Sťahovanie",
+      "inspect": "Kontrola aplikácie",
+      "certificate_sharing": "Zdieľanie certifikátu",
+      "sign_in": "Prihlásenie do Apple",
+      "team": "Výber tímu",
+      "register_device": "Registrácia zariadenia",
+      "certificate": "Príprava certifikátu",
+      "app_ids": "Registrácia App ID",
+      "free_apps": "Kontrola limitu bezplatných aplikácií",
+      "provision": "Získanie provisioning profilov",
+      "refresh_profiles": "Získanie nových profilov",
+      "sign": "Podpísanie aplikácie",
+      "install": "Inštalácia do zariadenia",
+      "pairing": "Uloženie súboru párovania",
+      "remember": "Zapamätanie tejto inštalácie",
+      "save": "Uloženie podpísaného súboru .ipa"
+    },
+    "signInNeeded": {
+      "title": "Tvoje Apple ID vyžaduje nové prihlásenie",
+      "body": "Uložená relácia pre {appleId} vypršala. Inštalovať môžeš aj tak: IPAForge sa opýta na heslo, keď na to príde."
+    },
+    "blocked": {
+      "title": "Apple zablokoval {appleId} na zariadení {device}",
+      "body": "Aplikácie podpísané týmto Apple ID sa na tomto zariadení neotvoria. Použi iné Apple ID.",
+      "use": "Použiť {appleId}"
+    },
+    "home": {
+      "what": "Čo nainštalovať",
+      "channel": "Kanál",
+      "install": "Nainštalovať {app}"
+    },
+    "variant": {
+      "sidestore": {
+        "title": "SideStore",
+        "description": "Samo obnovuje a inštaluje aplikácie v zariadení. Používa 2 App ID."
+      },
+      "livecontainer": {
+        "title": "LiveContainer + SideStore",
+        "description": "Spúšťa viac aplikácií v jednej, mimo limitu 3 aplikácií. Používa 5 App ID."
+      }
+    },
+    "channel": {
+      "stable": "Stabilný",
+      "nightly": "Nightly",
+      "stableRecommended": "Stabilný (odporúčané)",
+      "nightlyRecommended": "Nightly (odporúčané)"
+    },
+    "plan": {
+      "title": "Táto inštalácia",
+      "waiting": "Zobrazí sa, keď budú zariadenie a Apple ID pripravené.",
+      "checking": "Sťahuje sa {app} a overuje sa u Apple… Stiahnutý súbor sa uchová, takže ho inštalácia použije znova.",
+      "unavailable": "Overenie u Apple sa nepodarilo. Inštalovať môžeš aj tak: každý krok overuje znova.",
+      "appIds": "App ID",
+      "appIdsValue": "{created, plural, =0 {Všetkých {reused} je už zaregistrovaných} other {{reused, plural, =0 {{created} nových} other {{created} nových, {reused} použitých znova}}}} · {left, plural, one {tento týždeň zostáva #} few {tento týždeň zostávajú #} other {tento týždeň zostáva #}}",
+      "nextSlot": "Ďalšie sa uvoľní {date}",
+      "freeApps": "Bezplatné aplikácie v zariadení",
+      "freeAppsValue": "Použité {used} z {limit}",
+      "freeAppsRoom": "Pre túto je miesto",
+      "freeAppsFull": "Vyberieš jednu na odstránenie",
+      "noLimit": "Bez limitu (platený tím)",
+      "certificate": "Certifikát",
+      "certificateReused": "Použije sa znova",
+      "certificateNew": "Vytvorí sa nový",
+      "certificatesOnTeam": "{count, plural, =0 {V tíme zatiaľ žiadny} one {# v tíme} few {# v tíme} other {# v tíme}}",
+      "team": "Tím",
+      "certificateNewWhy": "IPAForge zatiaľ nemá v tomto tíme vlastný certifikát. {count, plural, =0 {} one {Ten, ktorý tu už je, patrí inému nástroju, ktorý si ponecháva svoj súkromný kľúč.} few {Tie #, ktoré tu už sú, patria iným nástrojom, ktoré si ponechávajú svoje súkromné kľúče.} other {Tých #, ktoré tu už je, patrí iným nástrojom, ktoré si ponechávajú svoje súkromné kľúče.}}"
+    },
+    "readiness": {
+      "noDevice": "Najprv pripoj zariadenie.",
+      "noSideStore": "SideStore beží na iPhone a iPade. Aplikácie na Apple TV alebo Vision Pro nainštaluješ cez Predinštaláciu.",
+      "checking": "Kontrolujem zariadenie…",
+      "device": "Dostupné, keď bude zariadenie pripravené.",
+      "noAccount": "Najprv pridaj Apple ID.",
+      "blocked": "Najprv použi iné Apple ID.",
+      "appIds": "Tento týždeň nezostalo dosť App ID.",
+      "ready": "Všetko je pripravené."
+    },
+    "run": {
+      "title": {
+        "running": "Inštaluje sa {app}",
+        "completed": "{app} je nainštalovaná",
+        "failed": "{app} sa nepodarilo nainštalovať",
+        "cancelled": "Inštalácia bola zrušená"
+      },
+      "subtitle": "{channel} · {device} · {appleId}",
+      "percent": "{fraction, number, percent}",
+      "progress": "Celkový priebeh",
+      "steps": "Kroky",
+      "cancel": "Zrušiť",
+      "cancelInstall": "Zrušiť inštaláciu",
+      "runningHint": "Kým to beží, môžeš používať iné sekcie.",
+      "waitingHint": "Čaká sa na tvoju odpoveď.",
+      "stepState": {
+        "waiting": "čaká na teba",
+        "skipped": "preskočené",
+        "failed": "zlyhalo"
+      },
+      "detail": {
+        "bytes": "{received} z {total}",
+        "received": "{received}",
+        "retrying": "Spojenie sa prerušilo. Ďalší pokus o {seconds, plural, one {# sekundu} few {# sekundy} other {# sekúnd}} (pokus {attempt})"
+      },
+      "live": {
+        "header": "{percent} · {left}",
+        "installing": "{fraction, number, percent} · {phase}",
+        "count": "{done} z {total}",
+        "task": {
+          "line": "{task} · {count}",
+          "team": "Kontrola tímu",
+          "appIds": "Vytváranie App ID",
+          "appGroup": "Pridávanie skupiny aplikácií",
+          "profiles": "Získavanie profilov"
+        },
+        "phase": {
+          "unpacking": "Rozbaľovanie aplikácie",
+          "checking": "Kontrola aplikácie",
+          "installing": "Inštalácia"
+        },
+        "speed": "{speed}/s",
+        "ios": "Inštaluje ju iOS",
+        "leftSeconds": "Zostáva asi {seconds} s",
+        "leftMinutes": "{minutes, plural, one {Zostáva asi # min} few {Zostávajú asi # min} other {Zostáva asi # min}}"
+      },
+      "connection": {
+        "usb": "USB",
+        "network": "Wi-Fi"
+      },
+      "wifi": {
+        "title": "Toto zariadenie je pripojené cez Wi-Fi",
+        "body": "Veľké aplikácie sa cez kábel inštalujú oveľa rýchlejšie. Cez Wi-Fi ich IPAForge posiela komprimované, aby ušetril čas."
+      },
+      "unsupportedPrompt": {
+        "title": "Tento krok potrebuje odpoveď",
+        "body": "IPAForge potrebuje odpoveď na otázku, ktorú táto verzia nevie zobraziť. Zruš inštaláciu a aktualizuj IPAForge."
+      },
+      "backToInstall": "Späť na Inštaláciu",
+      "report": {
+        "device": "{model} · iOS {ios} · {connection}",
+        "release": "{app} {version} · {channel}",
+        "download": "{size} · kontrolný súčet overený",
+        "downloadCached": "{size} · z vyrovnávacej pamäte sťahovania",
+        "app": "{app} · {extensions, plural, =0 {bez rozšírení} one {# rozšírenie} few {# rozšírenia} other {# rozšírení}}",
+        "session": {
+          "reused": "Uložená relácia použitá znova",
+          "renewed": "Prihlásený znova uloženým heslom",
+          "signed-in": "Prihlásený"
+        },
+        "registered": "Zaregistrované v tíme",
+        "alreadyRegistered": "Už zaregistrované v tíme",
+        "certificate": {
+          "reused": "Použitý uložený certifikát",
+          "created": "Vytvorený nový certifikát",
+          "replaced": "Jeden zrušený a vytvorený nový certifikát"
+        },
+        "removed": "Odstránená {app} · {used}",
+        "profiles": "{count, plural, one {# profil} few {# profily} other {# profilov}}",
+        "signed": "{count, plural, one {# balík podpísaný} few {# balíky podpísané} other {# balíkov podpísaných}}",
+        "signedCompressed": "{count, plural, one {# balík podpísaný} few {# balíky podpísané} other {# balíkov podpísaných}} · komprimované pre Wi-Fi",
+        "phase": {
+          "uploading": "Nahrávanie do zariadenia",
+          "installing": "Inštalácia"
+        },
+        "pairing": "Uložené do {apps}",
+        "shared": "Certifikát zdieľaný",
+        "notShared": "Certifikát nezdieľaný",
+        "pairingRemote": "Uložené do {apps} · so vzdialeným párovaním pre iOS 17.4 a novšie",
+        "saved": "Uložené do {path}"
+      },
+      "subtitleApps": "{device} · {appleId}"
+    },
+    "summary": {
+      "title": "Táto inštalácia",
+      "app": "Aplikácia",
+      "channel": "Kanál",
+      "device": "Zariadenie",
+      "deviceValue": "{name} · iOS {ios}",
+      "account": "Apple ID",
+      "appIds": "App ID",
+      "appIdsValue": "{count, plural, one {tento týždeň zostáva #} few {tento týždeň zostávajú #} other {tento týždeň zostáva #}}",
+      "freeApps": "Bezplatné aplikácie",
+      "apps": "Aplikácie"
+    },
+    "done": {
+      "title": "{app} je v zariadení {device}.",
+      "trust": "V zariadení: Nastavenia › Všeobecné › VPN a správa zariadenia › dôveruj {appleId}.",
+      "open": "Otvor SideStore: súbor párovania aj tvoj certifikát sú už vnútri.",
+      "done": "Hotovo"
+    },
+    "cancelled": {
+      "title": "Zastavené pri kroku „{step}“.",
+      "body": "Čo je už hotové, sa pri pokračovaní nebude opakovať.",
+      "resume": "Pokračovať"
+    },
+    "failed": {
+      "continues": "Dokončené kroky sa zachovajú: ďalší pokus pokračuje od kroku „{step}“.",
+      "copy": "Kopírovať diagnostiku",
+      "copied": "Skopírované",
+      "copyFailed": "Kopírovanie sa nepodarilo",
+      "showLogs": "Zobraziť záznamy"
+    }
+  },
+  "pairing": {
+    "steps": {
+      "targets": "Hľadanie aplikácií, ktoré potrebujú párovanie",
+      "place": "Uloženie súboru párovania"
+    }
+  },
+  "settings": {
+    "appearance": "Vzhľad a jazyk",
+    "mode": "Farebný režim",
+    "palette": "Paleta",
+    "language": {
+      "title": "Jazyk",
+      "system": "Systém ({language})",
+      "hint": "IPAForge sleduje jazyk systému, kým si tu nevyberieš iný.",
+      "draft": "návrh"
+    },
+    "anisette": {
+      "title": "Servery anisette",
+      "hint": "Prihlásenie do Apple potrebuje anisette server, ktorý Applu hovorí, z ktorého počítača sa prihlasuje. IPAForge si vyberie funkčný sám; ak chceš konkrétny server, vyber ho tu, alebo pridaj vlastný.",
+      "add": "Pridať server",
+      "loading": "Načítavam servery…",
+      "modeLabel": "Ako IPAForge vyberá server",
+      "mode": {
+        "automatic": "Automaticky",
+        "chosen": "Vybrať server"
+      },
+      "modeHint": {
+        "automatic": "Skúša servery v tomto poradí a keď jeden zlyhá, prejde na ďalší.",
+        "chosen": "Vždy používa {name}.",
+        "none": "Vyber server, ktorý má IPAForge vždy používať."
+      },
+      "noneChosen": "Zatiaľ nie je vybraný žiadny server: kým nejaký nevyberieš, IPAForge ďalej vyberá sám.",
+      "chosenDown": "{name} neodpovedá. Prihlásenie nebude fungovať, kým sa nevráti, alebo kým nevyberieš iný server či neprepneš na Automaticky.",
+      "count": "{count, plural, one {# server} few {# servery} other {# serverov}}",
+      "sources": "{custom, plural, =0 {} other {# pridané tebou, }}{list} zo zoznamu SideStore, {backup} ako záloha ·",
+      "listUpdated": "Zoznam SideStore aktualizovaný {ago}",
+      "listNever": "Zoznam SideStore ešte nebol stiahnutý",
+      "updateList": "Aktualizovať zoznam",
+      "updating": "Aktualizujem…",
+      "testAll": "Otestovať všetky",
+      "testing": "Testujem…",
+      "group": {
+        "custom": "Pridané tebou · používajú sa ako prvé",
+        "list": "Zo zoznamu SideStore",
+        "backup": "Záloha · len keď zoznam SideStore nie je dostupný alebo neodpovedá žiadny jeho server"
+      },
+      "tag": {
+        "custom": "Pridané tebou",
+        "inUse": "Používa sa",
+        "chosen": "Vybraný"
+      },
+      "position": "Skúša sa ako číslo {position}",
+      "use": "Použiť {name}",
+      "chooseLabel": "Server na použitie",
+      "status": {
+        "untested": "Netestované",
+        "testing": "Testujem…",
+        "ok": "Funguje · {ms} ms",
+        "bad": "Neodpovedá"
+      },
+      "test": "Test",
+      "testOne": "Otestovať {name}",
+      "edit": "Upraviť {name}",
+      "remove": "Odstrániť {name}",
+      "confirmRemove": "Odstrániť {name}?",
+      "removeYes": "Odstrániť",
+      "skipped": "Zo zoznamu SideStore sa nepoužívajú: {names} (bez HTTPS). Server s obyčajným HTTP môžeš pridať sám, napríklad taký na vlastnom počítači.",
+      "dialog": {
+        "addTitle": "Pridať server anisette",
+        "editTitle": "Upraviť server",
+        "body": "Funguje každý anisette server, ktorý hovorí obvyklým protokolom: verejný alebo taký, ktorý prevádzkuješ sám.",
+        "name": "Názov",
+        "namePlaceholder": "Môj server",
+        "address": "Adresa",
+        "addressPlaceholder": "https://anisette.my-server.net",
+        "addressHint": "https:// alebo, pre server, ktorý prevádzkuješ sám, http://",
+        "nameMissing": "Daj mu názov.",
+        "addressInvalid": "Zadaj adresu, ktorá začína na https:// alebo http://.",
+        "exists": "Tento server už v zozname je.",
+        "stillAdd": "Stále ho môžeš pridať.",
+        "save": "Uložiť"
+      }
+    },
+    "guide": {
+      "title": "Sprievodca nastavením",
+      "text": "Počítač, iPhone a Apple ID sa skontrolujú znova.",
+      "run": "Spustiť sprievodcu znova",
+      "tour": "Ukáž mi, kde čo je",
+      "tourTitle": "Prehliadka stránok",
+      "tourHint": "Na čo je každá stránka, zastávku po zastávke."
+    },
+    "tabs": {
+      "label": "Nastavenia",
+      "general": "Všeobecné",
+      "anisette": "Servery anisette"
+    },
+    "modeHint": "Svetlý, tmavý, alebo podľa systému.",
+    "paletteHint": "Farby celej aplikácie, vo svetlom aj tmavom režime."
+  },
+  "theme": {
+    "mode": {
+      "system": "Systém",
+      "light": "Svetlý",
+      "dark": "Tmavý"
+    },
+    "palette": {
+      "graphite": "Grafit",
+      "ocean": "Oceán",
+      "aurora": "Aurora",
+      "sunset": "Západ slnka",
+      "forest": "Les",
+      "rose": "Ruža",
+      "violet": "Fialová",
+      "mocha": "Mocha"
+    }
+  },
+  "errors": {
+    "device": {
+      "locked": {
+        "title": "Odomkni zariadenie",
+        "body": "Zariadenie je zamknuté, takže sa s ním IPAForge nemôže spojiť. Odomkni ho a nechaj odomknuté, kým inštalácia neskončí."
+      },
+      "developer_mode_off": {
+        "title": "Režim vývojára je vypnutý",
+        "body": "Aplikácie nainštalované bokom vyžadujú režim vývojára. Zapni ho v Nastavenia › Súkromie a zabezpečenie › Režim vývojára a potom zariadenie reštartuj."
+      },
+      "not_paired": {
+        "title": "Tomuto počítaču sa ešte nedôveruje",
+        "body": "Odomkni zariadenie a ťukni na Dôverovať, keď sa opýta, či má tomuto počítaču dôverovať."
+      },
+      "usbmuxd_unavailable": {
+        "title": "Podpora zariadení nebeží",
+        "body": "IPAForge sa nevie spojiť so systémovou službou, ktorá komunikuje s iPhonmi a iPadmi. Nainštaluj ju alebo spusti a skús to znova."
+      },
+      "not_found": {
+        "title": "Nenašlo sa žiadne zariadenie",
+        "body": "Pripoj iPhone alebo iPad káblom USB a odomkni ho."
+      },
+      "disconnected": {
+        "title": "Zariadenie sa odpojilo",
+        "body": "Spojenie sa prerušilo. Pripoj kábel znova, odomkni zariadenie a skús to znova."
+      },
+      "pairing_pending": {
+        "title": "Čaká sa na Dôverovať",
+        "body": "Odomkni zariadenie a ťukni na Dôverovať v zobrazenej výzve."
+      },
+      "pairing_denied": {
+        "title": "Dôvera bola odmietnutá",
+        "body": "Zariadenie odmietlo dôverovať tomuto počítaču. Spáruj znova a tentoraz ťukni na Dôverovať."
+      },
+      "invalid_pair_record": {
+        "title": "Párovanie už neplatí",
+        "body": "Zariadenie už neprijíma párovanie tohto počítača. Odpoj ho, pripoj znova, odomkni a ťukni na Dôverovať."
+      },
+      "service_unavailable": {
+        "title": "Služba zariadenia sa nespustila",
+        "body": "Zariadenie odmietlo spustiť službu, ktorú IPAForge potrebuje. Odomkni ho, pripoj znova a skús to znova."
+      },
+      "protocol_error": {
+        "title": "Neočakávaná odpoveď zariadenia",
+        "body": "Zariadenie poslalo niečo, čomu IPAForge nerozumel. Pripoj ho znova; ak sa to zopakuje, aktualizuj IPAForge alebo to nahlás."
+      },
+      "install_failed": {
+        "title": "Inštalácia zlyhala",
+        "body": "Zariadenie odmietlo aplikáciu nainštalovať. Skús to znova; ak to stále zlyháva, preinštaluj aplikáciu alebo to nahlás."
+      },
+      "afc_error": {
+        "title": "Súbory sa nepodarilo preniesť",
+        "body": "Kopírovanie súborov do zariadenia zlyhalo. Odomkni ho a skús to znova."
+      },
+      "timeout": {
+        "title": "Zariadenie prestalo odpovedať",
+        "body": "Zariadenie odpovedalo príliš dlho. Odomkni ho, pripoj znova a skús to znova."
+      },
+      "passcode_required": {
+        "title": "Nastav prístupový kód",
+        "body": "Toto vyžaduje prístupový kód zariadenia. Nastav ho v Nastavenia › Face ID a kód a potom to skús znova."
+      },
+      "free_app_limit": {
+        "title": "Priveľa aplikácií nainštalovaných bokom",
+        "body": "Bezplatné Apple ID môže mať v zariadení aktívne len tri aplikácie nainštalované bokom. Jednu odstráň a skús to znova."
+      },
+      "profile_banned": {
+        "title": "Apple zablokoval toto Apple ID v zariadení",
+        "body": "Zariadenie neprijme aplikácie podpísané týmto Apple ID. Opakovanie nepomôže: použi iné Apple ID."
+      },
+      "identity_invalid": {
+        "title": "Podpisový certifikát už neplatí",
+        "body": "Zariadenie odmietlo certifikát, ktorým bola aplikácia podpísaná. Skontroluj hodiny počítača alebo certifikát zruš a skús to znova."
+      },
+      "profile_not_found": {
+        "title": "Chýba provisioning profil",
+        "body": "Zariadenie nenašlo provisioning profil aplikácie. Skús to znova alebo aplikáciu preinštaluj."
+      },
+      "pairing_path_invalid": {
+        "title": "Do tejto cesty sa súbor párovania uložiť nedá",
+        "body": "Použi cestu v priečinku Documents alebo Library aplikácie, ktorá končí na .plist alebo .mobiledevicepairing."
+      },
+      "local_network_denied": {
+        "title": "IPAForge nemôže hľadať zariadenia v tvojej sieti",
+        "body": "macOS nepovolil IPAForge nájsť zariadenia v lokálnej sieti, takže sa nevie cez Wi-Fi spojiť s iPhonmi. Zariadenia na kábli stále fungujú."
+      },
+      "tunnel_unavailable": {
+        "title": "Tunel zariadenia sa neotvoril",
+        "body": "IPAForge nedokázal otvoriť zabezpečený tunel, ktorý iOS 17.4 a novšie ponúkajú cez kábel. Skontroluj, či v zariadení beží iOS 17.4 alebo novší, pripoj ho znova a skús to znova."
+      },
+      "pairing_code_wrong": {
+        "title": "Kód sa nezhodoval",
+        "body": "Zadaný kód nie je ten, ktorý zariadenie zobrazuje. Skontroluj kód na jeho obrazovke a skús to znova."
+      },
+      "pairing_backoff": {
+        "title": "Priveľa nesprávnych kódov",
+        "body": "Zariadenie chvíľu neprijme žiadne ďalšie kódy. Chvíľu počkaj, znova otvor jeho obrazovku párovania a spáruj ešte raz."
+      },
+      "pairing_screen_closed": {
+        "title": "Obrazovka párovania sa zavrela",
+        "body": "Zariadenie prestalo zobrazovať obrazovku párovania skôr, než sa párovanie dokončilo. Otvor ju znova a nechaj otvorenú: Apple TV: Nastavenia → Diaľkové ovládače a zariadenia → Aplikácia Remote a zariadenia. Apple Vision Pro: Nastavenia → Všeobecné → Vzdialené zariadenia."
+      }
+    },
+    "apple": {
+      "anisette_unavailable": {
+        "title": "Server anisette neodpovedá",
+        "body": "Prihlásenie do Apple potrebuje server anisette a aktuálny neodpovedal. Vyber iný server alebo skontroluj sieť."
+      },
+      "anisette_not_provisioned": {
+        "title": "Server anisette nie je pripravený",
+        "body": "Server anisette sa nedokázal nastaviť. Vyber iný server a skús to znova."
+      },
+      "app_id_quota": {
+        "title": "Tento týždeň nezostali žiadne App ID",
+        "body": "Bezplatné Apple ID môže zaregistrovať len 10 App ID za 7 dní. Počkaj, kým sa uvoľní miesto, alebo použi iné Apple ID."
+      },
+      "certificate_limit": {
+        "title": "Priveľa certifikátov",
+        "body": "Toto Apple ID dosiahlo limit vývojárskych certifikátov. Jeden zruš alebo použi iné Apple ID."
+      },
+      "invalid_credentials": {
+        "title": "Nesprávne Apple ID alebo heslo",
+        "body": "Apple neprijal e-mail alebo heslo. Skontroluj ich a zadaj heslo znova."
+      },
+      "account_locked": {
+        "title": "Toto Apple ID je zamknuté",
+        "body": "Apple tento účet zamkol z bezpečnostných dôvodov. Odomkni ho na zariadení Apple alebo na webe Apple, alebo použi iné Apple ID."
+      },
+      "account_refused": {
+        "title": "Apple odmietol prihlásenie",
+        "body": "Apple momentálne nedovolí tomuto Apple ID prihlásiť sa odtiaľto. Chvíľu počkaj, raz sa prihlás na zariadení Apple alebo použi iné Apple ID."
+      },
+      "client_rejected": {
+        "title": "Apple odmietol žiadosť o prihlásenie",
+        "body": "Apple neprijal identitu odoslanú pri prihlásení. Vyber iný server anisette alebo počkaj a skús to znova."
+      },
+      "rate_limited": {
+        "title": "Priveľa žiadostí",
+        "body": "Apple zatiaľ obmedzuje počet žiadostí. Počkaj niekoľko minút a skús to znova."
+      },
+      "service_unavailable": {
+        "title": "Servery Apple sú nedostupné",
+        "body": "Servery Apple neodpovedali. Počkaj niekoľko minút a skontroluj sieť."
+      },
+      "two_factor_required": {
+        "title": "Zadaj overovací kód",
+        "body": "Apple poslal overovací kód na tvoje dôveryhodné zariadenia. Zadaj ho a pokračuj."
+      },
+      "two_factor_invalid_code": {
+        "title": "Nesprávny overovací kód",
+        "body": "Ten kód nefungoval. Skontroluj ho a zadaj znova."
+      },
+      "two_factor_unsupported": {
+        "title": "Tento spôsob prihlásenia nie je podporovaný",
+        "body": "Toto Apple ID používa metódu dvojfaktorového overenia, ktorú IPAForge zatiaľ nezvláda, napríklad bezpečnostný kľúč. Použi iné Apple ID."
+      },
+      "sms_unavailable": {
+        "title": "Kódy v textovej správe nie sú dostupné",
+        "body": "Apple tu kód textovou správou neposiela. Získaj ho na dôveryhodnom zariadení alebo použi iné Apple ID."
+      },
+      "clock_skew": {
+        "title": "Hodiny počítača sú nesprávne",
+        "body": "Apple odmieta žiadosti, keď sú hodiny posunuté. Nastav dátum a čas automaticky a skús to znova."
+      },
+      "protocol_error": {
+        "title": "Neočakávaná odpoveď od Apple",
+        "body": "Apple poslal niečo, čomu IPAForge nerozumel. Aktualizuj IPAForge alebo to nahlás, ak sa to bude opakovať."
+      },
+      "session_expired": {
+        "title": "Tvoja relácia vypršala",
+        "body": "Prihlás sa k tomuto Apple ID znova. Ak stále vypršiava, skontroluj hodiny počítača."
+      },
+      "account_not_found": {
+        "title": "Apple ID sa nenašlo",
+        "body": "IPAForge nemá uloženú reláciu pre toto Apple ID. Prihlás sa znova."
+      },
+      "not_eligible": {
+        "title": "Toto Apple ID sa nedá použiť na vývoj",
+        "body": "Apple tomuto účtu nepovoľuje podpisovať aplikácie, napríklad kvôli veku alebo podmienkam. Použi iné Apple ID."
+      },
+      "email_unverified": {
+        "title": "Over svoj e-mail",
+        "body": "Apple najprv potrebuje overiť e-mailovú adresu tohto Apple ID. Over ju a skús to znova."
+      },
+      "team_agreement": {
+        "title": "Prijmi zmluvu Apple",
+        "body": "Tím neprijal najnovšiu vývojársku zmluvu Apple. Prijmi ju na vývojárskom webe Apple alebo vyber iný tím."
+      },
+      "no_teams": {
+        "title": "Žiadny vývojársky tím",
+        "body": "Toto Apple ID zatiaľ nemá vývojársky tím. Prijmi vývojársku zmluvu Apple alebo použi iné Apple ID."
+      },
+      "device_limit": {
+        "title": "Dosiahnutý limit zariadení",
+        "body": "Tento tím nemôže zaregistrovať ďalšie zariadenia. Vyber iný tím alebo použi iné Apple ID."
+      },
+      "app_id_unavailable": {
+        "title": "Toto App ID je obsadené",
+        "body": "Toto App ID už používa iný tím. Vyber iný tím alebo použi iné Apple ID."
+      },
+      "invalid_app_id_name": {
+        "title": "Apple odmietol názov App ID",
+        "body": "Apple neprijal názov, ktorý IPAForge zvolil pre App ID. Aktualizuj IPAForge alebo to nahlás."
+      },
+      "certificate_not_revocable": {
+        "title": "Tento certifikát sa tu nedá zrušiť",
+        "body": "Tento certifikát môže zrušiť iba Apple. Zruš namiesto neho iný."
+      },
+      "no_devices_for_profile": {
+        "title": "Zariadenie ešte nie je zaregistrované",
+        "body": "Apple ešte nedokončil registráciu zariadenia. Počkaj minútu a skús to znova."
+      },
+      "developer_request_failed": {
+        "title": "Vývojárske služby Apple zlyhali",
+        "body": "Žiadosť na vývojárske služby Apple zlyhala. Skús to znova a nahlás to, ak sa to bude opakovať."
+      },
+      "anisette_server_invalid": {
+        "title": "Tento server anisette sa nedá použiť",
+        "body": "Skontroluj jeho názov a adresu: adresa začína na https:// alebo http://."
+      },
+      "anisette_server_exists": {
+        "title": "Tento server anisette už v zozname je",
+        "body": "Vyber ho radšej zo zoznamu v Nastaveniach."
+      },
+      "certificate_not_on_team": {
+        "title": "Tento certifikát nie je v tíme",
+        "body": "Apple ho už pre tento tím neuvádza: bol zrušený, vypršal, alebo patrí inému tímu. Exportuj aktuálny a importuj ten."
+      }
+    },
+    "catalog": {
+      "source_gone": {
+        "title": "Vydanie už nie je dostupné",
+        "body": "Miesto, odkiaľ sa táto aplikácia stiahla, už neexistuje. Vyber iný kanál, importuj IPA alebo aktualizuj IPAForge."
+      },
+      "unavailable": {
+        "title": "Zoznam aplikácií sa nepodarilo načítať",
+        "body": "IPAForge nedokázal stiahnuť zoznam aplikácií. Skontroluj sieť a skús to znova."
+      },
+      "download_failed": {
+        "title": "Sťahovanie zlyhalo",
+        "body": "Aplikáciu sa nepodarilo stiahnuť. Skontroluj sieť a skús to znova."
+      },
+      "checksum_mismatch": {
+        "title": "Stiahnutý súbor je poškodený",
+        "body": "Stiahnutý súbor nezodpovedá svojmu kontrolnému súčtu, preto sa nepoužil. Skús to znova alebo vyber iný kanál."
+      },
+      "checksum_missing": {
+        "title": "Stiahnutý súbor sa nedá overiť",
+        "body": "Toto vydanie nemá kontrolný súčet, takže ho IPAForge nemôže overiť. Vyber iný kanál alebo importuj IPA sám."
+      },
+      "rate_limited": {
+        "title": "Priveľa žiadostí na GitHub",
+        "body": "GitHub zatiaľ obmedzuje sťahovanie. Počkaj niekoľko minút a skús to znova."
+      },
+      "app_source_unreachable": {
+        "title": "Tento zdroj sa nepodarilo nájsť",
+        "body": "Skontroluj odkaz a či si online, a skús to znova."
+      },
+      "app_source_invalid": {
+        "title": "Tento odkaz nie je zdrojom aplikácií",
+        "body": "Neuvádza žiadne aplikácie vo formáte AltStore. Skontroluj odkaz alebo pridaj radšej súbor .ipa aplikácie."
+      },
+      "app_source_exists": {
+        "title": "Tento zdroj je už pridaný",
+        "body": "Jeho aplikácie sú už v Prehliadaní aplikácií."
+      }
+    },
+    "plist": {
+      "invalid": {
+        "title": "Súbor nastavení aplikácie je poškodený",
+        "body": "Zoznam vlastností (plist) v aplikácii sa nepodarilo prečítať. Vyber iný IPA alebo to nahlás."
+      }
+    },
+    "net": {
+      "offline": {
+        "title": "Si offline",
+        "body": "IPAForge sa nevie pripojiť na internet. Skontroluj sieťové pripojenie a skús to znova."
+      }
+    },
+    "signer": {
+      "invalid_macho": {
+        "title": "Program aplikácie je poškodený",
+        "body": "Spustiteľný súbor aplikácie sa nepodarilo prečítať. Vyber iný IPA."
+      },
+      "encrypted_binary": {
+        "title": "Aplikácia je šifrovaná",
+        "body": "Tento IPA pochádza z App Store a je stále šifrovaný, preto sa nedá znova podpísať. Vyber dešifrovaný IPA."
+      },
+      "unsupported_arch": {
+        "title": "Nepodporovaný formát aplikácie",
+        "body": "Spustiteľný súbor aplikácie používa formát, ktorý iOS nevie spustiť. Vyber iný IPA."
+      },
+      "unsupported_ios": {
+        "title": "Vyžaduje novšie iOS",
+        "body": "Táto aplikácia vyžaduje novšiu verziu iOS, než má zariadenie. Aktualizuj zariadenie alebo vyber iný kanál či IPA."
+      },
+      "unsupported_device": {
+        "title": "Nie je určená pre toto zariadenie",
+        "body": "Táto aplikácia nepodporuje tento druh zariadenia, napríklad aplikácia len pre iPad na iPhone alebo aplikácia pre iPhone na Apple TV. Vyber iný IPA."
+      },
+      "no_arm64_build": {
+        "title": "Žiadna zostava pre iPhone ani iPad",
+        "body": "Aplikácia nemá 64-bitovú zostavu pre iPhone alebo iPad, napríklad ide o 32-bitovú alebo simulátorovú zostavu. Vyber iný IPA."
+      },
+      "no_header_space": {
+        "title": "Aplikáciu sa nedá podpísať",
+        "body": "V spustiteľnom súbore aplikácie nie je miesto na podpis. Vyber iný IPA alebo to nahlás."
+      },
+      "zip_slip": {
+        "title": "IPA je nebezpečný",
+        "body": "IPA sa pokúša zapisovať súbory mimo vlastného priečinka, preto ho IPAForge odmietol. Vyber iný IPA."
+      },
+      "invalid_certificate": {
+        "title": "Certifikát je neplatný",
+        "body": "Podpisový certifikát sa nedal použiť. Zruš ho, aby IPAForge mohol vytvoriť nový, a skús to znova."
+      },
+      "unknown_issuer": {
+        "title": "Neznámy vydavateľ certifikátu",
+        "body": "IPAForge nepozná vydavateľa certifikátu. Aktualizuj IPAForge a skontroluj sieť."
+      },
+      "invalid_bundle": {
+        "title": "Balík aplikácie je neplatný",
+        "body": "IPA neobsahuje platnú aplikáciu. Vyber iný IPA."
+      },
+      "invalid_profile": {
+        "title": "Provisioning profil je neplatný",
+        "body": "Provisioning profil od Apple sa nepodarilo prečítať. Skús to znova a nahlás to, ak sa to bude opakovať."
+      },
+      "extension_prefix": {
+        "title": "Rozšírenie aplikácie má nesprávne ID",
+        "body": "ID balíka rozšírenia nezačína vlastným ID aplikácie. Vyber iný IPA."
+      },
+      "profile_mismatch": {
+        "title": "Provisioning profil nesedí",
+        "body": "Profil nezodpovedá aplikácii, pre ktorú bol vytvorený. Skús to znova a nahlás to, ak sa to bude opakovať."
+      },
+      "profile_expired": {
+        "title": "Provisioning profil vypršal",
+        "body": "Profil vypršal, alebo sú hodiny počítača nesprávne. Skontroluj hodiny a skús to znova."
+      },
+      "cert_not_in_profile": {
+        "title": "Certifikát nie je v profile",
+        "body": "Provisioning profil neobsahuje podpisový certifikát. Skús to znova, aby si získal nový profil."
+      },
+      "device_not_provisioned": {
+        "title": "Zariadenie nie je v profile",
+        "body": "Provisioning profil neobsahuje toto zariadenie. Skús to znova, aby si získal nový profil."
+      },
+      "pkcs12_password": {
+        "title": "Heslo tento súbor .p12 neotvorí",
+        "body": "Zadaj heslo, s ktorým bol exportovaný, a skús to znova."
+      }
+    },
+    "installer": {
+      "step_failed": {
+        "title": "Krok zlyhal",
+        "body": "Pri inštalácii sa niečo pokazilo. Skús to znova a nahlás to, ak sa to bude opakovať."
+      },
+      "prompt_cancelled": {
+        "title": "Zrušené",
+        "body": "Inštalácia sa zastavila, pretože otázka bola zrušená. Začni znova, keď budeš pripravený."
+      },
+      "certificate_machine_id_missing": {
+        "title": "Certifikát sa nedá zdieľať",
+        "body": "Tomuto certifikátu chýbajú údaje, ktoré SideStore potrebuje na jeho otvorenie. Zruš ho, aby IPAForge mohol vytvoriť nový, a skús to znova."
+      },
+      "team_required": {
+        "title": "Vyber tím",
+        "body": "Toto Apple ID patrí do viacerých tímov. Vyber ten, ktorým sa má podpisovať."
+      },
+      "kept_ipa_missing": {
+        "title": "Túto aplikáciu tu nemožno obnoviť",
+        "body": "IPAForge ju do tohto zariadenia neinštaloval alebo jej uchovaná kópia chýba. Pridaj jej .ipa v Predinštalácii a nainštaluj ju znova."
+      },
+      "wrong_app": {
+        "title": "Tento odkaz vedie na inú aplikáciu",
+        "body": "Nie je to aplikácia, ktorú obnovuješ alebo aktualizuješ, preto sa nenainštalovala a aplikácia s jej údajmi zostáva, ako je. Pridaj správny .ipa v Predinštalácii a nainštaluj ju znova."
+      },
+      "version_unavailable": {
+        "title": "Túto verziu sa už nedá stiahnuť",
+        "body": "Obnovenie ponechá verziu, ktorú máš v zariadení, a tá sa už na stiahnutie neponúka. Použi Aktualizovať a nainštaluj najnovšiu verziu; aplikácia si ponechá svoje údaje."
+      },
+      "pairing_app_not_found": {
+        "title": "Táto aplikácia nie je v zariadení",
+        "body": "Bola odstránená alebo už nie je medzi tými, ktoré IPAForge nainštaloval. Zavri Súbory párovania a otvor ich znova."
+      },
+      "certificate_not_stored": {
+        "title": "V tomto počítači zatiaľ nie je žiadny certifikát",
+        "body": "Tento počítač si ponechá certifikát tímu, keď s ním nainštaluje aplikáciu. Najprv nainštaluj aplikáciu alebo importuj .p12."
+      }
+    },
+    "rpc": {
+      "invalid_message": {
+        "title": "Chyba vnútornej komunikácie",
+        "body": "Časti IPAForge si navzájom nerozumeli. Aktualizuj IPAForge alebo to nahlás."
+      },
+      "disconnected": {
+        "title": "Spojenie s jadrom sa stratilo",
+        "body": "Jadro IPAForge prestalo odpovedať. Skús to znova a nahlás to, ak sa to bude opakovať."
+      },
+      "timeout": {
+        "title": "Jadro neodpovedalo",
+        "body": "Jadro IPAForge odpovedalo príliš dlho. Skús to znova a nahlás to, ak sa to bude opakovať."
+      }
+    },
+    "internal": {
+      "aborted": {
+        "title": "Zastavené",
+        "body": "Operácia bola zastavená skôr, než skončila."
+      },
+      "unexpected": {
+        "title": "Niečo sa pokazilo",
+        "body": "Nastala neočakávaná chyba. Skús to znova a nahlás to, ak sa to bude opakovať."
+      }
+    }
+  },
+  "recovery": {
+    "retry": "Skúsiť znova",
+    "wait-and-retry": "Počkať a skúsiť znova",
+    "check-network": "Skontrolovať sieť",
+    "check-clock": "Skontrolovať dátum a čas",
+    "change-anisette-server": "Vybrať iný server anisette",
+    "re-enter-password": "Zadať heslo znova",
+    "re-enter-code": "Zadať kód znova",
+    "use-trusted-device": "Použiť dôveryhodné zariadenie",
+    "sign-in-again": "Prihlásiť sa znova",
+    "sign-in-on-apple-device": "Prihlásiť sa na zariadení Apple",
+    "switch-account": "Použiť iné Apple ID",
+    "verify-email": "Overiť e-mail",
+    "accept-agreement": "Prijať zmluvu Apple",
+    "choose-team": "Vybrať tím",
+    "revoke-certificate": "Zrušiť certifikát",
+    "wait-for-app-id-slot": "Počkať na voľné App ID",
+    "try-anyway": "Skúsiť aj tak",
+    "choose-app-to-remove": "Vybrať aplikáciu na odstránenie",
+    "unlock-device": "Odomknúť zariadenie",
+    "enable-developer-mode": "Zapnúť režim vývojára",
+    "trust-computer": "Dôverovať tomuto počítaču",
+    "reconnect-device": "Pripojiť zariadenie znova",
+    "pair-again": "Spárovať znova",
+    "set-passcode": "Nastaviť prístupový kód",
+    "install-device-support": "Nainštalovať podporu zariadení",
+    "reinstall-app": "Preinštalovať aplikáciu",
+    "choose-another-ipa": "Vybrať iný IPA",
+    "choose-another-channel": "Vybrať iný kanál",
+    "import-ipa": "Importovať IPA",
+    "update-ipaforge": "Aktualizovať IPAForge",
+    "report-issue": "Nahlásiť problém",
+    "or": "Alebo",
+    "switchAccount": {
+      "title": "Použiť iné Apple ID",
+      "body": "Inštalácia sa začne znova s Apple ID, ktoré vyberieš."
+    },
+    "fix": {
+      "copy": "Kopírovať",
+      "copied": "Skopírované",
+      "done": "Hotovo, skúsiť znova",
+      "waitAndRetry": {
+        "how": "Apple je vyťažený alebo obmedzuje žiadosti. Počkaj minútu a skús to znova."
+      },
+      "checkNetwork": {
+        "how": "Uisti sa, že je tento počítač online, a skús to znova."
+      },
+      "checkClock": {
+        "step1": "Otvor nastavenia dátumu a času v tomto počítači",
+        "step2": "Zapni automatické nastavenie dátumu a času"
+      },
+      "reEnterPassword": {
+        "how": "Pri ďalšom pokuse sa opýta na heslo; skontroluj ho skôr, než ho zadáš."
+      },
+      "reEnterCode": {
+        "how": "Pri ďalšom pokuse sa opýta na nový overovací kód."
+      },
+      "useTrustedDevice": {
+        "how": "Keď sa opýta na kód, vyber namiesto textovej správy dôveryhodné zariadenie."
+      },
+      "signInAgain": {
+        "how": "Pri ďalšom pokuse sa opýta na heslo, aby sa prihlásil znova."
+      },
+      "signInOnAppleDevice": {
+        "how": "Prihlás sa k tomuto Apple ID na iPhone, iPade alebo Macu, alebo na webe Apple, a postupuj podľa toho, čo si vyžiada:"
+      },
+      "switchAccount": {
+        "how": "Vyber jedno zo svojich uložených Apple ID. Inštalácia sa s ním začne znova.",
+        "button": "Vybrať Apple ID…"
+      },
+      "verifyEmail": {
+        "how": "Over e-mailovú adresu tohto Apple ID na webe Apple:"
+      },
+      "acceptAgreement": {
+        "how": "Prihlás sa na vývojárskom webe Apple a prijmi zmluvu, ktorú zobrazí:"
+      },
+      "revokeCertificate": {
+        "how": "Pri ďalšom pokuse sa opýta, ktorý certifikát zrušiť."
+      },
+      "waitForAppIdSlot": {
+        "how": "Apple uvoľní každé App ID 7 dní po jeho vytvorení. Nainštaluj znova, keď bude nejaké voľné, alebo použi iné Apple ID.",
+        "next": "Ďalšie App ID sa uvoľní {date}."
+      },
+      "chooseAppToRemove": {
+        "how": "Pri ďalšom pokuse sa opýta, ktorú aplikáciu odstrániť, aby sa uvoľnilo miesto."
+      },
+      "unlockDevice": {
+        "how": "Odomkni zariadenie a nechaj ho odomknuté, kým inštalácia neskončí."
+      },
+      "enableDeveloperMode": {
+        "button": "Je zapnutý, skúsiť znova"
+      },
+      "trustComputer": {
+        "how": "Odomkni zariadenie. Keď sa opýta, či má tomuto počítaču dôverovať, ťukni na Dôverovať a zadaj prístupový kód.",
+        "button": "Opýtať sa znova v zariadení"
+      },
+      "reconnectDevice": {
+        "how": "Odpoj zariadenie, pripoj ho znova a odomkni."
+      },
+      "setPasscode": {
+        "how": "Nastav v zariadení prístupový kód v Nastavenia › Face ID a kód a potom to skús znova."
+      },
+      "installDeviceSupport": {
+        "how": "V systéme Windows nainštaluj Apple Devices (alebo iTunes) z Microsoft Store a potom reštartuj IPAForge."
+      },
+      "reinstallApp": {
+        "how": "Odstráň aplikáciu zo zariadenia a potom to skús znova."
+      },
+      "chooseAnotherChannel": {
+        "how": "Zostava z iného kanála môže na tomto zariadení fungovať.",
+        "button": "Nainštalovať z kanála {channel}"
+      },
+      "open": "Otvoriť",
+      "tryAnyway": {
+        "how": "Apple nahlásil záporný počet zostávajúcich App ID, čo je známa chyba na jeho strane: skutočný počet môže byť vyšší. Skúsiť aj tak požiada Apple o ich vytvorenie; ak je naozaj na limite, povie to."
+      },
+      "changeAnisetteServer": {
+        "how": "Otvor Nastavenia, otestuj servery anisette a vyber funkčný, alebo sa vráť na Automaticky.",
+        "button": "Otvoriť servery anisette"
+      },
+      "allowLocalNetwork": {
+        "how": "Otvor Nastavenia systému › Súkromie a zabezpečenie › Lokálna sieť, zapni IPAForge a skús to znova. Alebo pripoj zariadenie káblom."
+      }
+    },
+    "reportHint": "Otvorí nový issue na GitHub s vyplnenou diagnostikou. Kým ho neodošleš, nič sa neposiela.",
+    "allow-local-network": "Povoliť prístup k lokálnej sieti"
+  },
+  "devices": {
+    "engine": {
+      "connecting": "Pripájam sa k jadru…",
+      "connected": "{count, plural, =0 {Jadro pripojené · žiadne zariadenia} one {Jadro pripojené · # zariadenie} few {Jadro pripojené · # zariadenia} other {Jadro pripojené · # zariadení}}",
+      "failed": "K jadru sa nedá pripojiť: {reason}"
+    },
+    "description": "iPhony a iPady pripojené k tomuto počítaču a Apple TV a Vision Pro spárované s ním. Používané zariadenie je zobrazené v hornom paneli.",
+    "unknownDevice": "Neznáme zariadenie",
+    "line": "{model} · iOS {ios} · {link}",
+    "model": "{model} · iOS {ios}",
+    "withState": "{line} · {state}",
+    "link": {
+      "usb": "USB",
+      "network": "Wi-Fi",
+      "both": "USB a Wi-Fi"
+    },
+    "state": {
+      "checking": "Kontrolujem…",
+      "ready": "Pripravené",
+      "locked": "Zamknuté",
+      "developerModeOff": "Režim vývojára vypnutý",
+      "notTrusted": "Nedôveruje sa",
+      "unavailable": "Zariadenie sa nedá prečítať",
+      "notConnected": "Nepripojené"
+    },
+    "inUse": "Používa sa",
+    "use": "Použiť toto zariadenie",
+    "checkAgain": "Skontrolovať znova",
+    "facts": {
+      "model": "Model",
+      "ios": "iOS",
+      "connection": "Pripojenie",
+      "udid": "UDID",
+      "pairing": "Párovanie",
+      "address": "Adresa"
+    },
+    "empty": {
+      "title": "Zatiaľ žiadne zariadenia",
+      "body": "Pripoj iPhone alebo iPad káblom a odomkni ho. V systéme Windows musí byť nainštalovaný Apple Devices alebo iTunes."
+    },
+    "notice": {
+      "none": {
+        "title": "Nie je pripojené žiadne zariadenie",
+        "body": "Pripoj iPhone alebo iPad káblom a odomkni ho. Zobrazí sa tu samo."
+      },
+      "notConnected": {
+        "title": "{name} nie je pripojené",
+        "body": "Pripoj ho znova a použije sa automaticky, alebo vyber iné zariadenie v hornom paneli."
+      },
+      "notTrusted": {
+        "title": "Dôveruj tomuto počítaču v zariadení {name}",
+        "body": "Odomkni ho, ťukni na Dôverovať a zadaj prístupový kód.",
+        "action": "Opýtať sa znova",
+        "waiting": "Čaká sa na Dôverovať…",
+        "titleUnnamed": "Dôveruj tomuto počítaču v zariadení"
+      },
+      "locked": {
+        "title": "Odomkni {name}",
+        "body": "Počas inštalácie aplikácií musí zostať odomknuté."
+      },
+      "developerModeOff": {
+        "title": "Zapni režim vývojára v zariadení {name}",
+        "step1": "Nastavenia → Súkromie a zabezpečenie → Režim vývojára",
+        "step2": "Zapni ho a keď sa to vyžiada, reštartuj",
+        "step3": "Po reštarte ťukni na Zapnúť a zadaj prístupový kód"
+      },
+      "unavailable": {
+        "title": "{name} sa nedá prečítať",
+        "body": "Odpoj ho a pripoj znova. Ak sa to opakuje, reštartuj zariadenie.",
+        "bodyWifi": "Je pripojené cez Wi-Fi: zobuď ho, odomkni a nechaj v rovnakej sieti ako tento počítač, potom Skontrolovať znova. Kábel je spoľahlivejší.",
+        "reason": "Dôvod: {reason}",
+        "titleUnnamed": "Zariadenie sa nedá prečítať"
+      },
+      "offNetwork": {
+        "title": "{name} nie je v sieti",
+        "tv": "Zobuď ho diaľkovým ovládačom a nechaj ho v rovnakej sieti Wi-Fi ako tento počítač.",
+        "vision": "Nasaď si ho, odomkni a nechaj v rovnakej sieti Wi-Fi ako tento počítač."
+      },
+      "pairAgain": {
+        "title": "Spáruj {name} znova",
+        "body": "Už neprijíma párovanie tohto počítača. To je po aktualizácii tvOS alebo visionOS bežné: spáruj ho znova novým kódom.",
+        "action": "Spárovať znova…"
+      }
+    },
+    "notes": {
+      "connected": "{name} pripojené",
+      "disconnected": "{name} odpojené",
+      "aDevice": "Zariadenie"
+    },
+    "savePairing": "Uložiť súbor párovania…",
+    "localNetwork": {
+      "open": "Otvoriť nastavenia lokálnej siete"
+    },
+    "os": {
+      "tv": "tvOS",
+      "vision": "visionOS"
+    },
+    "lineOs": "{model} · {os} {version} · {link}",
+    "modelOs": "{model} · {os} {version}",
+    "pairedByCode": "Spárované s týmto počítačom kódom",
+    "forget": {
+      "action": "Zabudnúť…",
+      "title": "Zabudnúť {name}?",
+      "body": "IPAForge odstráni párovanie tohto počítača. Aplikácie, ktoré už v ňom sú, zostanú. Ak ho chceš používať znova, spáruj ho znova.",
+      "confirm": "Zabudnúť"
+    }
+  },
+  "prompts": {
+    "cancel": "Zrušiť",
+    "continue": "Pokračovať",
+    "password": {
+      "title": "Prihlás sa znova",
+      "body": "Uložená relácia pre {appleId} vypršala. Zadaj heslo a pokračuj.",
+      "label": "Heslo",
+      "checking": "Kontrolujem heslo…"
+    },
+    "method": {
+      "title": "Kam má Apple poslať kód?",
+      "body": "Vyber, ako získať overovací kód.",
+      "trustedDevice": "Dôveryhodné zariadenie",
+      "trustedDeviceHint": "Tvoj iPhone, iPad alebo Mac prihlásený k tomuto Apple ID",
+      "sms": "Textová správa na {number}",
+      "smsHint": "Môžu sa účtovať bežné poplatky za SMS",
+      "sending": "Odosielam kód…"
+    },
+    "code": {
+      "title": "Zadaj overovací kód",
+      "body": "{length, plural, one {Zadaj #-miestny kód, ktorý poslal Apple.} few {Zadaj #-miestny kód, ktorý poslal Apple.} other {Zadaj #-miestny kód, ktorý poslal Apple.}}",
+      "label": "Overovací kód",
+      "wrong": "Ten kód nefungoval. Skontroluj ho a zadaj znova.",
+      "verify": "Overiť",
+      "checking": "Kontrolujem kód…",
+      "deviceBody": "{length, plural, one {Zadaj #-miestny kód zobrazený na tvojom iPhone, iPade alebo Macu.} few {Zadaj #-miestny kód zobrazený na tvojom iPhone, iPade alebo Macu.} other {Zadaj #-miestny kód zobrazený na tvojom iPhone, iPade alebo Macu.}}",
+      "smsBody": "{length, plural, one {Zadaj #-miestny kód poslaný na {number}.} few {Zadaj #-miestny kód poslaný na {number}.} other {Zadaj #-miestny kód poslaný na {number}.}}",
+      "allowHint": "Nechaj ho odomknutý a keď sa opýta na prihlásenie, ťukni na Povoliť.",
+      "noCode": "Nedostal si kód?",
+      "resend": "Poslať nový kód",
+      "textTo": "Poslať SMS na {number}",
+      "sending": "Odosielam nový kód…",
+      "sent": "Nový kód je na ceste.",
+      "notSent": "Apple neposlal nový kód. Počkaj niekoľko minút a skús to znova."
+    },
+    "suggested": "Navrhnuté",
+    "team": {
+      "title": "Ktorý tím má aplikáciu podpísať?",
+      "body": "Toto Apple ID patrí do viac než jedného tímu. IPAForge si tvoj výber pre toto Apple ID zapamätá.",
+      "free": "Bezplatný: aplikácie vypršia po 7 dňoch, 3 aplikácie na zariadenie",
+      "paid": "Platený: aplikácie vydržia rok, bez limitu aplikácií",
+      "checking": "Používa sa tento tím…"
+    },
+    "revoke": {
+      "title": "Zrušiť certifikát?",
+      "body": "Tento tím už má maximálny počet vývojárskych certifikátov, takže IPAForge musí jeden zrušiť, aby si vytvoril vlastný. Aplikácie podpísané zrušeným prestanú sa obnovovať.",
+      "ipaforge": "Vytvoril IPAForge na inom počítači",
+      "sidestore": "Vytvoril SideStore",
+      "machine": "Vytvorený na „{machine}“ (zvyčajne Xcode)",
+      "unknown": "Vytvoril neznámy nástroj",
+      "sidestoreWarning": "SideStore v tvojom zariadení prestane obnovovať aplikácie, kým si nevytvorí nový.",
+      "machineWarning": "Xcode na tom počítači vytvorí nový pri najbližšom podpisovaní.",
+      "expires": "Vyprší {date}",
+      "confirm": "Zrušiť a pokračovať",
+      "revoking": "Ruším certifikát…"
+    },
+    "remove": {
+      "title": "Odstrániť aplikáciu, aby sa uvoľnilo miesto?",
+      "body": "Bezplatné Apple ID môže mať v zariadení {limit} aplikácií, takže jedna musí zmiznúť, aby sa sem zmestila táto. Neskôr ju môžeš nainštalovať znova.",
+      "confirm": "Odstrániť a pokračovať",
+      "removing": "Odstraňujem aplikáciu…"
+    },
+    "share": {
+      "title": "Zdieľať svoj podpisový certifikát s aplikáciou „{app}“?",
+      "body": "Táto aplikácia vyzerá ako SideStore. S tvojím certifikátom môže sama obnovovať aplikácie v zariadení. Zdieľaj ho len s aplikáciou, ktorej dôveruješ.",
+      "yes": "Zdieľať certifikát",
+      "yesHint": "Sama obnovuje tvoje aplikácie v zariadení",
+      "no": "Nezdieľať",
+      "noHint": "Nainštaluje sa bez tvojho certifikátu"
+    },
+    "pairing": {
+      "title": "Ktoré aplikácie dostanú súbor párovania?",
+      "body": "Súbor párovania umožňuje aplikácii v zariadení komunikovať s ním cez Wi-Fi, tak ako to robí tento počítač. Dostanú ho len aplikácie, ktoré zaškrtneš.",
+      "available": "{count, plural, one {# aplikácia v zariadení ho môže použiť} few {# aplikácie v zariadení ho môžu použiť} other {# aplikácií v zariadení ho môže použiť}}",
+      "selectAll": "Vybrať všetky",
+      "clearAll": "Zrušiť výber",
+      "place": "{count, plural, =0 {Vyber aplikáciu} one {Uložiť do # aplikácie} few {Uložiť do # aplikácií} other {Uložiť do # aplikácií}}",
+      "placing": "Ukladám súbor párovania…",
+      "purpose": {
+        "sidestore": "Obnovuje a inštaluje aplikácie cez Wi-Fi",
+        "livecontainer": "Spúšťa aplikácie v sebe s JIT",
+        "stikdebug": "Zapína JIT pre iné aplikácie",
+        "stikstore": "Inštaluje aplikácie z vlastných zdrojov"
+      }
+    }
+  },
+  "signIn": {
+    "title": "Pridať Apple ID",
+    "body": "IPAForge ním podpisuje aplikácie. Tvoje heslo ide len do Apple.",
+    "appleId": "Apple ID",
+    "password": "Heslo",
+    "submit": "Prihlásiť sa",
+    "signingIn": "Prihlasujem…",
+    "done": {
+      "title": "Apple ID pridané",
+      "body": "Prihlásený ako {appleId}.",
+      "close": "Hotovo"
+    },
+    "rememberPassword": "Uložiť moje heslo do kľúčenky systému",
+    "rememberPasswordHint": "Umožní IPAForge prihlásiť sa znova sám, keď relácia vyprší.",
+    "resuming": {
+      "title": "Prihlasujem znova",
+      "body": "Prihlasujem sa k {appleId} tým, čo IPAForge uložil…",
+      "cancel": "Zrušiť"
+    }
+  },
+  "accounts": {
+    "description": "Apple ID, ktorými IPAForge podpisuje aplikácie. Používané je zobrazené v hornom paneli.",
+    "list": "Uložené Apple ID",
+    "empty": "Zatiaľ žiadne Apple ID. Pridaj jedno, aby si mohol nainštalovať SideStore.",
+    "notSaved": {
+      "title": "Apple ID sa neukladajú",
+      "body": "IPAForge nemôže použiť kľúčenku systému (prístup mohol byť odmietnutý), takže tvoje Apple ID sa uchovajú len do ukončenia aplikácie. Ak ich chceš uložiť, otvor IPAForge znova a keď sa opýta, povoľ prístup ku kľúčenke."
+    },
+    "freeTeam": "{name} (bezplatný)",
+    "withState": "{line} · {state}",
+    "state": {
+      "checking": "Kontrolujem…",
+      "signInNeeded": "Vyžaduje prihlásenie",
+      "blocked": "Zablokované v tomto zariadení",
+      "unreachable": "Apple sa nepodarilo kontaktovať"
+    },
+    "inUse": "Používa sa",
+    "noTeams": "Tímy sa zobrazia, keď Apple odpovie.",
+    "use": "Použiť",
+    "signInAgain": "Prihlásiť sa znova",
+    "signOut": {
+      "action": "Odhlásiť sa",
+      "title": "Odhlásiť sa z {appleId}?",
+      "forgets": "IPAForge zabudne toto Apple ID, jeho reláciu a uložené heslo.",
+      "keeps": "Jeho podpisové certifikáty zostanú v tomto počítači, takže ich pri novom prihlásení použije znova. Už nainštalované aplikácie fungujú, kým nevypršia.",
+      "confirm": "Odhlásiť sa"
+    }
+  },
+  "apps": {
+    "description": "Aplikácie, ktoré IPAForge nainštaloval v tomto zariadení. Obnovenie podpíše aplikáciu znova skôr, než vyprší, a zachová jej údaje.",
+    "refreshAll": "{count, plural, =0 {Obnoviť všetko} other {Obnoviť všetko (#)}}",
+    "updateAll": "{count, plural, other {Aktualizovať všetko (#)}}",
+    "refresh": "Obnoviť",
+    "update": "Aktualizovať",
+    "remove": "Odstrániť",
+    "removeApp": "Odstrániť {name}",
+    "updateTo": "Aktualizácia: {version}",
+    "from": "Zo zdroja {source}",
+    "needsIpa": "Nainštalované IPAForge z .ipa na inom počítači. Pridaj tento .ipa raz v Predinštalácii, aby sa dal obnoviť tu.",
+    "thisDevice": "toto zariadenie",
+    "badge": "{count, plural, one {# aplikácia na čoskoré obnovenie} few {# aplikácie na čoskoré obnovenie} other {# aplikácií na čoskoré obnovenie}}",
+    "expiry": {
+      "in": "{days, plural, one {Vyprší o # deň · {date}} few {Vyprší o # dni · {date}} other {Vyprší o # dní · {date}}}",
+      "today": "Vyprší dnes",
+      "expired": "{days, plural, one {Vypršalo pred # dňom · neotvorí sa} few {Vypršalo pred # dňami · neotvorí sa} other {Vypršalo pred # dňami · neotvorí sa}}",
+      "unknown": "Vypršanie neznáme",
+      "gone": "Vypršalo · neotvorí sa"
+    },
+    "run": {
+      "checking": "Overujem u Apple…",
+      "waiting": "Čaká na svoj rad",
+      "done": "Hotovo"
+    },
+    "failed": {
+      "title": "Obnovenie sa nedokončilo: {reason}",
+      "details": "Zobraziť podrobnosti",
+      "dismiss": "Zavrieť"
+    },
+    "notConnected": {
+      "title": "Toto zariadenie nie je pripojené",
+      "body": "Pripoj ho, aby si videl jeho aplikácie a mohol ich obnovovať alebo aktualizovať."
+    },
+    "expired": {
+      "title": "{count, plural, one {# aplikácia vypršala} few {# aplikácie vypršali} other {# aplikácií vypršalo}}",
+      "body": "Neotvoria sa, kým sa neobnovia. Ich údaje sú zachované.",
+      "refresh": "{count, plural, one {Obnoviť ju teraz} other {Obnoviť ich teraz}}"
+    },
+    "facts": {
+      "next": "Najbližšie vyprší",
+      "none": "Zatiaľ nič",
+      "nextIn": "{days, plural, one {{name} · # deň} few {{name} · # dni} other {{name} · # dní}}",
+      "nextExpired": "{name} · vypršalo",
+      "count": "Udržiavané obnovené",
+      "apps": "{count, plural, one {# aplikácia} few {# aplikácie} other {# aplikácií}}",
+      "auto": "Automatické obnovenie",
+      "autoOn": "{days, plural, one {Zapnuté · # deň vopred} few {Zapnuté · # dni vopred} other {Zapnuté · # dní vopred}}",
+      "autoOff": "Vypnuté"
+    },
+    "list": {
+      "title": "Nainštalované IPAForge",
+      "count": "{count, plural, one {# aplikácia · najbližšie vyprší prvá} few {# aplikácie · najbližšie vyprší prvá} other {# aplikácií · najbližšie vyprší prvá}}",
+      "empty": "Zatiaľ žiadne aplikácie. Nainštaluj SideStore alebo predinštaluj aplikácie a zobrazia sa tu."
+    },
+    "others": {
+      "title": "IPAForge ich ešte neudržiava",
+      "hint": "Nainštalované pred touto verziou IPAForge alebo iným nástrojom",
+      "found": "Nájdené v zdroji {source}. Obnovenie ju odtiaľ nainštaluje a zachová jej údaje a IPAForge ju odvtedy udržiava obnovenú.",
+      "foundMany": "Nájdené v zdroji {source} a {count, plural, one {# ďalšom zdroji} few {# ďalších zdrojoch} other {# ďalších zdrojoch}}. Obnovenie ju nainštaluje z toho, ktorý vyberieš nižšie, a zachová jej údaje, a IPAForge ju odvtedy udržiava obnovenú.",
+      "pickSource": "Nainštalovať z",
+      "choice": "{source} · {version}",
+      "how": "Pridaj jej .ipa raz v Predinštalácii a IPAForge ju odvtedy udržiava obnovenú."
+    },
+    "auto": {
+      "title": "Obnovovať aplikácie automaticky",
+      "body": "Kým je IPAForge otvorený a zariadenie pripojené, aplikácie sa samy obnovia skôr, než vypršia.",
+      "toggle": "Obnovovať automaticky",
+      "when": "Obnoviť, keď aplikácii zostáva",
+      "days": "{count, plural, one {# deň} few {# dni} other {# dní}}"
+    },
+    "removeDialog": {
+      "title": "Odstrániť {name}?",
+      "body": "Odstráni sa zo zariadenia {device} spolu s údajmi a uvoľní miesto pre bezplatnú aplikáciu. Môžeš ju znova nainštalovať z Predinštalácie."
+    },
+    "pairing": {
+      "open": "Súbory párovania",
+      "title": "Súbory párovania",
+      "hint": "Súbor párovania umožňuje aplikácii sama sa dostať k tvojmu zariadeniu, aby obnovovala a inštalovala aplikácie. Kto ho má, môže zariadenie používať, preto ho dávaj vlastným aplikáciám len vtedy, keď si ho vyžiadajú ich pokyny.",
+      "reading": "Čítam súbory párovania…",
+      "empty": "V tomto zariadení nie sú žiadne aplikácie s párovaním ani aplikácie nainštalované IPAForge.",
+      "classic": {
+        "thisComputer": "Párovanie: tohto počítača",
+        "otherComputer": "Párovanie: iného počítača",
+        "missing": "Párovanie: chýba"
+      },
+      "remote": {
+        "accepted": "Vzdialené: prijaté",
+        "rejected": "Vzdialené: neprijaté",
+        "otherComputer": "Vzdialené: iného počítača",
+        "missing": "Vzdialené: chýba"
+      },
+      "detail": {
+        "placed": "Uložené {date}",
+        "needed": "Potrebuje ho, aby sa mohla sama obnovovať.",
+        "otherComputer": "Z iného počítača: funguje, kým tento počítač zostáva dôveryhodný.",
+        "ownNone": "Žiadny. Pridaj ho, len ak si ho aplikácia vyžiada."
+      },
+      "place": "Uložiť",
+      "placeOne": "Uložiť súbor párovania do {name}",
+      "placeAgain": "Uložiť znova",
+      "placeAgainOne": "Uložiť súbor párovania do {name} znova",
+      "add": "Pridať…",
+      "addOne": "Pridať súbor párovania do {name}",
+      "remove": "Odstrániť",
+      "removeOne": "Odstrániť súbor párovania z {name}",
+      "newRemote": "Nové vzdialené párovanie",
+      "done": "Hotovo",
+      "addTitle": "Pridať súbor párovania do {name}",
+      "addBody": "IPAForge zapíše súbor párovania tohto počítača do priečinka aplikácie v tvojom zariadení. Kto ho má, môže zariadenie používať: pridaj ho len aplikáciám, ktorým dôveruješ.",
+      "pathLabel": "Cesta v aplikácii",
+      "pathHint": "Z pokynov aplikácie; zvyčajne v Documents. IPAForge si ju pre túto aplikáciu zapamätá.",
+      "pathInvalid": "Použi cestu v Documents alebo Library, ktorá končí na .plist alebo .mobiledevicepairing.",
+      "removeTitle": "Odstrániť súbor párovania aplikácie {name}?",
+      "removeBody": "Nebude sa môcť sama dostať k tvojmu zariadeniu (obnovovanie, inštalácia), kým sa súbor párovania znova neuloží.",
+      "newRemoteTitle": "Vytvoriť nové vzdialené párovanie?",
+      "newRemoteBody": "IPAForge vytvorí nové vzdialené párovanie s tvojím zariadením a uloží ho do SideStore. Zariadenie sa ťa môže opýtať, či dôveruješ tomuto počítaču. Staré vzdialené párovanie prestane fungovať.",
+      "newRemoteConfirm": "Vytvoriť nové",
+      "newRemoteWaiting": "Ak sa zariadenie opýta, ťukni na Dôverovať a zadaj jeho prístupový kód.",
+      "tag": "Bez súboru párovania",
+      "tagOne": "{name} nemá súbor párovania: otvor Súbory párovania"
+    },
+    "cancelRefresh": "Zrušiť obnovenie"
+  },
+  "logs": {
+    "title": "Záznamy",
+    "lede": "Čo IPAForge urobil, riadok po riadku. Otvoríš ich odkiaľkoľvek pomocou",
+    "shortcut": {
+      "control": "Ctrl+",
+      "command": "⌘",
+      "key": "L"
+    },
+    "copy": "Kopírovať",
+    "save": "Uložiť…",
+    "clear": "Vymazať",
+    "cleared": "Zobrazenie vymazané. Uložiť stále zapíše každý riadok uchovaný v tejto relácii.",
+    "search": {
+      "label": "Hľadať v záznamoch",
+      "placeholder": "Hľadať v správach a podrobnostiach",
+      "key": "/"
+    },
+    "level": {
+      "label": "Úroveň",
+      "all": "Všetky",
+      "info": "Informácie",
+      "warn": "Upozornenia",
+      "error": "Chyby"
+    },
+    "levelName": {
+      "debug": "Ladenie",
+      "info": "Informácia",
+      "warn": "Upozornenie",
+      "error": "Chyba"
+    },
+    "area": {
+      "label": "Oblasť",
+      "all": "Všetky oblasti",
+      "install": "Inštalácia",
+      "device": "Zariadenie",
+      "apple": "Apple",
+      "catalog": "Katalóg",
+      "signing": "Podpisovanie",
+      "engine": "Jadro",
+      "interface": "Rozhranie",
+      "app": "Aplikácia"
+    },
+    "filters": {
+      "showing": "Zobrazené len:",
+      "run": "Tento priebeh inštalácie ({time})",
+      "text": "„{text}“",
+      "remove": "Odstrániť filter {filter}"
+    },
+    "list": {
+      "label": "Riadky záznamu",
+      "loadingOlder": "Načítavam staršie riadky…"
+    },
+    "row": {
+      "details": "{count, plural, one {# podrobnosť} few {# podrobnosti} other {# podrobností}}",
+      "scope": "oblasť",
+      "redacted": "[skryté]",
+      "copy": "Kopírovať riadok"
+    },
+    "follow": {
+      "on": "Sledujú sa nové riadky",
+      "off": "Pozastavené",
+      "pause": "Pozastaviť",
+      "resume": "Sledovať"
+    },
+    "jump": "{count, plural, one {# nový riadok} few {# nové riadky} other {# nových riadkov}} · Prejsť na najnovší",
+    "count": "{matching, plural, one {# zodpovedajúci riadok} few {# zodpovedajúce riadky} other {# zodpovedajúcich riadkov}} · v tejto relácii sa uchováva posledných {capacity, number}",
+    "debug": "Zahrnúť podrobnosti ladenia",
+    "privacy": "Heslá, tokeny, kľúče, sériové čísla a identifikátory zariadení sa do záznamov nikdy nezapisujú; zobrazia sa ako [skryté]. Záznamy zostávajú v tomto počítači, kým ich neskopíruješ alebo neuložíš.",
+    "empty": {
+      "none": {
+        "title": "Zatiaľ nič nezaznamenané",
+        "body": "Riadky sa tu objavujú, ako IPAForge pracuje: pripájanie zariadenia, prihlasovanie, inštalácia."
+      },
+      "noMatch": {
+        "title": "Nezodpovedajú žiadne riadky",
+        "body": "Zmeň úroveň, oblasť alebo vyhľadávanie.",
+        "showAll": "Zobraziť všetky riadky"
+      },
+      "cleared": {
+        "title": "Zobrazenie vymazané",
+        "body": "Nové riadky sa tu objavia, len čo prídu."
+      },
+      "failed": {
+        "title": "Záznamy sa nepodarilo prečítať",
+        "body": "Spojenie s jadrom sa mohlo zatvoriť. Otvor Záznamy znova a skús to."
+      }
+    },
+    "export": {
+      "copyTitle": "{count, plural, one {Kopírovať # riadok?} few {Kopírovať # riadky?} other {Kopírovať # riadkov?}}",
+      "saveTitle": "{count, plural, one {Uložiť # riadok do súboru?} few {Uložiť # riadky do súboru?} other {Uložiť # riadkov do súboru?}}",
+      "copyBody": "Zobrazené riadky s nastavenými filtrami.",
+      "saveBody": "Každý riadok uchovaný v tejto relácii, bez ohľadu na filtre.",
+      "warning": "Heslá, tokeny a identifikátory zariadení sú už vynechané, ale záznamy uvádzajú model tvojho zariadenia, aplikácie a tím. Skontroluj ich, skôr než ich zverejníš.",
+      "confirmCopy": "Kopírovať",
+      "confirmSave": "Uložiť",
+      "copied": "{count, plural, one {Skopírovaný # riadok} few {Skopírované # riadky} other {Skopírovaných # riadkov}}",
+      "saved": "{count, plural, one {Uložený # riadok} few {Uložené # riadky} other {Uložených # riadkov}}",
+      "copyFailed": "Riadky sa nepodarilo skopírovať",
+      "saveFailed": "Riadky sa nepodarilo uložiť"
+    }
+  },
+  "preload": {
+    "title": "Predinštalovať aplikácie",
+    "description": "Nainštaluj vlastné aplikácie: podpísané tvojím Apple ID, nainštalované cez USB, jedna po druhej.",
+    "tabs": {
+      "label": "Predinštalácia",
+      "apps": "Pridať aplikácie",
+      "sources": "Zdroje"
+    },
+    "add": {
+      "drop": "Pusti sem súbory .ipa",
+      "or": "alebo",
+      "choose": "Vybrať súbory…",
+      "link": "Pridať z odkazu…"
+    },
+    "catalog": {
+      "recommended": "Odporúčané",
+      "added": "Pridané",
+      "add": "Pridať",
+      "sidestore": "Samo obnovuje a inštaluje aplikácie v zariadení.",
+      "livecontainerSidestore": "LiveContainer so SideStore vnútri.",
+      "livecontainer": "Spúšťa viac aplikácií v jednej, mimo limitu 3 aplikácií.",
+      "stikdebug": "Zapína v zariadení JIT pre aplikácie, ktoré ho potrebujú.",
+      "feather": "Podpisuje a inštaluje aplikácie v zariadení tvojím certifikátom."
+    },
+    "browse": {
+      "title": "Prehliadať aplikácie",
+      "count": "{apps, plural, one {# aplikácia} few {# aplikácie} other {# aplikácií}} z {sources, plural, one {# zdroja} few {# zdrojov} other {# zdrojov}}",
+      "source": "Zdroj",
+      "allSources": "Všetky zdroje",
+      "search": "Hľadať aplikácie",
+      "manage": "Spravovať zdroje",
+      "noMatch": "Žiadne aplikácie nezodpovedajú „{query}“.",
+      "allOff": "Každý zdroj je vypnutý. Zapni jeden v Zdrojoch.",
+      "loading": "Čítam zdroje…",
+      "catalogLine": "Najnovšie vydanie · overené podľa kontrolného súčtu",
+      "version": "{version} · {size}",
+      "from": "{name}, aj v {others}",
+      "details": "Podrobnosti o {name}",
+      "notRefreshed": {
+        "title": "{name} sa nepodarilo obnoviť",
+        "body": "Zobrazujú sa jeho aplikácie z posledného obnovenia, {when}.",
+        "retry": "Skúsiť znova"
+      }
+    },
+    "detail": {
+      "version": "Verzia",
+      "latest": "{version} (najnovšia)",
+      "size": "Veľkosť",
+      "needs": "Vyžaduje",
+      "needsIos": "iOS {version}",
+      "anyIos": "Akékoľvek iOS",
+      "from": "Zdroj",
+      "builtin": "Vstavaný · dôveryhodný",
+      "added": "Zdroj, ktorý si pridal",
+      "untrusted": "Zo zdroja, ktorý si pridal: IPAForge jeho aplikácie nekontroluje.",
+      "add": "Pridať do zoznamu",
+      "inList": "V zozname",
+      "close": "Zavrieť",
+      "loadingReleases": "Hľadám jeho vydania…",
+      "noReleases": "Jeho vydania sa teraz nedajú prečítať. Skontroluj pripojenie a otvor ho znova."
+    },
+    "sources": {
+      "description": "Kde Prehliadanie aplikácií nachádza aplikácie. Vstavané zdroje udržiava IPAForge; ďalšie pridaj ich odkazom (formát AltStore).",
+      "add": "Pridať zdroj…",
+      "refreshAll": "Obnoviť všetky",
+      "list": "Zdroje",
+      "builtin": "Vstavaný · dôveryhodný",
+      "added": "Pridané tebou",
+      "catalogName": "Katalóg IPAForge",
+      "apps": "{count, plural, one {# aplikácia} few {# aplikácie} other {# aplikácií}}",
+      "updated": "aktualizované {when}",
+      "notRead": "Zatiaľ neprečítané",
+      "skipped": "{count, plural, one {# preskočená (nie .ipa)} few {# preskočené (nie .ipa)} other {# preskočených (nie .ipa)}}",
+      "failed": "Nepodarilo sa ho kontaktovať.",
+      "failedCopy": "Zobrazuje sa jeho posledná kópia z {when}.",
+      "refreshing": "Obnovujem…",
+      "show": "Zobraziť aplikácie zo zdroja {name}",
+      "refresh": "Obnoviť {name}",
+      "remove": "Odstrániť {name}",
+      "on": "Zapnuté",
+      "off": "Vypnuté",
+      "note": "IPAForge nekontroluje aplikácie v zdrojoch, ktoré pridáš. Pridávaj len zdroje, ktorým dôveruješ.",
+      "refreshOne": "Obnoviť",
+      "removeOne": "Odstrániť"
+    },
+    "addSource": {
+      "title": "Pridať zdroj",
+      "label": "Odkaz na zdroj",
+      "placeholder": "https://example.com/apps.json",
+      "hint": "Zdroj vo formáte AltStore, aký číta SideStore. Zvyčajne končí na .json.",
+      "check": "Skontrolovať",
+      "checking": "Kontrolujem zdroj…",
+      "notLink": "Zadaj odkaz, ktorý začína na https://",
+      "notHttps": "Použi odkaz https://: IPAForge číta zdroje len cez zabezpečené spojenie.",
+      "previewTitle": "Pridať tento zdroj?",
+      "includes": "{count, plural, one {# aplikácia, vrátane:} few {# aplikácie, vrátane:} other {# aplikácií, vrátane:}}",
+      "skipped": "{count, plural, one {# ďalšia vynechaná: jej stiahnutie nie je .ipa.} few {# ďalšie vynechané: ich stiahnutie nie je .ipa.} other {# ďalších vynechaných: ich stiahnutie nie je .ipa.}}",
+      "warningTitle": "Pridávaj len zdroje, ktorým dôveruješ",
+      "warningBody": "IPAForge nekontroluje aplikácie v zdrojoch, ktoré pridáš. Každá aplikácia sa pred inštaláciou aj tak kontroluje.",
+      "back": "Späť",
+      "confirm": "Pridať zdroj"
+    },
+    "removeSource": {
+      "title": "Odstrániť {name}?",
+      "body": "Jeho aplikácie zmiznú z Prehliadania aplikácií. Aplikácie z neho nainštalované zostanú v zariadení a aplikácie v zozname Na inštaláciu zostanú tiež.",
+      "confirm": "Odstrániť"
+    },
+    "list": {
+      "title": "Na inštaláciu",
+      "count": "{count, plural, one {# aplikácia} few {# aplikácie} other {# aplikácií}}",
+      "empty": "Zatiaľ žiadne aplikácie. Pusti sem súbory .ipa, vyber ich, pridaj odkaz alebo vyber jednu v Prehliadaní aplikácií."
+    },
+    "row": {
+      "waiting": "Čaká na zariadenie a Apple ID",
+      "checking": "Kontrolujem…",
+      "downloading": "Sťahujem a kontrolujem…",
+      "appIds": "{count, plural, one {# App ID} few {# App ID} other {# App ID}}{extensions, plural, =0 {} one { (aplikácia + # rozšírenie)} few { (aplikácia + # rozšírenia)} other { (aplikácia + # rozšírení)}}",
+      "updates": "Aktualizuje {from} → {to} · zachová jej údaje",
+      "new": "Nové v zariadení",
+      "pairing": "Dostane súbor párovania a certifikát",
+      "fromCatalog": "Z katalógu · Stabilný",
+      "remove": "Odstrániť {name}",
+      "cannot": "Nedá sa nainštalovať.",
+      "fromSource": "Zo zdroja {name}",
+      "saveInstead": "Radšej uložiť podpísaný .ipa",
+      "saveInsteadOne": "Uložiť {name} ako podpísaný .ipa namiesto inštalácie",
+      "savedOnComputer": "Uložené v tomto počítači, nenainštalované"
+    },
+    "problem": {
+      "notIpa": "Nainštalovať sa dajú len súbory .ipa.",
+      "unreadable": "IPAForge tento súbor nevie prečítať. Pridaj ho radšej cez Vybrať súbory….",
+      "needsIos": "Vyžaduje iOS {needs}; toto zariadenie má iOS {has}."
+    },
+    "summary": {
+      "appIds": "{count, plural, one {# nové} few {# nové} other {# nových}} · {left, plural, one {tento týždeň zostáva #} few {tento týždeň zostávajú #} other {tento týždeň zostáva #}}",
+      "appIdsNoLimit": "{count, plural, one {# nové} few {# nové} other {# nových}}",
+      "notEnough": "Nezostáva dosť. Odstráň aplikáciu alebo počkaj. {next}",
+      "freeApps": "{after} z {limit} po tejto inštalácii",
+      "freeAppsOver": "{used, plural, one {# už je tam.} few {# už sú tam.} other {# už je tam.}} Inštalácia sa opýta, ktorú aplikáciu odstrániť, alebo jednu odstráň z tohto zoznamu."
+    },
+    "install": "{count, plural, =0 {Nainštalovať} one {Nainštalovať # aplikáciu} few {Nainštalovať # aplikácie} other {Nainštalovať # aplikácií}}",
+    "clear": "Vyprázdniť zoznam",
+    "readiness": {
+      "busy": "Počkaj na inštaláciu, ktorá práve beží.",
+      "empty": "Najprv pridaj aplikáciu.",
+      "checking": "Kontrolujem aplikácie…",
+      "problems": "Odstráň aplikácie, ktoré sa nedajú nainštalovať."
+    },
+    "link": {
+      "title": "Pridať z odkazu",
+      "body": "Priamy odkaz na súbor .ipa. IPAForge ho stiahne a potom skontroluje ako každú inú aplikáciu.",
+      "label": "Odkaz",
+      "placeholder": "https://example.com/MyApp.ipa",
+      "add": "Pridať",
+      "httpsOnly": "Stiahnuť sa dajú len odkazy https.",
+      "invalid": "To nie je odkaz.",
+      "notIpa": "Odkaz musí smerovať na súbor .ipa."
+    },
+    "elsewhere": {
+      "apps": "Inštalujú sa aplikácie",
+      "sidestore": "Inštaluje sa SideStore",
+      "body": "Vždy len jedna inštalácia: potrebuje zariadenie. Táto sa môže začať, keď tá druhá skončí.",
+      "open": "Otvoriť ju"
+    },
+    "run": {
+      "title": {
+        "running": "{count, plural, one {Inštaluje sa {app}} few {Inštalujú sa # aplikácie} other {Inštaluje sa # aplikácií}}",
+        "completed": "{count, plural, one {{app} je nainštalovaná} few {# aplikácie sú nainštalované} other {# aplikácií je nainštalovaných}}",
+        "failed": "Nepodarilo sa nainštalovať všetky aplikácie"
+      },
+      "backToPreload": "Späť na Predinštaláciu",
+      "shared": "Toto zariadenie a tvoje Apple ID",
+      "refresh": {
+        "profile": "Len nový profil, nič sa neinštaluje znova",
+        "certificate": "Nainštalované znova: certifikát, ktorým bola podpísaná, už neplatí",
+        "unmarked": "Nainštalované znova: IPAForge nevie zistiť, ktorý certifikát ju podpísal",
+        "appId": "Nainštalované znova: Apple odstránil jej App ID po vypršaní",
+        "sidestore": "Nainštalované znova so zachovanými údajmi, takže SideStore sám ukazuje nový dátum"
+      },
+      "group": {
+        "failed": "Zlyhalo",
+        "done": "Hotovo",
+        "active": "Prebieha",
+        "pending": "Čaká"
+      }
+    },
+    "done": {
+      "title": "{count, plural, one {{app} je v zariadení {device}.} other {{app} sú v zariadení {device}.}}",
+      "open": "Každú aplikáciu otvor z domovskej obrazovky."
+    },
+    "signAndSave": "{count, plural, one {Podpísať a uložiť # aplikáciu} few {Podpísať a uložiť # aplikácie} other {Podpísať a uložiť # aplikácií}}",
+    "installAndSave": "{install} na inštaláciu · {save} na uloženie ako podpísaný .ipa"
+  },
+  "repair": {
+    "title": "Oprava SideStore",
+    "description": "IPAForge skontroluje SideStore v zariadení {device} a opraví, čo mu bráni samo obnovovať tvoje aplikácie.",
+    "checkAgain": "Skontrolovať znova",
+    "checking": "Kontrolujem SideStore…",
+    "checks": "Kontroly",
+    "failed": "SideStore sa nepodarilo skontrolovať: {reason}",
+    "failedBody": "Skontroluj, či je zariadenie pripojené a odomknuté, a stlač Skontrolovať znova.",
+    "ok": "V poriadku",
+    "unknown": "Nedá sa zistiť",
+    "deviceFirst": "Najprv oprav {device}",
+    "device": {
+      "title": "{device} je pripravené",
+      "ok": "Odomknuté, dôveryhodné a so zapnutým režimom vývojára.",
+      "locked": "Je zamknuté. Odomkni ho a stlač Skontrolovať znova.",
+      "lockedTag": "Zamknuté",
+      "developerMode": "Režim vývojára je vypnutý, takže sa SideStore a aplikácie, ktoré inštaluje, neotvoria. Na iPhone: Nastavenia › Súkromie a zabezpečenie › Režim vývojára a potom ho reštartuj.",
+      "developerModeTag": "Režim vývojára vypnutý"
+    },
+    "installed": {
+      "title": "SideStore je nainštalovaný",
+      "missing": "SideStore nie je v zariadení {device}.",
+      "missingTag": "Nenainštalované"
+    },
+    "signer": {
+      "title": "Je podpísaný tímom, ktorý tu používaš",
+      "ok": "Oprava ho môže nainštalovať znova alebo mu dať nový profil bez straty jeho údajov.",
+      "otherTeam": "Podpísal ho iný tím tohto Apple ID. Nové nainštalovanie s týmto tímom by pridalo druhý SideStore, bez jeho údajov a aplikácií.",
+      "otherTeamTag": "Iný tím",
+      "otherAppleId": "Podpísalo ho iné Apple ID. Nové nainštalovanie s týmto by pridalo druhý SideStore, bez jeho údajov a aplikácií.",
+      "otherAppleIdTag": "Iné Apple ID"
+    },
+    "version": {
+      "title": "SideStore je aktuálny",
+      "ok": "Verzia {version}, najnovšia.",
+      "outdated": "Verzia {version}; vyšla {latest}. Staršie verzie môžu postrádať opravy obnovovania na novších iOS.",
+      "outdatedTag": "Dostupná {latest}",
+      "unknown": "Verzia {version}. Katalóg sa nepodarilo kontaktovať na porovnanie."
+    },
+    "expiry": {
+      "title": "SideStore nevypršal",
+      "ok": "{days, plural, one {Vyprší o # deň.} few {Vyprší o # dni.} other {Vyprší o # dní.}}",
+      "soon": "{days, plural, =0 {Vyprší dnes.} one {Vyprší o # deň.} few {Vyprší o # dni.} other {Vyprší o # dní.}} Keď vyprší, SideStore sa nevie sám obnoviť.",
+      "soonTag": "Čoskoro vyprší",
+      "expired": "{days, plural, one {Vypršal pred # dňom.} few {Vypršal pred # dňami.} other {Vypršal pred # dňami.}} Neotvorí sa, takže nevie obnovovať tvoje aplikácie.",
+      "expiredTag": "Vypršal",
+      "unknown": "Zariadenie preň nezobrazuje žiadny profil."
+    },
+    "signing": {
+      "title": "Certifikát, ktorým je podpísaný, je platný",
+      "ok": "Na strane Apple stále platí.",
+      "revoked": "Bol zrušený alebo vypršal. SideStore sa pri ďalšom spustení prestane otvárať.",
+      "revokedTag": "Zrušený",
+      "unknown": "Nainštalovaný iným nástrojom, takže IPAForge nevidí, ktorý certifikát ho podpísal. Oprava ho môže nainštalovať znova, aby sa to overilo."
+    },
+    "own": {
+      "title": "SideStore vie podpisovať aplikácie sám",
+      "ok": "Má platný certifikát, ktorým obnovuje tvoje aplikácie.",
+      "missing": "Nemá žiadny certifikát, takže jeho obnovenia žiadajú prihlásenie, alebo zlyhajú.",
+      "missingTag": "Žiadny certifikát",
+      "other": "Certifikát, ktorý dostal, už neplatí. Mohol ho nahradiť novším vlastným; ak obnovenie v SideStore zlyháva, nainštaluj ho znova.",
+      "otherTag": "Možno nahradený"
+    },
+    "pairing": {
+      "title": "SideStore má súbor párovania",
+      "ok": "Je prítomný a je to párovanie tohto počítača so zariadením {device}.",
+      "missing": "Chýba: SideStore sa nevie dostať k zariadeniu, aby inštaloval alebo obnovoval aplikácie.",
+      "missingTag": "Chýba",
+      "other": "Je z iného počítača. Funguje, kým toto párovanie platí; resetovanie dôvery v zariadení ho preruší.",
+      "otherTag": "Iný počítač"
+    },
+    "manual": {
+      "title": "Na tvojom iPhone · IPAForge to nevie skontrolovať",
+      "tag": "Skontroluj sám",
+      "vpn": {
+        "title": "VPN SideStore je pri obnovovaní zapnutá",
+        "body": "Pred obnovením v SideStore otvor LocalDevVPN a pripoj ho."
+      },
+      "anisette": {
+        "title": "SideStore sa dostane na svoj server anisette",
+        "body": "V SideStore › Nastavenia › Anisette vyber iný server, ak obnovenie hlási, že sa nevie prihlásiť."
+      }
+    },
+    "plan": {
+      "title": "Oprava",
+      "reinstall": "Nainštaluje SideStore znova",
+      "reinstallBody": "Z katalógu IPAForge, podpísaný platným certifikátom, ktorý sa vloží aj do neho. Jeho údaje a tvoje aplikácie zostanú.",
+      "profile": "Dá SideStore nový profil",
+      "profileBody": "Nič sa neinštaluje znova.",
+      "pairing": "Uloží súbor párovania tohto počítača",
+      "pairingBody": "Do Documents v SideStore, s nahradením toho, čo tam je.",
+      "optional": "Navyše, ak chceš",
+      "offerReinstall": "Nainštalovať SideStore znova, pre istotu",
+      "offerPairing": "Nahradiť súbor párovania súborom tohto počítača",
+      "hint": "Jeden priebeh. Nechaj {device} pripojené a odomknuté.",
+      "start": "Opraviť SideStore"
+    },
+    "blocked": {
+      "title": "SideStore sa s týmto Apple ID nedá nainštalovať znova",
+      "body": "Podpísal ho iný tím alebo Apple ID, takže by sa jeho údaje neprenesli. Vyber toto Apple ID v hornom paneli a stlač Skontrolovať znova."
+    },
+    "notInstalled": {
+      "title": "SideStore nie je v zariadení {device}",
+      "body": "Najprv ho nainštaluj zo stránky Inštalácia.",
+      "install": "Nainštalovať SideStore"
+    },
+    "fine": {
+      "title": "SideStore funguje",
+      "body": "Niet čo opravovať. Ak sa stále nevie obnoviť, skontroluj dve veci na iPhone nižšie."
+    },
+    "run": {
+      "title": {
+        "running": "Opravuje sa SideStore",
+        "completed": "SideStore je opravený",
+        "failed": "SideStore sa nepodarilo opraviť"
+      }
+    },
+    "done": {
+      "title": "SideStore v zariadení {device} je opravený.",
+      "open": "Otvor SideStore a obnov svoje aplikácie."
+    },
+    "open": "Skontrolovať SideStore",
+    "checkingTag": "Kontrolujem…",
+    "remote": {
+      "title": "Vzdialené párovanie pre iOS 17.4 a novšie",
+      "ok": "Je prítomné a {device} ho prijíma.",
+      "missing": "Chýba: SideStore môže použiť len klasické párovanie. Uloženie súboru párovania tohto počítača ho pridá.",
+      "missingTag": "Chýba",
+      "rejected": "{device} ho už neprijíma (jeho dôvera bola resetovaná). Uloženie súboru párovania tohto počítača vytvorí nové.",
+      "rejectedTag": "Neprijaté",
+      "other": "Je z iného počítača, takže ho IPAForge nevie skontrolovať. Uloženie súboru párovania tohto počítača ho nahradí.",
+      "otherTag": "Iný počítač",
+      "notNeeded": "Pod iOS 17.4 nie je potrebné.",
+      "notNeededTag": "Nie je potrebné"
+    }
+  },
+  "sidestore": {
+    "addSource": "Pridať do SideStore",
+    "addAll": "Pridať všetky do SideStore",
+    "install": "Nainštalovať cez SideStore",
+    "sourceTitle": "Pridať {name} do SideStore",
+    "sourceBody": "SideStore zobrazuje aj jeho aplikácie a udržiava ich na iPhone aktuálne. Ani SideStore nekontroluje aplikácie v zdroji: pridávaj len zdroje, ktorým dôveruješ.",
+    "installTitle": "Nainštalovať {name} cez SideStore",
+    "installBody": "SideStore stiahne {name} {version}, podpíše ju tvojím Apple ID a nainštaluje ju na iPhone sám. S bezplatným Apple ID sa počíta do 3 aplikácií. V Aplikáciách sa zobrazí, keď ju IPAForge obnoví.",
+    "qrLabel": "QR kód odkazu nižšie",
+    "steps": {
+      "camera": "Otvor Fotoaparát na {device} a zameraj ho na kód.",
+      "banner": "Ťukni na banner, aby sa otvoril SideStore.",
+      "addSource": "SideStore sa opýta, či pridať zdroj: ťukni na Pridať.",
+      "install": "SideStore sa opýta, či nainštalovať aplikáciu: ťukni na Inštalovať."
+    },
+    "onPhone": "Priamo na iPhone odkaz otvorí SideStore tiež (vložený v Safari alebo poslaný v Správach).",
+    "copy": "Kopírovať",
+    "copied": "Skopírované",
+    "previous": "Predchádzajúci",
+    "next": "Ďalší",
+    "step": "Zdroj {at} z {count}",
+    "back": "Späť",
+    "done": "Hotovo",
+    "offer": "{count, plural, one {Pridaj zdroj, ktorý si tu pridal, aj do SideStore, aby zobrazoval jeho aplikácie na iPhone.} few {Pridaj # zdroje, ktoré si tu pridal, aj do SideStore, aby zobrazoval ich aplikácie na iPhone.} other {Pridaj # zdrojov, ktoré si tu pridal, aj do SideStore, aby zobrazoval ich aplikácie na iPhone.}}"
+  },
+  "checklist": {
+    "title": "V zariadení {device} · iOS {ios}",
+    "setUp": "{device} je nastavené · iOS {ios}",
+    "show": "Zobraziť kontrolný zoznam",
+    "hide": "Skryť",
+    "allSet": "Všetko hotové",
+    "progress": "{left, plural, one {# vec na urobenie} few {# veci na urobenie} other {# vecí na urobenie}} · hotové {done} z {total}",
+    "group": {
+      "before": "Pred inštaláciou",
+      "after": "Po inštalácii",
+      "sidestore": "Pre SideStore"
+    },
+    "onPhone": "Na iPhone",
+    "tickedTag": "Hotové na iPhone",
+    "tick": "Urobil som to",
+    "notNeeded": "V tomto iOS nie je potrebné",
+    "cable": {
+      "title": "Pripoj {device} k tomuto počítaču",
+      "connected": "Pripojené",
+      "none": "Nepripojené",
+      "how": "Prvýkrát použi kábel; potom funguje Wi-Fi, kým sú oba v rovnakej sieti."
+    },
+    "unlock": {
+      "title": "Odomkni ho",
+      "locked": "Zamknuté",
+      "unlocked": "Odomknuté",
+      "how": "Nechaj ho odomknutý, kým IPAForge inštaluje."
+    },
+    "trust": {
+      "title": "Dôveruj tomuto počítaču",
+      "trusted": "Dôveryhodný",
+      "notYet": "Zatiaľ nie",
+      "step1": "Odomkni {device}.",
+      "step2": "Ťukni na Dôverovať, keď sa opýta na tento počítač.",
+      "step3": "Zadaj jeho prístupový kód.",
+      "again": "Opýtať sa znova"
+    },
+    "passcode": {
+      "title": "Nastav prístupový kód",
+      "how": "SideStore obnovuje cez Wi-Fi, čo iOS dovoľuje len s prístupovým kódom: Nastavenia › Face ID a kód."
+    },
+    "devmode": {
+      "title": "Zapni režim vývojára",
+      "on": "Zapnutý",
+      "off": "Vypnutý",
+      "step1": "Nastavenia › Súkromie a zabezpečenie › Režim vývojára (ak tam nie je, stlač Zobraziť možnosť).",
+      "step2": "Zapni ho a reštartuj {device}.",
+      "step3": "Po reštarte ťukni na Zapnúť a zadaj prístupový kód.",
+      "reveal": "Zobraziť možnosť",
+      "revealed": "Teraz je v Nastavenia › Súkromie a zabezpečenie."
+    },
+    "developer": {
+      "title": "Dôveruj svojmu Apple ID ako vývojárovi",
+      "later": "Po prvej inštalácii",
+      "step1": "Nastavenia › Všeobecné › VPN a správa zariadenia.",
+      "step2": "Pod Aplikácia vývojára ťukni na {appleId}.",
+      "step3": "Ťukni na Dôverovať. iPhone na to potrebuje internet."
+    },
+    "vpn": {
+      "title": "Nainštaluj LocalDevVPN",
+      "installed": "Nainštalované",
+      "notInstalled": "Nenainštalované",
+      "how": "SideStore komunikuje s iPhone cez túto lokálnu VPN; nič neopúšťa telefón. V App Store je zadarmo.",
+      "qrLabel": "QR kód stránky LocalDevVPN v App Store",
+      "scan": "Naskenuj Fotoaparátom alebo vyhľadaj „LocalDevVPN“ v App Store."
+    },
+    "vpnOn": {
+      "title": "Pripoj LocalDevVPN, keď SideStore obnovuje",
+      "tag": "Vždy",
+      "later": "Po jej inštalácii",
+      "how": "Otvor LocalDevVPN a ťukni na Pripojiť, alebo nechaj SideStore, aby ju zapol: prvýkrát sa opýta."
+    },
+    "repair": {
+      "title": "SideStore sa vie obnoviť sám",
+      "tag": "Kontrolované v Oprave",
+      "how": "Jeho certifikát, súbor párovania a vypršanie."
+    },
+    "notice": "{count, plural, one {# vec na urobenie v zariadení {device}} few {# veci na urobenie v zariadení {device}} other {# vecí na urobenie v zariadení {device}}}",
+    "noticeBody": "Aby inštalácia a obnovovanie prebiehali hladko.",
+    "showChecklist": "Zobraziť kontrolný zoznam"
+  },
+  "updates": {
+    "screen": {
+      "label": "Aktualizácia IPAForge"
+    },
+    "checking": {
+      "title": "Hľadám aktualizácie…"
+    },
+    "downloading": {
+      "title": "Aktualizácia IPAForge",
+      "body": "Vyšla verzia {version}. Teraz sa stiahne a nainštaluje a potom sa IPAForge sám znova otvorí.",
+      "starting": "Spúšťam sťahovanie…",
+      "percent": "{fraction, number, percent}"
+    },
+    "installing": {
+      "title": "Inštaluje sa {version}…",
+      "body": "IPAForge sa o chvíľu znova otvorí."
+    },
+    "failed": {
+      "title": "Aktualizácia sa nedokončila",
+      "body": "Vyšla verzia {version}. Skús to znova alebo ju stiahni zo stránky vydania.",
+      "retry": "Skúsiť znova",
+      "releasePage": "Stránka vydania",
+      "skip": "Zatiaľ použiť túto verziu"
+    },
+    "manual": {
+      "title": "Vyšiel IPAForge {version}",
+      "body": "Táto kópia bola nainštalovaná z {package, select, msi {inštalátora .msi} deb {balíka .deb} rpm {balíka .rpm} other {balíka}}, ktorý sa nevie sám aktualizovať. Stiahni novú verziu a nainštaluj ju cez túto: tvoje Apple ID, aplikácie a nastavenia zostanú.",
+      "download": "Stiahnuť {version}",
+      "later": "Neskôr"
+    },
+    "nativeBuild": {
+      "title": "Toto je zostava pre Intel",
+      "body": "Tvoj Mac má čip Apple, takže táto kópia IPAForge beží cez Rosetta a všetko je pomalšie. Stiahni zostavu pre čip Apple a nainštaluj ju cez túto; tvoje Apple ID, zariadenia a aplikácie zostanú.",
+      "file": "IPAForge-…-mac-arm64.dmg",
+      "later": "Neskôr",
+      "download": "Stiahnuť pre čip Apple"
+    }
+  },
+  "whatsNew": {
+    "link": "Čo je nové",
+    "version": "Verzia {version} · {date}",
+    "englishOnly": "Poznámky k vydaniu sú v angličtine.",
+    "kind": {
+      "new": "Nové",
+      "changed": "Zmenené",
+      "fixed": "Opravené",
+      "removed": "Odstránené"
+    },
+    "dialog": {
+      "title": "Čo je nové v IPAForge",
+      "everyVersion": "Každá verzia",
+      "close": "Rozumiem"
+    },
+    "page": {
+      "title": "Čo je nové",
+      "lede": "Všetko, čo sa v IPAForge zmenilo, od najnovšieho.",
+      "current": "Táto verzia",
+      "release": "Vydanie na GitHub"
+    }
+  },
+  "portal": {
+    "description": "Čo drží tím tvojho Apple ID u Apple a profily v tvojom zariadení.",
+    "tabsLabel": "Čo tím drží",
+    "tabs": {
+      "certificates": "Certifikáty",
+      "appIds": "App ID",
+      "profiles": "Profily",
+      "groups": "Skupiny aplikácií",
+      "devices": "Registrované zariadenia"
+    },
+    "team": {
+      "pick": "Tím",
+      "free": "{name} (bezplatný)",
+      "paid": "{name} (platený)"
+    },
+    "refresh": "Obnoviť",
+    "reading": "Čítam od Apple…",
+    "noAccount": {
+      "title": "Zatiaľ žiadne Apple ID",
+      "body": "Prihlás sa Apple ID v Účtoch, aby si videl, čo jeho tím drží."
+    },
+    "expired": "Vypršalo",
+    "expires": "Vyprší {date}",
+    "expiredOn": "Vypršalo {date}",
+    "certificates": {
+      "hint": "Certifikát podpisuje aplikácie, ktoré inštaluješ. Zrušenie jedného zastaví otváranie každej aplikácie, ktorú podpísal, kým sa nepodpíšu znova.",
+      "usedFree": "Použité {count} z {max} (bezplatné tímy môžu mať {max})",
+      "usedPaid": "{count, plural, one {# certifikát} few {# certifikáty} other {# certifikátov}}",
+      "maker": {
+        "thisComputer": "IPAForge v tomto počítači",
+        "ipaforge": "IPAForge na inom počítači",
+        "sidestore": "SideStore",
+        "machine": "„{machine}“ (zvyčajne Xcode)",
+        "unknown": "Neznámy nástroj"
+      },
+      "thisComputer": "Tohto počítača",
+      "signs": "Podpisuje {apps} v zariadení {device}",
+      "signsNothing": "Nepodpisuje nič v zariadení {device}",
+      "revoke": "Zrušiť",
+      "revokeOne": "Zrušiť {name}",
+      "empty": "Tím zatiaľ nemá žiadne certifikáty. IPAForge vytvorí jeden pri prvej inštalácii.",
+      "import": "Importovať .p12…",
+      "export": "Exportovať .p12"
+    },
+    "revokeDialog": {
+      "title": "Zrušiť tento certifikát?",
+      "apps": "Tieto sa v zariadení {device} prestanú otvárať, kým sa nepodpíšu znova (urobí to Obnoviť v Aplikáciách):",
+      "none": "Nič v zariadení {device} nie je ním podpísané.",
+      "noDevice": "Pripoj svoje zariadenie, aby si videl, ktoré jeho aplikácie tento certifikát podpisuje.",
+      "thisComputer": "IPAForge vytvorí nový pri ďalšej inštalácii alebo obnovení.",
+      "sidestore": "SideStore ho vytvoril, aby sa obnovoval sám: nový vytvorí, keď sa tam nabudúce prihlásiš.",
+      "machine": "Xcode na tom počítači vytvorí nový pri najbližšom podpisovaní.",
+      "exportedToo": "Prestane fungovať aj .p12 z neho exportovaný."
+    },
+    "appIds": {
+      "hintFree": "Každá aplikácia a rozšírenie, ktoré inštaluješ, potrebuje jedno. Bezplatné tímy môžu zaregistrovať 10 za 7 dní; každé sa počíta 7 dní od vytvorenia.",
+      "hintPaid": "Každá aplikácia a rozšírenie, ktoré inštaluješ, potrebuje jedno. Platené tímy nemajú týždenný limit.",
+      "left": "{count, plural, one {tento týždeň zostáva #} few {tento týždeň zostávajú #} other {tento týždeň zostáva #}}",
+      "leftAndNext": "{left} · ďalšie sa uvoľní {date}",
+      "countsUntil": "Počíta sa do {date}",
+      "unused": "Nepoužité",
+      "delete": "Odstrániť",
+      "deleteOne": "Odstrániť {name}",
+      "empty": "Tím zatiaľ nemá žiadne App ID."
+    },
+    "deleteDialog": {
+      "title": "Odstrániť toto App ID?",
+      "free": "V bezplatnom tíme sa stále počíta do 10 za týždeň, kým nevypršia: odstránením sa miesto skôr neuvoľní.",
+      "paid": "Môže sa neskôr zaregistrovať znova."
+    },
+    "profiles": {
+      "title": "Provisioning profily v zariadení {device}",
+      "hint": "Profil umožňuje jednej aplikácii (alebo rozšíreniu) bežať v tomto zariadení. Obnovenie dá aplikácii nový; vypršaný alebo nepoužitý sa dá bezpečne odstrániť.",
+      "noDevice": "Pripoj svoje zariadenie, aby si videl jeho provisioning profily.",
+      "noApp": "Nepoužíva ho žiadna aplikácia",
+      "otherTeam": "Iný tím",
+      "remove": "Odstrániť",
+      "removeOne": "Odstrániť profil aplikácie {name}",
+      "removeUnused": "Odstrániť nepoužité",
+      "empty": "V tomto zariadení nie sú žiadne provisioning profily."
+    },
+    "removeDialog": {
+      "title": "{count, plural, one {Odstrániť tento profil?} few {Odstrániť # profily?} other {Odstrániť # profilov?}}",
+      "body": "{count, plural, one {Odstráni sa zo zariadenia {device}. Žiadna aplikácia v ňom ho nepotrebuje.} other {Odstránia sa zo zariadenia {device}. Žiadna aplikácia v ňom ich nepotrebuje.}}"
+    },
+    "groups": {
+      "hint": "Aplikácie v rovnakej skupine zdieľajú súbory (napríklad SideStore a jeho widget). IPAForge ich vytvorí, keď ich aplikácia potrebuje.",
+      "empty": "Tím zatiaľ nemá žiadne skupiny aplikácií."
+    },
+    "devices": {
+      "hintFree": "Aplikácie, ktoré podpíšeš, bežia len na týchto.",
+      "hintPaid": "Aplikácie, ktoré podpíšeš, bežia len na týchto. Platené tímy môžu zaregistrovať 100 ročne; odstránenie jedného sa robí na vývojárskom webe Apple, raz ročne.",
+      "used": "{count} z {max} tento rok",
+      "connected": "Pripojené",
+      "unnamed": "Nepomenované zariadenie",
+      "empty": "Zatiaľ nie sú zaregistrované žiadne zariadenia. IPAForge zaregistruje tvoje pri prvej inštalácii."
+    },
+    "exportDialog": {
+      "title": "Exportovať certifikát tohto počítača",
+      "body": "Súbor .p12 s certifikátom a jeho súkromným kľúčom, pre SideStore alebo iný počítač. Ktokoľvek so súborom a jeho heslom môže podpisovať aplikácie ako tvoj tím.",
+      "password": "Heslo",
+      "again": "Heslo znova",
+      "tooShort": "{count, plural, one {Použi aspoň # znak.} few {Použi aspoň # znaky.} other {Použi aspoň # znakov.}}",
+      "differ": "Obe heslá sa líšia.",
+      "save": "Uložiť .p12…"
+    },
+    "importDialog": {
+      "title": "Importovať certifikát",
+      "body": "Súbor .p12 z iného počítača alebo zo SideStore. IPAForge skontroluje, že ho Apple pre tento tím stále uvádza, a potom ním tu podpisuje: žiadny nový certifikát, žiadne využité miesto.",
+      "noFile": "Nie je vybraný súbor",
+      "choose": "Vybrať…",
+      "password": "Jeho heslo",
+      "import": "Importovať"
+    }
+  },
+  "guide": {
+    "title": "Sprievodca nastavením",
+    "stepsLabel": "Kroky nastavenia",
+    "stepDone": "(hotovo)",
+    "steps": {
+      "welcome": "Vitaj",
+      "computer": "Tento počítač",
+      "iphone": "Tvoj iPhone",
+      "appleid": "Apple ID",
+      "install": "Inštalácia SideStore",
+      "onphone": "Na tvojom iPhone",
+      "around": "Všetko je nastavené"
+    },
+    "back": "Späť",
+    "skip": "Preskočiť tento krok",
+    "continue": "Pokračovať",
+    "later": "Dokončiť neskôr",
+    "checkAgain": "Skontrolovať znova",
+    "checking": "Kontrolujem…",
+    "copy": "Kopírovať",
+    "copied": "Skopírované",
+    "welcome": {
+      "title": "Vitaj v IPAForge",
+      "lead": "Pár krokov pripraví tvoj počítač, iPhone a Apple ID, a potom môžeš nainštalovať SideStore. Najprv si vyber jazyk.",
+      "needTitle": "Čo budeš potrebovať",
+      "needDevice": "iPhone alebo iPad s iOS 15 alebo novším a jeho kábel USB",
+      "needAppleId": "Apple ID (stačí bezplatné)",
+      "needPasscode": "Prístupový kód tvojho iPhonu, aby si mohol dôverovať tomuto počítaču",
+      "skipGuide": "Vyznám sa tu",
+      "start": "Začať"
+    },
+    "computer": {
+      "title": "Tento počítač",
+      "lead": "IPAForge skontroluje, či sa tento počítač vie prihlásiť do Apple: servery Apple, hodiny a server anisette. Ak sa nevie dorozumieť s iPhonmi, povie aj to, ako to opraviť.",
+      "failed": "Kontroly sa nespustili. Skontroluj znova alebo tento krok preskoč.",
+      "service": {
+        "title": "Služba pripojenia iPhonu",
+        "fixMac": "macOS by ju mal spúšťať sám. Reštartuj Mac a potom skontroluj znova.",
+        "fixWindows": "Nainštaluj Apple Devices z Microsoft Store, raz ho otvor a potom skontroluj znova.",
+        "fixLinux": "Nainštaluj usbmuxd, pripoj iPhone a potom skontroluj znova.",
+        "openStore": "Otvoriť Microsoft Store"
+      },
+      "apple": {
+        "title": "Servery Apple",
+        "ok": "Dostupné.",
+        "fix": "IPAForge sa nedostane k Apple. Skontroluj internetové pripojenie, VPN alebo firewall."
+      },
+      "clock": {
+        "title": "Hodiny",
+        "ok": "Správne.",
+        "fix": "{minutes, plural, one {Tvoje hodiny sa líšia o # minútu.} few {Tvoje hodiny sa líšia o # minúty.} other {Tvoje hodiny sa líšia o # minút.}} Nastav dátum a čas automaticky a potom skontroluj znova."
+      },
+      "anisette": {
+        "title": "Servery anisette",
+        "ok": "{name} odpovedá. Prihlásenie ho používa.",
+        "fix": "Neodpovedal žiadny z prvých {tried} serverov v tvojom zozname. Skontroluj pripojenie alebo pridaj či vyber server v Nastavenia › Servery anisette."
+      }
+    },
+    "iphone": {
+      "title": "Tvoj iPhone",
+      "lead": "Pripoj iPhone káblom, odomkni ho a keď sa opýta, ťukni na Dôverovať. V iOS 16 a novšom musí byť zapnutý režim vývojára.",
+      "connectTitle": "Pripoj svoj iPhone",
+      "connectText": "Čaká sa na iPhone alebo iPad cez USB…"
+    },
+    "appleid": {
+      "title": "Tvoje Apple ID",
+      "lead": "Apple podpisuje aplikácie, ktoré inštaluješ, tvojím Apple ID. Tvoje heslo ide len do Apple a zostáva v kľúčenke tohto počítača.",
+      "freeNote": "Bezplatné Apple ID funguje: jeho aplikácie vydržia 7 dní a IPAForge ich vie obnovovať. Platený vývojársky účet vydrží rok.",
+      "signIn": "Prihlásiť sa cez Apple ID",
+      "signedIn": "Prihlásený.",
+      "team": "Tím, ktorý podpisuje aplikácie",
+      "free": "Bezplatný: aplikácie vydržia 7 dní",
+      "paid": "Platený: aplikácie vydržia rok"
+    },
+    "banner": {
+      "label": "Sprievodca nastavením",
+      "text": "Dokonči nastavenie IPAForge: hotové {done} z {total} krokov.",
+      "continue": "Pokračovať v sprievodcovi",
+      "notNow": "Teraz nie"
+    },
+    "install": {
+      "title": "Inštalácia SideStore",
+      "lead": "SideStore sám obnovuje tvoje aplikácie na iPhone a inštaluje ďalšie. IPAForge mu dá súbor párovania a certifikát, ktoré potrebuje.",
+      "notNow": "Teraz nie"
+    },
+    "onphone": {
+      "title": "Na tvojom iPhone",
+      "lead": "Čo môžeš urobiť len ty na iPhone. Odškrtávaj jedno po druhom; stránka Zariadenia si drží ten istý zoznam."
+    },
+    "around": {
+      "title": "Všetko je nastavené",
+      "lead": "Tu je, kde čo je. Kým je IPAForge otvorený, obnovuje tvoje aplikácie skôr, než vypršia.",
+      "again": "Tohto sprievodcu môžeš kedykoľvek spustiť znova v Nastaveniach.",
+      "showMe": "Ukáž mi, kde čo je",
+      "apps": {
+        "title": "Aplikácie",
+        "text": "Kedy ktorá aplikácia vyprší, s Obnoviť a Aktualizovať. Sú tu aj súbory párovania.",
+        "where": "Bočný panel › Aplikácie"
+      },
+      "preload": {
+        "title": "Predinštalácia",
+        "text": "Pridaj vlastné aplikácie: súbory .ipa, odkazy, zdroje. Alebo ich ulož ako podpísané súbory .ipa.",
+        "where": "Bočný panel › Predinštalácia"
+      },
+      "repair": {
+        "title": "Oprava SideStore",
+        "text": "Ak sa SideStore prestane obnovovať sám, toto zistí prečo a opraví to.",
+        "where": "Aplikácie › Skontrolovať SideStore"
+      },
+      "developer": {
+        "title": "Vývojársky portál",
+        "text": "Tvoje certifikáty, App ID a profily a .p12 na prenos certifikátu.",
+        "where": "Bočný panel › Vývojársky portál"
+      },
+      "devices": {
+        "title": "Zariadenia",
+        "text": "Kontrolný zoznam každého iPhonu a jeho súbor párovania pre iné nástroje.",
+        "where": "Bočný panel › Zariadenia"
+      },
+      "logs": {
+        "title": "Záznamy",
+        "text": "Čo sa stalo, krok za krokom. Prilož ich k hláseniu chyby.",
+        "where": "Bočný panel › Záznamy · ⌘L / Ctrl+L"
+      }
+    }
+  },
+  "tour": {
+    "count": "{current} z {total}",
+    "skip": "Preskočiť prehliadku",
+    "back": "Späť",
+    "next": "Ďalej",
+    "done": "Hotovo",
+    "install": {
+      "title": "Inštalácia",
+      "text": "Nainštaluj SideStore alebo LiveContainer so SideStore jedným kliknutím. Na novom iPhone začni tu."
+    },
+    "preload": {
+      "title": "Predinštalácia",
+      "text": "Pridaj vlastné aplikácie: súbory .ipa, odkazy alebo aplikácie zo zdrojov. Zaškrtni jednu, aby sa namiesto toho uložila ako podpísaný .ipa."
+    },
+    "apps": {
+      "title": "Aplikácie",
+      "text": "Kedy ktorá aplikácia vyprší, s Obnoviť a Aktualizovať. IPAForge ich obnovuje sám, kým je otvorený. Sú tu aj súbory párovania."
+    },
+    "devices": {
+      "title": "Zariadenia",
+      "text": "Kontrolný zoznam každého iPhonu pre jeho verziu iOS a jeho súbor párovania pre iné nástroje."
+    },
+    "developer": {
+      "title": "Vývojársky portál",
+      "text": "Certifikáty, App ID a profily tvojho Apple ID. Upratať, čo nič nepoužíva, alebo previesť certifikát ako .p12."
+    },
+    "pickers": {
+      "title": "Zariadenie a Apple ID",
+      "text": "Tu kedykoľvek prepneš iPhone alebo Apple ID, ktoré IPAForge používa."
+    },
+    "logs": {
+      "title": "Záznamy",
+      "text": "Každý krok, ktorý IPAForge urobil. Prilož ich k hláseniu chyby (⌘L / Ctrl+L)."
+    },
+    "settings": {
+      "title": "Nastavenia",
+      "text": "Jazyk, vzhľad, servery anisette a táto prehliadka znova."
+    },
+    "showAround": {
+      "title": "Ukáž mi, kde čo je",
+      "text": "Túto prehliadku si odtiaľto môžeš kedykoľvek prejsť znova. Sprievodca nastavením je v Nastaveniach."
+    }
+  },
+  "pairByCode": {
+    "steps": {
+      "pair": "Párovanie kódom"
+    },
+    "open": "Spárovať Apple TV alebo Vision Pro…",
+    "title": "Spárovať Apple TV alebo Vision Pro",
+    "titleAgain": "Spárovať {name} znova",
+    "progress": {
+      "label": "Kroky",
+      "find": "1 Nájsť",
+      "code": "2 Kód"
+    },
+    "intro": "Nemajú kábel, preto sa párujú cez Wi-Fi pomocou kódu. Pripoj zariadenie do rovnakej siete Wi-Fi ako tento počítač, potom otvor jeho obrazovku párovania a nechaj ju otvorenú:",
+    "where": {
+      "tv": "Apple TV",
+      "vision": "Apple Vision Pro",
+      "tvPath": "Nastavenia → Diaľkové ovládače a zariadenia → Aplikácia Remote a zariadenia",
+      "visionPath": "Nastavenia → Všeobecné → Vzdialené zariadenia"
+    },
+    "found": "Nájdené v tvojej sieti",
+    "showing": "Zobrazuje svoju obrazovku párovania",
+    "pair": "Spárovať",
+    "searching": "Hľadám v tvojej sieti… Zariadenie sa tu zobrazí, keď bude jeho obrazovka párovania otvorená.",
+    "searchingMore": "Stále hľadám ďalšie…",
+    "help": {
+      "title": "Nezobrazuje sa",
+      "screen": "Nechaj obrazovku párovania otvorenú: zariadenie sa dá nájsť, len kým sa zobrazuje.",
+      "network": "Rovnaká sieť Wi-Fi ako tento počítač: nie hosťovská sieť a bez VPN na ktorejkoľvek strane.",
+      "ipv6": "V routeri zapnuté IPv6 (Apple ho na párovanie potrebuje).",
+      "macos": "macOS: Nastavenia systému → Súkromie a zabezpečenie → Lokálna sieť → IPAForge zapnutý.",
+      "windows": "Windows: keď sa firewall opýta, povoľ IPAForge v súkromných sieťach."
+    },
+    "failed": "Hľadanie v tvojej sieti sa zastavilo. Zavri toto a otvor to znova.",
+    "code": {
+      "title": "Zadaj kód na zariadení {name}",
+      "body": "{name} zobrazuje kód. Napíš ho sem.",
+      "label": "Kód",
+      "wrong": "Ten kód sa nezhodoval. Skontroluj kód na zariadení {name} a skús to znova.",
+      "pairing": "Párujem so zariadením {name}…",
+      "checking": "Kontrolujem kód…"
+    },
+    "back": "Späť",
+    "backToList": "Späť na zoznam",
+    "backoff": {
+      "title": "Priveľa nesprávnych kódov",
+      "wait": "{name} ti dovolí skúsiť znova o {seconds, plural, one {# sekundu} few {# sekundy} other {# sekúnd}}.",
+      "later": "{name} chvíľu neprijme žiadne ďalšie kódy. Chvíľu počkaj a skús to znova."
+    },
+    "closed": {
+      "title": "{name} zavrelo obrazovku párovania",
+      "body": "Kód funguje, len kým je obrazovka párovania otvorená. Otvor ju znova na zariadení {name}:"
+    },
+    "done": {
+      "title": "{name} je spárované",
+      "body": "{name} je na stránke Zariadenia. Obrazovku párovania teraz môžeš zavrieť.",
+      "vision": "Aplikácie sa nainštalujú, keď je zapnutý režim vývojára.",
+      "use": "Použiť {name}",
+      "close": "Zavrieť"
+    },
+    "pairNamed": "Spárovať {name}"
+  }
+}
