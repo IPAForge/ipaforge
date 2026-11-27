@@ -1,0 +1,2216 @@
+{
+  "app": {
+    "name": "IPAForge"
+  },
+  "shell": {
+    "skipToContent": "Lompat ke konten",
+    "navigation": "Bagian",
+    "credit": {
+      "madeWith": "Dibuat dengan ❤️ dan ☕",
+      "copyright": "© {year} {name}"
+    }
+  },
+  "topBar": {
+    "device": "Perangkat",
+    "noDevice": "Tidak ada",
+    "deviceMenu": "Perangkat",
+    "account": "Apple ID",
+    "notSignedIn": "Belum masuk",
+    "accountMenu": "Apple ID",
+    "addAppleId": "Tambah Apple ID…",
+    "noAccounts": "Belum ada Apple ID.",
+    "noDevicesHint": "Hubungkan iPhone atau iPad dengan kabel, lalu buka kuncinya.",
+    "openDevices": "Buka Perangkat",
+    "tour": "Ajak saya keliling",
+    "pairByCode": "Pasangkan Apple TV atau Vision Pro…"
+  },
+  "nav": {
+    "group": {
+      "manage": "Kelola"
+    },
+    "install": "Pasang",
+    "preload": "Pramuat",
+    "apps": "Aplikasi",
+    "devices": "Perangkat",
+    "accounts": "Akun",
+    "developer": "Portal Developer",
+    "logs": "Log",
+    "settings": "Pengaturan",
+    "installRunning": "Pemasangan sedang berjalan"
+  },
+  "placeholder": {
+    "body": "Bagian ini masih dalam pengerjaan."
+  },
+  "install": {
+    "title": "Pasang SideStore",
+    "description": "Ditandatangani dengan Apple ID kamu, lalu dipasang lewat USB.",
+    "steps": {
+      "device": "Periksa perangkat",
+      "resolve": "Cari rilis",
+      "download": "Unduh",
+      "inspect": "Periksa aplikasi",
+      "certificate_sharing": "Bagikan sertifikat",
+      "sign_in": "Masuk ke Apple",
+      "team": "Pilih tim",
+      "register_device": "Daftarkan perangkat",
+      "certificate": "Siapkan sertifikat",
+      "app_ids": "Daftarkan App ID",
+      "free_apps": "Periksa batas aplikasi gratis",
+      "provision": "Ambil provisioning profile",
+      "refresh_profiles": "Ambil profil baru",
+      "sign": "Tandatangani aplikasi",
+      "install": "Pasang di perangkat",
+      "pairing": "Tempatkan file pairing",
+      "remember": "Ingat pemasangan ini",
+      "save": "Simpan .ipa yang sudah ditandatangani"
+    },
+    "signInNeeded": {
+      "title": "Apple ID kamu perlu masuk lagi",
+      "body": "Sesi tersimpan untuk {appleId} sudah kedaluwarsa. Kamu tetap bisa memasang: IPAForge akan menanyakan kata sandi saat tiba gilirannya."
+    },
+    "blocked": {
+      "title": "Apple memblokir {appleId} di {device}",
+      "body": "Aplikasi yang ditandatangani dengan Apple ID ini tidak akan terbuka di perangkat ini. Gunakan Apple ID lain.",
+      "use": "Gunakan {appleId}"
+    },
+    "home": {
+      "what": "Yang akan dipasang",
+      "channel": "Kanal",
+      "install": "Pasang {app}"
+    },
+    "variant": {
+      "sidestore": {
+        "title": "SideStore",
+        "description": "Memperbarui dan memasang aplikasi di perangkat secara mandiri. Memakai 2 App ID."
+      },
+      "livecontainer": {
+        "title": "LiveContainer + SideStore",
+        "description": "Menjalankan banyak aplikasi di dalam satu aplikasi, melampaui batas 3 aplikasi. Memakai 5 App ID."
+      }
+    },
+    "channel": {
+      "stable": "Stabil",
+      "nightly": "Nightly",
+      "stableRecommended": "Stabil (disarankan)",
+      "nightlyRecommended": "Nightly (disarankan)"
+    },
+    "plan": {
+      "title": "Pemasangan ini",
+      "waiting": "Ditampilkan setelah perangkat dan Apple ID siap.",
+      "checking": "Mengunduh {app} dan memeriksanya ke Apple… Unduhan disimpan, jadi pemasangan akan memakainya lagi.",
+      "unavailable": "Tidak bisa memeriksa ke Apple. Kamu tetap bisa memasang: setiap langkah memeriksa lagi.",
+      "appIds": "App ID",
+      "appIdsValue": "{created, plural, =0 {Semua {reused} sudah terdaftar} other {{reused, plural, =0 {{created} baru} other {{created} baru, {reused} dipakai ulang}}}} · {left, plural, other {# tersisa minggu ini}}",
+      "nextSlot": "Slot berikutnya kosong pada {date}",
+      "freeApps": "Aplikasi gratis di perangkat",
+      "freeAppsValue": "{used} dari {limit} terpakai",
+      "freeAppsRoom": "Masih ada ruang untuk yang ini",
+      "freeAppsFull": "Kamu akan memilih satu untuk dihapus",
+      "noLimit": "Tanpa batas (tim berbayar)",
+      "certificate": "Sertifikat",
+      "certificateReused": "Dipakai ulang",
+      "certificateNew": "Dibuat yang baru",
+      "certificatesOnTeam": "{count, plural, =0 {Belum ada di tim} other {# di tim}}",
+      "team": "Tim",
+      "certificateNewWhy": "IPAForge belum punya sertifikat sendiri di tim ini. {count, plural, =0 {} other {Sertifikat yang sudah ada (#) milik alat lain, yang menyimpan kunci privatnya sendiri.}}"
+    },
+    "readiness": {
+      "noDevice": "Hubungkan perangkat dulu.",
+      "noSideStore": "SideStore berjalan di iPhone dan iPad. Gunakan Pramuat untuk memasang aplikasi di Apple TV atau Vision Pro.",
+      "checking": "Memeriksa perangkat…",
+      "device": "Tersedia setelah perangkat siap.",
+      "noAccount": "Tambahkan Apple ID dulu.",
+      "blocked": "Gunakan Apple ID lain dulu.",
+      "appIds": "App ID minggu ini tidak cukup.",
+      "ready": "Semuanya sudah siap."
+    },
+    "run": {
+      "title": {
+        "running": "Memasang {app}",
+        "completed": "{app} sudah terpasang",
+        "failed": "Tidak bisa memasang {app}",
+        "cancelled": "Pemasangan dibatalkan"
+      },
+      "subtitle": "{channel} · {device} · {appleId}",
+      "percent": "{fraction, number, percent}",
+      "progress": "Kemajuan keseluruhan",
+      "steps": "Langkah",
+      "cancel": "Batal",
+      "cancelInstall": "Batalkan pemasangan",
+      "runningHint": "Kamu bisa memakai bagian lain selagi ini berjalan.",
+      "waitingHint": "Menunggu jawabanmu.",
+      "stepState": {
+        "waiting": "perlu kamu",
+        "skipped": "dilewati",
+        "failed": "gagal"
+      },
+      "detail": {
+        "bytes": "{received} dari {total}",
+        "received": "{received}",
+        "retrying": "Koneksi terputus. Mencoba lagi dalam {seconds, plural, other {# detik}} (percobaan {attempt})"
+      },
+      "live": {
+        "header": "{percent} · {left}",
+        "installing": "{fraction, number, percent} · {phase}",
+        "count": "{done} dari {total}",
+        "task": {
+          "line": "{task} · {count}",
+          "team": "Memeriksa tim",
+          "appIds": "Membuat App ID",
+          "appGroup": "Menambahkan grup aplikasi",
+          "profiles": "Mengambil profil"
+        },
+        "phase": {
+          "unpacking": "Mengekstrak aplikasi",
+          "checking": "Memeriksa aplikasi",
+          "installing": "Memasang"
+        },
+        "speed": "{speed}/dtk",
+        "ios": "iOS sedang memasangnya",
+        "leftSeconds": "Sekitar {seconds} dtk lagi",
+        "leftMinutes": "{minutes, plural, other {Sekitar # mnt lagi}}"
+      },
+      "connection": {
+        "usb": "USB",
+        "network": "Wi-Fi"
+      },
+      "wifi": {
+        "title": "Perangkat ini terhubung lewat Wi-Fi",
+        "body": "Aplikasi besar jauh lebih cepat dipasang dengan kabel. Lewat Wi-Fi, IPAForge mengirimnya dalam bentuk terkompresi untuk menghemat waktu."
+      },
+      "unsupportedPrompt": {
+        "title": "Langkah ini butuh jawaban",
+        "body": "IPAForge butuh jawaban atas pertanyaan yang tidak bisa ditampilkan versi ini. Batalkan pemasangan dan perbarui IPAForge."
+      },
+      "backToInstall": "Kembali ke Pasang",
+      "report": {
+        "device": "{model} · iOS {ios} · {connection}",
+        "release": "{app} {version} · {channel}",
+        "download": "{size} · checksum terverifikasi",
+        "downloadCached": "{size} · dari cache unduhan",
+        "app": "{app} · {extensions, plural, =0 {tanpa ekstensi} other {# ekstensi}}",
+        "session": {
+          "reused": "Sesi tersimpan dipakai lagi",
+          "renewed": "Masuk lagi dengan kata sandi tersimpan",
+          "signed-in": "Sudah masuk"
+        },
+        "registered": "Terdaftar di tim",
+        "alreadyRegistered": "Sudah terdaftar di tim",
+        "certificate": {
+          "reused": "Memakai ulang sertifikat tersimpan",
+          "created": "Membuat sertifikat baru",
+          "replaced": "Mencabut satu dan membuat sertifikat baru"
+        },
+        "removed": "{app} dihapus · {used}",
+        "profiles": "{count, plural, other {# profil}}",
+        "signed": "{count, plural, other {# bundel ditandatangani}}",
+        "signedCompressed": "{count, plural, other {# bundel ditandatangani}} · dikompresi untuk Wi-Fi",
+        "phase": {
+          "uploading": "Mengunggah ke perangkat",
+          "installing": "Memasang"
+        },
+        "pairing": "Ditempatkan di {apps}",
+        "shared": "Sertifikat dibagikan",
+        "notShared": "Sertifikat tidak dibagikan",
+        "pairingRemote": "Ditempatkan di {apps} · dengan pairing jarak jauh untuk iOS 17.4 dan yang lebih baru",
+        "saved": "Disimpan di {path}"
+      },
+      "subtitleApps": "{device} · {appleId}"
+    },
+    "summary": {
+      "title": "Pemasangan ini",
+      "app": "Aplikasi",
+      "channel": "Kanal",
+      "device": "Perangkat",
+      "deviceValue": "{name} · iOS {ios}",
+      "account": "Apple ID",
+      "appIds": "App ID",
+      "appIdsValue": "{count, plural, other {# tersisa minggu ini}}",
+      "freeApps": "Aplikasi gratis",
+      "apps": "Aplikasi"
+    },
+    "done": {
+      "title": "{app} sudah ada di {device}.",
+      "trust": "Di perangkat: Pengaturan › Umum › VPN & Manajemen Perangkat › percayai {appleId}.",
+      "open": "Buka SideStore: file pairing dan sertifikatmu sudah ada di dalamnya.",
+      "done": "Selesai"
+    },
+    "cancelled": {
+      "title": "Berhenti di “{step}”.",
+      "body": "Langkah yang sudah selesai tidak diulang saat kamu melanjutkan.",
+      "resume": "Lanjutkan"
+    },
+    "failed": {
+      "continues": "Langkah yang selesai tetap tersimpan: mencoba lagi akan dilanjutkan dari “{step}”.",
+      "copy": "Salin diagnostik",
+      "copied": "Tersalin",
+      "copyFailed": "Gagal menyalin",
+      "showLogs": "Tampilkan log"
+    }
+  },
+  "pairing": {
+    "steps": {
+      "targets": "Cari aplikasi yang perlu pairing",
+      "place": "Tempatkan file pairing"
+    }
+  },
+  "settings": {
+    "appearance": "Tampilan dan bahasa",
+    "mode": "Mode warna",
+    "palette": "Palet",
+    "language": {
+      "title": "Bahasa",
+      "system": "Sistem ({language})",
+      "hint": "IPAForge mengikuti bahasa sistemmu kecuali kamu memilih satu di sini.",
+      "draft": "draf"
+    },
+    "anisette": {
+      "title": "Server anisette",
+      "hint": "Untuk masuk ke Apple dibutuhkan server anisette, yang memberi tahu Apple komputer mana yang sedang masuk. IPAForge memakai server yang berfungsi secara otomatis; pilih satu di sini jika kamu lebih suka server tertentu, atau tambahkan server milikmu sendiri.",
+      "add": "Tambah server",
+      "loading": "Memuat server…",
+      "modeLabel": "Cara IPAForge memilih server",
+      "mode": {
+        "automatic": "Otomatis",
+        "chosen": "Pilih server"
+      },
+      "modeHint": {
+        "automatic": "Mencoba server sesuai urutan ini dan lanjut ke berikutnya jika ada yang gagal.",
+        "chosen": "Selalu memakai {name}.",
+        "none": "Pilih server yang harus selalu dipakai IPAForge."
+      },
+      "noneChosen": "Belum ada server yang dipilih: sebelum kamu memilih, IPAForge tetap memilih sendiri.",
+      "chosenDown": "{name} tidak merespons. Masuk tidak akan berhasil sampai server itu kembali, atau sampai kamu memilih server lain atau beralih ke Otomatis.",
+      "count": "{count, plural, other {# server}}",
+      "sources": "{custom, plural, =0 {} other {# ditambahkan olehmu, }}{list} dari daftar SideStore, {backup} sebagai cadangan ·",
+      "listUpdated": "Daftar SideStore diperbarui {ago}",
+      "listNever": "Daftar SideStore belum diambil",
+      "updateList": "Perbarui daftar",
+      "updating": "Memperbarui…",
+      "testAll": "Uji semua",
+      "testing": "Menguji…",
+      "group": {
+        "custom": "Ditambahkan olehmu · dipakai lebih dulu",
+        "list": "Dari daftar SideStore",
+        "backup": "Cadangan · hanya jika daftar SideStore tidak bisa dijangkau atau tidak ada yang menjawab"
+      },
+      "tag": {
+        "custom": "Ditambahkan olehmu",
+        "inUse": "Sedang dipakai",
+        "chosen": "Dipilih"
+      },
+      "position": "Dicoba sebagai nomor {position}",
+      "use": "Gunakan {name}",
+      "chooseLabel": "Server yang dipakai",
+      "status": {
+        "untested": "Belum diuji",
+        "testing": "Menguji…",
+        "ok": "Berfungsi · {ms} md",
+        "bad": "Tidak merespons"
+      },
+      "test": "Uji",
+      "testOne": "Uji {name}",
+      "edit": "Ubah {name}",
+      "remove": "Hapus {name}",
+      "confirmRemove": "Hapus {name}?",
+      "removeYes": "Hapus",
+      "skipped": "Tidak dipakai dari daftar SideStore: {names} (tanpa HTTPS). Kamu bisa menambahkan sendiri server HTTP biasa, misalnya yang ada di komputermu sendiri.",
+      "dialog": {
+        "addTitle": "Tambah server anisette",
+        "editTitle": "Ubah server",
+        "body": "Server anisette apa pun yang memakai protokol umum bisa dipakai: server publik, atau yang kamu jalankan sendiri.",
+        "name": "Nama",
+        "namePlaceholder": "Server saya",
+        "address": "Alamat",
+        "addressPlaceholder": "https://anisette.my-server.net",
+        "addressHint": "https:// atau, untuk server yang kamu jalankan sendiri, http://",
+        "nameMissing": "Beri nama.",
+        "addressInvalid": "Masukkan alamat yang diawali https:// atau http://.",
+        "exists": "Server ini sudah ada di daftar.",
+        "stillAdd": "Kamu tetap bisa menambahkannya.",
+        "save": "Simpan"
+      }
+    },
+    "guide": {
+      "title": "Panduan penyiapan",
+      "text": "Komputer, iPhone, dan Apple ID diperiksa lagi.",
+      "run": "Jalankan panduan lagi",
+      "tour": "Ajak saya keliling",
+      "tourTitle": "Tur halaman",
+      "tourHint": "Fungsi tiap halaman, satu per satu."
+    },
+    "tabs": {
+      "label": "Pengaturan",
+      "general": "Umum",
+      "anisette": "Server anisette"
+    },
+    "modeHint": "Terang, gelap, atau mengikuti sistemmu.",
+    "paletteHint": "Warna seluruh aplikasi, dalam mode terang dan gelap."
+  },
+  "theme": {
+    "mode": {
+      "system": "Sistem",
+      "light": "Terang",
+      "dark": "Gelap"
+    },
+    "palette": {
+      "graphite": "Grafit",
+      "ocean": "Samudra",
+      "aurora": "Aurora",
+      "sunset": "Senja",
+      "forest": "Hutan",
+      "rose": "Mawar",
+      "violet": "Ungu",
+      "mocha": "Mocha"
+    }
+  },
+  "errors": {
+    "device": {
+      "locked": {
+        "title": "Buka kunci perangkatmu",
+        "body": "Perangkat terkunci, jadi IPAForge tidak bisa berkomunikasi dengannya. Buka kuncinya dan biarkan tetap terbuka sampai pemasangan selesai."
+      },
+      "developer_mode_off": {
+        "title": "Mode Developer mati",
+        "body": "Aplikasi sideload butuh Mode Developer. Aktifkan di Pengaturan › Privasi & Keamanan › Mode Developer, lalu mulai ulang perangkat."
+      },
+      "not_paired": {
+        "title": "Komputer ini belum dipercaya",
+        "body": "Buka kunci perangkat dan ketuk Percayai saat perangkat menanyakan apakah komputer ini dipercaya."
+      },
+      "usbmuxd_unavailable": {
+        "title": "Dukungan perangkat tidak berjalan",
+        "body": "IPAForge tidak bisa menjangkau layanan sistem yang berkomunikasi dengan iPhone dan iPad. Pasang atau jalankan layanan itu, lalu coba lagi."
+      },
+      "not_found": {
+        "title": "Tidak ada perangkat",
+        "body": "Hubungkan iPhone atau iPad dengan kabel USB, lalu buka kuncinya."
+      },
+      "disconnected": {
+        "title": "Perangkat terputus",
+        "body": "Koneksi terputus. Sambungkan kabel lagi, buka kunci perangkat, lalu coba lagi."
+      },
+      "pairing_pending": {
+        "title": "Menunggu Percayai",
+        "body": "Buka kunci perangkat dan ketuk Percayai pada pesan yang muncul."
+      },
+      "pairing_denied": {
+        "title": "Kepercayaan ditolak",
+        "body": "Perangkat menolak mempercayai komputer ini. Lakukan pairing lagi dan ketuk Percayai kali ini."
+      },
+      "invalid_pair_record": {
+        "title": "Pairing tidak lagi valid",
+        "body": "Perangkat tidak lagi menerima pairing komputer ini. Cabut, colok lagi, buka kuncinya, lalu ketuk Percayai."
+      },
+      "service_unavailable": {
+        "title": "Layanan perangkat tidak mulai",
+        "body": "Perangkat menolak memulai layanan yang dibutuhkan IPAForge. Buka kuncinya, sambungkan ulang, lalu coba lagi."
+      },
+      "protocol_error": {
+        "title": "Jawaban tak terduga dari perangkat",
+        "body": "Perangkat mengirim sesuatu yang tidak dipahami IPAForge. Sambungkan ulang; jika terulang, perbarui IPAForge atau laporkan."
+      },
+      "install_failed": {
+        "title": "Pemasangan gagal",
+        "body": "Perangkat menolak memasang aplikasi. Coba lagi; jika terus gagal, pasang ulang aplikasinya atau laporkan."
+      },
+      "afc_error": {
+        "title": "Tidak bisa mentransfer file",
+        "body": "Penyalinan file ke perangkat gagal. Buka kuncinya dan coba lagi."
+      },
+      "timeout": {
+        "title": "Perangkat berhenti merespons",
+        "body": "Perangkat terlalu lama menjawab. Buka kuncinya, sambungkan ulang, lalu coba lagi."
+      },
+      "passcode_required": {
+        "title": "Setel kode sandi",
+        "body": "Ini butuh kode sandi perangkat. Setel di Pengaturan › Face ID & Kode Sandi, lalu coba lagi."
+      },
+      "free_app_limit": {
+        "title": "Terlalu banyak aplikasi sideload",
+        "body": "Apple ID gratis hanya bisa memiliki tiga aplikasi sideload aktif di satu perangkat. Hapus satu, lalu coba lagi."
+      },
+      "profile_banned": {
+        "title": "Apple memblokir Apple ID ini di perangkat",
+        "body": "Perangkat tidak akan menerima aplikasi yang ditandatangani dengan Apple ID ini. Mencoba lagi tidak akan membantu: gunakan Apple ID lain."
+      },
+      "identity_invalid": {
+        "title": "Sertifikat penandatanganan tidak lagi valid",
+        "body": "Perangkat menolak sertifikat yang dipakai untuk menandatangani aplikasi. Periksa jam komputer, atau cabut sertifikat lalu coba lagi."
+      },
+      "profile_not_found": {
+        "title": "Provisioning profile hilang",
+        "body": "Perangkat tidak menemukan provisioning profile aplikasi. Coba lagi, atau pasang ulang aplikasinya."
+      },
+      "pairing_path_invalid": {
+        "title": "Path itu tidak bisa menyimpan file pairing",
+        "body": "Gunakan path di Documents atau Library aplikasi yang berakhiran .plist atau .mobiledevicepairing."
+      },
+      "local_network_denied": {
+        "title": "IPAForge tidak bisa mencari perangkat di jaringanmu",
+        "body": "macOS belum mengizinkan IPAForge menemukan perangkat di jaringan lokalmu, jadi tidak bisa menjangkau iPhone lewat Wi-Fi. Perangkat yang tersambung kabel tetap berfungsi."
+      },
+      "tunnel_unavailable": {
+        "title": "Tunnel perangkat tidak terbuka",
+        "body": "IPAForge tidak bisa membuka tunnel aman yang ditawarkan iOS 17.4 dan yang lebih baru lewat kabel. Pastikan perangkat menjalankan iOS 17.4 atau lebih baru, sambungkan ulang, lalu coba lagi."
+      },
+      "pairing_code_wrong": {
+        "title": "Kode tidak cocok",
+        "body": "Kode yang diketik bukan kode yang ditampilkan perangkat. Periksa kode di layarnya dan coba lagi."
+      },
+      "pairing_backoff": {
+        "title": "Terlalu banyak kode salah",
+        "body": "Perangkat tidak menerima kode lagi untuk sementara. Tunggu sebentar, buka lagi layar pairing-nya, lalu lakukan pairing sekali lagi."
+      },
+      "pairing_screen_closed": {
+        "title": "Layar pairing tertutup",
+        "body": "Perangkat berhenti menampilkan layar pairing sebelum pairing selesai. Buka lagi dan biarkan tetap terbuka: Apple TV: Pengaturan → Remote dan Perangkat → Aplikasi Remote dan Perangkat. Apple Vision Pro: Pengaturan → Umum → Perangkat Remote."
+      }
+    },
+    "apple": {
+      "anisette_unavailable": {
+        "title": "Server anisette tidak merespons",
+        "body": "Untuk masuk ke Apple dibutuhkan server anisette, dan server saat ini tidak menjawab. Pilih server lain atau periksa jaringanmu."
+      },
+      "anisette_not_provisioned": {
+        "title": "Server anisette belum siap",
+        "body": "Server anisette tidak bisa menyiapkan dirinya. Pilih server lain dan coba lagi."
+      },
+      "app_id_quota": {
+        "title": "App ID minggu ini habis",
+        "body": "Apple ID gratis hanya bisa mendaftarkan 10 App ID setiap 7 hari. Tunggu sampai ada slot kosong, atau gunakan Apple ID lain."
+      },
+      "certificate_limit": {
+        "title": "Terlalu banyak sertifikat",
+        "body": "Apple ID ini sudah mencapai batas sertifikat pengembangan. Cabut satu, atau gunakan Apple ID lain."
+      },
+      "invalid_credentials": {
+        "title": "Apple ID atau kata sandi salah",
+        "body": "Apple tidak menerima email atau kata sandi itu. Periksa keduanya dan masukkan kata sandi lagi."
+      },
+      "account_locked": {
+        "title": "Apple ID ini terkunci",
+        "body": "Apple mengunci akun ini demi keamanan. Buka kuncinya di perangkat Apple atau di situs web Apple, atau gunakan Apple ID lain."
+      },
+      "account_refused": {
+        "title": "Apple menolak proses masuk",
+        "body": "Apple tidak mengizinkan Apple ID ini masuk dari sini untuk saat ini. Tunggu sebentar, masuk sekali di perangkat Apple, atau gunakan Apple ID lain."
+      },
+      "client_rejected": {
+        "title": "Apple menolak permintaan masuk",
+        "body": "Apple tidak menerima identitas yang dikirim bersama permintaan masuk. Pilih server anisette lain, atau tunggu lalu coba lagi."
+      },
+      "rate_limited": {
+        "title": "Terlalu banyak permintaan",
+        "body": "Apple sedang membatasi permintaan. Tunggu beberapa menit lalu coba lagi."
+      },
+      "service_unavailable": {
+        "title": "Server Apple tidak tersedia",
+        "body": "Server Apple tidak merespons. Tunggu beberapa menit dan periksa jaringanmu."
+      },
+      "two_factor_required": {
+        "title": "Masukkan kode verifikasi",
+        "body": "Apple mengirim kode verifikasi ke perangkat tepercayamu. Masukkan untuk melanjutkan."
+      },
+      "two_factor_invalid_code": {
+        "title": "Kode verifikasi salah",
+        "body": "Kode itu tidak berhasil. Periksa dan masukkan lagi."
+      },
+      "two_factor_unsupported": {
+        "title": "Metode masuk ini tidak didukung",
+        "body": "Apple ID ini memakai metode dua faktor yang belum bisa ditangani IPAForge, seperti kunci keamanan. Gunakan Apple ID lain."
+      },
+      "sms_unavailable": {
+        "title": "Kode lewat pesan teks tidak tersedia",
+        "body": "Apple tidak akan mengirim kode lewat pesan teks di sini. Ambil di perangkat tepercaya, atau gunakan Apple ID lain."
+      },
+      "clock_skew": {
+        "title": "Jam komputer salah",
+        "body": "Apple menolak permintaan saat jam tidak tepat. Setel tanggal dan waktu secara otomatis, lalu coba lagi."
+      },
+      "protocol_error": {
+        "title": "Jawaban tak terduga dari Apple",
+        "body": "Apple mengirim sesuatu yang tidak dipahami IPAForge. Perbarui IPAForge, atau laporkan jika terus terjadi."
+      },
+      "session_expired": {
+        "title": "Sesimu kedaluwarsa",
+        "body": "Masuk lagi ke Apple ID ini. Jika terus kedaluwarsa, periksa jam komputer."
+      },
+      "account_not_found": {
+        "title": "Apple ID tidak ditemukan",
+        "body": "IPAForge tidak punya sesi tersimpan untuk Apple ID ini. Masuk lagi."
+      },
+      "not_eligible": {
+        "title": "Apple ID ini tidak bisa dipakai untuk pengembangan",
+        "body": "Apple tidak mengizinkan akun ini menandatangani aplikasi, misalnya karena usia atau ketentuannya. Gunakan Apple ID lain."
+      },
+      "email_unverified": {
+        "title": "Verifikasi emailmu",
+        "body": "Apple mengharuskan alamat email Apple ID ini diverifikasi dulu. Verifikasi, lalu coba lagi."
+      },
+      "team_agreement": {
+        "title": "Setujui perjanjian Apple",
+        "body": "Tim belum menyetujui perjanjian developer Apple terbaru. Setujui di situs developer Apple, atau pilih tim lain."
+      },
+      "no_teams": {
+        "title": "Tidak ada tim developer",
+        "body": "Apple ID ini belum punya tim developer. Setujui perjanjian developer Apple, atau gunakan Apple ID lain."
+      },
+      "device_limit": {
+        "title": "Batas perangkat tercapai",
+        "body": "Tim ini tidak bisa mendaftarkan perangkat lagi. Pilih tim lain, atau gunakan Apple ID lain."
+      },
+      "app_id_unavailable": {
+        "title": "App ID ini sudah dipakai",
+        "body": "Tim lain sudah memakai App ID ini. Pilih tim lain, atau gunakan Apple ID lain."
+      },
+      "invalid_app_id_name": {
+        "title": "Apple menolak nama App ID",
+        "body": "Apple tidak menerima nama yang dipilih IPAForge untuk App ID. Perbarui IPAForge, atau laporkan."
+      },
+      "certificate_not_revocable": {
+        "title": "Sertifikat ini tidak bisa dicabut di sini",
+        "body": "Hanya Apple yang bisa mencabut sertifikat ini. Cabut yang lain saja."
+      },
+      "no_devices_for_profile": {
+        "title": "Perangkat belum terdaftar",
+        "body": "Apple belum selesai mendaftarkan perangkat. Tunggu semenit lalu coba lagi."
+      },
+      "developer_request_failed": {
+        "title": "Layanan developer Apple gagal",
+        "body": "Permintaan ke layanan developer Apple gagal. Coba lagi, dan laporkan jika terus terjadi."
+      },
+      "anisette_server_invalid": {
+        "title": "Server anisette ini tidak bisa dipakai",
+        "body": "Periksa nama dan alamatnya: alamat diawali https:// atau http://."
+      },
+      "anisette_server_exists": {
+        "title": "Server anisette ini sudah ada di daftar",
+        "body": "Pilih saja dari daftar di Pengaturan."
+      },
+      "certificate_not_on_team": {
+        "title": "Sertifikat ini tidak ada di tim",
+        "body": "Apple tidak lagi mencantumkannya untuk tim ini: dicabut, kedaluwarsa, atau milik tim lain. Ekspor yang terbaru dan impor itu."
+      }
+    },
+    "catalog": {
+      "source_gone": {
+        "title": "Rilis tidak lagi tersedia",
+        "body": "Tempat aplikasi ini diunduh sudah tidak ada. Pilih kanal lain, impor IPA, atau perbarui IPAForge."
+      },
+      "unavailable": {
+        "title": "Tidak bisa memuat daftar aplikasi",
+        "body": "IPAForge tidak bisa mengambil daftar aplikasi. Periksa jaringanmu dan coba lagi."
+      },
+      "download_failed": {
+        "title": "Pengunduhan gagal",
+        "body": "Aplikasi tidak bisa diunduh. Periksa jaringanmu dan coba lagi."
+      },
+      "checksum_mismatch": {
+        "title": "Unduhan rusak",
+        "body": "File yang diunduh tidak cocok dengan checksum-nya, jadi tidak dipakai. Coba lagi atau pilih kanal lain."
+      },
+      "checksum_missing": {
+        "title": "Unduhan tidak bisa diverifikasi",
+        "body": "Rilis ini tidak punya checksum, jadi IPAForge tidak bisa memeriksanya. Pilih kanal lain, atau impor sendiri IPA-nya."
+      },
+      "rate_limited": {
+        "title": "Terlalu banyak permintaan ke GitHub",
+        "body": "GitHub sedang membatasi unduhan. Tunggu beberapa menit lalu coba lagi."
+      },
+      "app_source_unreachable": {
+        "title": "Tidak bisa menjangkau sumber ini",
+        "body": "Periksa tautannya, dan pastikan kamu online, lalu coba lagi."
+      },
+      "app_source_invalid": {
+        "title": "Tautan ini bukan sumber aplikasi",
+        "body": "Tidak ada aplikasi yang tercantum dalam format AltStore. Periksa tautannya, atau tambahkan file .ipa aplikasinya."
+      },
+      "app_source_exists": {
+        "title": "Sumber ini sudah ditambahkan",
+        "body": "Aplikasinya sudah ada di Jelajahi aplikasi."
+      }
+    },
+    "plist": {
+      "invalid": {
+        "title": "File pengaturan aplikasi rusak",
+        "body": "Property list di dalam aplikasi tidak bisa dibaca. Pilih IPA lain, atau laporkan."
+      }
+    },
+    "net": {
+      "offline": {
+        "title": "Kamu sedang offline",
+        "body": "IPAForge tidak bisa menjangkau internet. Periksa koneksi jaringanmu dan coba lagi."
+      }
+    },
+    "signer": {
+      "invalid_macho": {
+        "title": "Program aplikasi rusak",
+        "body": "Executable aplikasi tidak bisa dibaca. Pilih IPA lain."
+      },
+      "encrypted_binary": {
+        "title": "Aplikasi terenkripsi",
+        "body": "IPA ini berasal dari App Store dan masih terenkripsi, jadi tidak bisa ditandatangani ulang. Pilih IPA yang sudah didekripsi."
+      },
+      "unsupported_arch": {
+        "title": "Format aplikasi tidak didukung",
+        "body": "Executable aplikasi memakai format yang tidak bisa dijalankan iOS. Pilih IPA lain."
+      },
+      "unsupported_ios": {
+        "title": "Butuh iOS yang lebih baru",
+        "body": "Aplikasi ini butuh versi iOS yang lebih baru daripada yang ada di perangkat. Perbarui perangkat, atau pilih kanal atau IPA lain."
+      },
+      "unsupported_device": {
+        "title": "Tidak dibuat untuk perangkat ini",
+        "body": "Aplikasi ini tidak mendukung jenis perangkat ini, misalnya aplikasi khusus iPad di iPhone, atau aplikasi iPhone di Apple TV. Pilih IPA lain."
+      },
+      "no_arm64_build": {
+        "title": "Tidak ada build untuk iPhone atau iPad",
+        "body": "Aplikasi ini tidak punya build 64-bit untuk iPhone atau iPad, misalnya build 32-bit atau simulator. Pilih IPA lain."
+      },
+      "no_header_space": {
+        "title": "Aplikasi tidak bisa ditandatangani",
+        "body": "Tidak ada ruang di executable aplikasi untuk tanda tangan. Pilih IPA lain, atau laporkan."
+      },
+      "zip_slip": {
+        "title": "IPA tidak aman",
+        "body": "IPA ini mencoba menulis file di luar foldernya sendiri, jadi IPAForge menolaknya. Pilih IPA lain."
+      },
+      "invalid_certificate": {
+        "title": "Sertifikat tidak valid",
+        "body": "Sertifikat penandatanganan tidak bisa dipakai. Cabut agar IPAForge bisa membuat yang baru, lalu coba lagi."
+      },
+      "unknown_issuer": {
+        "title": "Penerbit sertifikat tidak dikenal",
+        "body": "IPAForge tidak mengenali penerbit sertifikat ini. Perbarui IPAForge dan periksa jaringanmu."
+      },
+      "invalid_bundle": {
+        "title": "Bundel aplikasi tidak valid",
+        "body": "IPA ini tidak berisi aplikasi yang valid. Pilih IPA lain."
+      },
+      "invalid_profile": {
+        "title": "Provisioning profile tidak valid",
+        "body": "Provisioning profile dari Apple tidak bisa dibaca. Coba lagi, dan laporkan jika terus terjadi."
+      },
+      "extension_prefix": {
+        "title": "Ekstensi aplikasi punya ID yang salah",
+        "body": "Bundle ID sebuah ekstensi tidak diawali dengan ID aplikasinya sendiri. Pilih IPA lain."
+      },
+      "profile_mismatch": {
+        "title": "Provisioning profile tidak cocok",
+        "body": "Profil tidak cocok dengan aplikasi yang dibuatkan untuknya. Coba lagi, dan laporkan jika terus terjadi."
+      },
+      "profile_expired": {
+        "title": "Provisioning profile kedaluwarsa",
+        "body": "Profil sudah kedaluwarsa, atau jam komputer salah. Periksa jam lalu coba lagi."
+      },
+      "cert_not_in_profile": {
+        "title": "Sertifikat tidak ada di profil",
+        "body": "Provisioning profile tidak menyertakan sertifikat penandatanganan. Coba lagi untuk mengambil profil baru."
+      },
+      "device_not_provisioned": {
+        "title": "Perangkat tidak ada di profil",
+        "body": "Provisioning profile tidak menyertakan perangkat ini. Coba lagi untuk mengambil profil baru."
+      },
+      "pkcs12_password": {
+        "title": "Kata sandi tidak bisa membuka .p12 ini",
+        "body": "Ketik kata sandi yang dipakai saat mengekspornya, lalu coba lagi."
+      }
+    },
+    "installer": {
+      "step_failed": {
+        "title": "Satu langkah gagal",
+        "body": "Terjadi masalah saat pemasangan. Coba lagi, dan laporkan jika terus terjadi."
+      },
+      "prompt_cancelled": {
+        "title": "Dibatalkan",
+        "body": "Pemasangan berhenti karena sebuah pertanyaan dibatalkan. Mulai lagi saat kamu siap."
+      },
+      "certificate_machine_id_missing": {
+        "title": "Sertifikat tidak bisa dibagikan",
+        "body": "Sertifikat ini tidak punya data yang dibutuhkan SideStore untuk membukanya. Cabut agar IPAForge bisa membuat yang baru, lalu coba lagi."
+      },
+      "team_required": {
+        "title": "Pilih tim",
+        "body": "Apple ID ini tergabung di beberapa tim. Pilih tim yang akan dipakai untuk menandatangani."
+      },
+      "kept_ipa_missing": {
+        "title": "Aplikasi ini tidak bisa diperbarui di sini",
+        "body": "IPAForge tidak memasangnya di perangkat ini, atau salinan yang disimpan sudah hilang. Tambahkan file .ipa-nya di Pramuat untuk memasangnya lagi."
+      },
+      "wrong_app": {
+        "title": "Tautan ini memberikan aplikasi yang berbeda",
+        "body": "Itu bukan aplikasi yang sedang kamu segarkan atau perbarui, jadi tidak dipasang dan aplikasi beserta datanya tetap seperti semula. Tambahkan file .ipa yang benar di Pramuat untuk memasangnya lagi."
+      },
+      "version_unavailable": {
+        "title": "Versi ini tidak bisa diunduh lagi",
+        "body": "Refresh mempertahankan versi di perangkatmu, dan versi itu tidak lagi ditawarkan untuk diunduh. Gunakan Update untuk memasang versi terbaru; datanya tetap ada di aplikasi."
+      },
+      "pairing_app_not_found": {
+        "title": "Aplikasi itu tidak ada di perangkat",
+        "body": "Aplikasi itu sudah dihapus, atau bukan lagi aplikasi yang dipasang IPAForge. Tutup File pairing dan buka lagi."
+      },
+      "certificate_not_stored": {
+        "title": "Belum ada sertifikat di komputer ini",
+        "body": "Komputer ini menyimpan sertifikat tim setelah memasang aplikasi dengannya. Pasang satu aplikasi dulu, atau impor file .p12."
+      }
+    },
+    "rpc": {
+      "invalid_message": {
+        "title": "Kesalahan komunikasi internal",
+        "body": "Bagian-bagian IPAForge tidak saling memahami. Perbarui IPAForge, atau laporkan."
+      },
+      "disconnected": {
+        "title": "Koneksi ke engine terputus",
+        "body": "Engine IPAForge berhenti merespons. Coba lagi, dan laporkan jika terus terjadi."
+      },
+      "timeout": {
+        "title": "Engine tidak menjawab",
+        "body": "Engine IPAForge terlalu lama menjawab. Coba lagi, dan laporkan jika terus terjadi."
+      }
+    },
+    "internal": {
+      "aborted": {
+        "title": "Dihentikan",
+        "body": "Operasi dihentikan sebelum selesai."
+      },
+      "unexpected": {
+        "title": "Terjadi masalah",
+        "body": "Terjadi kesalahan tak terduga. Coba lagi, dan laporkan jika terus terjadi."
+      }
+    }
+  },
+  "recovery": {
+    "retry": "Coba lagi",
+    "wait-and-retry": "Tunggu, lalu coba lagi",
+    "check-network": "Periksa jaringanmu",
+    "check-clock": "Periksa tanggal dan waktu",
+    "change-anisette-server": "Pilih server anisette lain",
+    "re-enter-password": "Masukkan kata sandi lagi",
+    "re-enter-code": "Masukkan kode lagi",
+    "use-trusted-device": "Gunakan perangkat tepercaya",
+    "sign-in-again": "Masuk lagi",
+    "sign-in-on-apple-device": "Masuk di perangkat Apple",
+    "switch-account": "Gunakan Apple ID lain",
+    "verify-email": "Verifikasi emailmu",
+    "accept-agreement": "Setujui perjanjian Apple",
+    "choose-team": "Pilih tim",
+    "revoke-certificate": "Cabut sertifikat",
+    "wait-for-app-id-slot": "Tunggu App ID kosong",
+    "try-anyway": "Coba saja",
+    "choose-app-to-remove": "Pilih aplikasi untuk dihapus",
+    "unlock-device": "Buka kunci perangkat",
+    "enable-developer-mode": "Aktifkan Mode Developer",
+    "trust-computer": "Percayai komputer ini",
+    "reconnect-device": "Sambungkan ulang perangkat",
+    "pair-again": "Lakukan pairing lagi",
+    "set-passcode": "Setel kode sandi",
+    "install-device-support": "Pasang dukungan perangkat",
+    "reinstall-app": "Pasang ulang aplikasi",
+    "choose-another-ipa": "Pilih IPA lain",
+    "choose-another-channel": "Pilih kanal lain",
+    "import-ipa": "Impor IPA",
+    "update-ipaforge": "Perbarui IPAForge",
+    "report-issue": "Laporkan masalah",
+    "or": "Atau",
+    "switchAccount": {
+      "title": "Gunakan Apple ID lain",
+      "body": "Pemasangan dimulai lagi dengan Apple ID yang kamu pilih."
+    },
+    "fix": {
+      "copy": "Salin",
+      "copied": "Tersalin",
+      "done": "Selesai, coba lagi",
+      "waitAndRetry": {
+        "how": "Apple sedang sibuk atau membatasi permintaan. Tunggu semenit, lalu coba lagi."
+      },
+      "checkNetwork": {
+        "how": "Pastikan komputer ini online, lalu coba lagi."
+      },
+      "checkClock": {
+        "step1": "Buka pengaturan tanggal dan waktu di komputer ini",
+        "step2": "Aktifkan pengaturan tanggal dan waktu otomatis"
+      },
+      "reEnterPassword": {
+        "how": "Mencoba lagi akan menanyakan kata sandi; periksa dulu sebelum memasukkannya."
+      },
+      "reEnterCode": {
+        "how": "Mencoba lagi akan meminta kode verifikasi baru."
+      },
+      "useTrustedDevice": {
+        "how": "Saat kode diminta, pilih perangkat tepercaya, bukan pesan teks."
+      },
+      "signInAgain": {
+        "how": "Mencoba lagi akan meminta kata sandi untuk masuk lagi."
+      },
+      "signInOnAppleDevice": {
+        "how": "Masuk ke Apple ID ini di iPhone, iPad, atau Mac, atau di situs web Apple, lalu ikuti yang diminta:"
+      },
+      "switchAccount": {
+        "how": "Pilih salah satu Apple ID tersimpanmu. Pemasangan dimulai lagi dengannya.",
+        "button": "Pilih Apple ID…"
+      },
+      "verifyEmail": {
+        "how": "Verifikasi alamat email Apple ID ini di situs web Apple:"
+      },
+      "acceptAgreement": {
+        "how": "Masuk di situs developer Apple dan setujui perjanjian yang ditampilkan:"
+      },
+      "revokeCertificate": {
+        "how": "Mencoba lagi akan menanyakan sertifikat mana yang dicabut."
+      },
+      "waitForAppIdSlot": {
+        "how": "Apple membebaskan setiap App ID 7 hari setelah dibuat. Pasang lagi setelah ada yang kosong, atau gunakan Apple ID lain.",
+        "next": "App ID berikutnya kosong pada {date}."
+      },
+      "chooseAppToRemove": {
+        "how": "Mencoba lagi akan menanyakan aplikasi mana yang dihapus untuk memberi ruang."
+      },
+      "unlockDevice": {
+        "how": "Buka kunci perangkat dan biarkan tetap terbuka sampai pemasangan selesai."
+      },
+      "enableDeveloperMode": {
+        "button": "Sudah aktif, coba lagi"
+      },
+      "trustComputer": {
+        "how": "Buka kunci perangkat. Saat perangkat menanyakan apakah komputer ini dipercaya, ketuk Percayai dan masukkan kode sandi.",
+        "button": "Tanya lagi di perangkat"
+      },
+      "reconnectDevice": {
+        "how": "Cabut perangkat, colok lagi, lalu buka kuncinya."
+      },
+      "setPasscode": {
+        "how": "Setel kode sandi di perangkat lewat Pengaturan › Face ID & Kode Sandi, lalu coba lagi."
+      },
+      "installDeviceSupport": {
+        "how": "Di Windows, pasang Apple Devices (atau iTunes) dari Microsoft Store, lalu mulai ulang IPAForge."
+      },
+      "reinstallApp": {
+        "how": "Hapus aplikasi dari perangkat, lalu coba lagi."
+      },
+      "chooseAnotherChannel": {
+        "how": "Build kanal lainnya mungkin berfungsi di perangkat ini.",
+        "button": "Pasang dari {channel}"
+      },
+      "open": "Buka",
+      "tryAnyway": {
+        "how": "Apple melaporkan jumlah App ID tersisa yang negatif, glitch yang sudah dikenal di sisi Apple: jumlah sebenarnya mungkin lebih tinggi. Coba saja meminta Apple membuatnya; jika memang sudah di batas, Apple akan memberi tahu."
+      },
+      "changeAnisetteServer": {
+        "how": "Buka Pengaturan, uji server anisette, dan pilih yang berfungsi, atau kembali ke Otomatis.",
+        "button": "Buka server anisette"
+      },
+      "allowLocalNetwork": {
+        "how": "Buka Pengaturan Sistem › Privasi & Keamanan › Jaringan Lokal, aktifkan IPAForge, lalu coba lagi. Atau hubungkan perangkat dengan kabel."
+      }
+    },
+    "reportHint": "Membuka isu GitHub baru dengan diagnostik yang sudah terisi. Tidak ada yang dikirim sampai kamu mengirimkannya.",
+    "allow-local-network": "Izinkan akses jaringan lokal"
+  },
+  "devices": {
+    "engine": {
+      "connecting": "Menghubungkan ke Engine…",
+      "connected": "{count, plural, =0 {Engine terhubung · tidak ada perangkat} other {Engine terhubung · # perangkat}}",
+      "failed": "Tidak bisa menjangkau Engine: {reason}"
+    },
+    "description": "iPhone dan iPad yang terhubung ke komputer ini, serta Apple TV dan Vision Pro yang dipasangkan dengannya. Yang sedang dipakai ditampilkan di bilah atas.",
+    "unknownDevice": "Perangkat tidak dikenal",
+    "line": "{model} · iOS {ios} · {link}",
+    "model": "{model} · iOS {ios}",
+    "withState": "{line} · {state}",
+    "link": {
+      "usb": "USB",
+      "network": "Wi-Fi",
+      "both": "USB dan Wi-Fi"
+    },
+    "state": {
+      "checking": "Memeriksa…",
+      "ready": "Siap",
+      "locked": "Terkunci",
+      "developerModeOff": "Mode Developer mati",
+      "notTrusted": "Belum dipercaya",
+      "unavailable": "Perangkat tidak bisa dibaca",
+      "notConnected": "Tidak terhubung"
+    },
+    "inUse": "Sedang dipakai",
+    "use": "Pakai perangkat ini",
+    "checkAgain": "Periksa lagi",
+    "facts": {
+      "model": "Model",
+      "ios": "iOS",
+      "connection": "Koneksi",
+      "udid": "UDID",
+      "pairing": "Pairing",
+      "address": "Alamat"
+    },
+    "empty": {
+      "title": "Belum ada perangkat",
+      "body": "Hubungkan iPhone atau iPad dengan kabel, lalu buka kuncinya. Di Windows, Apple Devices atau iTunes harus terpasang."
+    },
+    "notice": {
+      "none": {
+        "title": "Tidak ada perangkat terhubung",
+        "body": "Hubungkan iPhone atau iPad dengan kabel, lalu buka kuncinya. Perangkat akan muncul di sini dengan sendirinya."
+      },
+      "notConnected": {
+        "title": "{name} tidak terhubung",
+        "body": "Colok lagi dan akan dipakai otomatis, atau pilih perangkat lain di bilah atas."
+      },
+      "notTrusted": {
+        "title": "Percayai komputer ini di {name}",
+        "body": "Buka kuncinya, ketuk Percayai, dan masukkan kode sandi.",
+        "action": "Tanya lagi",
+        "waiting": "Menunggu Percayai…",
+        "titleUnnamed": "Percayai komputer ini di perangkat"
+      },
+      "locked": {
+        "title": "Buka kunci {name}",
+        "body": "Perangkat harus tetap terbuka selama aplikasi dipasang."
+      },
+      "developerModeOff": {
+        "title": "Aktifkan Mode Developer di {name}",
+        "step1": "Pengaturan → Privasi & Keamanan → Mode Developer",
+        "step2": "Aktifkan dan mulai ulang saat diminta",
+        "step3": "Setelah mulai ulang, ketuk Aktifkan dan masukkan kode sandi"
+      },
+      "unavailable": {
+        "title": "Tidak bisa membaca {name}",
+        "body": "Cabut dan colok lagi. Jika terus terjadi, mulai ulang perangkat.",
+        "bodyWifi": "Perangkat terhubung lewat Wi-Fi: bangunkan, buka kuncinya, dan jaga tetap di jaringan yang sama dengan komputer ini, lalu Periksa lagi. Kabel lebih andal.",
+        "reason": "Alasan: {reason}",
+        "titleUnnamed": "Tidak bisa membaca perangkat"
+      },
+      "offNetwork": {
+        "title": "{name} tidak ada di jaringan",
+        "tv": "Bangunkan dengan remote-nya, dan jaga tetap di Wi-Fi yang sama dengan komputer ini.",
+        "vision": "Kenakan, buka kuncinya, dan jaga tetap di Wi-Fi yang sama dengan komputer ini."
+      },
+      "pairAgain": {
+        "title": "Pasangkan {name} lagi",
+        "body": "Perangkat tidak lagi menerima pairing komputer ini. Itu wajar setelah pembaruan tvOS atau visionOS: pasangkan lagi dengan kode baru.",
+        "action": "Pasangkan lagi…"
+      }
+    },
+    "notes": {
+      "connected": "{name} terhubung",
+      "disconnected": "{name} terputus",
+      "aDevice": "Sebuah perangkat"
+    },
+    "savePairing": "Simpan file pairing…",
+    "localNetwork": {
+      "open": "Buka pengaturan Jaringan Lokal"
+    },
+    "os": {
+      "tv": "tvOS",
+      "vision": "visionOS"
+    },
+    "lineOs": "{model} · {os} {version} · {link}",
+    "modelOs": "{model} · {os} {version}",
+    "pairedByCode": "Dipasangkan dengan komputer ini, lewat kode",
+    "forget": {
+      "action": "Lupakan…",
+      "title": "Lupakan {name}?",
+      "body": "IPAForge menghapus pairing komputer ini. Aplikasi yang sudah ada di sana tetap ada. Untuk memakainya lagi, pasangkan lagi.",
+      "confirm": "Lupakan"
+    }
+  },
+  "prompts": {
+    "cancel": "Batal",
+    "continue": "Lanjutkan",
+    "password": {
+      "title": "Masuk lagi",
+      "body": "Sesi tersimpan untuk {appleId} sudah kedaluwarsa. Masukkan kata sandi untuk melanjutkan.",
+      "label": "Kata sandi",
+      "checking": "Memeriksa kata sandi…"
+    },
+    "method": {
+      "title": "Ke mana Apple harus mengirim kodenya?",
+      "body": "Pilih cara mendapatkan kode verifikasimu.",
+      "trustedDevice": "Perangkat tepercaya",
+      "trustedDeviceHint": "iPhone, iPad, atau Mac-mu yang masuk ke Apple ID ini",
+      "sms": "Pesan teks ke {number}",
+      "smsHint": "Tarif SMS standar mungkin berlaku",
+      "sending": "Mengirim kode…"
+    },
+    "code": {
+      "title": "Masukkan kode verifikasi",
+      "body": "{length, plural, other {Masukkan kode # digit yang dikirim Apple.}}",
+      "label": "Kode verifikasi",
+      "wrong": "Kode itu tidak berhasil. Periksa dan masukkan lagi.",
+      "verify": "Verifikasi",
+      "checking": "Memeriksa kode…",
+      "deviceBody": "{length, plural, other {Masukkan kode # digit yang tampil di iPhone, iPad, atau Mac-mu.}}",
+      "smsBody": "{length, plural, other {Masukkan kode # digit yang dikirim ke {number}.}}",
+      "allowHint": "Biarkan tetap terbuka, dan ketuk Izinkan saat perangkat menanyakan soal proses masuk.",
+      "noCode": "Tidak menerima kode?",
+      "resend": "Kirim kode baru",
+      "textTo": "Kirim pesan ke {number}",
+      "sending": "Mengirim kode baru…",
+      "sent": "Kode baru sedang dalam perjalanan.",
+      "notSent": "Apple tidak mengirim kode baru. Tunggu beberapa menit, lalu coba lagi."
+    },
+    "suggested": "Disarankan",
+    "team": {
+      "title": "Tim mana yang akan menandatangani aplikasi?",
+      "body": "Apple ID ini tergabung di lebih dari satu tim. IPAForge mengingat pilihanmu untuk Apple ID ini.",
+      "free": "Gratis: aplikasi kedaluwarsa setelah 7 hari, 3 aplikasi per perangkat",
+      "paid": "Berbayar: aplikasi bertahan setahun, tanpa batas aplikasi",
+      "checking": "Memakai tim ini…"
+    },
+    "revoke": {
+      "title": "Cabut sertifikat?",
+      "body": "Tim ini sudah mencapai jumlah maksimum sertifikat pengembangan, jadi IPAForge perlu mencabut satu untuk membuat miliknya sendiri. Aplikasi yang ditandatangani dengan yang dicabut berhenti diperbarui.",
+      "ipaforge": "Dibuat oleh IPAForge di komputer lain",
+      "sidestore": "Dibuat oleh SideStore",
+      "machine": "Dibuat di “{machine}” (biasanya Xcode)",
+      "unknown": "Dibuat oleh alat yang tidak dikenal",
+      "sidestoreWarning": "SideStore di perangkatmu berhenti memperbarui aplikasi sampai SideStore membuat yang baru.",
+      "machineWarning": "Xcode di komputer itu membuat yang baru saat berikutnya menandatangani.",
+      "expires": "Kedaluwarsa {date}",
+      "confirm": "Cabut dan lanjutkan",
+      "revoking": "Mencabut sertifikat…"
+    },
+    "remove": {
+      "title": "Hapus aplikasi untuk memberi ruang?",
+      "body": "Apple ID gratis hanya bisa memiliki {limit} aplikasi di satu perangkat, jadi satu harus dihapus agar yang ini muat. Kamu bisa memasangnya lagi nanti.",
+      "confirm": "Hapus dan lanjutkan",
+      "removing": "Menghapus aplikasi…"
+    },
+    "share": {
+      "title": "Bagikan sertifikat penandatanganmu ke “{app}”?",
+      "body": "Aplikasi ini tampaknya SideStore. Dengan sertifikatmu, aplikasi ini bisa memperbarui aplikasi di perangkat secara mandiri. Bagikan hanya ke aplikasi yang kamu percaya.",
+      "yes": "Bagikan sertifikat",
+      "yesHint": "Memperbarui aplikasimu di perangkat secara mandiri",
+      "no": "Jangan bagikan",
+      "noHint": "Dipasang tanpa sertifikatmu"
+    },
+    "pairing": {
+      "title": "Aplikasi mana yang mendapat file pairing?",
+      "body": "File pairing memungkinkan aplikasi di perangkat berkomunikasi dengannya lewat Wi-Fi, seperti komputer ini. Hanya aplikasi yang kamu centang yang mendapatkannya.",
+      "available": "{count, plural, other {# aplikasi di perangkat bisa memakainya}}",
+      "selectAll": "Pilih semua",
+      "clearAll": "Hapus semua pilihan",
+      "place": "{count, plural, =0 {Pilih aplikasi} other {Tempatkan di # aplikasi}}",
+      "placing": "Menempatkan file pairing…",
+      "purpose": {
+        "sidestore": "Memperbarui dan memasang aplikasi lewat Wi-Fi",
+        "livecontainer": "Menjalankan aplikasi di dalamnya dengan JIT",
+        "stikdebug": "Mengaktifkan JIT untuk aplikasi lain",
+        "stikstore": "Memasang aplikasi dari sumbernya sendiri"
+      }
+    }
+  },
+  "signIn": {
+    "title": "Tambah Apple ID",
+    "body": "IPAForge menandatangani aplikasi dengannya. Kata sandimu hanya dikirim ke Apple.",
+    "appleId": "Apple ID",
+    "password": "Kata sandi",
+    "submit": "Masuk",
+    "signingIn": "Sedang masuk…",
+    "done": {
+      "title": "Apple ID ditambahkan",
+      "body": "Masuk sebagai {appleId}.",
+      "close": "Selesai"
+    },
+    "rememberPassword": "Simpan kata sandiku di keychain sistem",
+    "rememberPasswordHint": "Memungkinkan IPAForge masuk lagi sendiri saat sesi kedaluwarsa.",
+    "resuming": {
+      "title": "Masuk lagi",
+      "body": "Masuk ke {appleId} dengan yang disimpan IPAForge…",
+      "cancel": "Batal"
+    }
+  },
+  "accounts": {
+    "description": "Apple ID yang dipakai IPAForge untuk menandatangani aplikasi. Yang sedang dipakai ditampilkan di bilah atas.",
+    "list": "Apple ID tersimpan",
+    "empty": "Belum ada Apple ID. Tambahkan satu untuk memasang SideStore.",
+    "notSaved": {
+      "title": "Apple ID tidak disimpan",
+      "body": "IPAForge tidak bisa memakai keychain sistem (aksesnya mungkin ditolak), jadi Apple ID-mu hanya disimpan sampai IPAForge ditutup. Untuk menyimpannya, buka IPAForge lagi dan izinkan akses keychain saat diminta."
+    },
+    "freeTeam": "{name} (gratis)",
+    "withState": "{line} · {state}",
+    "state": {
+      "checking": "Memeriksa…",
+      "signInNeeded": "Perlu masuk",
+      "blocked": "Diblokir di perangkat ini",
+      "unreachable": "Tidak bisa menjangkau Apple"
+    },
+    "inUse": "Sedang dipakai",
+    "noTeams": "Tim muncul setelah Apple menjawab.",
+    "use": "Pakai",
+    "signInAgain": "Masuk lagi",
+    "signOut": {
+      "action": "Keluar",
+      "title": "Keluar dari {appleId}?",
+      "forgets": "IPAForge melupakan Apple ID ini, sesinya, dan kata sandi tersimpannya.",
+      "keeps": "Sertifikat penandatanganannya tetap ada di komputer ini, jadi masuk lagi akan memakainya kembali. Aplikasi yang sudah terpasang tetap berfungsi sampai kedaluwarsa.",
+      "confirm": "Keluar"
+    }
+  },
+  "apps": {
+    "description": "Aplikasi yang dipasang IPAForge di perangkat ini. Refresh menandatangani ulang aplikasi sebelum kedaluwarsa, dengan datanya tetap ada.",
+    "refreshAll": "{count, plural, =0 {Refresh semua} other {Refresh semua (#)}}",
+    "updateAll": "{count, plural, other {Update semua (#)}}",
+    "refresh": "Refresh",
+    "update": "Update",
+    "remove": "Hapus",
+    "removeApp": "Hapus {name}",
+    "updateTo": "Update: {version}",
+    "from": "Dari {source}",
+    "needsIpa": "Dipasang IPAForge dari file .ipa di komputer lain. Tambahkan file .ipa itu di Pramuat sekali agar bisa di-refresh di sini.",
+    "thisDevice": "perangkat ini",
+    "badge": "{count, plural, other {# aplikasi segera di-refresh}}",
+    "expiry": {
+      "in": "{days, plural, other {Kedaluwarsa dalam # hari · {date}}}",
+      "today": "Kedaluwarsa hari ini",
+      "expired": "{days, plural, other {Kedaluwarsa # hari lalu · tidak akan terbuka}}",
+      "unknown": "Masa berlaku tidak diketahui",
+      "gone": "Kedaluwarsa · tidak akan terbuka"
+    },
+    "run": {
+      "checking": "Memeriksa ke Apple…",
+      "waiting": "Menunggu giliran",
+      "done": "Selesai"
+    },
+    "failed": {
+      "title": "Refresh tidak selesai: {reason}",
+      "details": "Tampilkan detail",
+      "dismiss": "Tutup"
+    },
+    "notConnected": {
+      "title": "Perangkat ini tidak terhubung",
+      "body": "Hubungkan untuk melihat aplikasinya, serta me-refresh atau memperbaruinya."
+    },
+    "expired": {
+      "title": "{count, plural, other {# aplikasi sudah kedaluwarsa}}",
+      "body": "Aplikasi tidak akan terbuka sampai di-refresh. Datanya tetap ada.",
+      "refresh": "{count, plural, other {Refresh sekarang}}"
+    },
+    "facts": {
+      "next": "Berikutnya kedaluwarsa",
+      "none": "Belum ada",
+      "nextIn": "{days, plural, other {{name} · # hari}}",
+      "nextExpired": "{name} · kedaluwarsa",
+      "count": "Dijaga tetap segar",
+      "apps": "{count, plural, other {# aplikasi}}",
+      "auto": "Refresh otomatis",
+      "autoOn": "{days, plural, other {Aktif · # hari sebelumnya}}",
+      "autoOff": "Nonaktif"
+    },
+    "list": {
+      "title": "Dipasang IPAForge",
+      "count": "{count, plural, other {# aplikasi · yang terdekat dulu}}",
+      "empty": "Belum ada aplikasi. Pasang SideStore, atau pramuat aplikasi, dan akan tampil di sini."
+    },
+    "others": {
+      "title": "Belum dijaga IPAForge",
+      "hint": "Dipasang sebelum versi IPAForge ini, atau oleh alat lain",
+      "found": "Ditemukan di {source}. Refresh memasangnya dari sana, dengan datanya tetap ada, dan IPAForge menjaganya tetap segar sejak saat itu.",
+      "foundMany": "Ditemukan di {source} dan {count, plural, other {# sumber lain}}. Refresh memasangnya dari yang dipilih di bawah, dengan datanya tetap ada, dan IPAForge menjaganya tetap segar sejak saat itu.",
+      "pickSource": "Pasang dari",
+      "choice": "{source} · {version}",
+      "how": "Tambahkan file .ipa-nya di Pramuat sekali, dan IPAForge menjaganya tetap segar sejak saat itu."
+    },
+    "auto": {
+      "title": "Refresh aplikasi otomatis",
+      "body": "Selama IPAForge terbuka dan perangkat terhubung, aplikasi di-refresh sendiri sebelum kedaluwarsa.",
+      "toggle": "Refresh otomatis",
+      "when": "Refresh saat aplikasi tersisa",
+      "days": "{count, plural, other {# hari}}"
+    },
+    "removeDialog": {
+      "title": "Hapus {name}?",
+      "body": "Aplikasi dihapus dari {device} beserta datanya, dan membebaskan satu slot aplikasi gratis. Kamu bisa memasangnya lagi dari Pramuat."
+    },
+    "pairing": {
+      "open": "File pairing",
+      "title": "File pairing",
+      "hint": "File pairing memungkinkan aplikasi menjangkau perangkatmu sendiri, untuk me-refresh dan memasang aplikasi. Siapa pun yang memegangnya bisa memakai perangkat, jadi berikan ke aplikasimu sendiri hanya jika petunjuknya memintanya.",
+      "reading": "Membaca file pairing…",
+      "empty": "Tidak ada aplikasi pairing atau aplikasi yang dipasang IPAForge di perangkat ini.",
+      "classic": {
+        "thisComputer": "Pairing: milik komputer ini",
+        "otherComputer": "Pairing: milik komputer lain",
+        "missing": "Pairing: tidak ada"
+      },
+      "remote": {
+        "accepted": "Jarak jauh: diterima",
+        "rejected": "Jarak jauh: tidak diterima",
+        "otherComputer": "Jarak jauh: milik komputer lain",
+        "missing": "Jarak jauh: tidak ada"
+      },
+      "detail": {
+        "placed": "Ditempatkan {date}",
+        "needed": "Butuh satu untuk me-refresh sendiri.",
+        "otherComputer": "Dari komputer lain: berfungsi selama komputer itu tetap dipercaya.",
+        "ownNone": "Tidak ada. Tambahkan hanya jika aplikasi memintanya."
+      },
+      "place": "Tempatkan",
+      "placeOne": "Tempatkan file pairing di {name}",
+      "placeAgain": "Tempatkan lagi",
+      "placeAgainOne": "Tempatkan lagi file pairing di {name}",
+      "add": "Tambah…",
+      "addOne": "Tambahkan file pairing ke {name}",
+      "remove": "Hapus",
+      "removeOne": "Hapus file pairing dari {name}",
+      "newRemote": "Pairing jarak jauh baru",
+      "done": "Selesai",
+      "addTitle": "Tambahkan file pairing ke {name}",
+      "addBody": "IPAForge menulis file pairing komputer ini ke folder aplikasi di perangkatmu. Siapa pun yang memegangnya bisa memakai perangkat: tambahkan hanya ke aplikasi yang kamu percaya.",
+      "pathLabel": "Path di dalam aplikasi",
+      "pathHint": "Dari petunjuk aplikasi; biasanya di Documents. IPAForge mengingatnya untuk aplikasi ini.",
+      "pathInvalid": "Gunakan path di Documents atau Library yang berakhiran .plist atau .mobiledevicepairing.",
+      "removeTitle": "Hapus file pairing milik {name}?",
+      "removeBody": "Aplikasi tidak bisa menjangkau perangkatmu sendiri lagi (me-refresh, memasang) sampai file pairing ditempatkan lagi.",
+      "newRemoteTitle": "Buat pairing jarak jauh baru?",
+      "newRemoteBody": "IPAForge membuat pairing jarak jauh baru dengan perangkatmu dan menempatkannya di SideStore. Perangkat mungkin meminta kamu mempercayai komputer ini. Pairing jarak jauh yang lama berhenti berfungsi.",
+      "newRemoteConfirm": "Buat yang baru",
+      "newRemoteWaiting": "Jika perangkat bertanya, ketuk Percayai dan masukkan kode sandinya.",
+      "tag": "Tanpa file pairing",
+      "tagOne": "{name} tidak punya file pairing: buka File pairing"
+    },
+    "cancelRefresh": "Batalkan refresh"
+  },
+  "logs": {
+    "title": "Log",
+    "lede": "Apa yang dilakukan IPAForge, baris demi baris. Buka dari mana saja dengan",
+    "shortcut": {
+      "control": "Ctrl+",
+      "command": "⌘",
+      "key": "L"
+    },
+    "copy": "Salin",
+    "save": "Simpan…",
+    "clear": "Bersihkan",
+    "cleared": "Tampilan dibersihkan. Simpan tetap menulis setiap baris yang disimpan sesi ini.",
+    "search": {
+      "label": "Cari di log",
+      "placeholder": "Cari pesan dan detail",
+      "key": "/"
+    },
+    "level": {
+      "label": "Level",
+      "all": "Semua",
+      "info": "Info",
+      "warn": "Peringatan",
+      "error": "Kesalahan"
+    },
+    "levelName": {
+      "debug": "Debug",
+      "info": "Info",
+      "warn": "Peringatan",
+      "error": "Kesalahan"
+    },
+    "area": {
+      "label": "Area",
+      "all": "Semua area",
+      "install": "Pasang",
+      "device": "Perangkat",
+      "apple": "Apple",
+      "catalog": "Katalog",
+      "signing": "Penandatanganan",
+      "engine": "Engine",
+      "interface": "Antarmuka",
+      "app": "Aplikasi"
+    },
+    "filters": {
+      "showing": "Hanya menampilkan:",
+      "run": "Proses pemasangan ini ({time})",
+      "text": "“{text}”",
+      "remove": "Hapus filter {filter}"
+    },
+    "list": {
+      "label": "Baris log",
+      "loadingOlder": "Memuat baris yang lebih lama…"
+    },
+    "row": {
+      "details": "{count, plural, other {# detail}}",
+      "scope": "area",
+      "redacted": "[redacted]",
+      "copy": "Salin baris"
+    },
+    "follow": {
+      "on": "Mengikuti baris baru",
+      "off": "Dijeda",
+      "pause": "Jeda",
+      "resume": "Ikuti"
+    },
+    "jump": "{count, plural, other {# baris baru}} · Lompat ke terbaru",
+    "count": "{matching, plural, other {# baris cocok}} · {capacity, number} terakhir disimpan sesi ini",
+    "debug": "Sertakan detail debug",
+    "privacy": "Kata sandi, token, kunci, nomor seri, dan pengenal perangkat tidak pernah ditulis ke log; semuanya tampil sebagai [redacted]. Log tetap di komputer ini sampai kamu menyalin atau menyimpannya.",
+    "empty": {
+      "none": {
+        "title": "Belum ada yang dicatat",
+        "body": "Baris muncul di sini saat IPAForge bekerja: menghubungkan perangkat, masuk, memasang."
+      },
+      "noMatch": {
+        "title": "Tidak ada baris yang cocok",
+        "body": "Ubah level, area, atau pencarian.",
+        "showAll": "Tampilkan semua baris"
+      },
+      "cleared": {
+        "title": "Tampilan dibersihkan",
+        "body": "Baris baru muncul di sini saat masuk."
+      },
+      "failed": {
+        "title": "Tidak bisa membaca log",
+        "body": "Koneksi ke Engine mungkin sudah tertutup. Buka Log lagi untuk mencoba lagi."
+      }
+    },
+    "export": {
+      "copyTitle": "{count, plural, other {Salin # baris?}}",
+      "saveTitle": "{count, plural, other {Simpan # baris ke file?}}",
+      "copyBody": "Baris yang ditampilkan, dengan filter yang kamu atur.",
+      "saveBody": "Setiap baris yang disimpan sesi ini, apa pun filternya.",
+      "warning": "Kata sandi, token, dan pengenal perangkat sudah dihilangkan, tetapi log memang menyebut model perangkat, aplikasi, dan timmu. Periksa dulu sebelum memostingnya ke publik.",
+      "confirmCopy": "Salin",
+      "confirmSave": "Simpan",
+      "copied": "{count, plural, other {Menyalin # baris}}",
+      "saved": "{count, plural, other {Menyimpan # baris}}",
+      "copyFailed": "Tidak bisa menyalin baris",
+      "saveFailed": "Tidak bisa menyimpan baris"
+    }
+  },
+  "preload": {
+    "title": "Pramuat aplikasi",
+    "description": "Pasang aplikasimu sendiri: ditandatangani dengan Apple ID kamu, dipasang lewat USB, satu per satu.",
+    "tabs": {
+      "label": "Pramuat",
+      "apps": "Tambah aplikasi",
+      "sources": "Sumber"
+    },
+    "add": {
+      "drop": "Letakkan file .ipa di sini",
+      "or": "atau",
+      "choose": "Pilih file…",
+      "link": "Tambah dari tautan…"
+    },
+    "catalog": {
+      "recommended": "Disarankan",
+      "added": "Ditambahkan",
+      "add": "Tambah",
+      "sidestore": "Memperbarui dan memasang aplikasi di perangkat secara mandiri.",
+      "livecontainerSidestore": "LiveContainer dengan SideStore di dalamnya.",
+      "livecontainer": "Menjalankan banyak aplikasi di dalam satu aplikasi, melampaui batas 3 aplikasi.",
+      "stikdebug": "Mengaktifkan JIT untuk aplikasi yang membutuhkannya, di perangkat.",
+      "feather": "Menandatangani dan memasang aplikasi di perangkat dengan sertifikatmu."
+    },
+    "browse": {
+      "title": "Jelajahi aplikasi",
+      "count": "{apps, plural, other {# aplikasi}} dari {sources, plural, other {# sumber}}",
+      "source": "Sumber",
+      "allSources": "Semua sumber",
+      "search": "Cari aplikasi",
+      "manage": "Kelola sumber",
+      "noMatch": "Tidak ada aplikasi yang cocok dengan “{query}”.",
+      "allOff": "Semua sumber dinonaktifkan. Aktifkan satu di Sumber.",
+      "loading": "Membaca sumber…",
+      "catalogLine": "Rilis terbaru · diperiksa dengan checksum-nya",
+      "version": "{version} · {size}",
+      "from": "{name}, juga ada di {others}",
+      "details": "Detail {name}",
+      "notRefreshed": {
+        "title": "Tidak bisa me-refresh {name}",
+        "body": "Menampilkan aplikasinya dari refresh terakhir, {when}.",
+        "retry": "Coba lagi"
+      }
+    },
+    "detail": {
+      "version": "Versi",
+      "latest": "{version} (terbaru)",
+      "size": "Ukuran",
+      "needs": "Membutuhkan",
+      "needsIos": "iOS {version}",
+      "anyIos": "iOS apa pun",
+      "from": "Dari",
+      "builtin": "Bawaan · tepercaya",
+      "added": "Sumber yang kamu tambahkan",
+      "untrusted": "Dari sumber yang kamu tambahkan: IPAForge tidak meninjau aplikasinya.",
+      "add": "Tambah ke daftar",
+      "inList": "Ada di daftar",
+      "close": "Tutup",
+      "loadingReleases": "Mencari rilisnya…",
+      "noReleases": "Rilisnya tidak bisa dibaca sekarang. Periksa koneksi dan buka lagi."
+    },
+    "sources": {
+      "description": "Tempat Jelajahi aplikasi menemukan aplikasi. Sumber bawaan dikelola IPAForge; tambahkan yang lain lewat tautannya (format AltStore).",
+      "add": "Tambah sumber…",
+      "refreshAll": "Refresh semua",
+      "list": "Sumber",
+      "builtin": "Bawaan · tepercaya",
+      "added": "Ditambahkan olehmu",
+      "catalogName": "Katalog IPAForge",
+      "apps": "{count, plural, other {# aplikasi}}",
+      "updated": "diperbarui {when}",
+      "notRead": "Belum dibaca",
+      "skipped": "{count, plural, other {# dilewati (bukan .ipa)}}",
+      "failed": "Tidak bisa dijangkau.",
+      "failedCopy": "Menampilkan salinan terakhirnya, dari {when}.",
+      "refreshing": "Me-refresh…",
+      "show": "Tampilkan aplikasi dari {name}",
+      "refresh": "Refresh {name}",
+      "remove": "Hapus {name}",
+      "on": "Aktif",
+      "off": "Nonaktif",
+      "note": "IPAForge tidak meninjau aplikasi di sumber yang kamu tambahkan. Tambahkan hanya sumber yang kamu percaya.",
+      "refreshOne": "Refresh",
+      "removeOne": "Hapus"
+    },
+    "addSource": {
+      "title": "Tambah sumber",
+      "label": "Tautan sumber",
+      "placeholder": "https://example.com/apps.json",
+      "hint": "Sumber dalam format AltStore, jenis yang dibaca SideStore. Biasanya berakhiran .json.",
+      "check": "Periksa",
+      "checking": "Memeriksa sumber…",
+      "notLink": "Masukkan tautan yang diawali https://",
+      "notHttps": "Gunakan tautan https://: IPAForge hanya membaca sumber lewat koneksi aman.",
+      "previewTitle": "Tambahkan sumber ini?",
+      "includes": "{count, plural, other {# aplikasi, termasuk:}}",
+      "skipped": "{count, plural, other {# lagi dikecualikan: unduhannya bukan .ipa.}}",
+      "warningTitle": "Tambahkan hanya sumber yang kamu percaya",
+      "warningBody": "IPAForge tidak meninjau aplikasi di sumber yang kamu tambahkan. Setiap aplikasi tetap diperiksa sebelum dipasang.",
+      "back": "Kembali",
+      "confirm": "Tambah sumber"
+    },
+    "removeSource": {
+      "title": "Hapus {name}?",
+      "body": "Aplikasinya hilang dari Jelajahi aplikasi. Aplikasi yang dipasang darinya tetap ada di perangkat, dan aplikasi di daftar Akan dipasang juga tetap di sana.",
+      "confirm": "Hapus"
+    },
+    "list": {
+      "title": "Akan dipasang",
+      "count": "{count, plural, other {# aplikasi}}",
+      "empty": "Belum ada aplikasi. Letakkan file .ipa di sini, pilih file, tambahkan tautan, atau pilih satu di Jelajahi aplikasi."
+    },
+    "row": {
+      "waiting": "Menunggu perangkat dan Apple ID",
+      "checking": "Memeriksa…",
+      "downloading": "Mengunduh dan memeriksa…",
+      "appIds": "{count, plural, other {# App ID}}{extensions, plural, =0 {} other { (aplikasi + # ekstensi)}}",
+      "updates": "Memperbarui {from} → {to} · datanya tetap ada",
+      "new": "Baru di perangkat",
+      "pairing": "Mendapat file pairing dan sertifikat",
+      "fromCatalog": "Dari katalog · Stabil",
+      "remove": "Hapus {name}",
+      "cannot": "Tidak bisa dipasang.",
+      "fromSource": "Dari {name}",
+      "saveInstead": "Simpan .ipa bertanda tangan saja",
+      "saveInsteadOne": "Simpan {name} sebagai .ipa bertanda tangan, tanpa memasangnya",
+      "savedOnComputer": "Disimpan di komputer ini, tidak dipasang"
+    },
+    "problem": {
+      "notIpa": "Hanya file .ipa yang bisa dipasang.",
+      "unreadable": "IPAForge tidak bisa membaca file ini. Tambahkan dengan Pilih file… sebagai gantinya.",
+      "needsIos": "Butuh iOS {needs}; perangkat ini memakai iOS {has}."
+    },
+    "summary": {
+      "appIds": "{count, plural, other {# baru}} · {left, plural, other {# tersisa minggu ini}}",
+      "appIdsNoLimit": "{count, plural, other {# baru}}",
+      "notEnough": "Tidak cukup lagi. Hapus aplikasi, atau tunggu. {next}",
+      "freeApps": "{after} dari {limit} setelah pemasangan ini",
+      "freeAppsOver": "{used, plural, other {# sudah ada.}} Pemasangan akan menanyakan aplikasi mana yang dihapus, atau hapus satu dari daftar ini."
+    },
+    "install": "{count, plural, =0 {Pasang} other {Pasang # aplikasi}}",
+    "clear": "Kosongkan daftar",
+    "readiness": {
+      "busy": "Tunggu pemasangan yang sedang berjalan.",
+      "empty": "Tambahkan aplikasi dulu.",
+      "checking": "Memeriksa aplikasi…",
+      "problems": "Hapus aplikasi yang tidak bisa dipasang."
+    },
+    "link": {
+      "title": "Tambah dari tautan",
+      "body": "Tautan langsung ke file .ipa. IPAForge mengunduhnya, lalu memeriksanya seperti aplikasi lain.",
+      "label": "Tautan",
+      "placeholder": "https://example.com/MyApp.ipa",
+      "add": "Tambah",
+      "httpsOnly": "Hanya tautan https yang bisa diunduh.",
+      "invalid": "Itu bukan tautan.",
+      "notIpa": "Tautan harus mengarah ke file .ipa."
+    },
+    "elsewhere": {
+      "apps": "Aplikasi sedang dipasang",
+      "sidestore": "SideStore sedang dipasang",
+      "body": "Satu pemasangan dalam satu waktu: butuh perangkat. Yang ini bisa mulai setelah selesai.",
+      "open": "Buka"
+    },
+    "run": {
+      "title": {
+        "running": "{count, plural, =1 {Memasang {app}} other {Memasang # aplikasi}}",
+        "completed": "{count, plural, =1 {{app} sudah terpasang} other {# aplikasi sudah terpasang}}",
+        "failed": "Tidak bisa memasang semua aplikasi"
+      },
+      "backToPreload": "Kembali ke Pramuat",
+      "shared": "Perangkat ini dan Apple ID kamu",
+      "refresh": {
+        "profile": "Hanya profil baru, tidak ada yang dipasang ulang",
+        "certificate": "Dipasang ulang: sertifikat yang menandatanganinya tidak lagi valid",
+        "unmarked": "Dipasang ulang: IPAForge tidak bisa mengetahui sertifikat mana yang menandatanganinya",
+        "appId": "Dipasang ulang: Apple menghapus App ID-nya setelah kedaluwarsa",
+        "sidestore": "Dipasang ulang dengan datanya tetap ada, jadi SideStore sendiri menampilkan tanggal baru"
+      },
+      "group": {
+        "failed": "Gagal",
+        "done": "Selesai",
+        "active": "Sedang berjalan",
+        "pending": "Menunggu"
+      }
+    },
+    "done": {
+      "title": "{count, plural, =1 {{app} sudah ada di {device}.} other {{app} sudah ada di {device}.}}",
+      "open": "Buka setiap aplikasi dari Layar Utama."
+    },
+    "signAndSave": "{count, plural, other {Tandatangani dan simpan # aplikasi}}",
+    "installAndSave": "{install} untuk dipasang · {save} untuk disimpan sebagai .ipa bertanda tangan"
+  },
+  "repair": {
+    "title": "Perbaiki SideStore",
+    "description": "IPAForge memeriksa SideStore di {device} dan memperbaiki yang membuatnya tidak bisa menyegarkan aplikasimu sendiri.",
+    "checkAgain": "Periksa lagi",
+    "checking": "Memeriksa SideStore…",
+    "checks": "Pemeriksaan",
+    "failed": "Tidak bisa memeriksa SideStore: {reason}",
+    "failedBody": "Pastikan perangkat terhubung dan terbuka, lalu tekan Periksa lagi.",
+    "ok": "OK",
+    "unknown": "Tidak diketahui",
+    "deviceFirst": "Perbaiki {device} dulu",
+    "device": {
+      "title": "{device} siap",
+      "ok": "Terbuka, dipercaya, dan Mode Developer aktif.",
+      "locked": "Perangkat terkunci. Buka kuncinya, lalu tekan Periksa lagi.",
+      "lockedTag": "Terkunci",
+      "developerMode": "Mode Developer mati, jadi SideStore dan aplikasi yang dipasangnya tidak akan terbuka. Di iPhone: Pengaturan › Privasi & Keamanan › Mode Developer, lalu mulai ulang.",
+      "developerModeTag": "Mode Developer mati"
+    },
+    "installed": {
+      "title": "SideStore terpasang",
+      "missing": "SideStore tidak ada di {device}.",
+      "missingTag": "Tidak terpasang"
+    },
+    "signer": {
+      "title": "Ditandatangani dengan tim yang kamu pakai di sini",
+      "ok": "Perbaikan bisa memasangnya lagi, atau memberinya profil baru, tanpa kehilangan datanya.",
+      "otherTeam": "Tim lain dari Apple ID ini yang menandatanganinya. Memasangnya lagi dengan tim ini akan menambah SideStore kedua, tanpa data atau aplikasinya.",
+      "otherTeamTag": "Tim lain",
+      "otherAppleId": "Apple ID lain yang menandatanganinya. Memasangnya lagi dengan yang ini akan menambah SideStore kedua, tanpa data atau aplikasinya.",
+      "otherAppleIdTag": "Apple ID lain"
+    },
+    "version": {
+      "title": "SideStore sudah yang terbaru",
+      "ok": "Versi {version}, yang terbaru.",
+      "outdated": "Versi {version}; {latest} sudah rilis. Versi lama bisa kehilangan perbaikan untuk refresh di iOS terbaru.",
+      "outdatedTag": "{latest} tersedia",
+      "unknown": "Versi {version}. Katalog tidak bisa dijangkau untuk membandingkan."
+    },
+    "expiry": {
+      "title": "SideStore belum kedaluwarsa",
+      "ok": "{days, plural, other {Kedaluwarsa dalam # hari.}}",
+      "soon": "{days, plural, =0 {Kedaluwarsa hari ini.} other {Kedaluwarsa dalam # hari.}} Setelah kedaluwarsa, SideStore tidak bisa menyegarkan dirinya sendiri.",
+      "soonTag": "Segera kedaluwarsa",
+      "expired": "{days, plural, other {Kedaluwarsa # hari lalu.}} SideStore tidak akan terbuka, jadi tidak bisa menyegarkan aplikasimu.",
+      "expiredTag": "Kedaluwarsa",
+      "unknown": "Perangkat tidak menampilkan profil untuknya."
+    },
+    "signing": {
+      "title": "Sertifikat yang menandatanganinya valid",
+      "ok": "Masih valid di sisi Apple.",
+      "revoked": "Sertifikat dicabut atau sudah kedaluwarsa. SideStore berhenti terbuka pada peluncuran berikutnya.",
+      "revokedTag": "Dicabut",
+      "unknown": "Dipasang oleh alat lain, jadi IPAForge tidak bisa melihat sertifikat mana yang menandatanganinya. Perbaikan bisa memasangnya lagi agar yakin."
+    },
+    "own": {
+      "title": "SideStore bisa menandatangani aplikasi sendiri",
+      "ok": "SideStore memegang sertifikat valid untuk menyegarkan aplikasimu.",
+      "missing": "SideStore tidak memegang sertifikat, jadi refresh-nya meminta kamu masuk, atau gagal.",
+      "missingTag": "Tanpa sertifikat",
+      "other": "Sertifikat yang diberikan padanya tidak valid lagi. SideStore mungkin sudah menggantinya dengan yang lebih baru miliknya sendiri; jika refresh gagal di SideStore, pasang lagi.",
+      "otherTag": "Mungkin sudah diganti"
+    },
+    "pairing": {
+      "title": "SideStore punya file pairing",
+      "ok": "Ada, dan itu pairing komputer ini dengan {device}.",
+      "missing": "Hilang: SideStore tidak bisa menjangkau perangkat untuk memasang atau menyegarkan aplikasi.",
+      "missingTag": "Hilang",
+      "other": "Itu milik komputer lain. Berfungsi selama pairing itu tetap valid; mengatur ulang Percayai di perangkat akan merusaknya.",
+      "otherTag": "Komputer lain"
+    },
+    "manual": {
+      "title": "Di iPhone-mu · IPAForge tidak bisa memeriksa ini",
+      "tag": "Periksa sendiri",
+      "vpn": {
+        "title": "VPN SideStore aktif saat refresh",
+        "body": "Buka LocalDevVPN dan hubungkan sebelum refresh di SideStore."
+      },
+      "anisette": {
+        "title": "SideStore bisa menjangkau server anisette-nya",
+        "body": "Di SideStore › Pengaturan › Anisette, pilih server lain jika refresh bilang tidak bisa masuk."
+      }
+    },
+    "plan": {
+      "title": "Perbaikan akan",
+      "reinstall": "Memasang SideStore lagi",
+      "reinstallBody": "Dari katalog IPAForge, ditandatangani dengan sertifikat valid yang juga ditaruh di dalamnya. Datanya dan aplikasimu tetap ada.",
+      "profile": "Memberi SideStore profil baru",
+      "profileBody": "Tidak ada yang dipasang ulang.",
+      "pairing": "Menempatkan file pairing komputer ini",
+      "pairingBody": "Di Documents SideStore, menggantikan yang ada.",
+      "optional": "Juga, jika kamu mau",
+      "offerReinstall": "Pasang SideStore lagi, agar yakin",
+      "offerPairing": "Ganti file pairing dengan milik komputer ini",
+      "hint": "Sekali jalan. Biarkan {device} tetap terhubung dan terbuka.",
+      "start": "Perbaiki SideStore"
+    },
+    "blocked": {
+      "title": "SideStore tidak bisa dipasang lagi dengan Apple ID ini",
+      "body": "Tim atau Apple ID lain yang menandatanganinya, jadi datanya tidak akan terbawa. Pilih Apple ID itu di bilah atas, lalu tekan Periksa lagi."
+    },
+    "notInstalled": {
+      "title": "SideStore tidak ada di {device}",
+      "body": "Pasang dulu, dari halaman Pasang.",
+      "install": "Pasang SideStore"
+    },
+    "fine": {
+      "title": "SideStore berfungsi",
+      "body": "Tidak ada yang perlu diperbaiki. Jika masih tidak bisa menyegarkan, periksa dua hal di iPhone di bawah."
+    },
+    "run": {
+      "title": {
+        "running": "Memperbaiki SideStore",
+        "completed": "SideStore sudah diperbaiki",
+        "failed": "Tidak bisa memperbaiki SideStore"
+      }
+    },
+    "done": {
+      "title": "SideStore di {device} sudah diperbaiki.",
+      "open": "Buka SideStore dan segarkan aplikasimu."
+    },
+    "open": "Periksa SideStore",
+    "checkingTag": "Memeriksa…",
+    "remote": {
+      "title": "Pairing jarak jauh untuk iOS 17.4 dan yang lebih baru",
+      "ok": "Ada, dan {device} menerimanya.",
+      "missing": "Hilang: SideStore hanya bisa memakai pairing klasik. Menempatkan file pairing komputer ini akan menambahkannya.",
+      "missingTag": "Hilang",
+      "rejected": "{device} tidak lagi menerimanya (Percayai-nya diatur ulang). Menempatkan file pairing komputer ini membuat yang baru.",
+      "rejectedTag": "Tidak diterima",
+      "other": "Itu milik komputer lain, jadi IPAForge tidak bisa memeriksanya. Menempatkan file pairing komputer ini menggantikannya.",
+      "otherTag": "Komputer lain",
+      "notNeeded": "Tidak diperlukan di bawah iOS 17.4.",
+      "notNeededTag": "Tidak diperlukan"
+    }
+  },
+  "sidestore": {
+    "addSource": "Tambahkan ke SideStore",
+    "addAll": "Tambahkan semua ke SideStore",
+    "install": "Pasang dengan SideStore",
+    "sourceTitle": "Tambahkan {name} ke SideStore",
+    "sourceBody": "SideStore juga menampilkan aplikasinya, dan menjaganya tetap mutakhir di iPhone. SideStore juga tidak meninjau aplikasi di sebuah sumber: tambahkan hanya sumber yang kamu percaya.",
+    "installTitle": "Pasang {name} dengan SideStore",
+    "installBody": "SideStore mengunduh {name} {version}, menandatanganinya dengan Apple ID kamu, dan memasangnya sendiri di iPhone. Pada Apple ID gratis, ini dihitung dalam batas 3 aplikasi. Tampil di Aplikasi setelah IPAForge me-refresh-nya.",
+    "qrLabel": "Kode QR tautan di bawah",
+    "steps": {
+      "camera": "Buka Kamera di {device} dan arahkan ke kode.",
+      "banner": "Ketuk banner untuk membuka SideStore.",
+      "addSource": "SideStore meminta menambahkan sumber: ketuk Tambah.",
+      "install": "SideStore meminta memasang aplikasi: ketuk Pasang."
+    },
+    "onPhone": "Di iPhone sendiri, tautan ini juga membuka SideStore (ditempel di Safari, atau dikirim lewat Pesan).",
+    "copy": "Salin",
+    "copied": "Tersalin",
+    "previous": "Sebelumnya",
+    "next": "Berikutnya",
+    "step": "Sumber {at} dari {count}",
+    "back": "Kembali",
+    "done": "Selesai",
+    "offer": "{count, plural, other {Tambahkan # sumber yang kamu tambahkan di sini ke SideStore juga, agar menampilkan aplikasinya di iPhone.}}"
+  },
+  "checklist": {
+    "title": "Di {device} · iOS {ios}",
+    "setUp": "{device} sudah disiapkan · iOS {ios}",
+    "show": "Tampilkan daftar periksa",
+    "hide": "Sembunyikan",
+    "allSet": "Semua beres",
+    "progress": "{left, plural, other {# hal yang harus dilakukan}} · {done} dari {total} selesai",
+    "group": {
+      "before": "Sebelum memasang",
+      "after": "Setelah memasang",
+      "sidestore": "Untuk SideStore"
+    },
+    "onPhone": "Di iPhone",
+    "tickedTag": "Selesai di iPhone",
+    "tick": "Sudah saya lakukan",
+    "notNeeded": "Tidak diperlukan di iOS ini",
+    "cable": {
+      "title": "Hubungkan {device} ke komputer ini",
+      "connected": "Terhubung",
+      "none": "Tidak terhubung",
+      "how": "Gunakan kabel untuk pertama kalinya; setelah itu, Wi-Fi berfungsi selama keduanya di jaringan yang sama."
+    },
+    "unlock": {
+      "title": "Buka kuncinya",
+      "locked": "Terkunci",
+      "unlocked": "Terbuka",
+      "how": "Biarkan tetap terbuka selama IPAForge memasang."
+    },
+    "trust": {
+      "title": "Percayai komputer ini",
+      "trusted": "Dipercaya",
+      "notYet": "Belum",
+      "step1": "Buka kunci {device}.",
+      "step2": "Ketuk Percayai saat perangkat menanyakan tentang komputer ini.",
+      "step3": "Masukkan kode sandinya.",
+      "again": "Tanya lagi"
+    },
+    "passcode": {
+      "title": "Setel kode sandi",
+      "how": "SideStore menyegarkan lewat Wi-Fi, yang hanya diizinkan iOS dengan kode sandi: Pengaturan › Face ID & Kode Sandi."
+    },
+    "devmode": {
+      "title": "Aktifkan Mode Developer",
+      "on": "Aktif",
+      "off": "Nonaktif",
+      "step1": "Pengaturan › Privasi & Keamanan › Mode Developer (jika tidak ada, tekan Tampilkan opsinya).",
+      "step2": "Aktifkan dan mulai ulang {device}.",
+      "step3": "Setelah mulai ulang, ketuk Aktifkan dan masukkan kode sandi.",
+      "reveal": "Tampilkan opsinya",
+      "revealed": "Sekarang ada di Pengaturan › Privasi & Keamanan."
+    },
+    "developer": {
+      "title": "Percayai Apple ID-mu sebagai developer",
+      "later": "Setelah pemasangan pertama",
+      "step1": "Pengaturan › Umum › VPN & Manajemen Perangkat.",
+      "step2": "Di bawah Aplikasi Developer, ketuk {appleId}.",
+      "step3": "Ketuk Percayai. iPhone butuh internet untuk ini."
+    },
+    "vpn": {
+      "title": "Pasang LocalDevVPN",
+      "installed": "Terpasang",
+      "notInstalled": "Tidak terpasang",
+      "how": "SideStore berkomunikasi dengan iPhone lewat VPN lokal ini; tidak ada yang keluar dari ponsel. Gratis di App Store.",
+      "qrLabel": "Kode QR halaman App Store LocalDevVPN",
+      "scan": "Pindai dengan Kamera, atau cari \"LocalDevVPN\" di App Store."
+    },
+    "vpnOn": {
+      "title": "Hubungkan LocalDevVPN saat SideStore menyegarkan",
+      "tag": "Setiap kali",
+      "later": "Setelah memasangnya",
+      "how": "Buka LocalDevVPN dan ketuk Hubungkan, atau biarkan SideStore mengaktifkannya: SideStore menanyakannya pertama kali."
+    },
+    "repair": {
+      "title": "SideStore bisa menyegarkan sendiri",
+      "tag": "Diperiksa di Perbaikan",
+      "how": "Sertifikatnya, file pairing-nya, dan masa berlakunya."
+    },
+    "notice": "{count, plural, other {# hal yang harus dilakukan di {device}}}",
+    "noticeBody": "Agar pemasangan dan refresh berjalan lancar.",
+    "showChecklist": "Tampilkan daftar periksa"
+  },
+  "updates": {
+    "screen": {
+      "label": "Memperbarui IPAForge"
+    },
+    "checking": {
+      "title": "Memeriksa pembaruan…"
+    },
+    "downloading": {
+      "title": "Memperbarui IPAForge",
+      "body": "Versi {version} sudah rilis. Sekarang diunduh dan dipasang, lalu IPAForge terbuka lagi sendiri.",
+      "starting": "Memulai pengunduhan…",
+      "percent": "{fraction, number, percent}"
+    },
+    "installing": {
+      "title": "Memasang {version}…",
+      "body": "IPAForge terbuka lagi sebentar lagi."
+    },
+    "failed": {
+      "title": "Pembaruan tidak selesai",
+      "body": "Versi {version} sudah rilis. Coba lagi, atau unduh dari halaman rilisnya.",
+      "retry": "Coba lagi",
+      "releasePage": "Halaman rilis",
+      "skip": "Pakai versi ini untuk sementara"
+    },
+    "manual": {
+      "title": "IPAForge {version} sudah rilis",
+      "body": "Salinan ini dipasang dari {package, select, msi {installer .msi} deb {paket .deb} rpm {paket .rpm} other {sebuah paket}}, yang tidak bisa memperbarui dirinya sendiri. Unduh versi baru dan pasang di atas yang ini: Apple ID, aplikasi, dan pengaturanmu tetap ada.",
+      "download": "Unduh {version}",
+      "later": "Nanti"
+    },
+    "nativeBuild": {
+      "title": "Ini build Intel",
+      "body": "Mac kamu memakai Apple silicon, jadi salinan IPAForge ini berjalan lewat Rosetta dan semuanya lebih lambat. Unduh build Apple silicon dan pasang di atas yang ini; Apple ID, perangkat, dan aplikasimu tetap ada.",
+      "file": "IPAForge-…-mac-arm64.dmg",
+      "later": "Nanti",
+      "download": "Unduh untuk Apple silicon"
+    }
+  },
+  "whatsNew": {
+    "link": "Yang baru",
+    "version": "Versi {version} · {date}",
+    "englishOnly": "Catatan rilis dalam bahasa Inggris.",
+    "kind": {
+      "new": "Baru",
+      "changed": "Diubah",
+      "fixed": "Diperbaiki",
+      "removed": "Dihapus"
+    },
+    "dialog": {
+      "title": "Yang baru di IPAForge",
+      "everyVersion": "Setiap versi",
+      "close": "Mengerti"
+    },
+    "page": {
+      "title": "Yang baru",
+      "lede": "Semua yang berubah di IPAForge, yang terbaru di atas.",
+      "current": "Versi ini",
+      "release": "Rilis di GitHub"
+    }
+  },
+  "portal": {
+    "description": "Yang dipegang tim Apple ID-mu di Apple, dan profil di perangkatmu.",
+    "tabsLabel": "Yang dipegang tim",
+    "tabs": {
+      "certificates": "Sertifikat",
+      "appIds": "App ID",
+      "profiles": "Profil",
+      "groups": "Grup Aplikasi",
+      "devices": "Perangkat terdaftar"
+    },
+    "team": {
+      "pick": "Tim",
+      "free": "{name} (gratis)",
+      "paid": "{name} (berbayar)"
+    },
+    "refresh": "Refresh",
+    "reading": "Membaca dari Apple…",
+    "noAccount": {
+      "title": "Belum ada Apple ID",
+      "body": "Masuk dengan Apple ID di Akun untuk melihat yang dipegang timnya."
+    },
+    "expired": "Kedaluwarsa",
+    "expires": "Kedaluwarsa {date}",
+    "expiredOn": "Kedaluwarsa {date}",
+    "certificates": {
+      "hint": "Sertifikat menandatangani aplikasi yang kamu pasang. Mencabutnya membuat setiap aplikasi yang ditandatanganinya berhenti terbuka, sampai ditandatangani lagi.",
+      "usedFree": "{count} dari {max} terpakai (tim gratis bisa memegang {max})",
+      "usedPaid": "{count, plural, other {# sertifikat}}",
+      "maker": {
+        "thisComputer": "IPAForge di komputer ini",
+        "ipaforge": "IPAForge di komputer lain",
+        "sidestore": "SideStore",
+        "machine": "“{machine}” (biasanya Xcode)",
+        "unknown": "Alat yang tidak dikenal"
+      },
+      "thisComputer": "Milik komputer ini",
+      "signs": "Menandatangani {apps} di {device}",
+      "signsNothing": "Tidak menandatangani apa pun di {device}",
+      "revoke": "Cabut",
+      "revokeOne": "Cabut {name}",
+      "empty": "Tim belum punya sertifikat. IPAForge membuatnya saat pertama kali memasang.",
+      "import": "Impor .p12…",
+      "export": "Ekspor .p12"
+    },
+    "revokeDialog": {
+      "title": "Cabut sertifikat ini?",
+      "apps": "Ini berhenti terbuka di {device} sampai ditandatangani lagi (Refresh di Aplikasi melakukannya):",
+      "none": "Tidak ada yang di {device} ditandatangani dengannya.",
+      "noDevice": "Hubungkan perangkatmu untuk melihat aplikasi mana yang ditandatangani sertifikat ini.",
+      "thisComputer": "IPAForge membuat yang baru saat berikutnya memasang atau menyegarkan.",
+      "sidestore": "SideStore membuatnya untuk menyegarkan sendiri: SideStore membuat yang baru saat berikutnya kamu masuk di sana.",
+      "machine": "Xcode di komputer itu membuat yang baru saat berikutnya menandatangani.",
+      "exportedToo": "File .p12 yang diekspor darinya juga berhenti berfungsi."
+    },
+    "appIds": {
+      "hintFree": "Setiap aplikasi dan ekstensi yang kamu pasang membutuhkannya. Tim gratis bisa mendaftarkan 10 dalam 7 hari; masing-masing dihitung selama 7 hari setelah dibuat.",
+      "hintPaid": "Setiap aplikasi dan ekstensi yang kamu pasang membutuhkannya. Tim berbayar tidak punya batas mingguan.",
+      "left": "{count, plural, other {# tersisa minggu ini}}",
+      "leftAndNext": "{left} · berikutnya kosong pada {date}",
+      "countsUntil": "Dihitung sampai {date}",
+      "unused": "Tidak terpakai",
+      "delete": "Hapus",
+      "deleteOne": "Hapus {name}",
+      "empty": "Tim belum punya App ID."
+    },
+    "deleteDialog": {
+      "title": "Hapus App ID ini?",
+      "free": "Di tim gratis, App ID tetap dihitung dalam batas 10 per minggu sampai kedaluwarsa: menghapusnya tidak mengembalikan slot lebih cepat.",
+      "paid": "App ID bisa didaftarkan lagi nanti."
+    },
+    "profiles": {
+      "title": "Provisioning profile di {device}",
+      "hint": "Profil memungkinkan satu aplikasi (atau ekstensi) berjalan di perangkat ini. Refresh memberi aplikasi profil baru; profil yang kedaluwarsa atau tidak terpakai aman dihapus.",
+      "noDevice": "Hubungkan perangkatmu untuk melihat provisioning profile-nya.",
+      "noApp": "Tidak ada aplikasi yang memakainya",
+      "otherTeam": "Tim lain",
+      "remove": "Hapus",
+      "removeOne": "Hapus profil {name}",
+      "removeUnused": "Hapus yang tidak terpakai",
+      "empty": "Tidak ada provisioning profile di perangkat ini."
+    },
+    "removeDialog": {
+      "title": "{count, plural, other {Hapus # profil?}}",
+      "body": "{count, plural, other {Dihapus dari {device}. Tidak ada aplikasi di sana yang membutuhkannya.}}"
+    },
+    "groups": {
+      "hint": "Aplikasi dalam grup yang sama berbagi file (SideStore dan widget-nya, misalnya). IPAForge membuatnya saat aplikasi membutuhkannya.",
+      "empty": "Tim belum punya grup aplikasi."
+    },
+    "devices": {
+      "hintFree": "Aplikasi yang kamu tandatangani hanya berjalan di sini.",
+      "hintPaid": "Aplikasi yang kamu tandatangani hanya berjalan di sini. Tim berbayar bisa mendaftarkan 100 per tahun; penghapusan dilakukan di situs developer Apple, setahun sekali.",
+      "used": "{count} dari {max} tahun ini",
+      "connected": "Terhubung",
+      "unnamed": "Perangkat tanpa nama",
+      "empty": "Belum ada perangkat terdaftar. IPAForge mendaftarkan perangkatmu saat pertama kali memasang."
+    },
+    "exportDialog": {
+      "title": "Ekspor sertifikat komputer ini",
+      "body": "File .p12 berisi sertifikat dan kunci privatnya, untuk SideStore atau komputer lain. Siapa pun yang memegang file dan kata sandinya bisa menandatangani aplikasi sebagai timmu.",
+      "password": "Kata sandi",
+      "again": "Kata sandi lagi",
+      "tooShort": "{count, plural, other {Gunakan minimal # karakter.}}",
+      "differ": "Kedua kata sandi berbeda.",
+      "save": "Simpan .p12…"
+    },
+    "importDialog": {
+      "title": "Impor sertifikat",
+      "body": "File .p12 dari komputer lain atau SideStore. IPAForge memeriksa bahwa Apple masih mencantumkannya untuk tim ini, lalu menandatangani dengannya di sini: tanpa sertifikat baru, tanpa slot terpakai.",
+      "noFile": "Belum ada file dipilih",
+      "choose": "Pilih…",
+      "password": "Kata sandinya",
+      "import": "Impor"
+    }
+  },
+  "guide": {
+    "title": "Panduan penyiapan",
+    "stepsLabel": "Langkah penyiapan",
+    "stepDone": "(selesai)",
+    "steps": {
+      "welcome": "Selamat datang",
+      "computer": "Komputer ini",
+      "iphone": "iPhone kamu",
+      "appleid": "Apple ID",
+      "install": "Pasang SideStore",
+      "onphone": "Di iPhone kamu",
+      "around": "Semua sudah siap"
+    },
+    "back": "Kembali",
+    "skip": "Lewati langkah ini",
+    "continue": "Lanjutkan",
+    "later": "Selesaikan nanti",
+    "checkAgain": "Periksa lagi",
+    "checking": "Memeriksa…",
+    "copy": "Salin",
+    "copied": "Tersalin",
+    "welcome": {
+      "title": "Selamat datang di IPAForge",
+      "lead": "Beberapa langkah akan menyiapkan komputer, iPhone, dan Apple ID kamu, lalu kamu bisa memasang SideStore. Pilih bahasamu dulu.",
+      "needTitle": "Yang kamu butuhkan",
+      "needDevice": "iPhone atau iPad dengan iOS 15 atau lebih baru, dan kabel USB-nya",
+      "needAppleId": "Sebuah Apple ID (yang gratis juga bisa)",
+      "needPasscode": "Kode sandi iPhone kamu, untuk mempercayai komputer ini",
+      "skipGuide": "Saya sudah paham",
+      "start": "Mulai"
+    },
+    "computer": {
+      "title": "Komputer ini",
+      "lead": "IPAForge memeriksa apakah komputer ini bisa masuk ke Apple: server Apple, jam, dan server anisette. Jika tidak bisa berkomunikasi dengan iPhone, IPAForge juga memberi tahu cara memperbaikinya.",
+      "failed": "Pemeriksaan tidak berjalan. Periksa lagi, atau lewati langkah ini.",
+      "service": {
+        "title": "Layanan koneksi iPhone",
+        "fixMac": "macOS seharusnya menjalankannya sendiri. Mulai ulang Mac kamu, lalu periksa lagi.",
+        "fixWindows": "Pasang Apple Devices dari Microsoft Store, buka sekali, lalu periksa lagi.",
+        "fixLinux": "Pasang usbmuxd, hubungkan iPhone kamu, lalu periksa lagi.",
+        "openStore": "Buka Microsoft Store"
+      },
+      "apple": {
+        "title": "Server Apple",
+        "ok": "Dapat dijangkau.",
+        "fix": "IPAForge tidak bisa menjangkau Apple. Periksa koneksi internet, VPN, atau firewall kamu."
+      },
+      "clock": {
+        "title": "Jam",
+        "ok": "Benar.",
+        "fix": "{minutes, plural, other {Jam kamu meleset # menit.}} Setel tanggal dan waktu secara otomatis, lalu periksa lagi."
+      },
+      "anisette": {
+        "title": "Server anisette",
+        "ok": "{name} menjawab. Proses masuk memakainya.",
+        "fix": "Tidak ada dari {tried} server pertama di daftarmu yang menjawab. Periksa koneksimu, atau tambahkan atau pilih server di Pengaturan › Server anisette."
+      }
+    },
+    "iphone": {
+      "title": "iPhone kamu",
+      "lead": "Hubungkan iPhone dengan kabelnya, buka kuncinya, dan ketuk Percayai saat diminta. Di iOS 16 dan yang lebih baru, Mode Developer harus aktif.",
+      "connectTitle": "Hubungkan iPhone kamu",
+      "connectText": "Menunggu iPhone atau iPad lewat USB…"
+    },
+    "appleid": {
+      "title": "Apple ID kamu",
+      "lead": "Apple menandatangani aplikasi yang kamu pasang dengan Apple ID kamu. Kata sandimu hanya dikirim ke Apple dan tersimpan di keychain komputer ini.",
+      "freeNote": "Apple ID gratis bisa dipakai: aplikasinya bertahan 7 hari dan IPAForge bisa menyegarkannya. Akun developer berbayar bertahan setahun.",
+      "signIn": "Masuk dengan Apple ID",
+      "signedIn": "Sudah masuk.",
+      "team": "Tim yang menandatangani aplikasi",
+      "free": "Gratis: aplikasi bertahan 7 hari",
+      "paid": "Berbayar: aplikasi bertahan setahun"
+    },
+    "banner": {
+      "label": "Panduan penyiapan",
+      "text": "Selesaikan penyiapan IPAForge: {done} dari {total} langkah selesai.",
+      "continue": "Lanjutkan panduan",
+      "notNow": "Jangan sekarang"
+    },
+    "install": {
+      "title": "Pasang SideStore",
+      "lead": "SideStore menyegarkan aplikasimu di iPhone secara mandiri dan memasang lebih banyak. IPAForge memberinya file pairing dan sertifikat yang dibutuhkan.",
+      "notNow": "Jangan sekarang"
+    },
+    "onphone": {
+      "title": "Di iPhone kamu",
+      "lead": "Yang hanya bisa kamu lakukan di iPhone. Centang satu per satu; halaman Perangkat menyimpan daftar yang sama."
+    },
+    "around": {
+      "title": "Semua sudah siap",
+      "lead": "Ini letak semuanya. Selama IPAForge terbuka, aplikasimu disegarkan sebelum kedaluwarsa.",
+      "again": "Jalankan panduan ini lagi kapan saja dari Pengaturan.",
+      "showMe": "Ajak saya keliling",
+      "apps": {
+        "title": "Aplikasi",
+        "text": "Kapan setiap aplikasi kedaluwarsa, dengan Refresh dan Update. File pairing juga ada di sini.",
+        "where": "Bilah sisi › Aplikasi"
+      },
+      "preload": {
+        "title": "Pramuat",
+        "text": "Tambahkan aplikasimu sendiri: file .ipa, tautan, sumber. Atau simpan sebagai file .ipa bertanda tangan.",
+        "where": "Bilah sisi › Pramuat"
+      },
+      "repair": {
+        "title": "Perbaiki SideStore",
+        "text": "Jika SideStore berhenti menyegarkan sendiri, ini mencari penyebabnya dan memperbaikinya.",
+        "where": "Aplikasi › Periksa SideStore"
+      },
+      "developer": {
+        "title": "Portal Developer",
+        "text": "Sertifikat, App ID, dan profilmu, serta .p12 untuk memindahkan sertifikatmu.",
+        "where": "Bilah sisi › Portal Developer"
+      },
+      "devices": {
+        "title": "Perangkat",
+        "text": "Daftar periksa tiap iPhone, dan file pairing-nya untuk alat lain.",
+        "where": "Bilah sisi › Perangkat"
+      },
+      "logs": {
+        "title": "Log",
+        "text": "Apa yang terjadi, langkah demi langkah. Lampirkan ke laporan bug.",
+        "where": "Bilah sisi › Log · ⌘L / Ctrl+L"
+      }
+    }
+  },
+  "tour": {
+    "count": "{current} dari {total}",
+    "skip": "Lewati tur",
+    "back": "Kembali",
+    "next": "Berikutnya",
+    "done": "Selesai",
+    "install": {
+      "title": "Pasang",
+      "text": "Pasang SideStore, atau LiveContainer dengan SideStore, sekali klik. Mulai dari sini di iPhone baru."
+    },
+    "preload": {
+      "title": "Pramuat",
+      "text": "Tambahkan aplikasimu sendiri: file .ipa, tautan, atau aplikasi dari sumber. Centang satu untuk menyimpannya sebagai .ipa bertanda tangan."
+    },
+    "apps": {
+      "title": "Aplikasi",
+      "text": "Kapan setiap aplikasi kedaluwarsa, dengan Refresh dan Update. IPAForge menyegarkannya sendiri selama terbuka. File pairing juga ada di sini."
+    },
+    "devices": {
+      "title": "Perangkat",
+      "text": "Daftar periksa tiap iPhone untuk versi iOS-nya, dan file pairing-nya untuk alat lain."
+    },
+    "developer": {
+      "title": "Portal Developer",
+      "text": "Sertifikat, App ID, dan profil Apple ID kamu. Bersihkan yang tidak dipakai, atau pindahkan sertifikatmu sebagai .p12."
+    },
+    "pickers": {
+      "title": "Perangkat dan Apple ID",
+      "text": "Ganti iPhone atau Apple ID yang dipakai IPAForge di sini, kapan saja."
+    },
+    "logs": {
+      "title": "Log",
+      "text": "Setiap langkah yang dilakukan IPAForge. Lampirkan ke laporan bug (⌘L / Ctrl+L)."
+    },
+    "settings": {
+      "title": "Pengaturan",
+      "text": "Bahasa, tampilan, server anisette, dan tur ini lagi."
+    },
+    "showAround": {
+      "title": "Ajak saya keliling",
+      "text": "Ikuti tur ini lagi dari sini, kapan saja. Panduan penyiapan ada di Pengaturan."
+    }
+  },
+  "pairByCode": {
+    "steps": {
+      "pair": "Pairing dengan kode"
+    },
+    "open": "Pasangkan Apple TV atau Vision Pro…",
+    "title": "Pasangkan Apple TV atau Vision Pro",
+    "titleAgain": "Pasangkan {name} lagi",
+    "progress": {
+      "label": "Langkah",
+      "find": "1 Cari",
+      "code": "2 Kode"
+    },
+    "intro": "Perangkat ini tidak punya kabel, jadi dipasangkan lewat Wi-Fi dengan kode. Letakkan perangkat di Wi-Fi yang sama dengan komputer ini, lalu buka layar pairing-nya dan biarkan tetap terbuka:",
+    "where": {
+      "tv": "Apple TV",
+      "vision": "Apple Vision Pro",
+      "tvPath": "Pengaturan → Remote dan Perangkat → Aplikasi Remote dan Perangkat",
+      "visionPath": "Pengaturan → Umum → Perangkat Remote"
+    },
+    "found": "Ditemukan di jaringanmu",
+    "showing": "Menampilkan layar pairing-nya",
+    "pair": "Pasangkan",
+    "searching": "Mencari di jaringanmu… Perangkat muncul di sini setelah layar pairing-nya terbuka.",
+    "searchingMore": "Masih mencari yang lain…",
+    "help": {
+      "title": "Tidak muncul",
+      "screen": "Biarkan layar pairing tetap terbuka: perangkat hanya bisa ditemukan selama layar itu tampil.",
+      "network": "Wi-Fi yang sama dengan komputer ini: bukan jaringan tamu, dan tanpa VPN di kedua sisi.",
+      "ipv6": "IPv6 diaktifkan di router (Apple membutuhkannya untuk pairing).",
+      "macos": "macOS: Pengaturan Sistem → Privasi & Keamanan → Jaringan Lokal → IPAForge diaktifkan.",
+      "windows": "Windows: izinkan IPAForge di jaringan privat saat firewall bertanya."
+    },
+    "failed": "Pencarian di jaringanmu berhenti. Tutup ini dan buka lagi.",
+    "code": {
+      "title": "Masukkan kode di {name}",
+      "body": "{name} menampilkan sebuah kode. Ketik di sini.",
+      "label": "Kode",
+      "wrong": "Kode itu tidak cocok. Periksa kode di {name} dan coba lagi.",
+      "pairing": "Memasangkan dengan {name}…",
+      "checking": "Memeriksa kode…"
+    },
+    "back": "Kembali",
+    "backToList": "Kembali ke daftar",
+    "backoff": {
+      "title": "Terlalu banyak kode salah",
+      "wait": "{name} mengizinkan kamu mencoba lagi dalam {seconds, plural, other {# detik}}.",
+      "later": "{name} tidak menerima kode lagi untuk sementara. Tunggu sebentar, lalu coba lagi."
+    },
+    "closed": {
+      "title": "{name} menutup layar pairing-nya",
+      "body": "Kode hanya berfungsi selama layar pairing terbuka. Buka lagi di {name}:"
+    },
+    "done": {
+      "title": "{name} sudah dipasangkan",
+      "body": "{name} ada di halaman Perangkat. Kamu bisa menutup layar pairing-nya sekarang.",
+      "vision": "Aplikasi terpasang setelah Mode Developer aktif.",
+      "use": "Pakai {name}",
+      "close": "Tutup"
+    },
+    "pairNamed": "Pasangkan {name}"
+  }
+}
