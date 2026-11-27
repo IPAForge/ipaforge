@@ -71,10 +71,11 @@ const placeRemotePairing = async (
     )
     return { remote: [] }
   }
-  const { productVersion } = await session.info()
-  if (!supportsRemotePairing(parseVersion(productVersion ?? '0')))
-    return { remote: [] }
   try {
+    // Inside the try: a device that resets the connection here must not fail an install whose files are placed.
+    const { productVersion } = await session.info()
+    if (!supportsRemotePairing(parseVersion(productVersion ?? '0')))
+      return { remote: [] }
     const made = await ensureRemotePairingWithin(
       ctx,
       session,
