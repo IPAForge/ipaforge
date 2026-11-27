@@ -1,0 +1,2216 @@
+{
+  "app": {
+    "name": "IPAForge"
+  },
+  "shell": {
+    "skipToContent": "Siirry sisältöön",
+    "navigation": "Osiot",
+    "credit": {
+      "madeWith": "Tehty ❤️:llä ja ☕:lla",
+      "copyright": "© {year} {name}"
+    }
+  },
+  "topBar": {
+    "device": "Laite",
+    "noDevice": "Ei mitään",
+    "deviceMenu": "Laitteet",
+    "account": "Apple ID",
+    "notSignedIn": "Ei kirjautunut",
+    "accountMenu": "Apple ID:t",
+    "addAppleId": "Lisää Apple ID…",
+    "noAccounts": "Ei vielä Apple ID:itä.",
+    "noDevicesHint": "Yhdistä iPhone tai iPad kaapelilla ja avaa sen lukitus.",
+    "openDevices": "Avaa Laitteet",
+    "tour": "Näytä ympäristö",
+    "pairByCode": "Muodosta pari Apple TV:n tai Vision Pron kanssa…"
+  },
+  "nav": {
+    "group": {
+      "manage": "Hallinta"
+    },
+    "install": "Asenna",
+    "preload": "Esilataa",
+    "apps": "Sovellukset",
+    "devices": "Laitteet",
+    "accounts": "Tilit",
+    "developer": "Kehittäjäportaali",
+    "logs": "Lokit",
+    "settings": "Asetukset",
+    "installRunning": "Asennus on käynnissä"
+  },
+  "placeholder": {
+    "body": "Tämä osio on työn alla."
+  },
+  "install": {
+    "title": "Asenna SideStore",
+    "description": "Allekirjoitetaan Apple ID:lläsi ja asennetaan sitten USB:llä.",
+    "steps": {
+      "device": "Tarkista laite",
+      "resolve": "Etsi julkaisu",
+      "download": "Lataa",
+      "inspect": "Tarkista sovellus",
+      "certificate_sharing": "Jaa varmenne",
+      "sign_in": "Kirjaudu Appleen",
+      "team": "Valitse tiimi",
+      "register_device": "Rekisteröi laite",
+      "certificate": "Valmistele varmenne",
+      "app_ids": "Rekisteröi App ID:t",
+      "free_apps": "Tarkista ilmaisten sovellusten raja",
+      "provision": "Hae provisiointiprofiilit",
+      "refresh_profiles": "Hae uudet profiilit",
+      "sign": "Allekirjoita sovellus",
+      "install": "Asenna laitteelle",
+      "pairing": "Sijoita pariliitostiedosto",
+      "remember": "Muista tämä asennus",
+      "save": "Tallenna allekirjoitettu .ipa"
+    },
+    "signInNeeded": {
+      "title": "Apple ID vaatii uuden kirjautumisen",
+      "body": "Tilin {appleId} tallennettu istunto on vanhentunut. Voit silti asentaa: IPAForge kysyy salasanaa, kun sen aika tulee."
+    },
+    "blocked": {
+      "title": "Apple esti tilin {appleId} laitteella {device}",
+      "body": "Tällä Apple ID:llä allekirjoitetut sovellukset eivät aukea tällä laitteella. Käytä toista Apple ID:tä.",
+      "use": "Käytä {appleId}"
+    },
+    "home": {
+      "what": "Mitä asennetaan",
+      "channel": "Kanava",
+      "install": "Asenna {app}"
+    },
+    "variant": {
+      "sidestore": {
+        "title": "SideStore",
+        "description": "Päivittää ja asentaa sovelluksia laitteella itse. Käyttää 2 App ID:tä."
+      },
+      "livecontainer": {
+        "title": "LiveContainer + SideStore",
+        "description": "Ajaa useita sovelluksia yhden sisällä, 3 sovelluksen rajan yli. Käyttää 5 App ID:tä."
+      }
+    },
+    "channel": {
+      "stable": "Vakaa",
+      "nightly": "Nightly",
+      "stableRecommended": "Vakaa (suositus)",
+      "nightlyRecommended": "Nightly (suositus)"
+    },
+    "plan": {
+      "title": "Tämä asennus",
+      "waiting": "Näytetään, kun laite ja Apple ID ovat valmiina.",
+      "checking": "Ladataan sovellusta {app} ja tarkistetaan Applelta… Lataus säilytetään, joten asennus käyttää sitä uudelleen.",
+      "unavailable": "Applelta ei saatu tarkistusta. Voit silti asentaa: jokainen vaihe tarkistaa uudelleen.",
+      "appIds": "App ID:t",
+      "appIdsValue": "{created, plural, =0 {Kaikki {reused} on jo rekisteröity} other {{reused, plural, =0 {{created} uutta} other {{created} uutta, {reused} käytetty uudelleen}}}} · {left, plural, one {# jäljellä tällä viikolla} other {# jäljellä tällä viikolla}}",
+      "nextSlot": "Seuraava vapautuu {date}",
+      "freeApps": "Ilmaiset sovellukset laitteella",
+      "freeAppsValue": "{used} / {limit} käytössä",
+      "freeAppsRoom": "Tälle on tilaa",
+      "freeAppsFull": "Valitset poistettavan sovelluksen",
+      "noLimit": "Ei rajaa (maksullinen tiimi)",
+      "certificate": "Varmenne",
+      "certificateReused": "Käytetään uudelleen",
+      "certificateNew": "Tehdään uusi",
+      "certificatesOnTeam": "{count, plural, =0 {Tiimillä ei vielä ole} one {# tiimillä} other {# tiimillä}}",
+      "team": "Tiimi",
+      "certificateNewWhy": "IPAForgella ei ole vielä omaa varmennetta tällä tiimillä. {count, plural, =0 {} one {Siellä jo oleva kuuluu toiselle työkalulle, joka säilyttää sen yksityisen avaimen.} other {Siellä jo olevat # kuuluvat muille työkaluille, jotka säilyttävät niiden yksityiset avaimet.}}"
+    },
+    "readiness": {
+      "noDevice": "Yhdistä ensin laite.",
+      "noSideStore": "SideStore toimii iPhonessa ja iPadissa. Asenna sovelluksia Apple TV:hen tai Vision Prohon Esilatauksella.",
+      "checking": "Tarkistetaan laitetta…",
+      "device": "Käytettävissä, kun laite on valmis.",
+      "noAccount": "Lisää ensin Apple ID.",
+      "blocked": "Käytä ensin toista Apple ID:tä.",
+      "appIds": "App ID:itä ei ole tarpeeksi jäljellä tällä viikolla.",
+      "ready": "Kaikki on valmista."
+    },
+    "run": {
+      "title": {
+        "running": "Asennetaan {app}",
+        "completed": "{app} on asennettu",
+        "failed": "Sovellusta {app} ei voitu asentaa",
+        "cancelled": "Asennus peruttu"
+      },
+      "subtitle": "{channel} · {device} · {appleId}",
+      "percent": "{fraction, number, percent}",
+      "progress": "Kokonaisedistyminen",
+      "steps": "Vaiheet",
+      "cancel": "Peruuta",
+      "cancelInstall": "Peruuta asennus",
+      "runningHint": "Voit käyttää muita osioita, kun tämä on käynnissä.",
+      "waitingHint": "Odotetaan vastaustasi.",
+      "stepState": {
+        "waiting": "tarvitsee sinua",
+        "skipped": "ohitettu",
+        "failed": "epäonnistui"
+      },
+      "detail": {
+        "bytes": "{received} / {total}",
+        "received": "{received}",
+        "retrying": "Yhteys katkesi. Yritetään uudelleen {seconds, plural, one {# sekunnin} other {# sekunnin}} kuluttua (yritys {attempt})"
+      },
+      "live": {
+        "header": "{percent} · {left}",
+        "installing": "{fraction, number, percent} · {phase}",
+        "count": "{done} / {total}",
+        "task": {
+          "line": "{task} · {count}",
+          "team": "Tarkistetaan tiimiä",
+          "appIds": "Luodaan App ID:itä",
+          "appGroup": "Lisätään sovellusryhmää",
+          "profiles": "Haetaan profiileja"
+        },
+        "phase": {
+          "unpacking": "Puretaan sovellusta",
+          "checking": "Tarkistetaan sovellusta",
+          "installing": "Asennetaan"
+        },
+        "speed": "{speed}/s",
+        "ios": "iOS asentaa sitä",
+        "leftSeconds": "Noin {seconds} s jäljellä",
+        "leftMinutes": "{minutes, plural, one {Noin # min jäljellä} other {Noin # min jäljellä}}"
+      },
+      "connection": {
+        "usb": "USB",
+        "network": "Wi-Fi"
+      },
+      "wifi": {
+        "title": "Tämä laite on yhdistetty Wi-Fillä",
+        "body": "Suuret sovellukset asentuvat paljon nopeammin kaapelilla. Wi-Fillä IPAForge lähettää ne pakattuina ajan säästämiseksi."
+      },
+      "unsupportedPrompt": {
+        "title": "Tämä vaihe tarvitsee vastauksen",
+        "body": "IPAForge tarvitsee vastauksen kysymykseen, jota tämä versio ei osaa näyttää. Peruuta asennus ja päivitä IPAForge."
+      },
+      "backToInstall": "Takaisin Asennukseen",
+      "report": {
+        "device": "{model} · iOS {ios} · {connection}",
+        "release": "{app} {version} · {channel}",
+        "download": "{size} · tarkistussumma vahvistettu",
+        "downloadCached": "{size} · latausvälimuistista",
+        "app": "{app} · {extensions, plural, =0 {ei laajennuksia} one {# laajennus} other {# laajennusta}}",
+        "session": {
+          "reused": "Tallennettu istunto käytettiin uudelleen",
+          "renewed": "Kirjauduttiin uudelleen tallennetulla salasanalla",
+          "signed-in": "Kirjauduttu"
+        },
+        "registered": "Rekisteröity tiimille",
+        "alreadyRegistered": "Jo rekisteröity tiimille",
+        "certificate": {
+          "reused": "Käytettiin tallennettua varmennetta uudelleen",
+          "created": "Tehtiin uusi varmenne",
+          "replaced": "Yksi mitätöitiin ja tehtiin uusi varmenne"
+        },
+        "removed": "Poistettu {app} · {used}",
+        "profiles": "{count, plural, one {# profiili} other {# profiilia}}",
+        "signed": "{count, plural, one {# paketti allekirjoitettu} other {# pakettia allekirjoitettu}}",
+        "signedCompressed": "{count, plural, one {# paketti allekirjoitettu} other {# pakettia allekirjoitettu}} · pakattu Wi-Fiä varten",
+        "phase": {
+          "uploading": "Lähetetään laitteelle",
+          "installing": "Asennetaan"
+        },
+        "pairing": "Sijoitettu kohteeseen {apps}",
+        "shared": "Varmenne jaettu",
+        "notShared": "Varmennetta ei jaettu",
+        "pairingRemote": "Sijoitettu kohteeseen {apps} · etäpariliitoksella iOS 17.4:lle ja uudemmille",
+        "saved": "Tallennettu kohteeseen {path}"
+      },
+      "subtitleApps": "{device} · {appleId}"
+    },
+    "summary": {
+      "title": "Tämä asennus",
+      "app": "Sovellus",
+      "channel": "Kanava",
+      "device": "Laite",
+      "deviceValue": "{name} · iOS {ios}",
+      "account": "Apple ID",
+      "appIds": "App ID:t",
+      "appIdsValue": "{count, plural, one {# jäljellä tällä viikolla} other {# jäljellä tällä viikolla}}",
+      "freeApps": "Ilmaiset sovellukset",
+      "apps": "Sovellukset"
+    },
+    "done": {
+      "title": "{app} on laitteella {device}.",
+      "trust": "Laitteella: Asetukset › Yleiset › VPN ja laitehallinta › luota tiliin {appleId}.",
+      "open": "Avaa SideStore: pariliitostiedosto ja varmenteesi ovat jo sen sisällä.",
+      "done": "Valmis"
+    },
+    "cancelled": {
+      "title": "Pysähtyi kohtaan “{step}”.",
+      "body": "Mitään jo tehtyä ei toisteta, kun jatkat.",
+      "resume": "Jatka"
+    },
+    "failed": {
+      "continues": "Valmiit vaiheet säilytetään: uusi yritys jatkuu kohdasta “{step}”.",
+      "copy": "Kopioi diagnostiikka",
+      "copied": "Kopioitu",
+      "copyFailed": "Kopiointi epäonnistui",
+      "showLogs": "Näytä lokit"
+    }
+  },
+  "pairing": {
+    "steps": {
+      "targets": "Etsi sovellukset, jotka tarvitsevat pariliitoksen",
+      "place": "Sijoita pariliitostiedosto"
+    }
+  },
+  "settings": {
+    "appearance": "Ulkoasu ja kieli",
+    "mode": "Värimoodi",
+    "palette": "Paletti",
+    "language": {
+      "title": "Kieli",
+      "system": "Järjestelmä ({language})",
+      "hint": "IPAForge noudattaa järjestelmäsi kieltä, ellet valitse tässä toista.",
+      "draft": "luonnos"
+    },
+    "anisette": {
+      "title": "Anisette-palvelimet",
+      "hint": "Appleen kirjautuminen vaatii anisette-palvelimen, joka kertoo Applelle, mikä tietokone kirjautuu. IPAForge käyttää toimivaa itse; valitse tässä haluamasi palvelin tai lisää oma.",
+      "add": "Lisää palvelin",
+      "loading": "Ladataan palvelimia…",
+      "modeLabel": "Miten IPAForge valitsee palvelimen",
+      "mode": {
+        "automatic": "Automaattinen",
+        "chosen": "Valitse palvelin"
+      },
+      "modeHint": {
+        "automatic": "Kokeilee palvelimia tässä järjestyksessä ja siirtyy seuraavaan, kun yksi epäonnistuu.",
+        "chosen": "Käyttää aina palvelinta {name}.",
+        "none": "Valitse palvelin, jota IPAForgen tulee aina käyttää."
+      },
+      "noneChosen": "Palvelinta ei ole vielä valittu: kunnes valitset, IPAForge jatkaa valintaa itse.",
+      "chosenDown": "{name} ei vastaa. Kirjautuminen ei toimi, ennen kuin se palaa tai valitset toisen palvelimen tai vaihdat Automaattiseen.",
+      "count": "{count, plural, one {# palvelin} other {# palvelinta}}",
+      "sources": "{custom, plural, =0 {} other {# lisännyt sinä, }}{list} SideStoren listalta, {backup} varalta ·",
+      "listUpdated": "SideStoren lista päivitetty {ago}",
+      "listNever": "SideStoren listaa ei ole vielä haettu",
+      "updateList": "Päivitä lista",
+      "updating": "Päivitetään…",
+      "testAll": "Testaa kaikki",
+      "testing": "Testataan…",
+      "group": {
+        "custom": "Lisännyt sinä · käytetään ensin",
+        "list": "SideStoren listalta",
+        "backup": "Varalla · vain kun SideStoren listaa ei tavoiteta tai mikään sen palvelin ei vastaa"
+      },
+      "tag": {
+        "custom": "Lisännyt sinä",
+        "inUse": "Käytössä",
+        "chosen": "Valittu"
+      },
+      "position": "Kokeillaan numerona {position}",
+      "use": "Käytä {name}",
+      "chooseLabel": "Käytettävä palvelin",
+      "status": {
+        "untested": "Ei testattu",
+        "testing": "Testataan…",
+        "ok": "Toimii · {ms} ms",
+        "bad": "Ei vastaa"
+      },
+      "test": "Testaa",
+      "testOne": "Testaa {name}",
+      "edit": "Muokkaa {name}",
+      "remove": "Poista {name}",
+      "confirmRemove": "Poistetaanko {name}?",
+      "removeYes": "Poista",
+      "skipped": "Ei käytetty SideStoren listalta: {names} (ei HTTPS:ää). Voit lisätä tavallisen HTTP-palvelimen itse, esimerkiksi omalla tietokoneellasi olevan.",
+      "dialog": {
+        "addTitle": "Lisää anisette-palvelin",
+        "editTitle": "Muokkaa palvelinta",
+        "body": "Mikä tahansa tavallista protokollaa puhuva anisette-palvelin käy: julkinen tai itse ylläpitämäsi.",
+        "name": "Nimi",
+        "namePlaceholder": "Oma palvelimeni",
+        "address": "Osoite",
+        "addressPlaceholder": "https://anisette.my-server.net",
+        "addressHint": "https:// tai, itse ylläpitämälle palvelimelle, http://",
+        "nameMissing": "Anna sille nimi.",
+        "addressInvalid": "Anna osoite, joka alkaa https:// tai http://.",
+        "exists": "Tämä palvelin on jo listalla.",
+        "stillAdd": "Voit silti lisätä sen.",
+        "save": "Tallenna"
+      }
+    },
+    "guide": {
+      "title": "Käyttöönotto-opas",
+      "text": "Tietokone, iPhone ja Apple ID tarkistetaan uudelleen.",
+      "run": "Suorita opas uudelleen",
+      "tour": "Näytä ympäristö",
+      "tourTitle": "Sivujen esittely",
+      "tourHint": "Mihin kukin sivu on tarkoitettu, yksi pysäkki kerrallaan."
+    },
+    "tabs": {
+      "label": "Asetukset",
+      "general": "Yleiset",
+      "anisette": "Anisette-palvelimet"
+    },
+    "modeHint": "Vaalea, tumma tai järjestelmän mukainen.",
+    "paletteHint": "Koko sovelluksen värit, vaaleana ja tummana."
+  },
+  "theme": {
+    "mode": {
+      "system": "Järjestelmä",
+      "light": "Vaalea",
+      "dark": "Tumma"
+    },
+    "palette": {
+      "graphite": "Grafiitti",
+      "ocean": "Valtameri",
+      "aurora": "Revontulet",
+      "sunset": "Auringonlasku",
+      "forest": "Metsä",
+      "rose": "Ruusu",
+      "violet": "Violetti",
+      "mocha": "Mokka"
+    }
+  },
+  "errors": {
+    "device": {
+      "locked": {
+        "title": "Avaa laitteesi lukitus",
+        "body": "Laite on lukittu, joten IPAForge ei voi keskustella sen kanssa. Avaa lukitus ja pidä se auki, kunnes asennus on valmis."
+      },
+      "developer_mode_off": {
+        "title": "Kehittäjätila on pois päältä",
+        "body": "Sivulatauksella asennetut sovellukset vaativat kehittäjätilan. Kytke se päälle kohdassa Asetukset › Tietosuoja ja turvallisuus › Kehittäjätila ja käynnistä laite uudelleen."
+      },
+      "not_paired": {
+        "title": "Tähän tietokoneeseen ei vielä luoteta",
+        "body": "Avaa laitteen lukitus ja napauta Luota, kun se kysyy, luotetaanko tähän tietokoneeseen."
+      },
+      "usbmuxd_unavailable": {
+        "title": "Laitetuki ei ole käynnissä",
+        "body": "IPAForge ei tavoita järjestelmäpalvelua, joka keskustelee iPhonien ja iPadien kanssa. Asenna tai käynnistä se ja yritä uudelleen."
+      },
+      "not_found": {
+        "title": "Laitetta ei löytynyt",
+        "body": "Yhdistä iPhone tai iPad USB-kaapelilla ja avaa sen lukitus."
+      },
+      "disconnected": {
+        "title": "Laitteen yhteys katkesi",
+        "body": "Yhteys katkesi. Kytke kaapeli uudelleen, avaa laitteen lukitus ja yritä uudelleen."
+      },
+      "pairing_pending": {
+        "title": "Odotetaan luottamusta",
+        "body": "Avaa laitteen lukitus ja napauta Luota näkyviin tulleesta kehotteesta."
+      },
+      "pairing_denied": {
+        "title": "Luottamus evättiin",
+        "body": "Laite kieltäytyi luottamasta tähän tietokoneeseen. Muodosta pari uudelleen ja napauta nyt Luota."
+      },
+      "invalid_pair_record": {
+        "title": "Pariliitos ei ole enää voimassa",
+        "body": "Laite ei enää hyväksy tämän tietokoneen pariliitosta. Irrota se, kytke takaisin, avaa lukitus ja napauta Luota."
+      },
+      "service_unavailable": {
+        "title": "Laitteen palvelu ei käynnistynyt",
+        "body": "Laite kieltäytyi käynnistämästä palvelua, jota IPAForge tarvitsee. Avaa lukitus, kytke laite uudelleen ja yritä uudelleen."
+      },
+      "protocol_error": {
+        "title": "Odottamaton vastaus laitteelta",
+        "body": "Laite lähetti jotain, mitä IPAForge ei ymmärtänyt. Kytke se uudelleen; jos tämä toistuu, päivitä IPAForge tai ilmoita siitä."
+      },
+      "install_failed": {
+        "title": "Asennus epäonnistui",
+        "body": "Laite kieltäytyi asentamasta sovellusta. Yritä uudelleen; jos se epäonnistuu jatkuvasti, asenna sovellus uudelleen tai ilmoita siitä."
+      },
+      "afc_error": {
+        "title": "Tiedostoja ei voitu siirtää",
+        "body": "Tiedostojen kopiointi laitteelle epäonnistui. Avaa lukitus ja yritä uudelleen."
+      },
+      "timeout": {
+        "title": "Laite lakkasi vastaamasta",
+        "body": "Laitteen vastaus kesti liian kauan. Avaa lukitus, kytke se uudelleen ja yritä uudelleen."
+      },
+      "passcode_required": {
+        "title": "Aseta pääsykoodi",
+        "body": "Tämä vaatii laitteen pääsykoodin. Aseta se kohdassa Asetukset › Face ID ja pääsykoodi ja yritä uudelleen."
+      },
+      "free_app_limit": {
+        "title": "Liian monta sivulatattua sovellusta",
+        "body": "Ilmaisella Apple ID:llä laitteella voi olla aktiivisena vain kolme sivulatattua sovellusta. Poista yksi ja yritä uudelleen."
+      },
+      "profile_banned": {
+        "title": "Apple esti tämän Apple ID:n laitteella",
+        "body": "Laite ei hyväksy tällä Apple ID:llä allekirjoitettuja sovelluksia. Uusi yritys ei auta: käytä toista Apple ID:tä."
+      },
+      "identity_invalid": {
+        "title": "Allekirjoitusvarmenne ei ole enää voimassa",
+        "body": "Laite hylkäsi varmenteen, jolla sovellus allekirjoitettiin. Tarkista tietokoneen kello tai mitätöi varmenne ja yritä uudelleen."
+      },
+      "profile_not_found": {
+        "title": "Provisiointiprofiili puuttuu",
+        "body": "Laite ei löytänyt sovelluksen provisiointiprofiilia. Yritä uudelleen tai asenna sovellus uudelleen."
+      },
+      "pairing_path_invalid": {
+        "title": "Tähän polkuun ei voi tallentaa pariliitostiedostoa",
+        "body": "Käytä sovelluksen Documents- tai Library-kansiossa olevaa polkua, joka päättyy .plist tai .mobiledevicepairing."
+      },
+      "local_network_denied": {
+        "title": "IPAForge ei voi etsiä laitteita verkostasi",
+        "body": "macOS ei ole sallinut IPAForgen löytää laitteita paikallisverkosta, joten se ei tavoita iPhoneja Wi-Fillä. Kaapelilla kytketyt laitteet toimivat silti."
+      },
+      "tunnel_unavailable": {
+        "title": "Laitteen tunneli ei avautunut",
+        "body": "IPAForge ei voinut avata suojattua tunnelia, jota iOS 17.4 ja uudemmat tarjoavat kaapelin yli. Tarkista, että laitteessa on iOS 17.4 tai uudempi, kytke se uudelleen ja yritä uudelleen."
+      },
+      "pairing_code_wrong": {
+        "title": "Koodi ei täsmännyt",
+        "body": "Syötetty koodi ei ole se, jonka laite näyttää. Tarkista koodi sen näytöltä ja yritä uudelleen."
+      },
+      "pairing_backoff": {
+        "title": "Liian monta väärää koodia",
+        "body": "Laite ei ota hetkeen enempää koodeja. Odota hetki, avaa sen pariliitosnäyttö uudelleen ja muodosta pari uudelleen."
+      },
+      "pairing_screen_closed": {
+        "title": "Pariliitosnäyttö sulkeutui",
+        "body": "Laite lopetti pariliitosnäytön näyttämisen ennen kuin pariliitos valmistui. Avaa se uudelleen ja pidä se auki: Apple TV: Asetukset → Kaukosäätimet ja laitteet → Remote-sovellus ja laitteet. Apple Vision Pro: Asetukset → Yleiset → Etälaitteet."
+      }
+    },
+    "apple": {
+      "anisette_unavailable": {
+        "title": "Anisette-palvelin ei vastaa",
+        "body": "Appleen kirjautuminen vaatii anisette-palvelimen, eikä nykyinen vastannut. Valitse toinen palvelin tai tarkista verkkosi."
+      },
+      "anisette_not_provisioned": {
+        "title": "Anisette-palvelin ei ole valmis",
+        "body": "Anisette-palvelin ei onnistunut alustamaan itseään. Valitse toinen palvelin ja yritä uudelleen."
+      },
+      "app_id_quota": {
+        "title": "App ID:itä ei ole jäljellä tällä viikolla",
+        "body": "Ilmaisella Apple ID:llä voi rekisteröidä vain 10 App ID:tä 7 päivässä. Odota, että paikka vapautuu, tai käytä toista Apple ID:tä."
+      },
+      "certificate_limit": {
+        "title": "Liian monta varmennetta",
+        "body": "Tämä Apple ID on saavuttanut kehitysvarmenteiden rajansa. Mitätöi yksi tai käytä toista Apple ID:tä."
+      },
+      "invalid_credentials": {
+        "title": "Väärä Apple ID tai salasana",
+        "body": "Apple ei hyväksynyt sähköpostiosoitetta tai salasanaa. Tarkista ne ja syötä salasana uudelleen."
+      },
+      "account_locked": {
+        "title": "Tämä Apple ID on lukittu",
+        "body": "Apple lukitsi tämän tilin turvallisuussyistä. Avaa lukitus Apple-laitteella tai Applen verkkosivustolla tai käytä toista Apple ID:tä."
+      },
+      "account_refused": {
+        "title": "Apple kieltäytyi kirjautumisesta",
+        "body": "Apple ei nyt anna tämän Apple ID:n kirjautua täältä. Odota hetki, kirjaudu kerran Apple-laitteella tai käytä toista Apple ID:tä."
+      },
+      "client_rejected": {
+        "title": "Apple hylkäsi kirjautumispyynnön",
+        "body": "Apple ei hyväksynyt kirjautumisen mukana lähetettyä identiteettiä. Valitse toinen anisette-palvelin tai odota ja yritä uudelleen."
+      },
+      "rate_limited": {
+        "title": "Liian monta pyyntöä",
+        "body": "Apple rajoittaa pyyntöjä toistaiseksi. Odota muutama minuutti ja yritä uudelleen."
+      },
+      "service_unavailable": {
+        "title": "Applen palvelimet eivät ole käytettävissä",
+        "body": "Applen palvelimet eivät vastanneet. Odota muutama minuutti ja tarkista verkkosi."
+      },
+      "two_factor_required": {
+        "title": "Syötä vahvistuskoodi",
+        "body": "Apple lähetti vahvistuskoodin luotetuille laitteillesi. Jatka syöttämällä se."
+      },
+      "two_factor_invalid_code": {
+        "title": "Väärä vahvistuskoodi",
+        "body": "Koodi ei kelvannut. Tarkista se ja syötä uudelleen."
+      },
+      "two_factor_unsupported": {
+        "title": "Tätä kirjautumistapaa ei tueta",
+        "body": "Tämä Apple ID käyttää kaksivaiheista todennustapaa, jota IPAForge ei vielä osaa käsitellä, kuten suojausavainta. Käytä toista Apple ID:tä."
+      },
+      "sms_unavailable": {
+        "title": "Koodit tekstiviestillä eivät ole käytettävissä",
+        "body": "Apple ei lähetä koodia tekstiviestillä täällä. Hae se luotetulta laitteelta tai käytä toista Apple ID:tä."
+      },
+      "clock_skew": {
+        "title": "Tietokoneen kello on väärässä",
+        "body": "Apple hylkää pyynnöt, kun kello on pielessä. Aseta päivämäärä ja aika automaattisesti ja yritä uudelleen."
+      },
+      "protocol_error": {
+        "title": "Odottamaton vastaus Applelta",
+        "body": "Apple lähetti jotain, mitä IPAForge ei ymmärtänyt. Päivitä IPAForge tai ilmoita siitä, jos tämä toistuu."
+      },
+      "session_expired": {
+        "title": "Istuntosi vanheni",
+        "body": "Kirjaudu tälle Apple ID:lle uudelleen. Jos se vanhenee jatkuvasti, tarkista tietokoneen kello."
+      },
+      "account_not_found": {
+        "title": "Apple ID:tä ei löytynyt",
+        "body": "IPAForgella ei ole tallennettua istuntoa tälle Apple ID:lle. Kirjaudu uudelleen."
+      },
+      "not_eligible": {
+        "title": "Tätä Apple ID:tä ei voi käyttää kehitykseen",
+        "body": "Apple ei salli tämän tilin allekirjoittaa sovelluksia, esimerkiksi iän tai ehtojen vuoksi. Käytä toista Apple ID:tä."
+      },
+      "email_unverified": {
+        "title": "Vahvista sähköpostisi",
+        "body": "Apple vaatii tämän Apple ID:n sähköpostiosoitteen vahvistamista ensin. Vahvista se ja yritä uudelleen."
+      },
+      "team_agreement": {
+        "title": "Hyväksy Applen sopimus",
+        "body": "Tiimi ei ole hyväksynyt Applen uusinta kehittäjäsopimusta. Hyväksy se Applen kehittäjäsivustolla tai valitse toinen tiimi."
+      },
+      "no_teams": {
+        "title": "Ei kehittäjätiimiä",
+        "body": "Tällä Apple ID:llä ei ole vielä kehittäjätiimiä. Hyväksy Applen kehittäjäsopimus tai käytä toista Apple ID:tä."
+      },
+      "device_limit": {
+        "title": "Laiteraja täynnä",
+        "body": "Tämä tiimi ei voi rekisteröidä enempää laitteita. Valitse toinen tiimi tai käytä toista Apple ID:tä."
+      },
+      "app_id_unavailable": {
+        "title": "Tämä App ID on varattu",
+        "body": "Toinen tiimi käyttää jo tätä App ID:tä. Valitse toinen tiimi tai käytä toista Apple ID:tä."
+      },
+      "invalid_app_id_name": {
+        "title": "Apple hylkäsi App ID:n nimen",
+        "body": "Apple ei hyväksynyt nimeä, jonka IPAForge valitsi App ID:lle. Päivitä IPAForge tai ilmoita siitä."
+      },
+      "certificate_not_revocable": {
+        "title": "Tätä varmennetta ei voi mitätöidä täällä",
+        "body": "Vain Apple voi mitätöidä tämän varmenteen. Mitätöi sen sijaan jokin toinen."
+      },
+      "no_devices_for_profile": {
+        "title": "Laitetta ei ole vielä rekisteröity",
+        "body": "Apple ei ole saanut laitteen rekisteröintiä valmiiksi. Odota hetki ja yritä uudelleen."
+      },
+      "developer_request_failed": {
+        "title": "Applen kehittäjäpalvelut epäonnistuivat",
+        "body": "Pyyntö Applen kehittäjäpalveluihin epäonnistui. Yritä uudelleen ja ilmoita siitä, jos se toistuu."
+      },
+      "anisette_server_invalid": {
+        "title": "Tätä anisette-palvelinta ei voi käyttää",
+        "body": "Tarkista sen nimi ja osoite: osoite alkaa https:// tai http://."
+      },
+      "anisette_server_exists": {
+        "title": "Tämä anisette-palvelin on jo listalla",
+        "body": "Valitse se sen sijaan Asetusten listalta."
+      },
+      "certificate_not_on_team": {
+        "title": "Tämä varmenne ei ole tiimillä",
+        "body": "Apple ei enää listaa sitä tälle tiimille: se on mitätöity, vanhentunut tai kuuluu toiselle tiimille. Vie voimassa oleva ja tuo se."
+      }
+    },
+    "catalog": {
+      "source_gone": {
+        "title": "Julkaisu ei ole enää saatavilla",
+        "body": "Paikka, josta tämä sovellus ladattiin, on poissa. Valitse toinen kanava, tuo IPA tai päivitä IPAForge."
+      },
+      "unavailable": {
+        "title": "Sovelluslistaa ei voitu ladata",
+        "body": "IPAForge ei voinut hakea sovelluslistaa. Tarkista verkkosi ja yritä uudelleen."
+      },
+      "download_failed": {
+        "title": "Lataus epäonnistui",
+        "body": "Sovellusta ei voitu ladata. Tarkista verkkosi ja yritä uudelleen."
+      },
+      "checksum_mismatch": {
+        "title": "Lataus on vioittunut",
+        "body": "Ladattu tiedosto ei täsmää tarkistussummansa kanssa, joten sitä ei käytetty. Yritä uudelleen tai valitse toinen kanava."
+      },
+      "checksum_missing": {
+        "title": "Latausta ei voi vahvistaa",
+        "body": "Tällä julkaisulla ei ole tarkistussummaa, joten IPAForge ei voi tarkistaa sitä. Valitse toinen kanava tai tuo IPA itse."
+      },
+      "rate_limited": {
+        "title": "Liian monta pyyntöä GitHubiin",
+        "body": "GitHub rajoittaa latauksia toistaiseksi. Odota muutama minuutti ja yritä uudelleen."
+      },
+      "app_source_unreachable": {
+        "title": "Tätä lähdettä ei tavoitettu",
+        "body": "Tarkista linkki ja että olet verkossa, ja yritä uudelleen."
+      },
+      "app_source_invalid": {
+        "title": "Tämä linkki ei ole sovelluslähde",
+        "body": "Se ei listaa yhtään sovellusta AltStore-muodossa. Tarkista linkki tai lisää sovelluksen .ipa-tiedosto."
+      },
+      "app_source_exists": {
+        "title": "Tämä lähde on jo lisätty",
+        "body": "Sen sovellukset ovat jo kohdassa Selaa sovelluksia."
+      }
+    },
+    "plist": {
+      "invalid": {
+        "title": "Sovelluksen asetustiedosto on vioittunut",
+        "body": "Sovelluksen sisällä olevaa ominaisuuslistaa ei voitu lukea. Valitse toinen IPA tai ilmoita siitä."
+      }
+    },
+    "net": {
+      "offline": {
+        "title": "Olet offline-tilassa",
+        "body": "IPAForge ei tavoita internetiä. Tarkista verkkoyhteytesi ja yritä uudelleen."
+      }
+    },
+    "signer": {
+      "invalid_macho": {
+        "title": "Sovelluksen ohjelma on vioittunut",
+        "body": "Sovelluksen suoritettavaa tiedostoa ei voitu lukea. Valitse toinen IPA."
+      },
+      "encrypted_binary": {
+        "title": "Sovellus on salattu",
+        "body": "Tämä IPA on App Storesta ja on yhä salattu, joten sitä ei voi allekirjoittaa uudelleen. Valitse salaamaton IPA."
+      },
+      "unsupported_arch": {
+        "title": "Muotoa ei tueta",
+        "body": "Sovelluksen suoritettava tiedosto käyttää muotoa, jota iOS ei voi ajaa. Valitse toinen IPA."
+      },
+      "unsupported_ios": {
+        "title": "Vaatii uudemman iOS:n",
+        "body": "Tämä sovellus vaatii laitetta uudemman iOS-version. Päivitä laite tai valitse toinen kanava tai IPA."
+      },
+      "unsupported_device": {
+        "title": "Ei tehty tälle laitteelle",
+        "body": "Tämä sovellus ei tue tämän tyyppistä laitetta, esimerkiksi vain iPadille tehty sovellus iPhonessa tai iPhone-sovellus Apple TV:ssä. Valitse toinen IPA."
+      },
+      "no_arm64_build": {
+        "title": "Ei versiota iPhonelle tai iPadille",
+        "body": "Sovelluksessa ei ole 64-bittistä versiota iPhonelle tai iPadille, esimerkiksi 32-bittinen tai simulaattoriversio. Valitse toinen IPA."
+      },
+      "no_header_space": {
+        "title": "Sovellusta ei voi allekirjoittaa",
+        "body": "Sovelluksen suoritettavassa tiedostossa ei ole tilaa allekirjoitukselle. Valitse toinen IPA tai ilmoita siitä."
+      },
+      "zip_slip": {
+        "title": "IPA ei ole turvallinen",
+        "body": "IPA yrittää kirjoittaa tiedostoja oman kansionsa ulkopuolelle, joten IPAForge hylkäsi sen. Valitse toinen IPA."
+      },
+      "invalid_certificate": {
+        "title": "Varmenne on virheellinen",
+        "body": "Allekirjoitusvarmennetta ei voitu käyttää. Mitätöi se, jotta IPAForge voi luoda uuden, ja yritä uudelleen."
+      },
+      "unknown_issuer": {
+        "title": "Tuntematon varmenteen myöntäjä",
+        "body": "IPAForge ei tunnista, kuka varmenteen myönsi. Päivitä IPAForge ja tarkista verkkosi."
+      },
+      "invalid_bundle": {
+        "title": "Sovelluspaketti on virheellinen",
+        "body": "IPA ei sisällä kelvollista sovellusta. Valitse toinen IPA."
+      },
+      "invalid_profile": {
+        "title": "Provisiointiprofiili on virheellinen",
+        "body": "Applelta saatua provisiointiprofiilia ei voitu lukea. Yritä uudelleen ja ilmoita siitä, jos se toistuu."
+      },
+      "extension_prefix": {
+        "title": "Sovelluslaajennuksella on väärä tunnus",
+        "body": "Laajennuksen bundle ID ei ala sovelluksen omalla tunnuksella. Valitse toinen IPA."
+      },
+      "profile_mismatch": {
+        "title": "Provisiointiprofiili ei täsmää",
+        "body": "Profiili ei täsmää sovelluksen kanssa, jolle se tehtiin. Yritä uudelleen ja ilmoita siitä, jos se toistuu."
+      },
+      "profile_expired": {
+        "title": "Provisiointiprofiili vanheni",
+        "body": "Profiili on vanhentunut tai tietokoneen kello on väärässä. Tarkista kello ja yritä uudelleen."
+      },
+      "cert_not_in_profile": {
+        "title": "Varmenne ei ole profiilissa",
+        "body": "Provisiointiprofiili ei sisällä allekirjoitusvarmennetta. Yritä uudelleen saadaksesi uuden profiilin."
+      },
+      "device_not_provisioned": {
+        "title": "Laite ei ole profiilissa",
+        "body": "Provisiointiprofiili ei sisällä tätä laitetta. Yritä uudelleen saadaksesi uuden profiilin."
+      },
+      "pkcs12_password": {
+        "title": "Salasana ei avaa tätä .p12-tiedostoa",
+        "body": "Kirjoita salasana, jolla se vietiin, ja yritä uudelleen."
+      }
+    },
+    "installer": {
+      "step_failed": {
+        "title": "Vaihe epäonnistui",
+        "body": "Asennuksen aikana meni jokin pieleen. Yritä uudelleen ja ilmoita siitä, jos se toistuu."
+      },
+      "prompt_cancelled": {
+        "title": "Peruttu",
+        "body": "Asennus pysähtyi, koska kysymys peruttiin. Aloita uudelleen, kun olet valmis."
+      },
+      "certificate_machine_id_missing": {
+        "title": "Varmennetta ei voi jakaa",
+        "body": "Tästä varmenteesta puuttuu tieto, jota SideStore tarvitsee sen avaamiseen. Mitätöi se, jotta IPAForge voi luoda uuden, ja yritä uudelleen."
+      },
+      "team_required": {
+        "title": "Valitse tiimi",
+        "body": "Tämä Apple ID kuuluu useisiin tiimeihin. Valitse se, jolla allekirjoitetaan."
+      },
+      "kept_ipa_missing": {
+        "title": "Tätä sovellusta ei voi uudistaa täällä",
+        "body": "IPAForge ei asentanut sitä tälle laitteelle tai sen säilytetty kopio on poissa. Lisää sen .ipa Esilatauksessa asentaaksesi sen uudelleen."
+      },
+      "wrong_app": {
+        "title": "Tämä linkki antaa eri sovelluksen",
+        "body": "Se ei ole sovellus, jota uudistat tai päivität, joten sitä ei asennettu ja sovellus ja sen tiedot säilyvät ennallaan. Lisää oikea .ipa Esilatauksessa asentaaksesi sen uudelleen."
+      },
+      "version_unavailable": {
+        "title": "Tätä versiota ei voi ladata uudelleen",
+        "body": "Uudistus säilyttää laitteellasi olevan version, eikä sitä enää tarjota ladattavaksi. Asenna uusin versio Päivitä-toiminnolla; sovellus säilyttää tietonsa."
+      },
+      "pairing_app_not_found": {
+        "title": "Sovellus ei ole laitteella",
+        "body": "Se poistettiin tai se ei ole enää sovellus, jonka IPAForge asensi. Sulje Pariliitostiedostot ja avaa se uudelleen."
+      },
+      "certificate_not_stored": {
+        "title": "Tällä tietokoneella ei ole vielä varmennetta",
+        "body": "Tämä tietokone säilyttää tiimin varmenteen, kun se asentaa sillä sovelluksen. Asenna ensin sovellus tai tuo .p12."
+      }
+    },
+    "rpc": {
+      "invalid_message": {
+        "title": "Sisäinen viestintävirhe",
+        "body": "IPAForgen osat eivät ymmärtäneet toisiaan. Päivitä IPAForge tai ilmoita siitä."
+      },
+      "disconnected": {
+        "title": "Yhteys moottoriin katkesi",
+        "body": "IPAForgen moottori lakkasi vastaamasta. Yritä uudelleen ja ilmoita siitä, jos se toistuu."
+      },
+      "timeout": {
+        "title": "Moottori ei vastannut",
+        "body": "IPAForgen moottorin vastaus kesti liian kauan. Yritä uudelleen ja ilmoita siitä, jos se toistuu."
+      }
+    },
+    "internal": {
+      "aborted": {
+        "title": "Pysäytetty",
+        "body": "Toiminto pysäytettiin ennen kuin se valmistui."
+      },
+      "unexpected": {
+        "title": "Jokin meni pieleen",
+        "body": "Tapahtui odottamaton virhe. Yritä uudelleen ja ilmoita siitä, jos se toistuu."
+      }
+    }
+  },
+  "recovery": {
+    "retry": "Yritä uudelleen",
+    "wait-and-retry": "Odota ja yritä uudelleen",
+    "check-network": "Tarkista verkkosi",
+    "check-clock": "Tarkista päivämäärä ja aika",
+    "change-anisette-server": "Valitse toinen anisette-palvelin",
+    "re-enter-password": "Syötä salasana uudelleen",
+    "re-enter-code": "Syötä koodi uudelleen",
+    "use-trusted-device": "Käytä luotettua laitetta",
+    "sign-in-again": "Kirjaudu uudelleen",
+    "sign-in-on-apple-device": "Kirjaudu Apple-laitteella",
+    "switch-account": "Käytä toista Apple ID:tä",
+    "verify-email": "Vahvista sähköpostisi",
+    "accept-agreement": "Hyväksy Applen sopimus",
+    "choose-team": "Valitse tiimi",
+    "revoke-certificate": "Mitätöi varmenne",
+    "wait-for-app-id-slot": "Odota vapaata App ID:tä",
+    "try-anyway": "Yritä silti",
+    "choose-app-to-remove": "Valitse poistettava sovellus",
+    "unlock-device": "Avaa laitteen lukitus",
+    "enable-developer-mode": "Kytke kehittäjätila päälle",
+    "trust-computer": "Luota tähän tietokoneeseen",
+    "reconnect-device": "Kytke laite uudelleen",
+    "pair-again": "Muodosta pari uudelleen",
+    "set-passcode": "Aseta pääsykoodi",
+    "install-device-support": "Asenna laitetuki",
+    "reinstall-app": "Asenna sovellus uudelleen",
+    "choose-another-ipa": "Valitse toinen IPA",
+    "choose-another-channel": "Valitse toinen kanava",
+    "import-ipa": "Tuo IPA",
+    "update-ipaforge": "Päivitä IPAForge",
+    "report-issue": "Ilmoita ongelmasta",
+    "or": "Tai",
+    "switchAccount": {
+      "title": "Käytä toista Apple ID:tä",
+      "body": "Asennus alkaa uudelleen valitsemallasi Apple ID:llä."
+    },
+    "fix": {
+      "copy": "Kopioi",
+      "copied": "Kopioitu",
+      "done": "Valmis, yritä uudelleen",
+      "waitAndRetry": {
+        "how": "Apple on kiireinen tai rajoittaa pyyntöjä. Odota hetki ja yritä uudelleen."
+      },
+      "checkNetwork": {
+        "how": "Varmista, että tämä tietokone on verkossa, ja yritä uudelleen."
+      },
+      "checkClock": {
+        "step1": "Avaa tämän tietokoneen päivämäärä- ja aika-asetukset",
+        "step2": "Kytke päälle päivämäärän ja ajan automaattinen asetus"
+      },
+      "reEnterPassword": {
+        "how": "Uusi yritys kysyy salasanaa; tarkista se ennen kuin syötät sen."
+      },
+      "reEnterCode": {
+        "how": "Uusi yritys kysyy uutta vahvistuskoodia."
+      },
+      "useTrustedDevice": {
+        "how": "Kun koodia kysytään, valitse tekstiviestin sijaan luotettu laite."
+      },
+      "signInAgain": {
+        "how": "Uusi yritys kysyy salasanaa, jotta voit kirjautua uudelleen."
+      },
+      "signInOnAppleDevice": {
+        "how": "Kirjaudu tälle Apple ID:lle iPhonella, iPadilla tai Macilla tai Applen verkkosivustolla ja tee, mitä se pyytää:"
+      },
+      "switchAccount": {
+        "how": "Valitse yksi tallennetuista Apple ID:istäsi. Asennus alkaa uudelleen sillä.",
+        "button": "Valitse Apple ID…"
+      },
+      "verifyEmail": {
+        "how": "Vahvista tämän Apple ID:n sähköpostiosoite Applen verkkosivustolla:"
+      },
+      "acceptAgreement": {
+        "how": "Kirjaudu Applen kehittäjäsivustolle ja hyväksy sen näyttämä sopimus:"
+      },
+      "revokeCertificate": {
+        "how": "Uusi yritys kysyy, mikä varmenne mitätöidään."
+      },
+      "waitForAppIdSlot": {
+        "how": "Apple vapauttaa jokaisen App ID:n 7 päivää sen luomisen jälkeen. Asenna uudelleen, kun yksi on vapaa, tai käytä toista Apple ID:tä.",
+        "next": "Seuraava App ID vapautuu {date}."
+      },
+      "chooseAppToRemove": {
+        "how": "Uusi yritys kysyy, mikä sovellus poistetaan tilan tekemiseksi."
+      },
+      "unlockDevice": {
+        "how": "Avaa laitteen lukitus ja pidä se auki, kunnes asennus on valmis."
+      },
+      "enableDeveloperMode": {
+        "button": "Se on päällä, yritä uudelleen"
+      },
+      "trustComputer": {
+        "how": "Avaa laitteen lukitus. Kun se kysyy, luotetaanko tähän tietokoneeseen, napauta Luota ja syötä pääsykoodi.",
+        "button": "Kysy uudelleen laitteella"
+      },
+      "reconnectDevice": {
+        "how": "Irrota laite, kytke se uudelleen ja avaa sen lukitus."
+      },
+      "setPasscode": {
+        "how": "Aseta laitteelle pääsykoodi kohdassa Asetukset › Face ID ja pääsykoodi ja yritä uudelleen."
+      },
+      "installDeviceSupport": {
+        "how": "Asenna Windowsissa Apple Devices (tai iTunes) Microsoft Storesta ja käynnistä IPAForge uudelleen."
+      },
+      "reinstallApp": {
+        "how": "Poista sovellus laitteelta ja yritä uudelleen."
+      },
+      "chooseAnotherChannel": {
+        "how": "Toisen kanavan versio saattaa toimia tällä laitteella.",
+        "button": "Asenna kanavalta {channel}"
+      },
+      "open": "Avaa",
+      "tryAnyway": {
+        "how": "Apple ilmoitti jäljellä olevien App ID:iden määräksi negatiivisen luvun, mikä on tunnettu vika sen päässä: todellinen luku voi olla suurempi. Yritä silti pyytää Applea luomaan ne; jos raja todella on täynnä, se kertoo siitä."
+      },
+      "changeAnisetteServer": {
+        "how": "Avaa Asetukset, testaa anisette-palvelimet ja valitse toimiva tai palaa Automaattiseen.",
+        "button": "Avaa anisette-palvelimet"
+      },
+      "allowLocalNetwork": {
+        "how": "Avaa Järjestelmäasetukset › Tietosuoja ja turvallisuus › Paikallisverkko, kytke IPAForge päälle ja yritä uudelleen. Tai yhdistä laite kaapelilla."
+      }
+    },
+    "reportHint": "Avaa uuden GitHub-issuen, johon diagnostiikka on valmiiksi täytetty. Mitään ei lähetetä, ennen kuin lähetät sen.",
+    "allow-local-network": "Salli paikallisverkon käyttö"
+  },
+  "devices": {
+    "engine": {
+      "connecting": "Yhdistetään moottoriin…",
+      "connected": "{count, plural, =0 {Moottori yhdistetty · ei laitteita} one {Moottori yhdistetty · # laite} other {Moottori yhdistetty · # laitetta}}",
+      "failed": "Moottoria ei tavoiteta: {reason}"
+    },
+    "description": "Tähän tietokoneeseen kytketyt iPhonet ja iPadit sekä sen kanssa pariliitetyt Apple TV:t ja Vision Prot. Käytössä oleva näkyy yläpalkissa.",
+    "unknownDevice": "Tuntematon laite",
+    "line": "{model} · iOS {ios} · {link}",
+    "model": "{model} · iOS {ios}",
+    "withState": "{line} · {state}",
+    "link": {
+      "usb": "USB",
+      "network": "Wi-Fi",
+      "both": "USB ja Wi-Fi"
+    },
+    "state": {
+      "checking": "Tarkistetaan…",
+      "ready": "Valmis",
+      "locked": "Lukittu",
+      "developerModeOff": "Kehittäjätila pois päältä",
+      "notTrusted": "Ei luotettu",
+      "unavailable": "Laitetta ei voi lukea",
+      "notConnected": "Ei yhdistetty"
+    },
+    "inUse": "Käytössä",
+    "use": "Käytä tätä laitetta",
+    "checkAgain": "Tarkista uudelleen",
+    "facts": {
+      "model": "Malli",
+      "ios": "iOS",
+      "connection": "Yhteys",
+      "udid": "UDID",
+      "pairing": "Pariliitos",
+      "address": "Osoite"
+    },
+    "empty": {
+      "title": "Ei vielä laitteita",
+      "body": "Yhdistä iPhone tai iPad kaapelilla ja avaa sen lukitus. Windowsissa Apple Devices tai iTunes täytyy olla asennettuna."
+    },
+    "notice": {
+      "none": {
+        "title": "Ei yhdistettyä laitetta",
+        "body": "Yhdistä iPhone tai iPad kaapelilla ja avaa sen lukitus. Se ilmestyy tähän itsestään."
+      },
+      "notConnected": {
+        "title": "{name} ei ole yhdistetty",
+        "body": "Kytke se uudelleen, niin se otetaan automaattisesti käyttöön, tai valitse toinen laite yläpalkista."
+      },
+      "notTrusted": {
+        "title": "Luota tähän tietokoneeseen laitteella {name}",
+        "body": "Avaa lukitus, napauta Luota ja syötä pääsykoodi.",
+        "action": "Kysy uudelleen",
+        "waiting": "Odotetaan luottamusta…",
+        "titleUnnamed": "Luota tähän tietokoneeseen laitteella"
+      },
+      "locked": {
+        "title": "Avaa laitteen {name} lukitus",
+        "body": "Sen täytyy pysyä auki, kun sovelluksia asennetaan."
+      },
+      "developerModeOff": {
+        "title": "Kytke kehittäjätila päälle laitteella {name}",
+        "step1": "Asetukset → Tietosuoja ja turvallisuus → Kehittäjätila",
+        "step2": "Kytke se päälle ja käynnistä uudelleen, kun sitä pyydetään",
+        "step3": "Napauta uudelleenkäynnistyksen jälkeen Kytke päälle ja syötä pääsykoodi"
+      },
+      "unavailable": {
+        "title": "Laitetta {name} ei voi lukea",
+        "body": "Irrota se ja kytke uudelleen. Jos tämä toistuu, käynnistä laite uudelleen.",
+        "bodyWifi": "Se on yhdistetty Wi-Fillä: herätä se, avaa sen lukitus ja pidä se samassa verkossa kuin tämä tietokone, sitten Tarkista uudelleen. Kaapeli on luotettavampi.",
+        "reason": "Syy: {reason}",
+        "titleUnnamed": "Laitetta ei voi lukea"
+      },
+      "offNetwork": {
+        "title": "{name} ei ole verkossa",
+        "tv": "Herätä se kaukosäätimellä ja pidä se samassa Wi-Fissä kuin tämä tietokone.",
+        "vision": "Laita se päähän, avaa sen lukitus ja pidä se samassa Wi-Fissä kuin tämä tietokone."
+      },
+      "pairAgain": {
+        "title": "Muodosta pari laitteen {name} kanssa uudelleen",
+        "body": "Se ei enää hyväksy tämän tietokoneen pariliitosta. Se on normaalia tvOS- tai visionOS-päivityksen jälkeen: muodosta pari uudelleen uudella koodilla.",
+        "action": "Muodosta pari uudelleen…"
+      }
+    },
+    "notes": {
+      "connected": "{name} yhdistetty",
+      "disconnected": "{name} irrotettu",
+      "aDevice": "Laite"
+    },
+    "savePairing": "Tallenna pariliitostiedosto…",
+    "localNetwork": {
+      "open": "Avaa Paikallisverkon asetukset"
+    },
+    "os": {
+      "tv": "tvOS",
+      "vision": "visionOS"
+    },
+    "lineOs": "{model} · {os} {version} · {link}",
+    "modelOs": "{model} · {os} {version}",
+    "pairedByCode": "Pariliitetty tämän tietokoneen kanssa koodilla",
+    "forget": {
+      "action": "Unohda…",
+      "title": "Unohdetaanko {name}?",
+      "body": "IPAForge poistaa tämän tietokoneen pariliitoksen. Siellä jo olevat sovellukset säilyvät. Käyttääksesi sitä uudelleen muodosta pari uudelleen.",
+      "confirm": "Unohda"
+    }
+  },
+  "prompts": {
+    "cancel": "Peruuta",
+    "continue": "Jatka",
+    "password": {
+      "title": "Kirjaudu uudelleen",
+      "body": "Tilin {appleId} tallennettu istunto on vanhentunut. Jatka syöttämällä salasana.",
+      "label": "Salasana",
+      "checking": "Tarkistetaan salasanaa…"
+    },
+    "method": {
+      "title": "Minne Applen pitäisi lähettää koodi?",
+      "body": "Valitse, miten saat vahvistuskoodisi.",
+      "trustedDevice": "Luotettu laite",
+      "trustedDeviceHint": "iPhonesi, iPadisi tai Macisi, joka on kirjautunut tälle Apple ID:lle",
+      "sms": "Tekstiviesti numeroon {number}",
+      "smsHint": "Tavallisia tekstiviestimaksuja voi tulla",
+      "sending": "Lähetetään koodia…"
+    },
+    "code": {
+      "title": "Syötä vahvistuskoodi",
+      "body": "{length, plural, one {Syötä Applen lähettämä #-numeroinen koodi.} other {Syötä Applen lähettämä #-numeroinen koodi.}}",
+      "label": "Vahvistuskoodi",
+      "wrong": "Koodi ei kelvannut. Tarkista se ja syötä uudelleen.",
+      "verify": "Vahvista",
+      "checking": "Tarkistetaan koodia…",
+      "deviceBody": "{length, plural, one {Syötä iPhonessasi, iPadissasi tai Macissasi näkyvä #-numeroinen koodi.} other {Syötä iPhonessasi, iPadissasi tai Macissasi näkyvä #-numeroinen koodi.}}",
+      "smsBody": "{length, plural, one {Syötä numeroon {number} lähetetty #-numeroinen koodi.} other {Syötä numeroon {number} lähetetty #-numeroinen koodi.}}",
+      "allowHint": "Pidä se auki ja napauta Salli, kun se kysyy kirjautumisesta.",
+      "noCode": "Etkö saanut koodia?",
+      "resend": "Lähetä uusi koodi",
+      "textTo": "Tekstiviesti numeroon {number}",
+      "sending": "Lähetetään uutta koodia…",
+      "sent": "Uusi koodi on tulossa.",
+      "notSent": "Apple ei lähettänyt uutta koodia. Odota muutama minuutti ja yritä uudelleen."
+    },
+    "suggested": "Ehdotettu",
+    "team": {
+      "title": "Minkä tiimin pitäisi allekirjoittaa sovellus?",
+      "body": "Tämä Apple ID kuuluu useampaan kuin yhteen tiimiin. IPAForge muistaa valintasi tälle Apple ID:lle.",
+      "free": "Ilmainen: sovellukset vanhenevat 7 päivässä, 3 sovellusta laitetta kohti",
+      "paid": "Maksullinen: sovellukset kestävät vuoden, ei sovellusrajaa",
+      "checking": "Otetaan tämä tiimi käyttöön…"
+    },
+    "revoke": {
+      "title": "Mitätöidäänkö varmenne?",
+      "body": "Tiimillä on jo kehitysvarmenteiden enimmäismäärä, joten IPAForgen täytyy mitätöidä yksi tehdäkseen omansa. Mitätöidyllä allekirjoitetut sovellukset lakkaavat uudistumasta.",
+      "ipaforge": "IPAForgen tekemä toisella tietokoneella",
+      "sidestore": "SideStoren tekemä",
+      "machine": "Tehty koneella “{machine}” (yleensä Xcode)",
+      "unknown": "Tuntemattoman työkalun tekemä",
+      "sidestoreWarning": "SideStore laitteellasi lakkaa uudistamasta sovelluksia, kunnes se tekee uuden.",
+      "machineWarning": "Xcode kyseisellä tietokoneella tekee uuden, kun se seuraavan kerran allekirjoittaa.",
+      "expires": "Vanhenee {date}",
+      "confirm": "Mitätöi ja jatka",
+      "revoking": "Mitätöidään varmennetta…"
+    },
+    "remove": {
+      "title": "Poistetaanko sovellus tilan tekemiseksi?",
+      "body": "Ilmaisella Apple ID:llä laitteella voi olla {limit} sovellusta, joten yhden täytyy lähteä, ennen kuin tämä mahtuu. Voit asentaa sen myöhemmin uudelleen.",
+      "confirm": "Poista ja jatka",
+      "removing": "Poistetaan sovellusta…"
+    },
+    "share": {
+      "title": "Jaetaanko allekirjoitusvarmenteesi sovellukselle “{app}”?",
+      "body": "Tämä sovellus näyttää SideStorelta. Varmenteellasi se voi uudistaa sovelluksia laitteella itse. Jaa se vain sovellukselle, johon luotat.",
+      "yes": "Jaa varmenne",
+      "yesHint": "Se uudistaa sovelluksesi laitteella itse",
+      "no": "Älä jaa",
+      "noHint": "Se asennetaan ilman varmennettasi"
+    },
+    "pairing": {
+      "title": "Mille sovelluksille pariliitostiedosto annetaan?",
+      "body": "Pariliitostiedoston avulla laitteella oleva sovellus voi keskustella sen kanssa Wi-Fillä, kuten tämä tietokone. Vain valitsemasi sovellukset saavat sen.",
+      "available": "{count, plural, one {# laitteella oleva sovellus voi käyttää sitä} other {# laitteella olevaa sovellusta voi käyttää sitä}}",
+      "selectAll": "Valitse kaikki",
+      "clearAll": "Tyhjennä valinnat",
+      "place": "{count, plural, =0 {Valitse sovellus} one {Sijoita # sovellukseen} other {Sijoita # sovellukseen}}",
+      "placing": "Sijoitetaan pariliitostiedostoa…",
+      "purpose": {
+        "sidestore": "Uudistaa ja asentaa sovelluksia Wi-Fillä",
+        "livecontainer": "Ajaa sen sisällä olevia sovelluksia JIT:llä",
+        "stikdebug": "Ottaa JIT:n käyttöön muille sovelluksille",
+        "stikstore": "Asentaa sovelluksia omista lähteistään"
+      }
+    }
+  },
+  "signIn": {
+    "title": "Lisää Apple ID",
+    "body": "IPAForge allekirjoittaa sovellukset sillä. Salasanasi menee vain Applelle.",
+    "appleId": "Apple ID",
+    "password": "Salasana",
+    "submit": "Kirjaudu",
+    "signingIn": "Kirjaudutaan…",
+    "done": {
+      "title": "Apple ID lisätty",
+      "body": "Kirjauduttu tilillä {appleId}.",
+      "close": "Valmis"
+    },
+    "rememberPassword": "Tallenna salasanani järjestelmän avainnippuun",
+    "rememberPasswordHint": "Antaa IPAForgen kirjautua itse uudelleen, kun istunto vanhenee.",
+    "resuming": {
+      "title": "Kirjaudutaan uudelleen",
+      "body": "Kirjaudutaan tilille {appleId} IPAForgen tallentamilla tiedoilla…",
+      "cancel": "Peruuta"
+    }
+  },
+  "accounts": {
+    "description": "Apple ID:t, joilla IPAForge allekirjoittaa sovelluksia. Käytössä oleva näkyy yläpalkissa.",
+    "list": "Tallennetut Apple ID:t",
+    "empty": "Ei vielä Apple ID:itä. Lisää yksi asentaaksesi SideStoren.",
+    "notSaved": {
+      "title": "Apple ID:itä ei tallenneta",
+      "body": "IPAForge ei voi käyttää järjestelmän avainnippua (pääsy on voitu evätä), joten Apple ID:si säilyvät vain, kunnes se suljetaan. Tallentaaksesi ne avaa IPAForge uudelleen ja salli avainnipun käyttö, kun sitä kysytään."
+    },
+    "freeTeam": "{name} (ilmainen)",
+    "withState": "{line} · {state}",
+    "state": {
+      "checking": "Tarkistetaan…",
+      "signInNeeded": "Kirjautuminen tarvitaan",
+      "blocked": "Estetty tällä laitteella",
+      "unreachable": "Appleä ei tavoitettu"
+    },
+    "inUse": "Käytössä",
+    "noTeams": "Tiimit ilmestyvät, kun Apple on vastannut.",
+    "use": "Käytä",
+    "signInAgain": "Kirjaudu uudelleen",
+    "signOut": {
+      "action": "Kirjaudu ulos",
+      "title": "Kirjaudutaanko ulos tililtä {appleId}?",
+      "forgets": "IPAForge unohtaa tämän Apple ID:n, sen istunnon ja tallennetun salasanan.",
+      "keeps": "Sen allekirjoitusvarmenteet säilyvät tällä tietokoneella, joten uudelleenkirjautuminen käyttää niitä uudelleen. Jo asennetut sovellukset toimivat, kunnes ne vanhenevat.",
+      "confirm": "Kirjaudu ulos"
+    }
+  },
+  "apps": {
+    "description": "Sovellukset, jotka IPAForge asensi tälle laitteelle. Uudista allekirjoittaa sovelluksen uudelleen ennen sen vanhenemista ja säilyttää sen tiedot.",
+    "refreshAll": "{count, plural, =0 {Uudista kaikki} other {Uudista kaikki (#)}}",
+    "updateAll": "{count, plural, other {Päivitä kaikki (#)}}",
+    "refresh": "Uudista",
+    "update": "Päivitä",
+    "remove": "Poista",
+    "removeApp": "Poista {name}",
+    "updateTo": "Päivitys: {version}",
+    "from": "Lähde: {source}",
+    "needsIpa": "IPAForgen toisella tietokoneella .ipa-tiedostosta asentama. Lisää tuo .ipa kerran Esilatauksessa, niin voit uudistaa sen täällä.",
+    "thisDevice": "tämä laite",
+    "badge": "{count, plural, one {# sovellus uudistettava pian} other {# sovellusta uudistettava pian}}",
+    "expiry": {
+      "in": "{days, plural, one {Vanhenee # päivän päästä · {date}} other {Vanhenee # päivän päästä · {date}}}",
+      "today": "Vanhenee tänään",
+      "expired": "{days, plural, one {Vanheni # päivä sitten · ei aukea} other {Vanheni # päivää sitten · ei aukea}}",
+      "unknown": "Vanhenemisaika tuntematon",
+      "gone": "Vanhentunut · ei aukea"
+    },
+    "run": {
+      "checking": "Tarkistetaan Applelta…",
+      "waiting": "Odottaa vuoroaan",
+      "done": "Valmis"
+    },
+    "failed": {
+      "title": "Uudistus ei valmistunut: {reason}",
+      "details": "Näytä tiedot",
+      "dismiss": "Sulje"
+    },
+    "notConnected": {
+      "title": "Tätä laitetta ei ole yhdistetty",
+      "body": "Yhdistä se nähdäksesi sen sovellukset ja uudistaaksesi tai päivittääksesi ne."
+    },
+    "expired": {
+      "title": "{count, plural, one {# sovellus on vanhentunut} other {# sovellusta on vanhentunut}}",
+      "body": "Ne eivät aukea, ennen kuin ne uudistetaan. Niiden tiedot säilyvät.",
+      "refresh": "{count, plural, one {Uudista se nyt} other {Uudista ne nyt}}"
+    },
+    "facts": {
+      "next": "Seuraavaksi vanhenee",
+      "none": "Ei vielä mitään",
+      "nextIn": "{days, plural, one {{name} · # päivä} other {{name} · # päivää}}",
+      "nextExpired": "{name} · vanhentunut",
+      "count": "Pidetään uudistettuna",
+      "apps": "{count, plural, one {# sovellus} other {# sovellusta}}",
+      "auto": "Automaattinen uudistus",
+      "autoOn": "{days, plural, one {Päällä · # päivä ennen} other {Päällä · # päivää ennen}}",
+      "autoOff": "Pois"
+    },
+    "list": {
+      "title": "IPAForgen asentamat",
+      "count": "{count, plural, one {# sovellus · pian vanhenevat ensin} other {# sovellusta · pian vanhenevat ensin}}",
+      "empty": "Ei vielä sovelluksia. Asenna SideStore tai esilataa sovelluksia, niin ne näkyvät tässä."
+    },
+    "others": {
+      "title": "IPAForge ei vielä pidä näitä yllä",
+      "hint": "Asennettu ennen tätä IPAForgen versiota tai toisella työkalulla",
+      "found": "Löytyi lähteestä {source}. Uudista asentaa sen sieltä säilyttäen sen tiedot, ja IPAForge pitää sen siitä lähtien uudistettuna.",
+      "foundMany": "Löytyi lähteestä {source} ja {count, plural, one {# muusta lähteestä} other {# muusta lähteestä}}. Uudista asentaa sen alla valitusta lähteestä säilyttäen sen tiedot, ja IPAForge pitää sen siitä lähtien uudistettuna.",
+      "pickSource": "Asenna lähteestä",
+      "choice": "{source} · {version}",
+      "how": "Lisää sen .ipa kerran Esilatauksessa, niin IPAForge pitää sen siitä lähtien uudistettuna."
+    },
+    "auto": {
+      "title": "Uudista sovellukset automaattisesti",
+      "body": "Kun IPAForge on auki ja laite yhdistetty, sovellukset uudistetaan itsestään ennen vanhenemista.",
+      "toggle": "Uudista automaattisesti",
+      "when": "Uudista, kun sovelluksella on jäljellä",
+      "days": "{count, plural, one {# päivä} other {# päivää}}"
+    },
+    "removeDialog": {
+      "title": "Poistetaanko {name}?",
+      "body": "Se poistetaan laitteelta {device} tietoineen ja vapauttaa ilmaisen sovelluksen paikan. Voit asentaa sen myöhemmin uudelleen Esilatauksesta."
+    },
+    "pairing": {
+      "open": "Pariliitostiedostot",
+      "title": "Pariliitostiedostot",
+      "hint": "Pariliitostiedoston avulla sovellus tavoittaa laitteesi itse sovellusten uudistamista ja asentamista varten. Sen haltija voi käyttää laitetta, joten anna sellainen omille sovelluksillesi vain, kun niiden ohjeet sitä pyytävät.",
+      "reading": "Luetaan pariliitostiedostoja…",
+      "empty": "Tällä laitteella ei ole pariliitossovelluksia eikä IPAForgen asentamia sovelluksia.",
+      "classic": {
+        "thisComputer": "Pariliitos: tämän tietokoneen",
+        "otherComputer": "Pariliitos: toisen tietokoneen",
+        "missing": "Pariliitos: puuttuu"
+      },
+      "remote": {
+        "accepted": "Etä: hyväksytty",
+        "rejected": "Etä: ei hyväksytty",
+        "otherComputer": "Etä: toisen tietokoneen",
+        "missing": "Etä: puuttuu"
+      },
+      "detail": {
+        "placed": "Sijoitettu {date}",
+        "needed": "Tarvitsee yhden uudistuakseen itse.",
+        "otherComputer": "Toiselta tietokoneelta: toimii niin kauan kuin kyseiseen tietokoneeseen luotetaan.",
+        "ownNone": "Ei mitään. Lisää vain, jos sovellus sitä pyytää."
+      },
+      "place": "Sijoita",
+      "placeOne": "Sijoita pariliitostiedosto sovellukseen {name}",
+      "placeAgain": "Sijoita uudelleen",
+      "placeAgainOne": "Sijoita pariliitostiedosto sovellukseen {name} uudelleen",
+      "add": "Lisää…",
+      "addOne": "Lisää pariliitostiedosto sovellukseen {name}",
+      "remove": "Poista",
+      "removeOne": "Poista pariliitostiedosto sovellukselta {name}",
+      "newRemote": "Uusi etäpariliitos",
+      "done": "Valmis",
+      "addTitle": "Lisää pariliitostiedosto sovellukseen {name}",
+      "addBody": "IPAForge kirjoittaa tämän tietokoneen pariliitostiedoston sovelluksen kansioon laitteellasi. Sen haltija voi käyttää laitetta: lisää se vain sovelluksille, joihin luotat.",
+      "pathLabel": "Polku sovelluksen sisällä",
+      "pathHint": "Sovelluksen ohjeista; yleensä kansiossa Documents. IPAForge muistaa sen tälle sovellukselle.",
+      "pathInvalid": "Käytä polkua kansiossa Documents tai Library, joka päättyy .plist tai .mobiledevicepairing.",
+      "removeTitle": "Poistetaanko sovelluksen {name} pariliitostiedosto?",
+      "removeBody": "Se ei voi enää tavoittaa laitettasi itse (uudistaminen, asentaminen), ennen kuin pariliitostiedosto sijoitetaan uudelleen.",
+      "newRemoteTitle": "Tehdäänkö uusi etäpariliitos?",
+      "newRemoteBody": "IPAForge tekee uuden etäpariliitoksen laitteesi kanssa ja sijoittaa sen SideStoreen. Laite voi pyytää sinua luottamaan tähän tietokoneeseen. Vanha etäpariliitos lakkaa toimimasta.",
+      "newRemoteConfirm": "Tee uusi",
+      "newRemoteWaiting": "Jos laitteesi kysyy, napauta Luota ja syötä sen pääsykoodi.",
+      "tag": "Ei pariliitostiedostoa",
+      "tagOne": "Sovelluksella {name} ei ole pariliitostiedostoa: avaa Pariliitostiedostot"
+    },
+    "cancelRefresh": "Peruuta uudistus"
+  },
+  "logs": {
+    "title": "Lokit",
+    "lede": "Mitä IPAForge teki, rivi riviltä. Avaa se mistä tahansa näppäinyhdistelmällä",
+    "shortcut": {
+      "control": "Ctrl+",
+      "command": "⌘",
+      "key": "L"
+    },
+    "copy": "Kopioi",
+    "save": "Tallenna…",
+    "clear": "Tyhjennä",
+    "cleared": "Näkymä tyhjennetty. Tallenna kirjoittaa edelleen kaikki tämän istunnon aikana säilytetyt rivit.",
+    "search": {
+      "label": "Hae lokeista",
+      "placeholder": "Hae viesteistä ja tiedoista",
+      "key": "/"
+    },
+    "level": {
+      "label": "Taso",
+      "all": "Kaikki",
+      "info": "Tiedot",
+      "warn": "Varoitukset",
+      "error": "Virheet"
+    },
+    "levelName": {
+      "debug": "Debug",
+      "info": "Tieto",
+      "warn": "Varoitus",
+      "error": "Virhe"
+    },
+    "area": {
+      "label": "Alue",
+      "all": "Kaikki alueet",
+      "install": "Asennus",
+      "device": "Laite",
+      "apple": "Apple",
+      "catalog": "Katalogi",
+      "signing": "Allekirjoitus",
+      "engine": "Moottori",
+      "interface": "Käyttöliittymä",
+      "app": "Sovellus"
+    },
+    "filters": {
+      "showing": "Näytetään vain:",
+      "run": "Tämä asennusajo ({time})",
+      "text": "“{text}”",
+      "remove": "Poista suodatin {filter}"
+    },
+    "list": {
+      "label": "Lokirivit",
+      "loadingOlder": "Ladataan vanhempia rivejä…"
+    },
+    "row": {
+      "details": "{count, plural, one {# tieto} other {# tietoa}}",
+      "scope": "alue",
+      "redacted": "[piilotettu]",
+      "copy": "Kopioi rivi"
+    },
+    "follow": {
+      "on": "Seurataan uusia rivejä",
+      "off": "Tauolla",
+      "pause": "Tauko",
+      "resume": "Seuraa"
+    },
+    "jump": "{count, plural, one {# uusi rivi} other {# uutta riviä}} · Siirry uusimpaan",
+    "count": "{matching, plural, one {# täsmäävä rivi} other {# täsmäävää riviä}} · viimeiset {capacity, number} säilytetään tämän istunnon ajan",
+    "debug": "Sisällytä debug-tiedot",
+    "privacy": "Salasanoja, tunnuksia, avaimia, sarjanumeroita ja laitetunnisteita ei koskaan kirjoiteta lokeihin; ne näkyvät muodossa [piilotettu]. Lokit pysyvät tällä tietokoneella, kunnes kopioit tai tallennat ne.",
+    "empty": {
+      "none": {
+        "title": "Mitään ei ole vielä kirjattu",
+        "body": "Rivejä ilmestyy tähän IPAForgen työskennellessä: laitteen yhdistäminen, kirjautuminen, asennus."
+      },
+      "noMatch": {
+        "title": "Mikään rivi ei täsmää",
+        "body": "Vaihda tasoa, aluetta tai hakua.",
+        "showAll": "Näytä kaikki rivit"
+      },
+      "cleared": {
+        "title": "Näkymä tyhjennetty",
+        "body": "Uusia rivejä ilmestyy tähän sitä mukaa kuin niitä tulee."
+      },
+      "failed": {
+        "title": "Lokeja ei voitu lukea",
+        "body": "Yhteys moottoriin on voinut sulkeutua. Avaa Lokit uudelleen yrittääksesi uudelleen."
+      }
+    },
+    "export": {
+      "copyTitle": "{count, plural, one {Kopioidaanko # rivi?} other {Kopioidaanko # riviä?}}",
+      "saveTitle": "{count, plural, one {Tallennetaanko # rivi tiedostoon?} other {Tallennetaanko # riviä tiedostoon?}}",
+      "copyBody": "Näytetyt rivit asettamillasi suodattimilla.",
+      "saveBody": "Kaikki tämän istunnon aikana säilytetyt rivit suodattimista riippumatta.",
+      "warning": "Salasanat, tunnukset ja laitetunnisteet on jo jätetty pois, mutta lokeissa mainitaan laitteesi malli, sovellukset ja tiimi. Tarkista ne, ennen kuin julkaiset ne julkisesti.",
+      "confirmCopy": "Kopioi",
+      "confirmSave": "Tallenna",
+      "copied": "{count, plural, one {Kopioitu # rivi} other {Kopioitu # riviä}}",
+      "saved": "{count, plural, one {Tallennettu # rivi} other {Tallennettu # riviä}}",
+      "copyFailed": "Rivejä ei voitu kopioida",
+      "saveFailed": "Rivejä ei voitu tallentaa"
+    }
+  },
+  "preload": {
+    "title": "Esilataa sovelluksia",
+    "description": "Asenna omia sovelluksiasi: allekirjoitetaan Apple ID:lläsi ja asennetaan USB:llä, yksi toisensa jälkeen.",
+    "tabs": {
+      "label": "Esilataa",
+      "apps": "Lisää sovelluksia",
+      "sources": "Lähteet"
+    },
+    "add": {
+      "drop": "Pudota .ipa-tiedostot tähän",
+      "or": "tai",
+      "choose": "Valitse tiedostoja…",
+      "link": "Lisää linkistä…"
+    },
+    "catalog": {
+      "recommended": "Suositeltu",
+      "added": "Lisätty",
+      "add": "Lisää",
+      "sidestore": "Uudistaa ja asentaa sovelluksia laitteella itse.",
+      "livecontainerSidestore": "LiveContainer, jonka sisällä on SideStore.",
+      "livecontainer": "Ajaa useita sovelluksia yhden sisällä, 3 sovelluksen rajan yli.",
+      "stikdebug": "Ottaa JIT:n käyttöön sitä tarvitsevissa sovelluksissa laitteella.",
+      "feather": "Allekirjoittaa ja asentaa sovelluksia laitteella varmenteellasi."
+    },
+    "browse": {
+      "title": "Selaa sovelluksia",
+      "count": "{apps, plural, one {# sovellus} other {# sovellusta}}, {sources, plural, one {# lähde} other {# lähdettä}}",
+      "source": "Lähde",
+      "allSources": "Kaikki lähteet",
+      "search": "Hae sovelluksia",
+      "manage": "Hallitse lähteitä",
+      "noMatch": "Mikään sovellus ei vastaa hakua “{query}”.",
+      "allOff": "Kaikki lähteet on kytketty pois. Kytke yksi päälle kohdassa Lähteet.",
+      "loading": "Luetaan lähteitä…",
+      "catalogLine": "Uusin julkaisu · tarkistettu tarkistussummaa vastaan",
+      "version": "{version} · {size}",
+      "from": "{name}, myös: {others}",
+      "details": "Sovelluksen {name} tiedot",
+      "notRefreshed": {
+        "title": "Lähdettä {name} ei voitu päivittää",
+        "body": "Näytetään sen sovellukset viimeisimmästä päivityksestä, {when}.",
+        "retry": "Yritä uudelleen"
+      }
+    },
+    "detail": {
+      "version": "Versio",
+      "latest": "{version} (uusin)",
+      "size": "Koko",
+      "needs": "Vaatii",
+      "needsIos": "iOS {version}",
+      "anyIos": "Mikä tahansa iOS",
+      "from": "Lähde",
+      "builtin": "Sisäänrakennettu · luotettu",
+      "added": "Lisäämäsi lähde",
+      "untrusted": "Lisäämästäsi lähteestä: IPAForge ei tarkista sen sovelluksia.",
+      "add": "Lisää listalle",
+      "inList": "Listalla",
+      "close": "Sulje",
+      "loadingReleases": "Haetaan sen julkaisuja…",
+      "noReleases": "Sen julkaisuja ei voi nyt lukea. Tarkista yhteys ja avaa se uudelleen."
+    },
+    "sources": {
+      "description": "Mistä Selaa sovelluksia löytää sovelluksia. Sisäänrakennettuja lähteitä ylläpitää IPAForge; lisää muita niiden linkillä (AltStore-muoto).",
+      "add": "Lisää lähde…",
+      "refreshAll": "Päivitä kaikki",
+      "list": "Lähteet",
+      "builtin": "Sisäänrakennettu · luotettu",
+      "added": "Lisännyt sinä",
+      "catalogName": "IPAForgen katalogi",
+      "apps": "{count, plural, one {# sovellus} other {# sovellusta}}",
+      "updated": "päivitetty {when}",
+      "notRead": "Ei vielä luettu",
+      "skipped": "{count, plural, one {# ohitettu (ei .ipa)} other {# ohitettu (ei .ipa)}}",
+      "failed": "Ei tavoitettu.",
+      "failedCopy": "Näytetään sen viimeisin kopio, ajalta {when}.",
+      "refreshing": "Päivitetään…",
+      "show": "Näytä sovellukset lähteestä {name}",
+      "refresh": "Päivitä {name}",
+      "remove": "Poista {name}",
+      "on": "Päällä",
+      "off": "Pois",
+      "note": "IPAForge ei tarkista lisäämiesi lähteiden sovelluksia. Lisää vain lähteitä, joihin luotat.",
+      "refreshOne": "Päivitä",
+      "removeOne": "Poista"
+    },
+    "addSource": {
+      "title": "Lisää lähde",
+      "label": "Lähteen linkki",
+      "placeholder": "https://example.com/apps.json",
+      "hint": "AltStore-muotoinen lähde, sellainen jonka SideStore lukee. Päättyy yleensä .json.",
+      "check": "Tarkista",
+      "checking": "Tarkistetaan lähdettä…",
+      "notLink": "Anna linkki, joka alkaa https://",
+      "notHttps": "Käytä https://-linkkiä: IPAForge lukee lähteitä vain suojatun yhteyden yli.",
+      "previewTitle": "Lisätäänkö tämä lähde?",
+      "includes": "{count, plural, one {# sovellus, mukaan lukien:} other {# sovellusta, mukaan lukien:}}",
+      "skipped": "{count, plural, one {# lisää jätetty pois: sen lataus ei ole .ipa.} other {# lisää jätetty pois: niiden lataus ei ole .ipa.}}",
+      "warningTitle": "Lisää vain lähteitä, joihin luotat",
+      "warningBody": "IPAForge ei tarkista lisäämiesi lähteiden sovelluksia. Jokainen sovellus tarkistetaan silti ennen asennusta.",
+      "back": "Takaisin",
+      "confirm": "Lisää lähde"
+    },
+    "removeSource": {
+      "title": "Poistetaanko {name}?",
+      "body": "Sen sovellukset katoavat kohdasta Selaa sovelluksia. Siitä asennetut sovellukset säilyvät laitteella, ja Asennettavat-listalla olevat sovellukset pysyvät siellä myös.",
+      "confirm": "Poista"
+    },
+    "list": {
+      "title": "Asennettavat",
+      "count": "{count, plural, one {# sovellus} other {# sovellusta}}",
+      "empty": "Ei vielä sovelluksia. Pudota .ipa-tiedostot tähän, valitse ne, lisää linkki tai valitse yksi kohdassa Selaa sovelluksia."
+    },
+    "row": {
+      "waiting": "Odotetaan laitetta ja Apple ID:tä",
+      "checking": "Tarkistetaan…",
+      "downloading": "Ladataan ja tarkistetaan…",
+      "appIds": "{count, plural, one {# App ID} other {# App ID:tä}}{extensions, plural, =0 {} one { (sovellus + # laajennus)} other { (sovellus + # laajennusta)}}",
+      "updates": "Päivittää {from} → {to} · säilyttää tietonsa",
+      "new": "Uusi laitteella",
+      "pairing": "Saa pariliitostiedoston ja varmenteen",
+      "fromCatalog": "Katalogista · Vakaa",
+      "remove": "Poista {name}",
+      "cannot": "Ei voi asentaa.",
+      "fromSource": "Lähde: {name}",
+      "saveInstead": "Tallenna allekirjoitettu .ipa sen sijaan",
+      "saveInsteadOne": "Tallenna {name} allekirjoitettuna .ipa-tiedostona asentamisen sijaan",
+      "savedOnComputer": "Tallennettu tälle tietokoneelle, ei asennettu"
+    },
+    "problem": {
+      "notIpa": "Vain .ipa-tiedostoja voi asentaa.",
+      "unreadable": "IPAForge ei voi lukea tätä tiedostoa. Lisää se sen sijaan toiminnolla Valitse tiedostoja….",
+      "needsIos": "Vaatii iOS {needs}; tällä laitteella on iOS {has}."
+    },
+    "summary": {
+      "appIds": "{count, plural, one {# uusi} other {# uutta}} · {left, plural, one {# jäljellä tällä viikolla} other {# jäljellä tällä viikolla}}",
+      "appIdsNoLimit": "{count, plural, one {# uusi} other {# uutta}}",
+      "notEnough": "Ei tarpeeksi jäljellä. Poista sovellus tai odota. {next}",
+      "freeApps": "{after} / {limit} tämän asennuksen jälkeen",
+      "freeAppsOver": "{used, plural, one {# on jo siellä.} other {# on jo siellä.}} Asennus kysyy, mikä sovellus poistetaan, tai poista yksi tältä listalta."
+    },
+    "install": "{count, plural, =0 {Asenna} one {Asenna # sovellus} other {Asenna # sovellusta}}",
+    "clear": "Tyhjennä lista",
+    "readiness": {
+      "busy": "Odota käynnissä olevaa asennusta.",
+      "empty": "Lisää ensin sovellus.",
+      "checking": "Tarkistetaan sovelluksia…",
+      "problems": "Poista sovellukset, joita ei voi asentaa."
+    },
+    "link": {
+      "title": "Lisää linkistä",
+      "body": "Suora linkki .ipa-tiedostoon. IPAForge lataa sen ja tarkistaa sen kuten minkä tahansa muun sovelluksen.",
+      "label": "Linkki",
+      "placeholder": "https://example.com/MyApp.ipa",
+      "add": "Lisää",
+      "httpsOnly": "Vain https-linkkejä voi ladata.",
+      "invalid": "Tuo ei ole linkki.",
+      "notIpa": "Linkin täytyy osoittaa .ipa-tiedostoon."
+    },
+    "elsewhere": {
+      "apps": "Sovelluksia asennetaan",
+      "sidestore": "SideStorea asennetaan",
+      "body": "Yksi asennus kerrallaan: se tarvitsee laitteen. Tämä voi alkaa, kun toinen on valmis.",
+      "open": "Avaa se"
+    },
+    "run": {
+      "title": {
+        "running": "{count, plural, one {Asennetaan {app}} other {Asennetaan # sovellusta}}",
+        "completed": "{count, plural, one {{app} on asennettu} other {# sovellusta on asennettu}}",
+        "failed": "Kaikkia sovelluksia ei voitu asentaa"
+      },
+      "backToPreload": "Takaisin Esilatauksiin",
+      "shared": "Tämä laite ja Apple ID:si",
+      "refresh": {
+        "profile": "Vain uusi profiili, mitään ei asenneta uudelleen",
+        "certificate": "Asennettu uudelleen: sen allekirjoittanut varmenne ei ole enää voimassa",
+        "unmarked": "Asennettu uudelleen: IPAForge ei tiedä, mikä varmenne sen allekirjoitti",
+        "appId": "Asennettu uudelleen: Apple poisti sen App ID:n sen vanhennuttua",
+        "sidestore": "Asennettu uudelleen, tiedot säilytetty, joten SideStore itse näyttää uuden päivämäärän"
+      },
+      "group": {
+        "failed": "Epäonnistui",
+        "done": "Valmis",
+        "active": "Käynnissä",
+        "pending": "Odottaa"
+      }
+    },
+    "done": {
+      "title": "{count, plural, one {{app} on laitteella {device}.} other {{app} ovat laitteella {device}.}}",
+      "open": "Avaa kukin sovellus Koti-valikosta."
+    },
+    "signAndSave": "{count, plural, one {Allekirjoita ja tallenna # sovellus} other {Allekirjoita ja tallenna # sovellusta}}",
+    "installAndSave": "{install} asennettavaksi · {save} tallennettavaksi allekirjoitettuna .ipa-tiedostona"
+  },
+  "repair": {
+    "title": "Korjaa SideStore",
+    "description": "IPAForge tarkistaa SideStoren laitteella {device} ja korjaa sen, mikä estää sitä uudistamasta sovelluksiasi itse.",
+    "checkAgain": "Tarkista uudelleen",
+    "checking": "Tarkistetaan SideStorea…",
+    "checks": "Tarkistukset",
+    "failed": "SideStorea ei voitu tarkistaa: {reason}",
+    "failedBody": "Tarkista, että laite on yhdistetty ja sen lukitus avattu, ja paina sitten Tarkista uudelleen.",
+    "ok": "OK",
+    "unknown": "Ei tiedossa",
+    "deviceFirst": "Korjaa ensin {device}",
+    "device": {
+      "title": "{device} on valmis",
+      "ok": "Lukitus avattu, luotettu ja kehittäjätila päällä.",
+      "locked": "Se on lukittu. Avaa lukitus ja paina sitten Tarkista uudelleen.",
+      "lockedTag": "Lukittu",
+      "developerMode": "Kehittäjätila on pois päältä, joten SideStore ja sen asentamat sovellukset eivät aukea. iPhonessa: Asetukset › Tietosuoja ja turvallisuus › Kehittäjätila, sitten käynnistä uudelleen.",
+      "developerModeTag": "Kehittäjätila pois päältä"
+    },
+    "installed": {
+      "title": "SideStore on asennettu",
+      "missing": "SideStorea ei ole laitteella {device}.",
+      "missingTag": "Ei asennettu"
+    },
+    "signer": {
+      "title": "Se on allekirjoitettu täällä käyttämälläsi tiimillä",
+      "ok": "Korjaus voi asentaa sen uudelleen tai antaa sille uuden profiilin menettämättä sen tietoja.",
+      "otherTeam": "Toinen tämän Apple ID:n tiimi allekirjoitti sen. Sen asentaminen uudelleen tällä tiimillä lisäisi toisen SideStoren ilman sen tietoja tai sovelluksia.",
+      "otherTeamTag": "Toinen tiimi",
+      "otherAppleId": "Toinen Apple ID allekirjoitti sen. Sen asentaminen uudelleen tällä lisäisi toisen SideStoren ilman sen tietoja tai sovelluksia.",
+      "otherAppleIdTag": "Toinen Apple ID"
+    },
+    "version": {
+      "title": "SideStore on ajan tasalla",
+      "ok": "Versio {version}, uusin.",
+      "outdated": "Versio {version}; {latest} on ulkona. Vanhemmista versioista voi puuttua korjauksia uudistamiseen uusilla iOS-versioilla.",
+      "outdatedTag": "{latest} saatavilla",
+      "unknown": "Versio {version}. Katalogia ei tavoitettu vertailua varten."
+    },
+    "expiry": {
+      "title": "SideStore ei ole vanhentunut",
+      "ok": "{days, plural, one {Vanhenee # päivän päästä.} other {Vanhenee # päivän päästä.}}",
+      "soon": "{days, plural, =0 {Vanhenee tänään.} one {Vanhenee # päivän päästä.} other {Vanhenee # päivän päästä.}} Vanhettuaan SideStore ei voi uudistaa itseään.",
+      "soonTag": "Vanhenee pian",
+      "expired": "{days, plural, one {Vanheni # päivä sitten.} other {Vanheni # päivää sitten.}} Se ei aukea, joten se ei voi uudistaa sovelluksiasi.",
+      "expiredTag": "Vanhentunut",
+      "unknown": "Laite ei näytä sille profiilia."
+    },
+    "signing": {
+      "title": "Sen allekirjoittanut varmenne on voimassa",
+      "ok": "Yhä voimassa Applen päässä.",
+      "revoked": "Se on mitätöity tai vanhentunut. SideStore lakkaa aukeamasta seuraavalla käynnistyksellä.",
+      "revokedTag": "Mitätöity",
+      "unknown": "Toisen työkalun asentama, joten IPAForge ei näe, mikä varmenne sen allekirjoitti. Korjaus voi asentaa sen uudelleen varmuuden vuoksi."
+    },
+    "own": {
+      "title": "SideStore voi allekirjoittaa sovelluksia itse",
+      "ok": "Sillä on voimassa oleva varmenne, jolla uudistaa sovelluksesi.",
+      "missing": "Sillä ei ole varmennetta, joten sen uudistukset pyytävät sinua kirjautumaan tai epäonnistuvat.",
+      "missingTag": "Ei varmennetta",
+      "other": "Sille annettu varmenne ei ole enää voimassa. Se on voinut korvata sen omalla uudemmallaan; jos uudistaminen epäonnistuu SideStoressa, asenna se uudelleen.",
+      "otherTag": "Voi olla korvattu"
+    },
+    "pairing": {
+      "title": "SideStorella on pariliitostiedosto",
+      "ok": "Olemassa, ja tämän tietokoneen pariliitos laitteen {device} kanssa.",
+      "missing": "Puuttuu: SideStore ei voi tavoittaa laitetta sovellusten asentamista tai uudistamista varten.",
+      "missingTag": "Puuttuu",
+      "other": "Se on toisen tietokoneen. Se toimii niin kauan kuin tuo pariliitos pysyy voimassa; luottamuksen nollaaminen laitteella rikkoo sen.",
+      "otherTag": "Toinen tietokone"
+    },
+    "manual": {
+      "title": "iPhonessasi · IPAForge ei voi tarkistaa näitä",
+      "tag": "Tarkista itse",
+      "vpn": {
+        "title": "SideStoren VPN on päällä uudistettaessa",
+        "body": "Avaa LocalDevVPN ja yhdistä se ennen uudistamista SideStoressa."
+      },
+      "anisette": {
+        "title": "SideStore tavoittaa anisette-palvelimensa",
+        "body": "Valitse SideStoressa Asetukset › Anisette toinen palvelin, jos uudistaminen kertoo, ettei se voi kirjautua."
+      }
+    },
+    "plan": {
+      "title": "Korjaus tekee seuraavaa",
+      "reinstall": "Asentaa SideStoren uudelleen",
+      "reinstallBody": "IPAForgen katalogista, allekirjoitettuna voimassa olevalla varmenteella, joka laitetaan myös sen sisään. Sen tiedot ja sovelluksesi säilyvät.",
+      "profile": "Antaa SideStorelle uuden profiilin",
+      "profileBody": "Mitään ei asenneta uudelleen.",
+      "pairing": "Sijoittaa tämän tietokoneen pariliitostiedoston",
+      "pairingBody": "SideStoren Documents-kansioon, korvaten sen, mitä siellä on.",
+      "optional": "Myös, jos haluat",
+      "offerReinstall": "Asenna SideStore uudelleen varmuuden vuoksi",
+      "offerPairing": "Korvaa pariliitostiedosto tämän tietokoneen omalla",
+      "hint": "Yksi ajo. Pidä {device} yhdistettynä ja lukitus avattuna.",
+      "start": "Korjaa SideStore"
+    },
+    "blocked": {
+      "title": "SideStorea ei voi asentaa uudelleen tällä Apple ID:llä",
+      "body": "Toinen tiimi tai Apple ID allekirjoitti sen, joten sen tiedot eivät siirtyisi mukana. Valitse kyseinen Apple ID yläpalkista ja paina sitten Tarkista uudelleen."
+    },
+    "notInstalled": {
+      "title": "SideStorea ei ole laitteella {device}",
+      "body": "Asenna se ensin Asenna-sivulta.",
+      "install": "Asenna SideStore"
+    },
+    "fine": {
+      "title": "SideStore toimii",
+      "body": "Ei mitään korjattavaa. Jos se ei silti voi uudistaa, tarkista alla olevat kaksi asiaa iPhonessasi."
+    },
+    "run": {
+      "title": {
+        "running": "Korjataan SideStorea",
+        "completed": "SideStore on korjattu",
+        "failed": "SideStorea ei voitu korjata"
+      }
+    },
+    "done": {
+      "title": "SideStore laitteella {device} on korjattu.",
+      "open": "Avaa SideStore ja uudista sovelluksesi."
+    },
+    "open": "Tarkista SideStore",
+    "checkingTag": "Tarkistetaan…",
+    "remote": {
+      "title": "Etäpariliitos iOS 17.4:lle ja uudemmille",
+      "ok": "Olemassa, ja {device} hyväksyy sen.",
+      "missing": "Puuttuu: SideStore voi käyttää vain perinteistä pariliitosta. Tämän tietokoneen pariliitostiedoston sijoittaminen lisää sen.",
+      "missingTag": "Puuttuu",
+      "rejected": "{device} ei enää hyväksy sitä (sen luottamus nollattiin). Tämän tietokoneen pariliitostiedoston sijoittaminen tekee uuden.",
+      "rejectedTag": "Ei hyväksytty",
+      "other": "Se on toisen tietokoneen, joten IPAForge ei voi tarkistaa sitä. Tämän tietokoneen pariliitostiedoston sijoittaminen korvaa sen.",
+      "otherTag": "Toinen tietokone",
+      "notNeeded": "Ei tarvita iOS 17.4:ää vanhemmilla.",
+      "notNeededTag": "Ei tarvita"
+    }
+  },
+  "sidestore": {
+    "addSource": "Lisää SideStoreen",
+    "addAll": "Lisää kaikki SideStoreen",
+    "install": "Asenna SideStorella",
+    "sourceTitle": "Lisää {name} SideStoreen",
+    "sourceBody": "SideStore näyttää myös sen sovellukset ja pitää ne ajan tasalla iPhonessa. SideStorekaan ei tarkista lähteen sovelluksia: lisää vain lähteitä, joihin luotat.",
+    "installTitle": "Asenna {name} SideStorella",
+    "installBody": "SideStore lataa sovelluksen {name} {version}, allekirjoittaa sen Apple ID:lläsi ja asentaa sen iPhoneen itse. Ilmaisella Apple ID:llä se lasketaan mukaan 3 sovelluksen rajaan. Se näkyy kohdassa Sovellukset, kun IPAForge on uudistanut sen.",
+    "qrLabel": "Alla olevan linkin QR-koodi",
+    "steps": {
+      "camera": "Avaa laitteen {device} Kamera ja osoita sillä koodia.",
+      "banner": "Avaa SideStore napauttamalla banneria.",
+      "addSource": "SideStore pyytää lisäämään lähteen: napauta Lisää.",
+      "install": "SideStore pyytää asentamaan sovelluksen: napauta Asenna."
+    },
+    "onPhone": "iPhonessa itsessään linkki avaa SideStoren myös (liitettynä Safariin tai lähetettynä Viesteissä).",
+    "copy": "Kopioi",
+    "copied": "Kopioitu",
+    "previous": "Edellinen",
+    "next": "Seuraava",
+    "step": "Lähde {at} / {count}",
+    "back": "Takaisin",
+    "done": "Valmis",
+    "offer": "{count, plural, one {Lisää täällä lisäämäsi lähde myös SideStoreen, jotta se näyttää sen sovellukset iPhonessa.} other {Lisää täällä lisäämäsi # lähdettä myös SideStoreen, jotta se näyttää niiden sovellukset iPhonessa.}}"
+  },
+  "checklist": {
+    "title": "Laitteella {device} · iOS {ios}",
+    "setUp": "{device} on määritetty · iOS {ios}",
+    "show": "Näytä tarkistuslista",
+    "hide": "Piilota",
+    "allSet": "Kaikki valmista",
+    "progress": "{left, plural, one {# tehtävä} other {# tehtävää}} · {done} / {total} tehty",
+    "group": {
+      "before": "Ennen asennusta",
+      "after": "Asennuksen jälkeen",
+      "sidestore": "SideStorea varten"
+    },
+    "onPhone": "iPhonessa",
+    "tickedTag": "Tehty iPhonessa",
+    "tick": "Tein tämän",
+    "notNeeded": "Ei tarvita tällä iOS:llä",
+    "cable": {
+      "title": "Yhdistä {device} tähän tietokoneeseen",
+      "connected": "Yhdistetty",
+      "none": "Ei yhdistetty",
+      "how": "Käytä kaapelia ensimmäisellä kerralla; sen jälkeen Wi-Fi toimii, kun molemmat ovat samassa verkossa."
+    },
+    "unlock": {
+      "title": "Avaa sen lukitus",
+      "locked": "Lukittu",
+      "unlocked": "Lukitus avattu",
+      "how": "Pidä lukitus avattuna, kun IPAForge asentaa."
+    },
+    "trust": {
+      "title": "Luota tähän tietokoneeseen",
+      "trusted": "Luotettu",
+      "notYet": "Ei vielä",
+      "step1": "Avaa laitteen {device} lukitus.",
+      "step2": "Napauta Luota, kun se kysyy tästä tietokoneesta.",
+      "step3": "Syötä sen pääsykoodi.",
+      "again": "Kysy uudelleen"
+    },
+    "passcode": {
+      "title": "Aseta pääsykoodi",
+      "how": "SideStore uudistaa Wi-Fillä, minkä iOS sallii vain pääsykoodin kanssa: Asetukset › Face ID ja pääsykoodi."
+    },
+    "devmode": {
+      "title": "Kytke kehittäjätila päälle",
+      "on": "Päällä",
+      "off": "Pois",
+      "step1": "Asetukset › Tietosuoja ja turvallisuus › Kehittäjätila (jos sitä ei ole, paina Näytä asetus).",
+      "step2": "Kytke se päälle ja käynnistä {device} uudelleen.",
+      "step3": "Napauta uudelleenkäynnistyksen jälkeen Kytke päälle ja syötä pääsykoodi.",
+      "reveal": "Näytä asetus",
+      "revealed": "Se on nyt kohdassa Asetukset › Tietosuoja ja turvallisuus."
+    },
+    "developer": {
+      "title": "Luota Apple ID:hesi kehittäjänä",
+      "later": "Ensimmäisen asennuksen jälkeen",
+      "step1": "Asetukset › Yleiset › VPN ja laitehallinta.",
+      "step2": "Napauta kohdassa Kehittäjäsovellus tiliä {appleId}.",
+      "step3": "Napauta Luota. iPhone tarvitsee tähän internetin."
+    },
+    "vpn": {
+      "title": "Asenna LocalDevVPN",
+      "installed": "Asennettu",
+      "notInstalled": "Ei asennettu",
+      "how": "SideStore keskustelee iPhonen kanssa tämän paikallisen VPN:n kautta; mikään ei poistu puhelimesta. Se on ilmainen App Storessa.",
+      "qrLabel": "LocalDevVPN:n App Store -sivun QR-koodi",
+      "scan": "Skannaa Kameralla tai hae App Storesta \"LocalDevVPN\"."
+    },
+    "vpnOn": {
+      "title": "Yhdistä LocalDevVPN, kun SideStore uudistaa",
+      "tag": "Joka kerta",
+      "later": "Sen asentamisen jälkeen",
+      "how": "Avaa LocalDevVPN ja napauta Yhdistä tai anna SideStoren kytkeä se päälle: se kysyy ensimmäisellä kerralla."
+    },
+    "repair": {
+      "title": "SideStore voi uudistaa itse",
+      "tag": "Tarkistetaan Korjauksessa",
+      "how": "Sen varmenne, pariliitostiedosto ja vanheneminen."
+    },
+    "notice": "{count, plural, one {# tehtävä laitteella {device}} other {# tehtävää laitteella {device}}}",
+    "noticeBody": "Jotta asennus ja uudistaminen sujuvat.",
+    "showChecklist": "Näytä tarkistuslista"
+  },
+  "updates": {
+    "screen": {
+      "label": "Päivitetään IPAForgea"
+    },
+    "checking": {
+      "title": "Tarkistetaan päivityksiä…"
+    },
+    "downloading": {
+      "title": "Päivitetään IPAForgea",
+      "body": "Versio {version} on ulkona. Se ladataan ja asennetaan nyt, sitten IPAForge avautuu uudelleen itsestään.",
+      "starting": "Aloitetaan lataus…",
+      "percent": "{fraction, number, percent}"
+    },
+    "installing": {
+      "title": "Asennetaan versiota {version}…",
+      "body": "IPAForge avautuu uudelleen hetken kuluttua."
+    },
+    "failed": {
+      "title": "Päivitys ei valmistunut",
+      "body": "Versio {version} on ulkona. Yritä uudelleen tai lataa se julkaisusivulta.",
+      "retry": "Yritä uudelleen",
+      "releasePage": "Julkaisusivu",
+      "skip": "Käytä tätä versiota toistaiseksi"
+    },
+    "manual": {
+      "title": "IPAForge {version} on ulkona",
+      "body": "Tämä kopio asennettiin {package, select, msi {.msi-asennusohjelmasta} deb {.deb-paketista} rpm {.rpm-paketista} other {paketista}}, joka ei voi päivittää itseään. Lataa uusi versio ja asenna se tämän päälle: Apple ID:si, sovelluksesi ja asetuksesi säilyvät.",
+      "download": "Lataa {version}",
+      "later": "Myöhemmin"
+    },
+    "nativeBuild": {
+      "title": "Tämä on Intel-versio",
+      "body": "Macissasi on Apple-piiri, joten tämä IPAForgen kopio toimii Rosetta-käännöksen kautta ja kaikki on hitaampaa. Lataa Apple-piirin versio ja asenna se tämän päälle; Apple ID:si, laitteesi ja sovelluksesi säilyvät.",
+      "file": "IPAForge-…-mac-arm64.dmg",
+      "later": "Myöhemmin",
+      "download": "Lataa Apple-piirille"
+    }
+  },
+  "whatsNew": {
+    "link": "Mitä uutta",
+    "version": "Versio {version} · {date}",
+    "englishOnly": "Julkaisutiedot ovat englanniksi.",
+    "kind": {
+      "new": "Uutta",
+      "changed": "Muutettu",
+      "fixed": "Korjattu",
+      "removed": "Poistettu"
+    },
+    "dialog": {
+      "title": "Mitä uutta IPAForgessa",
+      "everyVersion": "Kaikki versiot",
+      "close": "Selvä"
+    },
+    "page": {
+      "title": "Mitä uutta",
+      "lede": "Kaikki IPAForgessa muuttunut, uusin ensin.",
+      "current": "Tämä versio",
+      "release": "Julkaisu GitHubissa"
+    }
+  },
+  "portal": {
+    "description": "Mitä Apple ID:si tiimillä on Applella ja laitteesi profiilit.",
+    "tabsLabel": "Mitä tiimillä on",
+    "tabs": {
+      "certificates": "Varmenteet",
+      "appIds": "App ID:t",
+      "profiles": "Profiilit",
+      "groups": "Sovellusryhmät",
+      "devices": "Rekisteröidyt laitteet"
+    },
+    "team": {
+      "pick": "Tiimi",
+      "free": "{name} (ilmainen)",
+      "paid": "{name} (maksullinen)"
+    },
+    "refresh": "Päivitä",
+    "reading": "Luetaan Applelta…",
+    "noAccount": {
+      "title": "Ei vielä Apple ID:tä",
+      "body": "Kirjaudu Apple ID:llä kohdassa Tilit nähdäksesi, mitä sen tiimillä on."
+    },
+    "expired": "Vanhentunut",
+    "expires": "Vanhenee {date}",
+    "expiredOn": "Vanheni {date}",
+    "certificates": {
+      "hint": "Varmenne allekirjoittaa asentamasi sovellukset. Varmenteen mitätöiminen estää kaikkia sillä allekirjoitettuja sovelluksia aukeamasta, kunnes ne allekirjoitetaan uudelleen.",
+      "usedFree": "{count} / {max} käytössä (ilmaisilla tiimeillä voi olla {max})",
+      "usedPaid": "{count, plural, one {# varmenne} other {# varmennetta}}",
+      "maker": {
+        "thisComputer": "IPAForge tällä tietokoneella",
+        "ipaforge": "IPAForge toisella tietokoneella",
+        "sidestore": "SideStore",
+        "machine": "“{machine}” (yleensä Xcode)",
+        "unknown": "Tuntematon työkalu"
+      },
+      "thisComputer": "Tämän tietokoneen",
+      "signs": "Allekirjoittaa: {apps} laitteella {device}",
+      "signsNothing": "Ei allekirjoita mitään laitteella {device}",
+      "revoke": "Mitätöi",
+      "revokeOne": "Mitätöi {name}",
+      "empty": "Tiimillä ei ole vielä varmenteita. IPAForge tekee yhden ensimmäisellä asennuksella.",
+      "import": "Tuo .p12…",
+      "export": "Vie .p12"
+    },
+    "revokeDialog": {
+      "title": "Mitätöidäänkö tämä varmenne?",
+      "apps": "Nämä lakkaavat aukeamasta laitteella {device}, kunnes ne allekirjoitetaan uudelleen (Uudista kohdassa Sovellukset tekee sen):",
+      "none": "Mikään laitteella {device} ei ole allekirjoitettu sillä.",
+      "noDevice": "Yhdistä laitteesi nähdäksesi, mitkä sen sovellukset tämä varmenne allekirjoittaa.",
+      "thisComputer": "IPAForge tekee uuden seuraavalla asennuksella tai uudistuksella.",
+      "sidestore": "SideStore teki sen uudistaakseen itse: se tekee uuden, kun kirjaudut siellä seuraavan kerran.",
+      "machine": "Xcode kyseisellä tietokoneella tekee uuden, kun se seuraavan kerran allekirjoittaa.",
+      "exportedToo": "Siitä viety .p12 lakkaa myös toimimasta."
+    },
+    "appIds": {
+      "hintFree": "Jokainen asentamasi sovellus ja laajennus tarvitsee yhden. Ilmaiset tiimit voivat rekisteröidä 10 seitsemässä päivässä; kukin lasketaan 7 päivää luomisensa jälkeen.",
+      "hintPaid": "Jokainen asentamasi sovellus ja laajennus tarvitsee yhden. Maksullisilla tiimeillä ei ole viikkorajaa.",
+      "left": "{count, plural, one {# jäljellä tällä viikolla} other {# jäljellä tällä viikolla}}",
+      "leftAndNext": "{left} · seuraava vapautuu {date}",
+      "countsUntil": "Lasketaan {date} asti",
+      "unused": "Käyttämätön",
+      "delete": "Poista",
+      "deleteOne": "Poista {name}",
+      "empty": "Tiimillä ei ole vielä App ID:itä."
+    },
+    "deleteDialog": {
+      "title": "Poistetaanko tämä App ID?",
+      "free": "Ilmaisella tiimillä se lasketaan yhä viikon 10:n rajaan, kunnes se vanhenee: poistaminen ei vapauta paikkaa nopeammin.",
+      "paid": "Se voidaan rekisteröidä myöhemmin uudelleen."
+    },
+    "profiles": {
+      "title": "Provisiointiprofiilit laitteella {device}",
+      "hint": "Profiili antaa yhden sovelluksen (tai laajennuksen) toimia tällä laitteella. Uudista antaa sovellukselle uuden; vanhentuneen tai käyttämättömän voi turvallisesti poistaa.",
+      "noDevice": "Yhdistä laitteesi nähdäksesi sen provisiointiprofiilit.",
+      "noApp": "Mikään sovellus ei käytä sitä",
+      "otherTeam": "Toinen tiimi",
+      "remove": "Poista",
+      "removeOne": "Poista sovelluksen {name} profiili",
+      "removeUnused": "Poista käyttämättömät",
+      "empty": "Tällä laitteella ei ole provisiointiprofiileja."
+    },
+    "removeDialog": {
+      "title": "{count, plural, one {Poistetaanko tämä profiili?} other {Poistetaanko # profiilia?}}",
+      "body": "{count, plural, one {Se poistetaan laitteelta {device}. Mikään siellä oleva sovellus ei tarvitse sitä.} other {Ne poistetaan laitteelta {device}. Mikään siellä oleva sovellus ei tarvitse niitä.}}"
+    },
+    "groups": {
+      "hint": "Samassa ryhmässä olevat sovellukset jakavat tiedostoja (esimerkiksi SideStore ja sen widget). IPAForge tekee ryhmät, kun sovellus tarvitsee sellaisen.",
+      "empty": "Tiimillä ei ole vielä sovellusryhmiä."
+    },
+    "devices": {
+      "hintFree": "Allekirjoittamasi sovellukset toimivat vain näillä.",
+      "hintPaid": "Allekirjoittamasi sovellukset toimivat vain näillä. Maksulliset tiimit voivat rekisteröidä 100 vuodessa; poistaminen tehdään Applen kehittäjäsivustolla, kerran vuodessa.",
+      "used": "{count} / {max} tänä vuonna",
+      "connected": "Yhdistetty",
+      "unnamed": "Nimeämätön laite",
+      "empty": "Laitteita ei ole vielä rekisteröity. IPAForge rekisteröi omasi ensimmäisellä asennuksella."
+    },
+    "exportDialog": {
+      "title": "Vie tämän tietokoneen varmenne",
+      "body": "Varmennetta ja sen yksityistä avainta sisältävä .p12-tiedosto SideStorea tai toista tietokonetta varten. Jokainen, jolla on tiedosto ja sen salasana, voi allekirjoittaa sovelluksia tiimisi nimissä.",
+      "password": "Salasana",
+      "again": "Salasana uudelleen",
+      "tooShort": "{count, plural, one {Käytä vähintään # merkkiä.} other {Käytä vähintään # merkkiä.}}",
+      "differ": "Salasanat eroavat toisistaan.",
+      "save": "Tallenna .p12…"
+    },
+    "importDialog": {
+      "title": "Tuo varmenne",
+      "body": "Toiselta tietokoneelta tai SideStoresta peräisin oleva .p12. IPAForge tarkistaa, että Apple yhä listaa sen tälle tiimille, ja allekirjoittaa sitten sillä täällä: ei uutta varmennetta, ei käytettyä paikkaa.",
+      "noFile": "Tiedostoa ei valittu",
+      "choose": "Valitse…",
+      "password": "Sen salasana",
+      "import": "Tuo"
+    }
+  },
+  "guide": {
+    "title": "Käyttöönotto-opas",
+    "stepsLabel": "Käyttöönoton vaiheet",
+    "stepDone": "(valmis)",
+    "steps": {
+      "welcome": "Tervetuloa",
+      "computer": "Tämä tietokone",
+      "iphone": "iPhonesi",
+      "appleid": "Apple ID",
+      "install": "Asenna SideStore",
+      "onphone": "iPhonessasi",
+      "around": "Kaikki on valmista"
+    },
+    "back": "Takaisin",
+    "skip": "Ohita tämä vaihe",
+    "continue": "Jatka",
+    "later": "Lopeta myöhemmin",
+    "checkAgain": "Tarkista uudelleen",
+    "checking": "Tarkistetaan…",
+    "copy": "Kopioi",
+    "copied": "Kopioitu",
+    "welcome": {
+      "title": "Tervetuloa IPAForgeen",
+      "lead": "Muutamalla vaiheella tietokoneesi, iPhonesi ja Apple ID:si saadaan valmiiksi, ja sitten voit asentaa SideStoren. Valitse ensin kielesi.",
+      "needTitle": "Mitä tarvitset",
+      "needDevice": "iPhone tai iPad, jossa on iOS 15 tai uudempi, ja sen USB-kaapeli",
+      "needAppleId": "Apple ID (ilmainenkin käy)",
+      "needPasscode": "iPhonesi pääsykoodi, jotta voit luottaa tähän tietokoneeseen",
+      "skipGuide": "Tunnen jo sovelluksen",
+      "start": "Aloita"
+    },
+    "computer": {
+      "title": "Tämä tietokone",
+      "lead": "IPAForge tarkistaa, että tämä tietokone voi kirjautua Appleen: Applen palvelimet, kello ja anisette-palvelin. Jos se ei voi keskustella iPhonien kanssa, se kertoo myös, miten sen voi korjata.",
+      "failed": "Tarkistuksia ei suoritettu. Tarkista uudelleen tai ohita tämä vaihe.",
+      "service": {
+        "title": "iPhone-yhteyspalvelu",
+        "fixMac": "macOS:n pitäisi ajaa se itse. Käynnistä Mac uudelleen ja tarkista sitten uudelleen.",
+        "fixWindows": "Asenna Apple Devices Microsoft Storesta, avaa se kerran ja tarkista sitten uudelleen.",
+        "fixLinux": "Asenna usbmuxd, yhdistä iPhonesi ja tarkista sitten uudelleen.",
+        "openStore": "Avaa Microsoft Store"
+      },
+      "apple": {
+        "title": "Applen palvelimet",
+        "ok": "Tavoitettavissa.",
+        "fix": "IPAForge ei tavoita Appleä. Tarkista internetyhteytesi, VPN tai palomuuri."
+      },
+      "clock": {
+        "title": "Kello",
+        "ok": "Oikein.",
+        "fix": "{minutes, plural, one {Kellosi on # minuutin pielessä.} other {Kellosi on # minuuttia pielessä.}} Aseta päivämäärä ja aika automaattisesti ja tarkista sitten uudelleen."
+      },
+      "anisette": {
+        "title": "Anisette-palvelimet",
+        "ok": "{name} vastaa. Kirjautuminen käyttää sitä.",
+        "fix": "Mikään listasi {tried} ensimmäisestä palvelimesta ei vastannut. Tarkista yhteytesi tai lisää tai valitse palvelin kohdassa Asetukset › Anisette-palvelimet."
+      }
+    },
+    "iphone": {
+      "title": "iPhonesi",
+      "lead": "Yhdistä iPhonesi kaapelilla, avaa sen lukitus ja napauta Luota, kun se kysyy. iOS 16:ssa ja uudemmissa kehittäjätilan täytyy olla päällä.",
+      "connectTitle": "Yhdistä iPhonesi",
+      "connectText": "Odotetaan iPhonea tai iPadia USB:n kautta…"
+    },
+    "appleid": {
+      "title": "Apple ID:si",
+      "lead": "Apple allekirjoittaa asentamasi sovellukset Apple ID:lläsi. Salasanasi menee vain Applelle ja pysyy tämän tietokoneen avainnipussa.",
+      "freeNote": "Ilmainen Apple ID käy: sen sovellukset kestävät 7 päivää ja IPAForge voi uudistaa ne. Maksullinen kehittäjätili kestää vuoden.",
+      "signIn": "Kirjaudu Apple ID:llä",
+      "signedIn": "Kirjauduttu.",
+      "team": "Sovellukset allekirjoittava tiimi",
+      "free": "Ilmainen: sovellukset kestävät 7 päivää",
+      "paid": "Maksullinen: sovellukset kestävät vuoden"
+    },
+    "banner": {
+      "label": "Käyttöönotto-opas",
+      "text": "Viimeistele IPAForgen käyttöönotto: {done} / {total} vaihetta tehty.",
+      "continue": "Jatka opasta",
+      "notNow": "Ei nyt"
+    },
+    "install": {
+      "title": "Asenna SideStore",
+      "lead": "SideStore uudistaa sovelluksesi iPhonessa itse ja asentaa lisää. IPAForge antaa sille tarvitsemansa pariliitostiedoston ja varmenteen.",
+      "notNow": "Ei nyt"
+    },
+    "onphone": {
+      "title": "iPhonessasi",
+      "lead": "Mitä vain sinä voit tehdä iPhonessa. Merkitse kukin tehdyksi sitä mukaa; Laitteet-sivu pitää saman listan."
+    },
+    "around": {
+      "title": "Kaikki on valmista",
+      "lead": "Tässä on kaikki paikat. Kun IPAForge on auki, se uudistaa sovelluksesi ennen niiden vanhenemista.",
+      "again": "Suorita tämä opas uudelleen milloin tahansa Asetuksista.",
+      "showMe": "Näytä ympäristö",
+      "apps": {
+        "title": "Sovellukset",
+        "text": "Milloin kukin sovellus vanhenee, sekä Uudista ja Päivitä. Pariliitostiedostot ovat täällä myös.",
+        "where": "Sivupalkki › Sovellukset"
+      },
+      "preload": {
+        "title": "Esilataa",
+        "text": "Lisää omia sovelluksiasi: .ipa-tiedostoja, linkkejä, lähteitä. Tai tallenna ne allekirjoitettuina .ipa-tiedostoina.",
+        "where": "Sivupalkki › Esilataa"
+      },
+      "repair": {
+        "title": "Korjaa SideStore",
+        "text": "Jos SideStore lakkaa uudistamasta itseään, tämä selvittää syyn ja korjaa sen.",
+        "where": "Sovellukset › Tarkista SideStore"
+      },
+      "developer": {
+        "title": "Kehittäjäportaali",
+        "text": "Varmenteesi, App ID:t ja profiilit sekä .p12 varmenteen siirtämiseen.",
+        "where": "Sivupalkki › Kehittäjäportaali"
+      },
+      "devices": {
+        "title": "Laitteet",
+        "text": "Kunkin iPhonen tarkistuslista ja sen pariliitostiedosto muita työkaluja varten.",
+        "where": "Sivupalkki › Laitteet"
+      },
+      "logs": {
+        "title": "Lokit",
+        "text": "Mitä tapahtui, vaihe vaiheelta. Liitä ne virheilmoitukseen.",
+        "where": "Sivupalkki › Lokit · ⌘L / Ctrl+L"
+      }
+    }
+  },
+  "tour": {
+    "count": "{current} / {total}",
+    "skip": "Ohita esittely",
+    "back": "Takaisin",
+    "next": "Seuraava",
+    "done": "Valmis",
+    "install": {
+      "title": "Asenna",
+      "text": "Asenna SideStore tai LiveContainer SideStorella yhdellä napsautuksella. Aloita tästä uudella iPhonella."
+    },
+    "preload": {
+      "title": "Esilataa",
+      "text": "Lisää omia sovelluksiasi: .ipa-tiedostoja, linkkejä tai sovelluksia lähteistä. Merkitse yksi tallennettavaksi sen sijaan allekirjoitettuna .ipa-tiedostona."
+    },
+    "apps": {
+      "title": "Sovellukset",
+      "text": "Milloin kukin sovellus vanhenee, sekä Uudista ja Päivitä. IPAForge uudistaa ne itse, kun se on auki. Pariliitostiedostot ovat täällä myös."
+    },
+    "devices": {
+      "title": "Laitteet",
+      "text": "Kunkin iPhonen tarkistuslista sen iOS-versiolle ja sen pariliitostiedosto muita työkaluja varten."
+    },
+    "developer": {
+      "title": "Kehittäjäportaali",
+      "text": "Apple ID:si varmenteet, App ID:t ja profiilit. Siivoa, mitä mikään ei käytä, tai siirrä varmenteesi .p12-tiedostona."
+    },
+    "pickers": {
+      "title": "Laite ja Apple ID",
+      "text": "Vaihda IPAForgen täällä käyttämää iPhonea tai Apple ID:tä milloin tahansa."
+    },
+    "logs": {
+      "title": "Lokit",
+      "text": "Jokainen IPAForgen ottama askel. Liitä ne virheilmoitukseen (⌘L / Ctrl+L)."
+    },
+    "settings": {
+      "title": "Asetukset",
+      "text": "Kieli, ulkoasu, anisette-palvelimet ja tämä esittely uudelleen."
+    },
+    "showAround": {
+      "title": "Näytä ympäristö",
+      "text": "Käy tämä esittely uudelleen täältä milloin tahansa. Käyttöönotto-opas on Asetuksissa."
+    }
+  },
+  "pairByCode": {
+    "steps": {
+      "pair": "Muodosta pari koodilla"
+    },
+    "open": "Muodosta pari Apple TV:n tai Vision Pron kanssa…",
+    "title": "Muodosta pari Apple TV:n tai Vision Pron kanssa",
+    "titleAgain": "Muodosta pari laitteen {name} kanssa uudelleen",
+    "progress": {
+      "label": "Vaiheet",
+      "find": "1 Etsi",
+      "code": "2 Koodi"
+    },
+    "intro": "Niissä ei ole kaapelia, joten pari muodostetaan Wi-Fillä koodilla. Laita laite samaan Wi-Fiin kuin tämä tietokone, avaa sitten sen pariliitosnäyttö ja pidä se auki:",
+    "where": {
+      "tv": "Apple TV",
+      "vision": "Apple Vision Pro",
+      "tvPath": "Asetukset → Kaukosäätimet ja laitteet → Remote-sovellus ja laitteet",
+      "visionPath": "Asetukset → Yleiset → Etälaitteet"
+    },
+    "found": "Löytyi verkostasi",
+    "showing": "Näyttää pariliitosnäyttönsä",
+    "pair": "Muodosta pari",
+    "searching": "Etsitään verkostasi… Laite ilmestyy tähän, kun sen pariliitosnäyttö on auki.",
+    "searchingMore": "Etsitään vielä muita…",
+    "help": {
+      "title": "Se ei ilmesty",
+      "screen": "Pidä pariliitosnäyttö auki: laite löytyy vain, kun se näkyy.",
+      "network": "Sama Wi-Fi kuin tällä tietokoneella: ei vierasverkko eikä VPN kummallakaan puolella.",
+      "ipv6": "IPv6 on kytketty päälle reitittimessä (Apple tarvitsee sitä pariliitokseen).",
+      "macos": "macOS: Järjestelmäasetukset → Tietosuoja ja turvallisuus → Paikallisverkko → IPAForge päällä.",
+      "windows": "Windows: salli IPAForge yksityisissä verkoissa, kun palomuuri kysyy."
+    },
+    "failed": "Verkon etsintä pysähtyi. Sulje tämä ja avaa se uudelleen.",
+    "code": {
+      "title": "Syötä koodi laitteella {name}",
+      "body": "{name} näyttää koodin. Kirjoita se tähän.",
+      "label": "Koodi",
+      "wrong": "Koodi ei täsmännyt. Tarkista koodi laitteelta {name} ja yritä uudelleen.",
+      "pairing": "Muodostetaan paria laitteen {name} kanssa…",
+      "checking": "Tarkistetaan koodia…"
+    },
+    "back": "Takaisin",
+    "backToList": "Takaisin listaan",
+    "backoff": {
+      "title": "Liian monta väärää koodia",
+      "wait": "{name} antaa yrittää uudelleen {seconds, plural, one {# sekunnin} other {# sekunnin}} kuluttua.",
+      "later": "{name} ei ota hetkeen enempää koodeja. Odota hetki ja yritä uudelleen."
+    },
+    "closed": {
+      "title": "{name} sulki pariliitosnäyttönsä",
+      "body": "Koodi toimii vain, kun pariliitosnäyttö on auki. Avaa se uudelleen laitteella {name}:"
+    },
+    "done": {
+      "title": "{name} on pariliitetty",
+      "body": "{name} on Laitteet-sivullasi. Voit nyt sulkea sen pariliitosnäytön.",
+      "vision": "Sovellukset asentuvat, kun kehittäjätila on päällä.",
+      "use": "Käytä {name}",
+      "close": "Sulje"
+    },
+    "pairNamed": "Muodosta pari: {name}"
+  }
+}
