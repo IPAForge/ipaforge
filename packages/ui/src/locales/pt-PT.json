@@ -1,0 +1,2216 @@
+{
+  "app": {
+    "name": "IPAForge"
+  },
+  "shell": {
+    "skipToContent": "Saltar para o conteúdo",
+    "navigation": "Secções",
+    "credit": {
+      "madeWith": "Feito com ❤️ e ☕",
+      "copyright": "© {year} {name}"
+    }
+  },
+  "topBar": {
+    "device": "Dispositivo",
+    "noDevice": "Nenhum",
+    "deviceMenu": "Dispositivos",
+    "account": "Apple ID",
+    "notSignedIn": "Sessão não iniciada",
+    "accountMenu": "Apple IDs",
+    "addAppleId": "Adicionar Apple ID…",
+    "noAccounts": "Ainda não há Apple IDs.",
+    "noDevicesHint": "Liga um iPhone ou iPad com um cabo e desbloqueia-o.",
+    "openDevices": "Abrir Dispositivos",
+    "tour": "Mostra-me a app",
+    "pairByCode": "Emparelhar Apple TV ou Vision Pro…"
+  },
+  "nav": {
+    "group": {
+      "manage": "Gerir"
+    },
+    "install": "Instalar",
+    "preload": "Pré-carregar",
+    "apps": "Apps",
+    "devices": "Dispositivos",
+    "accounts": "Contas",
+    "developer": "Portal do Programador",
+    "logs": "Registos",
+    "settings": "Definições",
+    "installRunning": "Está a decorrer uma instalação"
+  },
+  "placeholder": {
+    "body": "Esta secção está em construção."
+  },
+  "install": {
+    "title": "Instalar o SideStore",
+    "description": "Assinado com o teu Apple ID e depois instalado por USB.",
+    "steps": {
+      "device": "Verificar o dispositivo",
+      "resolve": "Encontrar a versão",
+      "download": "Transferir",
+      "inspect": "Inspecionar a app",
+      "certificate_sharing": "Partilhar o certificado",
+      "sign_in": "Iniciar sessão na Apple",
+      "team": "Escolher a equipa",
+      "register_device": "Registar o dispositivo",
+      "certificate": "Preparar o certificado",
+      "app_ids": "Registar App IDs",
+      "free_apps": "Verificar o limite de apps gratuitas",
+      "provision": "Obter perfis de aprovisionamento",
+      "refresh_profiles": "Obter novos perfis",
+      "sign": "Assinar a app",
+      "install": "Instalar no dispositivo",
+      "pairing": "Colocar o ficheiro de emparelhamento",
+      "remember": "Memorizar esta instalação",
+      "save": "Guardar o .ipa assinado"
+    },
+    "signInNeeded": {
+      "title": "O teu Apple ID precisa que inicies sessão novamente",
+      "body": "A sessão guardada para {appleId} expirou. Ainda podes instalar: o IPAForge pede a palavra-passe quando chegar a essa altura."
+    },
+    "blocked": {
+      "title": "A Apple bloqueou {appleId} em {device}",
+      "body": "As apps assinadas com este Apple ID não abrem neste dispositivo. Usa outro Apple ID.",
+      "use": "Usar {appleId}"
+    },
+    "home": {
+      "what": "O que instalar",
+      "channel": "Canal",
+      "install": "Instalar {app}"
+    },
+    "variant": {
+      "sidestore": {
+        "title": "SideStore",
+        "description": "Renova e instala apps no próprio dispositivo. Usa 2 App IDs."
+      },
+      "livecontainer": {
+        "title": "LiveContainer + SideStore",
+        "description": "Executa muitas apps dentro de uma só, para além do limite de 3 apps. Usa 5 App IDs."
+      }
+    },
+    "channel": {
+      "stable": "Estável",
+      "nightly": "Nightly",
+      "stableRecommended": "Estável (recomendado)",
+      "nightlyRecommended": "Nightly (recomendado)"
+    },
+    "plan": {
+      "title": "Esta instalação",
+      "waiting": "Aparece quando o dispositivo e o Apple ID estiverem prontos.",
+      "checking": "A transferir {app} e a verificar com a Apple… A transferência é guardada, por isso a instalação reutiliza-a.",
+      "unavailable": "Não foi possível verificar com a Apple. Ainda podes instalar: cada passo volta a verificar.",
+      "appIds": "App IDs",
+      "appIdsValue": "{created, plural, =0 {Todos os {reused} já registados} other {{reused, plural, =0 {{created} novos} other {{created} novos, {reused} reutilizados}}}} · {left, plural, one {Resta # esta semana} other {Restam # esta semana}}",
+      "nextSlot": "O próximo fica livre em {date}",
+      "freeApps": "Apps gratuitas no dispositivo",
+      "freeAppsValue": "{used} de {limit} em uso",
+      "freeAppsRoom": "Há espaço para esta",
+      "freeAppsFull": "Vais escolher uma para remover",
+      "noLimit": "Sem limite (equipa paga)",
+      "certificate": "Certificado",
+      "certificateReused": "Reutilizado",
+      "certificateNew": "É criado um novo",
+      "certificatesOnTeam": "{count, plural, =0 {Nenhum na equipa ainda} one {# na equipa} other {# na equipa}}",
+      "team": "Equipa",
+      "certificateNewWhy": "O IPAForge ainda não tem um certificado próprio nesta equipa. {count, plural, =0 {} one {O que já lá está pertence a outra ferramenta, que guarda a respetiva chave privada.} other {Os # que já lá estão pertencem a outras ferramentas, que guardam as respetivas chaves privadas.}}"
+    },
+    "readiness": {
+      "noDevice": "Liga primeiro um dispositivo.",
+      "noSideStore": "O SideStore funciona em iPhone e iPad. Usa Pré-carregar para instalar apps numa Apple TV ou Vision Pro.",
+      "checking": "A verificar o dispositivo…",
+      "device": "Disponível quando o dispositivo estiver pronto.",
+      "noAccount": "Adiciona primeiro um Apple ID.",
+      "blocked": "Usa primeiro outro Apple ID.",
+      "appIds": "Já não restam App IDs suficientes esta semana.",
+      "ready": "Está tudo pronto."
+    },
+    "run": {
+      "title": {
+        "running": "A instalar {app}",
+        "completed": "{app} está instalado",
+        "failed": "Não foi possível instalar {app}",
+        "cancelled": "Instalação cancelada"
+      },
+      "subtitle": "{channel} · {device} · {appleId}",
+      "percent": "{fraction, number, percent}",
+      "progress": "Progresso geral",
+      "steps": "Passos",
+      "cancel": "Cancelar",
+      "cancelInstall": "Cancelar instalação",
+      "runningHint": "Podes usar outras secções enquanto isto decorre.",
+      "waitingHint": "À espera da tua resposta.",
+      "stepState": {
+        "waiting": "precisa de ti",
+        "skipped": "ignorado",
+        "failed": "falhou"
+      },
+      "detail": {
+        "bytes": "{received} de {total}",
+        "received": "{received}",
+        "retrying": "A ligação caiu. A tentar novamente dentro de {seconds, plural, one {# segundo} other {# segundos}} (tentativa {attempt})"
+      },
+      "live": {
+        "header": "{percent} · {left}",
+        "installing": "{fraction, number, percent} · {phase}",
+        "count": "{done} de {total}",
+        "task": {
+          "line": "{task} · {count}",
+          "team": "A verificar a equipa",
+          "appIds": "A criar App IDs",
+          "appGroup": "A adicionar o grupo de apps",
+          "profiles": "A obter perfis"
+        },
+        "phase": {
+          "unpacking": "A descompactar a app",
+          "checking": "A verificar a app",
+          "installing": "A instalar"
+        },
+        "speed": "{speed}/s",
+        "ios": "O iOS está a instalá-la",
+        "leftSeconds": "Faltam cerca de {seconds} s",
+        "leftMinutes": "{minutes, plural, one {Falta cerca de # min} other {Faltam cerca de # min}}"
+      },
+      "connection": {
+        "usb": "USB",
+        "network": "Wi-Fi"
+      },
+      "wifi": {
+        "title": "Este dispositivo está ligado por Wi-Fi",
+        "body": "As apps grandes instalam-se muito mais depressa com um cabo. Por Wi-Fi, o IPAForge envia-as comprimidas para poupar tempo."
+      },
+      "unsupportedPrompt": {
+        "title": "Este passo precisa de uma resposta",
+        "body": "O IPAForge precisa de uma resposta a uma pergunta que esta versão não consegue mostrar. Cancela a instalação e atualiza o IPAForge."
+      },
+      "backToInstall": "Voltar a Instalar",
+      "report": {
+        "device": "{model} · iOS {ios} · {connection}",
+        "release": "{app} {version} · {channel}",
+        "download": "{size} · soma de verificação confirmada",
+        "downloadCached": "{size} · da cache de transferências",
+        "app": "{app} · {extensions, plural, =0 {sem extensões} one {# extensão} other {# extensões}}",
+        "session": {
+          "reused": "Sessão guardada reutilizada",
+          "renewed": "Sessão iniciada novamente com a palavra-passe guardada",
+          "signed-in": "Sessão iniciada"
+        },
+        "registered": "Registado na equipa",
+        "alreadyRegistered": "Já registado na equipa",
+        "certificate": {
+          "reused": "Reutilizado o certificado guardado",
+          "created": "Criado um novo certificado",
+          "replaced": "Revogado um certificado e criado um novo"
+        },
+        "removed": "Removido {app} · {used}",
+        "profiles": "{count, plural, one {# perfil} other {# perfis}}",
+        "signed": "{count, plural, one {# pacote assinado} other {# pacotes assinados}}",
+        "signedCompressed": "{count, plural, one {# pacote assinado} other {# pacotes assinados}} · comprimido para Wi-Fi",
+        "phase": {
+          "uploading": "A enviar para o dispositivo",
+          "installing": "A instalar"
+        },
+        "pairing": "Colocado em {apps}",
+        "shared": "Certificado partilhado",
+        "notShared": "Certificado não partilhado",
+        "pairingRemote": "Colocado em {apps} · com emparelhamento remoto para iOS 17.4 e posteriores",
+        "saved": "Guardado em {path}"
+      },
+      "subtitleApps": "{device} · {appleId}"
+    },
+    "summary": {
+      "title": "Esta instalação",
+      "app": "App",
+      "channel": "Canal",
+      "device": "Dispositivo",
+      "deviceValue": "{name} · iOS {ios}",
+      "account": "Apple ID",
+      "appIds": "App IDs",
+      "appIdsValue": "{count, plural, one {Resta # esta semana} other {Restam # esta semana}}",
+      "freeApps": "Apps gratuitas",
+      "apps": "Apps"
+    },
+    "done": {
+      "title": "{app} está em {device}.",
+      "trust": "No dispositivo: Definições › Geral › VPN e Gestão de Dispositivos › confiar em {appleId}.",
+      "open": "Abre o SideStore: o ficheiro de emparelhamento e o teu certificado já lá estão.",
+      "done": "Concluído"
+    },
+    "cancelled": {
+      "title": "Parou em “{step}”.",
+      "body": "Nada do que já foi feito se repete quando retomares.",
+      "resume": "Retomar"
+    },
+    "failed": {
+      "continues": "Os passos concluídos são mantidos: ao tentar novamente, continua a partir de “{step}”.",
+      "copy": "Copiar diagnóstico",
+      "copied": "Copiado",
+      "copyFailed": "Não foi possível copiar",
+      "showLogs": "Mostrar registos"
+    }
+  },
+  "pairing": {
+    "steps": {
+      "targets": "Encontrar apps que precisam de emparelhamento",
+      "place": "Colocar o ficheiro de emparelhamento"
+    }
+  },
+  "settings": {
+    "appearance": "Aspeto e idioma",
+    "mode": "Modo de cor",
+    "palette": "Paleta",
+    "language": {
+      "title": "Idioma",
+      "system": "Sistema ({language})",
+      "hint": "O IPAForge segue o idioma do teu sistema, a não ser que escolhas um aqui.",
+      "draft": "rascunho"
+    },
+    "anisette": {
+      "title": "Servidores anisette",
+      "hint": "Iniciar sessão na Apple precisa de um servidor anisette, que diz à Apple que computador está a iniciar sessão. O IPAForge usa um que funcione, por si só; escolhe aqui um se preferires um servidor em particular, ou adiciona o teu.",
+      "add": "Adicionar servidor",
+      "loading": "A carregar os servidores…",
+      "modeLabel": "Como o IPAForge escolhe um servidor",
+      "mode": {
+        "automatic": "Automático",
+        "chosen": "Escolher um servidor"
+      },
+      "modeHint": {
+        "automatic": "Experimenta os servidores por esta ordem e passa ao seguinte quando um falha.",
+        "chosen": "Usa sempre {name}.",
+        "none": "Escolhe o servidor que o IPAForge deve usar sempre."
+      },
+      "noneChosen": "Ainda não escolheste nenhum servidor: até o fazeres, o IPAForge continua a escolher por si.",
+      "chosenDown": "{name} não está a responder. Iniciar sessão não vai funcionar até voltar, ou até escolheres outro servidor ou mudares para Automático.",
+      "count": "{count, plural, one {# servidor} other {# servidores}}",
+      "sources": "{custom, plural, =0 {} other {# adicionados por ti, }}{list} da lista do SideStore, {backup} como cópia de segurança ·",
+      "listUpdated": "Lista do SideStore atualizada {ago}",
+      "listNever": "A lista do SideStore ainda não foi obtida",
+      "updateList": "Atualizar lista",
+      "updating": "A atualizar…",
+      "testAll": "Testar todos",
+      "testing": "A testar…",
+      "group": {
+        "custom": "Adicionados por ti · usados primeiro",
+        "list": "Da lista do SideStore",
+        "backup": "Cópia de segurança · só quando a lista do SideStore não está acessível ou nenhum dos servidores responde"
+      },
+      "tag": {
+        "custom": "Adicionado por ti",
+        "inUse": "Em uso",
+        "chosen": "Escolhido"
+      },
+      "position": "Experimentado em {position}.º lugar",
+      "use": "Usar {name}",
+      "chooseLabel": "Servidor a usar",
+      "status": {
+        "untested": "Não testado",
+        "testing": "A testar…",
+        "ok": "A funcionar · {ms} ms",
+        "bad": "Não responde"
+      },
+      "test": "Testar",
+      "testOne": "Testar {name}",
+      "edit": "Editar {name}",
+      "remove": "Remover {name}",
+      "confirmRemove": "Remover {name}?",
+      "removeYes": "Remover",
+      "skipped": "Não usados da lista do SideStore: {names} (sem HTTPS). Podes adicionar tu próprio um servidor HTTP simples, por exemplo um no teu computador.",
+      "dialog": {
+        "addTitle": "Adicionar um servidor anisette",
+        "editTitle": "Editar servidor",
+        "body": "Qualquer servidor anisette que fale o protocolo habitual serve: um público ou um que tu próprio executes.",
+        "name": "Nome",
+        "namePlaceholder": "O meu servidor",
+        "address": "Endereço",
+        "addressPlaceholder": "https://anisette.my-server.net",
+        "addressHint": "https:// ou, para um servidor que tu próprio executes, http://",
+        "nameMissing": "Dá-lhe um nome.",
+        "addressInvalid": "Introduz um endereço que comece por https:// ou http://.",
+        "exists": "Este servidor já está na lista.",
+        "stillAdd": "Ainda o podes adicionar.",
+        "save": "Guardar"
+      }
+    },
+    "guide": {
+      "title": "Guia de configuração",
+      "text": "O computador, o iPhone e o Apple ID são verificados novamente.",
+      "run": "Executar o guia novamente",
+      "tour": "Mostra-me a app",
+      "tourTitle": "Visita às páginas",
+      "tourHint": "Para que serve cada página, uma paragem de cada vez."
+    },
+    "tabs": {
+      "label": "Definições",
+      "general": "Geral",
+      "anisette": "Servidores anisette"
+    },
+    "modeHint": "Claro, escuro, ou conforme o teu sistema.",
+    "paletteHint": "As cores de toda a app, em claro e escuro."
+  },
+  "theme": {
+    "mode": {
+      "system": "Sistema",
+      "light": "Claro",
+      "dark": "Escuro"
+    },
+    "palette": {
+      "graphite": "Grafite",
+      "ocean": "Oceano",
+      "aurora": "Aurora",
+      "sunset": "Pôr do sol",
+      "forest": "Floresta",
+      "rose": "Rosa",
+      "violet": "Violeta",
+      "mocha": "Moca"
+    }
+  },
+  "errors": {
+    "device": {
+      "locked": {
+        "title": "Desbloqueia o teu dispositivo",
+        "body": "O dispositivo está bloqueado, por isso o IPAForge não consegue comunicar com ele. Desbloqueia-o e mantém-no desbloqueado até a instalação terminar."
+      },
+      "developer_mode_off": {
+        "title": "O Modo de Programador está desativado",
+        "body": "As apps instaladas à parte precisam do Modo de Programador. Ativa-o em Definições › Privacidade e Segurança › Modo de Programador e reinicia o dispositivo."
+      },
+      "not_paired": {
+        "title": "Este computador ainda não é de confiança",
+        "body": "Desbloqueia o dispositivo e toca em Confiar quando perguntar se deve confiar neste computador."
+      },
+      "usbmuxd_unavailable": {
+        "title": "O suporte de dispositivos não está em execução",
+        "body": "O IPAForge não consegue aceder ao serviço do sistema que comunica com iPhones e iPads. Instala-o ou inicia-o e tenta novamente."
+      },
+      "not_found": {
+        "title": "Nenhum dispositivo encontrado",
+        "body": "Liga o teu iPhone ou iPad com um cabo USB e desbloqueia-o."
+      },
+      "disconnected": {
+        "title": "O dispositivo foi desligado",
+        "body": "A ligação caiu. Volta a ligar o cabo, desbloqueia o dispositivo e tenta novamente."
+      },
+      "pairing_pending": {
+        "title": "À espera de Confiar",
+        "body": "Desbloqueia o dispositivo e toca em Confiar no pedido que apareceu."
+      },
+      "pairing_denied": {
+        "title": "A confiança foi recusada",
+        "body": "O dispositivo recusou confiar neste computador. Emparelha novamente e desta vez toca em Confiar."
+      },
+      "invalid_pair_record": {
+        "title": "O emparelhamento já não é válido",
+        "body": "O dispositivo já não aceita o emparelhamento deste computador. Desliga-o, volta a ligá-lo, desbloqueia-o e toca em Confiar."
+      },
+      "service_unavailable": {
+        "title": "Um serviço do dispositivo não iniciou",
+        "body": "O dispositivo recusou iniciar um serviço de que o IPAForge precisa. Desbloqueia-o, volta a ligá-lo e tenta novamente."
+      },
+      "protocol_error": {
+        "title": "Resposta inesperada do dispositivo",
+        "body": "O dispositivo enviou algo que o IPAForge não compreendeu. Volta a ligá-lo; se voltar a acontecer, atualiza o IPAForge ou comunica o problema."
+      },
+      "install_failed": {
+        "title": "A instalação falhou",
+        "body": "O dispositivo recusou instalar a app. Tenta novamente; se continuar a falhar, reinstala a app ou comunica o problema."
+      },
+      "afc_error": {
+        "title": "Não foi possível transferir ficheiros",
+        "body": "A cópia de ficheiros para o dispositivo falhou. Desbloqueia-o e tenta novamente."
+      },
+      "timeout": {
+        "title": "O dispositivo deixou de responder",
+        "body": "O dispositivo demorou demasiado a responder. Desbloqueia-o, volta a ligá-lo e tenta novamente."
+      },
+      "passcode_required": {
+        "title": "Define um código",
+        "body": "Isto precisa de um código no dispositivo. Define um em Definições › Face ID e Código e tenta novamente."
+      },
+      "free_app_limit": {
+        "title": "Demasiadas apps instaladas à parte",
+        "body": "Um Apple ID gratuito só pode ter três apps instaladas à parte ativas num dispositivo. Remove uma e tenta novamente."
+      },
+      "profile_banned": {
+        "title": "A Apple bloqueou este Apple ID no dispositivo",
+        "body": "O dispositivo não aceita apps assinadas com este Apple ID. Tentar novamente não ajuda: usa outro Apple ID."
+      },
+      "identity_invalid": {
+        "title": "O certificado de assinatura já não é válido",
+        "body": "O dispositivo rejeitou o certificado com que a app foi assinada. Verifica o relógio do computador, ou revoga o certificado e tenta novamente."
+      },
+      "profile_not_found": {
+        "title": "Falta o perfil de aprovisionamento",
+        "body": "O dispositivo não encontrou o perfil de aprovisionamento da app. Tenta novamente ou reinstala a app."
+      },
+      "pairing_path_invalid": {
+        "title": "Esse caminho não pode conter um ficheiro de emparelhamento",
+        "body": "Usa um caminho em Documents ou Library da app que termine em .plist ou .mobiledevicepairing."
+      },
+      "local_network_denied": {
+        "title": "O IPAForge não pode procurar dispositivos na tua rede",
+        "body": "O macOS não permitiu que o IPAForge encontre dispositivos na tua rede local, por isso não consegue aceder a iPhones por Wi-Fi. Os dispositivos ligados por cabo continuam a funcionar."
+      },
+      "tunnel_unavailable": {
+        "title": "O túnel do dispositivo não abriu",
+        "body": "O IPAForge não conseguiu abrir o túnel seguro que o iOS 17.4 e posteriores oferecem através do cabo. Verifica se o dispositivo tem o iOS 17.4 ou posterior, volta a ligá-lo e tenta novamente."
+      },
+      "pairing_code_wrong": {
+        "title": "O código não coincidiu",
+        "body": "O código introduzido não é o que o dispositivo mostra. Verifica o código no ecrã dele e tenta novamente."
+      },
+      "pairing_backoff": {
+        "title": "Demasiados códigos errados",
+        "body": "O dispositivo não aceita mais códigos durante algum tempo. Espera um pouco, abre novamente o ecrã de emparelhamento e emparelha outra vez."
+      },
+      "pairing_screen_closed": {
+        "title": "O ecrã de emparelhamento fechou",
+        "body": "O dispositivo deixou de mostrar o ecrã de emparelhamento antes de este terminar. Abre-o novamente e mantém-no aberto: Apple TV: Definições → Comandos e Dispositivos → Remote App e Dispositivos. Apple Vision Pro: Definições → Geral → Dispositivos Remotos."
+      }
+    },
+    "apple": {
+      "anisette_unavailable": {
+        "title": "O servidor anisette não está a responder",
+        "body": "Iniciar sessão na Apple precisa de um servidor anisette e o atual não respondeu. Escolhe outro servidor ou verifica a tua rede."
+      },
+      "anisette_not_provisioned": {
+        "title": "O servidor anisette não está pronto",
+        "body": "O servidor anisette não conseguiu configurar-se. Escolhe outro servidor e tenta novamente."
+      },
+      "app_id_quota": {
+        "title": "Já não restam App IDs esta semana",
+        "body": "Um Apple ID gratuito só pode registar 10 App IDs de 7 em 7 dias. Espera que uma vaga fique livre ou usa outro Apple ID."
+      },
+      "certificate_limit": {
+        "title": "Demasiados certificados",
+        "body": "Este Apple ID atingiu o limite de certificados de desenvolvimento. Revoga um ou usa outro Apple ID."
+      },
+      "invalid_credentials": {
+        "title": "Apple ID ou palavra-passe errados",
+        "body": "A Apple não aceitou o email ou a palavra-passe. Verifica-os e volta a introduzir a palavra-passe."
+      },
+      "account_locked": {
+        "title": "Este Apple ID está bloqueado",
+        "body": "A Apple bloqueou esta conta por motivos de segurança. Desbloqueia-a num dispositivo Apple ou no site da Apple, ou usa outro Apple ID."
+      },
+      "account_refused": {
+        "title": "A Apple recusou o início de sessão",
+        "body": "A Apple não deixa este Apple ID iniciar sessão a partir daqui neste momento. Espera um pouco, inicia sessão uma vez num dispositivo Apple ou usa outro Apple ID."
+      },
+      "client_rejected": {
+        "title": "A Apple rejeitou o pedido de início de sessão",
+        "body": "A Apple não aceitou a identidade enviada com o início de sessão. Escolhe outro servidor anisette ou espera e tenta novamente."
+      },
+      "rate_limited": {
+        "title": "Demasiados pedidos",
+        "body": "A Apple está a limitar os pedidos por agora. Espera alguns minutos e tenta novamente."
+      },
+      "service_unavailable": {
+        "title": "Os servidores da Apple não estão disponíveis",
+        "body": "Os servidores da Apple não responderam. Espera alguns minutos e verifica a tua rede."
+      },
+      "two_factor_required": {
+        "title": "Introduz o código de verificação",
+        "body": "A Apple enviou um código de verificação para os teus dispositivos de confiança. Introduz-o para continuar."
+      },
+      "two_factor_invalid_code": {
+        "title": "Código de verificação errado",
+        "body": "Esse código não funcionou. Verifica-o e introduz-o novamente."
+      },
+      "two_factor_unsupported": {
+        "title": "Este método de início de sessão não é suportado",
+        "body": "Este Apple ID usa um método de dois fatores que o IPAForge ainda não consegue tratar, como uma chave de segurança. Usa outro Apple ID."
+      },
+      "sms_unavailable": {
+        "title": "Os códigos por mensagem de texto não estão disponíveis",
+        "body": "A Apple não envia o código por mensagem de texto aqui. Obtém-no num dispositivo de confiança ou usa outro Apple ID."
+      },
+      "clock_skew": {
+        "title": "O relógio do computador está errado",
+        "body": "A Apple rejeita pedidos quando o relógio está desajustado. Define a data e a hora automaticamente e tenta novamente."
+      },
+      "protocol_error": {
+        "title": "Resposta inesperada da Apple",
+        "body": "A Apple enviou algo que o IPAForge não compreendeu. Atualiza o IPAForge ou comunica o problema se continuar a acontecer."
+      },
+      "session_expired": {
+        "title": "A tua sessão expirou",
+        "body": "Inicia sessão novamente neste Apple ID. Se continuar a expirar, verifica o relógio do computador."
+      },
+      "account_not_found": {
+        "title": "Apple ID não encontrado",
+        "body": "O IPAForge não tem nenhuma sessão guardada para este Apple ID. Inicia sessão novamente."
+      },
+      "not_eligible": {
+        "title": "Este Apple ID não pode ser usado para desenvolvimento",
+        "body": "A Apple não permite que esta conta assine apps, por exemplo por causa da idade ou dos termos. Usa outro Apple ID."
+      },
+      "email_unverified": {
+        "title": "Verifica o teu email",
+        "body": "A Apple precisa primeiro que o endereço de email deste Apple ID seja verificado. Verifica-o e tenta novamente."
+      },
+      "team_agreement": {
+        "title": "Aceita o contrato da Apple",
+        "body": "A equipa não aceitou o contrato de programador mais recente da Apple. Aceita-o no site de programadores da Apple ou escolhe outra equipa."
+      },
+      "no_teams": {
+        "title": "Sem equipa de programador",
+        "body": "Este Apple ID ainda não tem nenhuma equipa de programador. Aceita o contrato de programador da Apple ou usa outro Apple ID."
+      },
+      "device_limit": {
+        "title": "Limite de dispositivos atingido",
+        "body": "Esta equipa não pode registar mais dispositivos. Escolhe outra equipa ou usa outro Apple ID."
+      },
+      "app_id_unavailable": {
+        "title": "Este App ID já está em uso",
+        "body": "Outra equipa já usa este App ID. Escolhe outra equipa ou usa outro Apple ID."
+      },
+      "invalid_app_id_name": {
+        "title": "A Apple rejeitou o nome do App ID",
+        "body": "A Apple não aceitou o nome que o IPAForge escolheu para o App ID. Atualiza o IPAForge ou comunica o problema."
+      },
+      "certificate_not_revocable": {
+        "title": "Este certificado não pode ser revogado aqui",
+        "body": "Só a Apple pode revogar este certificado. Revoga antes um diferente."
+      },
+      "no_devices_for_profile": {
+        "title": "O dispositivo ainda não está registado",
+        "body": "A Apple ainda não terminou de registar o dispositivo. Espera um minuto e tenta novamente."
+      },
+      "developer_request_failed": {
+        "title": "Os serviços de programador da Apple falharam",
+        "body": "Um pedido aos serviços de programador da Apple falhou. Tenta novamente e comunica o problema se continuar a acontecer."
+      },
+      "anisette_server_invalid": {
+        "title": "Este servidor anisette não pode ser usado",
+        "body": "Verifica o nome e o endereço: o endereço começa por https:// ou http://."
+      },
+      "anisette_server_exists": {
+        "title": "Este servidor anisette já está na lista",
+        "body": "Escolhe-o antes na lista, em Definições."
+      },
+      "certificate_not_on_team": {
+        "title": "Este certificado não está na equipa",
+        "body": "A Apple já não o lista para esta equipa: foi revogado, expirou ou pertence a outra equipa. Exporta um atual e importa esse."
+      }
+    },
+    "catalog": {
+      "source_gone": {
+        "title": "A versão já não está disponível",
+        "body": "O local de onde esta app foi transferida já não existe. Escolhe outro canal, importa um IPA ou atualiza o IPAForge."
+      },
+      "unavailable": {
+        "title": "Não foi possível carregar a lista de apps",
+        "body": "O IPAForge não conseguiu obter a lista de apps. Verifica a tua rede e tenta novamente."
+      },
+      "download_failed": {
+        "title": "A transferência falhou",
+        "body": "Não foi possível transferir a app. Verifica a tua rede e tenta novamente."
+      },
+      "checksum_mismatch": {
+        "title": "A transferência está danificada",
+        "body": "O ficheiro transferido não corresponde à sua soma de verificação, por isso não foi usado. Tenta novamente ou escolhe outro canal."
+      },
+      "checksum_missing": {
+        "title": "A transferência não pode ser verificada",
+        "body": "Esta versão não tem soma de verificação, por isso o IPAForge não a consegue verificar. Escolhe outro canal ou importa tu o IPA."
+      },
+      "rate_limited": {
+        "title": "Demasiados pedidos ao GitHub",
+        "body": "O GitHub está a limitar as transferências por agora. Espera alguns minutos e tenta novamente."
+      },
+      "app_source_unreachable": {
+        "title": "Não foi possível aceder a esta fonte",
+        "body": "Verifica a ligação e se tens acesso à internet e tenta novamente."
+      },
+      "app_source_invalid": {
+        "title": "Esta ligação não é uma fonte de apps",
+        "body": "Não lista nenhuma app no formato AltStore. Verifica a ligação ou adiciona antes o ficheiro .ipa da app."
+      },
+      "app_source_exists": {
+        "title": "Esta fonte já foi adicionada",
+        "body": "As suas apps já estão em Explorar apps."
+      }
+    },
+    "plist": {
+      "invalid": {
+        "title": "O ficheiro de definições da app está danificado",
+        "body": "Não foi possível ler uma lista de propriedades dentro da app. Escolhe outro IPA ou comunica o problema."
+      }
+    },
+    "net": {
+      "offline": {
+        "title": "Estás sem ligação",
+        "body": "O IPAForge não consegue aceder à internet. Verifica a ligação de rede e tenta novamente."
+      }
+    },
+    "signer": {
+      "invalid_macho": {
+        "title": "O programa da app está danificado",
+        "body": "Não foi possível ler o executável da app. Escolhe outro IPA."
+      },
+      "encrypted_binary": {
+        "title": "A app está encriptada",
+        "body": "Este IPA vem da App Store e ainda está encriptado, por isso não pode ser assinado novamente. Escolhe um IPA desencriptado."
+      },
+      "unsupported_arch": {
+        "title": "Formato de app não suportado",
+        "body": "O executável da app usa um formato que o iOS não consegue executar. Escolhe outro IPA."
+      },
+      "unsupported_ios": {
+        "title": "Precisa de um iOS mais recente",
+        "body": "Esta app precisa de uma versão do iOS mais recente do que a do dispositivo. Atualiza o dispositivo ou escolhe outro canal ou IPA."
+      },
+      "unsupported_device": {
+        "title": "Não foi feita para este dispositivo",
+        "body": "Esta app não suporta este tipo de dispositivo, por exemplo uma app só para iPad num iPhone, ou uma app de iPhone numa Apple TV. Escolhe outro IPA."
+      },
+      "no_arm64_build": {
+        "title": "Sem versão para iPhone ou iPad",
+        "body": "A app não tem uma versão de 64 bits para iPhone ou iPad, por exemplo uma versão de 32 bits ou de simulador. Escolhe outro IPA."
+      },
+      "no_header_space": {
+        "title": "A app não pode ser assinada",
+        "body": "Não há espaço no executável da app para uma assinatura. Escolhe outro IPA ou comunica o problema."
+      },
+      "zip_slip": {
+        "title": "O IPA não é seguro",
+        "body": "O IPA tenta escrever ficheiros fora da sua própria pasta, por isso o IPAForge recusou-o. Escolhe outro IPA."
+      },
+      "invalid_certificate": {
+        "title": "O certificado é inválido",
+        "body": "Não foi possível usar o certificado de assinatura. Revoga-o para o IPAForge criar um novo e tenta novamente."
+      },
+      "unknown_issuer": {
+        "title": "Emissor do certificado desconhecido",
+        "body": "O IPAForge não reconhece quem emitiu o certificado. Atualiza o IPAForge e verifica a tua rede."
+      },
+      "invalid_bundle": {
+        "title": "O pacote da app é inválido",
+        "body": "O IPA não contém uma app válida. Escolhe outro IPA."
+      },
+      "invalid_profile": {
+        "title": "O perfil de aprovisionamento é inválido",
+        "body": "Não foi possível ler o perfil de aprovisionamento da Apple. Tenta novamente e comunica o problema se continuar a acontecer."
+      },
+      "extension_prefix": {
+        "title": "Uma extensão da app tem o ID errado",
+        "body": "O ID de pacote de uma extensão não começa pelo ID da própria app. Escolhe outro IPA."
+      },
+      "profile_mismatch": {
+        "title": "O perfil de aprovisionamento não corresponde",
+        "body": "O perfil não corresponde à app para a qual foi criado. Tenta novamente e comunica o problema se continuar a acontecer."
+      },
+      "profile_expired": {
+        "title": "O perfil de aprovisionamento expirou",
+        "body": "O perfil expirou ou o relógio do computador está errado. Verifica o relógio e tenta novamente."
+      },
+      "cert_not_in_profile": {
+        "title": "O certificado não está no perfil",
+        "body": "O perfil de aprovisionamento não inclui o certificado de assinatura. Tenta novamente para obter um perfil novo."
+      },
+      "device_not_provisioned": {
+        "title": "O dispositivo não está no perfil",
+        "body": "O perfil de aprovisionamento não inclui este dispositivo. Tenta novamente para obter um perfil novo."
+      },
+      "pkcs12_password": {
+        "title": "A palavra-passe não abre este .p12",
+        "body": "Escreve a palavra-passe com que foi exportado e tenta novamente."
+      }
+    },
+    "installer": {
+      "step_failed": {
+        "title": "Um passo falhou",
+        "body": "Algo correu mal durante a instalação. Tenta novamente e comunica o problema se continuar a acontecer."
+      },
+      "prompt_cancelled": {
+        "title": "Cancelado",
+        "body": "A instalação parou porque uma pergunta foi cancelada. Recomeça quando estiveres pronto."
+      },
+      "certificate_machine_id_missing": {
+        "title": "O certificado não pode ser partilhado",
+        "body": "Este certificado não tem os dados de que o SideStore precisa para o abrir. Revoga-o para o IPAForge criar um novo e tenta novamente."
+      },
+      "team_required": {
+        "title": "Escolhe uma equipa",
+        "body": "Este Apple ID pertence a várias equipas. Escolhe aquela com que assinar."
+      },
+      "kept_ipa_missing": {
+        "title": "Esta app não pode ser renovada aqui",
+        "body": "O IPAForge não a instalou neste dispositivo, ou a cópia guardada desapareceu. Adiciona o respetivo .ipa em Pré-carregar para a instalar novamente."
+      },
+      "wrong_app": {
+        "title": "Esta ligação dá uma app diferente",
+        "body": "Não é a app que estás a renovar ou a atualizar, por isso não foi instalada e a app e os seus dados ficam como estão. Adiciona o .ipa certo em Pré-carregar para a instalar novamente."
+      },
+      "version_unavailable": {
+        "title": "Esta versão não pode ser transferida novamente",
+        "body": "Renovar mantém a versão que está no teu dispositivo, e já não é oferecida para transferência. Usa Atualizar para instalar a versão mais recente; a app mantém os seus dados."
+      },
+      "pairing_app_not_found": {
+        "title": "Essa app não está no dispositivo",
+        "body": "Foi removida ou já não é uma que o IPAForge tenha instalado. Fecha Ficheiros de emparelhamento e abre-o novamente."
+      },
+      "certificate_not_stored": {
+        "title": "Ainda não há certificado neste computador",
+        "body": "Este computador guarda o certificado da equipa depois de instalar uma app com ele. Instala primeiro uma app ou importa um .p12."
+      }
+    },
+    "rpc": {
+      "invalid_message": {
+        "title": "Erro de comunicação interna",
+        "body": "Partes do IPAForge não se conseguiram entender. Atualiza o IPAForge ou comunica o problema."
+      },
+      "disconnected": {
+        "title": "Ligação ao motor perdida",
+        "body": "O motor do IPAForge deixou de responder. Tenta novamente e comunica o problema se continuar a acontecer."
+      },
+      "timeout": {
+        "title": "O motor não respondeu",
+        "body": "O motor do IPAForge demorou demasiado a responder. Tenta novamente e comunica o problema se continuar a acontecer."
+      }
+    },
+    "internal": {
+      "aborted": {
+        "title": "Parado",
+        "body": "A operação foi interrompida antes de terminar."
+      },
+      "unexpected": {
+        "title": "Algo correu mal",
+        "body": "Ocorreu um erro inesperado. Tenta novamente e comunica o problema se continuar a acontecer."
+      }
+    }
+  },
+  "recovery": {
+    "retry": "Tentar novamente",
+    "wait-and-retry": "Esperar e tentar novamente",
+    "check-network": "Verificar a rede",
+    "check-clock": "Verificar a data e a hora",
+    "change-anisette-server": "Escolher outro servidor anisette",
+    "re-enter-password": "Introduzir novamente a palavra-passe",
+    "re-enter-code": "Introduzir novamente o código",
+    "use-trusted-device": "Usar um dispositivo de confiança",
+    "sign-in-again": "Iniciar sessão novamente",
+    "sign-in-on-apple-device": "Iniciar sessão num dispositivo Apple",
+    "switch-account": "Usar outro Apple ID",
+    "verify-email": "Verificar o email",
+    "accept-agreement": "Aceitar o contrato da Apple",
+    "choose-team": "Escolher uma equipa",
+    "revoke-certificate": "Revogar um certificado",
+    "wait-for-app-id-slot": "Esperar por um App ID livre",
+    "try-anyway": "Tentar na mesma",
+    "choose-app-to-remove": "Escolher uma app a remover",
+    "unlock-device": "Desbloquear o dispositivo",
+    "enable-developer-mode": "Ativar o Modo de Programador",
+    "trust-computer": "Confiar neste computador",
+    "reconnect-device": "Voltar a ligar o dispositivo",
+    "pair-again": "Emparelhar novamente",
+    "set-passcode": "Definir um código",
+    "install-device-support": "Instalar o suporte de dispositivos",
+    "reinstall-app": "Reinstalar a app",
+    "choose-another-ipa": "Escolher outro IPA",
+    "choose-another-channel": "Escolher outro canal",
+    "import-ipa": "Importar um IPA",
+    "update-ipaforge": "Atualizar o IPAForge",
+    "report-issue": "Comunicar o problema",
+    "or": "Ou",
+    "switchAccount": {
+      "title": "Usar outro Apple ID",
+      "body": "A instalação recomeça com o Apple ID que escolheres."
+    },
+    "fix": {
+      "copy": "Copiar",
+      "copied": "Copiado",
+      "done": "Feito, tentar novamente",
+      "waitAndRetry": {
+        "how": "A Apple está ocupada ou a limitar pedidos. Espera um minuto e tenta novamente."
+      },
+      "checkNetwork": {
+        "how": "Garante que este computador tem ligação à internet e tenta novamente."
+      },
+      "checkClock": {
+        "step1": "Abre as definições de data e hora deste computador",
+        "step2": "Ativa a definição automática da data e da hora"
+      },
+      "reEnterPassword": {
+        "how": "Ao tentar novamente, é pedida a palavra-passe; verifica-a antes de a introduzires."
+      },
+      "reEnterCode": {
+        "how": "Ao tentar novamente, é pedido um novo código de verificação."
+      },
+      "useTrustedDevice": {
+        "how": "Quando o código for pedido, escolhe um dispositivo de confiança em vez de uma mensagem de texto."
+      },
+      "signInAgain": {
+        "how": "Ao tentar novamente, é pedida a palavra-passe para iniciar sessão outra vez."
+      },
+      "signInOnAppleDevice": {
+        "how": "Inicia sessão neste Apple ID num iPhone, iPad ou Mac, ou no site da Apple, e segue o que for pedido:"
+      },
+      "switchAccount": {
+        "how": "Escolhe um dos teus Apple IDs guardados. A instalação recomeça com ele.",
+        "button": "Escolher um Apple ID…"
+      },
+      "verifyEmail": {
+        "how": "Verifica o endereço de email deste Apple ID no site da Apple:"
+      },
+      "acceptAgreement": {
+        "how": "Inicia sessão no site de programadores da Apple e aceita o contrato que ele mostra:"
+      },
+      "revokeCertificate": {
+        "how": "Ao tentar novamente, é perguntado qual certificado revogar."
+      },
+      "waitForAppIdSlot": {
+        "how": "A Apple liberta cada App ID 7 dias depois de ser criado. Instala novamente quando houver um livre ou usa outro Apple ID.",
+        "next": "O próximo App ID fica livre em {date}."
+      },
+      "chooseAppToRemove": {
+        "how": "Ao tentar novamente, é perguntado qual app remover para fazer espaço."
+      },
+      "unlockDevice": {
+        "how": "Desbloqueia o dispositivo e mantém-no desbloqueado até a instalação terminar."
+      },
+      "enableDeveloperMode": {
+        "button": "Está ativado, tentar novamente"
+      },
+      "trustComputer": {
+        "how": "Desbloqueia o dispositivo. Quando perguntar se deve confiar neste computador, toca em Confiar e introduz o código.",
+        "button": "Perguntar novamente no dispositivo"
+      },
+      "reconnectDevice": {
+        "how": "Desliga o dispositivo, volta a ligá-lo e desbloqueia-o."
+      },
+      "setPasscode": {
+        "how": "Define um código no dispositivo em Definições › Face ID e Código e tenta novamente."
+      },
+      "installDeviceSupport": {
+        "how": "No Windows, instala os Dispositivos Apple (ou o iTunes) a partir da Microsoft Store e reinicia o IPAForge."
+      },
+      "reinstallApp": {
+        "how": "Elimina a app do dispositivo e tenta novamente."
+      },
+      "chooseAnotherChannel": {
+        "how": "A versão do outro canal pode funcionar neste dispositivo.",
+        "button": "Instalar a partir de {channel}"
+      },
+      "open": "Abrir",
+      "tryAnyway": {
+        "how": "A Apple indicou um número negativo de App IDs restantes, o que é uma falha conhecida do seu lado: o número real pode ser maior. Tentar na mesma pede à Apple que os crie; se realmente estiver no limite, ela diz-o."
+      },
+      "changeAnisetteServer": {
+        "how": "Abre as Definições, testa os servidores anisette e escolhe um que funcione, ou volta ao modo Automático.",
+        "button": "Abrir servidores anisette"
+      },
+      "allowLocalNetwork": {
+        "how": "Abre as Definições do Sistema › Privacidade e Segurança › Rede Local, ativa o IPAForge e tenta novamente. Ou liga o dispositivo com um cabo."
+      }
+    },
+    "reportHint": "Abre um novo issue no GitHub com o diagnóstico preenchido. Nada é enviado até o submeteres.",
+    "allow-local-network": "Permitir acesso à rede local"
+  },
+  "devices": {
+    "engine": {
+      "connecting": "A ligar ao motor…",
+      "connected": "{count, plural, =0 {Motor ligado · sem dispositivos} one {Motor ligado · # dispositivo} other {Motor ligado · # dispositivos}}",
+      "failed": "Não é possível aceder ao motor: {reason}"
+    },
+    "description": "Os iPhones e iPads ligados a este computador, e as Apple TVs e Vision Pros emparelhados com ele. O que está em uso aparece na barra superior.",
+    "unknownDevice": "Dispositivo desconhecido",
+    "line": "{model} · iOS {ios} · {link}",
+    "model": "{model} · iOS {ios}",
+    "withState": "{line} · {state}",
+    "link": {
+      "usb": "USB",
+      "network": "Wi-Fi",
+      "both": "USB e Wi-Fi"
+    },
+    "state": {
+      "checking": "A verificar…",
+      "ready": "Pronto",
+      "locked": "Bloqueado",
+      "developerModeOff": "Modo de Programador desativado",
+      "notTrusted": "Sem confiança",
+      "unavailable": "Não é possível ler o dispositivo",
+      "notConnected": "Não ligado"
+    },
+    "inUse": "Em uso",
+    "use": "Usar este dispositivo",
+    "checkAgain": "Verificar novamente",
+    "facts": {
+      "model": "Modelo",
+      "ios": "iOS",
+      "connection": "Ligação",
+      "udid": "UDID",
+      "pairing": "Emparelhamento",
+      "address": "Endereço"
+    },
+    "empty": {
+      "title": "Ainda não há dispositivos",
+      "body": "Liga um iPhone ou iPad com um cabo e desbloqueia-o. No Windows, tem de estar instalado o Apple Devices ou o iTunes."
+    },
+    "notice": {
+      "none": {
+        "title": "Nenhum dispositivo ligado",
+        "body": "Liga um iPhone ou iPad com um cabo e desbloqueia-o. Aparece aqui sozinho."
+      },
+      "notConnected": {
+        "title": "{name} não está ligado",
+        "body": "Liga-o novamente e é usado automaticamente, ou escolhe outro dispositivo na barra superior."
+      },
+      "notTrusted": {
+        "title": "Confia neste computador em {name}",
+        "body": "Desbloqueia-o, toca em Confiar e introduz o código.",
+        "action": "Perguntar novamente",
+        "waiting": "À espera de Confiar…",
+        "titleUnnamed": "Confia neste computador no dispositivo"
+      },
+      "locked": {
+        "title": "Desbloqueia {name}",
+        "body": "Tem de ficar desbloqueado enquanto as apps são instaladas."
+      },
+      "developerModeOff": {
+        "title": "Ativa o Modo de Programador em {name}",
+        "step1": "Definições → Privacidade e Segurança → Modo de Programador",
+        "step2": "Ativa-o e reinicia quando pedido",
+        "step3": "Depois de reiniciar, toca em Ativar e introduz o código"
+      },
+      "unavailable": {
+        "title": "Não é possível ler {name}",
+        "body": "Desliga-o e volta a ligá-lo. Se continuar a acontecer, reinicia o dispositivo.",
+        "bodyWifi": "Está ligado por Wi-Fi: acorda-o, desbloqueia-o e mantém-no na mesma rede que este computador, depois Verificar novamente. Um cabo é mais fiável.",
+        "reason": "Motivo: {reason}",
+        "titleUnnamed": "Não é possível ler o dispositivo"
+      },
+      "offNetwork": {
+        "title": "{name} não está na rede",
+        "tv": "Acorda-a com o comando e mantém-na no mesmo Wi-Fi que este computador.",
+        "vision": "Coloca-o, desbloqueia-o e mantém-no no mesmo Wi-Fi que este computador."
+      },
+      "pairAgain": {
+        "title": "Emparelha {name} novamente",
+        "body": "Já não aceita o emparelhamento deste computador. É normal depois de uma atualização do tvOS ou do visionOS: emparelha-o novamente com um novo código.",
+        "action": "Emparelhar novamente…"
+      }
+    },
+    "notes": {
+      "connected": "{name} ligado",
+      "disconnected": "{name} desligado",
+      "aDevice": "Um dispositivo"
+    },
+    "savePairing": "Guardar ficheiro de emparelhamento…",
+    "localNetwork": {
+      "open": "Abrir as definições de Rede Local"
+    },
+    "os": {
+      "tv": "tvOS",
+      "vision": "visionOS"
+    },
+    "lineOs": "{model} · {os} {version} · {link}",
+    "modelOs": "{model} · {os} {version}",
+    "pairedByCode": "Emparelhado com este computador, por código",
+    "forget": {
+      "action": "Esquecer…",
+      "title": "Esquecer {name}?",
+      "body": "O IPAForge remove o emparelhamento deste computador. As apps que já lá estão ficam. Para o voltar a usar, emparelha-o novamente.",
+      "confirm": "Esquecer"
+    }
+  },
+  "prompts": {
+    "cancel": "Cancelar",
+    "continue": "Continuar",
+    "password": {
+      "title": "Inicia sessão novamente",
+      "body": "A sessão guardada para {appleId} expirou. Introduz a palavra-passe para continuar.",
+      "label": "Palavra-passe",
+      "checking": "A verificar a palavra-passe…"
+    },
+    "method": {
+      "title": "Para onde deve a Apple enviar o código?",
+      "body": "Escolhe como receber o código de verificação.",
+      "trustedDevice": "Um dispositivo de confiança",
+      "trustedDeviceHint": "O teu iPhone, iPad ou Mac com sessão iniciada neste Apple ID",
+      "sms": "Mensagem de texto para {number}",
+      "smsHint": "Podem aplicar-se custos normais de SMS",
+      "sending": "A enviar o código…"
+    },
+    "code": {
+      "title": "Introduz o código de verificação",
+      "body": "{length, plural, one {Introduz o código de # dígito que a Apple enviou.} other {Introduz o código de # dígitos que a Apple enviou.}}",
+      "label": "Código de verificação",
+      "wrong": "Esse código não funcionou. Verifica-o e introduz-o novamente.",
+      "verify": "Verificar",
+      "checking": "A verificar o código…",
+      "deviceBody": "{length, plural, one {Introduz o código de # dígito mostrado no teu iPhone, iPad ou Mac.} other {Introduz o código de # dígitos mostrado no teu iPhone, iPad ou Mac.}}",
+      "smsBody": "{length, plural, one {Introduz o código de # dígito enviado para {number}.} other {Introduz o código de # dígitos enviado para {number}.}}",
+      "allowHint": "Mantém-no desbloqueado e toca em Permitir quando perguntar sobre o início de sessão.",
+      "noCode": "Não recebeste um código?",
+      "resend": "Enviar um novo código",
+      "textTo": "Enviar mensagem para {number}",
+      "sending": "A enviar um novo código…",
+      "sent": "Um novo código está a caminho.",
+      "notSent": "A Apple não enviou um novo código. Espera alguns minutos e tenta novamente."
+    },
+    "suggested": "Sugerido",
+    "team": {
+      "title": "Que equipa deve assinar a app?",
+      "body": "Este Apple ID pertence a mais do que uma equipa. O IPAForge memoriza a tua escolha para este Apple ID.",
+      "free": "Gratuita: as apps expiram após 7 dias, 3 apps por dispositivo",
+      "paid": "Paga: as apps duram um ano, sem limite de apps",
+      "checking": "A usar esta equipa…"
+    },
+    "revoke": {
+      "title": "Revogar um certificado?",
+      "body": "Esta equipa já tem o número máximo de certificados de desenvolvimento, por isso o IPAForge precisa de revogar um para criar o seu. As apps assinadas com o revogado deixam de ser renovadas.",
+      "ipaforge": "Criado pelo IPAForge noutro computador",
+      "sidestore": "Criado pelo SideStore",
+      "machine": "Criado em “{machine}” (normalmente o Xcode)",
+      "unknown": "Criado por uma ferramenta desconhecida",
+      "sidestoreWarning": "O SideStore no teu dispositivo deixa de renovar apps até criar um novo.",
+      "machineWarning": "O Xcode nesse computador cria um novo da próxima vez que assinar.",
+      "expires": "Expira em {date}",
+      "confirm": "Revogar e continuar",
+      "revoking": "A revogar o certificado…"
+    },
+    "remove": {
+      "title": "Remover uma app para fazer espaço?",
+      "body": "Um Apple ID gratuito pode ter {limit} apps num dispositivo, por isso uma tem de sair para esta caber. Podes instalá-la novamente mais tarde.",
+      "confirm": "Remover e continuar",
+      "removing": "A remover a app…"
+    },
+    "share": {
+      "title": "Partilhar o teu certificado de assinatura com “{app}”?",
+      "body": "Esta app parece ser o SideStore. Com o teu certificado, pode renovar apps no dispositivo por si só. Partilha-o apenas com uma app em que confies.",
+      "yes": "Partilhar o certificado",
+      "yesHint": "Renova as tuas apps no dispositivo por si só",
+      "no": "Não partilhar",
+      "noHint": "É instalada sem o teu certificado"
+    },
+    "pairing": {
+      "title": "Que apps recebem o ficheiro de emparelhamento?",
+      "body": "O ficheiro de emparelhamento permite que uma app no dispositivo comunique com ele por Wi-Fi, como este computador faz. Só as apps que assinalares o recebem.",
+      "available": "{count, plural, one {# app no dispositivo pode usá-lo} other {# apps no dispositivo podem usá-lo}}",
+      "selectAll": "Selecionar tudo",
+      "clearAll": "Limpar tudo",
+      "place": "{count, plural, =0 {Escolhe uma app} one {Colocar em # app} other {Colocar em # apps}}",
+      "placing": "A colocar o ficheiro de emparelhamento…",
+      "purpose": {
+        "sidestore": "Renova e instala apps por Wi-Fi",
+        "livecontainer": "Executa as apps que tem dentro com JIT",
+        "stikdebug": "Ativa o JIT para outras apps",
+        "stikstore": "Instala apps a partir das suas próprias fontes"
+      }
+    }
+  },
+  "signIn": {
+    "title": "Adicionar um Apple ID",
+    "body": "O IPAForge assina apps com ele. A tua palavra-passe vai apenas para a Apple.",
+    "appleId": "Apple ID",
+    "password": "Palavra-passe",
+    "submit": "Iniciar sessão",
+    "signingIn": "A iniciar sessão…",
+    "done": {
+      "title": "Apple ID adicionado",
+      "body": "Sessão iniciada como {appleId}.",
+      "close": "Concluído"
+    },
+    "rememberPassword": "Guardar a minha palavra-passe no porta-chaves do sistema",
+    "rememberPasswordHint": "Permite ao IPAForge iniciar sessão novamente sozinho quando a sessão expirar.",
+    "resuming": {
+      "title": "A iniciar sessão novamente",
+      "body": "A iniciar sessão em {appleId} com o que o IPAForge guardou…",
+      "cancel": "Cancelar"
+    }
+  },
+  "accounts": {
+    "description": "Os Apple IDs com que o IPAForge assina apps. O que está em uso aparece na barra superior.",
+    "list": "Apple IDs guardados",
+    "empty": "Ainda não há Apple IDs. Adiciona um para instalar o SideStore.",
+    "notSaved": {
+      "title": "Os Apple IDs não estão a ser guardados",
+      "body": "O IPAForge não consegue usar o porta-chaves do sistema (o acesso pode ter sido negado), por isso os teus Apple IDs só são mantidos até ele fechar. Para os guardar, abre o IPAForge novamente e permite o acesso ao porta-chaves quando pedido."
+    },
+    "freeTeam": "{name} (gratuita)",
+    "withState": "{line} · {state}",
+    "state": {
+      "checking": "A verificar…",
+      "signInNeeded": "É preciso iniciar sessão",
+      "blocked": "Bloqueado neste dispositivo",
+      "unreachable": "Não foi possível contactar a Apple"
+    },
+    "inUse": "Em uso",
+    "noTeams": "As equipas aparecem quando a Apple responder.",
+    "use": "Usar",
+    "signInAgain": "Iniciar sessão novamente",
+    "signOut": {
+      "action": "Terminar sessão",
+      "title": "Terminar sessão em {appleId}?",
+      "forgets": "O IPAForge esquece este Apple ID, a sua sessão e a palavra-passe guardada.",
+      "keeps": "Os certificados de assinatura ficam neste computador, por isso iniciar sessão novamente reutiliza-os. As apps já instaladas continuam a funcionar até expirarem.",
+      "confirm": "Terminar sessão"
+    }
+  },
+  "apps": {
+    "description": "As apps que o IPAForge instalou neste dispositivo. Renovar volta a assinar uma antes de expirar, mantendo os seus dados.",
+    "refreshAll": "{count, plural, =0 {Renovar tudo} other {Renovar tudo (#)}}",
+    "updateAll": "{count, plural, other {Atualizar tudo (#)}}",
+    "refresh": "Renovar",
+    "update": "Atualizar",
+    "remove": "Remover",
+    "removeApp": "Remover {name}",
+    "updateTo": "Atualizar: {version}",
+    "from": "De {source}",
+    "needsIpa": "Instalada pelo IPAForge a partir de um .ipa noutro computador. Adiciona esse .ipa em Pré-carregar uma vez para a renovar aqui.",
+    "thisDevice": "este dispositivo",
+    "badge": "{count, plural, one {# app para renovar em breve} other {# apps para renovar em breve}}",
+    "expiry": {
+      "in": "{days, plural, one {Expira dentro de # dia · {date}} other {Expira dentro de # dias · {date}}}",
+      "today": "Expira hoje",
+      "expired": "{days, plural, one {Expirou há # dia · não abre} other {Expirou há # dias · não abre}}",
+      "unknown": "Expiração desconhecida",
+      "gone": "Expirada · não abre"
+    },
+    "run": {
+      "checking": "A verificar com a Apple…",
+      "waiting": "À espera da sua vez",
+      "done": "Concluído"
+    },
+    "failed": {
+      "title": "A renovação não terminou: {reason}",
+      "details": "Mostrar detalhes",
+      "dismiss": "Dispensar"
+    },
+    "notConnected": {
+      "title": "Este dispositivo não está ligado",
+      "body": "Liga-o para ver as suas apps e para as renovar ou atualizar."
+    },
+    "expired": {
+      "title": "{count, plural, one {# app expirou} other {# apps expiraram}}",
+      "body": "Não abrem até serem renovadas. Os seus dados são mantidos.",
+      "refresh": "{count, plural, one {Renová-la agora} other {Renová-las agora}}"
+    },
+    "facts": {
+      "next": "A próxima a expirar",
+      "none": "Ainda nenhuma",
+      "nextIn": "{days, plural, one {{name} · # dia} other {{name} · # dias}}",
+      "nextExpired": "{name} · expirada",
+      "count": "Mantidas renovadas",
+      "apps": "{count, plural, one {# app} other {# apps}}",
+      "auto": "Renovação automática",
+      "autoOn": "{days, plural, one {Ativa · # dia antes} other {Ativa · # dias antes}}",
+      "autoOff": "Desativada"
+    },
+    "list": {
+      "title": "Instaladas pelo IPAForge",
+      "count": "{count, plural, one {# app · as mais próximas primeiro} other {# apps · as mais próximas primeiro}}",
+      "empty": "Ainda não há apps. Instala o SideStore ou pré-carrega apps e aparecem aqui."
+    },
+    "others": {
+      "title": "Ainda não mantidas pelo IPAForge",
+      "hint": "Instaladas antes desta versão do IPAForge, ou por outra ferramenta",
+      "found": "Encontrada em {source}. Renovar instala-a a partir daí, mantendo os seus dados, e o IPAForge mantém-na renovada daí em diante.",
+      "foundMany": "Encontrada em {source} e {count, plural, one {# outra fonte} other {# outras fontes}}. Renovar instala-a a partir da que escolheres abaixo, mantendo os seus dados, e o IPAForge mantém-na renovada daí em diante.",
+      "pickSource": "Instalar a partir de",
+      "choice": "{source} · {version}",
+      "how": "Adiciona o respetivo .ipa em Pré-carregar uma vez e o IPAForge mantém-na renovada daí em diante."
+    },
+    "auto": {
+      "title": "Renovar apps automaticamente",
+      "body": "Enquanto o IPAForge estiver aberto e o dispositivo ligado, as apps são renovadas sozinhas antes de expirarem.",
+      "toggle": "Renovar automaticamente",
+      "when": "Renovar quando uma app tiver",
+      "days": "{count, plural, one {# dia restante} other {# dias restantes}}"
+    },
+    "removeDialog": {
+      "title": "Remover {name}?",
+      "body": "É eliminada de {device} com os seus dados e liberta uma vaga de app gratuita. Podes instalá-la novamente a partir de Pré-carregar."
+    },
+    "pairing": {
+      "open": "Ficheiros de emparelhamento",
+      "title": "Ficheiros de emparelhamento",
+      "hint": "Um ficheiro de emparelhamento permite que uma app aceda ao teu dispositivo sozinha, para renovar e instalar apps. Quem o tiver pode usar o dispositivo, por isso dá um às tuas próprias apps apenas quando as instruções delas o pedirem.",
+      "reading": "A ler os ficheiros de emparelhamento…",
+      "empty": "Não há apps de emparelhamento nem apps instaladas pelo IPAForge neste dispositivo.",
+      "classic": {
+        "thisComputer": "Emparelhamento: o deste computador",
+        "otherComputer": "Emparelhamento: o de outro computador",
+        "missing": "Emparelhamento: em falta"
+      },
+      "remote": {
+        "accepted": "Remoto: aceite",
+        "rejected": "Remoto: não aceite",
+        "otherComputer": "Remoto: o de outro computador",
+        "missing": "Remoto: em falta"
+      },
+      "detail": {
+        "placed": "Colocado {date}",
+        "needed": "Precisa de um para renovar sozinha.",
+        "otherComputer": "De outro computador: funciona enquanto esse computador for de confiança.",
+        "ownNone": "Nenhum. Adiciona um apenas se a app o pedir."
+      },
+      "place": "Colocar",
+      "placeOne": "Colocar o ficheiro de emparelhamento em {name}",
+      "placeAgain": "Colocar novamente",
+      "placeAgainOne": "Colocar novamente o ficheiro de emparelhamento em {name}",
+      "add": "Adicionar…",
+      "addOne": "Adicionar um ficheiro de emparelhamento a {name}",
+      "remove": "Remover",
+      "removeOne": "Remover o ficheiro de emparelhamento de {name}",
+      "newRemote": "Novo emparelhamento remoto",
+      "done": "Concluído",
+      "addTitle": "Adicionar um ficheiro de emparelhamento a {name}",
+      "addBody": "O IPAForge escreve o ficheiro de emparelhamento deste computador na pasta da app no teu dispositivo. Quem o tiver pode usar o dispositivo: adiciona-o apenas a apps em que confies.",
+      "pathLabel": "Caminho dentro da app",
+      "pathHint": "Das instruções da app; normalmente em Documents. O IPAForge memoriza-o para esta app.",
+      "pathInvalid": "Usa um caminho em Documents ou Library que termine em .plist ou .mobiledevicepairing.",
+      "removeTitle": "Remover o ficheiro de emparelhamento de {name}?",
+      "removeBody": "Deixa de poder aceder ao teu dispositivo sozinha (renovar, instalar) até um ficheiro de emparelhamento ser colocado novamente.",
+      "newRemoteTitle": "Criar um novo emparelhamento remoto?",
+      "newRemoteBody": "O IPAForge cria um novo emparelhamento remoto com o teu dispositivo e coloca-o no SideStore. O dispositivo pode pedir-te que confies neste computador. O emparelhamento remoto antigo deixa de funcionar.",
+      "newRemoteConfirm": "Criar um novo",
+      "newRemoteWaiting": "Se o teu dispositivo perguntar, toca em Confiar e introduz o código.",
+      "tag": "Sem ficheiro de emparelhamento",
+      "tagOne": "{name} não tem ficheiro de emparelhamento: abre Ficheiros de emparelhamento"
+    },
+    "cancelRefresh": "Cancelar renovação"
+  },
+  "logs": {
+    "title": "Registos",
+    "lede": "O que o IPAForge fez, linha a linha. Abre-os de qualquer lado com",
+    "shortcut": {
+      "control": "Ctrl+",
+      "command": "⌘",
+      "key": "L"
+    },
+    "copy": "Copiar",
+    "save": "Guardar…",
+    "clear": "Limpar",
+    "cleared": "Vista limpa. Guardar continua a escrever todas as linhas mantidas nesta sessão.",
+    "search": {
+      "label": "Pesquisar nos registos",
+      "placeholder": "Pesquisar mensagens e detalhes",
+      "key": "/"
+    },
+    "level": {
+      "label": "Nível",
+      "all": "Todos",
+      "info": "Info",
+      "warn": "Avisos",
+      "error": "Erros"
+    },
+    "levelName": {
+      "debug": "Depuração",
+      "info": "Info",
+      "warn": "Aviso",
+      "error": "Erro"
+    },
+    "area": {
+      "label": "Área",
+      "all": "Todas as áreas",
+      "install": "Instalação",
+      "device": "Dispositivo",
+      "apple": "Apple",
+      "catalog": "Catálogo",
+      "signing": "Assinatura",
+      "engine": "Motor",
+      "interface": "Interface",
+      "app": "App"
+    },
+    "filters": {
+      "showing": "A mostrar apenas:",
+      "run": "Esta execução da instalação ({time})",
+      "text": "“{text}”",
+      "remove": "Remover o filtro {filter}"
+    },
+    "list": {
+      "label": "Linhas do registo",
+      "loadingOlder": "A carregar linhas mais antigas…"
+    },
+    "row": {
+      "details": "{count, plural, one {# detalhe} other {# detalhes}}",
+      "scope": "área",
+      "redacted": "[omitido]",
+      "copy": "Copiar linha"
+    },
+    "follow": {
+      "on": "A seguir as novas linhas",
+      "off": "Em pausa",
+      "pause": "Pausar",
+      "resume": "Seguir"
+    },
+    "jump": "{count, plural, one {# nova linha} other {# novas linhas}} · Ir para a mais recente",
+    "count": "{matching, plural, one {# linha correspondente} other {# linhas correspondentes}} · as últimas {capacity, number} são mantidas nesta sessão",
+    "debug": "Incluir detalhes de depuração",
+    "privacy": "Palavras-passe, tokens, chaves, números de série e identificadores de dispositivos nunca são escritos nos registos; aparecem como [omitido]. Os registos ficam neste computador até os copiares ou guardares.",
+    "empty": {
+      "none": {
+        "title": "Ainda nada registado",
+        "body": "As linhas aparecem aqui à medida que o IPAForge trabalha: ligar um dispositivo, iniciar sessão, instalar."
+      },
+      "noMatch": {
+        "title": "Nenhuma linha corresponde",
+        "body": "Altera o nível, a área ou a pesquisa.",
+        "showAll": "Mostrar todas as linhas"
+      },
+      "cleared": {
+        "title": "Vista limpa",
+        "body": "As novas linhas aparecem aqui à medida que chegam."
+      },
+      "failed": {
+        "title": "Não foi possível ler os registos",
+        "body": "A ligação ao motor pode ter sido fechada. Abre novamente os Registos para tentar outra vez."
+      }
+    },
+    "export": {
+      "copyTitle": "{count, plural, one {Copiar # linha?} other {Copiar # linhas?}}",
+      "saveTitle": "{count, plural, one {Guardar # linha num ficheiro?} other {Guardar # linhas num ficheiro?}}",
+      "copyBody": "As linhas mostradas, com os filtros que definiste.",
+      "saveBody": "Todas as linhas mantidas nesta sessão, quaisquer que sejam os filtros.",
+      "warning": "Palavras-passe, tokens e identificadores de dispositivos já ficam de fora, mas os registos indicam o modelo do teu dispositivo, as apps e a equipa. Verifica-os antes de os publicares.",
+      "confirmCopy": "Copiar",
+      "confirmSave": "Guardar",
+      "copied": "{count, plural, one {Copiada # linha} other {Copiadas # linhas}}",
+      "saved": "{count, plural, one {Guardada # linha} other {Guardadas # linhas}}",
+      "copyFailed": "Não foi possível copiar as linhas",
+      "saveFailed": "Não foi possível guardar as linhas"
+    }
+  },
+  "preload": {
+    "title": "Pré-carregar apps",
+    "description": "Instala as tuas próprias apps: assinadas com o teu Apple ID, instaladas por USB, uma a seguir à outra.",
+    "tabs": {
+      "label": "Pré-carregar",
+      "apps": "Adicionar apps",
+      "sources": "Fontes"
+    },
+    "add": {
+      "drop": "Larga aqui ficheiros .ipa",
+      "or": "ou",
+      "choose": "Escolher ficheiros…",
+      "link": "Adicionar a partir de uma ligação…"
+    },
+    "catalog": {
+      "recommended": "Recomendadas",
+      "added": "Adicionada",
+      "add": "Adicionar",
+      "sidestore": "Renova e instala apps no próprio dispositivo.",
+      "livecontainerSidestore": "LiveContainer com o SideStore lá dentro.",
+      "livecontainer": "Executa muitas apps dentro de uma só, para além do limite de 3 apps.",
+      "stikdebug": "Ativa o JIT, no dispositivo, para as apps que precisam dele.",
+      "feather": "Assina e instala apps no dispositivo com o teu certificado."
+    },
+    "browse": {
+      "title": "Explorar apps",
+      "count": "{apps, plural, one {# app} other {# apps}} de {sources, plural, one {# fonte} other {# fontes}}",
+      "source": "Fonte",
+      "allSources": "Todas as fontes",
+      "search": "Pesquisar apps",
+      "manage": "Gerir fontes",
+      "noMatch": "Nenhuma app corresponde a “{query}”.",
+      "allOff": "Todas as fontes estão desativadas. Ativa uma em Fontes.",
+      "loading": "A ler as fontes…",
+      "catalogLine": "Versão mais recente · verificada com a sua soma de verificação",
+      "version": "{version} · {size}",
+      "from": "{name}, também em {others}",
+      "details": "Detalhes de {name}",
+      "notRefreshed": {
+        "title": "Não foi possível atualizar {name}",
+        "body": "A mostrar as suas apps da última atualização, {when}.",
+        "retry": "Tentar novamente"
+      }
+    },
+    "detail": {
+      "version": "Versão",
+      "latest": "{version} (mais recente)",
+      "size": "Tamanho",
+      "needs": "Requer",
+      "needsIos": "iOS {version}",
+      "anyIos": "Qualquer iOS",
+      "from": "De",
+      "builtin": "Integrada · de confiança",
+      "added": "Uma fonte que adicionaste",
+      "untrusted": "De uma fonte que adicionaste: o IPAForge não revê as suas apps.",
+      "add": "Adicionar à lista",
+      "inList": "Na lista",
+      "close": "Fechar",
+      "loadingReleases": "A procurar as suas versões…",
+      "noReleases": "Não é possível ler as suas versões neste momento. Verifica a ligação e abre-a novamente."
+    },
+    "sources": {
+      "description": "Onde o Explorar apps encontra apps. As fontes integradas são mantidas pelo IPAForge; adiciona outras pela respetiva ligação (formato AltStore).",
+      "add": "Adicionar fonte…",
+      "refreshAll": "Atualizar tudo",
+      "list": "Fontes",
+      "builtin": "Integrada · de confiança",
+      "added": "Adicionada por ti",
+      "catalogName": "Catálogo do IPAForge",
+      "apps": "{count, plural, one {# app} other {# apps}}",
+      "updated": "atualizada {when}",
+      "notRead": "Ainda não lida",
+      "skipped": "{count, plural, one {# ignorada (não é .ipa)} other {# ignoradas (não são .ipa)}}",
+      "failed": "Não foi possível aceder.",
+      "failedCopy": "A mostrar a última cópia, de {when}.",
+      "refreshing": "A atualizar…",
+      "show": "Mostrar apps de {name}",
+      "refresh": "Atualizar {name}",
+      "remove": "Remover {name}",
+      "on": "Ativada",
+      "off": "Desativada",
+      "note": "O IPAForge não revê as apps das fontes que adicionas. Adiciona apenas fontes em que confies.",
+      "refreshOne": "Atualizar",
+      "removeOne": "Remover"
+    },
+    "addSource": {
+      "title": "Adicionar uma fonte",
+      "label": "Ligação da fonte",
+      "placeholder": "https://example.com/apps.json",
+      "hint": "Uma fonte no formato AltStore, o que o SideStore lê. Normalmente termina em .json.",
+      "check": "Verificar",
+      "checking": "A verificar a fonte…",
+      "notLink": "Introduz uma ligação que comece por https://",
+      "notHttps": "Usa uma ligação https://: o IPAForge só lê fontes através de uma ligação segura.",
+      "previewTitle": "Adicionar esta fonte?",
+      "includes": "{count, plural, one {# app, incluindo:} other {# apps, incluindo:}}",
+      "skipped": "{count, plural, one {Mais # ficou de fora: a transferência não é um .ipa.} other {Mais # ficaram de fora: a transferência não é um .ipa.}}",
+      "warningTitle": "Adiciona apenas fontes em que confies",
+      "warningBody": "O IPAForge não revê as apps das fontes que adicionas. Cada app continua a ser verificada antes de ser instalada.",
+      "back": "Voltar",
+      "confirm": "Adicionar fonte"
+    },
+    "removeSource": {
+      "title": "Remover {name}?",
+      "body": "As suas apps desaparecem de Explorar apps. As apps instaladas a partir dela ficam no dispositivo, e as apps da lista Por instalar também ficam.",
+      "confirm": "Remover"
+    },
+    "list": {
+      "title": "Por instalar",
+      "count": "{count, plural, one {# app} other {# apps}}",
+      "empty": "Ainda não há apps. Larga aqui ficheiros .ipa, escolhe-os, adiciona uma ligação ou escolhe uma em Explorar apps."
+    },
+    "row": {
+      "waiting": "À espera do dispositivo e do Apple ID",
+      "checking": "A verificar…",
+      "downloading": "A transferir e a verificar…",
+      "appIds": "{count, plural, one {# App ID} other {# App IDs}}{extensions, plural, =0 {} one { (app + # extensão)} other { (app + # extensões)}}",
+      "updates": "Atualiza {from} → {to} · mantém os seus dados",
+      "new": "Nova no dispositivo",
+      "pairing": "Recebe o ficheiro de emparelhamento e o certificado",
+      "fromCatalog": "Do catálogo · Estável",
+      "remove": "Remover {name}",
+      "cannot": "Não pode ser instalada.",
+      "fromSource": "De {name}",
+      "saveInstead": "Guardar antes o .ipa assinado",
+      "saveInsteadOne": "Guardar {name} como .ipa assinado em vez de o instalar",
+      "savedOnComputer": "Guardado neste computador, não instalado"
+    },
+    "problem": {
+      "notIpa": "Só podem ser instalados ficheiros .ipa.",
+      "unreadable": "O IPAForge não consegue ler este ficheiro. Adiciona-o antes com Escolher ficheiros….",
+      "needsIos": "Requer iOS {needs}; este dispositivo tem iOS {has}."
+    },
+    "summary": {
+      "appIds": "{count, plural, one {# nova} other {# novas}} · {left, plural, one {Resta # esta semana} other {Restam # esta semana}}",
+      "appIdsNoLimit": "{count, plural, one {# nova} other {# novas}}",
+      "notEnough": "Não restam suficientes. Remove uma app ou espera. {next}",
+      "freeApps": "{after} de {limit} depois desta instalação",
+      "freeAppsOver": "{used, plural, one {# já lá está.} other {# já lá estão.}} A instalação vai perguntar que app remover, ou remove uma desta lista."
+    },
+    "install": "{count, plural, =0 {Instalar} one {Instalar # app} other {Instalar # apps}}",
+    "clear": "Limpar a lista",
+    "readiness": {
+      "busy": "Espera pela instalação que está a decorrer.",
+      "empty": "Adiciona primeiro uma app.",
+      "checking": "A verificar as apps…",
+      "problems": "Remove as apps que não podem ser instaladas."
+    },
+    "link": {
+      "title": "Adicionar a partir de uma ligação",
+      "body": "Uma ligação direta para um ficheiro .ipa. O IPAForge transfere-o e depois verifica-o como qualquer outra app.",
+      "label": "Ligação",
+      "placeholder": "https://example.com/MyApp.ipa",
+      "add": "Adicionar",
+      "httpsOnly": "Só podem ser transferidas ligações https.",
+      "invalid": "Isso não é uma ligação.",
+      "notIpa": "A ligação tem de apontar para um ficheiro .ipa."
+    },
+    "elsewhere": {
+      "apps": "Estão a ser instaladas apps",
+      "sidestore": "O SideStore está a ser instalado",
+      "body": "Uma instalação de cada vez: precisa do dispositivo. Esta pode começar quando a outra terminar.",
+      "open": "Abrir"
+    },
+    "run": {
+      "title": {
+        "running": "{count, plural, one {A instalar {app}} other {A instalar # apps}}",
+        "completed": "{count, plural, one {{app} está instalado} other {# apps estão instaladas}}",
+        "failed": "Não foi possível instalar todas as apps"
+      },
+      "backToPreload": "Voltar a Pré-carregar",
+      "shared": "Este dispositivo e o teu Apple ID",
+      "refresh": {
+        "profile": "Apenas um novo perfil, nada é instalado novamente",
+        "certificate": "Instalada novamente: o certificado que a assinou já não é válido",
+        "unmarked": "Instalada novamente: o IPAForge não sabe dizer que certificado a assinou",
+        "appId": "Instalada novamente: a Apple removeu o seu App ID quando expirou",
+        "sidestore": "Instalado novamente, com os dados mantidos, para que o próprio SideStore mostre a nova data"
+      },
+      "group": {
+        "failed": "Falharam",
+        "done": "Concluídas",
+        "active": "Em curso",
+        "pending": "À espera"
+      }
+    },
+    "done": {
+      "title": "{count, plural, one {{app} está em {device}.} other {{app} estão em {device}.}}",
+      "open": "Abre cada app a partir do Ecrã Principal."
+    },
+    "signAndSave": "{count, plural, one {Assinar e guardar # app} other {Assinar e guardar # apps}}",
+    "installAndSave": "{install} para instalar · {save} para guardar como .ipa assinado"
+  },
+  "repair": {
+    "title": "Reparar o SideStore",
+    "description": "O IPAForge verifica o SideStore em {device} e corrige o que o impede de renovar as tuas apps sozinho.",
+    "checkAgain": "Verificar novamente",
+    "checking": "A verificar o SideStore…",
+    "checks": "Verificações",
+    "failed": "Não foi possível verificar o SideStore: {reason}",
+    "failedBody": "Verifica se o dispositivo está ligado e desbloqueado e prime Verificar novamente.",
+    "ok": "OK",
+    "unknown": "Não se sabe",
+    "deviceFirst": "Corrige primeiro {device}",
+    "device": {
+      "title": "{device} está pronto",
+      "ok": "Desbloqueado, de confiança e com o Modo de Programador ativo.",
+      "locked": "Está bloqueado. Desbloqueia-o e prime Verificar novamente.",
+      "lockedTag": "Bloqueado",
+      "developerMode": "O Modo de Programador está desativado, por isso o SideStore e as apps que instala não abrem. No iPhone: Definições › Privacidade e Segurança › Modo de Programador e depois reinicia-o.",
+      "developerModeTag": "Modo de Programador desativado"
+    },
+    "installed": {
+      "title": "O SideStore está instalado",
+      "missing": "O SideStore não está em {device}.",
+      "missingTag": "Não instalado"
+    },
+    "signer": {
+      "title": "Está assinado com a equipa que usas aqui",
+      "ok": "Reparar pode instalá-lo novamente, ou dar-lhe um novo perfil, sem perder os seus dados.",
+      "otherTeam": "Foi assinado por outra das equipas deste Apple ID. Instalá-lo novamente com esta equipa adicionaria um segundo SideStore, sem os seus dados nem apps.",
+      "otherTeamTag": "Outra equipa",
+      "otherAppleId": "Foi assinado por outro Apple ID. Instalá-lo novamente com este adicionaria um segundo SideStore, sem os seus dados nem apps.",
+      "otherAppleIdTag": "Outro Apple ID"
+    },
+    "version": {
+      "title": "O SideStore está atualizado",
+      "ok": "Versão {version}, a mais recente.",
+      "outdated": "Versão {version}; já saiu a {latest}. As versões mais antigas podem não ter correções para renovar em versões recentes do iOS.",
+      "outdatedTag": "{latest} disponível",
+      "unknown": "Versão {version}. Não foi possível aceder ao catálogo para comparar."
+    },
+    "expiry": {
+      "title": "O SideStore não expirou",
+      "ok": "{days, plural, one {Expira dentro de # dia.} other {Expira dentro de # dias.}}",
+      "soon": "{days, plural, =0 {Expira hoje.} one {Expira dentro de # dia.} other {Expira dentro de # dias.}} Depois de expirar, o SideStore não consegue renovar-se.",
+      "soonTag": "Expira em breve",
+      "expired": "{days, plural, one {Expirou há # dia.} other {Expirou há # dias.}} Não abre, por isso não consegue renovar as tuas apps.",
+      "expiredTag": "Expirado",
+      "unknown": "O dispositivo não mostra nenhum perfil para ele."
+    },
+    "signing": {
+      "title": "O certificado que o assinou é válido",
+      "ok": "Ainda válido do lado da Apple.",
+      "revoked": "Foi revogado ou expirou. O SideStore deixa de abrir no próximo arranque.",
+      "revokedTag": "Revogado",
+      "unknown": "Instalado por outra ferramenta, por isso o IPAForge não vê que certificado o assinou. Reparar pode instalá-lo novamente para ter a certeza."
+    },
+    "own": {
+      "title": "O SideStore consegue assinar apps sozinho",
+      "ok": "Tem um certificado válido com que renovar as tuas apps.",
+      "missing": "Não tem nenhum certificado, por isso as renovações pedem que inicies sessão, ou falham.",
+      "missingTag": "Sem certificado",
+      "other": "O certificado que lhe foi dado já não é válido. Pode tê-lo substituído por um mais recente, criado por ele; se a renovação falhar no SideStore, instala-o novamente.",
+      "otherTag": "Pode ter sido substituído"
+    },
+    "pairing": {
+      "title": "O SideStore tem um ficheiro de emparelhamento",
+      "ok": "Presente, e é o emparelhamento deste computador com {device}.",
+      "missing": "Em falta: o SideStore não consegue aceder ao dispositivo para instalar ou renovar apps.",
+      "missingTag": "Em falta",
+      "other": "É o de outro computador. Funciona enquanto esse emparelhamento for válido; repor a Confiança no dispositivo quebra-o.",
+      "otherTag": "Outro computador"
+    },
+    "manual": {
+      "title": "No teu iPhone · o IPAForge não consegue verificar isto",
+      "tag": "Verifica tu",
+      "vpn": {
+        "title": "A VPN do SideStore está ativa quando ele renova",
+        "body": "Abre o LocalDevVPN e liga-o antes de renovar no SideStore."
+      },
+      "anisette": {
+        "title": "O SideStore consegue aceder ao seu servidor anisette",
+        "body": "Em SideStore › Definições › Anisette, escolhe outro servidor se a renovação disser que não consegue iniciar sessão."
+      }
+    },
+    "plan": {
+      "title": "Reparar vai",
+      "reinstall": "Instalar o SideStore novamente",
+      "reinstallBody": "A partir do catálogo do IPAForge, assinado com um certificado válido que também é colocado lá dentro. Os seus dados e as tuas apps ficam.",
+      "profile": "Dar ao SideStore um novo perfil",
+      "profileBody": "Nada é instalado novamente.",
+      "pairing": "Colocar o ficheiro de emparelhamento deste computador",
+      "pairingBody": "Em Documents do SideStore, substituindo o que lá está.",
+      "optional": "Além disso, se quiseres",
+      "offerReinstall": "Instalar o SideStore novamente, para ter a certeza",
+      "offerPairing": "Substituir o ficheiro de emparelhamento pelo deste computador",
+      "hint": "Uma execução. Mantém {device} ligado e desbloqueado.",
+      "start": "Reparar o SideStore"
+    },
+    "blocked": {
+      "title": "O SideStore não pode ser instalado novamente com este Apple ID",
+      "body": "Outra equipa ou outro Apple ID assinou-o, por isso os seus dados não passariam. Escolhe esse Apple ID na barra superior e prime Verificar novamente."
+    },
+    "notInstalled": {
+      "title": "O SideStore não está em {device}",
+      "body": "Instala-o primeiro, a partir da página Instalar.",
+      "install": "Instalar o SideStore"
+    },
+    "fine": {
+      "title": "O SideStore está a funcionar",
+      "body": "Nada a reparar. Se ainda assim não conseguir renovar, verifica as duas coisas abaixo no teu iPhone."
+    },
+    "run": {
+      "title": {
+        "running": "A reparar o SideStore",
+        "completed": "O SideStore está reparado",
+        "failed": "Não foi possível reparar o SideStore"
+      }
+    },
+    "done": {
+      "title": "O SideStore em {device} está reparado.",
+      "open": "Abre o SideStore e renova as tuas apps."
+    },
+    "open": "Verificar o SideStore",
+    "checkingTag": "A verificar…",
+    "remote": {
+      "title": "Emparelhamento remoto para iOS 17.4 e posteriores",
+      "ok": "Presente, e {device} aceita-o.",
+      "missing": "Em falta: o SideStore só pode usar o emparelhamento clássico. Colocar o ficheiro de emparelhamento deste computador adiciona-o.",
+      "missingTag": "Em falta",
+      "rejected": "{device} já não o aceita (a sua Confiança foi reposta). Colocar o ficheiro de emparelhamento deste computador cria um novo.",
+      "rejectedTag": "Não aceite",
+      "other": "É o de outro computador, por isso o IPAForge não o consegue verificar. Colocar o ficheiro de emparelhamento deste computador substitui-o.",
+      "otherTag": "Outro computador",
+      "notNeeded": "Não é necessário abaixo do iOS 17.4.",
+      "notNeededTag": "Não necessário"
+    }
+  },
+  "sidestore": {
+    "addSource": "Adicionar ao SideStore",
+    "addAll": "Adicionar tudo ao SideStore",
+    "install": "Instalar com o SideStore",
+    "sourceTitle": "Adicionar {name} ao SideStore",
+    "sourceBody": "O SideStore também mostra as suas apps e mantém-nas atualizadas no iPhone. O SideStore também não revê as apps de uma fonte: adiciona apenas fontes em que confies.",
+    "installTitle": "Instalar {name} com o SideStore",
+    "installBody": "O SideStore transfere {name} {version}, assina-o com o teu Apple ID e instala-o ele próprio no iPhone. Num Apple ID gratuito, conta para as 3 apps. Aparece em Apps depois de o IPAForge o renovar.",
+    "qrLabel": "Código QR da ligação abaixo",
+    "steps": {
+      "camera": "Abre a Câmara em {device} e aponta-a ao código.",
+      "banner": "Toca no banner para abrir o SideStore.",
+      "addSource": "O SideStore pede para adicionar a fonte: toca em Adicionar.",
+      "install": "O SideStore pede para instalar a app: toca em Instalar."
+    },
+    "onPhone": "No próprio iPhone, a ligação também abre o SideStore (colada no Safari ou enviada em Mensagens).",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "previous": "Anterior",
+    "next": "Seguinte",
+    "step": "Fonte {at} de {count}",
+    "back": "Voltar",
+    "done": "Concluído",
+    "offer": "{count, plural, one {Adiciona também ao SideStore a fonte que adicionaste aqui, para ele mostrar as suas apps no iPhone.} other {Adiciona também ao SideStore as # fontes que adicionaste aqui, para ele mostrar as suas apps no iPhone.}}"
+  },
+  "checklist": {
+    "title": "Em {device} · iOS {ios}",
+    "setUp": "{device} está configurado · iOS {ios}",
+    "show": "Mostrar lista de verificação",
+    "hide": "Ocultar",
+    "allSet": "Tudo pronto",
+    "progress": "{left, plural, one {# coisa a fazer} other {# coisas a fazer}} · {done} de {total} feitas",
+    "group": {
+      "before": "Antes de instalar",
+      "after": "Depois de instalar",
+      "sidestore": "Para o SideStore"
+    },
+    "onPhone": "No iPhone",
+    "tickedTag": "Feito no iPhone",
+    "tick": "Já fiz isto",
+    "notNeeded": "Não é necessário neste iOS",
+    "cable": {
+      "title": "Liga {device} a este computador",
+      "connected": "Ligado",
+      "none": "Não ligado",
+      "how": "Usa um cabo da primeira vez; depois disso, o Wi-Fi funciona enquanto ambos estiverem na mesma rede."
+    },
+    "unlock": {
+      "title": "Desbloqueia-o",
+      "locked": "Bloqueado",
+      "unlocked": "Desbloqueado",
+      "how": "Mantém-no desbloqueado enquanto o IPAForge instala."
+    },
+    "trust": {
+      "title": "Confia neste computador",
+      "trusted": "De confiança",
+      "notYet": "Ainda não",
+      "step1": "Desbloqueia {device}.",
+      "step2": "Toca em Confiar quando perguntar sobre este computador.",
+      "step3": "Introduz o código.",
+      "again": "Perguntar novamente"
+    },
+    "passcode": {
+      "title": "Define um código",
+      "how": "O SideStore renova por Wi-Fi, o que o iOS só permite com um código: Definições › Face ID e Código."
+    },
+    "devmode": {
+      "title": "Ativa o Modo de Programador",
+      "on": "Ativo",
+      "off": "Desativado",
+      "step1": "Definições › Privacidade e Segurança › Modo de Programador (se não estiver lá, prime Mostrar a opção).",
+      "step2": "Ativa-o e reinicia {device}.",
+      "step3": "Depois de reiniciar, toca em Ativar e introduz o código.",
+      "reveal": "Mostrar a opção",
+      "revealed": "Já está em Definições › Privacidade e Segurança."
+    },
+    "developer": {
+      "title": "Confia no teu Apple ID como programador",
+      "later": "Depois da primeira instalação",
+      "step1": "Definições › Geral › VPN e Gestão de Dispositivos.",
+      "step2": "Em App de Programador, toca em {appleId}.",
+      "step3": "Toca em Confiar. O iPhone precisa de internet para isto."
+    },
+    "vpn": {
+      "title": "Instala o LocalDevVPN",
+      "installed": "Instalado",
+      "notInstalled": "Não instalado",
+      "how": "O SideStore comunica com o iPhone através desta VPN local; nada sai do telemóvel. É gratuito na App Store.",
+      "qrLabel": "Código QR da página do LocalDevVPN na App Store",
+      "scan": "Lê com a Câmara ou procura \"LocalDevVPN\" na App Store."
+    },
+    "vpnOn": {
+      "title": "Liga o LocalDevVPN quando o SideStore renova",
+      "tag": "De cada vez",
+      "later": "Depois de o instalares",
+      "how": "Abre o LocalDevVPN e toca em Ligar, ou deixa o SideStore ativá-la: pergunta da primeira vez."
+    },
+    "repair": {
+      "title": "O SideStore consegue renovar sozinho",
+      "tag": "Verificado em Reparar",
+      "how": "O seu certificado, o seu ficheiro de emparelhamento e a sua expiração."
+    },
+    "notice": "{count, plural, one {# coisa a fazer em {device}} other {# coisas a fazer em {device}}}",
+    "noticeBody": "Para que a instalação e a renovação corram bem.",
+    "showChecklist": "Mostrar a lista de verificação"
+  },
+  "updates": {
+    "screen": {
+      "label": "A atualizar o IPAForge"
+    },
+    "checking": {
+      "title": "A procurar atualizações…"
+    },
+    "downloading": {
+      "title": "A atualizar o IPAForge",
+      "body": "Já saiu a versão {version}. É transferida e instalada agora, e depois o IPAForge abre novamente sozinho.",
+      "starting": "A iniciar a transferência…",
+      "percent": "{fraction, number, percent}"
+    },
+    "installing": {
+      "title": "A instalar {version}…",
+      "body": "O IPAForge abre novamente dentro de instantes."
+    },
+    "failed": {
+      "title": "A atualização não terminou",
+      "body": "Já saiu a versão {version}. Tenta novamente ou transfere-a a partir da página de lançamento.",
+      "retry": "Tentar novamente",
+      "releasePage": "Página de lançamento",
+      "skip": "Usar esta versão por agora"
+    },
+    "manual": {
+      "title": "Já saiu o IPAForge {version}",
+      "body": "Esta cópia foi instalada a partir de {package, select, msi {um instalador .msi} deb {um pacote .deb} rpm {um pacote .rpm} other {um pacote}}, que não se consegue atualizar sozinho. Transfere a nova versão e instala-a por cima desta: os teus Apple IDs, apps e definições ficam.",
+      "download": "Transferir {version}",
+      "later": "Mais tarde"
+    },
+    "nativeBuild": {
+      "title": "Esta é a versão para Intel",
+      "body": "O teu Mac tem Apple silicon, por isso esta cópia do IPAForge corre através do Rosetta e tudo é mais lento. Transfere a versão para Apple silicon e instala-a por cima desta; os teus Apple IDs, dispositivos e apps ficam.",
+      "file": "IPAForge-…-mac-arm64.dmg",
+      "later": "Mais tarde",
+      "download": "Transferir para Apple silicon"
+    }
+  },
+  "whatsNew": {
+    "link": "Novidades",
+    "version": "Versão {version} · {date}",
+    "englishOnly": "As notas de lançamento estão em inglês.",
+    "kind": {
+      "new": "Novo",
+      "changed": "Alterado",
+      "fixed": "Corrigido",
+      "removed": "Removido"
+    },
+    "dialog": {
+      "title": "Novidades do IPAForge",
+      "everyVersion": "Todas as versões",
+      "close": "Percebi"
+    },
+    "page": {
+      "title": "Novidades",
+      "lede": "Tudo o que mudou no IPAForge, das mais recentes para as mais antigas.",
+      "current": "Esta versão",
+      "release": "Lançamento no GitHub"
+    }
+  },
+  "portal": {
+    "description": "O que a equipa do teu Apple ID tem na Apple, e os perfis no teu dispositivo.",
+    "tabsLabel": "O que a equipa tem",
+    "tabs": {
+      "certificates": "Certificados",
+      "appIds": "App IDs",
+      "profiles": "Perfis",
+      "groups": "Grupos de apps",
+      "devices": "Dispositivos registados"
+    },
+    "team": {
+      "pick": "Equipa",
+      "free": "{name} (gratuita)",
+      "paid": "{name} (paga)"
+    },
+    "refresh": "Atualizar",
+    "reading": "A ler da Apple…",
+    "noAccount": {
+      "title": "Ainda não há Apple ID",
+      "body": "Inicia sessão com um Apple ID em Contas para ver o que a sua equipa tem."
+    },
+    "expired": "Expirado",
+    "expires": "Expira em {date}",
+    "expiredOn": "Expirou em {date}",
+    "certificates": {
+      "hint": "Um certificado assina as apps que instalas. Revogar um impede todas as apps que ele assinou de abrir, até serem assinadas novamente.",
+      "usedFree": "{count} de {max} em uso (as equipas gratuitas podem ter {max})",
+      "usedPaid": "{count, plural, one {# certificado} other {# certificados}}",
+      "maker": {
+        "thisComputer": "IPAForge neste computador",
+        "ipaforge": "IPAForge noutro computador",
+        "sidestore": "SideStore",
+        "machine": "“{machine}” (normalmente o Xcode)",
+        "unknown": "Uma ferramenta desconhecida"
+      },
+      "thisComputer": "O deste computador",
+      "signs": "Assina {apps} em {device}",
+      "signsNothing": "Não assina nada em {device}",
+      "revoke": "Revogar",
+      "revokeOne": "Revogar {name}",
+      "empty": "A equipa ainda não tem certificados. O IPAForge cria um da primeira vez que instala.",
+      "import": "Importar .p12…",
+      "export": "Exportar .p12"
+    },
+    "revokeDialog": {
+      "title": "Revogar este certificado?",
+      "apps": "Estas deixam de abrir em {device} até serem assinadas novamente (Renovar em Apps faz isso):",
+      "none": "Nada em {device} está assinado com ele.",
+      "noDevice": "Liga o teu dispositivo para ver quais das suas apps este certificado assina.",
+      "thisComputer": "O IPAForge cria um novo da próxima vez que instalar ou renovar.",
+      "sidestore": "O SideStore criou-o para renovar sozinho: cria um novo da próxima vez que iniciares sessão lá.",
+      "machine": "O Xcode nesse computador cria um novo da próxima vez que assinar.",
+      "exportedToo": "Um .p12 exportado a partir dele também deixa de funcionar."
+    },
+    "appIds": {
+      "hintFree": "Cada app e extensão que instalas precisa de um. As equipas gratuitas podem registar 10 em 7 dias; cada um conta durante 7 dias depois de ser criado.",
+      "hintPaid": "Cada app e extensão que instalas precisa de um. As equipas pagas não têm limite semanal.",
+      "left": "{count, plural, one {Resta # esta semana} other {Restam # esta semana}}",
+      "leftAndNext": "{left} · o próximo fica livre em {date}",
+      "countsUntil": "Conta até {date}",
+      "unused": "Sem uso",
+      "delete": "Eliminar",
+      "deleteOne": "Eliminar {name}",
+      "empty": "A equipa ainda não tem App IDs."
+    },
+    "deleteDialog": {
+      "title": "Eliminar este App ID?",
+      "free": "Numa equipa gratuita continua a contar para os 10 por semana até expirar: eliminá-lo não devolve a vaga mais cedo.",
+      "paid": "Pode ser registado novamente mais tarde."
+    },
+    "profiles": {
+      "title": "Perfis de aprovisionamento em {device}",
+      "hint": "Um perfil permite que uma app (ou extensão) execute neste dispositivo. Renovar dá um novo a uma app; um perfil expirado ou sem uso pode ser removido sem problema.",
+      "noDevice": "Liga o teu dispositivo para ver os seus perfis de aprovisionamento.",
+      "noApp": "Nenhuma app o usa",
+      "otherTeam": "Outra equipa",
+      "remove": "Remover",
+      "removeOne": "Remover o perfil de {name}",
+      "removeUnused": "Remover os sem uso",
+      "empty": "Não há perfis de aprovisionamento neste dispositivo."
+    },
+    "removeDialog": {
+      "title": "{count, plural, one {Remover este perfil?} other {Remover # perfis?}}",
+      "body": "{count, plural, one {É removido de {device}. Nenhuma app de lá precisa dele.} other {São removidos de {device}. Nenhuma app de lá precisa deles.}}"
+    },
+    "groups": {
+      "hint": "As apps do mesmo grupo partilham ficheiros (o SideStore e o seu widget, por exemplo). O IPAForge cria-os quando uma app precisa de um.",
+      "empty": "A equipa ainda não tem grupos de apps."
+    },
+    "devices": {
+      "hintFree": "As apps que assinas só executam nestes.",
+      "hintPaid": "As apps que assinas só executam nestes. As equipas pagas podem registar 100 por ano; a remoção de um faz-se no site de programadores da Apple, uma vez por ano.",
+      "used": "{count} de {max} este ano",
+      "connected": "Ligado",
+      "unnamed": "Dispositivo sem nome",
+      "empty": "Ainda não há dispositivos registados. O IPAForge regista o teu da primeira vez que instala."
+    },
+    "exportDialog": {
+      "title": "Exportar o certificado deste computador",
+      "body": "Um ficheiro .p12 com o certificado e a sua chave privada, para o SideStore ou outro computador. Qualquer pessoa com o ficheiro e a sua palavra-passe pode assinar apps como a tua equipa.",
+      "password": "Palavra-passe",
+      "again": "Palavra-passe novamente",
+      "tooShort": "{count, plural, one {Usa pelo menos # carácter.} other {Usa pelo menos # carateres.}}",
+      "differ": "As duas palavras-passe são diferentes.",
+      "save": "Guardar .p12…"
+    },
+    "importDialog": {
+      "title": "Importar um certificado",
+      "body": "Um .p12 de outro computador ou do SideStore. O IPAForge verifica se a Apple ainda o lista para esta equipa e depois assina com ele aqui: sem novo certificado, sem usar uma vaga.",
+      "noFile": "Nenhum ficheiro escolhido",
+      "choose": "Escolher…",
+      "password": "A sua palavra-passe",
+      "import": "Importar"
+    }
+  },
+  "guide": {
+    "title": "Guia de configuração",
+    "stepsLabel": "Passos de configuração",
+    "stepDone": "(feito)",
+    "steps": {
+      "welcome": "Boas-vindas",
+      "computer": "Este computador",
+      "iphone": "O teu iPhone",
+      "appleid": "Apple ID",
+      "install": "Instalar o SideStore",
+      "onphone": "No teu iPhone",
+      "around": "Está tudo configurado"
+    },
+    "back": "Voltar",
+    "skip": "Ignorar este passo",
+    "continue": "Continuar",
+    "later": "Terminar mais tarde",
+    "checkAgain": "Verificar novamente",
+    "checking": "A verificar…",
+    "copy": "Copiar",
+    "copied": "Copiado",
+    "welcome": {
+      "title": "Bem-vindo ao IPAForge",
+      "lead": "Alguns passos preparam o teu computador, o iPhone e o Apple ID, e depois podes instalar o SideStore. Escolhe primeiro o teu idioma.",
+      "needTitle": "O que vais precisar",
+      "needDevice": "Um iPhone ou iPad com iOS 15 ou posterior, e o respetivo cabo USB",
+      "needAppleId": "Um Apple ID (um gratuito serve)",
+      "needPasscode": "O código do teu iPhone, para confiar neste computador",
+      "skipGuide": "Já sei como funciona",
+      "start": "Começar"
+    },
+    "computer": {
+      "title": "Este computador",
+      "lead": "O IPAForge verifica se este computador consegue iniciar sessão na Apple: os servidores da Apple, o relógio e um servidor anisette. Se não conseguir comunicar com iPhones, também diz como resolver.",
+      "failed": "As verificações não correram. Verifica novamente ou ignora este passo.",
+      "service": {
+        "title": "Serviço de ligação ao iPhone",
+        "fixMac": "O macOS deveria executá-lo sozinho. Reinicia o Mac e verifica novamente.",
+        "fixWindows": "Instala o Apple Devices a partir da Microsoft Store, abre-o uma vez e verifica novamente.",
+        "fixLinux": "Instala o usbmuxd, liga o teu iPhone e verifica novamente.",
+        "openStore": "Abrir a Microsoft Store"
+      },
+      "apple": {
+        "title": "Servidores da Apple",
+        "ok": "Acessíveis.",
+        "fix": "O IPAForge não consegue aceder à Apple. Verifica a tua ligação à internet, VPN ou firewall."
+      },
+      "clock": {
+        "title": "Relógio",
+        "ok": "Correto.",
+        "fix": "{minutes, plural, one {O teu relógio está desajustado # minuto.} other {O teu relógio está desajustado # minutos.}} Define a data e a hora automaticamente e verifica novamente."
+      },
+      "anisette": {
+        "title": "Servidores anisette",
+        "ok": "{name} responde. O início de sessão usa-o.",
+        "fix": "Nenhum dos primeiros {tried} servidores da tua lista respondeu. Verifica a ligação, ou adiciona ou escolhe um servidor em Definições › Servidores anisette."
+      }
+    },
+    "iphone": {
+      "title": "O teu iPhone",
+      "lead": "Liga o teu iPhone com o cabo, desbloqueia-o e toca em Confiar quando perguntar. No iOS 16 e posteriores, o Modo de Programador tem de estar ativo.",
+      "connectTitle": "Liga o teu iPhone",
+      "connectText": "À espera de um iPhone ou iPad por USB…"
+    },
+    "appleid": {
+      "title": "O teu Apple ID",
+      "lead": "A Apple assina as apps que instalas com o teu Apple ID. A tua palavra-passe vai apenas para a Apple e fica no porta-chaves deste computador.",
+      "freeNote": "Um Apple ID gratuito serve: as suas apps duram 7 dias e o IPAForge pode renová-las. Uma conta de programador paga dura um ano.",
+      "signIn": "Iniciar sessão com o Apple ID",
+      "signedIn": "Sessão iniciada.",
+      "team": "Equipa que assina as apps",
+      "free": "Gratuita: as apps duram 7 dias",
+      "paid": "Paga: as apps duram um ano"
+    },
+    "banner": {
+      "label": "Guia de configuração",
+      "text": "Termina a configuração do IPAForge: {done} de {total} passos feitos.",
+      "continue": "Continuar o guia",
+      "notNow": "Agora não"
+    },
+    "install": {
+      "title": "Instalar o SideStore",
+      "lead": "O SideStore renova as tuas apps no iPhone sozinho e instala mais. O IPAForge dá-lhe o ficheiro de emparelhamento e o certificado de que precisa.",
+      "notNow": "Agora não"
+    },
+    "onphone": {
+      "title": "No teu iPhone",
+      "lead": "O que só tu podes fazer no iPhone. Assinala cada passo à medida que avanças; a página Dispositivos guarda a mesma lista."
+    },
+    "around": {
+      "title": "Está tudo configurado",
+      "lead": "Aqui está onde tudo fica. Enquanto o IPAForge estiver aberto, renova as tuas apps antes de expirarem.",
+      "again": "Executa este guia novamente quando quiseres, em Definições.",
+      "showMe": "Mostra-me a app",
+      "apps": {
+        "title": "Apps",
+        "text": "Quando cada app expira, com Renovar e Atualizar. Os ficheiros de emparelhamento também estão aqui.",
+        "where": "Barra lateral › Apps"
+      },
+      "preload": {
+        "title": "Pré-carregar",
+        "text": "Adiciona as tuas próprias apps: ficheiros .ipa, ligações, fontes. Ou guarda-as como ficheiros .ipa assinados.",
+        "where": "Barra lateral › Pré-carregar"
+      },
+      "repair": {
+        "title": "Reparar o SideStore",
+        "text": "Se o SideStore deixar de renovar sozinho, isto descobre porquê e corrige.",
+        "where": "Apps › Verificar o SideStore"
+      },
+      "developer": {
+        "title": "Portal do Programador",
+        "text": "Os teus certificados, App IDs e perfis, e um .p12 para mover o teu certificado.",
+        "where": "Barra lateral › Portal do Programador"
+      },
+      "devices": {
+        "title": "Dispositivos",
+        "text": "A lista de verificação de cada iPhone e o seu ficheiro de emparelhamento para outras ferramentas.",
+        "where": "Barra lateral › Dispositivos"
+      },
+      "logs": {
+        "title": "Registos",
+        "text": "O que aconteceu, passo a passo. Anexa-os a um relatório de erro.",
+        "where": "Barra lateral › Registos · ⌘L / Ctrl+L"
+      }
+    }
+  },
+  "tour": {
+    "count": "{current} de {total}",
+    "skip": "Saltar a visita",
+    "back": "Voltar",
+    "next": "Seguinte",
+    "done": "Concluído",
+    "install": {
+      "title": "Instalar",
+      "text": "Instala o SideStore, ou o LiveContainer com o SideStore, com um clique. Começa aqui num iPhone novo."
+    },
+    "preload": {
+      "title": "Pré-carregar",
+      "text": "Adiciona as tuas próprias apps: ficheiros .ipa, ligações ou apps de fontes. Assinala uma para a guardar antes como .ipa assinado."
+    },
+    "apps": {
+      "title": "Apps",
+      "text": "Quando cada app expira, com Renovar e Atualizar. O IPAForge renova-as sozinho enquanto está aberto. Os ficheiros de emparelhamento também estão aqui."
+    },
+    "devices": {
+      "title": "Dispositivos",
+      "text": "A lista de verificação de cada iPhone para a sua versão do iOS e o seu ficheiro de emparelhamento para outras ferramentas."
+    },
+    "developer": {
+      "title": "Portal do Programador",
+      "text": "Os certificados, App IDs e perfis do teu Apple ID. Limpa o que ninguém usa ou move o teu certificado como um .p12."
+    },
+    "pickers": {
+      "title": "Dispositivo e Apple ID",
+      "text": "Muda o iPhone ou o Apple ID que o IPAForge usa aqui, quando quiseres."
+    },
+    "logs": {
+      "title": "Registos",
+      "text": "Todos os passos que o IPAForge deu. Anexa-os a um relatório de erro (⌘L / Ctrl+L)."
+    },
+    "settings": {
+      "title": "Definições",
+      "text": "Idioma, aspeto, servidores anisette e esta visita outra vez."
+    },
+    "showAround": {
+      "title": "Mostra-me a app",
+      "text": "Faz esta visita novamente a partir daqui, quando quiseres. O guia de configuração está em Definições."
+    }
+  },
+  "pairByCode": {
+    "steps": {
+      "pair": "Emparelhar com o código"
+    },
+    "open": "Emparelhar Apple TV ou Vision Pro…",
+    "title": "Emparelhar uma Apple TV ou Vision Pro",
+    "titleAgain": "Emparelha {name} novamente",
+    "progress": {
+      "label": "Passos",
+      "find": "1 Encontrar",
+      "code": "2 Código"
+    },
+    "intro": "Não têm cabo, por isso são emparelhados por Wi-Fi com um código. Coloca o dispositivo no mesmo Wi-Fi que este computador, depois abre o seu ecrã de emparelhamento e mantém-no aberto:",
+    "where": {
+      "tv": "Apple TV",
+      "vision": "Apple Vision Pro",
+      "tvPath": "Definições → Comandos e Dispositivos → Remote App e Dispositivos",
+      "visionPath": "Definições → Geral → Dispositivos Remotos"
+    },
+    "found": "Encontrados na tua rede",
+    "showing": "A mostrar o ecrã de emparelhamento",
+    "pair": "Emparelhar",
+    "searching": "A procurar na tua rede… O dispositivo aparece aqui quando o seu ecrã de emparelhamento estiver aberto.",
+    "searchingMore": "Ainda a procurar outros…",
+    "help": {
+      "title": "Não aparece",
+      "screen": "Mantém o ecrã de emparelhamento aberto: o dispositivo só pode ser encontrado enquanto o estiver a mostrar.",
+      "network": "O mesmo Wi-Fi que este computador: não uma rede de convidados, e sem VPN em nenhum dos lados.",
+      "ipv6": "IPv6 ativado no router (a Apple precisa dele para o emparelhamento).",
+      "macos": "macOS: Definições do Sistema → Privacidade e Segurança → Rede Local → IPAForge ativado.",
+      "windows": "Windows: permite o IPAForge em redes privadas quando a firewall perguntar."
+    },
+    "failed": "A pesquisa na tua rede parou. Fecha isto e abre novamente.",
+    "code": {
+      "title": "Introduz o código em {name}",
+      "body": "{name} mostra um código. Escreve-o aqui.",
+      "label": "Código",
+      "wrong": "Esse código não coincidiu. Verifica o código em {name} e tenta novamente.",
+      "pairing": "A emparelhar com {name}…",
+      "checking": "A verificar o código…"
+    },
+    "back": "Voltar",
+    "backToList": "Voltar à lista",
+    "backoff": {
+      "title": "Demasiados códigos errados",
+      "wait": "{name} deixa-te tentar novamente dentro de {seconds, plural, one {# segundo} other {# segundos}}.",
+      "later": "{name} não aceita mais códigos durante algum tempo. Espera um pouco e tenta novamente."
+    },
+    "closed": {
+      "title": "{name} fechou o ecrã de emparelhamento",
+      "body": "O código só funciona enquanto o ecrã de emparelhamento está aberto. Abre-o novamente em {name}:"
+    },
+    "done": {
+      "title": "{name} está emparelhado",
+      "body": "{name} está na tua página Dispositivos. Já podes fechar o ecrã de emparelhamento.",
+      "vision": "As apps instalam-se quando o Modo de Programador estiver ativo.",
+      "use": "Usar {name}",
+      "close": "Fechar"
+    },
+    "pairNamed": "Emparelhar {name}"
+  }
+}
